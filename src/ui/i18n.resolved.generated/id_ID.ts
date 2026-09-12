@@ -10643,7 +10643,8 @@ export const id_ID: EnTranslations = {
       "copperShort": "t",
       "gold": "emas",
       "silver": "perak",
-      "copper": "tembaga"
+      "copper": "tembaga",
+      "wocAmount": "{amount} $WOC"
     },
     "slots": {
       "mainhand": "Tangan Utama",

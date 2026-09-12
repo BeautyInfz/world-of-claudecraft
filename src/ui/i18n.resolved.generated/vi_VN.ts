@@ -10643,7 +10643,8 @@ export const vi_VN: EnTranslations = {
       "copperShort": "đ",
       "gold": "vàng",
       "silver": "bạc",
-      "copper": "đồng"
+      "copper": "đồng",
+      "wocAmount": "{amount} $WOC"
     },
     "slots": {
       "mainhand": "Tay Chính",

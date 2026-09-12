@@ -554,6 +554,7 @@ import {
   needsWalletReauth,
   walletChangeErrorText,
 } from './ui/wallet_reauth_prompt';
+import { setWocCurrencyActive } from './ui/woc_currency';
 import type { IWorld } from './world_api';
 import { ONLINE_WORLD_INCOMPATIBLE_MESSAGE } from './world_api';
 
@@ -3092,6 +3093,10 @@ async function startGame(
     void api.devCommandsAdvert().then((enabled) => {
       if (enabled) hud.noteDevCommandsAdvertised();
     });
+    // WoC Unleashed currency terminology (src/ui/woc_currency.ts): $WOC
+    // instead of gold/silver/copper. Fire-and-forget like the advert above;
+    // Claudemoon never flips this true.
+    void api.wocUnleashedAdvert().then(setWocCurrencyActive);
     hud.attachReporting({
       submit: (targetPid, reason, details) =>
         api.reportPlayer(online.characterId, targetPid, reason, details),

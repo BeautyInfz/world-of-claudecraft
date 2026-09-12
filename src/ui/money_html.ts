@@ -6,6 +6,7 @@
 // replaced. Host-agnostic: strings only, no DOM.
 import { esc } from './esc';
 import { formatMoney, formatNumber, moneyParts, type TranslationKey, t } from './i18n';
+import { formatWocCurrency, wocCurrencyActive } from './woc_currency';
 
 export interface MoneyHtmlOptions {
   /** Drop a zero copper part once gold or silver is shown (formatMoney's compact
@@ -34,6 +35,13 @@ function coinAmountOptions(grouping: boolean): Intl.NumberFormatOptions {
 }
 
 export function moneyHtml(copper: number, options: MoneyHtmlOptions = {}): string {
+  // WoC Unleashed-exclusive: a single $WOC readout instead of three coin
+  // icons (src/ui/woc_currency.ts). Defaults false, so Claudemoon's markup
+  // is byte-identical to upstream.
+  if (wocCurrencyActive()) {
+    const text = esc(formatWocCurrency(copper));
+    return `<span class="money-inline woc-currency">${text}</span>`;
+  }
   const parts = moneyParts(copper);
   const numberOptions = coinAmountOptions(options.grouping ?? true);
   const coin = (value: number, cls: CoinClass): string =>

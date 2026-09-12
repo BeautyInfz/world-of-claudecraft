@@ -10643,7 +10643,8 @@ export const ko_KR: EnTranslations = {
       "copperShort": "동",
       "gold": "금화",
       "silver": "은화",
-      "copper": "동화"
+      "copper": "동화",
+      "wocAmount": "{amount} $WOC"
     },
     "slots": {
       "mainhand": "주장비",

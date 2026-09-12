@@ -1221,7 +1221,10 @@ const MONOLITHS: MonolithRow[] = [
     // RE-PINNED 11332 -> 11327 at the interact-key gather extraction
     // (src/game/interact_key_gather.ts took the R40 confirm gate and the
     // node bundle out of interactKey). Exact count, zero slack.
-    ceiling: 11327,
+    // Plus 5 for the WoC Unleashed currency-display advert wiring
+    // (setWocCurrencyActive off api.wocUnleashedAdvert(), mirroring the
+    // devCommandsAdvert call beside it). Exact count, zero slack.
+    ceiling: 11332,
     seam: 'a src/game/ or src/ui/ sibling module; main.ts is a firewall, not a home',
   },
   {
@@ -1579,7 +1582,9 @@ const MONOLITHS: MonolithRow[] = [
     // OSSBrain integration: entity flair decoding moved to net/entity_flair_wire.ts.
     // Measured after formatting; lower the ratchet with the extraction.
     // Main hotfix integration: combined extractions, exact merged count.
-    ceiling: 5540,
+    // Plus 13 for the WoC Unleashed currency-display advert (wocUnleashedAdvert,
+    // mirroring devCommandsAdvert exactly beside it). Exact count, zero slack.
+    ceiling: 5553,
     seam: 'a src/net sibling module (the refactor/net-online split is the template)',
   },
   {

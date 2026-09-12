@@ -12781,6 +12781,7 @@ export type TranslationKeyFlat =
   | 'itemUi.money.goldShort'
   | 'itemUi.money.silver'
   | 'itemUi.money.silverShort'
+  | 'itemUi.money.wocAmount'
   | 'itemUi.quality.common'
   | 'itemUi.quality.epic'
   | 'itemUi.quality.legendary'

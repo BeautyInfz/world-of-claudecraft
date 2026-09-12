@@ -10643,7 +10643,8 @@ export const en_XA: EnTranslations = {
       "copperShort": "[ç]",
       "gold": "[ĝóļð]",
       "silver": "[šíļʋéŕ]",
-      "copper": "[çóþþéŕ]"
+      "copper": "[çóþþéŕ]",
+      "wocAmount": "[{amount} $ŴÓÇ]"
     },
     "slots": {
       "mainhand": "[Ɱáíñ Ĥáñð]",

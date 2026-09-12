@@ -10643,7 +10643,8 @@ export const zh_TW: EnTranslations = {
       "copperShort": "銅",
       "gold": "金幣",
       "silver": "銀幣",
-      "copper": "銅幣"
+      "copper": "銅幣",
+      "wocAmount": "{amount} $WOC"
     },
     "slots": {
       "mainhand": "主手",

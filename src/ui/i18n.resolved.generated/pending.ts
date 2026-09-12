@@ -9,25 +9,65 @@
 // Reproducibility is checked by tests/i18n_resolved_equivalence.test.ts.
 
 export const pending: Record<string, readonly string[]> = {
-  "es": [],
-  "es_ES": [],
-  "fr_FR": [],
-  "fr_CA": [],
+  "es": [
+    "itemUi.money.wocAmount"
+  ],
+  "es_ES": [
+    "itemUi.money.wocAmount"
+  ],
+  "fr_FR": [
+    "itemUi.money.wocAmount"
+  ],
+  "fr_CA": [
+    "itemUi.money.wocAmount"
+  ],
   "en_CA": [],
-  "it_IT": [],
-  "de_DE": [],
-  "zh_CN": [],
-  "zh_TW": [],
-  "ko_KR": [],
-  "ja_JP": [],
-  "pt_BR": [],
-  "ru_RU": [],
-  "cs_CZ": [],
-  "nl_NL": [],
-  "pl_PL": [],
-  "id_ID": [],
-  "tr_TR": [],
-  "sv_SE": [],
-  "vi_VN": [],
-  "da_DK": []
+  "it_IT": [
+    "itemUi.money.wocAmount"
+  ],
+  "de_DE": [
+    "itemUi.money.wocAmount"
+  ],
+  "zh_CN": [
+    "itemUi.money.wocAmount"
+  ],
+  "zh_TW": [
+    "itemUi.money.wocAmount"
+  ],
+  "ko_KR": [
+    "itemUi.money.wocAmount"
+  ],
+  "ja_JP": [
+    "itemUi.money.wocAmount"
+  ],
+  "pt_BR": [
+    "itemUi.money.wocAmount"
+  ],
+  "ru_RU": [
+    "itemUi.money.wocAmount"
+  ],
+  "cs_CZ": [
+    "itemUi.money.wocAmount"
+  ],
+  "nl_NL": [
+    "itemUi.money.wocAmount"
+  ],
+  "pl_PL": [
+    "itemUi.money.wocAmount"
+  ],
+  "id_ID": [
+    "itemUi.money.wocAmount"
+  ],
+  "tr_TR": [
+    "itemUi.money.wocAmount"
+  ],
+  "sv_SE": [
+    "itemUi.money.wocAmount"
+  ],
+  "vi_VN": [
+    "itemUi.money.wocAmount"
+  ],
+  "da_DK": [
+    "itemUi.money.wocAmount"
+  ]
 };

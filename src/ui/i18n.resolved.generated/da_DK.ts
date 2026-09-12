@@ -10643,7 +10643,8 @@ export const da_DK: EnTranslations = {
       "copperShort": "k",
       "gold": "guld",
       "silver": "sølv",
-      "copper": "kobber"
+      "copper": "kobber",
+      "wocAmount": "{amount} $WOC"
     },
     "slots": {
       "mainhand": "Hovedhånd",

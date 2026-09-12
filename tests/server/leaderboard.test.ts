@@ -589,6 +589,8 @@ describe('status handler (name-list trim deviation)', () => {
       // ALLOW_DEV_COMMANDS, which is also the production posture.
       dev_commands: false,
       profiler_invulnerability: false,
+      // WoC Unleashed capability advert; false when WOC_UNLEASHED is unset.
+      woc_unleashed: false,
     });
     expect('names' in (body as object)).toBe(false);
   });

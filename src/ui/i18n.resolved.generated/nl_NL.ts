@@ -10643,7 +10643,8 @@ export const nl_NL: EnTranslations = {
       "copperShort": "k",
       "gold": "goud",
       "silver": "zilver",
-      "copper": "koper"
+      "copper": "koper",
+      "wocAmount": "{amount} $WOC"
     },
     "slots": {
       "mainhand": "Hoofdhand",

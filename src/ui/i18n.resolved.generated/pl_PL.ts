@@ -10643,7 +10643,8 @@ export const pl_PL: EnTranslations = {
       "copperShort": "m",
       "gold": "złoto",
       "silver": "srebro",
-      "copper": "miedziaki"
+      "copper": "miedziaki",
+      "wocAmount": "{amount} $WOC"
     },
     "slots": {
       "mainhand": "Główna ręka",

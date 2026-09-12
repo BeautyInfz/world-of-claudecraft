@@ -10643,7 +10643,8 @@ export const sv_SE: EnTranslations = {
       "copperShort": "k",
       "gold": "guld",
       "silver": "silver",
-      "copper": "koppar"
+      "copper": "koppar",
+      "wocAmount": "{amount} $WOC"
     },
     "slots": {
       "mainhand": "Främre hand",

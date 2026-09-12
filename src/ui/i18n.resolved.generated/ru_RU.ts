@@ -10643,7 +10643,8 @@ export const ru_RU: EnTranslations = {
       "copperShort": "м",
       "gold": "золото",
       "silver": "серебро",
-      "copper": "медь"
+      "copper": "медь",
+      "wocAmount": "{amount} $WOC"
     },
     "slots": {
       "mainhand": "Правая рука",

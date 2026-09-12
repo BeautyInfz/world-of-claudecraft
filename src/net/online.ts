@@ -1088,6 +1088,19 @@ export class Api {
     }
   }
 
+  // Whether this realm is running as WoC Unleashed (server/woc_unleashed.ts
+  // WOC_UNLEASHED), so the client can show $WOC currency terminology
+  // (src/ui/woc_currency.ts) instead of gold/silver/copper. Advert only,
+  // mirrors devCommandsAdvert exactly; fails closed (Claudemoon-safe) on error.
+  async wocUnleashedAdvert(): Promise<boolean> {
+    try {
+      const data = await this.statusDoc();
+      return data.woc_unleashed === true;
+    } catch {
+      return false;
+    }
+  }
+
   // Current account's Steam link status ({ enabled, linked, steamId? }).
   async steamStatus(): Promise<Record<string, unknown>> {
     return this.get('/api/steam/status');

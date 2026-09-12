@@ -10643,7 +10643,8 @@ export const ja_JP: EnTranslations = {
       "copperShort": "銅",
       "gold": "金貨",
       "silver": "銀貨",
-      "copper": "銅貨"
+      "copper": "銅貨",
+      "wocAmount": "{amount} $WOC"
     },
     "slots": {
       "mainhand": "メインハンド",

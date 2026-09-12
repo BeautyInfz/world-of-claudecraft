@@ -24,6 +24,7 @@ import { en_XA } from './i18n.resolved.generated/en_XA';
 import { LOCALE_LOADERS, SUPPORTED_LANGUAGES } from './i18n.resolved.generated/loaders';
 import { pending } from './i18n.resolved.generated/pending';
 import { type InterpolationMemoEntry, interpolateWithMemo } from './i18n_interpolation';
+import { formatWocCurrency, wocCurrencyActive } from './woc_currency';
 
 // Re-export the dense per-locale objects so const-importers of './i18n' keep an unchanged
 // surface: the S3 guard (tests/localization_fixes.test.ts) and the byte-equivalence
@@ -568,6 +569,11 @@ export function moneyParts(copper: number): MoneyParts {
 }
 
 export function formatMoney(copper: number, style: MoneyDisplayStyle = 'compact'): string {
+  // WoC Unleashed-exclusive: $WOC replaces the gold/silver/copper trio below
+  // 1:1 (src/ui/woc_currency.ts). wocCurrencyActive() defaults false, so
+  // Claudemoon's output is byte-identical to upstream; style is irrelevant
+  // to a single-denomination currency, so both styles share one spelling.
+  if (wocCurrencyActive()) return formatWocCurrency(copper);
   const parts = moneyParts(copper);
   const unitKeys =
     style === 'compact'

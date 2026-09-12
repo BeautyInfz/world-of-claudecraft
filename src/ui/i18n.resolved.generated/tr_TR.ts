@@ -10643,7 +10643,8 @@ export const tr_TR: EnTranslations = {
       "copperShort": "b",
       "gold": "altın",
       "silver": "gümüş",
-      "copper": "bakır"
+      "copper": "bakır",
+      "wocAmount": "{amount} $WOC"
     },
     "slots": {
       "mainhand": "Ana El",

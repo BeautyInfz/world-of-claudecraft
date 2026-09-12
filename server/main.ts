@@ -497,6 +497,7 @@ import { registerWocMarketReadCacheForBusts, WocMarketReadCache } from './woc_ma
 import { configureWocMarketRuntime, wocMarketConfig } from './woc_market_routes';
 import { createWocMarketSweep } from './woc_market_sweep';
 import { createWocMarketSweepWatchdog } from './woc_market_sweep_watchdog';
+import { WOC_UNLEASHED } from './woc_unleashed';
 import { ensureWocUnleashedSchema } from './woc_unleashed_schema';
 import { createWsAuth } from './ws_auth';
 import { bufferHandshakeMessages } from './ws_buffer';
@@ -2319,6 +2320,10 @@ async function handleApi(req: http.IncomingMessage, res: http.ServerResponse): P
         // harness to stop before entry because the dev gate is off. Dual-arm
         // edit: the migrated statusHandler carries the identical field.
         profiler_invulnerability: process.env.ALLOW_DEV_COMMANDS === '1',
+        // WoC Unleashed capability advert: the client reads this to choose the
+        // $WOC currency display over gold/silver/copper (src/ui/woc_currency.ts).
+        // Dual-arm edit: the migrated statusHandler carries the identical field.
+        woc_unleashed: WOC_UNLEASHED,
       });
     }
     // Dev-only world-loop perf profile (per-phase tick p95/max), for the load
