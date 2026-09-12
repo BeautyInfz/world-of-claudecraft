@@ -2588,6 +2588,29 @@ export const SURFACE_INVENTORY: readonly SurfaceRoute[] = [
     limiter: null,
     requireOwnedExpected: REQUIRE_OWNED.operator404,
   },
+  // WoC Unleashed emission cap: registry-only RouteDefs born AFTER the
+  // migration (the new-route rule, server/http/CLAUDE.md), so no legacy
+  // ladder arm and the legacy rollback answers 404 for them by design.
+  {
+    dispatcher: DISPATCH.admin,
+    method: 'GET',
+    path: '/admin/api/woc-unleashed/emission-cap',
+    handler: 'server/woc_unleashed_admin.ts getHandler (registry-only RouteDef)',
+    contentType: PROBLEM_JSON,
+    authScope: AUTH_SCOPE.admin,
+    limiter: null,
+    requireOwnedExpected: null,
+  },
+  {
+    dispatcher: DISPATCH.admin,
+    method: 'POST',
+    path: '/admin/api/woc-unleashed/emission-cap',
+    handler: 'server/woc_unleashed_admin.ts setHandler (registry-only RouteDef)',
+    contentType: PROBLEM_JSON,
+    authScope: AUTH_SCOPE.admin,
+    limiter: null,
+    requireOwnedExpected: null,
+  },
   {
     dispatcher: DISPATCH.admin,
     method: 'GET',

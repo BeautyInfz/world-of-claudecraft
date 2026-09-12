@@ -38,6 +38,14 @@ export const ADMIN_PERMISSIONS = [
   // reaches it, the conservative default for an irreversible action.
   'moderation.clearItemName',
   'staff.manage',
+  // WoC Unleashed emission-cap oversight (server/woc_unleashed_admin.ts): the
+  // in-game $WOC minting ceiling. Read rides its own permission rather than
+  // analytics.read so an operator can be granted visibility into the cap
+  // without the whole analytics surface, and the write is separate from the
+  // read so a viewer-tier role can see the cap but never move it (the
+  // ad-spend precedent: analytics.read / analytics.manage).
+  'woc.emission.read',
+  'woc.emission.manage',
 ] as const;
 
 export type AdminPermission = (typeof ADMIN_PERMISSIONS)[number];

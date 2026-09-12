@@ -24,6 +24,18 @@ export const ADMIN_ROUTE_PERMISSIONS: readonly AdminRouteRule[] = [
   { method: 'GET', pattern: '/admin/api/ad-spend', permission: 'analytics.read' },
   { method: 'POST', pattern: '/admin/api/ad-spend', permission: 'analytics.manage' },
   { method: 'POST', pattern: '/admin/api/ad-spend/delete', permission: 'analytics.manage' },
+  // WoC Unleashed emission cap (server/woc_unleashed_admin.ts): read beside
+  // the dashboards, the write behind its own dedicated manage grant.
+  {
+    method: 'GET',
+    pattern: '/admin/api/woc-unleashed/emission-cap',
+    permission: 'woc.emission.read',
+  },
+  {
+    method: 'POST',
+    pattern: '/admin/api/woc-unleashed/emission-cap',
+    permission: 'woc.emission.manage',
+  },
   { method: 'GET', pattern: '/admin/api/provider-usage', permission: 'ops_usage.read' },
   { method: 'GET', pattern: '/admin/api/online', permission: 'accounts.read' },
   { method: 'GET', pattern: '/admin/api/online-history', permission: 'analytics.read' },
