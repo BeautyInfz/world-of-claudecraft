@@ -1018,7 +1018,12 @@ const MONOLITHS: MonolithRow[] = [
     // character load loops (bags, buyback) moved to item_instance_load.ts's
     // sanitizeSlotInstanceOnLoad, paying for the party-trade retire hooks that
     // now live in src/sim/loot/bop_trade_persistence.ts. Exact count, zero slack.
-    ceiling: 11874,
+    // Plus 4 for the WoC Unleashed durability-system gate: SimConfig.
+    // durabilitySystemEnabled's ctor pass-through and the matching
+    // buildSimContext getter (the durability logic itself lives in
+    // src/sim/durability.ts, a sibling module; only the SimContext plumbing
+    // touches this file). Exact count, zero slack.
+    ceiling: 11878,
     seam: 'a sim system module behind SimContext (src/sim/CLAUDE.md)',
   },
   {

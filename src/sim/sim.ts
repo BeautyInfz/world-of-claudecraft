@@ -2226,6 +2226,7 @@ export class Sim {
       worldBossAtBoot: cfg.worldBossAtBoot ?? false,
       riftPortals: cfg.riftPortals ?? false,
       compulsoryTutorial: cfg.compulsoryTutorial ?? false,
+      durabilitySystemEnabled: cfg.durabilitySystemEnabled ?? false,
       lockoutNowMs: cfg.lockoutNowMs ?? (() => Math.floor(this.time * 1000)),
       raidResetMs: cfg.raidResetMs ?? ((nowMs: number) => nowMs + DEFAULT_RAID_LOCKOUT_MS),
       weeklyRaidResetMs:
@@ -5364,6 +5365,9 @@ export class Sim {
       },
       get compulsoryTutorial() {
         return sim.cfg.compulsoryTutorial;
+      },
+      get durabilitySystemEnabled() {
+        return sim.cfg.durabilitySystemEnabled;
       },
       get marketListings() {
         return sim.marketListings;

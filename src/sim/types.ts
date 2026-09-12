@@ -8283,6 +8283,11 @@ export interface SimConfig {
   // Default OFF so deterministic tests, parity traces, and the RL env never
   // teleport a fresh character mid-scenario unless they opt in.
   compulsoryTutorial?: boolean;
+  // WoC Unleashed-exclusive (server/woc_unleashed.ts DURABILITY_SYSTEM_ENABLED):
+  // gates the item durability/repair system (src/sim/durability.ts). Default
+  // OFF so Claudemoon, tests, parity traces, and the RL env never lose stat
+  // bonuses to a durability roll unless the host opts in.
+  durabilitySystemEnabled?: boolean;
   // Host-computed next raid-reset instant for a given lockout "now" (epoch ms). The
   // authoritative server uses its realm-local 3 AM daily reset; offline/headless omit
   // this and fall back to a flat 24h day. Keeps the time zone out of the sim core.

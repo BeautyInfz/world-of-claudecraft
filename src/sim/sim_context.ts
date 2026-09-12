@@ -338,6 +338,9 @@ export interface SimContextPrimitives {
   // greeting sweep only force-ferries fresh characters where a live world
   // turned it on; tests, parity traces, and the RL env keep it off.
   readonly compulsoryTutorial: boolean;
+  // WoC Unleashed-exclusive durability/repair gate (src/sim/durability.ts);
+  // see SimConfig.durabilitySystemEnabled for the default-off rationale.
+  readonly durabilitySystemEnabled: boolean;
   readonly marketListings: MarketListing[];
   // Bank system: the live array of every `banker: true` NPC id, seeded by
   // the Sim ctor NPC loop. bank.ts reads it to gate deposit/withdraw/buy-slots on
@@ -1472,6 +1475,9 @@ export function createSimContext(host: SimContextHost): SimContext {
     },
     get compulsoryTutorial() {
       return host.compulsoryTutorial;
+    },
+    get durabilitySystemEnabled() {
+      return host.durabilitySystemEnabled;
     },
     get marketListings() {
       return host.marketListings;
