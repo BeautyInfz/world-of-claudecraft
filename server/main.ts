@@ -497,6 +497,7 @@ import { registerWocMarketReadCacheForBusts, WocMarketReadCache } from './woc_ma
 import { configureWocMarketRuntime, wocMarketConfig } from './woc_market_routes';
 import { createWocMarketSweep } from './woc_market_sweep';
 import { createWocMarketSweepWatchdog } from './woc_market_sweep_watchdog';
+import { ensureWocUnleashedSchema } from './woc_unleashed_schema';
 import { createWsAuth } from './ws_auth';
 import { bufferHandshakeMessages } from './ws_buffer';
 
@@ -3604,6 +3605,7 @@ export async function startServer(): Promise<http.Server> {
     }
   }
   await ensureSchema();
+  await ensureWocUnleashedSchema(pool);
   await seedOAuthClients();
   const game = liveGame();
   const bankLedgerGrowthMonitor = createBankLedgerGrowthMonitor({

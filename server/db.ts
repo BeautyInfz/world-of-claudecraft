@@ -147,8 +147,6 @@ import { UNSTUCK_SCHEMA } from './unstuck_db';
 import { USER_ASSETS_SCHEMA } from './user_assets_db';
 import { bustWocAuthGuardAccount, bustWocAuthGuardToken } from './woc_auth_guard_cache';
 import { WOC_MARKET_SCHEMA } from './woc_market_db';
-import { WOC_UNLEASHED_EMISSION_SCHEMA } from './woc_unleashed_emission_db';
-import { WOC_UNLEASHED_WALLET_SCHEMA } from './woc_unleashed_wallet_db';
 import { bustWocMarketActivity } from './woc_market_read_cache';
 
 export type { BankLedgerSaveEffects } from './bank_ledger_save_effects_db';
@@ -1387,19 +1385,6 @@ export async function ensureSchema(): Promise<void> {
     // After SCHEMA: every marketplace table FKs accounts(id), and the custody
     // model rides characters + world_state (the escrow combined save).
     await client.query(WOC_MARKET_SCHEMA);
-    // WoC Unleashed's in-game $WOC emission-cap counters + audit log
-    // (server/woc_unleashed_emission_db.ts). No FK dependencies (a singleton
-    // state row plus an append-only log keyed by admin username, not account
-    // id), applied unconditionally like the other schema modules: the tables
-    // exist on every deployment, but nothing writes to them unless
-    // WOC_UNLEASHED is set (server/woc_unleashed.ts).
-    await client.query(WOC_UNLEASHED_EMISSION_SCHEMA);
-    // WoC Unleashed's account-level off-chain $WOC ledger: the claim-cooldown
-    // row per account and the append-only circulation-chart event log
-    // (server/woc_unleashed_wallet_db.ts). FK-references accounts(id), so it
-    // runs after SCHEMA. Applied unconditionally like the other schema
-    // modules; nothing writes to it unless WOC_UNLEASHED is set.
-    await client.query(WOC_UNLEASHED_WALLET_SCHEMA);
     // The World Market sold-volume store (qr-19-sold-volume-four-seam-wiring):
     // realm x day x tracked-item daily aggregates, no FK, additive, idempotent.
     await client.query(MARKET_SOLD_VOLUME_SCHEMA);
