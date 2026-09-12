@@ -1678,6 +1678,13 @@ export interface ItemInstancePayload {
      *  read; the load rebuild drops it. */
     enchant?: { stat: string; value: number };
   };
+  /** WoC Unleashed-exclusive (src/sim/durability.ts): remaining durability
+   *  points, 0-100. Absent means "not yet touched by the durability system"
+   *  (equivalent to full/100, never treated as 0/depleted) so every item that
+   *  existed before this field, and every item on Claudemoon (where the
+   *  system stays permanently off), types and loads unchanged. A plain
+   *  number, so cloneItemInstancePayload's shallow spread covers it. */
+  durability?: number;
 }
 
 // A shallow `{ ...instance }` aliases the mutable `charges`/`rolled.stats`/`rift`
