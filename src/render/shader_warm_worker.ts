@@ -188,15 +188,20 @@ function tick(): void {
     return;
   }
   // Settle what completed, oldest first. A link past its deadline is failed
-  // and dropped, so one wedged link cannot close the window for good.
+  // and dropped, so one wedged link cannot close the window for good; the
+  // client is told it was the deadline, with the wall the link had run, so a
+  // machine whose links never settle still produces link evidence. The
+  // program is not kept: a link that never completed put nothing in the
+  // driver's cache, and holding its object in this context would retain GPU
+  // memory for no measured gain.
   const nowMs = performance.now();
   for (const [id, flight] of inFlight) {
     let result = parallel
       ? pollWarmProgram(gl, flight.handle)
       : resolveWarmProgram(gl, flight.handle);
-    if (result === 'pending' && nowMs - flight.startedAt >= SHADER_WARM_LINK_DEADLINE_MS) {
-      result = 'failed';
-    }
+    const ranMs = nowMs - flight.startedAt;
+    const deadline = result === 'pending' && ranMs >= SHADER_WARM_LINK_DEADLINE_MS;
+    if (deadline) result = 'failed';
     if (result === 'pending') continue;
     inFlight.delete(id);
     releaseWarmShaders(gl, flight.handle);
@@ -209,7 +214,8 @@ function tick(): void {
       scheduler.markFailed(id);
       failed++;
       deleteWarmProgram(gl, flight.handle);
-      post({ kind: 'failed', id, reason: 'link-failed' });
+      if (deadline) post({ kind: 'failed', id, reason: 'link-deadline', linkMs: ranMs });
+      else post({ kind: 'failed', id, reason: 'link-failed' });
     }
   }
   // Submit what the window allows.

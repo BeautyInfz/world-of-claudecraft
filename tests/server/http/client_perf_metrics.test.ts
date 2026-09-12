@@ -171,9 +171,11 @@ describe('vocabulary pins', () => {
     expect([...CLIENT_PERF_SHADER_WARM_REFUSALS]).toEqual([
       'none',
       'cannot-serve:hold-cap',
+      'cannot-serve:hold-cap:censored',
       'context-lost',
       'extension-drift',
       'extension-mismatch',
+      'hold-failures:wedged',
       'hold-timeouts:expired-share',
       'hold-timeouts:wedged',
       'ios-webkit',
@@ -544,7 +546,9 @@ describe('shaderWarmRefusalLabel', () => {
     for (const cause of [
       'hold-timeouts:expired-share',
       'hold-timeouts:wedged',
+      'hold-failures:wedged',
       'cannot-serve:hold-cap',
+      'cannot-serve:hold-cap:censored',
       'ready-timeout',
       'ios-webkit',
       'pagehide',

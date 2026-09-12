@@ -142,9 +142,11 @@ export type ClientPerfSuggestionId = (typeof CLIENT_PERF_SUGGESTION_IDS)[number]
 export const CLIENT_PERF_SHADER_WARM_REFUSALS = [
   'none',
   'cannot-serve:hold-cap',
+  'cannot-serve:hold-cap:censored',
   'context-lost',
   'extension-drift',
   'extension-mismatch',
+  'hold-failures:wedged',
   'hold-timeouts:expired-share',
   'hold-timeouts:wedged',
   'ios-webkit',

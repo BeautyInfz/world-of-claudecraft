@@ -47,6 +47,7 @@ import {
   type ShaderWarmSetting,
   shaderWarmCannotServe,
   shaderWarmDecision,
+  shaderWarmLinkEvidence,
   shaderWarmModeFor,
 } from './shader_warm_client_core';
 import type { ShaderWarmSource, ShaderWarmWorkerMessage } from './shader_warm_protocol';
@@ -157,11 +158,16 @@ const state = {
   queuedUntilReady: [] as ShaderWarmSource[],
   cancelReadyDeadline: null as (() => void) | null,
   pagehideHooked: false,
-  /** Held gates that expired in a row while the worker settled nothing:
-   *  the breaker's count. */
-  consecutiveTimeouts: 0,
+  /** Held gates in a row the worker answered nothing through, whether each
+   *  expired on its cap or ended on the worker's own failure: the breaker's
+   *  count. */
+  consecutiveUnanswered: 0,
   /** When the worker last answered warmed, on the client's clock. */
   lastWarmedAtMs: Number.NEGATIVE_INFINITY,
+  /** When the worker last gave up a link at its own deadline, on the
+   *  client's clock: the other way a hold pays for a worker that answers
+   *  nothing (a fast rejection of a text says nothing about the worker). */
+  lastDeadlineAtMs: Number.NEGATIVE_INFINITY,
   /** The last few holds, for the breaker's expired-share rule. */
   holds: createShaderWarmHoldRing(),
   /** The holds still waiting, for the cannot-serve rule. */
@@ -279,11 +285,21 @@ function onWorkerMessage(event: MessageEvent<ShaderWarmWorkerMessage>): void {
       if (retireIfCannotServe()) break;
       syncWorkerPause();
       break;
-    case 'failed':
-      state.requests.settle(message.id, 'failed', message.reason === 'cancelled');
+    case 'failed': {
+      const settled = state.requests.settle(message.id, 'failed', message.reason === 'cancelled');
+      if (message.reason === 'link-deadline') {
+        state.lastDeadlineAtMs = (state.now ?? defaultNow)();
+        // A give-up at the worker's deadline is link evidence (a lower
+        // bound), counted like a link time: once per request the book still
+        // had open (an abandoned in-flight link runs to its deadline too,
+        // and its wall is evidence all the same).
+        if (settled && message.linkMs !== undefined)
+          state.requests.noteCensoredLink(message.linkMs);
+      }
       if (retireIfCannotServe()) break;
       syncWorkerPause();
       break;
+    }
     case 'lost':
       retireForCause('dead', 'context-lost');
       retireWorker();
@@ -563,47 +579,75 @@ function retireIfCannotServe(): boolean {
   if (!stats) return false;
   const oldest = state.outstanding.oldest();
   if (!oldest) return false;
-  const links = state.requests.stats().links;
-  const cannotServe = shaderWarmCannotServe({
+  const { links, censoredLinks } = state.requests.stats();
+  const inputs = {
     linkCount: links.count,
     linkSumMs: links.sumMs,
+    censoredCount: censoredLinks.count,
+    censoredSumMs: censoredLinks.sumMs,
     windowLinks: stats.windowLinks,
     aheadOfOldest: state.requests.unsettledAhead(oldest.priority, oldest.highestId),
     capMs: oldest.capMs,
     waitedMs: (state.now ?? defaultNow)() - oldest.startedAtMs,
-  });
-  if (!cannotServe) return false;
-  retireForCause('dead', 'cannot-serve:hold-cap');
+  };
+  if (!shaderWarmCannotServe(inputs)) return false;
+  // Named by the evidence that spoke: a verdict on deadline give-ups alone is
+  // the new arm, and the fleet must be able to tell it from the baseline.
+  const censored = shaderWarmLinkEvidence(inputs)?.source === 'censored';
+  retireForCause('dead', censored ? 'cannot-serve:hold-cap:censored' : 'cannot-serve:hold-cap');
   retireWorker();
   return true;
 }
 
-/** A held gate ended its hold. Consecutive expiries during which the worker
+/** A held gate ended its hold. Consecutive holds during which the worker
  *  settled NOTHING trip the breaker: the worker is retired and every later
- *  gate takes the unavailable bypass. An expiry the worker answered other
- *  requests through is a slow worker, not a dead one (a cold D3D11 links
- *  in 400 ms a program and a hold waits its turn in the queue), and a slow
- *  worker that keeps delivering is worth more than none. */
+ *  gate takes the unavailable bypass. A hold counts whether it expired on
+ *  its cap or ended on the worker giving a link up at its own deadline: the
+ *  deadline (`SHADER_WARM_LINK_DEADLINE_MS`) is shorter than the hold cap
+ *  (`SHADER_WARM_HOLD_CAP_MS`, the lanes' too), so on a machine whose links
+ *  never settle a single-program hold never expires, it fails at the
+ *  deadline, and a rule that counted expiries alone never fired while every
+ *  hold paid that deadline (the RTX 4060 Ti capture). A hold that ended on a
+ *  FAST failure (a text the worker's context rejects, or a program already
+ *  failed once that a later root shares) paid nothing and says nothing
+ *  about the worker's speed, so it neither counts nor names the cause. An
+ *  expiry the worker answered other requests through is a slow worker, not
+ *  a dead one (a cold D3D11 links in 400 ms a program and a hold waits its
+ *  turn in the queue), and a slow worker that keeps delivering is worth
+ *  more than none. A hold that ended before the worker was ready settled on
+ *  the client's side and says nothing about it; the ready deadline owns
+ *  that worker. */
 export function noteShaderWarmHold(warm: boolean, timedOut: boolean, holdMs: number): void {
   state.requests.noteHeld(warm, timedOut, holdMs);
   state.holds.note(timedOut);
   const holdStartedAtMs = (state.now ?? defaultNow)() - Math.max(0, holdMs);
   const progressed = state.lastWarmedAtMs >= holdStartedAtMs;
-  state.consecutiveTimeouts = timedOut && !progressed ? state.consecutiveTimeouts + 1 : 0;
+  const paidDeadline = state.lastDeadlineAtMs >= holdStartedAtMs;
+  const unanswered =
+    !warm && !progressed && (timedOut || paidDeadline) && state.workerState === 'ready';
+  state.consecutiveUnanswered = unanswered ? state.consecutiveUnanswered + 1 : 0;
   // The cannot-serve rule first: what it sees, the two rules below only learn
   // once the holds it is about have paid their caps.
   if (retireIfCannotServe()) return;
-  // Two rules: a worker that answered nothing through three expiries in a
-  // row is wedged; one that keeps answering someone while half the recent
-  // holds still expire is too slow for the demand, and either costs the
-  // player more than no worker.
-  const wedged = state.consecutiveTimeouts >= SHADER_WARM_TIMEOUT_BREAKER;
+  // Two rules: a worker that answered nothing through three holds in a row
+  // is wedged; one that keeps answering someone while half the recent holds
+  // still expire is too slow for the demand, and either costs the player
+  // more than no worker.
+  const wedged = state.consecutiveUnanswered >= SHADER_WARM_TIMEOUT_BREAKER;
   const tooSlow = state.holds.expired() >= SHADER_WARM_EXPIRED_SHARE_BREAKER;
   if ((wedged || tooSlow) && state.workerState !== 'dead') {
-    // Named per rule: a capture must say which one fired (a worker that
-    // answered nothing, or one that answered someone while the holds paid the
+    // Named per rule, and for the wedged rule by how THIS hold ended (the
+    // streak requires it to be unanswered, so it is the last of them): a
+    // capture must say which one fired (a worker that answered nothing while
+    // the holds paid their cap, one that answered nothing while they paid its
+    // own deadline, or one that answered someone while the holds paid the
     // cap), since the fixes differ.
-    retireForCause('dead', wedged ? 'hold-timeouts:wedged' : 'hold-timeouts:expired-share');
+    const cause = wedged
+      ? timedOut
+        ? 'hold-timeouts:wedged'
+        : 'hold-failures:wedged'
+      : 'hold-timeouts:expired-share';
+    retireForCause('dead', cause);
     retireWorker();
   }
 }
@@ -653,8 +697,9 @@ function retireAndForgetWorker(): void {
   state.retiredCause = null;
   state.adapter = '';
   state.workerStats = null;
-  state.consecutiveTimeouts = 0;
+  state.consecutiveUnanswered = 0;
   state.lastWarmedAtMs = Number.NEGATIVE_INFINITY;
+  state.lastDeadlineAtMs = Number.NEGATIVE_INFINITY;
   state.holds = createShaderWarmHoldRing();
   state.outstanding = createShaderWarmOutstandingHolds();
   state.requests = createShaderWarmRequests();

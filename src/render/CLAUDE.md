@@ -700,8 +700,12 @@ GPU work signs. Each rule names its seam and its guard.
   holds the gate's link piece until the worker answers or `SHADER_WARM_LANE_HOLD_CAP_MS`
   passes (`shader_warm_lane.ts`; a hold that expires abandons its request so the worker
   drops what nobody else waits for; three breaker rules retire it for the session:
-  `SHADER_WARM_TIMEOUT_BREAKER` expiries in a row during which the worker settled NOTHING
-  (wedged), or `SHADER_WARM_EXPIRED_SHARE_BREAKER` of the last `SHADER_WARM_HOLD_WINDOW`
+  `SHADER_WARM_TIMEOUT_BREAKER` holds in a row during which the worker settled NOTHING
+  (wedged: whether each hold expired on its cap, refusal `hold-timeouts:wedged`, or
+  ended on the worker's own link deadline, refusal `hold-failures:wedged`; the deadline
+  is shorter than the cap, so a single-program hold on a machine whose links never
+  settle always ends the second way, and a rule that counted expiries alone never
+  fired there), or `SHADER_WARM_EXPIRED_SHARE_BREAKER` of the last `SHADER_WARM_HOLD_WINDOW`
   holds expired whatever it answered meanwhile (too slow for the demand); a slow worker
   that keeps most holds served is kept). The third rule fires FIRST, on the worker's own
   evidence and before any hold has paid: once it has settled `SHADER_WARM_EVIDENCE_LINKS`
@@ -709,7 +713,13 @@ GPU work signs. Each rule names its seam and its guard.
   verdict is final), the queue ahead of the OLDEST outstanding hold, at the mean wall
   this worker's links have actually cost, spread over the window that message reported,
   is measured against what is left of the cap that hold's caller passed in
-  (`shaderWarmCannotServe`, refusal `cannot-serve:hold-cap`). Ahead is the worker's own
+  (`shaderWarmCannotServe`, refusal `cannot-serve:hold-cap`). Where NO link has settled
+  at all, the links the worker gave up on at `SHADER_WARM_LINK_DEADLINE_MS` stand in as
+  the evidence (the `link-deadline` failure carries the wall the link had run, a lower
+  bound the client keeps apart as `censoredLinks`), at the same floor, under its own
+  refusal `cannot-serve:hold-cap:censored` so the fleet can tell that arm from the
+  baseline; one settled link puts the rule back on the settled evidence, so a tab
+  throttled early on a healthy machine is never judged on its deadlines. Ahead is the worker's own
   order, PRIORITY first and arrival only within one priority, so a live view held behind
   a catalog's backlog is not charged for what the worker serves after it; the caller
   also stamps when its cap clock started (`holdShaderPrograms`' `startedAtMs`), since a

@@ -31,7 +31,10 @@ import {
   SHADER_WARM_HOLD_WINDOW,
   SHADER_WARM_TIMEOUT_BREAKER,
 } from '../src/render/shader_warm_client_core';
+import { SHADER_WARM_HOLD_CAP_MS } from '../src/render/shader_warm_gate';
+import { SHADER_WARM_LANE_HOLD_CAP_MS } from '../src/render/shader_warm_lane';
 import type { ShaderWarmWorkerMessage } from '../src/render/shader_warm_protocol';
+import { SHADER_WARM_LINK_DEADLINE_MS } from '../src/render/shader_warm_worker_core';
 
 let warned: string[] = [];
 
@@ -666,6 +669,160 @@ describe('the breaker on held gates that keep expiring', () => {
       heldTimedOut: SHADER_WARM_TIMEOUT_BREAKER,
     });
   });
+
+  it('retires a worker that fails every held program, the way it retires one that expires them', () => {
+    // The RTX 4060 Ti capture's shape: the worker's own link deadline (4 s) is
+    // shorter than the hold cap (5 s), so a single-program hold never expires
+    // on its cap; it ends on the worker's failure, warm nothing. Three of
+    // those in a row are the same evidence as three expiries: a worker that
+    // answers nothing. Before this, a failure RESET the streak and the client
+    // paid the deadline on every hold for the life of the renderer.
+    let clock = 0;
+    const { worker, ready, context } = start({ now: () => clock });
+    ready();
+
+    // Each hold: the worker gives its one program up at the deadline, the
+    // hold resolves failed, not expired.
+    for (let failure = 1; failure < SHADER_WARM_TIMEOUT_BREAKER; failure++) {
+      clock += 4_000;
+      worker().emit({ kind: 'failed', id: failure, reason: 'link-deadline', linkMs: 4_000 });
+      noteShaderWarmHold(false, false, 4_000);
+      expect(shaderWarmSnapshot().worker).toBe('ready');
+    }
+    clock += 4_000;
+    worker().emit({
+      kind: 'failed',
+      id: SHADER_WARM_TIMEOUT_BREAKER,
+      reason: 'link-deadline',
+      linkMs: 4_000,
+    });
+    noteShaderWarmHold(false, false, 4_000);
+    expect(shaderWarmSnapshot()).toMatchObject({
+      worker: 'dead',
+      refusal: 'hold-failures:wedged',
+      held: SHADER_WARM_TIMEOUT_BREAKER,
+      heldWarm: 0,
+      heldTimedOut: 0,
+    });
+    expect(worker().terminations).toBe(1);
+    expect(shaderWarmDecide(context, GPU_WORK_PRIORITY.VISIBLE_PREWARM, false)).toEqual({
+      hold: false,
+      bypass: 'unavailable',
+    });
+  });
+
+  it('counts an expiry and a worker failure toward the same streak, named by the last one', () => {
+    // A multi-program hold expires on its cap, the next single-program hold
+    // ends on the worker's deadline, the next expires again: three holds the
+    // worker answered nothing through. The cause names how the LAST hold
+    // ended, since a capture wants to know whether the cap or the worker's
+    // own deadline is what the player paid.
+    let clock = 0;
+    const { worker, ready } = start({ now: () => clock });
+    ready();
+    clock += 5_000;
+    noteShaderWarmHold(false, true, 5_000);
+    clock += 4_000;
+    worker().emit({ kind: 'failed', id: 1, reason: 'link-deadline', linkMs: 4_000 });
+    noteShaderWarmHold(false, false, 4_000);
+    expect(shaderWarmSnapshot().worker).toBe('ready');
+    clock += 5_000;
+    noteShaderWarmHold(false, true, 5_000);
+    expect(shaderWarmSnapshot()).toMatchObject({
+      worker: 'dead',
+      refusal: 'hold-timeouts:wedged',
+      heldTimedOut: 2,
+    });
+    expect(worker().terminations).toBe(1);
+
+    // The other order: two expiries, then the deadline. Named by the LAST.
+    resetShaderWarmForTest();
+    clock = 0;
+    const second = start({ now: () => clock });
+    second.ready();
+    clock += 5_000;
+    noteShaderWarmHold(false, true, 5_000);
+    clock += 5_000;
+    noteShaderWarmHold(false, true, 5_000);
+    clock += 4_000;
+    second.worker().emit({ kind: 'failed', id: 1, reason: 'link-deadline', linkMs: 4_000 });
+    noteShaderWarmHold(false, false, 4_000);
+    expect(shaderWarmSnapshot()).toMatchObject({
+      worker: 'dead',
+      refusal: 'hold-failures:wedged',
+      heldTimedOut: 2,
+    });
+  });
+
+  it('keeps a worker that failed some held programs while delivering others', () => {
+    // The healthy path, pinned on purpose: a worker that links most of what
+    // it is asked and fails the odd program (a text its context rejects) is
+    // not wedged. Every failure below has a warm inside its hold, and a hold
+    // that came back warm clears the streak.
+    let clock = 0;
+    const { worker, ready } = start({ now: () => clock });
+    ready();
+    const deadline = (id: number): void => {
+      clock += 4_000;
+      worker().emit({ kind: 'failed', id, reason: 'link-deadline', linkMs: 4_000 });
+    };
+    for (let hold = 0; hold < 2 * SHADER_WARM_TIMEOUT_BREAKER; hold++) {
+      deadline(hold);
+      worker().emit({ kind: 'warmed', id: 99, linkMs: 400 });
+      noteShaderWarmHold(false, false, 4_000);
+    }
+    deadline(10);
+    noteShaderWarmHold(false, false, 4_000);
+    deadline(11);
+    noteShaderWarmHold(false, false, 4_000);
+    noteShaderWarmHold(true, false, 400);
+    deadline(12);
+    noteShaderWarmHold(false, false, 4_000);
+    deadline(13);
+    noteShaderWarmHold(false, false, 4_000);
+    expect(shaderWarmSnapshot()).toMatchObject({ worker: 'ready', refusal: null });
+    expect(worker().terminations).toBe(0);
+  });
+
+  it('never counts a hold that ended on a fast rejection: one bad program is not a wedged worker', () => {
+    // A text the worker's context refuses fails at once, and a later root
+    // that shares it resolves at once on the same failed entry. Such holds
+    // paid nothing and say nothing about the worker's speed; a worker that
+    // links everything else is kept.
+    let clock = 0;
+    const { worker, ready } = start({ now: () => clock });
+    ready();
+    for (let hold = 0; hold < 2 * SHADER_WARM_TIMEOUT_BREAKER; hold++) {
+      clock += 10;
+      worker().emit({ kind: 'failed', id: hold, reason: 'link-failed' });
+      noteShaderWarmHold(false, false, 5);
+    }
+    expect(shaderWarmSnapshot()).toMatchObject({ worker: 'ready', refusal: null, held: 6 });
+    expect(worker().terminations).toBe(0);
+  });
+
+  it('never counts a hold against a worker that is not ready yet', () => {
+    // A hold entered while the worker is still starting settles on the
+    // client's side, or expires waiting for it; neither says anything about
+    // the worker, and the ready deadline owns a worker that never answers.
+    const { latest } = start();
+    for (let hold = 0; hold < SHADER_WARM_TIMEOUT_BREAKER; hold++) {
+      noteShaderWarmHold(false, false, 10);
+    }
+    for (let hold = 0; hold < SHADER_WARM_TIMEOUT_BREAKER; hold++) {
+      noteShaderWarmHold(false, true, 5_000);
+    }
+    expect(shaderWarmSnapshot()).toMatchObject({ worker: 'starting', refusal: null });
+    expect(latest().terminations).toBe(0);
+  });
+
+  it('pins that the worker link deadline is shorter than the hold caps', () => {
+    // The premise of the failure arm: a single-program hold on a machine
+    // whose links never settle ends on the deadline, never on the cap.
+    // Invert these and the arm silently stops describing reality.
+    expect(SHADER_WARM_LINK_DEADLINE_MS).toBeLessThan(SHADER_WARM_HOLD_CAP_MS);
+    expect(SHADER_WARM_LINK_DEADLINE_MS).toBeLessThan(SHADER_WARM_LANE_HOLD_CAP_MS);
+  });
 });
 
 describe('the cannot-serve rule: giving up on the worker own evidence', () => {
@@ -785,6 +942,120 @@ describe('the cannot-serve rule: giving up on the worker own evidence', () => {
       worker().emit({ kind: 'warmed', id: link, linkMs: LINK_MS });
     }
     expect(shaderWarmSnapshot()).toMatchObject({ worker: 'ready', warmed: 3 });
+  });
+
+  it('reads a deadline failure as a censored link, and retires on three with nothing settled', async () => {
+    // The RTX 4060 Ti capture: no link ever settles, so `links.count` stays
+    // zero and the rule was blind on exactly the machine it would help most.
+    // A link the worker gave up on at its deadline ran AT LEAST that long,
+    // and a lower bound is enough for a rule that asks whether the queue
+    // still fits the remaining cap.
+    const DEADLINE_MS = 4_000;
+    let clock = 0;
+    const { worker, ready, context } = start({ now: () => clock });
+    ready();
+    windowOfFour(worker());
+    const hold = holdShaderPrograms(programs(32), GPU_WORK_PRIORITY.VISIBLE_PREWARM, HOLD_CAP_MS);
+
+    // Four links in flight give up together at the deadline.
+    clock += DEADLINE_MS;
+    for (let link = 1; link <= SHADER_WARM_EVIDENCE_LINKS - 1; link++) {
+      worker().emit({ kind: 'failed', id: link, reason: 'link-deadline', linkMs: DEADLINE_MS });
+      expect(shaderWarmSnapshot().worker).toBe('ready');
+    }
+    worker().emit({
+      kind: 'failed',
+      id: SHADER_WARM_EVIDENCE_LINKS,
+      reason: 'link-deadline',
+      linkMs: DEADLINE_MS,
+    });
+
+    expect(shaderWarmSnapshot()).toMatchObject({
+      worker: 'dead',
+      // The censored arm names itself: the fleet must tell it from the
+      // settled-evidence baseline.
+      refusal: 'cannot-serve:hold-cap:censored',
+      warmed: 0,
+      failed: 32,
+      links: { count: 0, sumMs: 0, maxMs: 0 },
+      censoredLinks: {
+        count: SHADER_WARM_EVIDENCE_LINKS,
+        sumMs: SHADER_WARM_EVIDENCE_LINKS * DEADLINE_MS,
+        maxMs: DEADLINE_MS,
+      },
+      heldTimedOut: 0,
+    });
+    expect(worker().terminations).toBe(1);
+    expect(await hold.settled).toEqual(Array.from({ length: 32 }, () => 'failed'));
+    expect(shaderWarmDecide(context, GPU_WORK_PRIORITY.VISIBLE_PREWARM, false)).toEqual({
+      hold: false,
+      bypass: 'unavailable',
+    });
+  });
+
+  it('judges on the settled links once three exist, whatever the deadlines say', () => {
+    // The healthy path, pinned on purpose: a worker that links in 50 ms and
+    // had three links throttled past the deadline (a background tab) is
+    // judged on the links it settled, exactly as before. Censored samples
+    // never mix into a mean that has real evidence to stand on.
+    let clock = 0;
+    const { worker, ready } = start({ now: () => clock });
+    ready();
+    windowOfFour(worker());
+    holdShaderPrograms(programs(32), GPU_WORK_PRIORITY.VISIBLE_PREWARM, HOLD_CAP_MS);
+    for (let link = 1; link <= SHADER_WARM_EVIDENCE_LINKS; link++) {
+      clock += 50;
+      worker().emit({ kind: 'warmed', id: link, linkMs: 50 });
+    }
+    clock = 4_000;
+    for (let link = 4; link <= 3 + SHADER_WARM_EVIDENCE_LINKS; link++) {
+      worker().emit({ kind: 'failed', id: link, reason: 'link-deadline', linkMs: 4_000 });
+    }
+    expect(shaderWarmSnapshot()).toMatchObject({
+      worker: 'ready',
+      refusal: null,
+      warmed: 3,
+      censoredLinks: { count: SHADER_WARM_EVIDENCE_LINKS, sumMs: 12_000, maxMs: 4_000 },
+    });
+    expect(worker().terminations).toBe(0);
+  });
+
+  it('books a censored sample once per request, never for a give-up nobody waited on', () => {
+    // A duplicate deadline for an id already settled, or one with no wall
+    // on it, books nothing: the evidence is one lower bound per link.
+    let clock = 0;
+    const { worker, ready } = start({ now: () => clock });
+    ready();
+    windowOfFour(worker());
+    holdShaderPrograms(programs(4), GPU_WORK_PRIORITY.VISIBLE_PREWARM, HOLD_CAP_MS);
+    clock += 4_000;
+    worker().emit({ kind: 'failed', id: 1, reason: 'link-deadline', linkMs: 4_000 });
+    worker().emit({ kind: 'failed', id: 1, reason: 'link-deadline', linkMs: 4_000 });
+    worker().emit({ kind: 'failed', id: 2, reason: 'link-deadline' });
+    expect(shaderWarmSnapshot()).toMatchObject({
+      worker: 'ready',
+      censoredLinks: { count: 1, sumMs: 4_000, maxMs: 4_000 },
+    });
+  });
+
+  it('never reads a genuine link failure as a censored sample', () => {
+    // A program the worker's context rejects fails fast and says nothing
+    // about link speed; only the deadline carries a wall, and a wall on any
+    // other reason is ignored (the reason is the discriminator).
+    let clock = 0;
+    const { worker, ready } = start({ now: () => clock });
+    ready();
+    windowOfFour(worker());
+    holdShaderPrograms(programs(32), GPU_WORK_PRIORITY.VISIBLE_PREWARM, HOLD_CAP_MS);
+    clock += 100;
+    for (let link = 1; link <= SHADER_WARM_EVIDENCE_LINKS; link++) {
+      worker().emit({ kind: 'failed', id: link, reason: 'link-failed', linkMs: 4_000 });
+    }
+    expect(shaderWarmSnapshot()).toMatchObject({
+      worker: 'ready',
+      failed: 3,
+      censoredLinks: { count: 0, sumMs: 0, maxMs: 0 },
+    });
   });
 
   it('judges the oldest hold, and forgets a hold that gave up', () => {

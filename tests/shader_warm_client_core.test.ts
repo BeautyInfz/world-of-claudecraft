@@ -29,6 +29,7 @@ import {
   type ShaderWarmRequestSource,
   shaderWarmCannotServe,
   shaderWarmDecision,
+  shaderWarmLinkEvidence,
   shaderWarmModeFor,
 } from '../src/render/shader_warm_client_core';
 
@@ -387,22 +388,40 @@ describe('createShaderWarmRequests', () => {
     const stats = requests.stats();
     expect(stats.dryAssembleMs).toBe(10.5);
     expect(stats.links).toEqual({ count: 4, sumMs: 182, maxMs: 140 });
+    expect(stats.censoredLinks).toEqual({ count: 0, sumMs: 0, maxMs: 0 });
+  });
+
+  it('keeps the links the worker gave up on apart from the ones it settled', () => {
+    // A deadline is a lower bound on the wall, never a link time: a capture
+    // that read them as one block would report a mean the worker never paid.
+    const requests = createShaderWarmRequests();
+    requests.noteLink(40);
+    requests.noteCensoredLink(4_000);
+    requests.noteCensoredLink(4_010);
+    requests.noteCensoredLink(-1);
+    // A garbage wall is dropped, not clamped: this sum decides a retirement.
+    requests.noteCensoredLink(Number.NaN);
+    expect(requests.stats().links).toEqual({ count: 1, sumMs: 40, maxMs: 40 });
+    expect(requests.stats().censoredLinks).toEqual({ count: 3, sumMs: 8_010, maxMs: 4_010 });
   });
 
   it('hands out a copy of its counters, so a reader cannot move them', () => {
     const requests = createShaderWarmRequests();
     requests.noteBypass('actionable');
     requests.noteLink(20);
+    requests.noteCensoredLink(4_000);
     const stats = requests.stats();
     stats.held = 99;
     stats.bypassed.actionable = 99;
-    // The link block is nested: a shallow copy would hand out the live one.
+    // The link blocks are nested: a shallow copy would hand out the live ones.
     stats.links.count = 99;
     stats.links.maxMs = 99;
+    stats.censoredLinks.count = 99;
 
     expect(requests.stats()).toMatchObject({ held: 0 });
     expect(requests.stats().bypassed.actionable).toBe(1);
     expect(requests.stats().links).toEqual({ count: 1, sumMs: 20, maxMs: 20 });
+    expect(requests.stats().censoredLinks).toEqual({ count: 1, sumMs: 4_000, maxMs: 4_000 });
   });
 });
 
@@ -627,6 +646,49 @@ describe("the cannot-serve rule (the worker measured against the caller's cap)",
     expect(shaderWarmCannotServe({ ...six, windowLinks: Number.NaN })).toBe(true);
     expect(shaderWarmCannotServe({ ...six, windowLinks: 0 })).toBe(true);
     expect(shaderWarmCannotServe(six)).toBe(false);
+  });
+
+  it('stands on censored links once three of them exist and nothing settled', () => {
+    // The RTX 4060 Ti shape: no link ever settles, and every one the worker
+    // gave up on at its deadline is a lower bound on the wall. Three of those
+    // with nothing real to stand on is evidence; two is still one outlier
+    // short, the same floor the settled links get.
+    const blind = { ...LAPTOP, linkCount: 0, linkSumMs: 0 };
+    expect(shaderWarmCannotServe({ ...blind, censoredCount: 3, censoredSumMs: 12_000 })).toBe(true);
+    expect(shaderWarmCannotServe({ ...blind, censoredCount: 2, censoredSumMs: 8_000 })).toBe(false);
+    expect(shaderWarmCannotServe(blind)).toBe(false);
+    // And the evidence names its pool, so the cause can.
+    expect(shaderWarmLinkEvidence({ ...blind, censoredCount: 3, censoredSumMs: 12_000 })).toEqual({
+      count: 3,
+      sumMs: 12_000,
+      source: 'censored',
+    });
+    expect(shaderWarmLinkEvidence(LAPTOP)).toEqual({ count: 5, sumMs: 2_800, source: 'settled' });
+    // A garbage settled count is no evidence at all, censored or not.
+    expect(
+      shaderWarmLinkEvidence({
+        ...blind,
+        linkCount: Number.NaN,
+        censoredCount: 3,
+        censoredSumMs: 12_000,
+      }),
+    ).toBeNull();
+  });
+
+  it('prefers the settled links, and never mixes a censored sample into their mean', () => {
+    // Three real links at 50 ms and three deadlines: the worker's own wall is
+    // 50 ms and the queue fits, whatever a throttled tab did to three links.
+    const fast = { ...LAPTOP, linkCount: 3, linkSumMs: 150 };
+    expect(shaderWarmCannotServe({ ...fast, censoredCount: 3, censoredSumMs: 12_000 })).toBe(false);
+    // One settled link is enough to say the worker is not blind: the censored
+    // pool only speaks when NOTHING settled, and below the real floor the
+    // rule waits for a third real link as before. A tab throttled early and
+    // then foregrounded is the healthy case this protects.
+    const one = { ...LAPTOP, linkCount: 1, linkSumMs: 50 };
+    expect(shaderWarmCannotServe({ ...one, censoredCount: 3, censoredSumMs: 12_000 })).toBe(false);
+    // And a censored pool with no wall in it is no evidence either.
+    const blind = { ...LAPTOP, linkCount: 0, linkSumMs: 0 };
+    expect(shaderWarmCannotServe({ ...blind, censoredCount: 3, censoredSumMs: 0 })).toBe(false);
   });
 
   it('never fires on an empty queue', () => {
