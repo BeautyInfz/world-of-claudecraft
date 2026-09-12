@@ -4377,6 +4377,15 @@
     border-radius: 3px;
     padding: 0 4px;
   }
+  .realm-name .rn-unleashed {
+    color: #c8a838;
+    font-size: 10px;
+    margin-left: 6px;
+    border: 1px solid #7a611c;
+    border-radius: 3px;
+    padding: 0 4px;
+    cursor: help;
+  }
   .realm-sub {
     font-size: 11px;
     color: #998d6a;

@@ -455,7 +455,11 @@ const MONOLITHS: MonolithRow[] = [
     // the repairAll/onRepairAll deps entries, and the equipment-loop callback;
     // the pure cost preview lives in src/ui/repair_preview.ts). Exact count,
     // zero slack.
-    ceiling: 18480,
+    // Plus 24 for the WoC Unleashed wallet panel launcher wiring (the icon
+    // click handler, the WalletPanelWindow construction block, attach/toggle
+    // methods, and the import; the actual panel logic lives in
+    // src/ui/wallet_panel_window.ts). Exact count, zero slack.
+    ceiling: 18504,
     seam: 'pure view core + thin painter on PainterHost (src/ui/CLAUDE.md)',
   },
   {
@@ -1239,7 +1243,13 @@ const MONOLITHS: MonolithRow[] = [
     // Plus 5 for the WoC Unleashed currency-display advert wiring
     // (setWocCurrencyActive off api.wocUnleashedAdvert(), mirroring the
     // devCommandsAdvert call beside it). Exact count, zero slack.
-    ceiling: 11332,
+    // Plus 6 for wiring the wallet panel hooks (buildWalletPanelHooks from
+    // src/game/woc_unleashed_wallet_wiring.ts) into hud.attachWalletPanel
+    // when the advert resolves true. Exact count, zero slack.
+    // Plus 1 for the realm-list WoC Unleashed badge markup (rn-unleashed
+    // span, revealed per-row from realmStatus().wocUnleashed). Exact count,
+    // zero slack.
+    ceiling: 11339,
     seam: 'a src/game/ or src/ui/ sibling module; main.ts is a firewall, not a home',
   },
   {
@@ -1608,7 +1618,12 @@ const MONOLITHS: MonolithRow[] = [
     // Exact count, zero slack.
     // Plus 4 for reconstructing e.repairVendor client-side off the shared
     // content table, beside e.vendorItems. Exact count, zero slack.
-    ceiling: 5563,
+    // Plus 22 for the six WoC Unleashed wallet-panel/claim API methods
+    // beside wocUnleashedAdvert. Exact count, zero slack.
+    // Plus 7 for realmStatus() reporting wocUnleashed alongside cap (the
+    // realm-list badge, one fetch, no extra request; biome wraps the
+    // widened return type/object across extra lines). Exact count, zero slack.
+    ceiling: 5592,
     seam: 'a src/net sibling module (the refactor/net-online split is the template)',
   },
   {

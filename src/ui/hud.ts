@@ -86,8 +86,8 @@ import {
   ZONES,
   zoneAt,
 } from '../sim/data';
-import { DURABILITY_MAX, durabilityOf } from '../sim/durability';
 import { specialRoleColor } from '../sim/discord_roles';
+import { DURABILITY_MAX, durabilityOf } from '../sim/durability';
 import { canEquipItem, isUniqueEquipped, weaponHand } from '../sim/equipment_rules';
 import { isItemLevelEligible, itemInstanceLevel, itemScore } from '../sim/item_level';
 import type { Ante, PickAction } from '../sim/lockpick';
@@ -792,7 +792,6 @@ import { raidCalloutKey } from './raid_callout';
 import { formatLockoutDuration } from './raid_lockout_format';
 import { type RaidLockoutI18n, raidLockoutPanelHtml } from './raid_lockout_view';
 import { presentRealmBuilder, RealmBuilderPopup } from './realm_builder_popup';
-import { repairAllPreview } from './repair_preview';
 import {
   reliquaryIlluminationBroadcastLine,
   reliquaryIlluminationBroadcastRendered,
@@ -816,6 +815,7 @@ import {
   reliquaryRelicPageIndex,
 } from './reliquary_view';
 import { curatorRankNameKey, ReliquaryWindow } from './reliquary_window';
+import { repairAllPreview } from './repair_preview';
 import { closeReportWindow, openReportWindow } from './report_window';
 import { restView } from './rest_indicator';
 import { paintRestIndicator } from './rest_indicator_painter';
@@ -906,6 +906,7 @@ import { unstuckFeedback } from './unstuck_feedback';
 import { visibleVendorStock } from './vendor_stock_gate_core';
 import { nextVoicedYell, type VoicedYellState, voicedYellGain } from './voice_events';
 import { onWalletUiChange, walletConnectionView } from './wallet_balance';
+import { type WalletPanelHooks, WalletPanelWindow } from './wallet_panel_window';
 import { requestWalletVerify } from './wallet_verify_request';
 import { type WeaponProcEffectDesc, weaponProcLines } from './weapon_proc_view';
 import { weaponTypeLabelKey } from './weapon_type_label';
@@ -3142,6 +3143,7 @@ export class Hud {
     $('#mm-cardduel').addEventListener('click', () => this.toggleCardDuel());
     $('#mm-leaderboard').addEventListener('click', () => this.toggleLeaderboard());
     $('#mm-wocmarket')?.addEventListener('click', () => this.toggleWocMarket());
+    $('#mm-wallet')?.addEventListener('click', () => this.toggleWalletPanel());
     // The mobile More tray launcher (#mobile-wocmarket) binds through
     // MobileControls like its tray siblings, so tapping it runs the tray's
     // modal handoff (closeMoreModal plus the focus-return establishment); a
@@ -5850,6 +5852,16 @@ export class Hud {
     openWallet: requestWalletVerify,
     refreshWocBalance: (force) => this.optionsHooks?.refreshWocBalance(force),
     ...this.windowFocus('#woc-market-window'),
+  });
+  // WoC Unleashed wallet panel. main.ts injects the hooks when live via
+  // attachWalletPanel; until then hooks() is null and the window renders
+  // its empty state (the ClaudiumHooks/WocMarketHooks precedent).
+  private walletPanelHooks: WalletPanelHooks | null = null;
+  private readonly walletPanelWindow = new WalletPanelWindow({
+    root: () => $('#wallet-panel-window'),
+    closeOthers: () => this.closeOtherWindows('#wallet-panel-window'),
+    hooks: () => this.walletPanelHooks,
+    ...this.windowFocus('#wallet-panel-window'),
   });
   // Daily rewards window painter. It owns the async rewards reads, spin action,
   // focus opener, and a low-rate refresh while open. All closures are lazy.
@@ -17153,6 +17165,18 @@ export class Hud {
     for (const id of ['mm-wocmarket', 'mobile-wocmarket']) {
       document.getElementById(id)?.removeAttribute('hidden');
     }
+  }
+
+  /** Inject the WoC Unleashed wallet panel hooks (main.ts, only when
+   *  wocUnleashedAdvert() resolves true) and reveal its launcher; else the
+   *  surface stays absent, exactly like the Exchange. */
+  attachWalletPanel(hooks: WalletPanelHooks): void {
+    this.walletPanelHooks = hooks;
+    document.getElementById('mm-wallet')?.removeAttribute('hidden');
+  }
+
+  toggleWalletPanel(): void {
+    this.walletPanelWindow.toggle();
   }
 
   toggleWocMarket(): void {

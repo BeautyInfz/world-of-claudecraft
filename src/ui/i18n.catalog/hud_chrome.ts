@@ -4815,6 +4815,38 @@ export const hudChromeStrings = {
     materialSourceUnrecordedSigned: '{count} × No gatherer recorded, signed by {name}',
     materialSourceMore: '+{sources} more sources, {units} units',
   },
+  // WoC Unleashed-exclusive wallet panel (src/ui/wallet_panel_window.ts):
+  // connect/disconnect, on-chain + off-chain $WOC balances, the claim
+  // amount-entry flow with its live fee breakdown, the claim wallet
+  // reserve, and the two circulation charts. $WOC is a token brand name,
+  // never translated (see itemUi.money.wocAmount's own comment).
+  walletPanel: {
+    title: 'WoC Wallet',
+    close: 'Close wallet panel',
+    connect: 'Connect Wallet',
+    disconnect: 'Disconnect Wallet',
+    onChainBalance: 'On-chain balance:',
+    holdingGate: 'Minimum {amount} $WOC required to claim.',
+    gateMet: 'Met',
+    gateUnmet: 'Not met',
+    offChainBalance: 'In-game balance:',
+    characterBalance: '{amount} $WOC',
+    claimButton: 'Claim',
+    cooldownActive: 'You can claim again 24 hours after your last claim.',
+    gateNote: 'Hold at least the minimum shown above in your connected wallet to claim.',
+    amountLabel: 'Amount to claim',
+    feeGross: 'Amount: {amount} $WOC',
+    feeNet: 'You receive: {amount} $WOC',
+    feeTreasury: 'Treasury fee (10%): {amount} $WOC',
+    feeBurn: 'Burned (10%): {amount} $WOC',
+    confirmButton: 'Confirm',
+    cancelButton: 'Cancel',
+    claimPending: 'Claiming...',
+    claimSuccess: 'Claim complete. {amount} $WOC sent to your wallet.',
+    reserveLabel: 'Claim wallet reserve:',
+    circulationChartTitle: 'In-game circulation',
+    flowChartTitle: 'On-chain flow',
+  },
   // Full material-source details dialog. The picker quantities are exact units
   // from one captured descriptor key; the command revalidates the captured
   // selection before changing the inventory.

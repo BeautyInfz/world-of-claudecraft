@@ -226,6 +226,7 @@ import { loadingCurtainFadeMs, resolveUiEffectsProfile } from './game/ui_effects
 import { feedSimCalendar } from './game/utc_day';
 import { voice } from './game/voice';
 import { attachWocMarketExchange } from './game/woc_market_wiring';
+import { buildWalletPanelHooks } from './game/woc_unleashed_wallet_wiring';
 import { telemetryZoneId } from './game/world_telemetry';
 import { zoneWarmupMode } from './game/zone_transition';
 import { createZoneWarmTracker } from './game/zone_warm_tracker';
@@ -3093,10 +3094,15 @@ async function startGame(
     void api.devCommandsAdvert().then((enabled) => {
       if (enabled) hud.noteDevCommandsAdvertised();
     });
-    // WoC Unleashed currency terminology (src/ui/woc_currency.ts): $WOC
-    // instead of gold/silver/copper. Fire-and-forget like the advert above;
-    // Claudemoon never flips this true.
-    void api.wocUnleashedAdvert().then(setWocCurrencyActive);
+    // WoC Unleashed currency terminology (src/ui/woc_currency.ts) plus the
+    // wallet panel launcher (src/ui/wallet_panel_window.ts): both ride the
+    // SAME advert read, since they are 1:1 coupled server-side
+    // (server/woc_unleashed.ts). Fire-and-forget; Claudemoon never flips
+    // this true.
+    void api.wocUnleashedAdvert().then((enabled) => {
+      setWocCurrencyActive(enabled);
+      if (enabled) hud.attachWalletPanel(buildWalletPanelHooks(api));
+    });
     hud.attachReporting({
       submit: (targetPid, reason, details) =>
         api.reportPlayer(online.characterId, targetPid, reason, details),
@@ -6415,7 +6421,7 @@ function showRealmList(dir?: import('./net/online').RealmDirectory): void {
         const typeKey = realmTypeKeys[r.type as keyof typeof realmTypeKeys];
         const typeLabel = typeKey ? t(typeKey) : r.type;
         return `<div class="realm-row" data-name="${esc(r.name)}" data-url="${esc(r.url)}">
-        <div><div class="realm-name">${esc(r.name)}${charTag}<span class="rn-rec" data-rec hidden>${esc(t('realm.recommended'))}</span></div>
+        <div><div class="realm-name">${esc(r.name)}${charTag}<span class="rn-rec" data-rec hidden>${esc(t('realm.recommended'))}</span><span class="rn-unleashed" data-unleashed hidden title="${esc(t('realm.wocUnleashedTip'))}">${esc(t('realm.wocUnleashedBadge'))}</span></div>
           <div class="realm-sub" data-sub>${esc(t('realm.checkingStatus'))}</div></div>
         <div class="realm-meta">
           <div class="realm-type">${esc(typeLabel)}</div>
@@ -6454,6 +6460,7 @@ function showRealmList(dir?: import('./net/online').RealmDirectory): void {
           ? t('realm.onlineNow', { count: st.players })
           : t('realm.down');
         row.classList.toggle('offline', !st.online);
+        row.querySelector('[data-unleashed]')?.toggleAttribute('hidden', !st.wocUnleashed);
         if (st.online && st.players < bestPlayers) {
           bestPlayers = st.players;
           bestName = r.name;
