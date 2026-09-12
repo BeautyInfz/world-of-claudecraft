@@ -7,8 +7,22 @@ import { describe, expect, it, vi } from 'vitest';
 import {
   CLAIM_COOLDOWN_MS,
   claimCooldownElapsed,
+  offChainWocBalance,
   recordLedgerEvent,
 } from '../../server/woc_unleashed_wallet_db';
+
+describe('offChainWocBalance', () => {
+  it('reads the genuinely separate unleashedBalance JSONB key, never copper', async () => {
+    const query = vi.fn().mockResolvedValue({ rows: [] });
+    await offChainWocBalance({ query } as never, 1, 'WoC Unleashed');
+    const sql = query.mock.calls[0][0] as string;
+    expect(sql).toContain("state->>'unleashedBalance'");
+    expect(sql).not.toContain("state->>'copper'");
+    // Realm-scoped, per the module header's isolation requirement.
+    expect(sql).toContain('realm = $2');
+    expect(query.mock.calls[0][1]).toEqual([1, 'WoC Unleashed']);
+  });
+});
 
 describe('claimCooldownElapsed', () => {
   const now = Date.parse('2026-09-12T12:00:00.000Z');

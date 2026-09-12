@@ -72,38 +72,46 @@ export type LedgerSourceSink = (typeof LEDGER_SOURCES)[number] | (typeof LEDGER_
 export interface AccountCharacterBalance {
   characterId: number;
   name: string;
-  copper: number;
+  unleashedBalanceUnits: number;
 }
 
 export interface OffChainWocBalance {
   accountId: number;
-  totalCopper: number;
+  totalWocBalanceUnits: number;
   characters: AccountCharacterBalance[];
 }
 
 /** The account's spendable $WOC balance, summed LIVE across every character
  *  on `realm` (see the module header for why this must be realm-scoped and
- *  why it is live rather than materialized). */
+ *  why it is live rather than materialized). Reads `state.unleashedBalance`
+ *  (src/sim/character_state.ts CharacterState.unleashedBalance) - the genuinely
+ *  separate $WOC ledger a WoC Unleashed character's save writes, NEVER
+ *  `state.copper` (Claudemoon's field, always 0/absent on a WoC Unleashed
+ *  save; see src/sim/unleashed_currency_binding.ts). "Units" matches the sim's own
+ *  storage granularity (the same integer precision copper used, 10000 units
+ *  = 1 $WOC token = the old "1 gold"); callers doing the $WOC token
+ *  conversion should reuse copperToWocTokens's rate (src/ui/woc_currency.ts)
+ *  rather than re-deriving 10000. */
 export async function offChainWocBalance(
   db: Pool,
   accountId: number,
   realm: string,
 ): Promise<OffChainWocBalance> {
   const res = await db.query(
-    `SELECT id, name, COALESCE((state->>'copper')::bigint, 0) AS copper
+    `SELECT id, name, COALESCE((state->>'unleashedBalance')::bigint, 0) AS unleashed_balance
        FROM characters
       WHERE account_id = $1 AND realm = $2
-      ORDER BY copper DESC, id`,
+      ORDER BY unleashed_balance DESC, id`,
     [accountId, realm],
   );
   const characters: AccountCharacterBalance[] = res.rows.map((row) => ({
     characterId: Number(row.id),
     name: row.name,
-    copper: Number(row.copper),
+    unleashedBalanceUnits: Number(row.unleashed_balance),
   }));
   return {
     accountId,
-    totalCopper: characters.reduce((sum, c) => sum + c.copper, 0),
+    totalWocBalanceUnits: characters.reduce((sum, c) => sum + c.unleashedBalanceUnits, 0),
     characters,
   };
 }

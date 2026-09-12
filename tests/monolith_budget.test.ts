@@ -1032,7 +1032,13 @@ const MONOLITHS: MonolithRow[] = [
     // touches this file). Exact count, zero slack.
     // Plus 4 for the repairItem facet delegate beside buyItem (the pure
     // repair logic lives in src/sim/items.ts). Exact count, zero slack.
-    ceiling: 11882,
+    // Plus 25 for the WoC Unleashed genuinely-separate $WOC ledger: the
+    // PlayerMeta.wocBalance field, the load-site branch (wocBalance from its
+    // own saved key vs the legacy copper assignment), the unconditional
+    // bindWocCurrency call after the savedState block, and the save-site
+    // copper/wocBalance split (the redirect mechanism itself lives in
+    // src/sim/woc_currency_binding.ts). Exact count, zero slack.
+    ceiling: 11907,
     seam: 'a sim system module behind SimContext (src/sim/CLAUDE.md)',
   },
   {

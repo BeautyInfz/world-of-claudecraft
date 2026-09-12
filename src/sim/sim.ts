@@ -895,6 +895,7 @@ import {
 } from './types';
 import type { VendorBuyOptions } from './vendor_buy_stack';
 import * as weaponStowMod from './weapon_stow';
+import { bindUnleashedCurrency } from './unleashed_currency_binding';
 import {
   groundHeight,
   nearSteepWalls,
@@ -1446,6 +1447,10 @@ export interface PlayerMeta {
   guildMembership: GuildMembership | null;
   vendorBuyback: InvSlot[];
   copper: number;
+  // WoC Unleashed-exclusive: see CharacterState.unleashedBalance's doc comment
+  // (src/sim/character_state.ts) and src/sim/unleashed_currency_binding.ts for the
+  // copper<->unleashedBalance redirect this backs.
+  unleashedBalance?: number;
   equipment: PlayerEquipment;
   // Per-slot ItemInstancePayload for whichever equipped piece carries one (an
   // enchanted item's rolled.stats, see src/sim/professions/enchanting.ts, or a
@@ -3105,7 +3110,16 @@ export class Sim {
       meta.nodeHarvestReadyAt = applyNodeReadiness(s.nodeHarvestCooldowns, this.time);
       if (s.unlockedMilestones)
         for (const id of s.unlockedMilestones) meta.unlockedMilestones.add(id);
-      meta.copper = s.copper;
+      // WoC Unleashed-exclusive: a genuinely separate ledger from copper (see
+      // PlayerMeta.unleashedBalance's own doc comment) - loaded from its own saved
+      // key, never from s.copper. bindUnleashedCurrency (below, after this whole
+      // savedState block) installs the redirect once unleashedBalance holds the
+      // real loaded value.
+      if (this.cfg.durabilitySystemEnabled) {
+        meta.unleashedBalance = s.unleashedBalance ?? 0;
+      } else {
+        meta.copper = s.copper;
+      }
       meta.equipment = { ...s.equipment };
       meta.equipmentInstance = {};
       // ONE aggregated dev-channel line per character load, not one per row: a
@@ -3529,6 +3543,11 @@ export class Sim {
       if (s.weaponStowed) player.weaponStowed = true;
       if (s.helmHidden) player.helmHidden = true;
     }
+    // WoC Unleashed-exclusive: installs the copper<->unleashedBalance redirect
+    // (src/sim/unleashed_currency_binding.ts) for both a fresh character
+    // (unleashedBalance defaults to 0) and a loaded one (unleashedBalance was already set
+    // from s.unleashedBalance above); a no-op on Claudemoon.
+    bindUnleashedCurrency(meta, this.cfg.durabilitySystemEnabled);
 
     // Host-stamped bank bonus slots (see the opt doc above); applyBankBonusStamp
     // owns the clamp and the row clone, so bank.ts stays the one writer.
@@ -4110,7 +4129,13 @@ export class Sim {
       ...(meta.toolEffectSlots
         ? { toolEffectSlots: structuredCloneToolEffectSlots(meta.toolEffectSlots) }
         : {}),
-      copper: meta.copper,
+      // WoC Unleashed-exclusive: meta.copper is a REDIRECT to meta.unleashedBalance
+      // on a bound character (src/sim/unleashed_currency_binding.ts), so reading it
+      // here would leak the $WOC value into the legacy copper key. copper
+      // saves as 0 (genuinely decoupled, never populated) and the real value
+      // persists under its own key instead.
+      copper: this.cfg.durabilitySystemEnabled ? 0 : meta.copper,
+      ...(this.cfg.durabilitySystemEnabled ? { unleashedBalance: meta.unleashedBalance ?? 0 } : {}),
       hp: e.hp,
       // A druid saved while shifted runs on rage/energy with its mana parked in
       // savedMana; persist the parked mana so reload (always caster form) restores
