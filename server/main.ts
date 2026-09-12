@@ -498,9 +498,15 @@ import { configureWocMarketRuntime, wocMarketConfig } from './woc_market_routes'
 import { createWocMarketSweep } from './woc_market_sweep';
 import { createWocMarketSweepWatchdog } from './woc_market_sweep_watchdog';
 import { WOC_UNLEASHED } from './woc_unleashed';
+import {
+  claimWalletReserve,
+  WOC_UNLEASHED_CLAIM_SOURCE_WALLET,
+} from './woc_unleashed_chain';
 import { configureWocUnleashedClaimRuntime } from './woc_unleashed_claim';
 import { startHoldingThresholdRefreshLoop } from './woc_unleashed_price_gate';
+import { startReserveSnapshotLoop } from './woc_unleashed_reserve_snapshot';
 import { ensureWocUnleashedSchema } from './woc_unleashed_schema';
+import { configureWocUnleashedWalletRoutesRuntime } from './woc_unleashed_wallet_routes';
 import { createWsAuth } from './ws_auth';
 import { bufferHandshakeMessages } from './ws_buffer';
 
@@ -3621,8 +3627,8 @@ export async function startServer(): Promise<http.Server> {
   // module's own scope/atomicity notes). A no-op wiring on Claudemoon (the
   // routes themselves 404 there; this still runs to keep the boot path
   // identical either way).
-  configureWocUnleashedClaimRuntime({
-    onlineCharacterBalances: (accountId) => {
+  const wocUnleashedLiveRuntime = {
+    onlineCharacterBalances: (accountId: number) => {
       const balances: { pid: number; unitsAvailable: number }[] = [];
       for (const session of game.clients.values()) {
         if (session.accountId !== accountId) continue;
@@ -3631,12 +3637,17 @@ export async function startServer(): Promise<http.Server> {
       }
       return balances;
     },
-    adjustLivePid: (pid, deltaUnits) => {
+    adjustLivePid: (pid: number, deltaUnits: number) => {
       const meta = game.sim.players.get(pid);
       if (meta) meta.copper += deltaUnits;
     },
-  });
-  if (WOC_UNLEASHED) startHoldingThresholdRefreshLoop();
+  };
+  configureWocUnleashedClaimRuntime(wocUnleashedLiveRuntime);
+  configureWocUnleashedWalletRoutesRuntime(wocUnleashedLiveRuntime);
+  if (WOC_UNLEASHED) {
+    startHoldingThresholdRefreshLoop();
+    startReserveSnapshotLoop(pool, () => claimWalletReserve(WOC_UNLEASHED_CLAIM_SOURCE_WALLET));
+  }
   const bankLedgerGrowthMonitor = createBankLedgerGrowthMonitor({
     pool,
     // Metrics yield immediately under durability pressure. The next minute's

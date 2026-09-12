@@ -16,6 +16,7 @@
 
 import type { Pool } from 'pg';
 import { WOC_UNLEASHED_EMISSION_SCHEMA } from './woc_unleashed_emission_db';
+import { WOC_UNLEASHED_RESERVE_SNAPSHOTS_SCHEMA } from './woc_unleashed_reserve_snapshot';
 import { WOC_UNLEASHED_WALLET_SCHEMA } from './woc_unleashed_wallet_db';
 
 // Arbitrary constant distinct from db.ts's SCHEMA_ADVISORY_LOCK_KEY and
@@ -29,6 +30,7 @@ export async function ensureWocUnleashedSchema(pool: Pool): Promise<void> {
     await client.query('SELECT pg_advisory_xact_lock($1)', [WOC_UNLEASHED_SCHEMA_LOCK_KEY]);
     await client.query(WOC_UNLEASHED_EMISSION_SCHEMA);
     await client.query(WOC_UNLEASHED_WALLET_SCHEMA);
+    await client.query(WOC_UNLEASHED_RESERVE_SNAPSHOTS_SCHEMA);
     await client.query('COMMIT');
   } catch (err) {
     await client.query('ROLLBACK');

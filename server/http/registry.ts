@@ -52,6 +52,7 @@ import { routes as walletRoutes } from '../wallet';
 import { routes as wocMarketRoutes } from '../woc_market_routes';
 import { routes as wocUnleashedAdminRoutes } from '../woc_unleashed_admin';
 import { routes as wocUnleashedClaimRoutes } from '../woc_unleashed_claim';
+import { routes as wocUnleashedWalletRoutes } from '../woc_unleashed_wallet_routes';
 // new:endpoint imports appear above this line (npm run new:endpoint)
 import { type CompiledPattern, compilePattern } from './path_pattern';
 import { createRouter, type MatchResult } from './router';
@@ -163,6 +164,7 @@ export const apiRoutes: readonly RouteDef[] = [
   ...wocMarketRoutes,
   ...wocUnleashedAdminRoutes,
   ...wocUnleashedClaimRoutes,
+  ...wocUnleashedWalletRoutes,
   ...guildRosterRoutes,
   // new:endpoint spreads appear above this line (npm run new:endpoint)
 ];

@@ -1626,6 +1626,48 @@ export const SURFACE_INVENTORY: readonly SurfaceRoute[] = [
     limiter: null,
     requireOwnedExpected: null,
   },
+  {
+    dispatcher: DISPATCH.mainApi,
+    method: 'GET',
+    path: '/api/woc-unleashed/off-chain-balance',
+    handler: 'server/woc_unleashed_wallet_routes.ts offChainBalanceHandler (registry-only RouteDef)',
+    contentType: PROBLEM_JSON,
+    authScope: AUTH_SCOPE.full,
+    limiter: null,
+    requireOwnedExpected: null,
+  },
+  {
+    dispatcher: DISPATCH.mainApi,
+    method: 'GET',
+    path: '/api/woc-unleashed/reserve',
+    handler: 'server/woc_unleashed_wallet_routes.ts reserveHandler (registry-only RouteDef)',
+    contentType: PROBLEM_JSON,
+    authScope: AUTH_SCOPE.public,
+    limiter: null,
+    requireOwnedExpected: null,
+  },
+  {
+    dispatcher: DISPATCH.mainApi,
+    method: 'GET',
+    path: '/api/woc-unleashed/circulation-series',
+    handler:
+      'server/woc_unleashed_wallet_routes.ts circulationSeriesHandler (registry-only RouteDef)',
+    contentType: PROBLEM_JSON,
+    authScope: AUTH_SCOPE.public,
+    limiter: null,
+    requireOwnedExpected: null,
+  },
+  {
+    dispatcher: DISPATCH.mainApi,
+    method: 'GET',
+    path: '/api/woc-unleashed/onchain-flow-series',
+    handler:
+      'server/woc_unleashed_wallet_routes.ts onChainFlowSeriesHandler (registry-only RouteDef)',
+    contentType: PROBLEM_JSON,
+    authScope: AUTH_SCOPE.public,
+    limiter: null,
+    requireOwnedExpected: null,
+  },
   // v0.20.0 release merge: the map editor surface. Custom maps (owner CRUD +
   // public browse/read, server/maps_routes.ts cores) and uploaded GLB assets
   // (binary upload + public content-addressed byte read,
