@@ -141,6 +141,31 @@ export async function getClaimStatus(db: Pool, accountId: number): Promise<Claim
 
 export const CLAIM_COOLDOWN_MS = 24 * 60 * 60 * 1000;
 
+/** Record a successful claim: stamps last_claim_at to now and adds
+ *  claimedUnits to the running total (upserting the row on a first claim).
+ *  Called AFTER the on-chain transaction has confirmed (server/
+ *  woc_unleashed_claim.ts); this function only touches the cooldown/audit
+ *  row, never the off-chain balance itself (that debit already happened
+ *  against the live character(s) before the on-chain send). */
+export async function recordClaim(
+  db: Pool,
+  accountId: number,
+  claimedUnits: number,
+): Promise<void> {
+  if (!Number.isFinite(claimedUnits) || claimedUnits < 0) {
+    throw new TypeError('claimedUnits must be a non-negative finite number');
+  }
+  await db.query(
+    `INSERT INTO woc_unleashed_claims (account_id, last_claim_at, total_claimed_copper)
+     VALUES ($1, now(), $2)
+     ON CONFLICT (account_id) DO UPDATE SET
+       last_claim_at = now(),
+       total_claimed_copper = woc_unleashed_claims.total_claimed_copper + EXCLUDED.total_claimed_copper,
+       updated_at = now()`,
+    [accountId, Math.floor(claimedUnits)],
+  );
+}
+
 /** Pure cooldown check: given the last claim's ISO timestamp (or null for
  *  never-claimed) and the current time, is another claim allowed now? Kept
  *  pure and exported so both the future claim-flow handler and its tests can

@@ -1604,6 +1604,28 @@ export const SURFACE_INVENTORY: readonly SurfaceRoute[] = [
     limiter: null,
     requireOwnedExpected: null,
   },
+  // WoC Unleashed claim flow (server/woc_unleashed_claim.ts): registry-only
+  // RouteDefs, 404 on Claudemoon (WOC_UNLEASHED unset), no legacy ladder arm.
+  {
+    dispatcher: DISPATCH.mainApi,
+    method: 'GET',
+    path: '/api/woc-unleashed/claim-status',
+    handler: 'server/woc_unleashed_claim.ts claimStatusHandler (registry-only RouteDef)',
+    contentType: PROBLEM_JSON,
+    authScope: AUTH_SCOPE.full,
+    limiter: null,
+    requireOwnedExpected: null,
+  },
+  {
+    dispatcher: DISPATCH.mainApi,
+    method: 'POST',
+    path: '/api/woc-unleashed/claim',
+    handler: 'server/woc_unleashed_claim.ts claimHandler (registry-only RouteDef)',
+    contentType: PROBLEM_JSON,
+    authScope: AUTH_SCOPE.full,
+    limiter: null,
+    requireOwnedExpected: null,
+  },
   // v0.20.0 release merge: the map editor surface. Custom maps (owner CRUD +
   // public browse/read, server/maps_routes.ts cores) and uploaded GLB assets
   // (binary upload + public content-addressed byte read,

@@ -149,6 +149,10 @@ const REGISTRY_ONLY_PATHS = new Set<string>([
   '/api/woc-market/listings/:id/buy-now',
   '/api/woc-market/settlements/:id/quote',
   '/api/woc-market/settlements/:id/confirm',
+  // WoC Unleashed claim flow (server/woc_unleashed_claim.ts): brand-new,
+  // registry-only, 404 on Claudemoon.
+  '/api/woc-unleashed/claim-status',
+  '/api/woc-unleashed/claim',
 ]);
 
 // Every legacy /api ladder row (dispatcher === main handleApi), minus the
@@ -299,6 +303,8 @@ describe('registry completeness: migrated baseline (public reads + auth + charac
     { method: 'GET', path: '/api/woc/balance' },
     { method: 'POST', path: '/api/card' },
     { method: 'GET', path: '/api/referrals' },
+    { method: 'GET', path: '/api/woc-unleashed/claim-status' },
+    { method: 'POST', path: '/api/woc-unleashed/claim' },
     // The reports + telemetry surface (server/reports.ts). All POST; the
     // two public beacons (perf-report, site-presence) are registered POST-only so a
     // non-POST delegates to the retained legacy arm (perf-report's 404 fall-through,
