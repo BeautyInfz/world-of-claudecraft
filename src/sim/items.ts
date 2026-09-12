@@ -29,6 +29,13 @@ import { buildConsuming } from './consuming';
 import { isRawCookingCatch } from './content/items';
 import { ITEMS, NPCS } from './data';
 import { markItemDiscovered } from './deeds';
+import {
+  DEFAULT_REPAIR_FACTOR,
+  DURABILITY_MAX,
+  durabilityOf,
+  repairCostCopper,
+  repairInstance,
+} from './durability';
 import { recalcPlayerStats } from './entity';
 import {
   canDualWield,
@@ -1379,6 +1386,52 @@ export function buyItem(
   meta.honor -= honorCost;
   ctx.addItem(itemId, qty, meta.entityId);
   ctx.emit({ type: 'vendor', action: 'buy', itemId, pid: meta.entityId });
+}
+
+// WoC Unleashed-exclusive (src/sim/durability.ts): repair one equipped item
+// at a repairVendor NPC (spec: repair is vendor-only, no kits/consumables/
+// profession repair at this stage). Mirrors buyItem's gate ladder (vendor
+// existence, dead, range) before the durability-specific checks.
+export function repairItem(ctx: SimContext, npcId: number, slot: EquipSlot, pid?: number): void {
+  if (!ctx.durabilitySystemEnabled) return;
+  const r = ctx.resolve(pid);
+  if (!r) return;
+  const { meta, e: p } = r;
+  const npc = ctx.entities.get(npcId);
+  if (npc?.kind !== 'npc' || npc.repairVendor !== true) {
+    ctx.error(meta.entityId, 'That merchant does not repair gear.');
+    return;
+  }
+  if (p.dead) {
+    ctx.error(meta.entityId, "You can't do that while dead.");
+    return;
+  }
+  if (dist2d(p.pos, npc.pos) > INTERACT_RANGE + 2) {
+    ctx.error(meta.entityId, 'Too far away.');
+    return;
+  }
+  const itemId = meta.equipment[slot];
+  const instance = meta.equipmentInstance?.[slot];
+  if (!itemId || !instance) {
+    ctx.error(meta.entityId, 'Nothing to repair there.');
+    return;
+  }
+  const currentDurability = durabilityOf(instance);
+  if (currentDurability >= DURABILITY_MAX) {
+    ctx.error(meta.entityId, 'That item is already fully repaired.');
+    return;
+  }
+  const def = ITEMS[itemId];
+  const baseValue = def?.sellValue ?? 0;
+  const cost = repairCostCopper(baseValue, currentDurability, DEFAULT_REPAIR_FACTOR);
+  if (meta.copper < cost) {
+    ctx.error(meta.entityId, 'Not enough copper.');
+    return;
+  }
+  meta.copper -= cost;
+  repairInstance(instance);
+  recalcPlayerStats(p, meta.cls, meta.equipment, ctx.playerMods(meta), meta.equipmentInstance);
+  ctx.emit({ type: 'wocRepair', itemId, slot, amountCopper: cost, pid: meta.entityId });
 }
 
 function vendorInRange(ctx: SimContext, p: Entity): boolean {

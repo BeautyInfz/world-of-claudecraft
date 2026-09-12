@@ -10,64 +10,124 @@
 
 export const pending: Record<string, readonly string[]> = {
   "es": [
-    "itemUi.money.wocAmount"
+    "hudChrome.itemTooltip.durability",
+    "hudChrome.itemTooltip.durabilityLow",
+    "itemUi.money.wocAmount",
+    "itemUi.vendor.repairAll"
   ],
   "es_ES": [
-    "itemUi.money.wocAmount"
+    "hudChrome.itemTooltip.durability",
+    "hudChrome.itemTooltip.durabilityLow",
+    "itemUi.money.wocAmount",
+    "itemUi.vendor.repairAll"
   ],
   "fr_FR": [
-    "itemUi.money.wocAmount"
+    "hudChrome.itemTooltip.durability",
+    "hudChrome.itemTooltip.durabilityLow",
+    "itemUi.money.wocAmount",
+    "itemUi.vendor.repairAll"
   ],
   "fr_CA": [
-    "itemUi.money.wocAmount"
+    "hudChrome.itemTooltip.durability",
+    "hudChrome.itemTooltip.durabilityLow",
+    "itemUi.money.wocAmount",
+    "itemUi.vendor.repairAll"
   ],
   "en_CA": [],
   "it_IT": [
-    "itemUi.money.wocAmount"
+    "hudChrome.itemTooltip.durability",
+    "hudChrome.itemTooltip.durabilityLow",
+    "itemUi.money.wocAmount",
+    "itemUi.vendor.repairAll"
   ],
   "de_DE": [
-    "itemUi.money.wocAmount"
+    "hudChrome.itemTooltip.durability",
+    "hudChrome.itemTooltip.durabilityLow",
+    "itemUi.money.wocAmount",
+    "itemUi.vendor.repairAll"
   ],
   "zh_CN": [
-    "itemUi.money.wocAmount"
+    "hudChrome.itemTooltip.durability",
+    "hudChrome.itemTooltip.durabilityLow",
+    "itemUi.money.wocAmount",
+    "itemUi.vendor.repairAll"
   ],
   "zh_TW": [
-    "itemUi.money.wocAmount"
+    "hudChrome.itemTooltip.durability",
+    "hudChrome.itemTooltip.durabilityLow",
+    "itemUi.money.wocAmount",
+    "itemUi.vendor.repairAll"
   ],
   "ko_KR": [
-    "itemUi.money.wocAmount"
+    "hudChrome.itemTooltip.durability",
+    "hudChrome.itemTooltip.durabilityLow",
+    "itemUi.money.wocAmount",
+    "itemUi.vendor.repairAll"
   ],
   "ja_JP": [
-    "itemUi.money.wocAmount"
+    "hudChrome.itemTooltip.durability",
+    "hudChrome.itemTooltip.durabilityLow",
+    "itemUi.money.wocAmount",
+    "itemUi.vendor.repairAll"
   ],
   "pt_BR": [
-    "itemUi.money.wocAmount"
+    "hudChrome.itemTooltip.durability",
+    "hudChrome.itemTooltip.durabilityLow",
+    "itemUi.money.wocAmount",
+    "itemUi.vendor.repairAll"
   ],
   "ru_RU": [
-    "itemUi.money.wocAmount"
+    "hudChrome.itemTooltip.durability",
+    "hudChrome.itemTooltip.durabilityLow",
+    "itemUi.money.wocAmount",
+    "itemUi.vendor.repairAll"
   ],
   "cs_CZ": [
-    "itemUi.money.wocAmount"
+    "hudChrome.itemTooltip.durability",
+    "hudChrome.itemTooltip.durabilityLow",
+    "itemUi.money.wocAmount",
+    "itemUi.vendor.repairAll"
   ],
   "nl_NL": [
-    "itemUi.money.wocAmount"
+    "hudChrome.itemTooltip.durability",
+    "hudChrome.itemTooltip.durabilityLow",
+    "itemUi.money.wocAmount",
+    "itemUi.vendor.repairAll"
   ],
   "pl_PL": [
-    "itemUi.money.wocAmount"
+    "hudChrome.itemTooltip.durability",
+    "hudChrome.itemTooltip.durabilityLow",
+    "itemUi.money.wocAmount",
+    "itemUi.vendor.repairAll"
   ],
   "id_ID": [
-    "itemUi.money.wocAmount"
+    "hudChrome.itemTooltip.durability",
+    "hudChrome.itemTooltip.durabilityLow",
+    "itemUi.money.wocAmount",
+    "itemUi.vendor.repairAll"
   ],
   "tr_TR": [
-    "itemUi.money.wocAmount"
+    "hudChrome.itemTooltip.durability",
+    "hudChrome.itemTooltip.durabilityLow",
+    "itemUi.money.wocAmount",
+    "itemUi.vendor.repairAll"
   ],
   "sv_SE": [
-    "itemUi.money.wocAmount"
+    "hudChrome.itemTooltip.durability",
+    "hudChrome.itemTooltip.durabilityLow",
+    "itemUi.money.wocAmount",
+    "itemUi.vendor.repairAll"
   ],
   "vi_VN": [
-    "itemUi.money.wocAmount"
+    "hudChrome.itemTooltip.durability",
+    "hudChrome.itemTooltip.durabilityLow",
+    "itemUi.money.wocAmount",
+    "itemUi.vendor.repairAll"
   ],
   "da_DK": [
-    "itemUi.money.wocAmount"
+    "hudChrome.itemTooltip.durability",
+    "hudChrome.itemTooltip.durabilityLow",
+    "itemUi.money.wocAmount",
+    "itemUi.vendor.repairAll"
   ]
 };

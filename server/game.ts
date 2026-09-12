@@ -445,6 +445,7 @@ import { buildVarkhulPortalReplayBatch, varkhulPortalReplayFrame } from './varkh
 import { dispatchVaultCommand, emitVaultSelfKeys } from './vault_wire';
 import { holderInfoForPubkey } from './woc_balance';
 import type { CharacterSaveArgs } from './woc_market';
+import { recordWocUnleashedLedgerEvents } from './woc_unleashed_ledger_hook';
 import { isBackpressureExceeded } from './ws_backpressure';
 
 const ALDRIC_METEOR_QUEST_ID = 'q_aldrics_fallen_star';
@@ -2672,6 +2673,7 @@ export class GameServer {
             this.parseCapture.observe(events);
             this.routeEvents(events);
             this.detectActivity(events);
+            recordWocUnleashedLedgerEvents(events, (pid) => this.clients.get(pid));
             void observeQueuePops(events, queuedPidsOf(this.sim.ctx), this.queuePopDeps);
             lap('events');
             this.runAntibotTick();
@@ -6538,6 +6540,14 @@ export class GameServer {
             },
             pid,
           );
+        break;
+      // WoC Unleashed-exclusive (src/sim/durability.ts): the sim itself
+      // refuses this whenever durabilitySystemEnabled is off, so a
+      // Claudemoon realm process answers every 'repair' frame with the same
+      // silent no-op an unrecognized command would (no case needed there).
+      case 'repair':
+        if (typeof msg.npc === 'number' && typeof msg.slot === 'string' && isEquipSlot(msg.slot))
+          sim.repairItem(msg.npc, msg.slot, pid);
         break;
       case 'sell':
         if (typeof msg.item === 'string') {

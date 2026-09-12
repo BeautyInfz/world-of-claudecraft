@@ -876,6 +876,7 @@ export function createNpc(id: number, def: NpcDef, pos: Vec3): Entity {
   e.questIds = [...def.questIds];
   e.vendorItems = [...(def.vendorItems ?? [])];
   e.devVendor = def.devVendor ?? false;
+  e.repairVendor = def.repairVendor ?? false;
   return e;
 }
 

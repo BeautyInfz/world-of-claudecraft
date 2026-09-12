@@ -39,6 +39,14 @@ export const ARMOR_SLOTS: readonly EquipSlot[] = [
  *  precedent: STORAGE_PRICES/server/storage_prices.ts). */
 export const DEFAULT_PVE_HIT_DURABILITY_LOSS_CHANCE = 0.03;
 
+/** PROVISIONAL: the WoC Unleashed spec leaves repair_factor's value (and
+ *  whether it should vary per item rarity/level) as an explicitly open design
+ *  decision, not for this implementation to resolve unilaterally. 0.5 (half
+ *  the item's vendor sell value to fully repair from 0) is a placeholder so
+ *  the vendor action has something to charge; treat any production tuning of
+ *  this number as a maintainer/design call, not a code review nit. */
+export const DEFAULT_REPAIR_FACTOR = 0.5;
+
 /** Fraction of DURABILITY_MAX lost on a PvE death, applied to every equipped
  *  item (spec: -10% = 10 of 100 points). */
 export const PVE_DEATH_DURABILITY_LOSS_FRACTION = 0.1;

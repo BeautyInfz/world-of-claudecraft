@@ -242,6 +242,10 @@ const itemStringsEn = {
       qtyMultipleAria: 'Buy {count} at a time',
       qtyCustom: 'Custom',
       qtyCustomAria: 'Choose a custom amount to buy',
+      // WoC Unleashed-exclusive (src/sim/durability.ts): repairs every
+      // equipped item below full durability in one click. {cost} is the
+      // already-localized money string (gold or $WOC, formatMoney picks).
+      repairAll: 'Repair All ({count}) - {cost}',
       // The count-aware row labels (acceptance: aria names qty and total
       // price). The requirement sibling folds the R22 advisory into the name
       // exactly like buyAriaWithRequirement: one combined key, never two

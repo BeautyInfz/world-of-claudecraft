@@ -180,3 +180,22 @@ export async function wouldExceedCap(db: Pool, amountCopper: number): Promise<bo
   const state = await getEmissionState(db);
   return state.grossEmittedCopper + amountCopper > state.capCopper;
 }
+
+/** Record an off-chain sink (repair, marketplace fee, claim): decrements
+ *  net_circulating_copper only, never gross_emitted_copper - the sink took
+ *  $WOC OUT of circulation, it never un-mints what was already granted.
+ *  Floored at 0 so a sink can never drive the counter negative (a defensive
+ *  floor, not an expected path: every sink amount is validated non-negative
+ *  by its own caller, e.g. src/sim/durability.ts's repairCostCopper). */
+export async function recordSink(db: Pool, amountCopper: number): Promise<void> {
+  if (!Number.isFinite(amountCopper) || amountCopper < 0) {
+    throw new TypeError('amountCopper must be a non-negative finite number');
+  }
+  await db.query(
+    `UPDATE woc_unleashed_emission_state
+        SET net_circulating_copper = GREATEST(0, net_circulating_copper - $1),
+            updated_at = now()
+      WHERE id = 1`,
+    [Math.floor(amountCopper)],
+  );
+}

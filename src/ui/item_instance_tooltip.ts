@@ -10,6 +10,7 @@
 // lines it actually caused (instanceBonusStatLines), which is the fact a player
 // is reading the tooltip for.
 import { ENCHANTS } from '../sim/content/enchants';
+import { DURABILITY_MAX } from '../sim/durability';
 import { effectiveQuality } from '../sim/equipment_rules';
 import { activeItemInstanceStats, isItemEnchantActive } from '../sim/item_instance_stats';
 import { requiredLevelFor } from '../sim/item_level_req';
@@ -32,6 +33,7 @@ import {
 } from './material_sources_view';
 import { statNameKey } from './stat_tooltip_view';
 import { svgIcon } from './ui_icons';
+import { wocCurrencyActive } from './woc_currency';
 
 const ITEM_STAT_LABEL_KEYS: Partial<Record<keyof Stats, TranslationKey>> = {
   armor: 'itemUi.stats.armor',
@@ -256,6 +258,33 @@ export function instanceBadgeLines(instance?: ItemInstancePayload): string {
         ranks: itemNumber(PERFECTING_RANKS),
       }),
     )}</div>`;
+  }
+  return html;
+}
+
+// WoC Unleashed-exclusive (src/sim/durability.ts): "Durability: 45/100", red
+// and with a low-durability warning line once below 25%. Absent durability
+// (undefined) reads as full per the sim field's own doc comment, so a
+// pre-durability-system copy and every copy on Claudemoon render nothing
+// here - gated on wocCurrencyActive() (the one client-side WoC Unleashed
+// realm signal, shared with the currency formatter since the two features
+// are 1:1 coupled server-side, server/woc_unleashed.ts).
+const LOW_DURABILITY_WARNING_THRESHOLD = 0.25;
+
+export function instanceDurabilityLines(instance?: ItemInstancePayload): string {
+  if (!wocCurrencyActive()) return '';
+  const durability = instance?.durability;
+  if (typeof durability !== 'number') return '';
+  const low = durability < DURABILITY_MAX * LOW_DURABILITY_WARNING_THRESHOLD;
+  const color = low ? 'var(--color-text-error)' : 'var(--color-text-muted)';
+  let html = `<div class="tt-sub" style="color:${color}">${esc(
+    t('hudChrome.itemTooltip.durability', {
+      current: itemNumber(durability),
+      max: itemNumber(DURABILITY_MAX),
+    }),
+  )}</div>`;
+  if (low) {
+    html += `<div class="tt-sub" style="color:var(--color-text-error)">${esc(t('hudChrome.itemTooltip.durabilityLow'))}</div>`;
   }
   return html;
 }

@@ -62,6 +62,12 @@ export interface VendorWindowDeps extends PainterHostPresentation {
     enabled: boolean;
     proceeds: number;
   };
+  /** WoC Unleashed-exclusive (src/sim/durability.ts): non-null only at a
+   *  repairVendor NPC with at least one equipped item below full durability.
+   *  null everywhere else (including every Claudemoon vendor), so the button
+   *  below renders nothing there. */
+  repairAll: { totalCopper: number; count: number } | null;
+  onRepairAll(): void;
 }
 
 function honorText(amount: number): string {
@@ -150,6 +156,26 @@ export function renderVendorWindow(
       }),
     )}`;
     el.appendChild(balance);
+  }
+
+  // WoC Unleashed-exclusive repair action (src/sim/durability.ts): one button
+  // repairs every equipped item below full durability at once, showing the
+  // total cost up front. Renders nothing when repairAll is null (every
+  // Claudemoon vendor, or a repairVendor with nothing to repair).
+  if (deps.repairAll) {
+    const repairRow = document.createElement('div');
+    repairRow.className = 'vendor-repair-row';
+    const repairBtn = document.createElement('button');
+    repairBtn.type = 'button';
+    repairBtn.className = 'vendor-repair-btn';
+    repairBtn.textContent = t('itemUi.vendor.repairAll', {
+      cost: formatLocalizedMoney(deps.repairAll.totalCopper),
+      count: formatNumber(deps.repairAll.count, { maximumFractionDigits: 0 }),
+    });
+    repairBtn.dataset.focusKey = 'repair-all';
+    repairBtn.addEventListener('click', () => deps.onRepairAll());
+    repairRow.appendChild(repairBtn);
+    el.appendChild(repairRow);
   }
 
   // The 1x/5x/10x/custom purchase control row (phase 21, Q21: the ONE count

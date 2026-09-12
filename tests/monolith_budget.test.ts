@@ -448,7 +448,14 @@ const MONOLITHS: MonolithRow[] = [
     // LOWERED for the coin-icon money readout extraction (moneyHtml moved out
     // to src/ui/money_html.ts so the social tab's roster confirm shares it);
     // the coordinator keeps three one-line deps wirings. Exact count, zero slack.
-    ceiling: 18461,
+    // Plus 2 for the WoC Unleashed durability tooltip line (instanceDurabilityLines,
+    // the import plus its one composition call beside instanceBadgeLines; the pure
+    // logic lives in src/ui/item_instance_tooltip.ts). Exact count, zero slack.
+    // Plus 17 for the WoC Unleashed vendor "Repair All" wiring (three imports,
+    // the repairAll/onRepairAll deps entries, and the equipment-loop callback;
+    // the pure cost preview lives in src/ui/repair_preview.ts). Exact count,
+    // zero slack.
+    ceiling: 18480,
     seam: 'pure view core + thin painter on PainterHost (src/ui/CLAUDE.md)',
   },
   {
@@ -1023,7 +1030,9 @@ const MONOLITHS: MonolithRow[] = [
     // buildSimContext getter (the durability logic itself lives in
     // src/sim/durability.ts, a sibling module; only the SimContext plumbing
     // touches this file). Exact count, zero slack.
-    ceiling: 11878,
+    // Plus 4 for the repairItem facet delegate beside buyItem (the pure
+    // repair logic lives in src/sim/items.ts). Exact count, zero slack.
+    ceiling: 11882,
     seam: 'a sim system module behind SimContext (src/sim/CLAUDE.md)',
   },
   {
@@ -1439,7 +1448,12 @@ const MONOLITHS: MonolithRow[] = [
     // below both parent pins. Exact merged count, zero slack.
     // Mount skins: bank the coordinator extraction at its measured size.
     // Main hotfix integration: combined extractions, exact merged count.
-    ceiling: 10095,
+    // Plus 10 for the WoC Unleashed 'repair' WS command case (the pure repair
+    // logic lives in src/sim/items.ts; this is only the dispatch arm beside
+    // 'buy') plus the one-line recordWocUnleashedLedgerEvents tick-loop hook
+    // (server/woc_unleashed_ledger_hook.ts owns the actual event scan).
+    // Exact count, zero slack.
+    ceiling: 10105,
     seam: 'a sibling server module; see the hot-path seams in server/CLAUDE.md',
   },
   {
@@ -1584,7 +1598,11 @@ const MONOLITHS: MonolithRow[] = [
     // Main hotfix integration: combined extractions, exact merged count.
     // Plus 13 for the WoC Unleashed currency-display advert (wocUnleashedAdvert,
     // mirroring devCommandsAdvert exactly beside it). Exact count, zero slack.
-    ceiling: 5553,
+    // Plus 6 for the ClientWorld.repairItem wire method beside buyItem.
+    // Exact count, zero slack.
+    // Plus 4 for reconstructing e.repairVendor client-side off the shared
+    // content table, beside e.vendorItems. Exact count, zero slack.
+    ceiling: 5563,
     seam: 'a src/net sibling module (the refactor/net-online split is the template)',
   },
   {

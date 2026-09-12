@@ -86,6 +86,7 @@ import {
   ZONES,
   zoneAt,
 } from '../sim/data';
+import { DURABILITY_MAX, durabilityOf } from '../sim/durability';
 import { specialRoleColor } from '../sim/discord_roles';
 import { canEquipItem, isUniqueEquipped, weaponHand } from '../sim/equipment_rules';
 import { isItemLevelEligible, itemInstanceLevel, itemScore } from '../sim/item_level';
@@ -103,6 +104,7 @@ import { TIER_SKILL_STEP, tierForSkill } from '../sim/professions/wheel';
 import { questObjectivesForMob } from '../sim/quest_targets';
 import type { ResolvedAbility } from '../sim/sim';
 import {
+  ALL_EQUIP_SLOTS,
   type AuraKind,
   CONSUME_DURATION,
   CORPSE_HARVEST_CAST_ID,
@@ -629,6 +631,7 @@ import {
   instanceBadgeLines,
   instanceBindingLines,
   instanceBonusStatLines,
+  instanceDurabilityLines,
   instanceLockLine,
   instancePartyTradeLine,
   instanceTitleHtml,
@@ -789,6 +792,7 @@ import { raidCalloutKey } from './raid_callout';
 import { formatLockoutDuration } from './raid_lockout_format';
 import { type RaidLockoutI18n, raidLockoutPanelHtml } from './raid_lockout_view';
 import { presentRealmBuilder, RealmBuilderPopup } from './realm_builder_popup';
+import { repairAllPreview } from './repair_preview';
 import {
   reliquaryIlluminationBroadcastLine,
   reliquaryIlluminationBroadcastRendered,
@@ -6586,6 +6590,7 @@ export class Hud {
     // seal and the enchanted marker (item_instance_tooltip.ts owns the copy
     // rules, incl. never claiming a quality-rank upgrade).
     html += instanceBadgeLines(instance);
+    html += instanceDurabilityLines(instance);
     if (item.weapon) {
       const dps = (item.weapon.min + item.weapon.max) / 2 / item.weapon.speed;
       html += `<div class="tt-stat">${esc(
@@ -15028,6 +15033,20 @@ export class Hud {
         onSellJunk: () => buyAndRefresh(() => this.sim.sellAllJunk()),
         onClose: () => this.closeVendor(),
         sellJunk: sellJunkState,
+        repairAll: repairAllPreview(
+          npc.repairVendor === true,
+          this.sim.equipment,
+          this.sim.equipmentInstances,
+        ),
+        onRepairAll: () =>
+          buyAndRefresh(() => {
+            for (const slot of ALL_EQUIP_SLOTS) {
+              const instance = this.sim.equipmentInstances[slot];
+              if (instance && durabilityOf(instance) < DURABILITY_MAX) {
+                this.sim.repairItem(npc.id, slot);
+              }
+            }
+          }),
       },
     );
   }

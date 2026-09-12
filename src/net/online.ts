@@ -2824,6 +2824,10 @@ export class ClientWorld extends ReconWireState implements IWorld {
           const def = NPCS[e.templateId];
           e.questIds = def ? [...def.questIds] : [];
           e.vendorItems = def?.vendorItems ? [...def.vendorItems] : [];
+          // WoC Unleashed-exclusive (src/sim/durability.ts): reconstructed
+          // client-side off the shared content table, same as vendorItems
+          // above - never wire-sent, since NPCS is bundled into both hosts.
+          e.repairVendor = def?.repairVendor === true;
         }
       }
       // Re-anchor remote and self interpolation on their respective clocks.
@@ -3892,6 +3896,12 @@ export class ClientWorld extends ReconWireState implements IWorld {
     } else {
       this.cmd({ cmd: 'buy', npc: npcId, item: itemId });
     }
+  }
+  // WoC Unleashed-exclusive (src/sim/durability.ts). A no-op wire message on
+  // Claudemoon (the server's 'repair' command handler is itself gated on
+  // WOC_UNLEASHED and refuses it), so this never fires meaningfully there.
+  repairItem(npcId: number, slot: EquipSlot): void {
+    this.cmd({ cmd: 'repair', npc: npcId, slot });
   }
   // `confirmEffectUse` (R40): the per-use consent for a 'prompt'-mode tool
   // effect slot, sent ONLY when true (the craftItem `commission` precedent)

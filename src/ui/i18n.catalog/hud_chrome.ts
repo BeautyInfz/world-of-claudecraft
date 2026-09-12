@@ -4789,6 +4789,13 @@ export const hudChromeStrings = {
     // the sim's PERFECTING_RANKS, never literals in copy.
     perfectedBadge: 'Perfected',
     perfectingRank: 'Perfecting: rank {rank} of {ranks}',
+    // WoC Unleashed-exclusive (src/sim/durability.ts, item_instance_tooltip.ts
+    // instanceDurabilityLines): durability is a status line, not a stat -
+    // the item keeps every bonus down to 1 point and loses them ALL only at
+    // 0, so durabilityLow states that trigger exactly rather than implying a
+    // gradual falloff (docs/design/tooltip-writing.md).
+    durability: 'Durability: {current}/{max}',
+    durabilityLow: 'Low durability: stat bonuses are lost at 0.',
     // Per-unit material provenance (item_instance_tooltip.ts
     // materialSourceLines over the pure material_sources_view.ts model): one
     // line per recorded descriptor, stating the surviving unit count first so a

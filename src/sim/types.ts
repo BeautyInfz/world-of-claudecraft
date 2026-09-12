@@ -3894,6 +3894,12 @@ export interface NpcDef {
   // A flag on the warfareVendor precedent so a second placement never widens a
   // hard-keyed constant.
   crucibleVendor?: boolean;
+  // WoC Unleashed-exclusive (src/sim/durability.ts): an armor/weapon vendor
+  // who repairs equipped gear. A flag on the warfareVendor precedent (never a
+  // hard-keyed NPC id), so any vendor def can opt in. Repair is unreachable
+  // whenever durabilitySystemEnabled is off, so this flag is inert on
+  // Claudemoon regardless of which NPC defs carry it.
+  repairVendor?: boolean;
   // The Riftwright: talking to this NPC opens the Rift Forge window (upgrade,
   // socket on Riftbound rings, src/sim/rift/progression.ts), and the
   // two forge commands gate on standing within reach of one of these (the
@@ -5443,6 +5449,7 @@ export interface Entity extends ClientMirroredEntityFields {
   questIds: string[];
   vendorItems: string[];
   devVendor?: boolean; // dev free-epic vendor (ptr_dev_vendor.ts)
+  repairVendor?: boolean; // WoC Unleashed-exclusive (src/sim/durability.ts)
   // object (ground interactable)
   objectItemId: string | null;
   // Runtime-only Soulwell ownership/eligibility state. The object itself is wired
@@ -6456,6 +6463,13 @@ export type SimEvent = { pid?: number } & (
   // itemId names the single item for buy/sell/buyback; it is omitted for the
   // bulk "sell all junk" sweep, which the client treats as a plain refresh signal.
   | { type: 'vendor'; action: 'buy' | 'sell' | 'buyback'; itemId?: string }
+  // WoC Unleashed-exclusive (src/sim/durability.ts): a vendor repair paid off
+  // the account's off-chain $WOC balance. amountCopper is the POSITIVE cost
+  // charged (the sim side never signs it negative); the server-side ledger
+  // hook (server/woc_unleashed_wallet_db.ts recordLedgerEvent) negates it when
+  // logging the 'repair' sink. Never emitted when durabilitySystemEnabled is
+  // off, so a Claudemoon/off-flag Sim's event stream is unaffected.
+  | { type: 'wocRepair'; itemId: string; slot: EquipSlot; amountCopper: number }
   // Ravenpost mail. Structured data only, the client builds every visible
   // string (the lockpick convention). `mailbox` asks the client to open the
   // mail window (the interact path at a mailbox object); `mailArrived` is the

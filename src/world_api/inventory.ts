@@ -80,6 +80,10 @@ export interface IWorldInventory {
   // at most one of the two fields. An empty/omitted bag buys the ordinary
   // single unit (or the food/drink staple stack), byte-identical to today.
   buyItem(npcId: number, itemId: string, opts?: VendorBuyOptions): void;
+  // WoC Unleashed-exclusive (src/sim/durability.ts): repair one equipped item
+  // at a repairVendor NPC. A no-op (server-refused / offline-Sim-refused)
+  // whenever durabilitySystemEnabled is off, so Claudemoon never reaches it.
+  repairItem(npcId: number, slot: EquipSlot): void;
   sellItem(itemId: string, count?: number, target?: NamedSlotTarget): void;
   // Sell every gray (poor-quality) item in the bags at once while a vendor is open.
   // Quest items and anything flagged noVendorSell are left untouched.

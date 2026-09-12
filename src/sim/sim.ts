@@ -8584,6 +8584,10 @@ export class Sim {
     items.buyItem(this.ctx, npcId, itemId, pid, opts);
   }
 
+  repairItem(npcId: number, slot: EquipSlot, pid?: number): void {
+    items.repairItem(this.ctx, npcId, slot, pid);
+  }
+
   sellItem(
     itemId: string,
     count = 1,

@@ -802,6 +802,10 @@ export const ZONE1_NPCS: Record<string, NpcDef> = {
       'valespun_robe',
       'hobnail_boots',
     ],
+    // WoC Unleashed-exclusive (src/sim/durability.ts): an armorer/weaponsmith
+    // is the natural first repair vendor. Inert on Claudemoon (see NpcDef.
+    // repairVendor's own doc comment).
+    repairVendor: true,
     greeting: 'Mind the sparks, $C. Good steel is the difference between a scar and a grave.',
   },
   fisherman_brandt: {
