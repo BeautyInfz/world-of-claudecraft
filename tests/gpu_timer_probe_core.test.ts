@@ -30,6 +30,12 @@ class FakeBackend implements GpuTimerQueryBackend<number> {
 
   /** Set to model a lost context: createQuery answers null from then on. */
   contextLost = false;
+  /** Queries minted before a restore: dead to the live context. */
+  readonly dead = new Set<number>();
+
+  queryValid(query: number): boolean {
+    return !this.dead.has(query);
+  }
 
   createQuery(): number | null {
     if (this.contextLost) return null;
@@ -284,6 +290,24 @@ describe('gpu timer ledger: a context that cannot mint a query', () => {
     ledger.begin('scene');
     expect(ledger.open).toBeNull();
     expect(backend.created).toEqual([1]);
+  });
+});
+
+describe('gpu timer ledger: a restored context', () => {
+  it('releases pooled queries the backend no longer recognises and mints live ones', () => {
+    const backend = new FakeBackend();
+    const ledger = new GpuTimerLedger(backend);
+    frame(ledger, ['shadow', 'scene']);
+    backend.complete(1, 1);
+    backend.complete(2, 1);
+    ledger.endFrame();
+    // The context was lost and restored: both pooled queries are dead.
+    backend.dead.add(1);
+    backend.dead.add(2);
+    ledger.begin('scene');
+    expect(backend.deleted.sort()).toEqual([1, 2]);
+    expect(backend.created).toEqual([1, 2, 3]);
+    expect(backend.log.at(-1)).toBe('begin 3');
   });
 });
 

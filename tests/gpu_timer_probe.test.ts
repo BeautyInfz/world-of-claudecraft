@@ -47,6 +47,7 @@ function fakeGl(withExtension: boolean) {
     calls: string[];
     created: WebGLQuery[];
     contextLost: boolean;
+    dead: Set<WebGLQuery>;
     finish(query: object, ms: number): void;
     setDisjoint(): void;
   } = {
@@ -55,6 +56,7 @@ function fakeGl(withExtension: boolean) {
     calls,
     created,
     contextLost: false,
+    dead: new Set<WebGLQuery>(),
     getExtension(name: string) {
       calls.push(`getExtension ${name}`);
       return withExtension && name === GPU_TIMER_EXTENSION
@@ -74,6 +76,9 @@ function fakeGl(withExtension: boolean) {
     },
     deleteQuery(query) {
       calls.push(`deleteQuery ${query ? queries.get(query) : 'null'}`);
+    },
+    isQuery(query) {
+      return query !== null && !gl.dead.has(query);
     },
     beginQuery(target, query) {
       calls.push(`beginQuery ${target} ${queries.get(query)}`);
@@ -181,6 +186,28 @@ describe('gpu timer probe: the WebGL2 adapter', () => {
     expect(gl.calls.filter((c) => c.startsWith('beginQuery'))).toEqual([]);
   });
 
+  it('replaces pooled queries a restored context no longer recognises', () => {
+    const gl = fakeGl(true);
+    const probe = armed(gl);
+    probe.begin('bloom');
+    probe.end();
+    probe.endFrame();
+    gl.finish(gl.created[0], 1);
+    probe.beginFrame();
+    probe.endFrame();
+    // Lost and restored in place: the pooled query is dead to the new context.
+    gl.dead.add(gl.created[0]);
+    probe.beginFrame();
+    probe.begin('bloom');
+    probe.end();
+    expect(gl.calls.slice(-4)).toEqual([
+      'deleteQuery 1',
+      'createQuery 2',
+      `beginQuery ${TIME_ELAPSED_EXT} 2`,
+      `endQuery ${TIME_ELAPSED_EXT}`,
+    ]);
+  });
+
   it('opens nothing outside an armed frame, so out-of-band draws never enter the table', () => {
     const gl = fakeGl(true);
     const probe = new GpuTimerProbe(gl);
@@ -272,6 +299,11 @@ describe('gpu timer probe: the WebGL2 adapter', () => {
     probe.end();
     probe.endFrame();
     expect(probe.snapshot().sceneNoHandover).toBe(1);
+    // A scene submit still open when the frame seals is counted the same way.
+    probe.beginFrame();
+    probe.beginScene();
+    probe.endFrame();
+    expect(probe.snapshot().sceneNoHandover).toBe(2);
   });
 
   it('passes a shadow render through untouched when no scene bracket is open', () => {

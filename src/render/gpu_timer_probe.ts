@@ -30,7 +30,9 @@
 // frame allocates no GL object; and a result is only read once
 // QUERY_RESULT_AVAILABLE says so, on a later frame, so the readback never
 // forces a GPU sync. A context that cannot mint a query halts the ledger
-// rather than throwing inside the submit.
+// rather than throwing inside the submit, and after a restore (in place on
+// the same renderer) the pool drops the dead queries `isQuery` no longer
+// recognises instead of binding them.
 
 import {
   GPU_TIMER_SCENE_BRACKET,
@@ -53,6 +55,7 @@ export interface DisjointTimerQueryExt {
 export interface GpuTimerGl {
   createQuery(): WebGLQuery | null;
   deleteQuery(query: WebGLQuery | null): void;
+  isQuery(query: WebGLQuery | null): boolean;
   beginQuery(target: number, query: WebGLQuery): void;
   endQuery(target: number): void;
   getQueryParameter(query: WebGLQuery, pname: number): unknown;
@@ -97,6 +100,12 @@ class GlQueryBackend implements GpuTimerQueryBackend<WebGLQuery> {
 
   deleteQuery(query: WebGLQuery): void {
     this.gl.deleteQuery(query);
+  }
+
+  queryValid(query: WebGLQuery): boolean {
+    // False for every object minted before a context loss, so a pool that
+    // survived a restore replaces them instead of reusing dead handles.
+    return this.gl.isQuery(query);
   }
 
   beginQuery(query: WebGLQuery): void {
@@ -161,6 +170,8 @@ export class GpuTimerProbe implements GpuFrameTimer {
   }
 
   endFrame(): void {
+    // A scene submit still open at the seal never handed over either.
+    if (this.inFrame && this.ledger?.open === GPU_TIMER_SHADOW_BRACKET) this.noHandover++;
     this.inFrame = false;
     this.ledger?.endFrame();
   }

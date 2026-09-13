@@ -27,6 +27,10 @@ export interface GpuTimerQueryBackend<Q = unknown> {
   /** Null when the host cannot mint one (a lost context): the ledger halts. */
   createQuery(): Q | null;
   deleteQuery(query: Q): void;
+  /** Whether a pooled query still belongs to the live context: after a
+   *  context restore the old objects are dead, and a backend that can tell
+   *  (WebGL's `isQuery`) lets the pool replace them instead of reusing them. */
+  queryValid?(query: Q): boolean;
   beginQuery(query: Q): void;
   endQuery(): void;
   /** Non-blocking: whether the query's result can be read without a stall. */
@@ -186,7 +190,7 @@ export class GpuTimerLedger<Q = unknown> {
         return;
       }
     }
-    const query = this.free.pop() ?? this.backend.createQuery();
+    const query = this.pooledQuery() ?? this.backend.createQuery();
     if (query === null) {
       // The host cannot mint a query (a lost context): stop issuing rather
       // than throw from inside the frame submit. The table stays readable.
@@ -264,6 +268,17 @@ export class GpuTimerLedger<Q = unknown> {
     this.current = [];
     for (const query of this.free) this.backend.deleteQuery(query);
     this.free.length = 0;
+  }
+
+  /** The next live query from the pool; dead ones (a restored context) are
+   *  released on the way. */
+  private pooledQuery(): Q | null {
+    for (;;) {
+      const query = this.free.pop();
+      if (query === undefined) return null;
+      if (!this.backend.queryValid || this.backend.queryValid(query)) return query;
+      this.backend.deleteQuery(query);
+    }
   }
 
   private frameReady(frame: PendingFrame<Q>): boolean {
