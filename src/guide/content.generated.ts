@@ -14257,17 +14257,17 @@ export const GUIDE_PROF_CRAFTS: GuideProfCraft[] = [
           {
             "itemId": "arcane_shard",
             "name": "Chime Shard",
-            "count": 5
+            "count": 1
           },
           {
             "itemId": "arcane_essence",
             "name": "Chime Essence",
-            "count": 4
+            "count": 14
           },
           {
             "itemId": "arcane_dust",
             "name": "Chime Dust",
-            "count": 6
+            "count": 10
           }
         ],
         "output": {
@@ -14295,17 +14295,17 @@ export const GUIDE_PROF_CRAFTS: GuideProfCraft[] = [
           {
             "itemId": "arcane_shard",
             "name": "Chime Shard",
-            "count": 5
+            "count": 1
           },
           {
             "itemId": "arcane_essence",
             "name": "Chime Essence",
-            "count": 4
+            "count": 14
           },
           {
             "itemId": "arcane_dust",
             "name": "Chime Dust",
-            "count": 6
+            "count": 10
           }
         ],
         "output": {
