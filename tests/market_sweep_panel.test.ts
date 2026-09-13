@@ -242,6 +242,16 @@ describe('market window: the Market Sweep card', () => {
     expect(h.errors[1]).toBe(t('itemUi.errors.sweepNoListings'));
   });
 
+  it('clears the staged quote when the player leaves the Browse tab', () => {
+    const h = harness(info([listing()]));
+    sweepButton(h.root)?.click();
+    h.root.querySelector<HTMLElement>('[data-tab="sell"]')?.click();
+    expect(h.quotes).toEqual([
+      [ORE, 1],
+      [ORE, 0],
+    ]);
+  });
+
   it('closes the card on its Close button and clears the staged quote', () => {
     const h = harness(info([listing()]));
     sweepButton(h.root)?.click();

@@ -149,10 +149,10 @@ const PINS: PoolWiringPin[] = [
     path: 'src/sim/market.ts',
     sites: [
       { fn: 'marketBuy', what: 'the canGrantCopies gate on the purchased listing' },
-      // The Market Sweep (feature/ah-market-sweep): one summed gate on the whole
-      // plan before the first settlement, then the single-buy gate per row.
+      // The Market Sweep (feature/ah-market-sweep): ONE summed gate on the whole
+      // plan before the first settlement (every candidate is a plain row of one
+      // item, so the sum is exact and the sweep is all-or-nothing).
       { fn: 'marketSweep', what: 'the canGrantCopies gate on the whole sweep plan' },
-      { fn: 'marketSweep', what: 'the per-row canGrantCopies gate before each settlement' },
       { fn: 'marketCancel', what: 'the canGrantCopies gate on the reclaimed listing' },
       { fn: 'marketCollect', what: 'the canGrantCopies gate on each collection-box row' },
     ],

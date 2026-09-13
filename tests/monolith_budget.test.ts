@@ -1442,11 +1442,12 @@ const MONOLITHS: MonolithRow[] = [
     // below both parent pins. Exact merged count, zero slack.
     // Mount skins: bank the coordinator extraction at its measured size.
     // Main hotfix integration: combined extractions, exact merged count.
-    // LOWERED 10095 -> 10064 at the Market Sweep (feature/ah-market-sweep): the World
+    // LOWERED 10095 -> 10068 at the Market Sweep (feature/ah-market-sweep): the World
     // Market command bodies moved whole to server/market_commands.ts (the
     // farming_commands shape; labels stay here), paying for the sweep quote gate
-    // field and the two new case labels. Exact count, zero slack.
-    ceiling: 10064,
+    // field, the two new case labels, and the arm-marked heavy-self line. Exact
+    // count, zero slack.
+    ceiling: 10068,
     seam: 'a sibling server module; see the hot-path seams in server/CLAUDE.md',
   },
   {

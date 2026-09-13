@@ -10611,8 +10611,8 @@ export class Sim {
     this.market.marketSweepQuote(itemId, count, pid);
   }
 
-  marketSweep(itemId: string, count: number, maxCopper: number, pid?: number): void {
-    this.market.marketSweep(itemId, count, maxCopper, pid);
+  marketSweep(itemId: string, count: number, maxCopper: number, pid?: number): MarketListing[] {
+    return this.market.marketSweep(itemId, count, maxCopper, pid);
   }
 
   marketCancel(listingId: number, pid?: number): void {

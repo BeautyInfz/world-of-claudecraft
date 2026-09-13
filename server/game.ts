@@ -7555,7 +7555,11 @@ export class GameServer {
       case 'market_sweep':
       case 'market_cancel':
       case 'market_collect':
-        dispatchMarketCommand(sim, msg, pid);
+        // Arm-marked heavy-self members (market_sweep) mark only when the frame
+        // reached the sim, the farming precedent above.
+        if (dispatchMarketCommand(sim, msg, pid) && heavySelfMarkOnAccept(command)) {
+          session.selfHeavyDirty = true;
+        }
         break;
       case 'mail_send': {
         if (

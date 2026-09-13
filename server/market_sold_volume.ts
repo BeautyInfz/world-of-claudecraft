@@ -73,7 +73,12 @@ export interface SoldVolumeSim {
 /** The sim surface sweepWithSoldVolume reads; `Sim` satisfies it. */
 export interface SoldVolumeSweepSim {
   readonly marketListings: readonly SoldVolumeListing[];
-  marketSweep(itemId: string, count: number, maxCopper: number, pid?: number): void;
+  marketSweep(
+    itemId: string,
+    count: number,
+    maxCopper: number,
+    pid?: number,
+  ): readonly SoldVolumeListing[];
 }
 
 /**
@@ -297,11 +302,10 @@ export function buyWithSoldVolume(sim: SoldVolumeSim, listingId: number, pid: nu
 /**
  * The Market Sweep twin of buyWithSoldVolume. A sweep splices MANY rows, so the
  * single-buy "length dropped, therefore this one row sold" premise does not
- * carry: instead every non-house row of the swept item is read BEFORE the call
- * and looked up again AFTER, and each one that left the book is one sale
- * (marketSaleFromBuy, the same verdict per row). The sweep never touches house
- * stock or another item's rows (src/sim/market_sweep.ts eligibility), so the
- * pre-read is bounded to the swept item.
+ * carry; instead the sim RETURNS the rows it settled (empty on any refusal),
+ * and each one is one sale (marketSaleFromBuy with `after` null: a row the sim
+ * reports settled has left the book by construction). No before/after diff of
+ * the book, so a refused frame costs the observer nothing.
  */
 export function sweepWithSoldVolume(
   sim: SoldVolumeSweepSim,
@@ -310,18 +314,11 @@ export function sweepWithSoldVolume(
   maxCopper: number,
   pid: number,
 ): void {
-  const before = sim.marketListings.filter((row) => row.itemId === itemId && !row.house);
-  sim.marketSweep(itemId, count, maxCopper, pid);
-  if (sim.marketListings.length === before.length + countOtherRows(sim, itemId)) return;
+  const settled = sim.marketSweep(itemId, count, maxCopper, pid);
+  if (settled.length === 0) return;
   if (classifyMarketMetricsItem(itemId) === null) return;
-  for (const row of before) {
-    const entry = marketSaleFromBuy(row, findListing(sim.marketListings, row.id));
+  for (const row of settled) {
+    const entry = marketSaleFromBuy(row, null);
     if (entry !== null) enqueue(entry);
   }
-}
-
-function countOtherRows(sim: SoldVolumeSweepSim, itemId: string): number {
-  let n = 0;
-  for (const row of sim.marketListings) if (row.itemId !== itemId || row.house) n++;
-  return n;
 }

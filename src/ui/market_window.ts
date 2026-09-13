@@ -531,6 +531,9 @@ export class MarketWindow {
       node.addEventListener('click', () => {
         const next = (node as HTMLElement).dataset.tab as MarketTab;
         if (next === this.tab) return;
+        // Leaving Browse drops the staged sweep: nothing paints it elsewhere, and
+        // a quote nobody reads must not stay staged server-side.
+        if (next !== 'browse') this.sweep.clear(false);
         this.tab = next;
         this.browsePage = 0;
         this.lastSig = '';

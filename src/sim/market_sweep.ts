@@ -22,7 +22,12 @@
 //   - the Merchant's house stock (never depletes and pays no one, so it is not a
 //     market to sweep; buying it stays the single Buy button);
 //   - instanced copies (enchants, rolled stats, maker's marks: non-fungible);
-//   - signed material stacks (the same non-fungible reasoning market_collapse uses).
+//   - signed material stacks (the same non-fungible reasoning market_collapse
+//     uses) and crafted-recipe stacks: their units do not merge into the plain
+//     stack, so the one summed bag-capacity check the sweep makes before its
+//     first settlement could not stand for them, and a sweep must buy everything
+//     it quoted or nothing. Those rows keep the single Buy button. Unsigned
+//     material sources are plain (gathered stock carries them by default).
 
 import type { MaterialComposition } from './material_sources';
 import type { ItemInstancePayload } from './types';
@@ -40,6 +45,7 @@ export interface SweepableListing {
   price: number; // total copper buyout for the whole stack
   house: boolean;
   instance?: ItemInstancePayload;
+  craftedRecipeId?: string;
   materialSources?: MaterialComposition;
 }
 
@@ -57,13 +63,14 @@ export interface MarketSweepPlan {
   short: boolean;
 }
 
-/** A plain, fungible, someone-else's listing of `itemId`. */
+/** A plain, fungible, provenance-free, someone-else's listing of `itemId`. */
 export function sweepEligible(
   l: SweepableListing,
   itemId: string,
   isMine: (l: SweepableListing) => boolean,
 ): boolean {
   if (l.itemId !== itemId || l.house || l.instance) return false;
+  if (l.craftedRecipeId !== undefined) return false;
   if (l.materialSources?.some(({ source }) => source.signer !== undefined)) return false;
   return !isMine(l);
 }
@@ -80,14 +87,39 @@ export function planMarketSweep(
   wanted: number,
   isMine: (l: SweepableListing) => boolean,
 ): MarketSweepPlan {
-  const eligible = listings
-    .filter((l) => sweepEligible(l, itemId, isMine))
+  return planSweepFromCandidates(sweepCandidates(listings, itemId), itemId, wanted, isMine);
+}
+
+/**
+ * The BOOK-level half of the plan: every plain, fungible, non-house listing of
+ * `itemId`, cheapest per unit first (older id on a tie). A property of the book
+ * alone (no viewer in it), so the Market memoizes it per bookRev the way it
+ * memoizes its sorted views, and every viewer's quote and every sweep attempt
+ * share one filter + sort per item per book change.
+ */
+export function sweepCandidates<T extends SweepableListing>(
+  listings: readonly T[],
+  itemId: string,
+): T[] {
+  return listings
+    .filter((l) => sweepEligible(l, itemId, () => false))
     .sort((a, b) => a.price * b.count - b.price * a.count || a.id - b.id);
+}
+
+/** The VIEWER-level half: walk the sorted candidates, skipping the viewer's own
+ *  rows, taking whole rows until `wanted` is covered. O(k) over the candidates. */
+export function planSweepFromCandidates(
+  candidates: readonly SweepableListing[],
+  itemId: string,
+  wanted: number,
+  isMine: (l: SweepableListing) => boolean,
+): MarketSweepPlan {
   const listingIds: number[] = [];
   let units = 0;
   let total = 0;
-  for (const l of eligible) {
+  for (const l of candidates) {
     if (units >= wanted) break;
+    if (isMine(l)) continue;
     listingIds.push(l.id);
     units += l.count;
     total += l.price;

@@ -11,6 +11,7 @@
 // Browse list itself repaints (mount), from the staged state.
 
 import { audio } from '../game/audio';
+import { MARKET_SWEEP_MAX_UNITS } from '../sim/market_sweep';
 import type { IWorld } from '../world_api';
 import { esc } from './esc';
 import { formatMoney as formatLocalizedMoney, formatNumber, t } from './i18n';
@@ -90,7 +91,7 @@ export class MarketSweepPanel {
       `<button type="button" class="mkt-sweep-close ui-btn" aria-label="${esc(t('itemUi.market.sweepClose'))}">${esc(t('itemUi.market.sweepClose'))}</button></div>` +
       `<div class="mkt-sweep-note">${esc(t('itemUi.market.sweepNote'))}</div>` +
       `<div class="mkt-price-row"><label for="mkt-sweep-qty">${esc(t('itemUi.market.sweepQuantity'))}</label>` +
-      `<input class="coininput ui-input" id="mkt-sweep-qty" type="number" min="1" max="200" inputmode="numeric" value="${stage.count}"></div>` +
+      `<input class="coininput ui-input" id="mkt-sweep-qty" type="number" min="1" max="${MARKET_SWEEP_MAX_UNITS}" inputmode="numeric" value="${stage.count}"></div>` +
       `<div class="mkt-sweep-quote" role="status" aria-live="polite"></div>` +
       `<button type="button" class="mkt-sweep-go ui-btn ui-btn--red" disabled>${esc(t('itemUi.market.sweepButton'))}</button>`;
     const qty = card.querySelector<HTMLInputElement>('#mkt-sweep-qty');

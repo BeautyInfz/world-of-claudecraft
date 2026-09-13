@@ -64,11 +64,16 @@ describe('planMarketSweep', () => {
         price: 1,
         materialSources: [{ source: { signer: 'Someone' }, units: 1 } as never],
       }),
+      // A crafted-recipe stack does not merge into the plain stack, so it never
+      // rides a sweep (module header: the one summed bag check must be exact);
+      // an UNSIGNED material stack is plain and does.
+      row({ id: 7, price: 1, craftedRecipeId: 'smelt_copper' }),
+      row({ id: 8, price: 60, materialSources: [{ source: {}, units: 1 } as never] }),
       row({ id: 6, price: 50 }),
     ];
-    const plan = planMarketSweep(book, ORE, 1, (l) => l.sellerKey === 'me');
-    expect(plan.listingIds).toEqual([6]);
-    expect(plan.total).toBe(50);
+    const plan = planMarketSweep(book, ORE, 2, (l) => l.sellerKey === 'me');
+    expect(plan.listingIds).toEqual([6, 8]);
+    expect(plan.total).toBe(110);
   });
 
   it('reports a short book: every eligible listing, flagged, never an empty lie', () => {
