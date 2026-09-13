@@ -57,6 +57,7 @@ const EMPTY_SNAPSHOT: WalletPanelSnapshot = {
   offChainCharacters: [],
   claimStatus: null,
   reserveWoc: null,
+  circulatingSupply: null,
 };
 
 const CHART_IN_COLOR = '#5fb865';
@@ -138,6 +139,7 @@ export class WalletPanelWindow {
       this.balancesHtml(this.view) +
       this.claimSectionHtml(this.view) +
       this.reserveHtml(this.view) +
+      this.circulatingSupplyHtml(this.view) +
       this.chartsHtml();
     this.wire(body, this.view);
     this.paintCharts();
@@ -249,6 +251,29 @@ export class WalletPanelWindow {
       `<section class="wp-section wp-reserve">` +
       `<span>${esc(t('hudChrome.walletPanel.reserveLabel'))}</span>` +
       `<strong>${esc(view.reserveWoc === null ? '--' : formatNumber(view.reserveWoc, { maximumFractionDigits: 0 }))} $WOC</strong>` +
+      `</section>`
+    );
+  }
+
+  private circulatingSupplyHtml(view: WalletPanelView): string {
+    const capNote =
+      view.circulatingSupplyWoc !== null && view.emissionCapPct !== null && view.emissionCapWoc
+        ? `<p class="wp-note">${esc(
+            t('hudChrome.walletPanel.circulatingSupplyCap', {
+              pct: formatNumber(view.emissionCapPct, { maximumFractionDigits: 1 }),
+              cap: formatNumber(view.emissionCapWoc, { maximumFractionDigits: 0 }),
+            }),
+          )}</p>`
+        : '';
+    return (
+      `<section class="wp-section wp-circulating">` +
+      `<span>${esc(t('hudChrome.walletPanel.circulatingSupplyLabel'))}</span>` +
+      `<strong>${esc(
+        view.circulatingSupplyWoc === null
+          ? '--'
+          : formatNumber(view.circulatingSupplyWoc, { maximumFractionDigits: 0 }),
+      )} $WOC</strong>` +
+      capNote +
       `</section>`
     );
   }

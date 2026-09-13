@@ -1129,6 +1129,9 @@ export class Api {
   wocUnleashedOnchainFlowSeries(): Promise<LooseJson> {
     return this.get('/api/woc-unleashed/onchain-flow-series');
   }
+  wocUnleashedCirculatingSupply(): Promise<LooseJson> {
+    return this.get('/api/woc-unleashed/circulating-supply');
+  }
 
   // Current account's Steam link status ({ enabled, linked, steamId? }).
   async steamStatus(): Promise<Record<string, unknown>> {

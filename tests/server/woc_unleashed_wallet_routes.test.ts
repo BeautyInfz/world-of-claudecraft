@@ -77,6 +77,12 @@ describe('woc-unleashed wallet routes', () => {
       latestReserveSnapshot: async () => null,
       circulationSeries: async () => [{ day: '2026-09-01', inCopper: 100, outCopper: 20 }],
       onChainFlowSeries: async () => [{ day: '2026-09-01', balanceWoc: 999_000, deltaWoc: null }],
+      emissionState: async () => ({
+        capCopper: 1_000_000 * 10_000,
+        grossEmittedCopper: 250_000 * 10_000,
+        netCirculatingCopper: 180_000 * 10_000,
+        updatedAt: '2026-09-01T00:00:00Z',
+      }),
     });
   });
 
@@ -94,6 +100,7 @@ describe('woc-unleashed wallet routes', () => {
     expect((await runRoute('GET', '/api/woc-unleashed/reserve')).status).toBe(404);
     expect((await runRoute('GET', '/api/woc-unleashed/circulation-series')).status).toBe(404);
     expect((await runRoute('GET', '/api/woc-unleashed/onchain-flow-series')).status).toBe(404);
+    expect((await runRoute('GET', '/api/woc-unleashed/circulating-supply')).status).toBe(404);
   });
 
   it('off-chain-balance requires auth and sums online characters in $WOC (not raw units)', async () => {
@@ -125,5 +132,16 @@ describe('woc-unleashed wallet routes', () => {
     const b = await runRoute('GET', '/api/woc-unleashed/onchain-flow-series', { token: null });
     expect(b.status).toBe(200);
     expect(b.body).toMatchObject({ series: [{ day: '2026-09-01' }] });
+  });
+
+  it('circulating-supply reports the economy-wide totals in $WOC (not copper), no auth required', async () => {
+    const out = await runRoute('GET', '/api/woc-unleashed/circulating-supply', { token: null });
+    expect(out.status).toBe(200);
+    expect(out.body).toMatchObject({
+      netCirculatingWoc: 180_000,
+      grossEmittedWoc: 250_000,
+      capWoc: 1_000_000,
+      at: '2026-09-01T00:00:00Z',
+    });
   });
 });

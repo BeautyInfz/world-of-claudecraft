@@ -12,6 +12,7 @@ import { json } from './http_util';
 import { resolveWocUnleashed } from './woc_unleashed';
 import { claimWalletReserve, WOC_UNLEASHED_CLAIM_SOURCE_WALLET } from './woc_unleashed_chain';
 import type { WocUnleashedClaimRuntime } from './woc_unleashed_claim';
+import { type EmissionState, getEmissionState } from './woc_unleashed_emission_db';
 import { latestReserveSnapshot, onChainFlowSeries } from './woc_unleashed_reserve_snapshot';
 import { ledgerEventSeries } from './woc_unleashed_wallet_db';
 
@@ -42,6 +43,7 @@ const REAL_DEPS = {
   latestReserveSnapshot: () => latestReserveSnapshot(pool),
   circulationSeries: (days: number) => ledgerEventSeries(pool, days),
   onChainFlowSeries: (days: number) => onChainFlowSeries(pool, days),
+  emissionState: (): Promise<EmissionState> => getEmissionState(pool),
 };
 let deps = REAL_DEPS;
 export function setWocUnleashedWalletRoutesDepsForTests(
@@ -111,6 +113,23 @@ async function onChainFlowSeriesHandler(ctx: Ctx): Promise<void> {
   return json(ctx.res, 200, { series });
 }
 
+/** GET /api/woc-unleashed/circulating-supply: the current total $WOC held
+ *  in-game right now (gross ever emitted, minus off-chain sinks - repairs,
+ *  marketplace fees, claims - server/woc_unleashed_emission_db.ts's
+ *  net_circulating_copper), plus the emission totals a player's readout
+ *  contextualizes it against. Public: an aggregate economy total reveals
+ *  nothing about any individual account. */
+async function circulatingSupplyHandler(ctx: Ctx): Promise<void> {
+  if (!wocUnleashedLive()) return fail(ctx, 404, 'unknown endpoint');
+  const state = await deps.emissionState();
+  return json(ctx.res, 200, {
+    netCirculatingWoc: state.netCirculatingCopper / UNITS_PER_WOC,
+    grossEmittedWoc: state.grossEmittedCopper / UNITS_PER_WOC,
+    capWoc: state.capCopper / UNITS_PER_WOC,
+    at: state.updatedAt,
+  });
+}
+
 export const routes: RouteDef[] = [
   {
     method: 'GET',
@@ -139,5 +158,12 @@ export const routes: RouteDef[] = [
     surface: 'api',
     middleware: [],
     handler: onChainFlowSeriesHandler,
+  },
+  {
+    method: 'GET',
+    path: '/api/woc-unleashed/circulating-supply',
+    surface: 'api',
+    middleware: [],
+    handler: circulatingSupplyHandler,
   },
 ];

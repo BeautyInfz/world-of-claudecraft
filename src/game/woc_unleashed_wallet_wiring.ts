@@ -16,10 +16,11 @@ function asNumber(v: unknown, fallback: number | null = null): number | null {
 export function buildWalletPanelHooks(api: Api): WalletPanelHooks {
   return {
     async snapshot(): Promise<WalletPanelSnapshot> {
-      const [claimStatus, offChain, reserve] = await Promise.all([
+      const [claimStatus, offChain, reserve, circulatingSupply] = await Promise.all([
         api.wocUnleashedClaimStatus(),
         api.wocUnleashedOffChainBalance(),
         api.wocUnleashedReserve(),
+        api.wocUnleashedCirculatingSupply(),
       ]);
       const rawCharacters: unknown[] = Array.isArray(offChain.characters)
         ? offChain.characters
@@ -38,6 +39,11 @@ export function buildWalletPanelHooks(api: Api): WalletPanelHooks {
           totalClaimedCopper: asNumber(claimStatus.totalClaimedCopper, 0) ?? 0,
         },
         reserveWoc: asNumber(reserve.reserveWoc),
+        circulatingSupply: {
+          netWoc: asNumber(circulatingSupply.netCirculatingWoc),
+          grossEmittedWoc: asNumber(circulatingSupply.grossEmittedWoc),
+          capWoc: asNumber(circulatingSupply.capWoc),
+        },
       };
     },
     async circulationSeries() {

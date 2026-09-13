@@ -12184,6 +12184,8 @@ export type TranslationKeyFlat =
   | 'hudChrome.walletPanel.amountLabel'
   | 'hudChrome.walletPanel.cancelButton'
   | 'hudChrome.walletPanel.characterBalance'
+  | 'hudChrome.walletPanel.circulatingSupplyCap'
+  | 'hudChrome.walletPanel.circulatingSupplyLabel'
   | 'hudChrome.walletPanel.circulationChartTitle'
   | 'hudChrome.walletPanel.claimButton'
   | 'hudChrome.walletPanel.claimPending'

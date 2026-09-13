@@ -17094,4 +17094,6 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'mode.serverUnleashedOfflineSub': 'Локальный мир, правила WoC Unleashed',
   'hudChrome.walletPanel.offlineClaimUnavailable':
     'Получение недоступно офлайн. Подключитесь к онлайн-миру WoC Unleashed.',
+  'hudChrome.walletPanel.circulatingSupplyLabel': '$WOC в обращении в игре:',
+  'hudChrome.walletPanel.circulatingSupplyCap': '{pct}% от лимита эмиссии {cap} $WOC',
 };

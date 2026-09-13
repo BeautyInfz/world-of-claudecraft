@@ -60,6 +60,11 @@ function fakeApi(overrides: Partial<Record<string, unknown>> = {}): Api {
     wocUnleashedOnchainFlowSeries: {
       series: [{ day: '2026-09-10', balanceWoc: 900000 }],
     },
+    wocUnleashedCirculatingSupply: {
+      netCirculatingWoc: 180000,
+      grossEmittedWoc: 250000,
+      capWoc: 1000000,
+    },
     ...overrides,
   };
   return {
@@ -68,6 +73,7 @@ function fakeApi(overrides: Partial<Record<string, unknown>> = {}): Api {
     wocUnleashedReserve: async () => responses.wocUnleashedReserve,
     wocUnleashedCirculationSeries: async () => responses.wocUnleashedCirculationSeries,
     wocUnleashedOnchainFlowSeries: async () => responses.wocUnleashedOnchainFlowSeries,
+    wocUnleashedCirculatingSupply: async () => responses.wocUnleashedCirculatingSupply,
     wocUnleashedClaim: async (amountWoc: number) =>
       (responses.wocUnleashedClaim as (a: number) => unknown)?.(amountWoc) ?? {
         signature: 'sig-1',
@@ -106,6 +112,11 @@ describe('woc_unleashed_wallet_wiring: snapshot composition', () => {
       totalClaimedCopper: 12000,
     });
     expect(snap.reserveWoc).toBe(900000);
+    expect(snap.circulatingSupply).toEqual({
+      netWoc: 180000,
+      grossEmittedWoc: 250000,
+      capWoc: 1000000,
+    });
     expect(snap.connection).toBe(connectionView);
   });
 
@@ -122,6 +133,7 @@ describe('woc_unleashed_wallet_wiring: snapshot composition', () => {
           characters: [null, 'x', { pid: '1', woc: 'y' }, { pid: 2, woc: 5 }],
         },
         wocUnleashedReserve: {},
+        wocUnleashedCirculatingSupply: { netCirculatingWoc: 'nope' },
       }),
     );
     const snap = await hooks.snapshot();
@@ -138,6 +150,11 @@ describe('woc_unleashed_wallet_wiring: snapshot composition', () => {
       totalClaimedCopper: 0,
     });
     expect(snap.reserveWoc).toBeNull();
+    expect(snap.circulatingSupply).toEqual({
+      netWoc: null,
+      grossEmittedWoc: null,
+      capWoc: null,
+    });
   });
 
   it('reads the live wallet connection view fresh on every snapshot', async () => {

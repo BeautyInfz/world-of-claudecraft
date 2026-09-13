@@ -28,6 +28,7 @@ function snapshot(overrides: Partial<WalletPanelSnapshot> = {}): WalletPanelSnap
     offChainCharacters: [],
     claimStatus: null,
     reserveWoc: null,
+    circulatingSupply: null,
     ...overrides,
   };
 }
@@ -110,6 +111,42 @@ describe('buildWalletPanelView', () => {
     expect(
       buildWalletPanelView(snapshot({ ...base, holdingThresholdWoc: 5000 })).canAttemptClaim,
     ).toBe(false);
+  });
+});
+
+describe('buildWalletPanelView: circulating supply', () => {
+  it('passes through nulls before the first server read', () => {
+    const view = buildWalletPanelView(snapshot());
+    expect(view.circulatingSupplyWoc).toBeNull();
+    expect(view.emissionCapWoc).toBeNull();
+    expect(view.emissionCapPct).toBeNull();
+  });
+
+  it('derives the emission cap percentage from gross emitted / cap', () => {
+    const view = buildWalletPanelView(
+      snapshot({
+        circulatingSupply: { netWoc: 180_000, grossEmittedWoc: 250_000, capWoc: 1_000_000 },
+      }),
+    );
+    expect(view.circulatingSupplyWoc).toBe(180_000);
+    expect(view.emissionCapWoc).toBe(1_000_000);
+    expect(view.emissionCapPct).toBeCloseTo(25, 5);
+  });
+
+  it('clamps the percentage at 100 even if gross emission somehow exceeds the cap', () => {
+    const view = buildWalletPanelView(
+      snapshot({
+        circulatingSupply: { netWoc: 900_000, grossEmittedWoc: 1_200_000, capWoc: 1_000_000 },
+      }),
+    );
+    expect(view.emissionCapPct).toBe(100);
+  });
+
+  it('is null when the cap is 0 (division-by-zero guard)', () => {
+    const view = buildWalletPanelView(
+      snapshot({ circulatingSupply: { netWoc: 0, grossEmittedWoc: 0, capWoc: 0 } }),
+    );
+    expect(view.emissionCapPct).toBeNull();
   });
 });
 

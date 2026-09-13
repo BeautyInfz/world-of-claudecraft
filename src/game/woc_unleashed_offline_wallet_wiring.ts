@@ -12,6 +12,7 @@ import { walletConnectionView } from '../ui/wallet_balance';
 import type { WalletPanelSnapshot } from '../ui/wallet_panel_view';
 import type { WalletPanelHooks } from '../ui/wallet_panel_window';
 import { requestWalletVerify } from '../ui/wallet_verify_request';
+import { copperToWocTokens } from '../ui/woc_currency';
 
 export function buildOfflineWalletPanelHooks(sim: Sim): WalletPanelHooks {
   return {
@@ -19,8 +20,11 @@ export function buildOfflineWalletPanelHooks(sim: Sim): WalletPanelHooks {
       // meta.copper is the live unleashedBalance redirect (sim.ts's
       // bindUnleashedCurrency), installed unconditionally whenever
       // durabilitySystemEnabled is true, exactly the case that gates this
-      // wiring being attached at all.
-      const woc = sim.players.get(sim.playerId)?.copper ?? 0;
+      // wiring being attached at all - and, like every other copper field in
+      // the sim, it is in COPPER units (1 $WOC = 10000 copper), so it must go
+      // through the same copperToWocTokens conversion the online path's own
+      // /10000 division applies, or the panel shows 10000x the real balance.
+      const woc = copperToWocTokens(sim.players.get(sim.playerId)?.copper ?? 0);
       return {
         connection: walletConnectionView(),
         holdingThresholdWoc: null,
@@ -28,6 +32,7 @@ export function buildOfflineWalletPanelHooks(sim: Sim): WalletPanelHooks {
         offChainCharacters: [{ pid: sim.playerId, woc }],
         claimStatus: null,
         reserveWoc: null,
+        circulatingSupply: null,
       };
     },
     async circulationSeries() {

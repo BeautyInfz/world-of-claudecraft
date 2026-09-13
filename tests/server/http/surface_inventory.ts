@@ -1668,6 +1668,17 @@ export const SURFACE_INVENTORY: readonly SurfaceRoute[] = [
     limiter: null,
     requireOwnedExpected: null,
   },
+  {
+    dispatcher: DISPATCH.mainApi,
+    method: 'GET',
+    path: '/api/woc-unleashed/circulating-supply',
+    handler:
+      'server/woc_unleashed_wallet_routes.ts circulatingSupplyHandler (registry-only RouteDef)',
+    contentType: PROBLEM_JSON,
+    authScope: AUTH_SCOPE.public,
+    limiter: null,
+    requireOwnedExpected: null,
+  },
   // v0.20.0 release merge: the map editor surface. Custom maps (owner CRUD +
   // public browse/read, server/maps_routes.ts cores) and uploaded GLB assets
   // (binary upload + public content-addressed byte read,

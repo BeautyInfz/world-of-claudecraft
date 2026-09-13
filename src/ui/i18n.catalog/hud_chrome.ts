@@ -4844,6 +4844,8 @@ export const hudChromeStrings = {
     claimPending: 'Claiming...',
     claimSuccess: 'Claim complete. {amount} $WOC sent to your wallet.',
     reserveLabel: 'Claim wallet reserve:',
+    circulatingSupplyLabel: 'In-game $WOC circulating:',
+    circulatingSupplyCap: '{pct}% of the {cap} $WOC emission cap',
     circulationChartTitle: 'In-game circulation',
     flowChartTitle: 'On-chain flow',
     offlineClaimUnavailable:

@@ -15,6 +15,17 @@ export interface WalletPanelClaimStatus {
   totalClaimedCopper: number;
 }
 
+/** The economy-wide $WOC currently in circulation (server/
+ *  woc_unleashed_emission_db.ts), NOT this account's own balance: netWoc is
+ *  gross emission minus every off-chain sink (repairs, marketplace fees,
+ *  claims), grossEmittedWoc/capWoc give it a scale against the emission
+ *  ceiling. Every field null before the first server read. */
+export interface WalletPanelCirculatingSupply {
+  netWoc: number | null;
+  grossEmittedWoc: number | null;
+  capWoc: number | null;
+}
+
 export interface WalletPanelSnapshot {
   connection: WalletConnectionView;
   /** $WOC amount currently equivalent to $40 USD (server/
@@ -24,6 +35,7 @@ export interface WalletPanelSnapshot {
   offChainCharacters: readonly WalletPanelCharacterBalance[];
   claimStatus: WalletPanelClaimStatus | null;
   reserveWoc: number | null;
+  circulatingSupply: WalletPanelCirculatingSupply | null;
 }
 
 export interface WalletPanelView {
@@ -41,6 +53,11 @@ export interface WalletPanelView {
   cooldownElapsed: boolean;
   lastClaimAt: string | null;
   reserveWoc: number | null;
+  circulatingSupplyWoc: number | null;
+  emissionCapWoc: number | null;
+  /** grossEmittedWoc / capWoc as a 0-100 percent, null when either input is
+   *  missing or the cap is 0 (division-by-zero guard). */
+  emissionCapPct: number | null;
   /** True only once every gate this session can check client-side agrees a
    *  claim could succeed (holding gate met, cooldown elapsed, wallet
    *  connected+linked, an off-chain balance loaded and > 0). The server
@@ -60,6 +77,12 @@ export function buildWalletPanelView(snapshot: WalletPanelSnapshot): WalletPanel
   const holdingMet =
     threshold !== null && onChainBalanceWoc !== null && onChainBalanceWoc >= threshold;
   const nonzeroCharacters = snapshot.offChainCharacters.filter((c) => c.woc > 0);
+  const grossEmittedWoc = snapshot.circulatingSupply?.grossEmittedWoc ?? null;
+  const emissionCapWoc = snapshot.circulatingSupply?.capWoc ?? null;
+  const emissionCapPct =
+    grossEmittedWoc !== null && emissionCapWoc !== null && emissionCapWoc > 0
+      ? Math.min(100, (grossEmittedWoc / emissionCapWoc) * 100)
+      : null;
   return {
     connected,
     connectedAddress: connected ? connection.linkedAddress : null,
@@ -73,6 +96,9 @@ export function buildWalletPanelView(snapshot: WalletPanelSnapshot): WalletPanel
     cooldownElapsed: snapshot.claimStatus?.cooldownElapsed ?? false,
     lastClaimAt: snapshot.claimStatus?.lastClaimAt ?? null,
     reserveWoc: snapshot.reserveWoc,
+    circulatingSupplyWoc: snapshot.circulatingSupply?.netWoc ?? null,
+    emissionCapWoc,
+    emissionCapPct,
     canAttemptClaim:
       connected &&
       holdingMet &&

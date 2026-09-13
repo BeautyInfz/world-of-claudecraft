@@ -157,6 +157,7 @@ const REGISTRY_ONLY_PATHS = new Set<string>([
   '/api/woc-unleashed/reserve',
   '/api/woc-unleashed/circulation-series',
   '/api/woc-unleashed/onchain-flow-series',
+  '/api/woc-unleashed/circulating-supply',
 ]);
 
 // Every legacy /api ladder row (dispatcher === main handleApi), minus the
@@ -313,6 +314,7 @@ describe('registry completeness: migrated baseline (public reads + auth + charac
     { method: 'GET', path: '/api/woc-unleashed/reserve' },
     { method: 'GET', path: '/api/woc-unleashed/circulation-series' },
     { method: 'GET', path: '/api/woc-unleashed/onchain-flow-series' },
+    { method: 'GET', path: '/api/woc-unleashed/circulating-supply' },
     // The reports + telemetry surface (server/reports.ts). All POST; the
     // two public beacons (perf-report, site-presence) are registered POST-only so a
     // non-POST delegates to the retained legacy arm (perf-report's 404 fall-through,

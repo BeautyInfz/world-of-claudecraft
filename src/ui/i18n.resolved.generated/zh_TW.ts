@@ -3443,6 +3443,8 @@ export const zh_TW: EnTranslations = {
       "claimPending": "領取中……",
       "claimSuccess": "領取完成。{amount} $WOC 已發送至您的錢包。",
       "reserveLabel": "領取錢包儲備：",
+      "circulatingSupplyLabel": "遊戲內流通中的 $WOC：",
+      "circulatingSupplyCap": "佔 {cap} $WOC 發行上限的 {pct}%",
       "circulationChartTitle": "遊戲內流通量",
       "flowChartTitle": "鏈上流量",
       "offlineClaimUnavailable": "離線狀態下無法領取。請連接到線上的 WoC Unleashed 世界。"

@@ -1639,7 +1639,9 @@ const MONOLITHS: MonolithRow[] = [
     // Plus 7 for realmStatus() reporting wocUnleashed alongside cap (the
     // realm-list badge, one fetch, no extra request; biome wraps the
     // widened return type/object across extra lines). Exact count, zero slack.
-    ceiling: 5592,
+    // Plus 3 for wocUnleashedCirculatingSupply() beside the other wallet-panel
+    // API methods. Exact count, zero slack.
+    ceiling: 5595,
     seam: 'a src/net sibling module (the refactor/net-online split is the template)',
   },
   {

@@ -3443,6 +3443,8 @@ export const en_XA: EnTranslations = {
       "claimPending": "[Çļáíɱíñĝ...]",
       "claimSuccess": "[Çļáíɱ çóɱþļéţé. {amount} $ŴÓÇ šéñţ ţó ýóúŕ ŵáļļéţ.]",
       "reserveLabel": "[Çļáíɱ ŵáļļéţ ŕéšéŕʋé:]",
+      "circulatingSupplyLabel": "[Íñ-ĝáɱé $ŴÓÇ çíŕçúļáţíñĝ:]",
+      "circulatingSupplyCap": "[{pct}% óƒ ţĥé {cap} $ŴÓÇ éɱíššíóñ çáþ]",
       "circulationChartTitle": "[Íñ-ĝáɱé çíŕçúļáţíóñ]",
       "flowChartTitle": "[Óñ-çĥáíñ ƒļóŵ]",
       "offlineClaimUnavailable": "[Çļáíɱíñĝ íšñ'ţ áʋáíļáƀļé óƒƒļíñé. Çóññéçţ ţó áñ óñļíñé ŴóÇ Úñļéášĥéð ŕéáļɱ.]"

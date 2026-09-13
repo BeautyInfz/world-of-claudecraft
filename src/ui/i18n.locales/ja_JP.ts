@@ -16805,4 +16805,6 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'mode.serverUnleashedOfflineSub': 'ローカルワールド、WoC Unleashedルール',
   'hudChrome.walletPanel.offlineClaimUnavailable':
     'オフラインでは受け取れません。オンラインのWoC Unleashedワールドに接続してください。',
+  'hudChrome.walletPanel.circulatingSupplyLabel': 'ゲーム内で流通中の $WOC：',
+  'hudChrome.walletPanel.circulatingSupplyCap': '{cap} $WOC発行上限の{pct}%',
 };

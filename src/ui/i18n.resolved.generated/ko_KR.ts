@@ -3443,6 +3443,8 @@ export const ko_KR: EnTranslations = {
       "claimPending": "수령 중...",
       "claimSuccess": "수령이 완료되었습니다. {amount} $WOC가 지갑으로 전송되었습니다.",
       "reserveLabel": "수령 지갑 준비금:",
+      "circulatingSupplyLabel": "게임 내 유통 중인 $WOC:",
+      "circulatingSupplyCap": "{cap} $WOC 발행 한도의 {pct}%",
       "circulationChartTitle": "게임 내 유통량",
       "flowChartTitle": "온체인 흐름",
       "offlineClaimUnavailable": "오프라인에서는 수령할 수 없습니다. 온라인 WoC Unleashed 월드에 접속하세요."
