@@ -3444,7 +3444,8 @@ export const ja_JP: EnTranslations = {
       "claimSuccess": "受け取りが完了しました。{amount} $WOCがウォレットに送金されました。",
       "reserveLabel": "受取ウォレットの準備金：",
       "circulationChartTitle": "ゲーム内流通量",
-      "flowChartTitle": "オンチェーンの流量"
+      "flowChartTitle": "オンチェーンの流量",
+      "offlineClaimUnavailable": "オフラインでは受け取れません。オンラインのWoC Unleashedワールドに接続してください。"
     },
     "materialSources": {
       "detailsTitle": "{item}の入手元",

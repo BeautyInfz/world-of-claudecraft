@@ -16768,4 +16768,6 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
   'mode.unleashedOfflineDesc':
     'WoC Unleashed 규칙을 적용한 즉시 시작 싱글플레이 월드입니다. 골드는 $WOC이며 장비에는 내구도가 있습니다. 아무것도 저장되지 않으며 로컬 테스트 전용입니다.',
   'mode.serverUnleashedOfflineSub': '로컬 월드, WoC Unleashed 규칙',
+  'hudChrome.walletPanel.offlineClaimUnavailable':
+    '오프라인에서는 수령할 수 없습니다. 온라인 WoC Unleashed 월드에 접속하세요.',
 };

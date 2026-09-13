@@ -3444,7 +3444,8 @@ export const ru_RU: EnTranslations = {
       "claimSuccess": "Получение завершено. {amount} $WOC отправлено на ваш кошелёк.",
       "reserveLabel": "Резерв кошелька для выплат:",
       "circulationChartTitle": "Обращение в игре",
-      "flowChartTitle": "Движение в сети"
+      "flowChartTitle": "Движение в сети",
+      "offlineClaimUnavailable": "Получение недоступно офлайн. Подключитесь к онлайн-миру WoC Unleashed."
     },
     "materialSources": {
       "detailsTitle": "Источники: {item}",

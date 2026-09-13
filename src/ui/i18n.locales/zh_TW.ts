@@ -15973,4 +15973,5 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'mode.unleashedOfflineDesc':
     '使用 WoC Unleashed 規則的即時單人世界：金幣即為 $WOC，裝備具有耐久度。不會保存任何內容，僅供本地測試。',
   'mode.serverUnleashedOfflineSub': '本地世界，WoC Unleashed 規則',
+  'hudChrome.walletPanel.offlineClaimUnavailable': '離線狀態下無法領取。請連接到線上的 WoC Unleashed 世界。',
 };

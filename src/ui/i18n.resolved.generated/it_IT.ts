@@ -3444,7 +3444,8 @@ export const it_IT: EnTranslations = {
       "claimSuccess": "Claim complete. {amount} $WOC sent to your wallet.",
       "reserveLabel": "Claim wallet reserve:",
       "circulationChartTitle": "In-game circulation",
-      "flowChartTitle": "On-chain flow"
+      "flowChartTitle": "On-chain flow",
+      "offlineClaimUnavailable": "Claiming isn't available offline. Connect to an online WoC Unleashed realm."
     },
     "materialSources": {
       "detailsTitle": "Fonti di {item}",

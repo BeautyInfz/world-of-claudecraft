@@ -16803,4 +16803,6 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'mode.unleashedOfflineDesc':
     'WoC Unleashedのルールを使った即時シングルプレイヤーワールドです。ゴールドは$WOC、装備には耐久度があります。何も保存されません。ローカルテスト専用です。',
   'mode.serverUnleashedOfflineSub': 'ローカルワールド、WoC Unleashedルール',
+  'hudChrome.walletPanel.offlineClaimUnavailable':
+    'オフラインでは受け取れません。オンラインのWoC Unleashedワールドに接続してください。',
 };

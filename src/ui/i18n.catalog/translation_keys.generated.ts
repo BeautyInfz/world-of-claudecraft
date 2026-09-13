@@ -12203,6 +12203,7 @@ export type TranslationKeyFlat =
   | 'hudChrome.walletPanel.gateUnmet'
   | 'hudChrome.walletPanel.holdingGate'
   | 'hudChrome.walletPanel.offChainBalance'
+  | 'hudChrome.walletPanel.offlineClaimUnavailable'
   | 'hudChrome.walletPanel.onChainBalance'
   | 'hudChrome.walletPanel.reserveLabel'
   | 'hudChrome.walletPanel.title'

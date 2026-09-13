@@ -226,6 +226,7 @@ import { loadingCurtainFadeMs, resolveUiEffectsProfile } from './game/ui_effects
 import { feedSimCalendar } from './game/utc_day';
 import { voice } from './game/voice';
 import { attachWocMarketExchange } from './game/woc_market_wiring';
+import { buildOfflineWalletPanelHooks } from './game/woc_unleashed_offline_wallet_wiring';
 import { buildWalletPanelHooks } from './game/woc_unleashed_wallet_wiring';
 import { telemetryZoneId } from './game/world_telemetry';
 import { zoneWarmupMode } from './game/zone_transition';
@@ -3368,6 +3369,12 @@ async function startGame(
         hud.attachStorePromoCard();
       }
     }
+  } else if (offlineSim?.cfg.durabilitySystemEnabled) {
+    // "Unleashed Offline" dev shortcut: no server to ask an advert from, so
+    // the dropdown's own choice (already threaded into durabilitySystemEnabled)
+    // is the advert. The wallet panel's hooks read the local Sim directly
+    // instead of the server; see woc_unleashed_offline_wallet_wiring.ts.
+    hud.attachWalletPanel(buildOfflineWalletPanelHooks(offlineSim));
   }
   // The deliberate Thornhollow Fields flag press: always attempted, the world
   // owns every rule (radius, team, the return-beats-press race), so a stray

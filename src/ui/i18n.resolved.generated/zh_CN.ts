@@ -3444,7 +3444,8 @@ export const zh_CN: EnTranslations = {
       "claimSuccess": "领取完成。{amount} $WOC 已发送至您的钱包。",
       "reserveLabel": "领取钱包储备：",
       "circulationChartTitle": "游戏内流通量",
-      "flowChartTitle": "链上流量"
+      "flowChartTitle": "链上流量",
+      "offlineClaimUnavailable": "离线状态下无法领取。请连接到在线的 WoC Unleashed 世界。"
     },
     "materialSources": {
       "detailsTitle": "{item}的来源",

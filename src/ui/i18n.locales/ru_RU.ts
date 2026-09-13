@@ -17092,4 +17092,6 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'mode.unleashedOfflineDesc':
     'Мгновенный одиночный мир по правилам WoC Unleashed: золото — это $WOC, а снаряжение имеет прочность. Ничего не сохраняется; только для локального тестирования.',
   'mode.serverUnleashedOfflineSub': 'Локальный мир, правила WoC Unleashed',
+  'hudChrome.walletPanel.offlineClaimUnavailable':
+    'Получение недоступно офлайн. Подключитесь к онлайн-миру WoC Unleashed.',
 };

@@ -3444,7 +3444,8 @@ export const en_XA: EnTranslations = {
       "claimSuccess": "[Çļáíɱ çóɱþļéţé. {amount} $ŴÓÇ šéñţ ţó ýóúŕ ŵáļļéţ.]",
       "reserveLabel": "[Çļáíɱ ŵáļļéţ ŕéšéŕʋé:]",
       "circulationChartTitle": "[Íñ-ĝáɱé çíŕçúļáţíóñ]",
-      "flowChartTitle": "[Óñ-çĥáíñ ƒļóŵ]"
+      "flowChartTitle": "[Óñ-çĥáíñ ƒļóŵ]",
+      "offlineClaimUnavailable": "[Çļáíɱíñĝ íšñ'ţ áʋáíļáƀļé óƒƒļíñé. Çóññéçţ ţó áñ óñļíñé ŴóÇ Úñļéášĥéð ŕéáļɱ.]"
     },
     "materialSources": {
       "detailsTitle": "[Šóúŕçéš ƒóŕ {item}]",

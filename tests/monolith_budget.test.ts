@@ -1253,7 +1253,10 @@ const MONOLITHS: MonolithRow[] = [
     // mode threaded through startOffline (setWocCurrencyActive +
     // durabilitySystemEnabled), handleOfflineStart, and the dropdown/compat
     // trigger wiring. Exact count, zero slack.
-    ceiling: 11371,
+    // Plus 7 for attaching the offline wallet panel hooks
+    // (buildOfflineWalletPanelHooks) in the startGame else-arm when the
+    // offline Sim has durabilitySystemEnabled. Exact count, zero slack.
+    ceiling: 11378,
     seam: 'a src/game/ or src/ui/ sibling module; main.ts is a firewall, not a home',
   },
   {

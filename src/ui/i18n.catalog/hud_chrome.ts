@@ -4846,6 +4846,8 @@ export const hudChromeStrings = {
     reserveLabel: 'Claim wallet reserve:',
     circulationChartTitle: 'In-game circulation',
     flowChartTitle: 'On-chain flow',
+    offlineClaimUnavailable:
+      "Claiming isn't available offline. Connect to an online WoC Unleashed realm.",
   },
   // Full material-source details dialog. The picker quantities are exact units
   // from one captured descriptor key; the command revalidates the captured
