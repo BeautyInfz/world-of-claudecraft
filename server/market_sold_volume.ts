@@ -70,6 +70,12 @@ export interface SoldVolumeSim {
   marketBuy(listingId: number, pid?: number): void;
 }
 
+/** The sim surface sweepWithSoldVolume reads; `Sim` satisfies it. */
+export interface SoldVolumeSweepSim {
+  readonly marketListings: readonly SoldVolumeListing[];
+  marketSweep(itemId: string, count: number, maxCopper: number, pid?: number): void;
+}
+
 /**
  * The sale a buy completed, or null. Pure: `before` is the listing row as it
  * stood ahead of the call and `after` the same id looked up again.
@@ -286,4 +292,36 @@ export function buyWithSoldVolume(sim: SoldVolumeSim, listingId: number, pid: nu
   if (entry === null) return;
   if (classifyMarketMetricsItem(entry.itemId) === null) return;
   enqueue(entry);
+}
+
+/**
+ * The Market Sweep twin of buyWithSoldVolume. A sweep splices MANY rows, so the
+ * single-buy "length dropped, therefore this one row sold" premise does not
+ * carry: instead every non-house row of the swept item is read BEFORE the call
+ * and looked up again AFTER, and each one that left the book is one sale
+ * (marketSaleFromBuy, the same verdict per row). The sweep never touches house
+ * stock or another item's rows (src/sim/market_sweep.ts eligibility), so the
+ * pre-read is bounded to the swept item.
+ */
+export function sweepWithSoldVolume(
+  sim: SoldVolumeSweepSim,
+  itemId: string,
+  count: number,
+  maxCopper: number,
+  pid: number,
+): void {
+  const before = sim.marketListings.filter((row) => row.itemId === itemId && !row.house);
+  sim.marketSweep(itemId, count, maxCopper, pid);
+  if (sim.marketListings.length === before.length + countOtherRows(sim, itemId)) return;
+  if (classifyMarketMetricsItem(itemId) === null) return;
+  for (const row of before) {
+    const entry = marketSaleFromBuy(row, findListing(sim.marketListings, row.id));
+    if (entry !== null) enqueue(entry);
+  }
+}
+
+function countOtherRows(sim: SoldVolumeSweepSim, itemId: string): number {
+  let n = 0;
+  for (const row of sim.marketListings) if (row.itemId !== itemId || row.house) n++;
+  return n;
 }

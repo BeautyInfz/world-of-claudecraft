@@ -107,6 +107,7 @@ export const HEAVY_SELF_CMDS = new Set<string>([
   'market_list',
   'market_list_instance',
   'market_buy',
+  'market_sweep',
   'market_cancel',
   'market_collect',
   'mail_send',

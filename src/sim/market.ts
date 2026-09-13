@@ -45,6 +45,7 @@ import {
   recordSale,
   sanitizeSaleLog,
 } from './market_sale_log';
+import { type MarketSweepPlan, planMarketSweep, sanitizeSweepCount } from './market_sweep';
 import { planPlainMaterialTransfer } from './material_exchange_transfer';
 import { applyMaterialInventoryTake } from './material_inventory_take';
 import { cloneMaterialData } from './material_payload_identity';
@@ -64,6 +65,7 @@ import {
   type Entity,
   INTERACT_RANGE,
   type InvSlot,
+  type ItemDef,
   type ItemInstancePayload,
 } from './types';
 
@@ -833,6 +835,21 @@ export class Market {
       this.ctx.error(meta.entityId, 'Your bags are full.');
       return;
     }
+    this.settleBuy(idx, listing, def, meta);
+    this.ctx.emit({
+      type: 'loot',
+      // biome-ignore lint/style/useTemplate: keep this scanner-friendly shape for i18n extraction.
+      text: `Bought ${def.name}${listing.count > 1 ? ' x' + listing.count : ''} for ${formatMoney(listing.price)}.`,
+      pid: meta.entityId,
+    });
+  }
+
+  // The settlement every buy arm shares once its refusals have passed: coin leaves
+  // the buyer, the goods land, and (never for house stock) the seller's proceeds
+  // less the cut wait in their collection, the sale is itemized, the row leaves the
+  // book, and an online seller is told. marketBuy and marketSweep differ only in
+  // how they choose rows and what they say to the BUYER afterwards.
+  private settleBuy(idx: number, listing: MarketListing, def: ItemDef, meta: PlayerMeta): void {
     meta.copper -= listing.price;
     grantCopies(
       this.ctx,
@@ -871,10 +888,100 @@ export class Market {
         });
       }
     }
+  }
+
+  // Market Sweep, the quote half: remember what the viewer wants swept so the next
+  // snapshot carries a plan for it (MarketInfo.sweepQuote). Session-only, the
+  // marketSellPriceCheck precedent: a display/query narrowing with no gameplay
+  // effect, so it needs no proximity or liveness gate. An unknown item or a bad
+  // count clears the quote rather than quoting a bogus plan.
+  marketSweepQuote(itemId: string, count: number, pid?: number): void {
+    const r = this.ctx.resolve(pid);
+    if (!r) return;
+    const n = sanitizeSweepCount(count);
+    r.meta.sweepQuote = n !== null && ITEMS[itemId] ? { itemId, count: n } : null;
+  }
+
+  private sweepPlanFor(meta: PlayerMeta, itemId: string, count: number): MarketSweepPlan {
+    return planMarketSweep(this.marketListings, itemId, count, (l) =>
+      this.marketListingBelongsTo(l as MarketListing, meta),
+    );
+  }
+
+  // Market Sweep, the buy half: buy `count` units of one item across other sellers'
+  // plain listings, cheapest per unit first, as ONE command. Re-plans on the LIVE
+  // book (never trusts a client's row list) and refuses when the plan's total has
+  // moved past `maxCopper`, the total the player agreed to on the quote: the
+  // single-buy confirm-time recheck, held server-side because the client cannot
+  // see the whole book. Coin, bag space and every row are checked before the first
+  // settlement so a sweep that cannot complete buys nothing. Each row settles
+  // through the exact path a single buy takes (settleBuy: seller proceeds, cut,
+  // ledger, seller notice, bookRev); the buyer hears one summary line in the
+  // shape the single buy already speaks, so no new loot matcher is needed.
+  marketSweep(itemId: string, count: number, maxCopper: number, pid?: number): void {
+    const r = this.ctx.resolve(pid);
+    if (!r) return;
+    const { meta, e: p } = r;
+    if (p.dead) return;
+    if (!this.nearMerchant(p)) {
+      this.ctx.error(meta.entityId, 'You are too far from the Merchant.');
+      return;
+    }
+    const n = sanitizeSweepCount(count);
+    const def = ITEMS[itemId];
+    if (n === null || !def || !Number.isFinite(maxCopper)) return;
+    const plan = this.sweepPlanFor(meta, itemId, n);
+    if (plan.listingIds.length === 0) {
+      this.ctx.error(meta.entityId, 'No listings of that item are available to sweep.');
+      return;
+    }
+    if (plan.total > maxCopper) {
+      this.ctx.error(
+        meta.entityId,
+        'Prices changed before your sweep landed. Check the quote and try again.',
+      );
+      return;
+    }
+    if (meta.copper < plan.total) {
+      this.ctx.error(meta.entityId, 'You cannot afford that.');
+      return;
+    }
+    // Plain fungible rows all stack as the same item, so one summed check is the
+    // whole-sweep capacity question (a crafted-provenance row is checked again per
+    // row below, the single-buy gate, before its own settlement).
+    if (!canGrantCopies(meta.inventory, bagPools(meta.bags), itemId, plan.units)) {
+      this.ctx.error(meta.entityId, 'Your bags are full.');
+      return;
+    }
+    let units = 0;
+    let total = 0;
+    for (const id of plan.listingIds) {
+      const idx = this.marketListings.findIndex((l) => l.id === id);
+      if (idx < 0) continue;
+      const listing = this.marketListings[idx];
+      if (
+        !canGrantCopies(
+          meta.inventory,
+          bagPools(meta.bags),
+          listing.itemId,
+          listing.count,
+          listing.instance,
+          listing.craftedRecipeId,
+          listing.materialSources,
+        )
+      ) {
+        this.ctx.error(meta.entityId, 'Your bags are full.');
+        break;
+      }
+      this.settleBuy(idx, listing, def, meta);
+      units += listing.count;
+      total += listing.price;
+    }
+    if (units === 0) return;
     this.ctx.emit({
       type: 'loot',
       // biome-ignore lint/style/useTemplate: keep this scanner-friendly shape for i18n extraction.
-      text: `Bought ${def.name}${listing.count > 1 ? ' x' + listing.count : ''} for ${formatMoney(listing.price)}.`,
+      text: `Bought ${def.name}${units > 1 ? ' x' + units : ''} for ${formatMoney(total)}.`,
       pid: meta.entityId,
     });
   }
@@ -1153,6 +1260,25 @@ export class Market {
       sellLowestPrice: meta.sellPriceItemId
         ? lowestListingPricePerUnit(this.marketListings, meta.sellPriceItemId)
         : null,
+      // The Market Sweep quote (MarketInfo.sweepQuote): the live plan for what the
+      // viewer asked to sweep, echoed with its request so the UI can tell a stale
+      // snapshot from the quote it is waiting for, the sellPriceItemId precedent.
+      sweepQuote: meta.sweepQuote ? this.sweepQuoteFor(meta, meta.sweepQuote) : null,
+    };
+  }
+
+  private sweepQuoteFor(
+    meta: PlayerMeta,
+    req: { itemId: string; count: number },
+  ): import('../world_api').MarketSweepQuote {
+    const plan = this.sweepPlanFor(meta, req.itemId, req.count);
+    return {
+      itemId: req.itemId,
+      count: req.count,
+      units: plan.units,
+      listings: plan.listingIds.length,
+      total: plan.total,
+      short: plan.short,
     };
   }
 
