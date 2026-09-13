@@ -16807,4 +16807,5 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
     'オフラインでは受け取れません。オンラインのWoC Unleashedワールドに接続してください。',
   'hudChrome.walletPanel.circulatingSupplyLabel': 'ゲーム内で流通中の $WOC：',
   'hudChrome.walletPanel.circulatingSupplyCap': '{cap} $WOC発行上限の{pct}%',
+  'hudChrome.itemTooltip.durabilityBroken': '破損しています。効果を再び得るには修理が必要です。',
 };

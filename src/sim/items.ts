@@ -30,6 +30,7 @@ import { isRawCookingCatch } from './content/items';
 import { ITEMS, NPCS } from './data';
 import { markItemDiscovered } from './deeds';
 import {
+  canRepairAtVendor,
   DEFAULT_REPAIR_FACTOR,
   DURABILITY_MAX,
   durabilityOf,
@@ -1389,16 +1390,18 @@ export function buyItem(
 }
 
 // WoC Unleashed-exclusive (src/sim/durability.ts): repair one equipped item
-// at a repairVendor NPC (spec: repair is vendor-only, no kits/consumables/
-// profession repair at this stage). Mirrors buyItem's gate ladder (vendor
-// existence, dead, range) before the durability-specific checks.
+// at any vendor that repairs (canRepairAtVendor: an explicit repair
+// specialist, or any goods vendor at all - spec: repair is vendor-only, no
+// kits/consumables/profession repair at this stage). Mirrors buyItem's gate
+// ladder (vendor existence, dead, range) before the durability-specific
+// checks.
 export function repairItem(ctx: SimContext, npcId: number, slot: EquipSlot, pid?: number): void {
   if (!ctx.durabilitySystemEnabled) return;
   const r = ctx.resolve(pid);
   if (!r) return;
   const { meta, e: p } = r;
   const npc = ctx.entities.get(npcId);
-  if (npc?.kind !== 'npc' || npc.repairVendor !== true) {
+  if (npc?.kind !== 'npc' || !canRepairAtVendor(npc)) {
     ctx.error(meta.entityId, 'That merchant does not repair gear.');
     return;
   }

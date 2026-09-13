@@ -3413,6 +3413,7 @@ export const tr_TR: EnTranslations = {
       "perfectingRank": "Kusursuzlaştırma: {ranks} içinden {rank}. kademe",
       "durability": "Durability: {current}/{max}",
       "durabilityLow": "Low durability: stat bonuses are lost at 0.",
+      "durabilityBroken": "Broken. This item must be repaired before its bonuses work again.",
       "materialSourceGatherer": "{count} × {name} tarafından toplandı",
       "materialSourceGathererSigned": "{count} × {name} tarafından toplandı, {signer} imzalı",
       "materialSourceUnrecorded": "{count} × Toplayıcı kaydedilmedi",

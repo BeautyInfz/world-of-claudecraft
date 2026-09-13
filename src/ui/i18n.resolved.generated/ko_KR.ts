@@ -3413,6 +3413,7 @@ export const ko_KR: EnTranslations = {
       "perfectingRank": "완전화: {ranks}단계 중 {rank}단계",
       "durability": "내구도: {current}/{max}",
       "durabilityLow": "내구도가 낮습니다. 내구도가 0이 되면 능력치 보너스가 사라집니다.",
+      "durabilityBroken": "파손되었습니다. 효과를 다시 적용받으려면 수리해야 합니다.",
       "materialSourceGatherer": "{count} × {name} 채집",
       "materialSourceGathererSigned": "{count} × {name} 채집, {signer} 서명",
       "materialSourceUnrecorded": "{count} × 채집자 기록 없음",

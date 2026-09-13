@@ -80,13 +80,49 @@ describe('items.repairItem', () => {
     expect(meta.equipmentInstance?.helmet?.durability).toBe(DURABILITY_MAX);
   });
 
-  it('refuses at a non-repair vendor NPC', () => {
+  it('allows repair at ANY goods vendor, not just an explicit repairVendor NPC', () => {
+    // fisherman_brandt (src/sim/content/zone1.ts) sells goods but carries no
+    // repairVendor flag: canRepairAtVendor makes every goods vendor repair.
     const sim = makeWorld();
     const { pid, meta } = repairPlayer(sim, 40);
     const anySim = sim as unknown as { entities: Map<number, Entity> };
-    const nonRepairNpc = [...anySim.entities.values()].find(
-      (e) => e.kind === 'npc' && e.repairVendor !== true && e.vendorItems.length > 0,
+    const goodsVendor = [...anySim.entities.values()].find(
+      (e) =>
+        e.kind === 'npc' &&
+        (e as unknown as { templateId?: string }).templateId === 'fisherman_brandt',
     ) as Entity;
+    expect(goodsVendor.repairVendor).not.toBe(true);
+    expect(goodsVendor.vendorItems.length).toBeGreaterThan(0);
+    // Walk over to this vendor (repairPlayer positioned the player beside the
+    // smith, not here): interact range is enforced regardless of NPC kind.
+    const p = anySim.entities.get(pid) as Entity;
+    p.pos.x = goodsVendor.pos.x + 2;
+    p.pos.z = goodsVendor.pos.z;
+    (anySim as unknown as { rebucket(e: Entity): void }).rebucket(p);
+    const before = meta.copper;
+    const expectedCost = repairCostCopper(
+      ITEMS.cryptbone_helm.sellValue,
+      40,
+      DEFAULT_REPAIR_FACTOR,
+    );
+    items.repairItem(ctxOf(sim), goodsVendor.id, 'helmet', pid);
+    expect(meta.copper).toBe(before - expectedCost);
+    expect(meta.equipmentInstance?.helmet?.durability).toBe(DURABILITY_MAX);
+  });
+
+  it('refuses at an NPC that neither sells goods nor repairs', () => {
+    // foreman_odell (src/sim/content/zone1.ts) is a pure quest-giver: no
+    // vendorItems, no repairVendor flag.
+    const sim = makeWorld();
+    const { pid, meta } = repairPlayer(sim, 40);
+    const anySim = sim as unknown as { entities: Map<number, Entity> };
+    const nonVendorNpc = [...anySim.entities.values()].find(
+      (e) =>
+        e.kind === 'npc' &&
+        (e as unknown as { templateId?: string }).templateId === 'foreman_odell',
+    ) as Entity;
+    expect(nonVendorNpc.repairVendor).not.toBe(true);
+    expect(nonVendorNpc.vendorItems.length).toBe(0);
     const before = meta.copper;
     const events: SimEvent[] = [];
     const ctx = ctxOf(sim);
@@ -95,7 +131,7 @@ describe('items.repairItem', () => {
       events.push({ type: 'error', text, pid: id });
       origError(id, text);
     };
-    items.repairItem(ctx, nonRepairNpc.id, 'helmet', pid);
+    items.repairItem(ctx, nonVendorNpc.id, 'helmet', pid);
     expect(meta.copper).toBe(before);
     expect(errorTexts(events).length).toBeGreaterThan(0);
   });

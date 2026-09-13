@@ -17096,4 +17096,6 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
     'Получение недоступно офлайн. Подключитесь к онлайн-миру WoC Unleashed.',
   'hudChrome.walletPanel.circulatingSupplyLabel': '$WOC в обращении в игре:',
   'hudChrome.walletPanel.circulatingSupplyCap': '{pct}% от лимита эмиссии {cap} $WOC',
+  'hudChrome.itemTooltip.durabilityBroken':
+    'Сломано. Чтобы бонусы снова заработали, предмет нужно починить.',
 };

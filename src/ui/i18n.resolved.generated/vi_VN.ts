@@ -3413,6 +3413,7 @@ export const vi_VN: EnTranslations = {
       "perfectingRank": "Hoàn thiện: bậc {rank} trên {ranks}",
       "durability": "Durability: {current}/{max}",
       "durabilityLow": "Low durability: stat bonuses are lost at 0.",
+      "durabilityBroken": "Broken. This item must be repaired before its bonuses work again.",
       "materialSourceGatherer": "{count} × Được {name} thu thập",
       "materialSourceGathererSigned": "{count} × Được {name} thu thập, có chữ ký của {signer}",
       "materialSourceUnrecorded": "{count} × Không ghi nhận người thu thập",

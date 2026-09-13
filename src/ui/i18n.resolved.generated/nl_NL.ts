@@ -3413,6 +3413,7 @@ export const nl_NL: EnTranslations = {
       "perfectingRank": "Perfecteren: rang {rank} van {ranks}",
       "durability": "Durability: {current}/{max}",
       "durabilityLow": "Low durability: stat bonuses are lost at 0.",
+      "durabilityBroken": "Broken. This item must be repaired before its bonuses work again.",
       "materialSourceGatherer": "{count} × Verzameld door {name}",
       "materialSourceGathererSigned": "{count} × Verzameld door {name}, gesigneerd door {signer}",
       "materialSourceUnrecorded": "{count} × Geen verzamelaar geregistreerd",

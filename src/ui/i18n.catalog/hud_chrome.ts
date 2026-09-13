@@ -4796,6 +4796,7 @@ export const hudChromeStrings = {
     // gradual falloff (docs/design/tooltip-writing.md).
     durability: 'Durability: {current}/{max}',
     durabilityLow: 'Low durability: stat bonuses are lost at 0.',
+    durabilityBroken: 'Broken. This item must be repaired before its bonuses work again.',
     // Per-unit material provenance (item_instance_tooltip.ts
     // materialSourceLines over the pure material_sources_view.ts model): one
     // line per recorded descriptor, stating the surviving unit count first so a

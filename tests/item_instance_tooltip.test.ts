@@ -3,7 +3,7 @@
 // any arm (seal, bonus stats and their enchant attribution, maker's mark, the
 // legacy shapes) fails a decisive assertion. The module is the pure
 // string-builder side of hud.itemTooltip's instance composition.
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it } from 'vitest';
 import { ENCHANTS } from '../src/sim/content/enchants';
 import {
   HARVEST_COMPONENT_ITEMS,
@@ -19,6 +19,7 @@ import {
   instanceBadgeLines,
   instanceBindingLines,
   instanceBonusStatLines,
+  instanceDurabilityLines,
   instanceMakersMarkLine,
   instancePartyTradeLine,
   instanceTitleHtml,
@@ -30,6 +31,7 @@ import {
   wornTooltipInstance,
 } from '../src/ui/item_instance_tooltip';
 import { svgIcon } from '../src/ui/ui_icons';
+import { setWocCurrencyActive } from '../src/ui/woc_currency';
 
 describe('item_instance_tooltip', () => {
   it('masterwork copy gets the gold seal and no enchanted marker', () => {
@@ -780,5 +782,49 @@ describe('instancePartyTradeLine (the BoP party trade window line)', () => {
     expect(hud.indexOf('instancePartyTradeLine(', partyTrade + 1)).toBe(-1);
     // The remaining span resolves through the IWorld clock, never Date.now().
     expect(hud).toContain('this.sim.partyTradeMsRemaining(ms)');
+  });
+});
+
+describe('instanceDurabilityLines (WoC Unleashed-exclusive)', () => {
+  afterEach(() => setWocCurrencyActive(false));
+
+  it('renders nothing when WoC Unleashed is inactive, even for a damaged item', () => {
+    expect(instanceDurabilityLines(ITEMS.worn_sword, { durability: 10 })).toBe('');
+  });
+
+  it('renders nothing for a non-durability-tracked item (jewelry)', () => {
+    setWocCurrencyActive(true);
+    expect(instanceDurabilityLines(ITEMS.wyrmfall_pendant, { durability: 0 })).toBe('');
+    expect(instanceDurabilityLines(ITEMS.wyrmfall_pendant, undefined)).toBe('');
+  });
+
+  it('shows full durability for a pristine copy even with no instance at all', () => {
+    setWocCurrencyActive(true);
+    const html = instanceDurabilityLines(ITEMS.worn_sword, undefined);
+    expect(html).toContain('100/100');
+    expect(html).not.toContain('must be repaired');
+  });
+
+  it('shows the current durability for a damaged, non-critical copy, no warning line', () => {
+    setWocCurrencyActive(true);
+    const html = instanceDurabilityLines(ITEMS.recruit_tunic, { durability: 60 });
+    expect(html).toContain('60/100');
+    expect(html).not.toContain('must be repaired');
+  });
+
+  it('adds the low-durability warning under the 25% threshold, above 0', () => {
+    setWocCurrencyActive(true);
+    const html = instanceDurabilityLines(ITEMS.recruit_tunic, { durability: 24 });
+    expect(html).toContain('24/100');
+    expect(html).toContain(t('hudChrome.itemTooltip.durabilityLow'));
+    expect(html).not.toContain('must be repaired');
+  });
+
+  it('shows the distinct "must be repaired" line at exactly 0, not the low-durability warning', () => {
+    setWocCurrencyActive(true);
+    const html = instanceDurabilityLines(ITEMS.recruit_tunic, { durability: 0 });
+    expect(html).toContain('0/100');
+    expect(html).toContain(t('hudChrome.itemTooltip.durabilityBroken'));
+    expect(html).not.toContain(t('hudChrome.itemTooltip.durabilityLow'));
   });
 });

@@ -10331,6 +10331,7 @@ export type TranslationKeyFlat =
   | 'hudChrome.itemShare.linkHint'
   | 'hudChrome.itemSoulbound'
   | 'hudChrome.itemTooltip.durability'
+  | 'hudChrome.itemTooltip.durabilityBroken'
   | 'hudChrome.itemTooltip.durabilityLow'
   | 'hudChrome.itemTooltip.enchantedFallback'
   | 'hudChrome.itemTooltip.materialSourceGatherer'

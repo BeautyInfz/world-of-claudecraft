@@ -87,7 +87,7 @@ import {
   zoneAt,
 } from '../sim/data';
 import { specialRoleColor } from '../sim/discord_roles';
-import { DURABILITY_MAX, durabilityOf } from '../sim/durability';
+import { canRepairAtVendor, DURABILITY_MAX, durabilityOf } from '../sim/durability';
 import { canEquipItem, isUniqueEquipped, weaponHand } from '../sim/equipment_rules';
 import { isItemLevelEligible, itemInstanceLevel, itemScore } from '../sim/item_level';
 import type { Ante, PickAction } from '../sim/lockpick';
@@ -6603,7 +6603,7 @@ export class Hud {
     // seal and the enchanted marker (item_instance_tooltip.ts owns the copy
     // rules, incl. never claiming a quality-rank upgrade).
     html += instanceBadgeLines(instance);
-    html += instanceDurabilityLines(instance);
+    html += instanceDurabilityLines(item, instance);
     if (item.weapon) {
       const dps = (item.weapon.min + item.weapon.max) / 2 / item.weapon.speed;
       html += `<div class="tt-stat">${esc(
@@ -15047,7 +15047,7 @@ export class Hud {
         onClose: () => this.closeVendor(),
         sellJunk: sellJunkState,
         repairAll: repairAllPreview(
-          npc.repairVendor === true,
+          canRepairAtVendor(npc),
           this.sim.equipment,
           this.sim.equipmentInstances,
         ),

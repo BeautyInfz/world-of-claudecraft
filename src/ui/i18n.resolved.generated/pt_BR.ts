@@ -3413,6 +3413,7 @@ export const pt_BR: EnTranslations = {
       "perfectingRank": "Aperfeiçoamento: ranque {rank} de {ranks}",
       "durability": "Durability: {current}/{max}",
       "durabilityLow": "Low durability: stat bonuses are lost at 0.",
+      "durabilityBroken": "Broken. This item must be repaired before its bonuses work again.",
       "materialSourceGatherer": "{count} × Coletado por {name}",
       "materialSourceGathererSigned": "{count} × Coletado por {name}, assinado por {signer}",
       "materialSourceUnrecorded": "{count} × Coletor não registrado",

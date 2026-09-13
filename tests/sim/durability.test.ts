@@ -9,6 +9,7 @@ import { describe, expect, it } from 'vitest';
 import {
   ARMOR_SLOTS,
   applyPveDeathDurabilityLoss,
+  canRepairAtVendor,
   DURABILITY_MAX,
   durabilityOf,
   isDurabilityDepleted,
@@ -137,6 +138,22 @@ describe('repairInstance', () => {
     const instance: ItemInstancePayload = { durability: 12 };
     repairInstance(instance);
     expect(instance.durability).toBe(DURABILITY_MAX);
+  });
+});
+
+describe('canRepairAtVendor', () => {
+  it('allows any goods vendor (a nonempty vendorItems stock)', () => {
+    expect(canRepairAtVendor({ vendorItems: ['a'] })).toBe(true);
+    expect(canRepairAtVendor({ repairVendor: false, vendorItems: ['a', 'b'] })).toBe(true);
+  });
+
+  it('allows an explicit repair specialist even with no goods stock', () => {
+    expect(canRepairAtVendor({ repairVendor: true, vendorItems: [] })).toBe(true);
+  });
+
+  it('refuses an NPC that neither sells goods nor is flagged as a repair vendor', () => {
+    expect(canRepairAtVendor({ vendorItems: [] })).toBe(false);
+    expect(canRepairAtVendor({ repairVendor: false, vendorItems: [] })).toBe(false);
   });
 });
 

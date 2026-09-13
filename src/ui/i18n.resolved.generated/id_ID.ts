@@ -3413,6 +3413,7 @@ export const id_ID: EnTranslations = {
       "perfectingRank": "Penyempurnaan: peringkat {rank} dari {ranks}",
       "durability": "Durability: {current}/{max}",
       "durabilityLow": "Low durability: stat bonuses are lost at 0.",
+      "durabilityBroken": "Broken. This item must be repaired before its bonuses work again.",
       "materialSourceGatherer": "{count} × Dikumpulkan oleh {name}",
       "materialSourceGathererSigned": "{count} × Dikumpulkan oleh {name}, ditandatangani oleh {signer}",
       "materialSourceUnrecorded": "{count} × Tidak ada pengumpul yang tercatat",

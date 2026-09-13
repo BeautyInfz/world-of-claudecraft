@@ -11,6 +11,7 @@
 export const pending: Record<string, readonly string[]> = {
   "es": [
     "hudChrome.itemTooltip.durability",
+    "hudChrome.itemTooltip.durabilityBroken",
     "hudChrome.itemTooltip.durabilityLow",
     "hudChrome.walletPanel.amountLabel",
     "hudChrome.walletPanel.cancelButton",
@@ -50,6 +51,7 @@ export const pending: Record<string, readonly string[]> = {
   ],
   "es_ES": [
     "hudChrome.itemTooltip.durability",
+    "hudChrome.itemTooltip.durabilityBroken",
     "hudChrome.itemTooltip.durabilityLow",
     "hudChrome.walletPanel.amountLabel",
     "hudChrome.walletPanel.cancelButton",
@@ -89,6 +91,7 @@ export const pending: Record<string, readonly string[]> = {
   ],
   "fr_FR": [
     "hudChrome.itemTooltip.durability",
+    "hudChrome.itemTooltip.durabilityBroken",
     "hudChrome.itemTooltip.durabilityLow",
     "hudChrome.walletPanel.amountLabel",
     "hudChrome.walletPanel.cancelButton",
@@ -128,6 +131,7 @@ export const pending: Record<string, readonly string[]> = {
   ],
   "fr_CA": [
     "hudChrome.itemTooltip.durability",
+    "hudChrome.itemTooltip.durabilityBroken",
     "hudChrome.itemTooltip.durabilityLow",
     "hudChrome.walletPanel.amountLabel",
     "hudChrome.walletPanel.cancelButton",
@@ -168,6 +172,7 @@ export const pending: Record<string, readonly string[]> = {
   "en_CA": [],
   "it_IT": [
     "hudChrome.itemTooltip.durability",
+    "hudChrome.itemTooltip.durabilityBroken",
     "hudChrome.itemTooltip.durabilityLow",
     "hudChrome.walletPanel.amountLabel",
     "hudChrome.walletPanel.cancelButton",
@@ -207,6 +212,7 @@ export const pending: Record<string, readonly string[]> = {
   ],
   "de_DE": [
     "hudChrome.itemTooltip.durability",
+    "hudChrome.itemTooltip.durabilityBroken",
     "hudChrome.itemTooltip.durabilityLow",
     "hudChrome.walletPanel.amountLabel",
     "hudChrome.walletPanel.cancelButton",
@@ -274,6 +280,7 @@ export const pending: Record<string, readonly string[]> = {
   ],
   "pt_BR": [
     "hudChrome.itemTooltip.durability",
+    "hudChrome.itemTooltip.durabilityBroken",
     "hudChrome.itemTooltip.durabilityLow",
     "hudChrome.walletPanel.amountLabel",
     "hudChrome.walletPanel.cancelButton",
@@ -320,6 +327,7 @@ export const pending: Record<string, readonly string[]> = {
   ],
   "cs_CZ": [
     "hudChrome.itemTooltip.durability",
+    "hudChrome.itemTooltip.durabilityBroken",
     "hudChrome.itemTooltip.durabilityLow",
     "hudChrome.walletPanel.amountLabel",
     "hudChrome.walletPanel.cancelButton",
@@ -359,6 +367,7 @@ export const pending: Record<string, readonly string[]> = {
   ],
   "nl_NL": [
     "hudChrome.itemTooltip.durability",
+    "hudChrome.itemTooltip.durabilityBroken",
     "hudChrome.itemTooltip.durabilityLow",
     "hudChrome.walletPanel.amountLabel",
     "hudChrome.walletPanel.cancelButton",
@@ -398,6 +407,7 @@ export const pending: Record<string, readonly string[]> = {
   ],
   "pl_PL": [
     "hudChrome.itemTooltip.durability",
+    "hudChrome.itemTooltip.durabilityBroken",
     "hudChrome.itemTooltip.durabilityLow",
     "hudChrome.walletPanel.amountLabel",
     "hudChrome.walletPanel.cancelButton",
@@ -437,6 +447,7 @@ export const pending: Record<string, readonly string[]> = {
   ],
   "id_ID": [
     "hudChrome.itemTooltip.durability",
+    "hudChrome.itemTooltip.durabilityBroken",
     "hudChrome.itemTooltip.durabilityLow",
     "hudChrome.walletPanel.amountLabel",
     "hudChrome.walletPanel.cancelButton",
@@ -476,6 +487,7 @@ export const pending: Record<string, readonly string[]> = {
   ],
   "tr_TR": [
     "hudChrome.itemTooltip.durability",
+    "hudChrome.itemTooltip.durabilityBroken",
     "hudChrome.itemTooltip.durabilityLow",
     "hudChrome.walletPanel.amountLabel",
     "hudChrome.walletPanel.cancelButton",
@@ -515,6 +527,7 @@ export const pending: Record<string, readonly string[]> = {
   ],
   "sv_SE": [
     "hudChrome.itemTooltip.durability",
+    "hudChrome.itemTooltip.durabilityBroken",
     "hudChrome.itemTooltip.durabilityLow",
     "hudChrome.walletPanel.amountLabel",
     "hudChrome.walletPanel.cancelButton",
@@ -554,6 +567,7 @@ export const pending: Record<string, readonly string[]> = {
   ],
   "vi_VN": [
     "hudChrome.itemTooltip.durability",
+    "hudChrome.itemTooltip.durabilityBroken",
     "hudChrome.itemTooltip.durabilityLow",
     "hudChrome.walletPanel.amountLabel",
     "hudChrome.walletPanel.cancelButton",
@@ -593,6 +607,7 @@ export const pending: Record<string, readonly string[]> = {
   ],
   "da_DK": [
     "hudChrome.itemTooltip.durability",
+    "hudChrome.itemTooltip.durabilityBroken",
     "hudChrome.itemTooltip.durabilityLow",
     "hudChrome.walletPanel.amountLabel",
     "hudChrome.walletPanel.cancelButton",

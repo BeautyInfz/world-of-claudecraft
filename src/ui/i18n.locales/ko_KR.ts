@@ -16772,4 +16772,5 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
     '오프라인에서는 수령할 수 없습니다. 온라인 WoC Unleashed 월드에 접속하세요.',
   'hudChrome.walletPanel.circulatingSupplyLabel': '게임 내 유통 중인 $WOC:',
   'hudChrome.walletPanel.circulatingSupplyCap': '{cap} $WOC 발행 한도의 {pct}%',
+  'hudChrome.itemTooltip.durabilityBroken': '파손되었습니다. 효과를 다시 적용받으려면 수리해야 합니다.',
 };

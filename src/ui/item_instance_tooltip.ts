@@ -10,7 +10,7 @@
 // lines it actually caused (instanceBonusStatLines), which is the fact a player
 // is reading the tooltip for.
 import { ENCHANTS } from '../sim/content/enchants';
-import { DURABILITY_MAX } from '../sim/durability';
+import { DURABILITY_MAX, isDurabilityTrackedItem } from '../sim/durability';
 import { effectiveQuality } from '../sim/equipment_rules';
 import { activeItemInstanceStats, isItemEnchantActive } from '../sim/item_instance_stats';
 import { requiredLevelFor } from '../sim/item_level_req';
@@ -263,27 +263,32 @@ export function instanceBadgeLines(instance?: ItemInstancePayload): string {
 }
 
 // WoC Unleashed-exclusive (src/sim/durability.ts): "Durability: 45/100", red
-// and with a low-durability warning line once below 25%. Absent durability
-// (undefined) reads as full per the sim field's own doc comment, so a
-// pre-durability-system copy and every copy on Claudemoon render nothing
-// here - gated on wocCurrencyActive() (the one client-side WoC Unleashed
-// realm signal, shared with the currency formatter since the two features
-// are 1:1 coupled server-side, server/woc_unleashed.ts).
+// and with a low-durability warning line once below 25%, and a distinct
+// "must be repaired" line at 0. Shown for every durability-tracked item
+// (isDurabilityTrackedItem) once WoC Unleashed is active, whether or not the
+// instance has taken damage yet: absent durability reads as full per the sim
+// field's own doc comment, so a pristine copy still shows "100/100" rather
+// than staying silent - gated on wocCurrencyActive() (the one client-side
+// WoC Unleashed realm signal, shared with the currency formatter since the
+// two features are 1:1 coupled server-side, server/woc_unleashed.ts).
 const LOW_DURABILITY_WARNING_THRESHOLD = 0.25;
 
-export function instanceDurabilityLines(instance?: ItemInstancePayload): string {
+export function instanceDurabilityLines(item: ItemDef, instance?: ItemInstancePayload): string {
   if (!wocCurrencyActive()) return '';
-  const durability = instance?.durability;
-  if (typeof durability !== 'number') return '';
-  const low = durability < DURABILITY_MAX * LOW_DURABILITY_WARNING_THRESHOLD;
-  const color = low ? 'var(--color-text-error)' : 'var(--color-text-muted)';
+  if (!isDurabilityTrackedItem(item)) return '';
+  const durability = instance?.durability ?? DURABILITY_MAX;
+  const broken = durability <= 0;
+  const low = !broken && durability < DURABILITY_MAX * LOW_DURABILITY_WARNING_THRESHOLD;
+  const color = broken || low ? 'var(--color-text-error)' : 'var(--color-text-muted)';
   let html = `<div class="tt-sub" style="color:${color}">${esc(
     t('hudChrome.itemTooltip.durability', {
       current: itemNumber(durability),
       max: itemNumber(DURABILITY_MAX),
     }),
   )}</div>`;
-  if (low) {
+  if (broken) {
+    html += `<div class="tt-sub" style="color:var(--color-text-error)">${esc(t('hudChrome.itemTooltip.durabilityBroken'))}</div>`;
+  } else if (low) {
     html += `<div class="tt-sub" style="color:var(--color-text-error)">${esc(t('hudChrome.itemTooltip.durabilityLow'))}</div>`;
   }
   return html;

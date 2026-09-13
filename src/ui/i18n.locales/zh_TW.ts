@@ -15976,4 +15976,5 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'hudChrome.walletPanel.offlineClaimUnavailable': '離線狀態下無法領取。請連接到線上的 WoC Unleashed 世界。',
   'hudChrome.walletPanel.circulatingSupplyLabel': '遊戲內流通中的 $WOC：',
   'hudChrome.walletPanel.circulatingSupplyCap': '佔 {cap} $WOC 發行上限的 {pct}%',
+  'hudChrome.itemTooltip.durabilityBroken': '已損壞。需要修理才能恢復該物品的加成效果。',
 };

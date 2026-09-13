@@ -3413,6 +3413,7 @@ export const zh_CN: EnTranslations = {
       "perfectingRank": "完美化：第{rank}阶，共{ranks}阶",
       "durability": "耐久度：{current}/{max}",
       "durabilityLow": "耐久度过低：耐久度归零时属性加成将失效。",
+      "durabilityBroken": "已损坏。需要修理才能恢复该物品的加成效果。",
       "materialSourceGatherer": "{count} × 由{name}采集",
       "materialSourceGathererSigned": "{count} × 由{name}采集，由{signer}签名",
       "materialSourceUnrecorded": "{count} × 未记录采集者",

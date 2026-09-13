@@ -63,9 +63,10 @@ export interface VendorWindowDeps extends PainterHostPresentation {
     proceeds: number;
   };
   /** WoC Unleashed-exclusive (src/sim/durability.ts): non-null only at a
-   *  repairVendor NPC with at least one equipped item below full durability.
-   *  null everywhere else (including every Claudemoon vendor), so the button
-   *  below renders nothing there. */
+   *  vendor that repairs (canRepairAtVendor: any goods vendor, or an explicit
+   *  repair specialist) with at least one equipped item below full
+   *  durability. null everywhere else (including every Claudemoon vendor),
+   *  so the button below renders nothing there. */
   repairAll: { totalCopper: number; count: number } | null;
   onRepairAll(): void;
 }

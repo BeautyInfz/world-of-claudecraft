@@ -3413,6 +3413,7 @@ export const ru_RU: EnTranslations = {
       "perfectingRank": "Совершенствование: ранг {rank} из {ranks}",
       "durability": "Прочность: {current}/{max}",
       "durabilityLow": "Низкая прочность: при достижении 0 бонусы к характеристикам теряются.",
+      "durabilityBroken": "Сломано. Чтобы бонусы снова заработали, предмет нужно починить.",
       "materialSourceGatherer": "{count} × Сборщик: {name}",
       "materialSourceGathererSigned": "{count} × Сборщик: {name}, подпись: {signer}",
       "materialSourceUnrecorded": "{count} × Сборщик не указан",

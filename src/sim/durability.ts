@@ -57,6 +57,20 @@ export const DEFAULT_REPAIR_FACTOR = 0.5;
  *  item (spec: -10% = 10 of 100 points). */
 export const PVE_DEATH_DURABILITY_LOSS_FRACTION = 0.1;
 
+/** Whether an NPC repairs gear: an explicitly flagged repair specialist
+ *  (repairVendor: true, e.g. an armorer with no goods stock of their own), OR
+ *  any goods vendor at all (a nonempty vendorItems stock) - repair is a
+ *  standard service every merchant offers in WoC Unleashed, not a single
+ *  gatekept NPC. Structural (no Entity import) so both the server gate
+ *  (src/sim/items.ts repairItem) and the client preview gate (src/ui/hud.ts)
+ *  share one rule. */
+export function canRepairAtVendor(npc: {
+  repairVendor?: boolean;
+  vendorItems: readonly string[];
+}): boolean {
+  return npc.repairVendor === true || npc.vendorItems.length > 0;
+}
+
 /** Whether `def` is a durability-tracked item: every weapon and held
  *  offhand, and every armor piece EXCEPT jewelry (neck/ring - classic
  *  durability systems never touch those either, the same exclusion

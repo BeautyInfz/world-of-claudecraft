@@ -3413,6 +3413,7 @@ export const en_XA: EnTranslations = {
       "perfectingRank": "[Þéŕƒéçţíñĝ: ŕáñķ {rank} óƒ {ranks}]",
       "durability": "[Ðúŕáƀíļíţý: {current}/{max}]",
       "durabilityLow": "[Ļóŵ ðúŕáƀíļíţý: šţáţ ƀóñúšéš áŕé ļóšţ áţ 0.]",
+      "durabilityBroken": "[Ɓŕóķéñ. Ţĥíš íţéɱ ɱúšţ ƀé ŕéþáíŕéð ƀéƒóŕé íţš ƀóñúšéš ŵóŕķ áĝáíñ.]",
       "materialSourceGatherer": "[{count} × Çóļļéçţéð ƀý {name}]",
       "materialSourceGathererSigned": "[{count} × Çóļļéçţéð ƀý {name}, šíĝñéð ƀý {signer}]",
       "materialSourceUnrecorded": "[{count} × Ñó ĝáţĥéŕéŕ ŕéçóŕðéð]",

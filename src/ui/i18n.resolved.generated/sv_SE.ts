@@ -3413,6 +3413,7 @@ export const sv_SE: EnTranslations = {
       "perfectingRank": "Förfining: rang {rank} av {ranks}",
       "durability": "Durability: {current}/{max}",
       "durabilityLow": "Low durability: stat bonuses are lost at 0.",
+      "durabilityBroken": "Broken. This item must be repaired before its bonuses work again.",
       "materialSourceGatherer": "{count} × samlad av {name}",
       "materialSourceGathererSigned": "{count} × samlad av {name}, signerad av {signer}",
       "materialSourceUnrecorded": "{count} × ingen samlare registrerad",

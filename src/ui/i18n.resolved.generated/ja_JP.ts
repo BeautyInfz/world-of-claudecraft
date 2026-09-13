@@ -3413,6 +3413,7 @@ export const ja_JP: EnTranslations = {
       "perfectingRank": "完全化：ランク{rank}／{ranks}",
       "durability": "耐久度：{current}/{max}",
       "durabilityLow": "耐久度が低下しています。耐久度が0になるとステータスボーナスが失われます。",
+      "durabilityBroken": "破損しています。効果を再び得るには修理が必要です。",
       "materialSourceGatherer": "{count} × {name}が採集",
       "materialSourceGathererSigned": "{count} × {name}が採集、{signer}が署名",
       "materialSourceUnrecorded": "{count} × 採集者の記録なし",

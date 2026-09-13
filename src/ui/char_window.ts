@@ -19,6 +19,7 @@
 
 import { audio } from '../game/audio';
 import { ITEMS } from '../sim/data';
+import { isDurabilityDepleted } from '../sim/durability';
 import { type EquipSlot, type ItemDef, type ItemInstancePayload, isMechWearer } from '../sim/types';
 import type { IWorld } from '../world_api';
 import { STAT_PANELS } from './char_stats_view';
@@ -59,6 +60,11 @@ import { wornItemCellParts } from './worn_item_cell_view';
 // painter.
 const SLOT_EMPTY_TEXT_COLOR = 'var(--color-slot-empty-text)';
 const SLOT_EMPTY_BORDER_COLOR = 'var(--color-slot-empty-border)';
+// WoC Unleashed-exclusive: a depleted-durability worn item's icon rim/glow,
+// the same error red item_instance_tooltip.ts's "must be repaired" tooltip
+// line uses. Wins over the quality color; inert on Claudemoon (a piece with
+// no durability data is never depleted, see isDurabilityDepleted).
+const BROKEN_ITEM_COLOR = 'var(--color-text-error)';
 
 // The ten pair-archetype title keys (issue 1130, pair-named under Professions
 // 2.0), one per canonical pair id (see src/sim/professions/archetype.ts
@@ -515,8 +521,15 @@ export class CharWindow {
     }
     if (item) {
       // Soft glow in the item's quality color (derived, no getComputedStyle).
+      // A depleted-durability piece overrides both the glow and the icon's
+      // own border to the same error red, so a broken worn item is spottable
+      // on the paperdoll without opening its tooltip.
       const iconEl = row.querySelector<HTMLImageElement>('.item-icon');
-      if (iconEl) iconEl.style.boxShadow = qualityGlowShadow(qColor);
+      const broken = isDurabilityDepleted(instance ?? undefined);
+      if (iconEl) {
+        iconEl.style.boxShadow = qualityGlowShadow(broken ? BROKEN_ITEM_COLOR : qColor);
+        if (broken) iconEl.style.borderColor = BROKEN_ITEM_COLOR;
+      }
       this.deps.attachTooltip(row, () => {
         // Own worn copy's per-copy lines (seal, enchanted marker, maker's mark,
         // the phase 13 unique tag): read from IWorld.equipmentInstances, the
