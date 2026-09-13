@@ -1171,6 +1171,8 @@ describe('axe: vendor window advisory rows', () => {
       onSellJunk: () => {},
       onClose: () => {},
       sellJunk: { enabled: false, proceeds: 0 },
+      repairAll: null,
+      onRepairAll: () => {},
     });
     const rows = root.querySelectorAll<HTMLButtonElement>('.vendor-item');
     expect(rows.length).toBe(2);

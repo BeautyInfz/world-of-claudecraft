@@ -13,6 +13,12 @@ const itemStringsEn = {
       gold: 'gold',
       silver: 'silver',
       copper: 'copper',
+      // WoC Unleashed-exclusive: the $WOC currency amount (1 $WOC = 1 gold),
+      // shown instead of the gold/silver/copper trio above. $WOC is a token
+      // brand name, not a translated word, so only the surrounding phrasing
+      // localizes; every locale keeps the literal "$WOC" (see wallet.
+      // balanceAmount, the same convention already used for the wallet panel).
+      wocAmount: '{amount} $WOC',
     },
     slots: {
       mainhand: 'Main Hand',
@@ -236,6 +242,10 @@ const itemStringsEn = {
       qtyMultipleAria: 'Buy {count} at a time',
       qtyCustom: 'Custom',
       qtyCustomAria: 'Choose a custom amount to buy',
+      // WoC Unleashed-exclusive (src/sim/durability.ts): repairs every
+      // equipped item below full durability in one click. {cost} is the
+      // already-localized money string (gold or $WOC, formatMoney picks).
+      repairAll: 'Repair All ({count}) - {cost}',
       // The count-aware row labels (acceptance: aria names qty and total
       // price). The requirement sibling folds the R22 advisory into the name
       // exactly like buyAriaWithRequirement: one combined key, never two

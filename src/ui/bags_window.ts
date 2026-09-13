@@ -20,6 +20,7 @@
 import { audio } from '../game/audio';
 import { BACKPACK_SLOTS, bagSlotsOf } from '../sim/bags';
 import { ITEMS, QUESTS } from '../sim/data';
+import { isDurabilityDepleted } from '../sim/durability';
 import { FIREBOTTLE_COOLDOWN_SECS, FIREBOTTLE_ITEM_ID } from '../sim/interactions/firebottle_hut';
 import { baggedCopyAnchor } from '../sim/item_copy_anchor';
 import { itemCopyPin, type NamedSlotTarget } from '../sim/item_copy_ref';
@@ -1031,7 +1032,13 @@ export class BagsWindow {
       const questMark = bagQuestMarkKind(item, this.questMarkProgress(item));
       const questReady = questMark === 'questReady';
       const fineMark = bagFineMark(item.id);
-      row.className = `bag-item q-${bagQualityKey(item, s.instance)}${bagRimClasses(questMark, fineMark)}`;
+      // WoC Unleashed-exclusive: a depleted durability-tracked item wears a
+      // red rim so a broken piece is spottable in the grid, not just on hover
+      // (item_instance_tooltip.ts's instanceDurabilityLines owns the "must be
+      // repaired" tooltip line beside it). Inert on Claudemoon: absent
+      // durability reads as full, never depleted.
+      const brokenMark = isDurabilityDepleted(s.instance) ? ' item-broken' : '';
+      row.className = `bag-item q-${bagQualityKey(item, s.instance)}${bagRimClasses(questMark, fineMark)}${brokenMark}`;
       // Item identity for the island coach's press-this-next glow
       // (bootcamp.ts; distinct from the focus-key namespace).
       row.dataset.coachItem = item.id;

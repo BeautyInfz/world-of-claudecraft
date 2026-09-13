@@ -3411,11 +3411,44 @@ export const zh_TW: EnTranslations = {
       "partyTradeWindow": "在接下來的{time}內，你可以將此物品交易給共同獲得該掉落的玩家。裝備後交易期限即告結束。",
       "perfectedBadge": "臻至完美",
       "perfectingRank": "完美化：第{rank}階，共{ranks}階",
+      "durability": "耐久度：{current}/{max}",
+      "durabilityLow": "耐久度過低：耐久度歸零時屬性加成將失效。",
+      "durabilityBroken": "已損壞。需要修理才能恢復該物品的加成效果。",
       "materialSourceGatherer": "{count} × 由{name}採集",
       "materialSourceGathererSigned": "{count} × 由{name}採集，由{signer}簽名",
       "materialSourceUnrecorded": "{count} × 未記錄採集者",
       "materialSourceUnrecordedSigned": "{count} × 未記錄採集者，由{name}簽名",
       "materialSourceMore": "另有{sources}個來源，共{units}個單位"
+    },
+    "walletPanel": {
+      "title": "WoC 錢包",
+      "close": "關閉錢包面板",
+      "connect": "連接錢包",
+      "disconnect": "中斷錢包連接",
+      "onChainBalance": "鏈上餘額：",
+      "holdingGate": "領取需要至少 {amount} $WOC。",
+      "gateMet": "Met",
+      "gateUnmet": "Not met",
+      "offChainBalance": "遊戲內餘額：",
+      "characterBalance": "{amount} $WOC",
+      "claimButton": "領取",
+      "cooldownActive": "上次領取後需等待24小時才能再次領取。",
+      "gateNote": "請在已連接的錢包中持有不低於上方所示的最低數量以進行領取。",
+      "amountLabel": "領取數量",
+      "feeGross": "數量：{amount} $WOC",
+      "feeNet": "實際到帳：{amount} $WOC",
+      "feeTreasury": "國庫手續費（10%）：{amount} $WOC",
+      "feeBurn": "銷毀（10%）：{amount} $WOC",
+      "confirmButton": "確認",
+      "cancelButton": "取消",
+      "claimPending": "領取中……",
+      "claimSuccess": "領取完成。{amount} $WOC 已發送至您的錢包。",
+      "reserveLabel": "領取錢包儲備：",
+      "circulatingSupplyLabel": "遊戲內流通中的 $WOC：",
+      "circulatingSupplyCap": "佔 {cap} $WOC 發行上限的 {pct}%",
+      "circulationChartTitle": "遊戲內流通量",
+      "flowChartTitle": "鏈上流量",
+      "offlineClaimUnavailable": "離線狀態下無法領取。請連接到線上的 WoC Unleashed 世界。"
     },
     "materialSources": {
       "detailsTitle": "{item}的來源",
@@ -8283,7 +8316,10 @@ export const zh_TW: EnTranslations = {
     "playAria": "遊玩 World of ClaudeCraft",
     "serverLabel": "選擇你的世界",
     "serverAria": "選擇世界：線上或離線",
-    "serverOfflineSub": "即時本地世界"
+    "serverOfflineSub": "即時本地世界",
+    "serverUnleashedOffline": "WoC Unleashed（離線）",
+    "unleashedOfflineDesc": "使用 WoC Unleashed 規則的即時單人世界：金幣即為 $WOC，裝備具有耐久度。不會保存任何內容，僅供本地測試。",
+    "serverUnleashedOfflineSub": "本地世界，WoC Unleashed 規則"
   },
   "auth": {
     "enterRealm": "進入世界",
@@ -9605,6 +9641,8 @@ export const zh_TW: EnTranslations = {
     "popTipOffline": "離線：此世界目前無法連接，無法加入。",
     "characterCountOne": "{count} 個角色",
     "characterCountOther": "{count} 個角色",
+    "wocUnleashedBadge": "$WOC",
+    "wocUnleashedTip": "WoC Unleashed：金幣即 $WOC，一種可提領至您錢包的真實Solana代幣，其餘玩法與Claudemoon完全相同。",
     "selectedRealm": "世界：{name}",
     "statsOffline": "離線",
     "statsRealmOffline": "{realm}（離線）"
@@ -10643,7 +10681,8 @@ export const zh_TW: EnTranslations = {
       "copperShort": "銅",
       "gold": "金幣",
       "silver": "銀幣",
-      "copper": "銅幣"
+      "copper": "銅幣",
+      "wocAmount": "{amount} $WOC"
     },
     "slots": {
       "mainhand": "主手",
@@ -10780,6 +10819,7 @@ export const zh_TW: EnTranslations = {
       "qtyMultipleAria": "每次購買 {count} 份",
       "qtyCustom": "自訂",
       "qtyCustomAria": "選擇自訂購買數量",
+      "repairAll": "全部修理（{count}）- {cost}",
       "buyCountAria": "以 {price} 購買 {count} 個 {item}",
       "buyCountAriaWithRequirement": "以 {price} 購買 {count} 個 {item}。{requirement}",
       "buyQuantityTitle": "購買多少 {item}？最多 {max}。",

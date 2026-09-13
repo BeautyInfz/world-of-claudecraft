@@ -13,6 +13,7 @@ import { WORLD_SEED } from '../src/sim/world_seed';
 import { nextRaidResetMs, nextWeeklyRaidResetMs } from './raid_reset';
 import { REALM_RESET_TIME_ZONE } from './realm';
 import { STORAGE_PRICES } from './storage_prices';
+import { DURABILITY_SYSTEM_ENABLED } from './woc_unleashed';
 
 // The admission is REQUIRED, deliberately, even though SimConfig's own field
 // is optional (offline Sim constructions omit it and run inert): this seam is
@@ -29,6 +30,7 @@ export function buildRealmSimConfig(
     playerClass: 'warrior',
     noPlayer: true,
     devCommands: process.env.ALLOW_DEV_COMMANDS === '1',
+    durabilitySystemEnabled: DURABILITY_SYSTEM_ENABLED,
     // Thunzharr is up as soon as the realm boots; subsequent rises keep the
     // normal interval cadence (see src/sim/world_boss.ts).
     // Live realm: legacy fresh mainland rows get ferried through the Proving

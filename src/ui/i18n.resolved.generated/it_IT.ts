@@ -3411,11 +3411,44 @@ export const it_IT: EnTranslations = {
       "partyTradeWindow": "Puoi scambiare questo oggetto con i giocatori che hanno condiviso il suo bottino per i prossimi {time}. Indossarlo pone fine alla finestra di scambio.",
       "perfectedBadge": "Perfezionato",
       "perfectingRank": "Perfezionamento: grado {rank} di {ranks}",
+      "durability": "Durability: {current}/{max}",
+      "durabilityLow": "Low durability: stat bonuses are lost at 0.",
+      "durabilityBroken": "Broken. This item must be repaired before its bonuses work again.",
       "materialSourceGatherer": "{count} × Raccolto da {name}",
       "materialSourceGathererSigned": "{count} × Raccolto da {name}, firmato da {signer}",
       "materialSourceUnrecorded": "{count} × Raccoglitore non registrato",
       "materialSourceUnrecordedSigned": "{count} × Raccoglitore non registrato, firmato da {name}",
       "materialSourceMore": "+{sources} altre fonti, {units} unità"
+    },
+    "walletPanel": {
+      "title": "WoC Wallet",
+      "close": "Close wallet panel",
+      "connect": "Connect Wallet",
+      "disconnect": "Disconnect Wallet",
+      "onChainBalance": "On-chain balance:",
+      "holdingGate": "Minimum {amount} $WOC required to claim.",
+      "gateMet": "Met",
+      "gateUnmet": "Not met",
+      "offChainBalance": "In-game balance:",
+      "characterBalance": "{amount} $WOC",
+      "claimButton": "Claim",
+      "cooldownActive": "You can claim again 24 hours after your last claim.",
+      "gateNote": "Hold at least the minimum shown above in your connected wallet to claim.",
+      "amountLabel": "Amount to claim",
+      "feeGross": "Amount: {amount} $WOC",
+      "feeNet": "You receive: {amount} $WOC",
+      "feeTreasury": "Treasury fee (10%): {amount} $WOC",
+      "feeBurn": "Burned (10%): {amount} $WOC",
+      "confirmButton": "Confirm",
+      "cancelButton": "Cancel",
+      "claimPending": "Claiming...",
+      "claimSuccess": "Claim complete. {amount} $WOC sent to your wallet.",
+      "reserveLabel": "Claim wallet reserve:",
+      "circulatingSupplyLabel": "In-game $WOC circulating:",
+      "circulatingSupplyCap": "{pct}% of the {cap} $WOC emission cap",
+      "circulationChartTitle": "In-game circulation",
+      "flowChartTitle": "On-chain flow",
+      "offlineClaimUnavailable": "Claiming isn't available offline. Connect to an online WoC Unleashed realm."
     },
     "materialSources": {
       "detailsTitle": "Fonti di {item}",
@@ -8283,7 +8316,10 @@ export const it_IT: EnTranslations = {
     "playAria": "Gioca a World of ClaudeCraft",
     "serverLabel": "Scegli il tuo mondo",
     "serverAria": "Seleziona il mondo: Online o Offline",
-    "serverOfflineSub": "Mondo locale istantaneo"
+    "serverOfflineSub": "Mondo locale istantaneo",
+    "serverUnleashedOffline": "Unleashed Offline",
+    "unleashedOfflineDesc": "Instant single-player world using WoC Unleashed rules: gold is $WOC and gear has durability. Nothing is saved; local testing only.",
+    "serverUnleashedOfflineSub": "Local world, WoC Unleashed rules"
   },
   "auth": {
     "enterRealm": "Entra nel mondo",
@@ -9605,6 +9641,8 @@ export const it_IT: EnTranslations = {
     "popTipOffline": "Offline: questo mondo al momento non è raggiungibile e non è possibile entrarvi.",
     "characterCountOne": "{count} personaggio",
     "characterCountOther": "{count} personaggi",
+    "wocUnleashedBadge": "$WOC",
+    "wocUnleashedTip": "WoC Unleashed: gold is $WOC, a real Solana token you can claim to your wallet. Everything else plays the same as Claudemoon.",
     "selectedRealm": "Mondo: {name}",
     "statsOffline": "Offline",
     "statsRealmOffline": "{realm} (offline)"
@@ -10643,7 +10681,8 @@ export const it_IT: EnTranslations = {
       "copperShort": "r",
       "gold": "oro",
       "silver": "argento",
-      "copper": "rame"
+      "copper": "rame",
+      "wocAmount": "{amount} $WOC"
     },
     "slots": {
       "mainhand": "Mano principale",
@@ -10780,6 +10819,7 @@ export const it_IT: EnTranslations = {
       "qtyMultipleAria": "Compra {count} alla volta",
       "qtyCustom": "Personalizzata",
       "qtyCustomAria": "Scegli una quantità personalizzata da comprare",
+      "repairAll": "Repair All ({count}) - {cost}",
       "buyCountAria": "Compra {count} unità di {item} per {price}",
       "buyCountAriaWithRequirement": "Compra {count} unità di {item} per {price}. {requirement}",
       "buyQuantityTitle": "Quanti {item} vuoi comprare? Fino a {max}.",

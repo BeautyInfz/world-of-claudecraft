@@ -4789,6 +4789,14 @@ export const hudChromeStrings = {
     // the sim's PERFECTING_RANKS, never literals in copy.
     perfectedBadge: 'Perfected',
     perfectingRank: 'Perfecting: rank {rank} of {ranks}',
+    // WoC Unleashed-exclusive (src/sim/durability.ts, item_instance_tooltip.ts
+    // instanceDurabilityLines): durability is a status line, not a stat -
+    // the item keeps every bonus down to 1 point and loses them ALL only at
+    // 0, so durabilityLow states that trigger exactly rather than implying a
+    // gradual falloff (docs/design/tooltip-writing.md).
+    durability: 'Durability: {current}/{max}',
+    durabilityLow: 'Low durability: stat bonuses are lost at 0.',
+    durabilityBroken: 'Broken. This item must be repaired before its bonuses work again.',
     // Per-unit material provenance (item_instance_tooltip.ts
     // materialSourceLines over the pure material_sources_view.ts model): one
     // line per recorded descriptor, stating the surviving unit count first so a
@@ -4807,6 +4815,42 @@ export const hudChromeStrings = {
     materialSourceUnrecorded: '{count} × No gatherer recorded',
     materialSourceUnrecordedSigned: '{count} × No gatherer recorded, signed by {name}',
     materialSourceMore: '+{sources} more sources, {units} units',
+  },
+  // WoC Unleashed-exclusive wallet panel (src/ui/wallet_panel_window.ts):
+  // connect/disconnect, on-chain + off-chain $WOC balances, the claim
+  // amount-entry flow with its live fee breakdown, the claim wallet
+  // reserve, and the two circulation charts. $WOC is a token brand name,
+  // never translated (see itemUi.money.wocAmount's own comment).
+  walletPanel: {
+    title: 'WoC Wallet',
+    close: 'Close wallet panel',
+    connect: 'Connect Wallet',
+    disconnect: 'Disconnect Wallet',
+    onChainBalance: 'On-chain balance:',
+    holdingGate: 'Minimum {amount} $WOC required to claim.',
+    gateMet: 'Met',
+    gateUnmet: 'Not met',
+    offChainBalance: 'In-game balance:',
+    characterBalance: '{amount} $WOC',
+    claimButton: 'Claim',
+    cooldownActive: 'You can claim again 24 hours after your last claim.',
+    gateNote: 'Hold at least the minimum shown above in your connected wallet to claim.',
+    amountLabel: 'Amount to claim',
+    feeGross: 'Amount: {amount} $WOC',
+    feeNet: 'You receive: {amount} $WOC',
+    feeTreasury: 'Treasury fee (10%): {amount} $WOC',
+    feeBurn: 'Burned (10%): {amount} $WOC',
+    confirmButton: 'Confirm',
+    cancelButton: 'Cancel',
+    claimPending: 'Claiming...',
+    claimSuccess: 'Claim complete. {amount} $WOC sent to your wallet.',
+    reserveLabel: 'Claim wallet reserve:',
+    circulatingSupplyLabel: 'In-game $WOC circulating:',
+    circulatingSupplyCap: '{pct}% of the {cap} $WOC emission cap',
+    circulationChartTitle: 'In-game circulation',
+    flowChartTitle: 'On-chain flow',
+    offlineClaimUnavailable:
+      "Claiming isn't available offline. Connect to an online WoC Unleashed realm.",
   },
   // Full material-source details dialog. The picker quantities are exact units
   // from one captured descriptor key; the command revalidates the captured

@@ -69,6 +69,15 @@ export interface CharacterState {
   // existed loads byte-identically.
   toolEffectSlots?: Partial<Record<string, ToolEffectSlot>>;
   copper: number;
+  // WoC Unleashed-exclusive (src/sim/unleashed_currency_binding.ts): the character's
+  // REAL $WOC balance, genuinely decoupled from `copper` above (never the same
+  // storage, never summed together). Only ever populated on a WoC Unleashed
+  // character; absent/unused on Claudemoon. bindUnleashedCurrency installs a
+  // transparent copper<->unleashedBalance redirect on this object at construction/
+  // load time so every existing gameplay call site that reads/writes
+  // meta.copper (loot, quests, vendors, repair) automatically operates on
+  // THIS field instead, with no call-site changes anywhere in the sim.
+  unleashedBalance?: number;
   hp: number;
   resource: number;
   pos: { x: number; z: number };

@@ -356,6 +356,13 @@ export const en = {
     serverLabel: 'Choose your world',
     serverAria: 'Select world: Online or Offline',
     serverOfflineSub: 'Instant local world',
+    // Dev-only third dropdown option (npm run dev): the WoC Unleashed ruleset,
+    // run offline with no server or wallet. Hidden in production builds
+    // alongside the plain Offline option.
+    serverUnleashedOffline: 'Unleashed Offline',
+    unleashedOfflineDesc:
+      'Instant single-player world using WoC Unleashed rules: gold is $WOC and gear has durability. Nothing is saved; local testing only.',
+    serverUnleashedOfflineSub: 'Local world, WoC Unleashed rules',
   },
   auth: {
     enterRealm: 'Enter the World',

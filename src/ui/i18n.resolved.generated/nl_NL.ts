@@ -3411,11 +3411,44 @@ export const nl_NL: EnTranslations = {
       "partyTradeWindow": "Je kunt dit voorwerp de komende {time} ruilen met spelers die deze buit deelden. Uitrusten beëindigt het ruilvenster.",
       "perfectedBadge": "Geperfectioneerd",
       "perfectingRank": "Perfecteren: rang {rank} van {ranks}",
+      "durability": "Durability: {current}/{max}",
+      "durabilityLow": "Low durability: stat bonuses are lost at 0.",
+      "durabilityBroken": "Broken. This item must be repaired before its bonuses work again.",
       "materialSourceGatherer": "{count} × Verzameld door {name}",
       "materialSourceGathererSigned": "{count} × Verzameld door {name}, gesigneerd door {signer}",
       "materialSourceUnrecorded": "{count} × Geen verzamelaar geregistreerd",
       "materialSourceUnrecordedSigned": "{count} × Geen verzamelaar geregistreerd, gesigneerd door {name}",
       "materialSourceMore": "+{sources} meer bronnen, {units} eenheden"
+    },
+    "walletPanel": {
+      "title": "WoC Wallet",
+      "close": "Close wallet panel",
+      "connect": "Connect Wallet",
+      "disconnect": "Disconnect Wallet",
+      "onChainBalance": "On-chain balance:",
+      "holdingGate": "Minimum {amount} $WOC required to claim.",
+      "gateMet": "Met",
+      "gateUnmet": "Not met",
+      "offChainBalance": "In-game balance:",
+      "characterBalance": "{amount} $WOC",
+      "claimButton": "Claim",
+      "cooldownActive": "You can claim again 24 hours after your last claim.",
+      "gateNote": "Hold at least the minimum shown above in your connected wallet to claim.",
+      "amountLabel": "Amount to claim",
+      "feeGross": "Amount: {amount} $WOC",
+      "feeNet": "You receive: {amount} $WOC",
+      "feeTreasury": "Treasury fee (10%): {amount} $WOC",
+      "feeBurn": "Burned (10%): {amount} $WOC",
+      "confirmButton": "Confirm",
+      "cancelButton": "Cancel",
+      "claimPending": "Claiming...",
+      "claimSuccess": "Claim complete. {amount} $WOC sent to your wallet.",
+      "reserveLabel": "Claim wallet reserve:",
+      "circulatingSupplyLabel": "In-game $WOC circulating:",
+      "circulatingSupplyCap": "{pct}% of the {cap} $WOC emission cap",
+      "circulationChartTitle": "In-game circulation",
+      "flowChartTitle": "On-chain flow",
+      "offlineClaimUnavailable": "Claiming isn't available offline. Connect to an online WoC Unleashed realm."
     },
     "materialSources": {
       "detailsTitle": "Bronnen voor {item}",
@@ -8283,7 +8316,10 @@ export const nl_NL: EnTranslations = {
     "playAria": "Speel World of ClaudeCraft",
     "serverLabel": "Kies je wereld",
     "serverAria": "Kies wereld: Online of Offline",
-    "serverOfflineSub": "Directe lokale wereld"
+    "serverOfflineSub": "Directe lokale wereld",
+    "serverUnleashedOffline": "Unleashed Offline",
+    "unleashedOfflineDesc": "Instant single-player world using WoC Unleashed rules: gold is $WOC and gear has durability. Nothing is saved; local testing only.",
+    "serverUnleashedOfflineSub": "Local world, WoC Unleashed rules"
   },
   "auth": {
     "enterRealm": "Betreed de wereld",
@@ -9605,6 +9641,8 @@ export const nl_NL: EnTranslations = {
     "popTipOffline": "Offline: deze wereld is momenteel onbereikbaar en kan niet betreden worden.",
     "characterCountOne": "{count} personage",
     "characterCountOther": "{count} personages",
+    "wocUnleashedBadge": "$WOC",
+    "wocUnleashedTip": "WoC Unleashed: gold is $WOC, a real Solana token you can claim to your wallet. Everything else plays the same as Claudemoon.",
     "selectedRealm": "Wereld: {name}",
     "statsOffline": "Offline",
     "statsRealmOffline": "{realm} (Offline)"
@@ -10643,7 +10681,8 @@ export const nl_NL: EnTranslations = {
       "copperShort": "k",
       "gold": "goud",
       "silver": "zilver",
-      "copper": "koper"
+      "copper": "koper",
+      "wocAmount": "{amount} $WOC"
     },
     "slots": {
       "mainhand": "Hoofdhand",
@@ -10780,6 +10819,7 @@ export const nl_NL: EnTranslations = {
       "qtyMultipleAria": "Koop er {count} tegelijk",
       "qtyCustom": "Aangepast",
       "qtyCustomAria": "Kies zelf hoeveel je wilt kopen",
+      "repairAll": "Repair All ({count}) - {cost}",
       "buyCountAria": "Koop {count} {item} voor {price}",
       "buyCountAriaWithRequirement": "Koop {count} {item} voor {price}. {requirement}",
       "buyQuantityTitle": "Hoeveel {item} kopen? Maximaal {max}.",

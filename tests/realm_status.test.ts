@@ -23,6 +23,7 @@ describe('Api.realmStatus players_cap decode', () => {
       online: true,
       players: 3,
       cap: 5000,
+      wocUnleashed: false,
     });
   });
 
@@ -35,6 +36,7 @@ describe('Api.realmStatus players_cap decode', () => {
       online: true,
       players: 42,
       cap: 0,
+      wocUnleashed: false,
     });
   });
 
@@ -60,6 +62,7 @@ describe('Api.realmStatus players_cap decode', () => {
       online: false,
       players: 0,
       cap: 0,
+      wocUnleashed: false,
     });
   });
 
@@ -74,6 +77,30 @@ describe('Api.realmStatus players_cap decode', () => {
       online: false,
       players: 0,
       cap: 0,
+      wocUnleashed: false,
     });
+  });
+});
+
+describe('Api.realmStatus woc_unleashed decode (the realm-list badge)', () => {
+  it('reports wocUnleashed true only for an exact boolean true', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async () => statusResponse({ ok: true, players_online: 1, woc_unleashed: true })),
+    );
+    expect((await api.realmStatus('http://realm.test')).wocUnleashed).toBe(true);
+  });
+
+  it('treats a missing or falsy woc_unleashed field as Claudemoon (false)', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async () => statusResponse({ ok: true, players_online: 1 })),
+    );
+    expect((await api.realmStatus('http://realm.test')).wocUnleashed).toBe(false);
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async () => statusResponse({ ok: true, players_online: 1, woc_unleashed: 'true' })),
+    );
+    expect((await api.realmStatus('http://realm.test')).wocUnleashed).toBe(false);
   });
 });

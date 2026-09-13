@@ -448,7 +448,21 @@ const MONOLITHS: MonolithRow[] = [
     // LOWERED for the coin-icon money readout extraction (moneyHtml moved out
     // to src/ui/money_html.ts so the social tab's roster confirm shares it);
     // the coordinator keeps three one-line deps wirings. Exact count, zero slack.
-    ceiling: 18461,
+    // Plus 2 for the WoC Unleashed durability tooltip line (instanceDurabilityLines,
+    // the import plus its one composition call beside instanceBadgeLines; the pure
+    // logic lives in src/ui/item_instance_tooltip.ts). Exact count, zero slack.
+    // Plus 17 for the WoC Unleashed vendor "Repair All" wiring (three imports,
+    // the repairAll/onRepairAll deps entries, and the equipment-loop callback;
+    // the pure cost preview lives in src/ui/repair_preview.ts). Exact count,
+    // zero slack.
+    // Plus 24 for the WoC Unleashed wallet panel launcher wiring (the icon
+    // click handler, the WalletPanelWindow construction block, attach/toggle
+    // methods, and the import; the actual panel logic lives in
+    // src/ui/wallet_panel_window.ts). Exact count, zero slack.
+    // Plus 1 for swapping the loot window's coin icon to woc_token under
+    // WoC Unleashed (coinIconUrl reading wocCurrencyActive, plus its import).
+    // Exact count, zero slack.
+    ceiling: 18505,
     seam: 'pure view core + thin painter on PainterHost (src/ui/CLAUDE.md)',
   },
   {
@@ -1018,7 +1032,26 @@ const MONOLITHS: MonolithRow[] = [
     // character load loops (bags, buyback) moved to item_instance_load.ts's
     // sanitizeSlotInstanceOnLoad, paying for the party-trade retire hooks that
     // now live in src/sim/loot/bop_trade_persistence.ts. Exact count, zero slack.
-    ceiling: 11874,
+    // Plus 4 for the WoC Unleashed durability-system gate: SimConfig.
+    // durabilitySystemEnabled's ctor pass-through and the matching
+    // buildSimContext getter (the durability logic itself lives in
+    // src/sim/durability.ts, a sibling module; only the SimContext plumbing
+    // touches this file). Exact count, zero slack.
+    // Plus 4 for the repairItem facet delegate beside buyItem (the pure
+    // repair logic lives in src/sim/items.ts). Exact count, zero slack.
+    // Plus 25 for the WoC Unleashed genuinely-separate $WOC ledger: the
+    // PlayerMeta.wocBalance field, the load-site branch (wocBalance from its
+    // own saved key vs the legacy copper assignment), the unconditional
+    // bindWocCurrency call after the savedState block, and the save-site
+    // copper/wocBalance split (the redirect mechanism itself lives in
+    // src/sim/woc_currency_binding.ts). Exact count, zero slack.
+    // Plus 31 for stamping real durability onto every durability-tracked item
+    // at grant time (addItem/addItemInstance) and onto the fresh-character
+    // starting weapon/chest, so items actually carry durability once the
+    // system is enabled instead of just having the loss/repair machinery sit
+    // unused (isDurabilityTrackedItem itself lives in src/sim/durability.ts).
+    // Exact count, zero slack.
+    ceiling: 11938,
     seam: 'a sim system module behind SimContext (src/sim/CLAUDE.md)',
   },
   {
@@ -1216,7 +1249,23 @@ const MONOLITHS: MonolithRow[] = [
     // RE-PINNED 11332 -> 11327 at the interact-key gather extraction
     // (src/game/interact_key_gather.ts took the R40 confirm gate and the
     // node bundle out of interactKey). Exact count, zero slack.
-    ceiling: 11327,
+    // Plus 5 for the WoC Unleashed currency-display advert wiring
+    // (setWocCurrencyActive off api.wocUnleashedAdvert(), mirroring the
+    // devCommandsAdvert call beside it). Exact count, zero slack.
+    // Plus 6 for wiring the wallet panel hooks (buildWalletPanelHooks from
+    // src/game/woc_unleashed_wallet_wiring.ts) into hud.attachWalletPanel
+    // when the advert resolves true. Exact count, zero slack.
+    // Plus 1 for the realm-list WoC Unleashed badge markup (rn-unleashed
+    // span, revealed per-row from realmStatus().wocUnleashed). Exact count,
+    // zero slack.
+    // Plus 32 for the "Unleashed Offline" dev shortcut: a third server-select
+    // mode threaded through startOffline (setWocCurrencyActive +
+    // durabilitySystemEnabled), handleOfflineStart, and the dropdown/compat
+    // trigger wiring. Exact count, zero slack.
+    // Plus 7 for attaching the offline wallet panel hooks
+    // (buildOfflineWalletPanelHooks) in the startGame else-arm when the
+    // offline Sim has durabilitySystemEnabled. Exact count, zero slack.
+    ceiling: 11378,
     seam: 'a src/game/ or src/ui/ sibling module; main.ts is a firewall, not a home',
   },
   {
@@ -1431,7 +1480,12 @@ const MONOLITHS: MonolithRow[] = [
     // below both parent pins. Exact merged count, zero slack.
     // Mount skins: bank the coordinator extraction at its measured size.
     // Main hotfix integration: combined extractions, exact merged count.
-    ceiling: 10095,
+    // Plus 10 for the WoC Unleashed 'repair' WS command case (the pure repair
+    // logic lives in src/sim/items.ts; this is only the dispatch arm beside
+    // 'buy') plus the one-line recordWocUnleashedLedgerEvents tick-loop hook
+    // (server/woc_unleashed_ledger_hook.ts owns the actual event scan).
+    // Exact count, zero slack.
+    ceiling: 10105,
     seam: 'a sibling server module; see the hot-path seams in server/CLAUDE.md',
   },
   {
@@ -1574,7 +1628,20 @@ const MONOLITHS: MonolithRow[] = [
     // OSSBrain integration: entity flair decoding moved to net/entity_flair_wire.ts.
     // Measured after formatting; lower the ratchet with the extraction.
     // Main hotfix integration: combined extractions, exact merged count.
-    ceiling: 5540,
+    // Plus 13 for the WoC Unleashed currency-display advert (wocUnleashedAdvert,
+    // mirroring devCommandsAdvert exactly beside it). Exact count, zero slack.
+    // Plus 6 for the ClientWorld.repairItem wire method beside buyItem.
+    // Exact count, zero slack.
+    // Plus 4 for reconstructing e.repairVendor client-side off the shared
+    // content table, beside e.vendorItems. Exact count, zero slack.
+    // Plus 22 for the six WoC Unleashed wallet-panel/claim API methods
+    // beside wocUnleashedAdvert. Exact count, zero slack.
+    // Plus 7 for realmStatus() reporting wocUnleashed alongside cap (the
+    // realm-list badge, one fetch, no extra request; biome wraps the
+    // widened return type/object across extra lines). Exact count, zero slack.
+    // Plus 3 for wocUnleashedCirculatingSupply() beside the other wallet-panel
+    // API methods. Exact count, zero slack.
+    ceiling: 5595,
     seam: 'a src/net sibling module (the refactor/net-online split is the template)',
   },
   {

@@ -7432,6 +7432,19 @@
       inset 0 1px 4px #000c,
       0 0 5px color-mix(in srgb, var(--color-bag-quest-rim) 28%, transparent);
   }
+  /* WoC Unleashed-exclusive: a depleted-durability item (item_instance_tooltip.ts's
+     "must be repaired" tooltip line, src/ui/bags_window.ts's isDurabilityDepleted
+     check) wears the same error red the tooltip line itself uses, so a broken
+     piece is spottable in the grid without opening the tooltip. Wins over every
+     rarity/quest/fine rim at equal specificity (placed after them). */
+  .bag-item.item-broken {
+    border-color: var(--color-text-error) !important;
+    box-shadow:
+      inset 0 0 8px color-mix(in srgb, var(--color-text-error) 35%, transparent),
+      inset 0 0 0 1px color-mix(in srgb, var(--color-text-error) 55%, transparent),
+      inset 0 1px 4px #000c,
+      0 0 5px color-mix(in srgb, var(--color-text-error) 35%, transparent);
+  }
   /* The fine-grade rim/wash block lives BELOW the bank grid's common/poor
      neutral reset as one dual-selector cell rule (search for the bag-fine
      class): it must sit after BOTH commons resets to win them at equal

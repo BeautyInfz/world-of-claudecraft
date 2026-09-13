@@ -3411,11 +3411,44 @@ export const tr_TR: EnTranslations = {
       "partyTradeWindow": "Bu eşyayı, düşüşünü paylaşan oyunculara önümüzdeki {time} boyunca takas edebilirsin. Kuşanmak takas penceresini sona erdirir.",
       "perfectedBadge": "Kusursuzlaştırılmış",
       "perfectingRank": "Kusursuzlaştırma: {ranks} içinden {rank}. kademe",
+      "durability": "Durability: {current}/{max}",
+      "durabilityLow": "Low durability: stat bonuses are lost at 0.",
+      "durabilityBroken": "Broken. This item must be repaired before its bonuses work again.",
       "materialSourceGatherer": "{count} × {name} tarafından toplandı",
       "materialSourceGathererSigned": "{count} × {name} tarafından toplandı, {signer} imzalı",
       "materialSourceUnrecorded": "{count} × Toplayıcı kaydedilmedi",
       "materialSourceUnrecordedSigned": "{count} × Toplayıcı kaydedilmedi, {name} imzalı",
       "materialSourceMore": "+{sources} kaynak daha, {units} birim"
+    },
+    "walletPanel": {
+      "title": "WoC Wallet",
+      "close": "Close wallet panel",
+      "connect": "Connect Wallet",
+      "disconnect": "Disconnect Wallet",
+      "onChainBalance": "On-chain balance:",
+      "holdingGate": "Minimum {amount} $WOC required to claim.",
+      "gateMet": "Met",
+      "gateUnmet": "Not met",
+      "offChainBalance": "In-game balance:",
+      "characterBalance": "{amount} $WOC",
+      "claimButton": "Claim",
+      "cooldownActive": "You can claim again 24 hours after your last claim.",
+      "gateNote": "Hold at least the minimum shown above in your connected wallet to claim.",
+      "amountLabel": "Amount to claim",
+      "feeGross": "Amount: {amount} $WOC",
+      "feeNet": "You receive: {amount} $WOC",
+      "feeTreasury": "Treasury fee (10%): {amount} $WOC",
+      "feeBurn": "Burned (10%): {amount} $WOC",
+      "confirmButton": "Confirm",
+      "cancelButton": "Cancel",
+      "claimPending": "Claiming...",
+      "claimSuccess": "Claim complete. {amount} $WOC sent to your wallet.",
+      "reserveLabel": "Claim wallet reserve:",
+      "circulatingSupplyLabel": "In-game $WOC circulating:",
+      "circulatingSupplyCap": "{pct}% of the {cap} $WOC emission cap",
+      "circulationChartTitle": "In-game circulation",
+      "flowChartTitle": "On-chain flow",
+      "offlineClaimUnavailable": "Claiming isn't available offline. Connect to an online WoC Unleashed realm."
     },
     "materialSources": {
       "detailsTitle": "{item} kaynakları",
@@ -8283,7 +8316,10 @@ export const tr_TR: EnTranslations = {
     "playAria": "World of ClaudeCraft oyna",
     "serverLabel": "Dünyanı seç",
     "serverAria": "Dünya seç: Çevrimiçi veya Çevrimdışı",
-    "serverOfflineSub": "Anında yerel dünya"
+    "serverOfflineSub": "Anında yerel dünya",
+    "serverUnleashedOffline": "Unleashed Offline",
+    "unleashedOfflineDesc": "Instant single-player world using WoC Unleashed rules: gold is $WOC and gear has durability. Nothing is saved; local testing only.",
+    "serverUnleashedOfflineSub": "Local world, WoC Unleashed rules"
   },
   "auth": {
     "enterRealm": "Dünyaya Gir",
@@ -9605,6 +9641,8 @@ export const tr_TR: EnTranslations = {
     "popTipOffline": "Çevrimdışı: bu dünyaya şu anda ulaşılamıyor ve katılınamıyor.",
     "characterCountOne": "{count} karakter",
     "characterCountOther": "{count} karakter",
+    "wocUnleashedBadge": "$WOC",
+    "wocUnleashedTip": "WoC Unleashed: gold is $WOC, a real Solana token you can claim to your wallet. Everything else plays the same as Claudemoon.",
     "selectedRealm": "Dünya: {name}",
     "statsOffline": "Çevrimdışı",
     "statsRealmOffline": "{realm} (Çevrimdışı)"
@@ -10643,7 +10681,8 @@ export const tr_TR: EnTranslations = {
       "copperShort": "b",
       "gold": "altın",
       "silver": "gümüş",
-      "copper": "bakır"
+      "copper": "bakır",
+      "wocAmount": "{amount} $WOC"
     },
     "slots": {
       "mainhand": "Ana El",
@@ -10780,6 +10819,7 @@ export const tr_TR: EnTranslations = {
       "qtyMultipleAria": "Her seferinde {count} adet satın al",
       "qtyCustom": "Özel",
       "qtyCustomAria": "Satın alınacak özel bir miktar seç",
+      "repairAll": "Repair All ({count}) - {cost}",
       "buyCountAria": "{item} eşyasından {count} adet, {price} karşılığında satın al",
       "buyCountAriaWithRequirement": "{item} eşyasından {count} adet, {price} karşılığında satın al. {requirement}",
       "buyQuantityTitle": "Kaç adet {item} alınsın? En fazla {max}.",

@@ -415,15 +415,22 @@ export class Api {
   // Live status for a realm (population + reachability), for the realm picker.
   // `cap` is the realm admission cap (players_cap): a positive number is the real
   // refusal point; 0 means the cap is disabled or the server predates the field.
-  async realmStatus(url: string): Promise<{ online: boolean; players: number; cap: number }> {
+  async realmStatus(
+    url: string,
+  ): Promise<{ online: boolean; players: number; cap: number; wocUnleashed: boolean }> {
     try {
       const res = await fetch(apiUrl('/api/status', url), { signal: AbortSignal.timeout(3000) });
-      if (!res.ok) return { online: false, players: 0, cap: 0 };
+      if (!res.ok) return { online: false, players: 0, cap: 0, wocUnleashed: false };
       const d = await res.json();
       const cap = typeof d.players_cap === 'number' && d.players_cap > 0 ? d.players_cap : 0;
-      return { online: true, players: d.players_online ?? 0, cap };
+      return {
+        online: true,
+        players: d.players_online ?? 0,
+        cap,
+        wocUnleashed: d.woc_unleashed === true,
+      };
     } catch {
-      return { online: false, players: 0, cap: 0 };
+      return { online: false, players: 0, cap: 0, wocUnleashed: false };
     }
   }
 
@@ -1086,6 +1093,44 @@ export class Api {
     } catch {
       return false;
     }
+  }
+
+  // Whether this realm is running as WoC Unleashed (server/woc_unleashed.ts
+  // WOC_UNLEASHED), so the client can show $WOC currency terminology
+  // (src/ui/woc_currency.ts) instead of gold/silver/copper. Advert only,
+  // mirrors devCommandsAdvert exactly; fails closed (Claudemoon-safe) on error.
+  async wocUnleashedAdvert(): Promise<boolean> {
+    try {
+      const data = await this.statusDoc();
+      return data.woc_unleashed === true;
+    } catch {
+      return false;
+    }
+  }
+
+  // WoC Unleashed wallet panel + claim flow (server/woc_unleashed_claim.ts,
+  // server/woc_unleashed_wallet_routes.ts). Every route 404s on Claudemoon;
+  // src/ui/wallet_panel_window.ts is the one caller.
+  wocUnleashedClaimStatus(): Promise<LooseJson> {
+    return this.get('/api/woc-unleashed/claim-status');
+  }
+  wocUnleashedClaim(amountWoc: number): Promise<LooseJson> {
+    return this.post('/api/woc-unleashed/claim', { amountWoc });
+  }
+  wocUnleashedOffChainBalance(): Promise<LooseJson> {
+    return this.get('/api/woc-unleashed/off-chain-balance');
+  }
+  wocUnleashedReserve(): Promise<LooseJson> {
+    return this.get('/api/woc-unleashed/reserve');
+  }
+  wocUnleashedCirculationSeries(): Promise<LooseJson> {
+    return this.get('/api/woc-unleashed/circulation-series');
+  }
+  wocUnleashedOnchainFlowSeries(): Promise<LooseJson> {
+    return this.get('/api/woc-unleashed/onchain-flow-series');
+  }
+  wocUnleashedCirculatingSupply(): Promise<LooseJson> {
+    return this.get('/api/woc-unleashed/circulating-supply');
   }
 
   // Current account's Steam link status ({ enabled, linked, steamId? }).
@@ -2811,6 +2856,10 @@ export class ClientWorld extends ReconWireState implements IWorld {
           const def = NPCS[e.templateId];
           e.questIds = def ? [...def.questIds] : [];
           e.vendorItems = def?.vendorItems ? [...def.vendorItems] : [];
+          // WoC Unleashed-exclusive (src/sim/durability.ts): reconstructed
+          // client-side off the shared content table, same as vendorItems
+          // above - never wire-sent, since NPCS is bundled into both hosts.
+          e.repairVendor = def?.repairVendor === true;
         }
       }
       // Re-anchor remote and self interpolation on their respective clocks.
@@ -3879,6 +3928,12 @@ export class ClientWorld extends ReconWireState implements IWorld {
     } else {
       this.cmd({ cmd: 'buy', npc: npcId, item: itemId });
     }
+  }
+  // WoC Unleashed-exclusive (src/sim/durability.ts). A no-op wire message on
+  // Claudemoon (the server's 'repair' command handler is itself gated on
+  // WOC_UNLEASHED and refuses it), so this never fires meaningfully there.
+  repairItem(npcId: number, slot: EquipSlot): void {
+    this.cmd({ cmd: 'repair', npc: npcId, slot });
   }
   // `confirmEffectUse` (R40): the per-use consent for a 'prompt'-mode tool
   // effect slot, sent ONLY when true (the craftItem `commission` precedent)

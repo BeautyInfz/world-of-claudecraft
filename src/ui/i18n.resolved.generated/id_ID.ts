@@ -3411,11 +3411,44 @@ export const id_ID: EnTranslations = {
       "partyTradeWindow": "Kamu dapat memperdagangkan barang ini kepada pemain yang berbagi jarahannya selama {time} berikutnya. Memakainya mengakhiri jendela perdagangan.",
       "perfectedBadge": "Disempurnakan",
       "perfectingRank": "Penyempurnaan: peringkat {rank} dari {ranks}",
+      "durability": "Durability: {current}/{max}",
+      "durabilityLow": "Low durability: stat bonuses are lost at 0.",
+      "durabilityBroken": "Broken. This item must be repaired before its bonuses work again.",
       "materialSourceGatherer": "{count} × Dikumpulkan oleh {name}",
       "materialSourceGathererSigned": "{count} × Dikumpulkan oleh {name}, ditandatangani oleh {signer}",
       "materialSourceUnrecorded": "{count} × Tidak ada pengumpul yang tercatat",
       "materialSourceUnrecordedSigned": "{count} × Tidak ada pengumpul yang tercatat, ditandatangani oleh {name}",
       "materialSourceMore": "+{sources} sumber lainnya, {units} unit"
+    },
+    "walletPanel": {
+      "title": "WoC Wallet",
+      "close": "Close wallet panel",
+      "connect": "Connect Wallet",
+      "disconnect": "Disconnect Wallet",
+      "onChainBalance": "On-chain balance:",
+      "holdingGate": "Minimum {amount} $WOC required to claim.",
+      "gateMet": "Met",
+      "gateUnmet": "Not met",
+      "offChainBalance": "In-game balance:",
+      "characterBalance": "{amount} $WOC",
+      "claimButton": "Claim",
+      "cooldownActive": "You can claim again 24 hours after your last claim.",
+      "gateNote": "Hold at least the minimum shown above in your connected wallet to claim.",
+      "amountLabel": "Amount to claim",
+      "feeGross": "Amount: {amount} $WOC",
+      "feeNet": "You receive: {amount} $WOC",
+      "feeTreasury": "Treasury fee (10%): {amount} $WOC",
+      "feeBurn": "Burned (10%): {amount} $WOC",
+      "confirmButton": "Confirm",
+      "cancelButton": "Cancel",
+      "claimPending": "Claiming...",
+      "claimSuccess": "Claim complete. {amount} $WOC sent to your wallet.",
+      "reserveLabel": "Claim wallet reserve:",
+      "circulatingSupplyLabel": "In-game $WOC circulating:",
+      "circulatingSupplyCap": "{pct}% of the {cap} $WOC emission cap",
+      "circulationChartTitle": "In-game circulation",
+      "flowChartTitle": "On-chain flow",
+      "offlineClaimUnavailable": "Claiming isn't available offline. Connect to an online WoC Unleashed realm."
     },
     "materialSources": {
       "detailsTitle": "Sumber untuk {item}",
@@ -8283,7 +8316,10 @@ export const id_ID: EnTranslations = {
     "playAria": "Mainkan World of ClaudeCraft",
     "serverLabel": "Pilih dunia Anda",
     "serverAria": "Pilih dunia: Online atau Offline",
-    "serverOfflineSub": "Dunia lokal seketika"
+    "serverOfflineSub": "Dunia lokal seketika",
+    "serverUnleashedOffline": "Unleashed Offline",
+    "unleashedOfflineDesc": "Instant single-player world using WoC Unleashed rules: gold is $WOC and gear has durability. Nothing is saved; local testing only.",
+    "serverUnleashedOfflineSub": "Local world, WoC Unleashed rules"
   },
   "auth": {
     "enterRealm": "Masuki Dunia",
@@ -9605,6 +9641,8 @@ export const id_ID: EnTranslations = {
     "popTipOffline": "Offline: dunia ini tidak dapat dijangkau saat ini dan tidak bisa dimasuki.",
     "characterCountOne": "{count} karakter",
     "characterCountOther": "{count} karakter",
+    "wocUnleashedBadge": "$WOC",
+    "wocUnleashedTip": "WoC Unleashed: gold is $WOC, a real Solana token you can claim to your wallet. Everything else plays the same as Claudemoon.",
     "selectedRealm": "Dunia: {name}",
     "statsOffline": "Offline",
     "statsRealmOffline": "{realm} (Offline)"
@@ -10643,7 +10681,8 @@ export const id_ID: EnTranslations = {
       "copperShort": "t",
       "gold": "emas",
       "silver": "perak",
-      "copper": "tembaga"
+      "copper": "tembaga",
+      "wocAmount": "{amount} $WOC"
     },
     "slots": {
       "mainhand": "Tangan Utama",
@@ -10780,6 +10819,7 @@ export const id_ID: EnTranslations = {
       "qtyMultipleAria": "Beli {count} sekaligus",
       "qtyCustom": "Kustom",
       "qtyCustomAria": "Pilih sendiri jumlah yang ingin dibeli",
+      "repairAll": "Repair All ({count}) - {cost}",
       "buyCountAria": "Beli {count} {item} seharga {price}",
       "buyCountAriaWithRequirement": "Beli {count} {item} seharga {price}. {requirement}",
       "buyQuantityTitle": "Beli berapa banyak {item}? Hingga {max}.",

@@ -3411,11 +3411,44 @@ export const ko_KR: EnTranslations = {
       "partyTradeWindow": "앞으로 {time} 동안 이 아이템을 같은 전리품을 함께 획득한 플레이어와 거래할 수 있습니다. 착용하면 거래 기간이 끝납니다.",
       "perfectedBadge": "완전해짐",
       "perfectingRank": "완전화: {ranks}단계 중 {rank}단계",
+      "durability": "내구도: {current}/{max}",
+      "durabilityLow": "내구도가 낮습니다. 내구도가 0이 되면 능력치 보너스가 사라집니다.",
+      "durabilityBroken": "파손되었습니다. 효과를 다시 적용받으려면 수리해야 합니다.",
       "materialSourceGatherer": "{count} × {name} 채집",
       "materialSourceGathererSigned": "{count} × {name} 채집, {signer} 서명",
       "materialSourceUnrecorded": "{count} × 채집자 기록 없음",
       "materialSourceUnrecordedSigned": "{count} × 채집자 기록 없음, {name} 서명",
       "materialSourceMore": "그 외 출처 {sources}개, 총 {units}개"
+    },
+    "walletPanel": {
+      "title": "WoC 지갑",
+      "close": "지갑 패널 닫기",
+      "connect": "지갑 연결",
+      "disconnect": "지갑 연결 해제",
+      "onChainBalance": "온체인 잔액:",
+      "holdingGate": "수령하려면 최소 {amount} $WOC가 필요합니다.",
+      "gateMet": "Met",
+      "gateUnmet": "Not met",
+      "offChainBalance": "게임 내 잔액:",
+      "characterBalance": "{amount} $WOC",
+      "claimButton": "수령",
+      "cooldownActive": "마지막 수령 후 24시간이 지나면 다시 수령할 수 있습니다.",
+      "gateNote": "수령하려면 연결된 지갑에 위에 표시된 최소 수량 이상을 보유해야 합니다.",
+      "amountLabel": "수령할 수량",
+      "feeGross": "수량: {amount} $WOC",
+      "feeNet": "받는 금액: {amount} $WOC",
+      "feeTreasury": "재무부 수수료(10%): {amount} $WOC",
+      "feeBurn": "소각(10%): {amount} $WOC",
+      "confirmButton": "확인",
+      "cancelButton": "취소",
+      "claimPending": "수령 중...",
+      "claimSuccess": "수령이 완료되었습니다. {amount} $WOC가 지갑으로 전송되었습니다.",
+      "reserveLabel": "수령 지갑 준비금:",
+      "circulatingSupplyLabel": "게임 내 유통 중인 $WOC:",
+      "circulatingSupplyCap": "{cap} $WOC 발행 한도의 {pct}%",
+      "circulationChartTitle": "게임 내 유통량",
+      "flowChartTitle": "온체인 흐름",
+      "offlineClaimUnavailable": "오프라인에서는 수령할 수 없습니다. 온라인 WoC Unleashed 월드에 접속하세요."
     },
     "materialSources": {
       "detailsTitle": "{item} 출처",
@@ -8283,7 +8316,10 @@ export const ko_KR: EnTranslations = {
     "playAria": "World of ClaudeCraft 플레이",
     "serverLabel": "월드를 선택하세요",
     "serverAria": "월드 선택: 온라인 또는 오프라인",
-    "serverOfflineSub": "즉시 시작하는 로컬 세상"
+    "serverOfflineSub": "즉시 시작하는 로컬 세상",
+    "serverUnleashedOffline": "WoC Unleashed 오프라인",
+    "unleashedOfflineDesc": "WoC Unleashed 규칙을 적용한 즉시 시작 싱글플레이 월드입니다. 골드는 $WOC이며 장비에는 내구도가 있습니다. 아무것도 저장되지 않으며 로컬 테스트 전용입니다.",
+    "serverUnleashedOfflineSub": "로컬 월드, WoC Unleashed 규칙"
   },
   "auth": {
     "enterRealm": "월드 입장",
@@ -9605,6 +9641,8 @@ export const ko_KR: EnTranslations = {
     "popTipOffline": "오프라인: 이 월드는 현재 연결할 수 없어 입장할 수 없습니다.",
     "characterCountOne": "캐릭터 {count}개",
     "characterCountOther": "캐릭터 {count}개",
+    "wocUnleashedBadge": "$WOC",
+    "wocUnleashedTip": "WoC Unleashed: 골드는 곧 $WOC이며, 지갑으로 수령할 수 있는 실제 Solana 토큰입니다. 그 외에는 Claudemoon과 동일하게 플레이됩니다.",
     "selectedRealm": "월드: {name}",
     "statsOffline": "오프라인",
     "statsRealmOffline": "{realm}(오프라인)"
@@ -10643,7 +10681,8 @@ export const ko_KR: EnTranslations = {
       "copperShort": "동",
       "gold": "금화",
       "silver": "은화",
-      "copper": "동화"
+      "copper": "동화",
+      "wocAmount": "{amount} $WOC"
     },
     "slots": {
       "mainhand": "주장비",
@@ -10780,6 +10819,7 @@ export const ko_KR: EnTranslations = {
       "qtyMultipleAria": "한 번에 {count}개씩 구매",
       "qtyCustom": "직접 입력",
       "qtyCustomAria": "구매 수량 직접 입력",
+      "repairAll": "모두 수리 ({count}) - {cost}",
       "buyCountAria": "{price}에 {item} {count}개 구매",
       "buyCountAriaWithRequirement": "{price}에 {item} {count}개 구매. {requirement}",
       "buyQuantityTitle": "{item}을(를) 몇 개 구매하시겠습니까? 최대 {max}개.",

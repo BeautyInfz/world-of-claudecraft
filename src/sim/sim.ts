@@ -245,6 +245,7 @@ import { DEV_SANDBOX_CFG, DEV_SANDBOX_CLASSES } from './dev/dev_sandbox_config';
 import { despawnMobsForDev } from './dev_commands';
 import { projectOutsideDungeonDoors } from './dungeon_door_clearance';
 import { arenaMapForSlot } from './dungeon_layout';
+import { DURABILITY_MAX, isDurabilityTrackedItem } from './durability';
 import * as nythraxis from './encounters/nythraxis';
 // A3: ARENA_SPAWNS_A_2v2/B_2v2 (read only by the moved fiestaRevive) now live with
 // social/fiesta.ts. The dungeon-wall consts (DUNGEON_WALL_HW/X) are now read only by
@@ -895,6 +896,7 @@ import {
 } from './types';
 import type { VendorBuyOptions } from './vendor_buy_stack';
 import * as weaponStowMod from './weapon_stow';
+import { bindUnleashedCurrency } from './unleashed_currency_binding';
 import {
   groundHeight,
   nearSteepWalls,
@@ -1446,6 +1448,10 @@ export interface PlayerMeta {
   guildMembership: GuildMembership | null;
   vendorBuyback: InvSlot[];
   copper: number;
+  // WoC Unleashed-exclusive: see CharacterState.unleashedBalance's doc comment
+  // (src/sim/character_state.ts) and src/sim/unleashed_currency_binding.ts for the
+  // copper<->unleashedBalance redirect this backs.
+  unleashedBalance?: number;
   equipment: PlayerEquipment;
   // Per-slot ItemInstancePayload for whichever equipped piece carries one (an
   // enchanted item's rolled.stats, see src/sim/professions/enchanting.ts, or a
@@ -2226,6 +2232,7 @@ export class Sim {
       worldBossAtBoot: cfg.worldBossAtBoot ?? false,
       riftPortals: cfg.riftPortals ?? false,
       compulsoryTutorial: cfg.compulsoryTutorial ?? false,
+      durabilitySystemEnabled: cfg.durabilitySystemEnabled ?? false,
       lockoutNowMs: cfg.lockoutNowMs ?? (() => Math.floor(this.time * 1000)),
       raidResetMs: cfg.raidResetMs ?? ((nowMs: number) => nowMs + DEFAULT_RAID_LOCKOUT_MS),
       weeklyRaidResetMs:
@@ -2917,7 +2924,17 @@ export class Sim {
         chest: classDef.startChest,
         ...(classDef.startOffhand ? { offhand: classDef.startOffhand } : {}),
       },
-      equipmentInstance: {},
+      // WoC Unleashed-exclusive: the starting weapon/chest/offhand bypass the
+      // addItem/addItemInstance grant hub (they are set directly above), so
+      // they need their own full-durability stamp here to match every other
+      // durability-tracked item. Inert on Claudemoon.
+      equipmentInstance: this.cfg.durabilitySystemEnabled
+        ? {
+            mainhand: { durability: DURABILITY_MAX },
+            chest: { durability: DURABILITY_MAX },
+            ...(classDef.startOffhand ? { offhand: { durability: DURABILITY_MAX } } : {}),
+          }
+        : {},
       xp: 0,
       lifetimeXp: 0,
       honor: 0,
@@ -3104,7 +3121,16 @@ export class Sim {
       meta.nodeHarvestReadyAt = applyNodeReadiness(s.nodeHarvestCooldowns, this.time);
       if (s.unlockedMilestones)
         for (const id of s.unlockedMilestones) meta.unlockedMilestones.add(id);
-      meta.copper = s.copper;
+      // WoC Unleashed-exclusive: a genuinely separate ledger from copper (see
+      // PlayerMeta.unleashedBalance's own doc comment) - loaded from its own saved
+      // key, never from s.copper. bindUnleashedCurrency (below, after this whole
+      // savedState block) installs the redirect once unleashedBalance holds the
+      // real loaded value.
+      if (this.cfg.durabilitySystemEnabled) {
+        meta.unleashedBalance = s.unleashedBalance ?? 0;
+      } else {
+        meta.copper = s.copper;
+      }
       meta.equipment = { ...s.equipment };
       meta.equipmentInstance = {};
       // ONE aggregated dev-channel line per character load, not one per row: a
@@ -3528,6 +3554,11 @@ export class Sim {
       if (s.weaponStowed) player.weaponStowed = true;
       if (s.helmHidden) player.helmHidden = true;
     }
+    // WoC Unleashed-exclusive: installs the copper<->unleashedBalance redirect
+    // (src/sim/unleashed_currency_binding.ts) for both a fresh character
+    // (unleashedBalance defaults to 0) and a loaded one (unleashedBalance was already set
+    // from s.unleashedBalance above); a no-op on Claudemoon.
+    bindUnleashedCurrency(meta, this.cfg.durabilitySystemEnabled);
 
     // Host-stamped bank bonus slots (see the opt doc above); applyBankBonusStamp
     // owns the clamp and the row clone, so bank.ts stays the one writer.
@@ -4109,7 +4140,13 @@ export class Sim {
       ...(meta.toolEffectSlots
         ? { toolEffectSlots: structuredCloneToolEffectSlots(meta.toolEffectSlots) }
         : {}),
-      copper: meta.copper,
+      // WoC Unleashed-exclusive: meta.copper is a REDIRECT to meta.unleashedBalance
+      // on a bound character (src/sim/unleashed_currency_binding.ts), so reading it
+      // here would leak the $WOC value into the legacy copper key. copper
+      // saves as 0 (genuinely decoupled, never populated) and the real value
+      // persists under its own key instead.
+      copper: this.cfg.durabilitySystemEnabled ? 0 : meta.copper,
+      ...(this.cfg.durabilitySystemEnabled ? { unleashedBalance: meta.unleashedBalance ?? 0 } : {}),
       hp: e.hp,
       // A druid saved while shifted runs on rage/energy with its mana parked in
       // savedMana; persist the parked mana so reload (always caster form) restores
@@ -5364,6 +5401,9 @@ export class Sim {
       },
       get compulsoryTutorial() {
         return sim.cfg.compulsoryTutorial;
+      },
+      get durabilitySystemEnabled() {
+        return sim.cfg.durabilitySystemEnabled;
       },
       get marketListings() {
         return sim.marketListings;
@@ -8302,11 +8342,20 @@ export class Sim {
     if (!r) return;
     const { meta } = r;
     const def = ITEMS[itemId];
+    // WoC Unleashed-exclusive: every durability-tracked item starts at full
+    // durability from the moment it is granted (src/sim/durability.ts), so
+    // the tooltip shows "100/100" immediately rather than staying silent
+    // until the item first takes damage. Inert on Claudemoon (durability
+    // stays undefined there, byte-identical to upstream).
+    const instance: ItemInstancePayload | undefined =
+      this.cfg.durabilitySystemEnabled && isDurabilityTrackedItem(def)
+        ? { durability: DURABILITY_MAX }
+        : undefined;
     addStacked(
       meta.inventory,
       itemId,
       count,
-      undefined,
+      instance,
       opts?.craftedRecipeId,
       opts?.materialSources,
     );
@@ -8364,6 +8413,17 @@ export class Sim {
     if (count < 1) return;
     const { meta } = r;
     const def = ITEMS[itemId];
+    // WoC Unleashed-exclusive: backfill full durability onto an instanced
+    // grant (a soulbound/crafted/socketed copy) that doesn't already carry a
+    // value; a transfer of an already-worn item keeps its real durability
+    // untouched. Inert on Claudemoon.
+    if (
+      this.cfg.durabilitySystemEnabled &&
+      isDurabilityTrackedItem(def) &&
+      instance.durability === undefined
+    ) {
+      instance.durability = DURABILITY_MAX;
+    }
     grantInventoryInstances(
       meta.inventory,
       itemId,
@@ -8578,6 +8638,10 @@ export class Sim {
   // per-player thread every sibling command shares.
   buyItem(npcId: number, itemId: string, opts?: VendorBuyOptions, pid?: number): void {
     items.buyItem(this.ctx, npcId, itemId, pid, opts);
+  }
+
+  repairItem(npcId: number, slot: EquipSlot, pid?: number): void {
+    items.repairItem(this.ctx, npcId, slot, pid);
   }
 
   sellItem(

@@ -1678,6 +1678,13 @@ export interface ItemInstancePayload {
      *  read; the load rebuild drops it. */
     enchant?: { stat: string; value: number };
   };
+  /** WoC Unleashed-exclusive (src/sim/durability.ts): remaining durability
+   *  points, 0-100. Absent means "not yet touched by the durability system"
+   *  (equivalent to full/100, never treated as 0/depleted) so every item that
+   *  existed before this field, and every item on Claudemoon (where the
+   *  system stays permanently off), types and loads unchanged. A plain
+   *  number, so cloneItemInstancePayload's shallow spread covers it. */
+  durability?: number;
 }
 
 // A shallow `{ ...instance }` aliases the mutable `charges`/`rolled.stats`/`rift`
@@ -3887,6 +3894,12 @@ export interface NpcDef {
   // A flag on the warfareVendor precedent so a second placement never widens a
   // hard-keyed constant.
   crucibleVendor?: boolean;
+  // WoC Unleashed-exclusive (src/sim/durability.ts): an armor/weapon vendor
+  // who repairs equipped gear. A flag on the warfareVendor precedent (never a
+  // hard-keyed NPC id), so any vendor def can opt in. Repair is unreachable
+  // whenever durabilitySystemEnabled is off, so this flag is inert on
+  // Claudemoon regardless of which NPC defs carry it.
+  repairVendor?: boolean;
   // The Riftwright: talking to this NPC opens the Rift Forge window (upgrade,
   // socket on Riftbound rings, src/sim/rift/progression.ts), and the
   // two forge commands gate on standing within reach of one of these (the
@@ -5436,6 +5449,7 @@ export interface Entity extends ClientMirroredEntityFields {
   questIds: string[];
   vendorItems: string[];
   devVendor?: boolean; // dev free-epic vendor (ptr_dev_vendor.ts)
+  repairVendor?: boolean; // WoC Unleashed-exclusive (src/sim/durability.ts)
   // object (ground interactable)
   objectItemId: string | null;
   // Runtime-only Soulwell ownership/eligibility state. The object itself is wired
@@ -6449,6 +6463,13 @@ export type SimEvent = { pid?: number } & (
   // itemId names the single item for buy/sell/buyback; it is omitted for the
   // bulk "sell all junk" sweep, which the client treats as a plain refresh signal.
   | { type: 'vendor'; action: 'buy' | 'sell' | 'buyback'; itemId?: string }
+  // WoC Unleashed-exclusive (src/sim/durability.ts): a vendor repair paid off
+  // the account's off-chain $WOC balance. amountCopper is the POSITIVE cost
+  // charged (the sim side never signs it negative); the server-side ledger
+  // hook (server/woc_unleashed_wallet_db.ts recordLedgerEvent) negates it when
+  // logging the 'repair' sink. Never emitted when durabilitySystemEnabled is
+  // off, so a Claudemoon/off-flag Sim's event stream is unaffected.
+  | { type: 'wocRepair'; itemId: string; slot: EquipSlot; amountCopper: number }
   // Ravenpost mail. Structured data only, the client builds every visible
   // string (the lockpick convention). `mailbox` asks the client to open the
   // mail window (the interact path at a mailbox object); `mailArrived` is the
@@ -8283,6 +8304,11 @@ export interface SimConfig {
   // Default OFF so deterministic tests, parity traces, and the RL env never
   // teleport a fresh character mid-scenario unless they opt in.
   compulsoryTutorial?: boolean;
+  // WoC Unleashed-exclusive (server/woc_unleashed.ts DURABILITY_SYSTEM_ENABLED):
+  // gates the item durability/repair system (src/sim/durability.ts). Default
+  // OFF so Claudemoon, tests, parity traces, and the RL env never lose stat
+  // bonuses to a durability roll unless the host opts in.
+  durabilitySystemEnabled?: boolean;
   // Host-computed next raid-reset instant for a given lockout "now" (epoch ms). The
   // authoritative server uses its realm-local 3 AM daily reset; offline/headless omit
   // this and fall back to a flat 24h day. Keeps the time zone out of the sim core.

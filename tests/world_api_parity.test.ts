@@ -177,6 +177,7 @@ export const IWORLD_MEMBERS = [
   { name: 'discardItem', kind: 'method' },
   { name: 'setItemLocked', kind: 'method' },
   { name: 'buyItem', kind: 'method' },
+  { name: 'repairItem', kind: 'method' },
   { name: 'sellItem', kind: 'method' },
   { name: 'sellAllJunk', kind: 'method' },
   { name: 'buyBackItem', kind: 'method' },
@@ -855,9 +856,9 @@ describe('IWORLD_MEMBERS is the pinned IWorld contract (anti-loosening)', () => 
     // tests/world_api_parity.test.ts` before merge lands to confirm the
     // facet-file exhaustiveness checks (AssertNever) also pass on the fully
     // resolved production tree.
-    expect(IWORLD_MEMBERS.length).toBe(371);
+    expect(IWORLD_MEMBERS.length).toBe(372);
     expect(DATA_MEMBERS.length).toBe(103);
-    expect(METHOD_MEMBERS.length).toBe(268);
+    expect(METHOD_MEMBERS.length).toBe(269);
   });
   it('has no duplicate member names', () => {
     const names = IWORLD_MEMBERS.map((m) => m.name);
@@ -1151,6 +1152,7 @@ describe('IWORLD_MEMBERS is the pinned IWorld contract (anti-loosening)', () => 
       'reliquaryRecent',
       'renamePet',
       'renown',
+      'repairItem',
       'reportTelemetry',
       'resolvedAbility',
       'respec',
@@ -1548,6 +1550,7 @@ describe('IWORLD_MEMBERS is the pinned IWorld contract (anti-loosening)', () => 
       'reliquaryPageCompletion',
       'reliquaryRarity',
       'renamePet',
+      'repairItem',
       'reportTelemetry',
       'resolvedAbility',
       'respec',
@@ -1803,6 +1806,7 @@ const FACET_INVENTORY = [
   'discardItem',
   'setItemLocked',
   'buyItem',
+  'repairItem',
   'sellItem',
   'sellAllJunk',
   'buyBackItem',
@@ -2367,8 +2371,8 @@ describe('W1: aggregate IWorld member set equals the disjoint union of the facet
     // tests/world_api_parity.test.ts` before merge lands to confirm the
     // facet arrays actually reconstruct IWORLD_MEMBERS with no gaps or
     // collisions; this pin and the one above must always agree.
-    expect(union.length, 'union size before dedup (catches a duplicated member)').toBe(371);
-    expect(new Set(union).size, 'union size after dedup (catches a duplicated member)').toBe(371);
+    expect(union.length, 'union size before dedup (catches a duplicated member)').toBe(372);
+    expect(new Set(union).size, 'union size after dedup (catches a duplicated member)').toBe(372);
     const sortedUnion = [...union].sort();
     const pinned = IWORLD_MEMBERS.map((m) => m.name).sort();
     expect(sortedUnion).toEqual(pinned);

@@ -474,6 +474,7 @@ export const COMMAND_NAMES = [
   'discard',
   'lock_item',
   'buy',
+  'repair',
   'sell',
   'buyback',
   'sell_all_junk',

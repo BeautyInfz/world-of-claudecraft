@@ -3411,11 +3411,44 @@ export const cs_CZ: EnTranslations = {
       "partyTradeWindow": "Tento předmět můžeš dalších {time} směňovat s hráči, kteří sdíleli jeho kořist. Nasazení předmětu okno pro směnu ukončí.",
       "perfectedBadge": "Zdokonalené",
       "perfectingRank": "Zdokonalování: hodnost {rank} z {ranks}",
+      "durability": "Durability: {current}/{max}",
+      "durabilityLow": "Low durability: stat bonuses are lost at 0.",
+      "durabilityBroken": "Broken. This item must be repaired before its bonuses work again.",
       "materialSourceGatherer": "{count} × sebral(a) {name}",
       "materialSourceGathererSigned": "{count} × sebral(a) {name}, podepsal(a) {signer}",
       "materialSourceUnrecorded": "{count} × bez zaznamenaného sběrače",
       "materialSourceUnrecordedSigned": "{count} × bez zaznamenaného sběrače, podepsal(a) {name}",
       "materialSourceMore": "+ další zdroje: {sources}, kusů: {units}"
+    },
+    "walletPanel": {
+      "title": "WoC Wallet",
+      "close": "Close wallet panel",
+      "connect": "Connect Wallet",
+      "disconnect": "Disconnect Wallet",
+      "onChainBalance": "On-chain balance:",
+      "holdingGate": "Minimum {amount} $WOC required to claim.",
+      "gateMet": "Met",
+      "gateUnmet": "Not met",
+      "offChainBalance": "In-game balance:",
+      "characterBalance": "{amount} $WOC",
+      "claimButton": "Claim",
+      "cooldownActive": "You can claim again 24 hours after your last claim.",
+      "gateNote": "Hold at least the minimum shown above in your connected wallet to claim.",
+      "amountLabel": "Amount to claim",
+      "feeGross": "Amount: {amount} $WOC",
+      "feeNet": "You receive: {amount} $WOC",
+      "feeTreasury": "Treasury fee (10%): {amount} $WOC",
+      "feeBurn": "Burned (10%): {amount} $WOC",
+      "confirmButton": "Confirm",
+      "cancelButton": "Cancel",
+      "claimPending": "Claiming...",
+      "claimSuccess": "Claim complete. {amount} $WOC sent to your wallet.",
+      "reserveLabel": "Claim wallet reserve:",
+      "circulatingSupplyLabel": "In-game $WOC circulating:",
+      "circulatingSupplyCap": "{pct}% of the {cap} $WOC emission cap",
+      "circulationChartTitle": "In-game circulation",
+      "flowChartTitle": "On-chain flow",
+      "offlineClaimUnavailable": "Claiming isn't available offline. Connect to an online WoC Unleashed realm."
     },
     "materialSources": {
       "detailsTitle": "Zdroje pro {item}",
@@ -8283,7 +8316,10 @@ export const cs_CZ: EnTranslations = {
     "playAria": "Hrát World of ClaudeCraft",
     "serverLabel": "Vyber si svět",
     "serverAria": "Vybrat svět: online nebo offline",
-    "serverOfflineSub": "Okamžitý lokální svět"
+    "serverOfflineSub": "Okamžitý lokální svět",
+    "serverUnleashedOffline": "Unleashed Offline",
+    "unleashedOfflineDesc": "Instant single-player world using WoC Unleashed rules: gold is $WOC and gear has durability. Nothing is saved; local testing only.",
+    "serverUnleashedOfflineSub": "Local world, WoC Unleashed rules"
   },
   "auth": {
     "enterRealm": "Vstoupit do světa",
@@ -9605,6 +9641,8 @@ export const cs_CZ: EnTranslations = {
     "popTipOffline": "Offline: tento svět je právě nedostupný a nejde se k němu připojit.",
     "characterCountOne": "{count} postava",
     "characterCountOther": "{count} postav",
+    "wocUnleashedBadge": "$WOC",
+    "wocUnleashedTip": "WoC Unleashed: gold is $WOC, a real Solana token you can claim to your wallet. Everything else plays the same as Claudemoon.",
     "selectedRealm": "Svět: {name}",
     "statsOffline": "Offline",
     "statsRealmOffline": "{realm} (offline)"
@@ -10643,7 +10681,8 @@ export const cs_CZ: EnTranslations = {
       "copperShort": "m",
       "gold": "zlato",
       "silver": "stříbro",
-      "copper": "měď"
+      "copper": "měď",
+      "wocAmount": "{amount} $WOC"
     },
     "slots": {
       "mainhand": "Hlavní ruka",
@@ -10780,6 +10819,7 @@ export const cs_CZ: EnTranslations = {
       "qtyMultipleAria": "Kupovat po {count} kusech",
       "qtyCustom": "Vlastní",
       "qtyCustomAria": "Zvol vlastní množství k nákupu",
+      "repairAll": "Repair All ({count}) - {cost}",
       "buyCountAria": "Koupit {count} ks {item} za {price}",
       "buyCountAriaWithRequirement": "Koupit {count} ks {item} za {price}. {requirement}",
       "buyQuantityTitle": "Kolik kusů {item} koupit? Až {max}.",

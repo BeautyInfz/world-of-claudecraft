@@ -149,6 +149,15 @@ const REGISTRY_ONLY_PATHS = new Set<string>([
   '/api/woc-market/listings/:id/buy-now',
   '/api/woc-market/settlements/:id/quote',
   '/api/woc-market/settlements/:id/confirm',
+  // WoC Unleashed claim flow (server/woc_unleashed_claim.ts): brand-new,
+  // registry-only, 404 on Claudemoon.
+  '/api/woc-unleashed/claim-status',
+  '/api/woc-unleashed/claim',
+  '/api/woc-unleashed/off-chain-balance',
+  '/api/woc-unleashed/reserve',
+  '/api/woc-unleashed/circulation-series',
+  '/api/woc-unleashed/onchain-flow-series',
+  '/api/woc-unleashed/circulating-supply',
 ]);
 
 // Every legacy /api ladder row (dispatcher === main handleApi), minus the
@@ -299,6 +308,13 @@ describe('registry completeness: migrated baseline (public reads + auth + charac
     { method: 'GET', path: '/api/woc/balance' },
     { method: 'POST', path: '/api/card' },
     { method: 'GET', path: '/api/referrals' },
+    { method: 'GET', path: '/api/woc-unleashed/claim-status' },
+    { method: 'POST', path: '/api/woc-unleashed/claim' },
+    { method: 'GET', path: '/api/woc-unleashed/off-chain-balance' },
+    { method: 'GET', path: '/api/woc-unleashed/reserve' },
+    { method: 'GET', path: '/api/woc-unleashed/circulation-series' },
+    { method: 'GET', path: '/api/woc-unleashed/onchain-flow-series' },
+    { method: 'GET', path: '/api/woc-unleashed/circulating-supply' },
     // The reports + telemetry surface (server/reports.ts). All POST; the
     // two public beacons (perf-report, site-presence) are registered POST-only so a
     // non-POST delegates to the retained legacy arm (perf-report's 404 fall-through,

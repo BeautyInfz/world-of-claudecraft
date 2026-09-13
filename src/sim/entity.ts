@@ -2,6 +2,7 @@ import { resetCraftedCollectionState } from './combat/crafted_collection_effects
 import { BATTLE_STANCE, buildStanceAura } from './combat/warrior_stances';
 import { crucibleCollectionFamilyForSet } from './content/crucible_collections';
 import type { TalentModifiers } from './content/talents';
+import { itemStatsExcludedByDurability } from './durability';
 import { resolveActiveWeaponSkin } from './content/weapon_skin_rules';
 import { aggregateSetBonuses, CLASSES, ITEMS, MOBS, type NpcDef } from './data';
 import { canDualWield, isShieldItem } from './equipment_rules';
@@ -344,6 +345,11 @@ export function recalcPlayerStats(
     // level. This only arises for a character loaded wearing gear equipped before
     // the level gate existed; the equip path blocks equipping over-level gear.
     if (!meetsLevelRequirement(lvl, item)) continue;
+    // WoC Unleashed durability: a depleted item stays equipped/rendered (same
+    // inert-not-removed shape as the level gate above) but contributes no
+    // stats/set-credit until repaired. Always false when the durability
+    // system is off (durability is then always "absent" = full).
+    if (itemStatsExcludedByDurability(item, equipmentInstance?.[slot])) continue;
     if (item.set) setCounts.set(item.set, (setCounts.get(item.set) ?? 0) + 1);
     bonusSp += item.spellPower ?? 0;
     bonusHealPower += item.healPower ?? 0;
@@ -870,6 +876,7 @@ export function createNpc(id: number, def: NpcDef, pos: Vec3): Entity {
   e.questIds = [...def.questIds];
   e.vendorItems = [...(def.vendorItems ?? [])];
   e.devVendor = def.devVendor ?? false;
+  e.repairVendor = def.repairVendor ?? false;
   return e;
 }
 

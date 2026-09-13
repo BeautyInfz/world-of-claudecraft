@@ -572,6 +572,7 @@
     <div id="claudium-window" class="window panel"></div>
     <div id="market-window" class="window panel"></div>
     <div id="woc-market-window" class="window panel"></div>
+    <div id="wallet-panel-window" class="window panel"></div>
     <div id="mailbox-window" class="window panel"></div>
     <div id="bank-window" class="window panel"></div>
     <div id="deeds-window" class="window panel"></div>
@@ -613,6 +614,7 @@
         <button type="button" class="micro-btn" id="mm-cardduel" data-i18n-title="cardDuel.title" data-i18n-aria="cardDuel.title" title="Card Duel" aria-label="Card Duel" data-icon="cards"></button>
         <button type="button" class="micro-btn" id="mm-leaderboard" data-i18n-title="game.leaderboard.title" data-i18n-aria="game.leaderboard.title" title="Leaderboard" aria-label="Leaderboard" data-icon="leaderboard"><span class="keybind">k</span></button>
         <button type="button" class="micro-btn" id="mm-wocmarket" hidden data-i18n-title="hudChrome.wocMarket.launcherLabel" data-i18n-aria="hudChrome.wocMarket.launcherLabel" title="$WOC Exchange" aria-label="$WOC Exchange" data-icon="market"></button>
+        <button type="button" class="micro-btn" id="mm-wallet" hidden data-i18n-title="hudChrome.walletPanel.title" data-i18n-aria="hudChrome.walletPanel.title" title="WoC Wallet" aria-label="WoC Wallet" data-icon="wallet"></button>
         <button type="button" class="micro-btn" id="mm-emote" data-i18n-aria="hudChrome.emoteWheel.label" aria-label="Emotes" data-icon="emote"><span class="keybind">x</span></button>
         <button type="button" class="micro-btn" id="mm-music" data-i18n-title="hud.options.music" data-i18n-aria="hud.options.music" title="Music" aria-label="Music" data-icon="music"></button>
         <button type="button" class="micro-btn" id="mm-social" data-i18n-title="hud.keybinds.actions.social" data-i18n-aria="hud.keybinds.actions.social" title="Friends &amp; Guild" aria-label="Friends &amp; Guild" data-icon="social"><span class="keybind">o</span></button>
@@ -841,6 +843,7 @@
                       <b class="stats-value js-stat-characters">…</b> <span data-i18n="stats.charactersCreated">Characters Created</span>
                     </span>
                     <span class="server-sub-offline" data-mode="offline" data-i18n="mode.serverOfflineSub" hidden>Instant local world</span>
+                    <span class="server-sub-offline" data-mode="unleashedOffline" data-i18n="mode.serverUnleashedOfflineSub" hidden>Local world, WoC Unleashed rules</span>
                   </span>
                 </span>
                 <svg class="server-select-chevron" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
@@ -862,6 +865,17 @@
                   <span class="server-opt-text">
                     <span class="server-opt-name" data-i18n="mode.serverOffline">Offline</span>
                     <span class="server-opt-desc" data-i18n="mode.offlineDesc">Instant single-player world in your browser. Nothing is saved: perfect for a quick brawl or testing.</span>
+                  </span>
+                  <svg class="server-opt-check" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </div>
+                <!-- Dev-only shortcut (npm run dev): the WoC Unleashed ruleset, run
+                     offline with no server or wallet. Hidden in production builds
+                     alongside #server-opt-offline. -->
+                <div class="server-select-option" id="server-opt-unleashed-offline" role="option" data-mode="unleashedOffline" tabindex="-1" aria-selected="false">
+                  <span class="server-dot" data-mode="unleashedOffline" aria-hidden="true"></span>
+                  <span class="server-opt-text">
+                    <span class="server-opt-name" data-i18n="mode.serverUnleashedOffline">Unleashed Offline</span>
+                    <span class="server-opt-desc" data-i18n="mode.unleashedOfflineDesc">Instant single-player world using WoC Unleashed rules: gold is $WOC and gear has durability. Nothing is saved; local testing only.</span>
                   </span>
                   <svg class="server-opt-check" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                 </div>

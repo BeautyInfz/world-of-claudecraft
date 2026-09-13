@@ -226,6 +226,8 @@ import { loadingCurtainFadeMs, resolveUiEffectsProfile } from './game/ui_effects
 import { feedSimCalendar } from './game/utc_day';
 import { voice } from './game/voice';
 import { attachWocMarketExchange } from './game/woc_market_wiring';
+import { buildOfflineWalletPanelHooks } from './game/woc_unleashed_offline_wallet_wiring';
+import { buildWalletPanelHooks } from './game/woc_unleashed_wallet_wiring';
 import { telemetryZoneId } from './game/world_telemetry';
 import { zoneWarmupMode } from './game/zone_transition';
 import { createZoneWarmTracker } from './game/zone_warm_tracker';
@@ -554,6 +556,7 @@ import {
   needsWalletReauth,
   walletChangeErrorText,
 } from './ui/wallet_reauth_prompt';
+import { setWocCurrencyActive } from './ui/woc_currency';
 import type { IWorld } from './world_api';
 import { ONLINE_WORLD_INCOMPATIBLE_MESSAGE } from './world_api';
 
@@ -3092,6 +3095,15 @@ async function startGame(
     void api.devCommandsAdvert().then((enabled) => {
       if (enabled) hud.noteDevCommandsAdvertised();
     });
+    // WoC Unleashed currency terminology (src/ui/woc_currency.ts) plus the
+    // wallet panel launcher (src/ui/wallet_panel_window.ts): both ride the
+    // SAME advert read, since they are 1:1 coupled server-side
+    // (server/woc_unleashed.ts). Fire-and-forget; Claudemoon never flips
+    // this true.
+    void api.wocUnleashedAdvert().then((enabled) => {
+      setWocCurrencyActive(enabled);
+      if (enabled) hud.attachWalletPanel(buildWalletPanelHooks(api));
+    });
     hud.attachReporting({
       submit: (targetPid, reason, details) =>
         api.reportPlayer(online.characterId, targetPid, reason, details),
@@ -3357,6 +3369,12 @@ async function startGame(
         hud.attachStorePromoCard();
       }
     }
+  } else if (offlineSim?.cfg.durabilitySystemEnabled) {
+    // "Unleashed Offline" dev shortcut: no server to ask an advert from, so
+    // the dropdown's own choice (already threaded into durabilitySystemEnabled)
+    // is the advert. The wallet panel's hooks read the local Sim directly
+    // instead of the server; see woc_unleashed_offline_wallet_wiring.ts.
+    hud.attachWalletPanel(buildOfflineWalletPanelHooks(offlineSim));
   }
   // The deliberate Thornhollow Fields flag press: always attempted, the world
   // owns every rule (radius, team, the return-beats-press race), so a stray
@@ -5184,12 +5202,21 @@ async function startOffline(
   skin = 0,
   world?: WorldContent,
   seedOverride?: number,
+  // "Unleashed Offline" dev shortcut: runs the local Sim with the WoC
+  // Unleashed currency-split + durability ruleset, no server or wallet
+  // involved. Every other caller omits this and keeps Claudemoon's
+  // plain-gold rules.
+  unleashed = false,
 ): Promise<void> {
   stopShaderWarmup();
   if (!(await prepareWorldEntry())) return;
   resetLoadProfile();
   loadPhaseStart('entry');
   enterLoadingState(t('loading.world'));
+  // $WOC currency terminology (src/ui/woc_currency.ts), mirroring the online
+  // advert read: offline has no server to ask, so the dropdown choice IS the
+  // advert.
+  setWocCurrencyActive(unleashed);
   // Editor play-test: route terrain + props at the custom world too (the renderer
   // reaches it by module global), in addition to the Sim reading cfg.world.
   if (world) setActiveWorldContent(world);
@@ -5203,6 +5230,7 @@ async function startOffline(
           world,
           seedOverride,
           devCommands: import.meta.env.DEV,
+          durabilitySystemEnabled: unleashed,
         }),
       ),
   );
@@ -6410,7 +6438,7 @@ function showRealmList(dir?: import('./net/online').RealmDirectory): void {
         const typeKey = realmTypeKeys[r.type as keyof typeof realmTypeKeys];
         const typeLabel = typeKey ? t(typeKey) : r.type;
         return `<div class="realm-row" data-name="${esc(r.name)}" data-url="${esc(r.url)}">
-        <div><div class="realm-name">${esc(r.name)}${charTag}<span class="rn-rec" data-rec hidden>${esc(t('realm.recommended'))}</span></div>
+        <div><div class="realm-name">${esc(r.name)}${charTag}<span class="rn-rec" data-rec hidden>${esc(t('realm.recommended'))}</span><span class="rn-unleashed" data-unleashed hidden title="${esc(t('realm.wocUnleashedTip'))}">${esc(t('realm.wocUnleashedBadge'))}</span></div>
           <div class="realm-sub" data-sub>${esc(t('realm.checkingStatus'))}</div></div>
         <div class="realm-meta">
           <div class="realm-type">${esc(typeLabel)}</div>
@@ -6449,6 +6477,7 @@ function showRealmList(dir?: import('./net/online').RealmDirectory): void {
           ? t('realm.onlineNow', { count: st.players })
           : t('realm.down');
         row.classList.toggle('offline', !st.online);
+        row.querySelector('[data-unleashed]')?.toggleAttribute('hidden', !st.wocUnleashed);
         if (st.online && st.players < bestPlayers) {
           bestPlayers = st.players;
           bestName = r.name;
@@ -9494,6 +9523,11 @@ function wireStartScreens(): void {
   // a dev/local-testing convenience only. Disabled in production builds,
   // unchanged (enabled) under `npm run dev`.
   const offlineAvailable = isOfflineModeAvailable(import.meta.env.DEV);
+  // Which offline flavor the server-select dropdown last chose: set by the
+  // dropdown's Play handler below, read by handleOfflineStart. The #btn-offline
+  // compat trigger always resets it, so a stale E2E script driving that hidden
+  // button never lands in Unleashed mode by accident.
+  let offlineUnleashed = false;
 
   const goToLoggedInPlay = () => {
     void enterRealmFlow().catch((err) => {
@@ -9575,7 +9609,14 @@ function wireStartScreens(): void {
     music.init();
     sfx.init();
     const name = sanitizeOfflineName(rawName);
-    void startOffline(cls, name, selectedSkin('#offline-skin-row', offlineSkin));
+    void startOffline(
+      cls,
+      name,
+      selectedSkin('#offline-skin-row', offlineSkin),
+      undefined,
+      undefined,
+      offlineUnleashed,
+    );
   };
 
   const handleOfflineSelect = () => {
@@ -9614,9 +9655,13 @@ function wireStartScreens(): void {
   // too, so no caller (including a stale E2E script) can reach it.
   if (offlineBtn) {
     if (offlineAvailable) {
-      offlineBtn.addEventListener('click', handleOfflineSelect);
+      const handlePlainOfflineSelect = () => {
+        offlineUnleashed = false;
+        handleOfflineSelect();
+      };
+      offlineBtn.addEventListener('click', handlePlainOfflineSelect);
       offlineBtn.addEventListener('keydown', (e) =>
-        handleKeyboardActivation(e as KeyboardEvent, handleOfflineSelect),
+        handleKeyboardActivation(e as KeyboardEvent, handlePlainOfflineSelect),
       );
     }
   }
@@ -9635,11 +9680,12 @@ function wireStartScreens(): void {
   const btnPlay = $('#btn-play') as HTMLButtonElement;
 
   if (serverSelect && serverTrigger && serverMenu && btnPlay) {
-    type ServerMode = 'online' | 'offline';
-    // Production builds hide the Offline dropdown option outright, so it can
-    // neither be selected by mouse/keyboard nor land in serverOptions below.
+    type ServerMode = 'online' | 'offline' | 'unleashedOffline';
+    // Production builds hide both Offline dropdown options outright, so
+    // neither can be selected by mouse/keyboard or land in serverOptions below.
     if (!offlineAvailable) {
       $('#server-opt-offline')?.setAttribute('hidden', '');
+      $('#server-opt-unleashed-offline')?.setAttribute('hidden', '');
     }
     const serverOptions = Array.from(
       serverMenu.querySelectorAll<HTMLElement>('.server-select-option:not([hidden])'),
@@ -9647,6 +9693,7 @@ function wireStartScreens(): void {
     const VALUE_KEY: Record<ServerMode, TranslationKey> = {
       online: 'mode.serverOnline',
       offline: 'mode.serverOffline',
+      unleashedOffline: 'mode.serverUnleashedOffline',
     };
     // The trigger sub-line shows live realm stats for Online and a short blurb
     // for Offline; toggle the matching child by its data-mode.
@@ -9758,8 +9805,12 @@ function wireStartScreens(): void {
     });
 
     btnPlay.addEventListener('click', () => {
-      if (serverMode === 'offline') handleOfflineSelect();
-      else handleOnlineSelect();
+      if (serverMode === 'offline' || serverMode === 'unleashedOffline') {
+        offlineUnleashed = serverMode === 'unleashedOffline';
+        handleOfflineSelect();
+      } else {
+        handleOnlineSelect();
+      }
     });
 
     applyServerMode('online');

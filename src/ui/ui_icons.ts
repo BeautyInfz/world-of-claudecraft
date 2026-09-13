@@ -40,6 +40,7 @@ export type UiIconName =
   | 'social'
   | 'attack'
   | 'market'
+  | 'wallet'
   | 'chat'
   | 'interact'
   | 'emote'
@@ -220,6 +221,12 @@ const ICONS: Record<UiIconName, string> = {
   // hand-authored sealed envelope (frame + flap V), distinct from the solid
   // `whisper` glyph so mail chrome and whisper actions stay tellable apart
   mail: '<path d="M48 128a32 32 0 0 1 32-32h352a32 32 0 0 1 32 32v256a32 32 0 0 1-32 32H80a32 32 0 0 1-32-32V128zm52 8 156 122 156-122H100zm312 50L288 296a52 52 0 0 1-64 0L100 186v190h312V186z"/>',
+  // hand-authored wallet (the WoC Wallet launcher): a rounded billfold body
+  // with a card-slot seam and a clasp, both punched out via evenodd, so it
+  // reads as "wallet" and stays tellable apart from the `market` exchange
+  // glyph it used to borrow and the `bags` inventory glyph beside it.
+  wallet:
+    '<path fill-rule="evenodd" d="M100 160 H412 A28 28 0 0 1 440 188 V356 A28 28 0 0 1 412 384 H100 A28 28 0 0 1 72 356 V188 A28 28 0 0 1 100 160 Z M104 204 H408 V220 H104 Z M344 272 a34 34 0 1 0 68 0 a34 34 0 1 0 -68 0 Z"/>',
   // with cross-stitch ticks so it reads at micro-button size
   // hand-authored open book (the Book of Deeds): two page leaves meeting at a
   // spine dip, each page hollowed so the glyph reads at micro-button size

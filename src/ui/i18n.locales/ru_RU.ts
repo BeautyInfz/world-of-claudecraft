@@ -17058,4 +17058,44 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'devCommand.actions.farmgrow.label': 'Ускорить созревание',
   'devCommand.fields.bed': 'ID грядки (необязательно)',
   'guide.profPages.oncePerDay': 'Раз в день',
+  'hudChrome.itemTooltip.durability': 'Прочность: {current}/{max}',
+  'hudChrome.itemTooltip.durabilityLow':
+    'Низкая прочность: при достижении 0 бонусы к характеристикам теряются.',
+  'hudChrome.walletPanel.title': 'Кошелёк WoC',
+  'hudChrome.walletPanel.close': 'Закрыть панель кошелька',
+  'hudChrome.walletPanel.connect': 'Подключить кошелёк',
+  'hudChrome.walletPanel.disconnect': 'Отключить кошелёк',
+  'hudChrome.walletPanel.onChainBalance': 'Баланс в сети:',
+  'hudChrome.walletPanel.holdingGate': 'Для получения требуется минимум {amount} $WOC.',
+  'hudChrome.walletPanel.offChainBalance': 'Игровой баланс:',
+  'hudChrome.walletPanel.claimButton': 'Получить',
+  'hudChrome.walletPanel.cooldownActive':
+    'Повторное получение возможно через 24 часа после последнего.',
+  'hudChrome.walletPanel.gateNote':
+    'Чтобы получить награду, храните в подключённом кошельке не менее указанного выше минимума.',
+  'hudChrome.walletPanel.amountLabel': 'Сумма к получению',
+  'hudChrome.walletPanel.feeGross': 'Сумма: {amount} $WOC',
+  'hudChrome.walletPanel.feeNet': 'Вы получите: {amount} $WOC',
+  'hudChrome.walletPanel.feeTreasury': 'Комиссия казначейства (10%): {amount} $WOC',
+  'hudChrome.walletPanel.feeBurn': 'Сожжено (10%): {amount} $WOC',
+  'hudChrome.walletPanel.confirmButton': 'Подтвердить',
+  'hudChrome.walletPanel.cancelButton': 'Отмена',
+  'hudChrome.walletPanel.claimPending': 'Получение…',
+  'hudChrome.walletPanel.claimSuccess': 'Получение завершено. {amount} $WOC отправлено на ваш кошелёк.',
+  'hudChrome.walletPanel.reserveLabel': 'Резерв кошелька для выплат:',
+  'hudChrome.walletPanel.circulationChartTitle': 'Обращение в игре',
+  'hudChrome.walletPanel.flowChartTitle': 'Движение в сети',
+  'realm.wocUnleashedTip':
+    'WoC Unleashed: золото — это $WOC, настоящий токен Solana, который можно получить на свой кошелёк. Всё остальное играется так же, как на Claudemoon.',
+  'itemUi.vendor.repairAll': 'Починить всё ({count}) - {cost}',
+  'mode.serverUnleashedOffline': 'WoC Unleashed офлайн',
+  'mode.unleashedOfflineDesc':
+    'Мгновенный одиночный мир по правилам WoC Unleashed: золото — это $WOC, а снаряжение имеет прочность. Ничего не сохраняется; только для локального тестирования.',
+  'mode.serverUnleashedOfflineSub': 'Локальный мир, правила WoC Unleashed',
+  'hudChrome.walletPanel.offlineClaimUnavailable':
+    'Получение недоступно офлайн. Подключитесь к онлайн-миру WoC Unleashed.',
+  'hudChrome.walletPanel.circulatingSupplyLabel': '$WOC в обращении в игре:',
+  'hudChrome.walletPanel.circulatingSupplyCap': '{pct}% от лимита эмиссии {cap} $WOC',
+  'hudChrome.itemTooltip.durabilityBroken':
+    'Сломано. Чтобы бонусы снова заработали, предмет нужно починить.',
 };

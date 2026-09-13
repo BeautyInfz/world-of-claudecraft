@@ -77,6 +77,8 @@ function deps(overrides: Partial<VendorWindowDeps> = {}): VendorWindowDeps {
     onSellJunk: () => {},
     onClose: () => {},
     sellJunk: { enabled: false, proceeds: 0 },
+    repairAll: null,
+    onRepairAll: () => {},
     ...overrides,
   };
 }

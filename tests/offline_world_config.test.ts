@@ -44,4 +44,17 @@ describe('offline browser world configuration', () => {
     expect(config.compulsoryTutorial).toBe(false);
     expect(config.gathererIdentity).toBeUndefined();
   });
+
+  it('threads durabilitySystemEnabled for the "Unleashed Offline" dev shortcut, off by default', () => {
+    vi.stubGlobal('crypto', { randomUUID: () => '00000000-0000-4000-8000-000000000001' });
+    const plain = offlineWorldConfig({ playerClass: 'warrior', name: 'Ana', devCommands: true });
+    expect(plain.durabilitySystemEnabled).toBeUndefined();
+    const unleashed = offlineWorldConfig({
+      playerClass: 'warrior',
+      name: 'Ana',
+      devCommands: true,
+      durabilitySystemEnabled: true,
+    });
+    expect(unleashed.durabilitySystemEnabled).toBe(true);
+  });
 });

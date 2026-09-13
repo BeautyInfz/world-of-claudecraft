@@ -1604,6 +1604,81 @@ export const SURFACE_INVENTORY: readonly SurfaceRoute[] = [
     limiter: null,
     requireOwnedExpected: null,
   },
+  // WoC Unleashed claim flow (server/woc_unleashed_claim.ts): registry-only
+  // RouteDefs, 404 on Claudemoon (WOC_UNLEASHED unset), no legacy ladder arm.
+  {
+    dispatcher: DISPATCH.mainApi,
+    method: 'GET',
+    path: '/api/woc-unleashed/claim-status',
+    handler: 'server/woc_unleashed_claim.ts claimStatusHandler (registry-only RouteDef)',
+    contentType: PROBLEM_JSON,
+    authScope: AUTH_SCOPE.full,
+    limiter: null,
+    requireOwnedExpected: null,
+  },
+  {
+    dispatcher: DISPATCH.mainApi,
+    method: 'POST',
+    path: '/api/woc-unleashed/claim',
+    handler: 'server/woc_unleashed_claim.ts claimHandler (registry-only RouteDef)',
+    contentType: PROBLEM_JSON,
+    authScope: AUTH_SCOPE.full,
+    limiter: null,
+    requireOwnedExpected: null,
+  },
+  {
+    dispatcher: DISPATCH.mainApi,
+    method: 'GET',
+    path: '/api/woc-unleashed/off-chain-balance',
+    handler: 'server/woc_unleashed_wallet_routes.ts offChainBalanceHandler (registry-only RouteDef)',
+    contentType: PROBLEM_JSON,
+    authScope: AUTH_SCOPE.full,
+    limiter: null,
+    requireOwnedExpected: null,
+  },
+  {
+    dispatcher: DISPATCH.mainApi,
+    method: 'GET',
+    path: '/api/woc-unleashed/reserve',
+    handler: 'server/woc_unleashed_wallet_routes.ts reserveHandler (registry-only RouteDef)',
+    contentType: PROBLEM_JSON,
+    authScope: AUTH_SCOPE.public,
+    limiter: null,
+    requireOwnedExpected: null,
+  },
+  {
+    dispatcher: DISPATCH.mainApi,
+    method: 'GET',
+    path: '/api/woc-unleashed/circulation-series',
+    handler:
+      'server/woc_unleashed_wallet_routes.ts circulationSeriesHandler (registry-only RouteDef)',
+    contentType: PROBLEM_JSON,
+    authScope: AUTH_SCOPE.public,
+    limiter: null,
+    requireOwnedExpected: null,
+  },
+  {
+    dispatcher: DISPATCH.mainApi,
+    method: 'GET',
+    path: '/api/woc-unleashed/onchain-flow-series',
+    handler:
+      'server/woc_unleashed_wallet_routes.ts onChainFlowSeriesHandler (registry-only RouteDef)',
+    contentType: PROBLEM_JSON,
+    authScope: AUTH_SCOPE.public,
+    limiter: null,
+    requireOwnedExpected: null,
+  },
+  {
+    dispatcher: DISPATCH.mainApi,
+    method: 'GET',
+    path: '/api/woc-unleashed/circulating-supply',
+    handler:
+      'server/woc_unleashed_wallet_routes.ts circulatingSupplyHandler (registry-only RouteDef)',
+    contentType: PROBLEM_JSON,
+    authScope: AUTH_SCOPE.public,
+    limiter: null,
+    requireOwnedExpected: null,
+  },
   // v0.20.0 release merge: the map editor surface. Custom maps (owner CRUD +
   // public browse/read, server/maps_routes.ts cores) and uploaded GLB assets
   // (binary upload + public content-addressed byte read,
@@ -2587,6 +2662,29 @@ export const SURFACE_INVENTORY: readonly SurfaceRoute[] = [
     authScope: AUTH_SCOPE.admin,
     limiter: null,
     requireOwnedExpected: REQUIRE_OWNED.operator404,
+  },
+  // WoC Unleashed emission cap: registry-only RouteDefs born AFTER the
+  // migration (the new-route rule, server/http/CLAUDE.md), so no legacy
+  // ladder arm and the legacy rollback answers 404 for them by design.
+  {
+    dispatcher: DISPATCH.admin,
+    method: 'GET',
+    path: '/admin/api/woc-unleashed/emission-cap',
+    handler: 'server/woc_unleashed_admin.ts getHandler (registry-only RouteDef)',
+    contentType: PROBLEM_JSON,
+    authScope: AUTH_SCOPE.admin,
+    limiter: null,
+    requireOwnedExpected: null,
+  },
+  {
+    dispatcher: DISPATCH.admin,
+    method: 'POST',
+    path: '/admin/api/woc-unleashed/emission-cap',
+    handler: 'server/woc_unleashed_admin.ts setHandler (registry-only RouteDef)',
+    contentType: PROBLEM_JSON,
+    authScope: AUTH_SCOPE.admin,
+    limiter: null,
+    requireOwnedExpected: null,
   },
   {
     dispatcher: DISPATCH.admin,

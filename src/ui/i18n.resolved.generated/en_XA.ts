@@ -3411,11 +3411,44 @@ export const en_XA: EnTranslations = {
       "partyTradeWindow": "[Ýóú ɱáý ţŕáðé ţĥíš íţéɱ ţó þļáýéŕš ŵĥó šĥáŕéð íţš ðŕóþ ƒóŕ ţĥé ñéẋţ {time}. Éɋúíþþíñĝ íţ éñðš ţĥé ţŕáðé ŵíñðóŵ.]",
       "perfectedBadge": "[Þéŕƒéçţéð]",
       "perfectingRank": "[Þéŕƒéçţíñĝ: ŕáñķ {rank} óƒ {ranks}]",
+      "durability": "[Ðúŕáƀíļíţý: {current}/{max}]",
+      "durabilityLow": "[Ļóŵ ðúŕáƀíļíţý: šţáţ ƀóñúšéš áŕé ļóšţ áţ 0.]",
+      "durabilityBroken": "[Ɓŕóķéñ. Ţĥíš íţéɱ ɱúšţ ƀé ŕéþáíŕéð ƀéƒóŕé íţš ƀóñúšéš ŵóŕķ áĝáíñ.]",
       "materialSourceGatherer": "[{count} × Çóļļéçţéð ƀý {name}]",
       "materialSourceGathererSigned": "[{count} × Çóļļéçţéð ƀý {name}, šíĝñéð ƀý {signer}]",
       "materialSourceUnrecorded": "[{count} × Ñó ĝáţĥéŕéŕ ŕéçóŕðéð]",
       "materialSourceUnrecordedSigned": "[{count} × Ñó ĝáţĥéŕéŕ ŕéçóŕðéð, šíĝñéð ƀý {name}]",
       "materialSourceMore": "[+{sources} ɱóŕé šóúŕçéš, {units} úñíţš]"
+    },
+    "walletPanel": {
+      "title": "[ŴóÇ Ŵáļļéţ]",
+      "close": "[Çļóšé ŵáļļéţ þáñéļ]",
+      "connect": "[Çóññéçţ Ŵáļļéţ]",
+      "disconnect": "[Ðíšçóññéçţ Ŵáļļéţ]",
+      "onChainBalance": "[Óñ-çĥáíñ ƀáļáñçé:]",
+      "holdingGate": "[Ɱíñíɱúɱ {amount} $ŴÓÇ ŕéɋúíŕéð ţó çļáíɱ.]",
+      "gateMet": "[Ɱéţ]",
+      "gateUnmet": "[Ñóţ ɱéţ]",
+      "offChainBalance": "[Íñ-ĝáɱé ƀáļáñçé:]",
+      "characterBalance": "[{amount} $ŴÓÇ]",
+      "claimButton": "[Çļáíɱ]",
+      "cooldownActive": "[Ýóú çáñ çļáíɱ áĝáíñ 24 ĥóúŕš áƒţéŕ ýóúŕ ļášţ çļáíɱ.]",
+      "gateNote": "[Ĥóļð áţ ļéášţ ţĥé ɱíñíɱúɱ šĥóŵñ áƀóʋé íñ ýóúŕ çóññéçţéð ŵáļļéţ ţó çļáíɱ.]",
+      "amountLabel": "[Áɱóúñţ ţó çļáíɱ]",
+      "feeGross": "[Áɱóúñţ: {amount} $ŴÓÇ]",
+      "feeNet": "[Ýóú ŕéçéíʋé: {amount} $ŴÓÇ]",
+      "feeTreasury": "[Ţŕéášúŕý ƒéé (10%): {amount} $ŴÓÇ]",
+      "feeBurn": "[Ɓúŕñéð (10%): {amount} $ŴÓÇ]",
+      "confirmButton": "[Çóñƒíŕɱ]",
+      "cancelButton": "[Çáñçéļ]",
+      "claimPending": "[Çļáíɱíñĝ...]",
+      "claimSuccess": "[Çļáíɱ çóɱþļéţé. {amount} $ŴÓÇ šéñţ ţó ýóúŕ ŵáļļéţ.]",
+      "reserveLabel": "[Çļáíɱ ŵáļļéţ ŕéšéŕʋé:]",
+      "circulatingSupplyLabel": "[Íñ-ĝáɱé $ŴÓÇ çíŕçúļáţíñĝ:]",
+      "circulatingSupplyCap": "[{pct}% óƒ ţĥé {cap} $ŴÓÇ éɱíššíóñ çáþ]",
+      "circulationChartTitle": "[Íñ-ĝáɱé çíŕçúļáţíóñ]",
+      "flowChartTitle": "[Óñ-çĥáíñ ƒļóŵ]",
+      "offlineClaimUnavailable": "[Çļáíɱíñĝ íšñ'ţ áʋáíļáƀļé óƒƒļíñé. Çóññéçţ ţó áñ óñļíñé ŴóÇ Úñļéášĥéð ŕéáļɱ.]"
     },
     "materialSources": {
       "detailsTitle": "[Šóúŕçéš ƒóŕ {item}]",
@@ -8283,7 +8316,10 @@ export const en_XA: EnTranslations = {
     "playAria": "[Þļáý Ŵóŕļð óƒ ÇļáúðéÇŕáƒţ]",
     "serverLabel": "[Çĥóóšé ýóúŕ ŵóŕļð]",
     "serverAria": "[Šéļéçţ ŵóŕļð: Óñļíñé óŕ Óƒƒļíñé]",
-    "serverOfflineSub": "[Íñšţáñţ ļóçáļ ŵóŕļð]"
+    "serverOfflineSub": "[Íñšţáñţ ļóçáļ ŵóŕļð]",
+    "serverUnleashedOffline": "[Úñļéášĥéð Óƒƒļíñé]",
+    "unleashedOfflineDesc": "[Íñšţáñţ šíñĝļé-þļáýéŕ ŵóŕļð úšíñĝ ŴóÇ Úñļéášĥéð ŕúļéš: ĝóļð íš $ŴÓÇ áñð ĝéáŕ ĥáš ðúŕáƀíļíţý. Ñóţĥíñĝ íš šáʋéð; ļóçáļ ţéšţíñĝ óñļý.]",
+    "serverUnleashedOfflineSub": "[Ļóçáļ ŵóŕļð, ŴóÇ Úñļéášĥéð ŕúļéš]"
   },
   "auth": {
     "enterRealm": "[Éñţéŕ ţĥé Ŵóŕļð]",
@@ -9605,6 +9641,8 @@ export const en_XA: EnTranslations = {
     "popTipOffline": "[Óƒƒļíñé: ţĥíš ŵóŕļð íš úñŕéáçĥáƀļé ŕíĝĥţ ñóŵ áñð çáññóţ ƀé ĵóíñéð.]",
     "characterCountOne": "[{count} çĥáŕáçţéŕ]",
     "characterCountOther": "[{count} çĥáŕáçţéŕš]",
+    "wocUnleashedBadge": "[$ŴÓÇ]",
+    "wocUnleashedTip": "[ŴóÇ Úñļéášĥéð: ĝóļð íš $ŴÓÇ, á ŕéáļ Šóļáñá ţóķéñ ýóú çáñ çļáíɱ ţó ýóúŕ ŵáļļéţ. Éʋéŕýţĥíñĝ éļšé þļáýš ţĥé šáɱé áš Çļáúðéɱóóñ.]",
     "selectedRealm": "[Ŵóŕļð: {name}]",
     "statsOffline": "[Óƒƒļíñé]",
     "statsRealmOffline": "[{realm} (Óƒƒļíñé)]"
@@ -10643,7 +10681,8 @@ export const en_XA: EnTranslations = {
       "copperShort": "[ç]",
       "gold": "[ĝóļð]",
       "silver": "[šíļʋéŕ]",
-      "copper": "[çóþþéŕ]"
+      "copper": "[çóþþéŕ]",
+      "wocAmount": "[{amount} $ŴÓÇ]"
     },
     "slots": {
       "mainhand": "[Ɱáíñ Ĥáñð]",
@@ -10780,6 +10819,7 @@ export const en_XA: EnTranslations = {
       "qtyMultipleAria": "[Ɓúý {count} áţ á ţíɱé]",
       "qtyCustom": "[Çúšţóɱ]",
       "qtyCustomAria": "[Çĥóóšé á çúšţóɱ áɱóúñţ ţó ƀúý]",
+      "repairAll": "[Ŕéþáíŕ Áļļ ({count}) - {cost}]",
       "buyCountAria": "[Ɓúý {count} óƒ {item} ƒóŕ {price}]",
       "buyCountAriaWithRequirement": "[Ɓúý {count} óƒ {item} ƒóŕ {price}. {requirement}]",
       "buyQuantityTitle": "[Ɓúý ĥóŵ ɱáñý {item}? Úþ ţó {max}.]",

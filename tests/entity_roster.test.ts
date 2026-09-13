@@ -276,6 +276,7 @@ function makeCtx() {
     nextLootRollId: 1,
     devCommands: false,
     compulsoryTutorial: false,
+    durabilitySystemEnabled: false,
     marketListings: [],
     commissionOrderBoard: [],
     nextCommissionOrderId: 1,

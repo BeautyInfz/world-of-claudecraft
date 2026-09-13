@@ -25,6 +25,7 @@
 
 import { ABILITIES, DELVES, GROUP_XP_BONUS, ITEMS, MOBS } from '../data';
 import * as deedsMod from '../deeds';
+import { applyPveDeathDurabilityLoss, rollPveHitDurabilityLoss } from '../durability';
 import { recalcPlayerStats } from '../entity';
 import { DAMAGE_IDLE_DESPAWN_MOB_IDS, DAMAGE_IDLE_DESPAWN_SECONDS } from '../entity_roster';
 import { weaponHand } from '../equipment_rules';
@@ -968,6 +969,26 @@ export function dealDamage(
 
   const preHp = target.hp;
   target.hp = guardianWardRestore || Math.max(0, target.hp - amount);
+  // WoC Unleashed durability: PvE hit taken only (zero loss from PvP, ever -
+  // a player-owned pet's hit does not count as PvE either). The enabled/kind
+  // checks gate BEFORE any rng draw so a disabled/Claudemoon Sim's replay
+  // draw order is never perturbed (src/sim/CLAUDE.md draw-order discipline).
+  if (
+    ctx.durabilitySystemEnabled &&
+    target.kind === 'player' &&
+    source !== null &&
+    source.kind === 'mob' &&
+    source.ownerId === null
+  ) {
+    const meta = ctx.players.get(target.id);
+    if (meta) {
+      rollPveHitDurabilityLoss(
+        (p) => ctx.rng.chance(p),
+        (arr) => ctx.rng.pick(arr),
+        meta.equipmentInstance,
+      );
+    }
+  }
   // Snapshot before reactive heals can restore health or nested damage can add loss.
   const craftedHpLoss = Math.max(0, preHp - target.hp);
   if (resolution) resolution.landedHpLoss = Math.max(0, preHp - target.hp);
@@ -1391,6 +1412,20 @@ export function handleDeath(
   stripPaladinDevotionsFromSource(ctx, e.id);
   e.dead = true;
   e.hp = 0;
+  // WoC Unleashed durability: -10% on every equipped item for a PvE death
+  // only (a player-owned pet killing its owner cannot happen; the ownerId
+  // check mirrors the hit-taken gate above for the same reason). Zero loss
+  // from PvP, ever.
+  if (
+    ctx.durabilitySystemEnabled &&
+    e.kind === 'player' &&
+    killer !== null &&
+    killer.kind === 'mob' &&
+    killer.ownerId === null
+  ) {
+    const meta = ctx.players.get(e.id);
+    if (meta) applyPveDeathDurabilityLoss(meta.equipmentInstance);
+  }
   ctx.clearNonPlayerStatAuras(e);
   // Death cannot shed persistent death penalties or encounter-owned unbreakable
   // control. The encounter script remains responsible for releasing its markers.

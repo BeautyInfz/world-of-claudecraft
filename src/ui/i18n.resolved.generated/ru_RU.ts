@@ -3411,11 +3411,44 @@ export const ru_RU: EnTranslations = {
       "partyTradeWindow": "Вы можете передать этот предмет игрокам, разделившим эту добычу, ещё в течение {time}. Надев предмет, вы завершите период обмена.",
       "perfectedBadge": "Доведён до совершенства",
       "perfectingRank": "Совершенствование: ранг {rank} из {ranks}",
+      "durability": "Прочность: {current}/{max}",
+      "durabilityLow": "Низкая прочность: при достижении 0 бонусы к характеристикам теряются.",
+      "durabilityBroken": "Сломано. Чтобы бонусы снова заработали, предмет нужно починить.",
       "materialSourceGatherer": "{count} × Сборщик: {name}",
       "materialSourceGathererSigned": "{count} × Сборщик: {name}, подпись: {signer}",
       "materialSourceUnrecorded": "{count} × Сборщик не указан",
       "materialSourceUnrecordedSigned": "{count} × Сборщик не указан, подпись: {name}",
       "materialSourceMore": "Ещё источников: {sources}, единиц: {units}"
+    },
+    "walletPanel": {
+      "title": "Кошелёк WoC",
+      "close": "Закрыть панель кошелька",
+      "connect": "Подключить кошелёк",
+      "disconnect": "Отключить кошелёк",
+      "onChainBalance": "Баланс в сети:",
+      "holdingGate": "Для получения требуется минимум {amount} $WOC.",
+      "gateMet": "Met",
+      "gateUnmet": "Not met",
+      "offChainBalance": "Игровой баланс:",
+      "characterBalance": "{amount} $WOC",
+      "claimButton": "Получить",
+      "cooldownActive": "Повторное получение возможно через 24 часа после последнего.",
+      "gateNote": "Чтобы получить награду, храните в подключённом кошельке не менее указанного выше минимума.",
+      "amountLabel": "Сумма к получению",
+      "feeGross": "Сумма: {amount} $WOC",
+      "feeNet": "Вы получите: {amount} $WOC",
+      "feeTreasury": "Комиссия казначейства (10%): {amount} $WOC",
+      "feeBurn": "Сожжено (10%): {amount} $WOC",
+      "confirmButton": "Подтвердить",
+      "cancelButton": "Отмена",
+      "claimPending": "Получение…",
+      "claimSuccess": "Получение завершено. {amount} $WOC отправлено на ваш кошелёк.",
+      "reserveLabel": "Резерв кошелька для выплат:",
+      "circulatingSupplyLabel": "$WOC в обращении в игре:",
+      "circulatingSupplyCap": "{pct}% от лимита эмиссии {cap} $WOC",
+      "circulationChartTitle": "Обращение в игре",
+      "flowChartTitle": "Движение в сети",
+      "offlineClaimUnavailable": "Получение недоступно офлайн. Подключитесь к онлайн-миру WoC Unleashed."
     },
     "materialSources": {
       "detailsTitle": "Источники: {item}",
@@ -8283,7 +8316,10 @@ export const ru_RU: EnTranslations = {
     "playAria": "Играть в World of ClaudeCraft",
     "serverLabel": "Выберите свой мир",
     "serverAria": "Выберите мир: В сети или Не в сети",
-    "serverOfflineSub": "Мгновенный локальный мир"
+    "serverOfflineSub": "Мгновенный локальный мир",
+    "serverUnleashedOffline": "WoC Unleashed офлайн",
+    "unleashedOfflineDesc": "Мгновенный одиночный мир по правилам WoC Unleashed: золото — это $WOC, а снаряжение имеет прочность. Ничего не сохраняется; только для локального тестирования.",
+    "serverUnleashedOfflineSub": "Локальный мир, правила WoC Unleashed"
   },
   "auth": {
     "enterRealm": "Войти в игровой мир",
@@ -9605,6 +9641,8 @@ export const ru_RU: EnTranslations = {
     "popTipOffline": "Не в сети: этот мир сейчас недоступен и к нему нельзя подключиться.",
     "characterCountOne": "{count} персонаж",
     "characterCountOther": "{count} персонажа",
+    "wocUnleashedBadge": "$WOC",
+    "wocUnleashedTip": "WoC Unleashed: золото — это $WOC, настоящий токен Solana, который можно получить на свой кошелёк. Всё остальное играется так же, как на Claudemoon.",
     "selectedRealm": "Мир: {name}",
     "statsOffline": "Не в сети",
     "statsRealmOffline": "{realm} (не в сети)"
@@ -10643,7 +10681,8 @@ export const ru_RU: EnTranslations = {
       "copperShort": "м",
       "gold": "золото",
       "silver": "серебро",
-      "copper": "медь"
+      "copper": "медь",
+      "wocAmount": "{amount} $WOC"
     },
     "slots": {
       "mainhand": "Правая рука",
@@ -10780,6 +10819,7 @@ export const ru_RU: EnTranslations = {
       "qtyMultipleAria": "Покупать по {count} за раз",
       "qtyCustom": "Другое",
       "qtyCustomAria": "Указать своё количество",
+      "repairAll": "Починить всё ({count}) - {cost}",
       "buyCountAria": "Купить {count} {item} за {price}",
       "buyCountAriaWithRequirement": "Купить {count} {item} за {price}. {requirement}",
       "buyQuantityTitle": "Сколько купить: {item}? Не более {max}.",

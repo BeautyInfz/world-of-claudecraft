@@ -65,6 +65,7 @@ import { recordUsageMetric } from './provider_usage';
 import { publicReadRateLimited } from './ratelimit';
 import { REALM, REALM_DIRECTORY } from './realm';
 import { steamEnabled } from './steam/config';
+import { WOC_UNLEASHED } from './woc_unleashed';
 
 // ---------------------------------------------------------------------------
 // Named constants (single source of truth for the query decoders + fixed args).
@@ -637,6 +638,7 @@ async function statusHandler(ctx: Ctx): Promise<void> {
     epic: { enabled: epicEnabled() },
     dev_commands: process.env.ALLOW_DEV_COMMANDS === '1',
     profiler_invulnerability: process.env.ALLOW_DEV_COMMANDS === '1',
+    woc_unleashed: WOC_UNLEASHED,
   });
 }
 

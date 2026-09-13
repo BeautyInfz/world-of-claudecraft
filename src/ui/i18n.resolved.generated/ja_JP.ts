@@ -3411,11 +3411,44 @@ export const ja_JP: EnTranslations = {
       "partyTradeWindow": "このアイテムはあと{time}の間、同じドロップを分かち合ったプレイヤーと取引できます。装備すると取引期間は終了します。",
       "perfectedBadge": "完全化済み",
       "perfectingRank": "完全化：ランク{rank}／{ranks}",
+      "durability": "耐久度：{current}/{max}",
+      "durabilityLow": "耐久度が低下しています。耐久度が0になるとステータスボーナスが失われます。",
+      "durabilityBroken": "破損しています。効果を再び得るには修理が必要です。",
       "materialSourceGatherer": "{count} × {name}が採集",
       "materialSourceGathererSigned": "{count} × {name}が採集、{signer}が署名",
       "materialSourceUnrecorded": "{count} × 採集者の記録なし",
       "materialSourceUnrecordedSigned": "{count} × 採集者の記録なし、{name}が署名",
       "materialSourceMore": "ほか{sources}件の入手元、計{units}個"
+    },
+    "walletPanel": {
+      "title": "WoCウォレット",
+      "close": "ウォレットパネルを閉じる",
+      "connect": "ウォレットを接続",
+      "disconnect": "ウォレットの接続を解除",
+      "onChainBalance": "オンチェーン残高：",
+      "holdingGate": "受け取るには最低{amount} $WOCが必要です。",
+      "gateMet": "Met",
+      "gateUnmet": "Not met",
+      "offChainBalance": "ゲーム内残高：",
+      "characterBalance": "{amount} $WOC",
+      "claimButton": "受け取る",
+      "cooldownActive": "前回の受け取りから24時間後に再度受け取れます。",
+      "gateNote": "受け取るには、接続したウォレットに上記の最低数量以上を保有している必要があります。",
+      "amountLabel": "受け取る数量",
+      "feeGross": "数量：{amount} $WOC",
+      "feeNet": "受取額：{amount} $WOC",
+      "feeTreasury": "財源手数料（10%）：{amount} $WOC",
+      "feeBurn": "バーン（10%）：{amount} $WOC",
+      "confirmButton": "確認",
+      "cancelButton": "キャンセル",
+      "claimPending": "受け取り中…",
+      "claimSuccess": "受け取りが完了しました。{amount} $WOCがウォレットに送金されました。",
+      "reserveLabel": "受取ウォレットの準備金：",
+      "circulatingSupplyLabel": "ゲーム内で流通中の $WOC：",
+      "circulatingSupplyCap": "{cap} $WOC発行上限の{pct}%",
+      "circulationChartTitle": "ゲーム内流通量",
+      "flowChartTitle": "オンチェーンの流量",
+      "offlineClaimUnavailable": "オフラインでは受け取れません。オンラインのWoC Unleashedワールドに接続してください。"
     },
     "materialSources": {
       "detailsTitle": "{item}の入手元",
@@ -8283,7 +8316,10 @@ export const ja_JP: EnTranslations = {
     "playAria": "World of ClaudeCraftをプレイ",
     "serverLabel": "ワールドを選択",
     "serverAria": "ワールドを選択：オンラインまたはオフライン",
-    "serverOfflineSub": "即座にローカルの世界へ"
+    "serverOfflineSub": "即座にローカルの世界へ",
+    "serverUnleashedOffline": "WoC Unleashedオフライン",
+    "unleashedOfflineDesc": "WoC Unleashedのルールを使った即時シングルプレイヤーワールドです。ゴールドは$WOC、装備には耐久度があります。何も保存されません。ローカルテスト専用です。",
+    "serverUnleashedOfflineSub": "ローカルワールド、WoC Unleashedルール"
   },
   "auth": {
     "enterRealm": "ワールドに入る",
@@ -9605,6 +9641,8 @@ export const ja_JP: EnTranslations = {
     "popTipOffline": "オフライン：このワールドは現在接続できず、参加できません。",
     "characterCountOne": "{count}キャラクター",
     "characterCountOther": "{count}キャラクター",
+    "wocUnleashedBadge": "$WOC",
+    "wocUnleashedTip": "WoC Unleashed：ゴールドは$WOC、ウォレットに受け取れる実際のSolanaトークンです。それ以外はClaudemoonと同じ遊び方です。",
     "selectedRealm": "ワールド: {name}",
     "statsOffline": "オフライン",
     "statsRealmOffline": "{realm}（オフライン）"
@@ -10643,7 +10681,8 @@ export const ja_JP: EnTranslations = {
       "copperShort": "銅",
       "gold": "金貨",
       "silver": "銀貨",
-      "copper": "銅貨"
+      "copper": "銅貨",
+      "wocAmount": "{amount} $WOC"
     },
     "slots": {
       "mainhand": "メインハンド",
@@ -10780,6 +10819,7 @@ export const ja_JP: EnTranslations = {
       "qtyMultipleAria": "一度に{count}個ずつ購入",
       "qtyCustom": "カスタム",
       "qtyCustomAria": "購入数を自分で指定",
+      "repairAll": "すべて修理（{count}）- {cost}",
       "buyCountAria": "{item}を{count}個、{price}で購入",
       "buyCountAriaWithRequirement": "{item}を{count}個、{price}で購入。{requirement}",
       "buyQuantityTitle": "{item}をいくつ購入しますか？最大{max}。",

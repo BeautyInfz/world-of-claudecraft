@@ -179,6 +179,13 @@ export const API_CONTENT_TYPE: Readonly<Record<string, ContentTypeClass>> = {
   '/api/epic/status': PROBLEM_JSON,
   '/api/card': BINARY,
   '/api/referrals': PROBLEM_JSON,
+  '/api/woc-unleashed/claim-status': PROBLEM_JSON,
+  '/api/woc-unleashed/claim': PROBLEM_JSON,
+  '/api/woc-unleashed/off-chain-balance': PROBLEM_JSON,
+  '/api/woc-unleashed/reserve': PROBLEM_JSON,
+  '/api/woc-unleashed/circulation-series': PROBLEM_JSON,
+  '/api/woc-unleashed/onchain-flow-series': PROBLEM_JSON,
+  '/api/woc-unleashed/circulating-supply': PROBLEM_JSON,
   '/api/discord/swag/claim': PROBLEM_JSON,
   // v0.20.0 release merge: the map editor surface. JSON everywhere except the
   // two binary lanes (the GLB upload request body, the byte-read response body).

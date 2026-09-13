@@ -3411,11 +3411,44 @@ export const sv_SE: EnTranslations = {
       "partyTradeWindow": "Du kan överlåta det här föremålet till spelare som delade bytet i {time} till. Att ta på det avslutar handelsfönstret.",
       "perfectedBadge": "Förfinad",
       "perfectingRank": "Förfining: rang {rank} av {ranks}",
+      "durability": "Durability: {current}/{max}",
+      "durabilityLow": "Low durability: stat bonuses are lost at 0.",
+      "durabilityBroken": "Broken. This item must be repaired before its bonuses work again.",
       "materialSourceGatherer": "{count} × samlad av {name}",
       "materialSourceGathererSigned": "{count} × samlad av {name}, signerad av {signer}",
       "materialSourceUnrecorded": "{count} × ingen samlare registrerad",
       "materialSourceUnrecordedSigned": "{count} × ingen samlare registrerad, signerad av {name}",
       "materialSourceMore": "+{sources} fler källor, {units} enheter"
+    },
+    "walletPanel": {
+      "title": "WoC Wallet",
+      "close": "Close wallet panel",
+      "connect": "Connect Wallet",
+      "disconnect": "Disconnect Wallet",
+      "onChainBalance": "On-chain balance:",
+      "holdingGate": "Minimum {amount} $WOC required to claim.",
+      "gateMet": "Met",
+      "gateUnmet": "Not met",
+      "offChainBalance": "In-game balance:",
+      "characterBalance": "{amount} $WOC",
+      "claimButton": "Claim",
+      "cooldownActive": "You can claim again 24 hours after your last claim.",
+      "gateNote": "Hold at least the minimum shown above in your connected wallet to claim.",
+      "amountLabel": "Amount to claim",
+      "feeGross": "Amount: {amount} $WOC",
+      "feeNet": "You receive: {amount} $WOC",
+      "feeTreasury": "Treasury fee (10%): {amount} $WOC",
+      "feeBurn": "Burned (10%): {amount} $WOC",
+      "confirmButton": "Confirm",
+      "cancelButton": "Cancel",
+      "claimPending": "Claiming...",
+      "claimSuccess": "Claim complete. {amount} $WOC sent to your wallet.",
+      "reserveLabel": "Claim wallet reserve:",
+      "circulatingSupplyLabel": "In-game $WOC circulating:",
+      "circulatingSupplyCap": "{pct}% of the {cap} $WOC emission cap",
+      "circulationChartTitle": "In-game circulation",
+      "flowChartTitle": "On-chain flow",
+      "offlineClaimUnavailable": "Claiming isn't available offline. Connect to an online WoC Unleashed realm."
     },
     "materialSources": {
       "detailsTitle": "Källor för {item}",
@@ -8283,7 +8316,10 @@ export const sv_SE: EnTranslations = {
     "playAria": "Spela World of ClaudeCraft",
     "serverLabel": "Välj din värld",
     "serverAria": "Välj värld: Online eller Offline",
-    "serverOfflineSub": "Direkt lokal värld"
+    "serverOfflineSub": "Direkt lokal värld",
+    "serverUnleashedOffline": "Unleashed Offline",
+    "unleashedOfflineDesc": "Instant single-player world using WoC Unleashed rules: gold is $WOC and gear has durability. Nothing is saved; local testing only.",
+    "serverUnleashedOfflineSub": "Local world, WoC Unleashed rules"
   },
   "auth": {
     "enterRealm": "Träd in i världen",
@@ -9605,6 +9641,8 @@ export const sv_SE: EnTranslations = {
     "popTipOffline": "Offline: den här världen går inte att nå just nu och kan inte anslutas till.",
     "characterCountOne": "{count} karaktär",
     "characterCountOther": "{count} karaktärer",
+    "wocUnleashedBadge": "$WOC",
+    "wocUnleashedTip": "WoC Unleashed: gold is $WOC, a real Solana token you can claim to your wallet. Everything else plays the same as Claudemoon.",
     "selectedRealm": "Värld: {name}",
     "statsOffline": "Offline",
     "statsRealmOffline": "{realm} (Offline)"
@@ -10643,7 +10681,8 @@ export const sv_SE: EnTranslations = {
       "copperShort": "k",
       "gold": "guld",
       "silver": "silver",
-      "copper": "koppar"
+      "copper": "koppar",
+      "wocAmount": "{amount} $WOC"
     },
     "slots": {
       "mainhand": "Främre hand",
@@ -10780,6 +10819,7 @@ export const sv_SE: EnTranslations = {
       "qtyMultipleAria": "Köp {count} åt gången",
       "qtyCustom": "Eget",
       "qtyCustomAria": "Välj ett eget antal att köpa",
+      "repairAll": "Repair All ({count}) - {cost}",
       "buyCountAria": "Köp {count} av {item} för {price}",
       "buyCountAriaWithRequirement": "Köp {count} av {item} för {price}. {requirement}",
       "buyQuantityTitle": "Hur många {item} vill du köpa? Upp till {max}.",

@@ -497,6 +497,16 @@ import { registerWocMarketReadCacheForBusts, WocMarketReadCache } from './woc_ma
 import { configureWocMarketRuntime, wocMarketConfig } from './woc_market_routes';
 import { createWocMarketSweep } from './woc_market_sweep';
 import { createWocMarketSweepWatchdog } from './woc_market_sweep_watchdog';
+import { WOC_UNLEASHED } from './woc_unleashed';
+import {
+  claimWalletReserve,
+  WOC_UNLEASHED_CLAIM_SOURCE_WALLET,
+} from './woc_unleashed_chain';
+import { configureWocUnleashedClaimRuntime } from './woc_unleashed_claim';
+import { startHoldingThresholdRefreshLoop } from './woc_unleashed_price_gate';
+import { startReserveSnapshotLoop } from './woc_unleashed_reserve_snapshot';
+import { ensureWocUnleashedSchema } from './woc_unleashed_schema';
+import { configureWocUnleashedWalletRoutesRuntime } from './woc_unleashed_wallet_routes';
 import { createWsAuth } from './ws_auth';
 import { bufferHandshakeMessages } from './ws_buffer';
 
@@ -2318,6 +2328,10 @@ async function handleApi(req: http.IncomingMessage, res: http.ServerResponse): P
         // harness to stop before entry because the dev gate is off. Dual-arm
         // edit: the migrated statusHandler carries the identical field.
         profiler_invulnerability: process.env.ALLOW_DEV_COMMANDS === '1',
+        // WoC Unleashed capability advert: the client reads this to choose the
+        // $WOC currency display over gold/silver/copper (src/ui/woc_currency.ts).
+        // Dual-arm edit: the migrated statusHandler carries the identical field.
+        woc_unleashed: WOC_UNLEASHED,
       });
     }
     // Dev-only world-loop perf profile (per-phase tick p95/max), for the load
@@ -3604,8 +3618,36 @@ export async function startServer(): Promise<http.Server> {
     }
   }
   await ensureSchema();
+  await ensureWocUnleashedSchema(pool);
   await seedOAuthClients();
   const game = liveGame();
+  // WoC Unleashed claim flow (server/woc_unleashed_claim.ts): drains ONLY the
+  // account's currently-online characters in this realm, live, so the debit
+  // and its post-failure refund can never race an autosave (see that
+  // module's own scope/atomicity notes). A no-op wiring on Claudemoon (the
+  // routes themselves 404 there; this still runs to keep the boot path
+  // identical either way).
+  const wocUnleashedLiveRuntime = {
+    onlineCharacterBalances: (accountId: number) => {
+      const balances: { pid: number; unitsAvailable: number }[] = [];
+      for (const session of game.clients.values()) {
+        if (session.accountId !== accountId) continue;
+        const meta = game.sim.players.get(session.pid);
+        if (meta) balances.push({ pid: session.pid, unitsAvailable: meta.copper });
+      }
+      return balances;
+    },
+    adjustLivePid: (pid: number, deltaUnits: number) => {
+      const meta = game.sim.players.get(pid);
+      if (meta) meta.copper += deltaUnits;
+    },
+  };
+  configureWocUnleashedClaimRuntime(wocUnleashedLiveRuntime);
+  configureWocUnleashedWalletRoutesRuntime(wocUnleashedLiveRuntime);
+  if (WOC_UNLEASHED) {
+    startHoldingThresholdRefreshLoop();
+    startReserveSnapshotLoop(pool, () => claimWalletReserve(WOC_UNLEASHED_CLAIM_SOURCE_WALLET));
+  }
   const bankLedgerGrowthMonitor = createBankLedgerGrowthMonitor({
     pool,
     // Metrics yield immediately under durability pressure. The next minute's

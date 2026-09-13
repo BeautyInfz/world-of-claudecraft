@@ -236,6 +236,9 @@ export const shellStrings = {
       popTipOffline: 'Offline: this world is unreachable right now and cannot be joined.',
       characterCountOne: '{count} character',
       characterCountOther: '{count} characters',
+      wocUnleashedBadge: '$WOC',
+      wocUnleashedTip:
+        'WoC Unleashed: gold is $WOC, a real Solana token you can claim to your wallet. Everything else plays the same as Claudemoon.',
       selectedRealm: 'World: {name}',
       statsOffline: 'Offline',
       statsRealmOffline: '{realm} (Offline)',
