@@ -1045,7 +1045,13 @@ const MONOLITHS: MonolithRow[] = [
     // bindWocCurrency call after the savedState block, and the save-site
     // copper/wocBalance split (the redirect mechanism itself lives in
     // src/sim/woc_currency_binding.ts). Exact count, zero slack.
-    ceiling: 11907,
+    // Plus 31 for stamping real durability onto every durability-tracked item
+    // at grant time (addItem/addItemInstance) and onto the fresh-character
+    // starting weapon/chest, so items actually carry durability once the
+    // system is enabled instead of just having the loss/repair machinery sit
+    // unused (isDurabilityTrackedItem itself lives in src/sim/durability.ts).
+    // Exact count, zero slack.
+    ceiling: 11938,
     seam: 'a sim system module behind SimContext (src/sim/CLAUDE.md)',
   },
   {

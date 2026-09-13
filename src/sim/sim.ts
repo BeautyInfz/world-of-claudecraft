@@ -245,6 +245,7 @@ import { DEV_SANDBOX_CFG, DEV_SANDBOX_CLASSES } from './dev/dev_sandbox_config';
 import { despawnMobsForDev } from './dev_commands';
 import { projectOutsideDungeonDoors } from './dungeon_door_clearance';
 import { arenaMapForSlot } from './dungeon_layout';
+import { DURABILITY_MAX, isDurabilityTrackedItem } from './durability';
 import * as nythraxis from './encounters/nythraxis';
 // A3: ARENA_SPAWNS_A_2v2/B_2v2 (read only by the moved fiestaRevive) now live with
 // social/fiesta.ts. The dungeon-wall consts (DUNGEON_WALL_HW/X) are now read only by
@@ -2923,7 +2924,17 @@ export class Sim {
         chest: classDef.startChest,
         ...(classDef.startOffhand ? { offhand: classDef.startOffhand } : {}),
       },
-      equipmentInstance: {},
+      // WoC Unleashed-exclusive: the starting weapon/chest/offhand bypass the
+      // addItem/addItemInstance grant hub (they are set directly above), so
+      // they need their own full-durability stamp here to match every other
+      // durability-tracked item. Inert on Claudemoon.
+      equipmentInstance: this.cfg.durabilitySystemEnabled
+        ? {
+            mainhand: { durability: DURABILITY_MAX },
+            chest: { durability: DURABILITY_MAX },
+            ...(classDef.startOffhand ? { offhand: { durability: DURABILITY_MAX } } : {}),
+          }
+        : {},
       xp: 0,
       lifetimeXp: 0,
       honor: 0,
@@ -8331,11 +8342,20 @@ export class Sim {
     if (!r) return;
     const { meta } = r;
     const def = ITEMS[itemId];
+    // WoC Unleashed-exclusive: every durability-tracked item starts at full
+    // durability from the moment it is granted (src/sim/durability.ts), so
+    // the tooltip shows "100/100" immediately rather than staying silent
+    // until the item first takes damage. Inert on Claudemoon (durability
+    // stays undefined there, byte-identical to upstream).
+    const instance: ItemInstancePayload | undefined =
+      this.cfg.durabilitySystemEnabled && isDurabilityTrackedItem(def)
+        ? { durability: DURABILITY_MAX }
+        : undefined;
     addStacked(
       meta.inventory,
       itemId,
       count,
-      undefined,
+      instance,
       opts?.craftedRecipeId,
       opts?.materialSources,
     );
@@ -8393,6 +8413,17 @@ export class Sim {
     if (count < 1) return;
     const { meta } = r;
     const def = ITEMS[itemId];
+    // WoC Unleashed-exclusive: backfill full durability onto an instanced
+    // grant (a soulbound/crafted/socketed copy) that doesn't already carry a
+    // value; a transfer of an already-worn item keeps its real durability
+    // untouched. Inert on Claudemoon.
+    if (
+      this.cfg.durabilitySystemEnabled &&
+      isDurabilityTrackedItem(def) &&
+      instance.durability === undefined
+    ) {
+      instance.durability = DURABILITY_MAX;
+    }
     grantInventoryInstances(
       meta.inventory,
       itemId,

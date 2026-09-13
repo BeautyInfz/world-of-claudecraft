@@ -11,6 +11,12 @@
 // are excluded by recalcPlayerStats (src/sim/entity.ts) but the item stays
 // equipped/visible - it is never destroyed or unequipped.
 //
+// Every durability-tracked item (isDurabilityTrackedItem below: every weapon,
+// held offhand, and non-jewelry armor piece) is stamped with an explicit
+// durability: DURABILITY_MAX the moment it is granted (Sim.addItem /
+// addItemInstance), so the tooltip shows "100/100" from the start instead of
+// staying silent until the item first takes damage.
+//
 // Loss rules (spec): PvP causes zero loss, ever. A PvE death costs -10% (10
 // points) on every equipped item. A PvE hit taken is a probabilistic 3%
 // (pveHitDurabilityLossChance) per-hit roll; on success, ONE random equipped
@@ -51,6 +57,19 @@ export const DEFAULT_REPAIR_FACTOR = 0.5;
  *  item (spec: -10% = 10 of 100 points). */
 export const PVE_DEATH_DURABILITY_LOSS_FRACTION = 0.1;
 
+/** Whether `def` is a durability-tracked item: every weapon and held
+ *  offhand, and every armor piece EXCEPT jewelry (neck/ring - classic
+ *  durability systems never touch those either, the same exclusion
+ *  ARMOR_SLOTS makes for the hit-taken roll). Jewelry shares armor's `kind`
+ *  (JewelryItemDef, src/sim/types.ts) so `slot` is what actually tells them
+ *  apart. The grant hub (Sim.addItem/addItemInstance) calls this to decide
+ *  whether a granted copy starts at full durability. */
+export function isDurabilityTrackedItem(def: ItemDef | undefined): boolean {
+  if (!def) return false;
+  if (def.kind === 'weapon' || def.kind === 'held_offhand') return true;
+  return def.kind === 'armor' && def.slot !== 'neck' && def.slot !== 'ring';
+}
+
 /** Absent reads as full (see ItemInstancePayload.durability's doc comment). */
 export function durabilityOf(instance: ItemInstancePayload | undefined): number {
   return instance?.durability ?? DURABILITY_MAX;
@@ -65,10 +84,10 @@ function clampDurability(value: number): number {
 }
 
 /** Apply the flat -10%-of-max loss to every equipped item (PvE death). Mutates
- *  in place; slots with no instance payload (e.g. an item with no per-copy
- *  data yet) are skipped - they have nothing to decrement onto, and gain one
- *  only lazily the first time a loss applies (equipmentInstance[slot] set
- *  here when absent). */
+ *  in place; a slot with no instance payload is skipped - every
+ *  durability-tracked item is granted with one already (isDurabilityTrackedItem),
+ *  so a missing instance here means the equipped item was never
+ *  durability-tracked (jewelry) or predates this system (a carried-over save). */
 export function applyPveDeathDurabilityLoss(equipmentInstance: PlayerEquipmentInstances): void {
   const lossPoints = Math.round(DURABILITY_MAX * PVE_DEATH_DURABILITY_LOSS_FRACTION);
   for (const slot of Object.keys(equipmentInstance) as EquipSlot[]) {
