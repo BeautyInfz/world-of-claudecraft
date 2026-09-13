@@ -35,6 +35,17 @@ if (!fs.existsSync(registryPath))
   throw new Error(
     'src/ui/i18n.status.json is missing - run `npm run i18n:gen` (pretest does this for `npm test`).',
   );
+// Windows checkouts can carry CRLF line endings in the working tree even
+// though the committed blob is LF; every literal '\n}\n'-style boundary
+// search below must not silently mis-locate (or, worse, fail outright with
+// indexOf returning -1) depending on the local checkout's line endings. Every
+// TS/JS source this suite scans by marker is read through this normalizer;
+// the two gitignored JSON artifacts (registry/summary, read separately below)
+// are unaffected either way since JSON.parse does not care about line endings.
+function readSourceLF(relPath: string): string {
+  return fs.readFileSync(path.join(root, relPath), 'utf8').replace(/\r\n/g, '\n');
+}
+
 const registry: any = JSON.parse(fs.readFileSync(registryPath, 'utf8'));
 // The audit summary (counts + per-locale rollup + universeHash, no per-key bodies)
 // emitted alongside the gitignored full registry by the same scanner run; it is
@@ -243,11 +254,8 @@ describe('i18n status registry: states', () => {
   // export the scanner reads, so a regression confined to the export's body
   // leaves both in agreement). Source text is the independent witness: the
   // sim module is data-as-code, and its locale rows are literal `'key':` lines.
-  const simSource = fs.readFileSync(path.join(root, 'src/ui/sim_i18n.ts'), 'utf8');
-  const newLocalesSource = fs.readFileSync(
-    path.join(root, 'src/ui/sim_i18n.newlocales.ts'),
-    'utf8',
-  );
+  const simSource = readSourceLF('src/ui/sim_i18n.ts');
+  const newLocalesSource = readSourceLF('src/ui/sim_i18n.newlocales.ts');
   const stripComments = (src: string) =>
     src.replace(/\/\*[\s\S]*?\*\//g, '').replace(/^[ \t]*\/\/.*$/gm, '');
 
@@ -459,7 +467,7 @@ describe('i18n status registry: blocked rows are load-bearing (no over-allow)', 
     // Shipping locales can be fully translated. Exercise the actual builder
     // against an omitted live successor and its retired predecessor instead:
     // deleting the retired filter or emptying all pending sets must both fail.
-    const buildSource = fs.readFileSync(path.join(root, 'scripts/i18n_build.mjs'), 'utf8');
+    const buildSource = readSourceLF('scripts/i18n_build.mjs');
     const start = buildSource.indexOf('const isPresent =');
     const end = buildSource.indexOf('\n}\n', start) + 2;
     expect(start).toBeGreaterThan(-1);
