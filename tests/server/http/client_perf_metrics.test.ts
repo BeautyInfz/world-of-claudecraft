@@ -186,6 +186,7 @@ describe('vocabulary pins', () => {
       'no-worker',
       'pagehide',
       'ready-timeout',
+      'standing-down:silent',
       'worker-error',
       'other',
     ]);
@@ -553,6 +554,7 @@ describe('shaderWarmRefusalLabel', () => {
     expect(shaderWarmRefusalLabel('')).toBe('none');
     for (const cause of [
       'ab:off',
+      'standing-down:silent',
       'hold-timeouts:expired-share',
       'hold-timeouts:wedged',
       'hold-failures:wedged',

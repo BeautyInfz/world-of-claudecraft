@@ -403,6 +403,8 @@ describe('createShaderWarmRequests', () => {
     requests.noteLink(140);
     requests.noteLink(30);
     requests.noteLink(-5);
+    // A garbage wall is dropped: one NaN in the sum would silence the rule.
+    requests.noteLink(Number.NaN);
 
     const stats = requests.stats();
     expect(stats.dryAssembleMs).toBe(10.5);

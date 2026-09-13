@@ -965,6 +965,79 @@ describe('the cannot-serve rule: giving up on the worker own evidence', () => {
     expect(cancelled).toHaveLength(32 - SHADER_WARM_EVIDENCE_LINKS - 1);
   });
 
+  it('retires a worker that goes silent while the gates stand down', () => {
+    // Every link the worker runs answers by its own deadline, and it posts
+    // stats while it works. Two deadlines without a single message after a
+    // release mean it is not ticking; standing down would otherwise keep its
+    // context for the page, with no hold left for any rule to judge.
+    let clock = 0;
+    const { worker, ready } = start({ now: () => clock });
+    ready();
+    windowOfFour(worker());
+    holdShaderPrograms(programs(32), GPU_WORK_PRIORITY.VISIBLE_PREWARM, HOLD_CAP_MS);
+    for (let link = 1; link <= SHADER_WARM_EVIDENCE_LINKS; link++) {
+      clock += LINK_MS;
+      worker().emit({ kind: 'warmed', id: link, linkMs: LINK_MS });
+    }
+    expectReleased();
+    clock += 2 * SHADER_WARM_LINK_DEADLINE_MS - 1;
+    noteShaderWarmFrameMs(16);
+    expect(shaderWarmSnapshot()).toMatchObject({ worker: 'ready', standingDown: true });
+    clock += 1;
+    noteShaderWarmFrameMs(16);
+    expect(shaderWarmSnapshot()).toMatchObject({
+      worker: 'dead',
+      refusal: 'standing-down:silent',
+    });
+    expect(worker().terminations).toBe(1);
+  });
+
+  it('keeps a standing-down worker that is still answering, however slowly', () => {
+    let clock = 0;
+    const { worker, ready } = start({ now: () => clock });
+    ready();
+    windowOfFour(worker());
+    holdShaderPrograms(programs(32), GPU_WORK_PRIORITY.VISIBLE_PREWARM, HOLD_CAP_MS);
+    for (let link = 1; link <= SHADER_WARM_EVIDENCE_LINKS; link++) {
+      clock += LINK_MS;
+      worker().emit({ kind: 'warmed', id: link, linkMs: LINK_MS });
+    }
+    expectReleased();
+    // A link in flight gives up at the deadline: the worker is alive.
+    clock += SHADER_WARM_LINK_DEADLINE_MS;
+    worker().emit({ kind: 'failed', id: 4, reason: 'link-deadline', linkMs: 4_000 });
+    clock += SHADER_WARM_LINK_DEADLINE_MS + 500;
+    noteShaderWarmFrameMs(16);
+    expect(shaderWarmSnapshot()).toMatchObject({ worker: 'ready', standingDown: true });
+    expect(worker().terminations).toBe(0);
+  });
+
+  it('still retires as wedged when the hold that trips a release is the third unanswered expiry', () => {
+    // A release exempts the holds IT ends early, not the evidence the burst
+    // already left: the two holds before this one paid their whole caps.
+    let clock = 0;
+    const { worker, ready } = start({ now: () => clock });
+    ready();
+    windowOfFour(worker());
+    warmShaderPrograms(programs(3, 100), GPU_WORK_PRIORITY.VISIBLE_PREWARM);
+    for (let id = 1; id <= SHADER_WARM_EVIDENCE_LINKS; id++) {
+      clock += LINK_MS;
+      worker().emit({ kind: 'warmed', id, linkMs: LINK_MS });
+    }
+    clock += 6_000;
+    noteShaderWarmHold(false, true, 5_000);
+    clock += 6_000;
+    noteShaderWarmHold(false, true, 5_000);
+    clock += 6_000;
+    holdShaderPrograms(programs(32), GPU_WORK_PRIORITY.VISIBLE_PREWARM, HOLD_CAP_MS, clock - 1_000);
+    noteShaderWarmHold(false, true, 5_000);
+    expect(shaderWarmSnapshot()).toMatchObject({
+      worker: 'dead',
+      refusal: 'hold-timeouts:wedged',
+      releases: 1,
+    });
+  });
+
   it('stands down only until the links already in flight answer', () => {
     // Once the worker has answered the cancel and settled what it was linking,
     // it owes nothing and gates hold again, one window of links later, not one
@@ -1791,7 +1864,7 @@ describe('disposing the shader warm client', () => {
     });
   });
 
-  it('reads out the mode, the arm, the worker state and every counter', () => {
+  it('reads out the mode, the worker state and every counter', () => {
     const { ready } = start({ search: '?shaderwarm=all' });
     ready('Adapter 9000');
 

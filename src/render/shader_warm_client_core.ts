@@ -678,6 +678,9 @@ export function createShaderWarmRequests(): ShaderWarmRequests {
       stats.dryAssembleMs += Math.max(0, ms);
     },
     noteLink(ms) {
+      // Dropped like a censored wall: one NaN in the sum would silence the
+      // cannot-serve rule for the session with no trace.
+      if (!Number.isFinite(ms)) return;
       const linkMs = Math.max(0, ms);
       stats.links.count++;
       stats.links.sumMs += linkMs;

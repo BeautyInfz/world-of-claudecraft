@@ -56,6 +56,7 @@ import {
 } from './shader_warm_client_core';
 import type { ShaderWarmSource, ShaderWarmWorkerMessage } from './shader_warm_protocol';
 import {
+  SHADER_WARM_LINK_DEADLINE_MS,
   SHADER_WARM_MAX_WINDOW_DESKTOP,
   SHADER_WARM_MAX_WINDOW_MOBILE,
   SHADER_WARM_RETAINED_DESKTOP,
@@ -144,6 +145,13 @@ export interface ShaderWarmAbStore {
 
 const SHADER_WARM_AB_STORAGE_KEY = 'woc.shaderWarm.abArm';
 
+/** How long a worker the gates stand down for may stay silent before it is
+ *  retired. Not a tuned timer: the worker answers every link it runs by its
+ *  own deadline and posts stats while it works, so two deadlines without a
+ *  single message mean it is not ticking at all, and standing down would
+ *  otherwise keep its context for the page with no hold left to judge it. */
+export const SHADER_WARM_SILENT_STANDDOWN_MS = 2 * SHADER_WARM_LINK_DEADLINE_MS;
+
 /** A request a hold can give up on: `settled` resolves with each program's
  *  outcome; `abandon` tells the worker to drop what nobody else waits for. */
 export interface ShaderWarmHold {
@@ -205,6 +213,10 @@ const state = {
   releases: 0,
   /** Set by a release, cleared once the worker owes nothing: no gate holds. */
   standingDown: false,
+  /** When the gates last started standing down, and when the worker last
+   *  posted anything, on the client's clock: the silence bound reads both. */
+  standingDownSinceMs: Number.NEGATIVE_INFINITY,
+  lastWorkerMessageAtMs: Number.NEGATIVE_INFINITY,
   /** Carried over retired workers' books, so the beacon's A/B cost terms
    *  cover the page like the long-task total they are weighed against. */
   carriedHoldWallMs: 0,
@@ -371,6 +383,7 @@ export function shaderWarmChoiceAvailable(
 
 function onWorkerMessage(event: MessageEvent<ShaderWarmWorkerMessage>): void {
   const message = event.data;
+  state.lastWorkerMessageAtMs = clock();
   switch (message.kind) {
     case 'ready':
       state.cancelReadyDeadline?.();
@@ -558,6 +571,7 @@ export function shaderWarmDecide(
     resolveMode();
   }
   if (state.mode !== 'off' && state.workerState === 'idle') startWorker(context);
+  retireIfSilentWhileStandingDown();
   const decision = shaderWarmDecision({
     mode: state.mode,
     available: shaderWarmAvailable(),
@@ -710,6 +724,18 @@ export function holdShaderPrograms(
   return { settled: ended, wasReleased: () => released, abandon };
 }
 
+/** A worker the gates stand down for that has posted nothing for
+ *  `SHADER_WARM_SILENT_STANDDOWN_MS` is not ticking: retire it. Read from the
+ *  frame hook and the policy call, signals the worker cannot withhold. */
+function retireIfSilentWhileStandingDown(): boolean {
+  if (!state.standingDown || state.workerState !== 'ready') return false;
+  const quietSinceMs = Math.max(state.standingDownSinceMs, state.lastWorkerMessageAtMs);
+  if (clock() - quietSinceMs < SHADER_WARM_SILENT_STANDDOWN_MS) return false;
+  retireForCause('dead', 'standing-down:silent');
+  retireWorker();
+  return true;
+}
+
 /** No gate holds after a release until the worker owes nothing: the burst the
  *  verdict priced is still being served, and a new hold would queue behind it. */
 function resumeHoldsIfDrained(): void {
@@ -770,6 +796,7 @@ function judgeCannotServe(): 'released' | 'retired' | null {
   }
   const now = clock();
   state.standingDown = true;
+  state.standingDownSinceMs = now;
   for (const hold of state.outstanding.releaseAll(now)) hold.release?.();
   return 'released';
 }
@@ -816,7 +843,10 @@ export function noteShaderWarmHold(
     !warm && !progressed && (timedOut || paidDeadline) && state.workerState === 'ready';
   state.consecutiveUnanswered = unanswered ? state.consecutiveUnanswered + 1 : 0;
   // The cannot-serve rule first: what it sees, the two rules below only learn
-  // once the holds it is about have paid their caps.
+  // once the holds it is about have paid their caps. A release falls through
+  // on purpose: it exempts the holds IT ends early, not the evidence this hold
+  // and the ones before it already left, so a third unanswered expiry that
+  // also trips a release still retires the worker as wedged.
   if (judgeCannotServe() === 'retired') return;
   // Two rules: a worker that answered nothing through three holds in a row
   // is wedged; one that keeps answering someone while half the recent holds
@@ -874,6 +904,7 @@ function syncWorkerPause(): void {
 
 /** One frame's duration, from the perf monitor: the pause signal. */
 export function noteShaderWarmFrameMs(frameMs: number): void {
+  if (retireIfSilentWhileStandingDown()) return;
   if (noteShaderWarmFrame(state.pause, frameMs)) syncWorkerPause();
 }
 
@@ -895,6 +926,8 @@ function retireAndForgetWorker(): void {
   state.lastDeadlineAtMs = Number.NEGATIVE_INFINITY;
   state.releases = 0;
   state.standingDown = false;
+  state.standingDownSinceMs = Number.NEGATIVE_INFINITY;
+  state.lastWorkerMessageAtMs = Number.NEGATIVE_INFINITY;
   state.holds = createShaderWarmHoldRing();
   state.outstanding = createShaderWarmOutstandingHolds();
   state.requests = createShaderWarmRequests();

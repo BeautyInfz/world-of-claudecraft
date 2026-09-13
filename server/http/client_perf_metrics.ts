@@ -158,6 +158,7 @@ export const CLIENT_PERF_SHADER_WARM_REFUSALS = [
   'no-worker',
   'pagehide',
   'ready-timeout',
+  'standing-down:silent',
   'worker-error',
   'other',
 ] as const;

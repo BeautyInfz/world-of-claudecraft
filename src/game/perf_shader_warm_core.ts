@@ -13,7 +13,11 @@
 // were is what would make the fleet numbers say the opposite of the truth.
 
 /** The client snapshot's fields this block projects (structurally, so the
- *  core stays free of the render layer). */
+ *  core stays free of the render layer). Two scopes: `holdWallMs` and
+ *  `releases` cover the page's life (the A/B weighs them against the page's
+ *  long-task total), while `warmed`, `held`, `heldTimedOut` and `holdMs` come
+ *  from the request book a renderer rebuild starts over, so after a graphics
+ *  rebuild a report can read releases with no held gate. */
 export interface ShaderWarmBeaconInput {
   worker: string;
   refusal: string | null;

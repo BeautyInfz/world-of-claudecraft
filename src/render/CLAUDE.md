@@ -732,7 +732,8 @@ GPU work signs. Each rule names its seam and its guard.
   does (the worker drops what nobody else waits for: a second link of the same text in its
   context would only compete for the busy driver); no gate holds again until the worker
   owes nothing, in practice the links already in flight (bypass `standing-down`, and a hold
-  asked after the release is refused on the spot), so the next
+  asked after the release is refused on the spot; a worker silent for two link deadlines
+  while the gates stand down is not ticking and retires as `standing-down:silent`), so the next
   verdict can only come from a later burst, and the `SHADER_WARM_RELEASE_BREAKER`th
   retires it. A released hold feeds neither expiry rule (a release with a link deadline
   inside it would otherwise retire the worker the release kept). Read off a window that
