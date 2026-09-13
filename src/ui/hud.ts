@@ -922,6 +922,7 @@ import { installWindowReflow, rememberWindowPos, requestedWindowPos } from './wi
 import { placeWindow } from './window_reflow_core';
 import { installWindowResize, markResizableWindow } from './window_resize';
 import { wocBalanceChipHtml } from './woc_balance_chip';
+import { wocCurrencyActive } from './woc_currency';
 import { promptWocMarketBrowserVisit, wocMarketToggleAction } from './woc_market_link';
 import { type WocMarketHooks, WocMarketWindow } from './woc_market_window';
 import { installWorldDropTarget } from './world_drop_target';
@@ -2411,7 +2412,7 @@ export class Hud {
       hideTooltip: () => this.hideTooltip(),
       entityName: entityDisplayName,
       money: (copper) => moneyHtml(copper),
-      coinIconUrl: () => iconDataUrl('item', 'coin_gold'),
+      coinIconUrl: () => iconDataUrl('item', wocCurrencyActive() ? 'woc_token' : 'coin_gold'),
       itemIcon: (item, quality) => this.itemIcon(item, quality),
       itemTooltip: (item, instance?: ItemInstancePayload) => this.itemTooltip(item, true, instance),
       attachTooltip: (element, html) => this.attachTooltip(element, html),

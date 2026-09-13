@@ -459,7 +459,10 @@ const MONOLITHS: MonolithRow[] = [
     // click handler, the WalletPanelWindow construction block, attach/toggle
     // methods, and the import; the actual panel logic lives in
     // src/ui/wallet_panel_window.ts). Exact count, zero slack.
-    ceiling: 18504,
+    // Plus 1 for swapping the loot window's coin icon to woc_token under
+    // WoC Unleashed (coinIconUrl reading wocCurrencyActive, plus its import).
+    // Exact count, zero slack.
+    ceiling: 18505,
     seam: 'pure view core + thin painter on PainterHost (src/ui/CLAUDE.md)',
   },
   {

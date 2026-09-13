@@ -65,4 +65,13 @@ describe('formatMoney / moneyHtml branch on wocCurrencyActive', () => {
     expect(html).toContain('1.23 $WOC');
     expect(html).not.toContain('coin g');
   });
+
+  it('moneyHtml leads the $WOC readout with the woc_token coin art, not the gold coin', () => {
+    setWocCurrencyActive(true);
+    const html = moneyHtml(12345);
+    expect(html).toContain('/ui/currency/woc_token.webp');
+    expect(html).not.toContain('coin_gold');
+    // the icon comes before the amount, matching the honor/delve_mark convention
+    expect(html.indexOf('woc_token.webp')).toBeLessThan(html.indexOf('1.23 $WOC'));
+  });
 });

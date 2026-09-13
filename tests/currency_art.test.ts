@@ -62,8 +62,10 @@ describe('currency art', () => {
         count: 2,
       },
       'src/ui/claudium_window.ts': { needle: "currencyImageUrl('woc_token')", count: 1 },
+      'src/ui/money_html.ts': { needle: "currencyIconHtml('woc_token')", count: 1 },
       'src/ui/hud.ts': {
-        needle: "coinIconUrl: () => iconDataUrl('item', 'coin_gold')",
+        needle:
+          "coinIconUrl: () => iconDataUrl('item', wocCurrencyActive() ? 'woc_token' : 'coin_gold')",
         count: 1,
       },
     };

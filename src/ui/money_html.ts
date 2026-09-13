@@ -4,6 +4,7 @@
 // guild bank, dungeon finder, the social tab's roster confirm) composes the same
 // markup; the default output is byte-identical to the coordinator method it
 // replaced. Host-agnostic: strings only, no DOM.
+import { currencyIconHtml } from './currency_art';
 import { esc } from './esc';
 import { formatMoney, formatNumber, moneyParts, type TranslationKey, t } from './i18n';
 import { formatWocCurrency, wocCurrencyActive } from './woc_currency';
@@ -40,7 +41,7 @@ export function moneyHtml(copper: number, options: MoneyHtmlOptions = {}): strin
   // is byte-identical to upstream.
   if (wocCurrencyActive()) {
     const text = esc(formatWocCurrency(copper));
-    return `<span class="money-inline woc-currency">${text}</span>`;
+    return `<span class="money-inline woc-currency">${currencyIconHtml('woc_token')}${text}</span>`;
   }
   const parts = moneyParts(copper);
   const numberOptions = coinAmountOptions(options.grouping ?? true);
