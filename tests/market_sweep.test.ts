@@ -145,9 +145,12 @@ describe('marketSweep', () => {
     expect(info(sim, halden).collectionCopper).toBe(Math.floor(25 * 0.95));
     expect(info(sim, mira).collectionCopper).toBe(Math.floor(12 * 0.95));
     expect(info(sim, halden).collectionSales.map((s) => s.buyerName)).toEqual(['Buyer']);
-    // The buyer hears ONE summary line (after the per-row receipts grantCopies
-    // already speaks), in the shape the single buy already speaks, so no new
-    // loot matcher is needed.
+    // The buyer hears the per-row receipts in PLAN order (cheapest per unit
+    // first: the 5-stack at 5c each, then the 2-stack at 6c), then ONE summary
+    // line in the shape the single buy already speaks, so no new loot matcher is
+    // needed.
+    const receipts = lootSince(sim, b).filter((l) => l.startsWith('You receive'));
+    expect(receipts).toEqual(['You receive: Copper Ore x5.', 'You receive: Copper Ore x2.']);
     const bought = lootSince(sim, b).filter((l) => l.startsWith('Bought '));
     expect(bought).toEqual(['Bought Copper Ore x7 for 37c.']);
   });

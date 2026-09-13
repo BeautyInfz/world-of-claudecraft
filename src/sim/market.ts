@@ -938,12 +938,7 @@ export class Market {
 
   private sweepCandidatesFor(itemId: string): readonly MarketListing[] {
     let c = this.sweepCandidatesCache;
-    if (
-      !c ||
-      c.rev !== this.bookRev ||
-      c.source !== this.marketListings ||
-      c.byItem.size > 0 === false
-    ) {
+    if (!c || c.rev !== this.bookRev || c.source !== this.marketListings) {
       c = { rev: this.bookRev, source: this.marketListings, byItem: new Map() };
       this.sweepCandidatesCache = c;
     }
@@ -957,6 +952,8 @@ export class Market {
 
   private sweepPlanFor(meta: PlayerMeta, itemId: string, count: number): MarketSweepPlan {
     // Own-row exclusion hoisted out of the per-row predicate: one key per plan.
+    // This is marketListingBelongsTo's rule inlined (house rows are already
+    // gone from the candidates); change the two together.
     const key = this.marketSellerKey(meta);
     return planSweepFromCandidates(
       this.sweepCandidatesFor(itemId),
@@ -977,7 +974,8 @@ export class Market {
   // ledger, seller notice, bookRev); the buyer hears one summary line in the
   // shape the single buy already speaks, so no new loot matcher is needed.
   // Returns the rows it settled (empty on any refusal): the server's sold-volume
-  // observer reads them instead of diffing the book before and after.
+  // observer reads them instead of diffing the book. A server-only channel:
+  // IWorldMarket declares void and the online mirror returns nothing.
   marketSweep(itemId: string, count: number, maxCopper: number, pid?: number): MarketListing[] {
     const r = this.ctx.resolve(pid);
     if (!r) return [];
@@ -1016,22 +1014,26 @@ export class Market {
       this.ctx.error(meta.entityId, 'Your bags are full.');
       return [];
     }
-    // ONE pass resolves every planned id to its index; settling in DESCENDING
-    // index order keeps each splice from shifting the indices still to come, so
-    // the loop is O(B + k) instead of k index scans. Buy order does not matter
-    // for settlement (each row is its own sale), only for the plan.
-    const wanted = new Set(plan.listingIds);
-    const indices: number[] = [];
+    // ONE pass resolves every planned id to its book index (no per-row scan);
+    // settlement then runs in PLAN order (cheapest per unit first), so the
+    // buyer's receipts and the sellers' notices arrive in the order the quote
+    // was built. Each splice shifts the indices above it by one, corrected in
+    // place: k is at most MARKET_SWEEP_MAX_UNITS rows, so the fix-up is cheap.
+    const indexById = new Map<number, number>();
     this.marketListings.forEach((l, i) => {
-      if (wanted.has(l.id)) indices.push(i);
+      if (plan.listingIds.includes(l.id)) indexById.set(l.id, i);
     });
-    indices.sort((a, b) => b - a);
     const sellerCache = new Map<string, PlayerMeta | null>();
     const settled: MarketListing[] = [];
     let units = 0;
     let total = 0;
-    for (const idx of indices) {
+    for (const id of plan.listingIds) {
+      const idx = indexById.get(id);
+      if (idx === undefined) continue;
       const listing = this.marketListings[idx];
+      for (const [otherId, otherIdx] of indexById) {
+        if (otherIdx > idx) indexById.set(otherId, otherIdx - 1);
+      }
       this.settleBuy(idx, listing, def, meta, sellerCache);
       settled.push(listing);
       units += listing.count;
