@@ -52,6 +52,28 @@ describe('buildWalletPanelView', () => {
     expect(view.onChainBalanceUsd).toBeCloseTo(1, 5); // 100 * 0.01
   });
 
+  it('derives the in-game (off-chain) balance USD value from the SAME rate, wallet connection irrelevant', () => {
+    const view = buildWalletPanelView(
+      snapshot({
+        // Not connected: the off-chain USD figure must not depend on it.
+        holdingThresholdWoc: 4000, // $40 / 4000 = $0.01 per $WOC
+        offChainTotalWoc: 250,
+      }),
+    );
+    expect(view.offChainTotalUsd).toBeCloseTo(2.5, 5); // 250 * 0.01
+  });
+
+  it('is null for the off-chain USD value before the holding threshold or the balance has loaded', () => {
+    expect(
+      buildWalletPanelView(snapshot({ offChainTotalWoc: 250, holdingThresholdWoc: null }))
+        .offChainTotalUsd,
+    ).toBeNull();
+    expect(
+      buildWalletPanelView(snapshot({ offChainTotalWoc: null, holdingThresholdWoc: 4000 }))
+        .offChainTotalUsd,
+    ).toBeNull();
+  });
+
   it('holdingMet is true only at or above the threshold', () => {
     const met = buildWalletPanelView(
       snapshot({

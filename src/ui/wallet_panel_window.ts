@@ -182,7 +182,9 @@ export class WalletPanelWindow {
       : '';
     const offChain =
       `<div class="wp-balance-row"><span>${esc(t('hudChrome.walletPanel.offChainBalance'))}</span>` +
-      `<strong>${esc(formatNumber(view.offChainTotalWoc ?? 0, { maximumFractionDigits: 2 }))} $WOC</strong></div>` +
+      `<strong>${esc(formatNumber(view.offChainTotalWoc ?? 0, { maximumFractionDigits: 2 }))} $WOC` +
+      (view.offChainTotalUsd !== null ? ` (${esc(usdDollarsText(view.offChainTotalUsd))})` : '') +
+      `</strong></div>` +
       (view.showCharacterBreakdown
         ? `<ul class="wp-character-list">${view.offChainCharacters
             .filter((c) => c.woc > 0)

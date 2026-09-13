@@ -48,6 +48,10 @@ export interface WalletPanelView {
   holdingThresholdWoc: number | null;
   holdingMet: boolean;
   offChainTotalWoc: number | null;
+  /** Derived from holdingThresholdWoc, the SAME usdPerWoc rate onChainBalanceUsd
+   *  uses (one price source for the whole panel): usdValue = balance *
+   *  (40 / threshold). */
+  offChainTotalUsd: number | null;
   offChainCharacters: readonly WalletPanelCharacterBalance[];
   showCharacterBreakdown: boolean;
   cooldownElapsed: boolean;
@@ -74,6 +78,10 @@ export function buildWalletPanelView(snapshot: WalletPanelSnapshot): WalletPanel
   const usdPerWoc = threshold !== null && threshold > 0 ? 40 / threshold : null;
   const onChainBalanceUsd =
     onChainBalanceWoc !== null && usdPerWoc !== null ? onChainBalanceWoc * usdPerWoc : null;
+  const offChainTotalUsd =
+    snapshot.offChainTotalWoc !== null && usdPerWoc !== null
+      ? snapshot.offChainTotalWoc * usdPerWoc
+      : null;
   const holdingMet =
     threshold !== null && onChainBalanceWoc !== null && onChainBalanceWoc >= threshold;
   const nonzeroCharacters = snapshot.offChainCharacters.filter((c) => c.woc > 0);
@@ -91,6 +99,7 @@ export function buildWalletPanelView(snapshot: WalletPanelSnapshot): WalletPanel
     holdingThresholdWoc: threshold,
     holdingMet,
     offChainTotalWoc: snapshot.offChainTotalWoc,
+    offChainTotalUsd,
     offChainCharacters: snapshot.offChainCharacters,
     showCharacterBreakdown: nonzeroCharacters.length > 1,
     cooldownElapsed: snapshot.claimStatus?.cooldownElapsed ?? false,
