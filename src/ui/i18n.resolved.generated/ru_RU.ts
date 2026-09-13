@@ -8312,7 +8312,10 @@ export const ru_RU: EnTranslations = {
     "playAria": "Играть в World of ClaudeCraft",
     "serverLabel": "Выберите свой мир",
     "serverAria": "Выберите мир: В сети или Не в сети",
-    "serverOfflineSub": "Мгновенный локальный мир"
+    "serverOfflineSub": "Мгновенный локальный мир",
+    "serverUnleashedOffline": "WoC Unleashed офлайн",
+    "unleashedOfflineDesc": "Мгновенный одиночный мир по правилам WoC Unleashed: золото — это $WOC, а снаряжение имеет прочность. Ничего не сохраняется; только для локального тестирования.",
+    "serverUnleashedOfflineSub": "Локальный мир, правила WoC Unleashed"
   },
   "auth": {
     "enterRealm": "Войти в игровой мир",

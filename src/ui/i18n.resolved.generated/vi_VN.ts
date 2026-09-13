@@ -8312,7 +8312,10 @@ export const vi_VN: EnTranslations = {
     "playAria": "Chơi World of ClaudeCraft",
     "serverLabel": "Chọn thế giới của bạn",
     "serverAria": "Chọn thế giới: Trực Tuyến hoặc Ngoại Tuyến",
-    "serverOfflineSub": "Thế giới cục bộ tức thì"
+    "serverOfflineSub": "Thế giới cục bộ tức thì",
+    "serverUnleashedOffline": "Unleashed Offline",
+    "unleashedOfflineDesc": "Instant single-player world using WoC Unleashed rules: gold is $WOC and gear has durability. Nothing is saved; local testing only.",
+    "serverUnleashedOfflineSub": "Local world, WoC Unleashed rules"
   },
   "auth": {
     "enterRealm": "Vào Thế Giới",

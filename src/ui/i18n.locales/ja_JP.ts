@@ -16799,4 +16799,8 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'realm.wocUnleashedTip':
     'WoC Unleashed：ゴールドは$WOC、ウォレットに受け取れる実際のSolanaトークンです。それ以外はClaudemoonと同じ遊び方です。',
   'itemUi.vendor.repairAll': 'すべて修理（{count}）- {cost}',
+  'mode.serverUnleashedOffline': 'WoC Unleashedオフライン',
+  'mode.unleashedOfflineDesc':
+    'WoC Unleashedのルールを使った即時シングルプレイヤーワールドです。ゴールドは$WOC、装備には耐久度があります。何も保存されません。ローカルテスト専用です。',
+  'mode.serverUnleashedOfflineSub': 'ローカルワールド、WoC Unleashedルール',
 };

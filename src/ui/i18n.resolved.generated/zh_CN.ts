@@ -8312,7 +8312,10 @@ export const zh_CN: EnTranslations = {
     "playAria": "开始游玩 World of ClaudeCraft",
     "serverLabel": "选择你的世界",
     "serverAria": "选择世界：在线或离线",
-    "serverOfflineSub": "即时本地世界"
+    "serverOfflineSub": "即时本地世界",
+    "serverUnleashedOffline": "WoC Unleashed（离线）",
+    "unleashedOfflineDesc": "使用 WoC Unleashed 规则的即时单人世界：金币即为 $WOC，装备具有耐久度。不会保存任何内容，仅供本地测试。",
+    "serverUnleashedOfflineSub": "本地世界，WoC Unleashed 规则"
   },
   "auth": {
     "enterRealm": "进入服务器",

@@ -15969,4 +15969,8 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'realm.wocUnleashedTip':
     'WoC Unleashed：金幣即 $WOC，一種可提領至您錢包的真實Solana代幣，其餘玩法與Claudemoon完全相同。',
   'itemUi.vendor.repairAll': '全部修理（{count}）- {cost}',
+  'mode.serverUnleashedOffline': 'WoC Unleashed（離線）',
+  'mode.unleashedOfflineDesc':
+    '使用 WoC Unleashed 規則的即時單人世界：金幣即為 $WOC，裝備具有耐久度。不會保存任何內容，僅供本地測試。',
+  'mode.serverUnleashedOfflineSub': '本地世界，WoC Unleashed 規則',
 };

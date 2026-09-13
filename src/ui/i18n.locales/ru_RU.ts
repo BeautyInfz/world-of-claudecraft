@@ -17088,4 +17088,8 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'realm.wocUnleashedTip':
     'WoC Unleashed: золото — это $WOC, настоящий токен Solana, который можно получить на свой кошелёк. Всё остальное играется так же, как на Claudemoon.',
   'itemUi.vendor.repairAll': 'Починить всё ({count}) - {cost}',
+  'mode.serverUnleashedOffline': 'WoC Unleashed офлайн',
+  'mode.unleashedOfflineDesc':
+    'Мгновенный одиночный мир по правилам WoC Unleashed: золото — это $WOC, а снаряжение имеет прочность. Ничего не сохраняется; только для локального тестирования.',
+  'mode.serverUnleashedOfflineSub': 'Локальный мир, правила WoC Unleashed',
 };

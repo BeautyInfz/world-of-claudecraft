@@ -8312,7 +8312,10 @@ export const id_ID: EnTranslations = {
     "playAria": "Mainkan World of ClaudeCraft",
     "serverLabel": "Pilih dunia Anda",
     "serverAria": "Pilih dunia: Online atau Offline",
-    "serverOfflineSub": "Dunia lokal seketika"
+    "serverOfflineSub": "Dunia lokal seketika",
+    "serverUnleashedOffline": "Unleashed Offline",
+    "unleashedOfflineDesc": "Instant single-player world using WoC Unleashed rules: gold is $WOC and gear has durability. Nothing is saved; local testing only.",
+    "serverUnleashedOfflineSub": "Local world, WoC Unleashed rules"
   },
   "auth": {
     "enterRealm": "Masuki Dunia",

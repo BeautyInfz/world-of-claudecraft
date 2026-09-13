@@ -8312,7 +8312,10 @@ export const ko_KR: EnTranslations = {
     "playAria": "World of ClaudeCraft 플레이",
     "serverLabel": "월드를 선택하세요",
     "serverAria": "월드 선택: 온라인 또는 오프라인",
-    "serverOfflineSub": "즉시 시작하는 로컬 세상"
+    "serverOfflineSub": "즉시 시작하는 로컬 세상",
+    "serverUnleashedOffline": "WoC Unleashed 오프라인",
+    "unleashedOfflineDesc": "WoC Unleashed 규칙을 적용한 즉시 시작 싱글플레이 월드입니다. 골드는 $WOC이며 장비에는 내구도가 있습니다. 아무것도 저장되지 않으며 로컬 테스트 전용입니다.",
+    "serverUnleashedOfflineSub": "로컬 월드, WoC Unleashed 규칙"
   },
   "auth": {
     "enterRealm": "월드 입장",

@@ -5195,12 +5195,21 @@ async function startOffline(
   skin = 0,
   world?: WorldContent,
   seedOverride?: number,
+  // "Unleashed Offline" dev shortcut: runs the local Sim with the WoC
+  // Unleashed currency-split + durability ruleset, no server or wallet
+  // involved. Every other caller omits this and keeps Claudemoon's
+  // plain-gold rules.
+  unleashed = false,
 ): Promise<void> {
   stopShaderWarmup();
   if (!(await prepareWorldEntry())) return;
   resetLoadProfile();
   loadPhaseStart('entry');
   enterLoadingState(t('loading.world'));
+  // $WOC currency terminology (src/ui/woc_currency.ts), mirroring the online
+  // advert read: offline has no server to ask, so the dropdown choice IS the
+  // advert.
+  setWocCurrencyActive(unleashed);
   // Editor play-test: route terrain + props at the custom world too (the renderer
   // reaches it by module global), in addition to the Sim reading cfg.world.
   if (world) setActiveWorldContent(world);
@@ -5214,6 +5223,7 @@ async function startOffline(
           world,
           seedOverride,
           devCommands: import.meta.env.DEV,
+          durabilitySystemEnabled: unleashed,
         }),
       ),
   );
@@ -9506,6 +9516,11 @@ function wireStartScreens(): void {
   // a dev/local-testing convenience only. Disabled in production builds,
   // unchanged (enabled) under `npm run dev`.
   const offlineAvailable = isOfflineModeAvailable(import.meta.env.DEV);
+  // Which offline flavor the server-select dropdown last chose: set by the
+  // dropdown's Play handler below, read by handleOfflineStart. The #btn-offline
+  // compat trigger always resets it, so a stale E2E script driving that hidden
+  // button never lands in Unleashed mode by accident.
+  let offlineUnleashed = false;
 
   const goToLoggedInPlay = () => {
     void enterRealmFlow().catch((err) => {
@@ -9587,7 +9602,14 @@ function wireStartScreens(): void {
     music.init();
     sfx.init();
     const name = sanitizeOfflineName(rawName);
-    void startOffline(cls, name, selectedSkin('#offline-skin-row', offlineSkin));
+    void startOffline(
+      cls,
+      name,
+      selectedSkin('#offline-skin-row', offlineSkin),
+      undefined,
+      undefined,
+      offlineUnleashed,
+    );
   };
 
   const handleOfflineSelect = () => {
@@ -9626,9 +9648,13 @@ function wireStartScreens(): void {
   // too, so no caller (including a stale E2E script) can reach it.
   if (offlineBtn) {
     if (offlineAvailable) {
-      offlineBtn.addEventListener('click', handleOfflineSelect);
+      const handlePlainOfflineSelect = () => {
+        offlineUnleashed = false;
+        handleOfflineSelect();
+      };
+      offlineBtn.addEventListener('click', handlePlainOfflineSelect);
       offlineBtn.addEventListener('keydown', (e) =>
-        handleKeyboardActivation(e as KeyboardEvent, handleOfflineSelect),
+        handleKeyboardActivation(e as KeyboardEvent, handlePlainOfflineSelect),
       );
     }
   }
@@ -9647,11 +9673,12 @@ function wireStartScreens(): void {
   const btnPlay = $('#btn-play') as HTMLButtonElement;
 
   if (serverSelect && serverTrigger && serverMenu && btnPlay) {
-    type ServerMode = 'online' | 'offline';
-    // Production builds hide the Offline dropdown option outright, so it can
-    // neither be selected by mouse/keyboard nor land in serverOptions below.
+    type ServerMode = 'online' | 'offline' | 'unleashedOffline';
+    // Production builds hide both Offline dropdown options outright, so
+    // neither can be selected by mouse/keyboard or land in serverOptions below.
     if (!offlineAvailable) {
       $('#server-opt-offline')?.setAttribute('hidden', '');
+      $('#server-opt-unleashed-offline')?.setAttribute('hidden', '');
     }
     const serverOptions = Array.from(
       serverMenu.querySelectorAll<HTMLElement>('.server-select-option:not([hidden])'),
@@ -9659,6 +9686,7 @@ function wireStartScreens(): void {
     const VALUE_KEY: Record<ServerMode, TranslationKey> = {
       online: 'mode.serverOnline',
       offline: 'mode.serverOffline',
+      unleashedOffline: 'mode.serverUnleashedOffline',
     };
     // The trigger sub-line shows live realm stats for Online and a short blurb
     // for Offline; toggle the matching child by its data-mode.
@@ -9770,8 +9798,12 @@ function wireStartScreens(): void {
     });
 
     btnPlay.addEventListener('click', () => {
-      if (serverMode === 'offline') handleOfflineSelect();
-      else handleOnlineSelect();
+      if (serverMode === 'offline' || serverMode === 'unleashedOffline') {
+        offlineUnleashed = serverMode === 'unleashedOffline';
+        handleOfflineSelect();
+      } else {
+        handleOnlineSelect();
+      }
     });
 
     applyServerMode('online');

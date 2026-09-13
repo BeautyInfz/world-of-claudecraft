@@ -8312,7 +8312,10 @@ export const sv_SE: EnTranslations = {
     "playAria": "Spela World of ClaudeCraft",
     "serverLabel": "Välj din värld",
     "serverAria": "Välj värld: Online eller Offline",
-    "serverOfflineSub": "Direkt lokal värld"
+    "serverOfflineSub": "Direkt lokal värld",
+    "serverUnleashedOffline": "Unleashed Offline",
+    "unleashedOfflineDesc": "Instant single-player world using WoC Unleashed rules: gold is $WOC and gear has durability. Nothing is saved; local testing only.",
+    "serverUnleashedOfflineSub": "Local world, WoC Unleashed rules"
   },
   "auth": {
     "enterRealm": "Träd in i världen",

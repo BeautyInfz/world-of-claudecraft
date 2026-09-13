@@ -1249,7 +1249,11 @@ const MONOLITHS: MonolithRow[] = [
     // Plus 1 for the realm-list WoC Unleashed badge markup (rn-unleashed
     // span, revealed per-row from realmStatus().wocUnleashed). Exact count,
     // zero slack.
-    ceiling: 11339,
+    // Plus 32 for the "Unleashed Offline" dev shortcut: a third server-select
+    // mode threaded through startOffline (setWocCurrencyActive +
+    // durabilitySystemEnabled), handleOfflineStart, and the dropdown/compat
+    // trigger wiring. Exact count, zero slack.
+    ceiling: 11371,
     seam: 'a src/game/ or src/ui/ sibling module; main.ts is a firewall, not a home',
   },
   {

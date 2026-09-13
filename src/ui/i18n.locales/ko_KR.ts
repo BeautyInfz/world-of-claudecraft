@@ -16764,4 +16764,8 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
   'realm.wocUnleashedTip':
     'WoC Unleashed: 골드는 곧 $WOC이며, 지갑으로 수령할 수 있는 실제 Solana 토큰입니다. 그 외에는 Claudemoon과 동일하게 플레이됩니다.',
   'itemUi.vendor.repairAll': '모두 수리 ({count}) - {cost}',
+  'mode.serverUnleashedOffline': 'WoC Unleashed 오프라인',
+  'mode.unleashedOfflineDesc':
+    'WoC Unleashed 규칙을 적용한 즉시 시작 싱글플레이 월드입니다. 골드는 $WOC이며 장비에는 내구도가 있습니다. 아무것도 저장되지 않으며 로컬 테스트 전용입니다.',
+  'mode.serverUnleashedOfflineSub': '로컬 월드, WoC Unleashed 규칙',
 };

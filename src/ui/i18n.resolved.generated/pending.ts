@@ -39,6 +39,9 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.walletPanel.title",
     "itemUi.money.wocAmount",
     "itemUi.vendor.repairAll",
+    "mode.serverUnleashedOffline",
+    "mode.serverUnleashedOfflineSub",
+    "mode.unleashedOfflineDesc",
     "realm.wocUnleashedBadge",
     "realm.wocUnleashedTip"
   ],
@@ -72,6 +75,9 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.walletPanel.title",
     "itemUi.money.wocAmount",
     "itemUi.vendor.repairAll",
+    "mode.serverUnleashedOffline",
+    "mode.serverUnleashedOfflineSub",
+    "mode.unleashedOfflineDesc",
     "realm.wocUnleashedBadge",
     "realm.wocUnleashedTip"
   ],
@@ -105,6 +111,9 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.walletPanel.title",
     "itemUi.money.wocAmount",
     "itemUi.vendor.repairAll",
+    "mode.serverUnleashedOffline",
+    "mode.serverUnleashedOfflineSub",
+    "mode.unleashedOfflineDesc",
     "realm.wocUnleashedBadge",
     "realm.wocUnleashedTip"
   ],
@@ -138,6 +147,9 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.walletPanel.title",
     "itemUi.money.wocAmount",
     "itemUi.vendor.repairAll",
+    "mode.serverUnleashedOffline",
+    "mode.serverUnleashedOfflineSub",
+    "mode.unleashedOfflineDesc",
     "realm.wocUnleashedBadge",
     "realm.wocUnleashedTip"
   ],
@@ -172,6 +184,9 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.walletPanel.title",
     "itemUi.money.wocAmount",
     "itemUi.vendor.repairAll",
+    "mode.serverUnleashedOffline",
+    "mode.serverUnleashedOfflineSub",
+    "mode.unleashedOfflineDesc",
     "realm.wocUnleashedBadge",
     "realm.wocUnleashedTip"
   ],
@@ -205,6 +220,9 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.walletPanel.title",
     "itemUi.money.wocAmount",
     "itemUi.vendor.repairAll",
+    "mode.serverUnleashedOffline",
+    "mode.serverUnleashedOfflineSub",
+    "mode.unleashedOfflineDesc",
     "realm.wocUnleashedBadge",
     "realm.wocUnleashedTip"
   ],
@@ -266,6 +284,9 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.walletPanel.title",
     "itemUi.money.wocAmount",
     "itemUi.vendor.repairAll",
+    "mode.serverUnleashedOffline",
+    "mode.serverUnleashedOfflineSub",
+    "mode.unleashedOfflineDesc",
     "realm.wocUnleashedBadge",
     "realm.wocUnleashedTip"
   ],
@@ -306,6 +327,9 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.walletPanel.title",
     "itemUi.money.wocAmount",
     "itemUi.vendor.repairAll",
+    "mode.serverUnleashedOffline",
+    "mode.serverUnleashedOfflineSub",
+    "mode.unleashedOfflineDesc",
     "realm.wocUnleashedBadge",
     "realm.wocUnleashedTip"
   ],
@@ -339,6 +363,9 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.walletPanel.title",
     "itemUi.money.wocAmount",
     "itemUi.vendor.repairAll",
+    "mode.serverUnleashedOffline",
+    "mode.serverUnleashedOfflineSub",
+    "mode.unleashedOfflineDesc",
     "realm.wocUnleashedBadge",
     "realm.wocUnleashedTip"
   ],
@@ -372,6 +399,9 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.walletPanel.title",
     "itemUi.money.wocAmount",
     "itemUi.vendor.repairAll",
+    "mode.serverUnleashedOffline",
+    "mode.serverUnleashedOfflineSub",
+    "mode.unleashedOfflineDesc",
     "realm.wocUnleashedBadge",
     "realm.wocUnleashedTip"
   ],
@@ -405,6 +435,9 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.walletPanel.title",
     "itemUi.money.wocAmount",
     "itemUi.vendor.repairAll",
+    "mode.serverUnleashedOffline",
+    "mode.serverUnleashedOfflineSub",
+    "mode.unleashedOfflineDesc",
     "realm.wocUnleashedBadge",
     "realm.wocUnleashedTip"
   ],
@@ -438,6 +471,9 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.walletPanel.title",
     "itemUi.money.wocAmount",
     "itemUi.vendor.repairAll",
+    "mode.serverUnleashedOffline",
+    "mode.serverUnleashedOfflineSub",
+    "mode.unleashedOfflineDesc",
     "realm.wocUnleashedBadge",
     "realm.wocUnleashedTip"
   ],
@@ -471,6 +507,9 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.walletPanel.title",
     "itemUi.money.wocAmount",
     "itemUi.vendor.repairAll",
+    "mode.serverUnleashedOffline",
+    "mode.serverUnleashedOfflineSub",
+    "mode.unleashedOfflineDesc",
     "realm.wocUnleashedBadge",
     "realm.wocUnleashedTip"
   ],
@@ -504,6 +543,9 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.walletPanel.title",
     "itemUi.money.wocAmount",
     "itemUi.vendor.repairAll",
+    "mode.serverUnleashedOffline",
+    "mode.serverUnleashedOfflineSub",
+    "mode.unleashedOfflineDesc",
     "realm.wocUnleashedBadge",
     "realm.wocUnleashedTip"
   ],
@@ -537,6 +579,9 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.walletPanel.title",
     "itemUi.money.wocAmount",
     "itemUi.vendor.repairAll",
+    "mode.serverUnleashedOffline",
+    "mode.serverUnleashedOfflineSub",
+    "mode.unleashedOfflineDesc",
     "realm.wocUnleashedBadge",
     "realm.wocUnleashedTip"
   ]

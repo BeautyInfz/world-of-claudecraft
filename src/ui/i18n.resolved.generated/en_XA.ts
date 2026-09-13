@@ -8312,7 +8312,10 @@ export const en_XA: EnTranslations = {
     "playAria": "[Þļáý Ŵóŕļð óƒ ÇļáúðéÇŕáƒţ]",
     "serverLabel": "[Çĥóóšé ýóúŕ ŵóŕļð]",
     "serverAria": "[Šéļéçţ ŵóŕļð: Óñļíñé óŕ Óƒƒļíñé]",
-    "serverOfflineSub": "[Íñšţáñţ ļóçáļ ŵóŕļð]"
+    "serverOfflineSub": "[Íñšţáñţ ļóçáļ ŵóŕļð]",
+    "serverUnleashedOffline": "[Úñļéášĥéð Óƒƒļíñé]",
+    "unleashedOfflineDesc": "[Íñšţáñţ šíñĝļé-þļáýéŕ ŵóŕļð úšíñĝ ŴóÇ Úñļéášĥéð ŕúļéš: ĝóļð íš $ŴÓÇ áñð ĝéáŕ ĥáš ðúŕáƀíļíţý. Ñóţĥíñĝ íš šáʋéð; ļóçáļ ţéšţíñĝ óñļý.]",
+    "serverUnleashedOfflineSub": "[Ļóçáļ ŵóŕļð, ŴóÇ Úñļéášĥéð ŕúļéš]"
   },
   "auth": {
     "enterRealm": "[Éñţéŕ ţĥé Ŵóŕļð]",

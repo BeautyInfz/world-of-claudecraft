@@ -2272,6 +2272,10 @@
     background: var(--color-primary-dim);
     color: var(--color-primary-dim);
   }
+  .server-dot[data-mode="unleashedOffline"] {
+    background: #c8a838;
+    color: #c8a838;
+  }
   .server-select-text {
     flex: 1 1 auto;
     min-width: 0;

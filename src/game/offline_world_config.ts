@@ -10,6 +10,11 @@ export function offlineWorldConfig(options: {
   readonly world?: SimConfig['world'];
   readonly seedOverride?: number;
   readonly devCommands: boolean;
+  // "Unleashed Offline" dev shortcut (src/main.ts's server-select dropdown):
+  // runs the WoC Unleashed currency-split + durability ruleset in a local,
+  // unauthenticated Sim with no wallet and no claim flow reachable. Defaults
+  // off so every other offline caller keeps Claudemoon's plain-gold rules.
+  readonly durabilitySystemEnabled?: boolean;
 }): SimConfig {
   return {
     seed: options.seedOverride ?? WORLD_SEED,
@@ -23,5 +28,6 @@ export function offlineWorldConfig(options: {
     idleMobTickRadius: PLAYER_INTEREST_DROP_RADIUS,
     world: options.world,
     gathererIdentity: allocateOfflineGathererIdentity() ?? undefined,
+    durabilitySystemEnabled: options.durabilitySystemEnabled,
   };
 }
