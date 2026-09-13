@@ -5,6 +5,11 @@ import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
 import type { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
 import type { DynamicResolutionRect } from './dynamic_resolution_core';
 import { GFX, sharedUniforms } from './gfx';
+import {
+  GPU_TIMER_SCENE_AO_BRACKET,
+  GPU_TIMER_SCENE_BRACKET,
+  labelGpuTimerPass,
+} from './gpu_timer_probe_core';
 import { PreparedBloomPass } from './post_bloom';
 import { PostEffectComposer } from './post_composer';
 import { StaticOpaqueN8AOPass } from './post_n8ao';
@@ -244,15 +249,15 @@ export function buildComposer(
     // transparent surfaces showed no visible difference in A/B shots.
     ao.configuration.transparencyAware = false;
     applyAoResolution(ao, plan.scene.aoQuality === 'Medium');
-    composer.addPass(ao);
+    composer.addPass(labelGpuTimerPass(ao, GPU_TIMER_SCENE_AO_BRACKET));
   } else {
-    composer.addPass(new RenderPass(scene, camera));
+    composer.addPass(labelGpuTimerPass(new RenderPass(scene, camera), GPU_TIMER_SCENE_BRACKET));
   }
 
   let bloom: UnrealBloomPass | null = null;
   if (plan.composerPasses.includes('bloom')) {
     bloom = new PreparedBloomPass(size.clone(), BLOOM_STRENGTH, BLOOM_RADIUS, BLOOM_THRESHOLD);
-    composer.addPass(bloom);
+    composer.addPass(labelGpuTimerPass(bloom, 'bloom'));
   }
   // Edge AA for the grade-only tiers lives INSIDE this pass. A tail pass would
   // be full-frame and cost the chain its dynamic-resolution region (see the AA
@@ -265,7 +270,7 @@ export function buildComposer(
     bloom instanceof PreparedBloomPass ? bloom.bloomTexture : null,
     { fxaa: plan.gradeFxaa },
   );
-  composer.addPass(grade);
+  composer.addPass(labelGpuTimerPass(grade, 'grade'));
   // The post shed's `smaa-to-fxaa` rung swaps the grade for this twin, the
   // same pass with the FXAA arm compiled in. Disabled until that rung, and
   // compiled by prewarmShed below, never at its first live use.
@@ -278,7 +283,7 @@ export function buildComposer(
     : null;
   if (gradeFxaaTwin) {
     gradeFxaaTwin.enabled = false;
-    composer.addPass(gradeFxaaTwin);
+    composer.addPass(labelGpuTimerPass(gradeFxaaTwin, 'grade-fxaa'));
   }
 
   // Screen-fx pass (display space, straight after the grade and BEFORE the
@@ -290,7 +295,7 @@ export function buildComposer(
   const screenFx = plan.composerPasses.includes('screen-fx')
     ? new ShaderPass(ScreenFxShader)
     : null;
-  if (screenFx) composer.addPass(screenFx);
+  if (screenFx) composer.addPass(labelGpuTimerPass(screenFx, 'screen-fx'));
   const rippleSlots = Array.from({ length: SCREEN_RIPPLE_SLOTS }, () => ({
     x: 0,
     y: 0,
@@ -316,7 +321,7 @@ export function buildComposer(
   // ?smaa=off is the dev-only perf-attribution kill switch. It keeps the
   // post-AA cost attributable while comparing the revised tier policy.
   const smaa = plan.composerPasses.includes('smaa') ? new ByteTargetSMAAPass() : null;
-  if (smaa) composer.addPass(smaa);
+  if (smaa) composer.addPass(labelGpuTimerPass(smaa, 'smaa'));
 
   const shed = new PostShed(
     webgl,

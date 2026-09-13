@@ -6,6 +6,7 @@ import { jitteredPerfReportDelay } from '../src/game/perf_report_schedule';
 import { perfReporterInternalsForTest, startPerfReporter } from '../src/game/perf_reporter';
 import { SHADER_WARM_BEACON_TEXT_MAX } from '../src/game/perf_shader_warm_core';
 import { Settings } from '../src/game/settings';
+import { GPU_TIMER_UNAVAILABLE } from '../src/render/gpu_timer_probe_core';
 import { POST_REVEAL_LINK_WINDOW_MS } from '../src/render/post_reveal_links_core';
 import { shaderWarmAuditSnapshot } from '../src/render/shader_warm_audit';
 import { shaderWarmSnapshot } from '../src/render/shader_warm_client';
@@ -475,6 +476,7 @@ function snapshot(): PerfSnapshot {
         },
       },
       nightAmount: 0,
+      gpuTimer: GPU_TIMER_UNAVAILABLE,
       gpuPrep: {
         budget: {
           frameEmaMs: 16.7,
