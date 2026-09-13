@@ -72,8 +72,8 @@ export class PostEffectComposer extends EffectComposer {
   /** Three's pass loop with one timer bracket per enabled pass. Only the
    *  `?gputimer=1` arm runs it; without a timer the loop is three's own. The
    *  mask-pass branch of the original is not carried: this chain builds no
-   *  MaskPass (post.ts), so the timed loop is the same submission in the
-   *  same order. */
+   *  MaskPass (post.ts, pinned by tests/gpu_timer_probe.test.ts), so the timed
+   *  loop is the same submission in the same order. */
   override render(deltaTime?: number): void {
     const timer = this.passTimer;
     if (!timer) {
@@ -90,8 +90,13 @@ export class PostEffectComposer extends EffectComposer {
       const name = gpuTimerPassName(pass);
       if (gpuTimerBracketDrawsScene(name)) timer.beginScene(name);
       else timer.begin(name);
-      pass.render(this.renderer, this.writeBuffer, this.readBuffer, dt, false);
-      timer.end();
+      try {
+        pass.render(this.renderer, this.writeBuffer, this.readBuffer, dt, false);
+      } finally {
+        // A pass that throws must not leave its bracket open, or every later
+        // begin would throw on nesting for the rest of the session.
+        timer.end();
+      }
       if (pass.needsSwap) this.swapBuffers();
     }
     this.renderer.setRenderTarget(currentRenderTarget);

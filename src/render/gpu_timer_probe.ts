@@ -15,12 +15,22 @@
 // `scene` once the maps are drawn. On composer tiers every other pass (AO,
 // bloom, grade, screen fx, SMAA) is its own bracket (post_composer.ts).
 //
+// Only the PRESENT submit is bracketed: `beginFrame` (frame_present.ts) arms
+// the probe and `endFrame` disarms it, so a composer or renderer draw issued
+// out of band (a prewarm pass, the scene census, a screenshot) opens nothing,
+// the way `discardOutOfBandDraws` keeps those draws out of the draw stats.
+//
 // Scheduler contract (src/render/CLAUDE.md, "GPU work"): the extension is
 // fetched once, before the context's ordered extension sweep so the enabled
-// set is the same for every program of the session; query objects come from
-// a pool the ledger recycles, so a steady frame allocates no GL object; and a
-// result is only read once QUERY_RESULT_AVAILABLE says so, on a later frame,
-// so the readback never forces a GPU sync.
+// set is the same for every program of the session, and because that set is
+// then NOT the shader-warm worker's, the probe retires the worker through
+// `noteShaderWarmExtensionDrift` so a capture under the flag reads as what it
+// is (no warm-up paying) instead of a player-representative first-seconds
+// regime; query objects come from a pool the ledger recycles, so a steady
+// frame allocates no GL object; and a result is only read once
+// QUERY_RESULT_AVAILABLE says so, on a later frame, so the readback never
+// forces a GPU sync. A context that cannot mint a query halts the ledger
+// rather than throwing inside the submit.
 
 import {
   GPU_TIMER_SCENE_BRACKET,
@@ -31,6 +41,7 @@ import {
   type GpuTimerSnapshot,
 } from './gpu_timer_probe_core';
 import { gpuTimerRequested } from './render_dev_flags';
+import { noteShaderWarmExtensionDrift } from './shader_warm_client';
 
 /** The extension's members the adapter reads, so a test can hand in a stub. */
 export interface DisjointTimerQueryExt {
@@ -62,11 +73,15 @@ export const GPU_TIMER_EXTENSION = 'EXT_disjoint_timer_query_webgl2';
 
 /** The probe as the frame submit sees it (frame_present.ts, post_composer.ts). */
 export interface GpuFrameTimer {
+  /** Arm the probe for the present submit that follows; brackets opened
+   *  before this (out-of-band draws) are ignored. */
+  beginFrame(): void;
   /** Open a scene-drawing submit: `shadow` first, handed over to `name`
    *  (default `scene`) by the shadow-map hook once the maps are drawn. */
   beginScene(name?: string): void;
   begin(name: string): void;
   end(): void;
+  /** Seal the frame, poll the readback, disarm. */
   endFrame(): void;
 }
 
@@ -76,10 +91,8 @@ class GlQueryBackend implements GpuTimerQueryBackend<WebGLQuery> {
     private readonly ext: DisjointTimerQueryExt,
   ) {}
 
-  createQuery(): WebGLQuery {
-    const query = this.gl.createQuery();
-    if (!query) throw new Error('gpu timer: createQuery returned null');
-    return query;
+  createQuery(): WebGLQuery | null {
+    return this.gl.createQuery();
   }
 
   deleteQuery(query: WebGLQuery): void {
@@ -114,6 +127,9 @@ export class GpuTimerProbe implements GpuFrameTimer {
   readonly available: boolean;
   private readonly ledger: GpuTimerLedger<WebGLQuery> | null;
   private sceneHandOver = GPU_TIMER_SCENE_BRACKET;
+  private inFrame = false;
+  private noHandover = 0;
+  private unwrapShadow: (() => void) | null = null;
 
   constructor(gl: GpuTimerGl) {
     const ext = gl.getExtension(GPU_TIMER_EXTENSION) as DisjointTimerQueryExt | null;
@@ -121,45 +137,63 @@ export class GpuTimerProbe implements GpuFrameTimer {
     this.ledger = ext ? new GpuTimerLedger<WebGLQuery>(new GlQueryBackend(gl, ext)) : null;
   }
 
+  beginFrame(): void {
+    if (this.ledger) this.inFrame = true;
+  }
+
   beginScene(name = GPU_TIMER_SCENE_BRACKET): void {
+    if (!this.inFrame) return;
     this.sceneHandOver = name;
     this.ledger?.begin(GPU_TIMER_SHADOW_BRACKET);
   }
 
   begin(name: string): void {
+    if (!this.inFrame) return;
     this.ledger?.begin(name);
   }
 
   end(): void {
-    this.ledger?.end();
+    if (!this.inFrame || !this.ledger) return;
+    // A scene submit closing while still under `shadow` never reached the
+    // shadow-map hook: the label is wrong for this frame, and the count says so.
+    if (this.ledger.open === GPU_TIMER_SHADOW_BRACKET) this.noHandover++;
+    this.ledger.end();
   }
 
   endFrame(): void {
+    this.inFrame = false;
     this.ledger?.endFrame();
   }
 
   snapshot(): GpuTimerSnapshot {
-    return this.ledger ? this.ledger.snapshot() : GPU_TIMER_UNAVAILABLE;
+    if (!this.ledger) return GPU_TIMER_UNAVAILABLE;
+    return { ...this.ledger.snapshot(), sceneNoHandover: this.noHandover };
   }
 
   /** Wrap the renderer's shadow-map render so the open `shadow` bracket hands
-   *  over to `scene` once the maps are drawn. Any other render (a prewarm
-   *  pass, a screenshot, a portrait context of its own) finds no `shadow`
-   *  bracket open and passes through untouched. */
+   *  over to the scene bracket once the maps are drawn. Any other render (a
+   *  prewarm pass, a screenshot, a portrait context of its own) finds no
+   *  `shadow` bracket open and passes through untouched. */
   installShadowSplit(shadowMap: ShadowMapRenderHost): void {
     const ledger = this.ledger;
-    if (!ledger) return;
+    if (!ledger || this.unwrapShadow) return;
     const original = shadowMap.render;
     shadowMap.render = (lights, scene, camera) => {
       original.call(shadowMap, lights, scene, camera);
-      if (ledger.open === GPU_TIMER_SHADOW_BRACKET) {
+      if (this.inFrame && ledger.open === GPU_TIMER_SHADOW_BRACKET) {
         ledger.end();
         ledger.begin(this.sceneHandOver);
       }
     };
+    this.unwrapShadow = () => {
+      shadowMap.render = original;
+    };
   }
 
   dispose(): void {
+    this.inFrame = false;
+    this.unwrapShadow?.();
+    this.unwrapShadow = null;
     this.ledger?.dispose();
   }
 }
@@ -168,5 +202,10 @@ export class GpuTimerProbe implements GpuFrameTimer {
  *  Call it on the world context BEFORE the ordered extension sweep. */
 export function createGpuTimerProbe(gl: GpuTimerGl): GpuTimerProbe | null {
   if (!gpuTimerRequested()) return null;
-  return new GpuTimerProbe(gl);
+  const probe = new GpuTimerProbe(gl);
+  // The timer extension is now in the game context's enabled set and not in
+  // the warm worker's: every program it warms would be keyed for a set the
+  // game does not have, so retire it and let the readout name the cause.
+  if (probe.available) noteShaderWarmExtensionDrift(GPU_TIMER_EXTENSION);
+  return probe;
 }

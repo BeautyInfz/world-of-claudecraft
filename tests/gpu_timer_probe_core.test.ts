@@ -28,7 +28,11 @@ class FakeBackend implements GpuTimerQueryBackend<number> {
   private readonly ready = new Set<number>();
   disjointFlag = false;
 
-  createQuery(): number {
+  /** Set to model a lost context: createQuery answers null from then on. */
+  contextLost = false;
+
+  createQuery(): number | null {
+    if (this.contextLost) return null;
     const id = this.nextId++;
     this.created.push(id);
     return id;
@@ -259,6 +263,30 @@ describe('gpu timer ledger: rolling stats', () => {
   });
 });
 
+describe('gpu timer ledger: a context that cannot mint a query', () => {
+  it('halts instead of throwing, keeps the table readable, and stays halted', () => {
+    const backend = new FakeBackend();
+    const ledger = new GpuTimerLedger(backend);
+    frame(ledger, ['scene']);
+    backend.complete(1, 2);
+    ledger.endFrame();
+    backend.contextLost = true;
+    // The pooled query (1) is reused first; the second bracket needs a new one.
+    ledger.begin('shadow');
+    ledger.end();
+    expect(() => ledger.begin('scene')).not.toThrow();
+    expect(ledger.open).toBeNull();
+    ledger.endFrame();
+    const snap = ledger.snapshot();
+    expect(snap.halted).toBe(true);
+    expect(snap.brackets.scene.avg).toBe(2);
+    backend.contextLost = false;
+    ledger.begin('scene');
+    expect(ledger.open).toBeNull();
+    expect(backend.created).toEqual([1]);
+  });
+});
+
 describe('gpu timer ledger: dispose', () => {
   it('returns every query object and goes inert', () => {
     const backend = new FakeBackend();
@@ -307,9 +335,19 @@ describe('gpu timer: pass labels and the overlay lines', () => {
       },
     });
     expect(lines).toEqual([
-      'gpu sum 5.5/6ms  frames 7  disjoint 1',
+      'gpu brackets 5.5/6ms  frames 7  disjoint 1',
       '  shadow 1/1.5ms  max 2  n 7',
       '  scene 4.5/5ms  max 5.5  n 7',
     ]);
+  });
+
+  it('flags a missed shadow hand-over and a halted ledger on the health line', () => {
+    const lines = gpuTimerOverlayLines({
+      ...GPU_TIMER_UNAVAILABLE,
+      available: true,
+      sceneNoHandover: 3,
+      halted: true,
+    });
+    expect(lines).toEqual(['gpu brackets 0/0ms  frames 0  nohandover 3  HALTED']);
   });
 });

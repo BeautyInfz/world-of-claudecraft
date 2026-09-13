@@ -56,6 +56,9 @@ export function presentFrame(host: FramePresentHost, dt: number, present: boolea
     return false;
   }
   host.vfx.prepareDraw(host.camera);
+  // Arms the probe for THIS submit only: a composer or renderer draw issued
+  // out of band (prewarm, census, screenshot) opens no bracket.
+  gpuTimer?.beginFrame();
   if (host.post) {
     // screen-fx pass state (ripple re-projection, flash decay) advances
     // with the camera finalized for this frame

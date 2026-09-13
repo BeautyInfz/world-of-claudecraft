@@ -727,6 +727,10 @@ describe('perf reporter payload', () => {
     expect(body.source).toBe('benchmark');
     expect(body.zoneOrScenario).toBe('bench_dense_foliage');
     expect(JSON.stringify(body.rawSummary)).not.toContain('Safari/605');
+    // The GPU timer probe's table (perfStats().gpuTimer) is a dev diagnostic
+    // that never leaves the machine: the snapshot above carries the field, so
+    // a reporter that started spreading renderer stats would ship it here.
+    expect(JSON.stringify(body)).not.toContain('gpuTimer');
     // hiddenPresentSkips ships in rawSummary (review reversal of the phase 4
     // decision): sends are skipped while hidden, but an after-restore session
     // still beacons cumulative numbers whose spans included minimized time,

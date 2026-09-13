@@ -13,11 +13,19 @@
 // condition to absorb. A bracket reopened inside the same frame is ignored
 // deterministically (counted, never timed twice) so a stray second open cannot
 // double a bucket's sum.
+//
+// What the table covers: the brackets the frame's present submit opens, and
+// nothing else. GPU work issued off the present path (the water simulation,
+// impostor and ground bakes, prewarm draws) runs on the same context and is
+// NOT in any bracket, so `frameSumMs` is the sum of the brackets, never the
+// frame's whole GPU time; a bucket absent from the table is unmeasured, not
+// free.
 
 /** Query objects as the ledger sees them: created up front and recycled, so a
  *  steady frame allocates nothing. */
 export interface GpuTimerQueryBackend<Q = unknown> {
-  createQuery(): Q;
+  /** Null when the host cannot mint one (a lost context): the ledger halts. */
+  createQuery(): Q | null;
   deleteQuery(query: Q): void;
   beginQuery(query: Q): void;
   endQuery(): void;
@@ -43,9 +51,11 @@ export interface GpuTimerSnapshot {
    *  other field is then empty and must not be read as a measurement. */
   available: boolean;
   brackets: Record<string, GpuTimerBracketStats>;
-  /** Rolling average of the per-frame sum of every bracket, in ms. */
+  /** Rolling average of the per-frame sum of the BRACKETS, in ms: the present
+   *  submit's shadow, scene and post passes, not the frame's whole GPU time
+   *  (see the module header for what is not bracketed). */
   frameSumMs: number;
-  /** The per-frame sum's full rolling stats, beside the average above. */
+  /** The per-frame bracket sum's full rolling stats, beside the average above. */
   frameSum: GpuTimerBracketStats;
   /** Frames whose results have been read back so far. */
   framesResolved: number;
@@ -58,6 +68,13 @@ export interface GpuTimerSnapshot {
   pendingFrames: number;
   /** Second opens of a bracket inside one frame, ignored rather than timed. */
   duplicateOpens: number;
+  /** Scene submits whose `shadow` bracket was never handed over to the scene
+   *  bracket (the shadow-map hook did not fire): the whole submit then sits
+   *  under `shadow`, and this count says the label is not to be trusted. */
+  sceneNoHandover: number;
+  /** True once the backend refused to mint a query (a lost context): the
+   *  ledger stopped issuing brackets and the table is frozen at that point. */
+  halted: boolean;
 }
 
 /** Frames of samples each rolling stat covers. */
@@ -78,6 +95,8 @@ export const GPU_TIMER_UNAVAILABLE: GpuTimerSnapshot = Object.freeze({
   droppedFrames: 0,
   pendingFrames: 0,
   duplicateOpens: 0,
+  sceneNoHandover: 0,
+  halted: false,
 });
 
 interface Segment<Q> {
@@ -138,6 +157,7 @@ export class GpuTimerLedger<Q = unknown> {
   private disjointFrames = 0;
   private droppedFrames = 0;
   private duplicateOpens = 0;
+  private halted = false;
   private disposed = false;
 
   constructor(
@@ -156,7 +176,7 @@ export class GpuTimerLedger<Q = unknown> {
   /** Open a named bracket. Throws on nesting; a name already opened this
    *  frame is ignored (and counted) so it is never timed twice. */
   begin(name: string): void {
-    if (this.disposed) return;
+    if (this.disposed || this.halted) return;
     if (this.openName !== null) {
       throw new Error(`gpu timer: bracket '${name}' opened while '${this.openName}' is open`);
     }
@@ -167,6 +187,12 @@ export class GpuTimerLedger<Q = unknown> {
       }
     }
     const query = this.free.pop() ?? this.backend.createQuery();
+    if (query === null) {
+      // The host cannot mint a query (a lost context): stop issuing rather
+      // than throw from inside the frame submit. The table stays readable.
+      this.halted = true;
+      return;
+    }
     this.backend.beginQuery(query);
     this.current.push({ name, query });
     this.openName = name;
@@ -223,6 +249,8 @@ export class GpuTimerLedger<Q = unknown> {
       droppedFrames: this.droppedFrames,
       pendingFrames: this.pending.length,
       duplicateOpens: this.duplicateOpens,
+      sceneNoHandover: 0,
+      halted: this.halted,
     };
   }
 
@@ -275,12 +303,12 @@ export class GpuTimerLedger<Q = unknown> {
   }
 }
 
-/** Pass labels for the composer's per-pass brackets: set at build time by
- *  post.ts, read by the composer's timed render arm. A pass without one is
- *  timed under `pass` (constructor names do not survive minification). */
-export interface GpuTimerLabelled {
-  gpuTimerName?: string;
-}
+/** Pass labels for the composer's per-pass brackets, set at build time by
+ *  post.ts and read by the composer's timed render arm. Kept beside the pass
+ *  objects in a WeakMap rather than on them, so the flag-off path leaves
+ *  three's objects byte-identical. A pass without a label is timed under
+ *  `pass` (constructor names do not survive minification). */
+const passLabels = new WeakMap<object, string>();
 
 export const GPU_TIMER_UNLABELLED_PASS = 'pass';
 
@@ -294,12 +322,12 @@ export const GPU_TIMER_SCENE_BRACKET = 'scene';
 export const GPU_TIMER_SCENE_AO_BRACKET = 'scene+ao';
 
 export function labelGpuTimerPass<T extends object>(pass: T, name: string): T {
-  (pass as GpuTimerLabelled).gpuTimerName = name;
+  passLabels.set(pass, name);
   return pass;
 }
 
 export function gpuTimerPassName(pass: object): string {
-  return (pass as GpuTimerLabelled).gpuTimerName ?? GPU_TIMER_UNLABELLED_PASS;
+  return passLabels.get(pass) ?? GPU_TIMER_UNLABELLED_PASS;
 }
 
 /** Whether a bracket name is one that draws the scene (and so opens as `shadow`). */
@@ -313,10 +341,12 @@ export function gpuTimerOverlayLines(snapshot: GpuTimerSnapshot | undefined): st
   if (!snapshot || !snapshot.available) return [];
   const lines: string[] = [];
   const health =
-    `gpu sum ${snapshot.frameSum.avg}/${snapshot.frameSum.p95}ms` +
+    `gpu brackets ${snapshot.frameSum.avg}/${snapshot.frameSum.p95}ms` +
     `  frames ${snapshot.framesResolved}` +
     (snapshot.disjointFrames > 0 ? `  disjoint ${snapshot.disjointFrames}` : '') +
-    (snapshot.droppedFrames > 0 ? `  dropped ${snapshot.droppedFrames}` : '');
+    (snapshot.droppedFrames > 0 ? `  dropped ${snapshot.droppedFrames}` : '') +
+    (snapshot.sceneNoHandover > 0 ? `  nohandover ${snapshot.sceneNoHandover}` : '') +
+    (snapshot.halted ? '  HALTED' : '');
   lines.push(health);
   for (const [name, stats] of Object.entries(snapshot.brackets)) {
     lines.push(`  ${name} ${stats.avg}/${stats.p95}ms  max ${stats.max}  n ${stats.count}`);

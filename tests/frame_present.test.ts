@@ -91,6 +91,7 @@ describe('presentFrame: the GPU timer probe', () => {
   function withTimer(host: ReturnType<typeof makeHost>) {
     return Object.assign(host, {
       gpuTimer: {
+        beginFrame: () => host.calls.push('beginFrame'),
         beginScene: (name?: string) => host.calls.push(`beginScene ${name ?? ''}`.trim()),
         begin: (name: string) => host.calls.push(`begin ${name}`),
         end: () => host.calls.push('end'),
@@ -102,13 +103,26 @@ describe('presentFrame: the GPU timer probe', () => {
   it('brackets the direct draw as a scene submit and seals the frame after it', () => {
     const host = withTimer(makeHost({ withPost: false }));
     expect(presentFrame(host, 0.016, true)).toBe(true);
-    expect(host.calls).toEqual(['prepareDraw', 'beginScene', 'webgl.render', 'end', 'endFrame']);
+    expect(host.calls).toEqual([
+      'prepareDraw',
+      'beginFrame',
+      'beginScene',
+      'webgl.render',
+      'end',
+      'endFrame',
+    ]);
   });
 
-  it('leaves the composer to bracket its own passes and only seals the frame', () => {
+  it('arms the probe around the composer submit and leaves the passes to it', () => {
     const host = withTimer(makeHost({ withPost: true }));
     expect(presentFrame(host, 0.016, true)).toBe(true);
-    expect(host.calls).toEqual(['prepareDraw', 'updateScreenFx', 'post.render', 'endFrame']);
+    expect(host.calls).toEqual([
+      'prepareDraw',
+      'beginFrame',
+      'updateScreenFx',
+      'post.render',
+      'endFrame',
+    ]);
   });
 
   it('still polls the readback on a skipped frame, with no bracket opened', () => {
