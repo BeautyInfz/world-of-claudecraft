@@ -297,7 +297,14 @@ function resolveMode(): void {
   if (draw.arm) state.pageArm = draw.arm;
   state.mode =
     draw.arm === 'off' ? 'off' : shaderWarmModeFor(state.setting, state.backend, state.platform);
-  if (draw.arm === 'off') {
+  // Between a renderer's dispose and the next context read the backend is
+  // unknown and no draw applies, but the page's off arm still names the
+  // session on the typed refusal column.
+  const backendPending = state.backend === null || state.backend === 'unknown';
+  const offArm =
+    draw.arm === 'off' ||
+    (draw.arm === null && backendPending && state.setting === 'auto' && state.pageArm === 'off');
+  if (offArm) {
     if (!state.retiredCause) state.refusal = SHADER_WARM_AB_REFUSAL;
   } else if (state.refusal === SHADER_WARM_AB_REFUSAL) {
     state.refusal = null;
@@ -645,7 +652,26 @@ export function holdShaderPrograms(
   const settled = requests.whenSettled(ids);
   let endByRelease: ((outcomes: ShaderWarmOutcome[]) => void) | null = null;
   let released = false;
-  const outstanding =
+  let abandoned = false;
+  let outstanding: ReturnType<typeof book.open> | null = null;
+  const abandon = (): void => {
+    if (abandoned) return;
+    abandoned = true;
+    if (outstanding) book.close(outstanding, clock());
+    // The book this request was written in: a renderer swap starts a new
+    // one, and an abandon after that has nothing to drop.
+    if (requests !== state.requests) return;
+    const dropped = requests.abandon(ids);
+    if (dropped.length === 0) return;
+    if (state.workerState === 'ready' && state.worker) {
+      state.worker.postMessage({ kind: 'cancel', ids: dropped });
+    } else if (state.workerState === 'starting') {
+      const droppedSet = new Set(dropped);
+      state.queuedUntilReady = state.queuedUntilReady.filter((s) => !droppedSet.has(s.id));
+      for (const id of dropped) requests.settle(id, 'failed');
+    }
+  };
+  outstanding =
     capped && ids.length > 0
       ? book.open(
           {
@@ -654,15 +680,19 @@ export function holdShaderPrograms(
             capMs,
             priority,
             highestId: Math.max(...ids),
-            // A release ends the hold now with what is warm so far; the
-            // requests stay with the worker, which keeps warming them. A hold
-            // whose last request settled in the very message that released it
-            // counts as released too: it ended the same way either path.
+            // A release ends the hold now with what is warm so far and gives
+            // its requests back, the way an expiry does: the game context links
+            // those programs now, and the worker linking the same text again
+            // would compete for the driver the verdict found too busy (a
+            // program another request still waits on is kept). A hold whose
+            // last request settled in the very message that released it counts
+            // as released too: it ended the same way either path.
             release: () => {
               released = true;
               endByRelease?.(
                 ids.map((id) => (requests.outcomeOf(id) === 'warmed' ? 'warmed' : 'failed')),
               );
+              abandon();
             },
           },
           clock(),
@@ -677,25 +707,7 @@ export function holdShaderPrograms(
         }),
       ])
     : settled;
-  return {
-    settled: ended,
-    wasReleased: () => released,
-    abandon: () => {
-      if (outstanding) book.close(outstanding, clock());
-      // The book this request was written in: a renderer swap starts a new
-      // one, and an abandon after that has nothing to drop.
-      if (requests !== state.requests) return;
-      const dropped = requests.abandon(ids);
-      if (dropped.length === 0) return;
-      if (state.workerState === 'ready' && state.worker) {
-        state.worker.postMessage({ kind: 'cancel', ids: dropped });
-      } else if (state.workerState === 'starting') {
-        const droppedSet = new Set(dropped);
-        state.queuedUntilReady = state.queuedUntilReady.filter((s) => !droppedSet.has(s.id));
-        for (const id of dropped) requests.settle(id, 'failed');
-      }
-    },
-  };
+  return { settled: ended, wasReleased: () => released, abandon };
 }
 
 /** No gate holds after a release until the worker owes nothing: the burst the
@@ -783,7 +795,10 @@ function judgeCannotServe(): 'released' | 'retired' | null {
  *  hold's own `wasReleased`) is not evidence for the other rules either: it
  *  is counted as released and goes no further, or a release with a link
  *  deadline inside it would feed the wedged streak and retire the worker the
- *  release kept. */
+ *  release kept. `progressed` and `paidDeadline` read the worker's LAST warm
+ *  and LAST deadline against this hold's start, not this hold's own programs:
+ *  a warm for someone else means the worker is alive, and a deadline anywhere
+ *  means its links are not settling, which is the evidence either way. */
 export function noteShaderWarmHold(
   warm: boolean,
   timedOut: boolean,
@@ -944,7 +959,11 @@ export function shaderWarmSnapshot(): ShaderWarmSnapshot {
     standingDown: state.standingDown,
     // Between a renderer's dispose and the next context read the backend is
     // unknown and no draw applies; the page's arm still names the session.
-    abArm: state.abArm ?? (state.setting === 'auto' ? state.pageArm : null),
+    abArm:
+      state.abArm ??
+      (state.setting === 'auto' && (state.backend === null || state.backend === 'unknown')
+        ? state.pageArm
+        : null),
     workerStats: state.workerStats ? { ...state.workerStats } : null,
   };
 }

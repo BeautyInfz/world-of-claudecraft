@@ -923,12 +923,70 @@ describe('the cannot-serve rule: giving up on the worker own evidence', () => {
     expect(outcomes.slice(SHADER_WARM_EVIDENCE_LINKS)).toEqual(
       Array.from({ length: 32 - SHADER_WARM_EVIDENCE_LINKS }, () => 'failed'),
     );
-    // The requests stay with the worker, which keeps warming them, and no
-    // gate holds again until it has.
-    expect(worker().ofKind('cancel')).toEqual([]);
+    // The released requests go back to the worker: the game context links
+    // those programs now, and a second link of the same text in the worker's
+    // context would only compete for the driver the verdict found too busy.
+    expect(worker().ofKind('cancel')).toEqual([
+      {
+        kind: 'cancel',
+        ids: Array.from(
+          { length: 32 - SHADER_WARM_EVIDENCE_LINKS },
+          (_, index) => SHADER_WARM_EVIDENCE_LINKS + 1 + index,
+        ),
+      },
+    ]);
+    // No gate holds until the worker has answered what it still owed.
     expect(shaderWarmDecide(context, GPU_WORK_PRIORITY.VISIBLE_PREWARM, false)).toEqual({
       hold: false,
       bypass: 'standing-down',
+    });
+  });
+
+  it('keeps a released program another request still waits on', () => {
+    // The shared-interest book decides what the worker may drop: a program a
+    // background request also asked for stays in the worker's queue.
+    let clock = 0;
+    const { worker, ready } = start({ now: () => clock });
+    ready();
+    windowOfFour(worker());
+    const shared = programs(32);
+    warmShaderPrograms(shared.slice(31), GPU_WORK_PRIORITY.VISIBLE_PREWARM);
+    holdShaderPrograms(shared, GPU_WORK_PRIORITY.VISIBLE_PREWARM, HOLD_CAP_MS);
+    for (let link = 1; link <= SHADER_WARM_EVIDENCE_LINKS; link++) {
+      clock += LINK_MS;
+      worker().emit({ kind: 'warmed', id: link + 1, linkMs: LINK_MS });
+    }
+    expectReleased();
+    const cancelled = worker()
+      .ofKind('cancel')
+      .flatMap((message) => message.ids as number[]);
+    // Id 1 is the program both asked for (the background request came first).
+    expect(cancelled).not.toContain(1);
+    expect(cancelled).toHaveLength(32 - SHADER_WARM_EVIDENCE_LINKS - 1);
+  });
+
+  it('stands down only until the links already in flight answer', () => {
+    // Once the worker has answered the cancel and settled what it was linking,
+    // it owes nothing and gates hold again, one window of links later, not one
+    // backlog later.
+    let clock = 0;
+    const { worker, ready, context } = start({ now: () => clock });
+    ready();
+    windowOfFour(worker());
+    holdShaderPrograms(programs(32), GPU_WORK_PRIORITY.VISIBLE_PREWARM, HOLD_CAP_MS);
+    for (let link = 1; link <= SHADER_WARM_EVIDENCE_LINKS; link++) {
+      clock += LINK_MS;
+      worker().emit({ kind: 'warmed', id: link, linkMs: LINK_MS });
+    }
+    expectReleased();
+    // The worker drops what it had not started and answers each as cancelled.
+    for (let id = 8; id <= 32; id++) worker().emit({ kind: 'failed', id, reason: 'cancelled' });
+    expect(shaderWarmSnapshot().standingDown).toBe(true);
+    // The four links it was already running settle.
+    for (let id = 4; id <= 7; id++) worker().emit({ kind: 'warmed', id, linkMs: LINK_MS });
+    expect(shaderWarmSnapshot()).toMatchObject({ standingDown: false, cancelled: 25 });
+    expect(shaderWarmDecide(context, GPU_WORK_PRIORITY.VISIBLE_PREWARM, false)).toEqual({
+      hold: true,
     });
   });
 
@@ -1039,6 +1097,13 @@ describe('the cannot-serve rule: giving up on the worker own evidence', () => {
       refusal: 'hold-failures:wedged',
       heldReleased: 0,
     });
+  });
+
+  it('counts a released hold that came back warm as an ordinary warm hold', () => {
+    const { ready } = start();
+    ready();
+    noteShaderWarmHold(true, false, 100, true);
+    expect(shaderWarmSnapshot()).toMatchObject({ held: 1, heldWarm: 1, heldReleased: 0 });
   });
 
   it('refuses a hold asked while standing down, so one burst never releases twice', async () => {
@@ -1740,11 +1805,19 @@ describe('disposing the shader warm client', () => {
       asked: 0,
       sent: 0,
       held: 0,
+      heldReleased: 0,
       dryAssembleMs: 0,
       links: { count: 0, sumMs: 0, maxMs: 0 },
+      censoredLinks: { count: 0, sumMs: 0, maxMs: 0 },
+      failedPrograms: [],
+      holdWallMs: 0,
+      releases: 0,
+      standingDown: false,
+      abArm: null,
       bypassed: {
         'mode-off': 0,
         unavailable: 0,
+        'standing-down': 0,
         'before-reveal': 0,
         actionable: 0,
         'live-view': 0,
@@ -1986,6 +2059,65 @@ describe('the A/B arm on D3D11 (one release, removed by the decision PR)', () =>
       expect(store.writes).toBe(1);
     } finally {
       setShaderWarmStoredSettingSource(() => null);
+    }
+  });
+
+  it('keeps the arm token on the refusal column across a renderer swap', () => {
+    // Between a dispose and the next context read the backend is unknown; a
+    // beacon sent then must still name the off arm on the typed column.
+    resetShaderWarmForTest({
+      spawn: () => fakeWorker(),
+      search: '',
+      stored: 'auto',
+      abStore: profileStore(),
+      random: () => 0.2,
+    });
+    shaderWarmDecide(backendContext(D3D11), GPU_WORK_PRIORITY.VISIBLE_PREWARM, false);
+    disposeShaderWarm();
+    expect(shaderWarmSnapshot()).toMatchObject({ abArm: 'off', refusal: SHADER_WARM_AB_REFUSAL });
+    // A rebuild that lands on a backend auto leaves off is out of the experiment.
+    shaderWarmDecide(backendContext(OPENGL), GPU_WORK_PRIORITY.VISIBLE_PREWARM, false);
+    expect(shaderWarmSnapshot()).toMatchObject({ abArm: null, refusal: null });
+  });
+
+  it('keeps the drawn arm in the profile storage under its key, and reads it back', () => {
+    // The experiment rests on one draw per profile: the page default store
+    // must write the arm where the next launch reads it.
+    const saved = new Map<string, string>();
+    const original = Object.getOwnPropertyDescriptor(globalThis, 'localStorage');
+    Object.defineProperty(globalThis, 'localStorage', {
+      configurable: true,
+      value: {
+        getItem: (key: string) => saved.get(key) ?? null,
+        setItem: (key: string, value: string) => {
+          saved.set(key, value);
+        },
+      },
+    });
+    try {
+      resetShaderWarmForTest({
+        spawn: () => fakeWorker(),
+        search: '',
+        stored: 'auto',
+        abStore: undefined,
+        random: () => 0.2,
+      });
+      shaderWarmDecide(backendContext(D3D11), GPU_WORK_PRIORITY.VISIBLE_PREWARM, false);
+      expect(saved.get('woc.shaderWarm.abArm')).toBe('off');
+
+      // The next launch draws the other way, and reads the stored arm instead.
+      resetShaderWarmForTest({
+        spawn: () => fakeWorker(),
+        search: '',
+        stored: 'auto',
+        abStore: undefined,
+        random: () => 0.9,
+      });
+      shaderWarmDecide(backendContext(D3D11), GPU_WORK_PRIORITY.VISIBLE_PREWARM, false);
+      expect(shaderWarmSnapshot().abArm).toBe('off');
+    } finally {
+      if (original) Object.defineProperty(globalThis, 'localStorage', original);
+      else delete (globalThis as { localStorage?: unknown }).localStorage;
     }
   });
 

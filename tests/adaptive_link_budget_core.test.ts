@@ -368,6 +368,8 @@ describe('adaptive link budget core', () => {
     clock.advance(500);
     budget.markRejected('slow:0');
     expect(budget.snapshot()).toMatchObject({ state: 'backoff', windowLinks: 8, rejectedUnits: 1 });
+    // Logged as the failure it stands for, not as a slow settle.
+    expect(budget.snapshot().transitions.at(-1)?.reason).toBe('failed');
     expect(budget.canSubmit()).toBe(true);
   });
 

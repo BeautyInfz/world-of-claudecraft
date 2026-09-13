@@ -849,7 +849,9 @@ For off-box safety, sync the directory to S3 occasionally:
   it (`shader_warm_worker_active`, `shader_warm_refusal`, both bounded at
   ingest), plus `raw_summary.shaderWarm` for the per-session detail (mode,
   setting, backend, the warmed / held counts, the summed and wall hold time,
-  the cannot-serve releases, and `abArm`, the only field that names the `on` arm).
+  the cannot-serve releases, and `abArm`, the only field that names the `on` arm). The
+  `held` and `heldReleased` counts include holds a gate asked for while the worker was
+  standing down after a release, which were refused at once and hid nothing.
 - **Multi-realm scraping**: one server process hosts exactly one realm, and no
   exported series carries a `realm` label (pinned by the exporter tests; the
   DB-backed business family filters on the realm in its queries instead). Give

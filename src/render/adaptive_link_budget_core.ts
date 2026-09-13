@@ -349,7 +349,7 @@ export function createAdaptiveLinkBudget(
       rejectedUnits++;
       // Past a stall the answer is late whatever it says, and lateness is what
       // a stalled lane reopens halved on (the settle arm in finish).
-      if (state === 'stalled') backoff();
+      if (state === 'stalled') backoff('failed');
     },
     markReveal() {
       transition('revealed', 'reveal');

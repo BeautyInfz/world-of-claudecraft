@@ -108,7 +108,6 @@ export interface ShaderWarmAbInputs {
   /** A draw in [0, 1). Owes nothing to the GPU: the arm must not depend on
    *  the machine it measures. */
   random: () => number;
-  active?: boolean;
 }
 
 /** The arm for this launch, and the arm to store when this launch drew it.
@@ -120,7 +119,7 @@ export function shaderWarmAbArmFor(inputs: ShaderWarmAbInputs): {
   arm: ShaderWarmAbArm | null;
   store: ShaderWarmAbArm | null;
 } {
-  if (inputs.active === false || !SHADER_WARM_AB_ACTIVE) return { arm: null, store: null };
+  if (!SHADER_WARM_AB_ACTIVE) return { arm: null, store: null };
   if (inputs.setting !== 'auto') return { arm: null, store: null };
   if (shaderWarmModeFor('auto', inputs.backend, inputs.platform) === 'off') {
     return { arm: null, store: null };
