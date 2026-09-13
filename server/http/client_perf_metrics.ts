@@ -141,6 +141,9 @@ export type ClientPerfSuggestionId = (typeof CLIENT_PERF_SUGGESTION_IDS)[number]
  */
 export const CLIENT_PERF_SHADER_WARM_REFUSALS = [
   'none',
+  // Not a refusal: the D3D11 experiment's off arm (shader_warm_client_core.ts
+  // SHADER_WARM_AB_REFUSAL), removed with the experiment.
+  'ab:off',
   'cannot-serve:hold-cap',
   'cannot-serve:hold-cap:censored',
   'context-lost',

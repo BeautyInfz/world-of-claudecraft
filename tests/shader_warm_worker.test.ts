@@ -30,6 +30,8 @@ let submitted: string[] = [];
 /** What the stub's completion query answers: pending until a case flips it,
  *  so a link can be made to complete (and fail) at a chosen tick. */
 let linkComplete = false;
+/** Whether the stub context refuses to create a program object at all. */
+let refuseProgram = false;
 const COMPLETION_STATUS_KHR = 0x91b1;
 
 function glStub() {
@@ -47,7 +49,7 @@ function glStub() {
       if (shader.type === 1) submitted.push(source);
     },
     compileShader: () => {},
-    createProgram: () => ({}),
+    createProgram: () => (refuseProgram ? null : {}),
     attachShader: () => {},
     bindAttribLocation: () => {},
     linkProgram: () => {},
@@ -114,12 +116,22 @@ function warmOne(id: number, priority = 0) {
  *  a request schedules. */
 const TICK_WINDOW_MS = 50;
 
+/** The worker's last stats message: its window history is the AIMD's. */
+function lastStats(): Extract<ShaderWarmWorkerMessage, { kind: 'stats' }> | undefined {
+  const stats = posted.filter(
+    (message): message is Extract<ShaderWarmWorkerMessage, { kind: 'stats' }> =>
+      message.kind === 'stats',
+  );
+  return stats[stats.length - 1];
+}
+
 beforeEach(() => {
   posted.length = 0;
   canvases = [];
   submitted = [];
   contextIsLost = false;
   linkComplete = false;
+  refuseProgram = false;
   // The worker's state is module-scoped and its handler installs at import.
   vi.resetModules();
 });
@@ -233,6 +245,8 @@ describe('the shader warm worker scope', () => {
     const linkMs = (failed[0] as { linkMs: number }).linkMs;
     expect(linkMs).toBeGreaterThanOrEqual(SHADER_WARM_LINK_DEADLINE_MS);
     expect(linkMs).toBeLessThan(SHADER_WARM_LINK_DEADLINE_MS + TICK_WINDOW_MS);
+    // A link past the deadline is slowness evidence: the window backs off.
+    expect(lastStats()).toMatchObject({ backoffCount: 1, failed: 1 });
   });
 
   it('keeps a genuine link failure past the deadline a failure, with no wall on it', async () => {
@@ -254,6 +268,25 @@ describe('the shader warm worker scope', () => {
     expect(posted.filter((message) => message.kind === 'failed')).toEqual([
       { kind: 'failed', id: 7, reason: 'link-failed' },
     ]);
+    // A refused text is not congestion: the window does not back off.
+    expect(lastStats()).toMatchObject({ backoffCount: 0, failed: 1 });
+  });
+
+  it('keeps the window when the context will not even create the program', async () => {
+    // The other rejection the worker can meet: no program object at all. It
+    // says as little about the driver's load as a failed link status does.
+    vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout', 'performance'] });
+    const send = await loadWorker();
+    init(send);
+    posted.length = 0;
+    refuseProgram = true;
+    send(warmOne(7));
+    vi.advanceTimersByTime(TICK_WINDOW_MS);
+    expect(submitted).toEqual([]);
+    expect(posted.filter((message) => message.kind === 'failed')).toEqual([
+      { kind: 'failed', id: 7, reason: 'link-failed' },
+    ]);
+    expect(lastStats()).toMatchObject({ backoffCount: 0, failed: 1 });
   });
 
   it('submits a reprioritized request ahead of what was queued before it', async () => {

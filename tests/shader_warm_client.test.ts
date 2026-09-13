@@ -12,6 +12,7 @@ import {
   armShaderWarm,
   disposeShaderWarm,
   holdShaderPrograms,
+  noteShaderWarmExtensionDrift,
   noteShaderWarmFrameMs,
   noteShaderWarmHold,
   noteShaderWarmSettingChanged,
@@ -26,9 +27,11 @@ import {
   warmShaderPrograms,
 } from '../src/render/shader_warm_client';
 import {
+  SHADER_WARM_AB_REFUSAL,
   SHADER_WARM_EVIDENCE_LINKS,
   SHADER_WARM_EXPIRED_SHARE_BREAKER,
   SHADER_WARM_HOLD_WINDOW,
+  SHADER_WARM_RELEASE_BREAKER,
   SHADER_WARM_TIMEOUT_BREAKER,
 } from '../src/render/shader_warm_client_core';
 import { SHADER_WARM_HOLD_CAP_MS } from '../src/render/shader_warm_gate';
@@ -833,10 +836,11 @@ describe('the cannot-serve rule: giving up on the worker own evidence', () => {
   const LINK_MS = 560;
   const HOLD_CAP_MS = 5_000;
 
-  /** `count` distinct programs, the way a gate piece's materials arrive. */
-  function programs(count: number) {
+  /** `count` distinct programs, the way a gate piece's materials arrive;
+   *  `from` shifts the texts so a later burst asks for new programs. */
+  function programs(count: number, from = 0) {
     return Array.from({ length: count }, (_, index) => ({
-      vertex: `void main() { float u${index}; }`,
+      vertex: `void main() { float u${from + index}; }`,
       fragment: 'void main() {}',
       index0Attribute: 'position',
     }));
@@ -860,7 +864,22 @@ describe('the cannot-serve rule: giving up on the worker own evidence', () => {
     });
   }
 
-  it('retires once the queue ahead of the oldest hold outruns its remaining cap', async () => {
+  /** The verdict ended this burst's held gates and kept the worker. */
+  function expectReleased(releases = 1): void {
+    expect(shaderWarmSnapshot()).toMatchObject({
+      worker: 'ready',
+      refusal: null,
+      releases,
+      standingDown: true,
+    });
+  }
+
+  /** Every request the worker still owes settles warm: the queue drains. */
+  function drain(worker: FakeWorker, fromId: number, toId: number): void {
+    for (let id = fromId; id <= toId; id++) worker.emit({ kind: 'warmed', id, linkMs: LINK_MS });
+  }
+
+  it('releases the held gates once the queue ahead of the oldest hold outruns its remaining cap', async () => {
     let clock = 0;
     const { worker, ready, context } = start({ now: () => clock });
     ready();
@@ -887,17 +906,16 @@ describe('the cannot-serve rule: giving up on the worker own evidence', () => {
       linkMs: LINK_MS,
     });
 
+    expectReleased();
     expect(shaderWarmSnapshot()).toMatchObject({
-      worker: 'dead',
-      refusal: 'cannot-serve:hold-cap',
       warmed: SHADER_WARM_EVIDENCE_LINKS,
       held: 0,
       // The whole point: nothing paid a cap to learn this.
       heldTimedOut: 0,
     });
-    expect(worker().terminations).toBe(1);
+    expect(worker().terminations).toBe(0);
     // The hold gives up now rather than at its cap: the three the worker did
-    // link stay warm, everything else fails, so the piece links cold.
+    // link stay warm, everything else reads failed, so the piece links cold.
     const outcomes = await hold.settled;
     expect(outcomes.slice(0, SHADER_WARM_EVIDENCE_LINKS)).toEqual(
       Array.from({ length: SHADER_WARM_EVIDENCE_LINKS }, () => 'warmed'),
@@ -905,10 +923,231 @@ describe('the cannot-serve rule: giving up on the worker own evidence', () => {
     expect(outcomes.slice(SHADER_WARM_EVIDENCE_LINKS)).toEqual(
       Array.from({ length: 32 - SHADER_WARM_EVIDENCE_LINKS }, () => 'failed'),
     );
+    // The requests stay with the worker, which keeps warming them, and no
+    // gate holds again until it has.
+    expect(worker().ofKind('cancel')).toEqual([]);
+    expect(shaderWarmDecide(context, GPU_WORK_PRIORITY.VISIBLE_PREWARM, false)).toEqual({
+      hold: false,
+      bypass: 'standing-down',
+    });
+  });
+
+  it('counts one release per burst, however many messages find the queue too long', () => {
+    // The rule runs on every worker message. Once a release has emptied the
+    // held gates there is nothing left to judge, so the rest of the burst's
+    // messages must not count again: a change that evaluates before the
+    // outstanding set is emptied would retire the worker in one burst.
+    let clock = 0;
+    const { worker, ready } = start({ now: () => clock });
+    ready();
+    windowOfFour(worker());
+    holdShaderPrograms(programs(32), GPU_WORK_PRIORITY.VISIBLE_PREWARM, HOLD_CAP_MS);
+    for (let link = 1; link <= 10; link++) {
+      clock += LINK_MS;
+      worker().emit({ kind: 'warmed', id: link, linkMs: LINK_MS });
+    }
+    expectReleased(1);
+    expect(worker().terminations).toBe(0);
+  });
+
+  it('holds again once the worker has drained what it owed', () => {
+    let clock = 0;
+    const { worker, ready, context } = start({ now: () => clock });
+    ready();
+    windowOfFour(worker());
+    holdShaderPrograms(programs(32), GPU_WORK_PRIORITY.VISIBLE_PREWARM, HOLD_CAP_MS);
+    for (let link = 1; link <= SHADER_WARM_EVIDENCE_LINKS; link++) {
+      clock += LINK_MS;
+      worker().emit({ kind: 'warmed', id: link, linkMs: LINK_MS });
+    }
+    expectReleased();
+    // One request still owed keeps the gates standing down.
+    drain(worker(), SHADER_WARM_EVIDENCE_LINKS + 1, 31);
+    expect(shaderWarmDecide(context, GPU_WORK_PRIORITY.VISIBLE_PREWARM, false)).toEqual({
+      hold: false,
+      bypass: 'standing-down',
+    });
+    worker().emit({ kind: 'failed', id: 32, reason: 'link-failed' });
+    expect(shaderWarmSnapshot()).toMatchObject({
+      worker: 'ready',
+      standingDown: false,
+      releases: 1,
+    });
+    expect(shaderWarmDecide(context, GPU_WORK_PRIORITY.VISIBLE_PREWARM, false)).toEqual({
+      hold: true,
+    });
+  });
+
+  it('retires only when the verdict repeats burst after burst', () => {
+    let clock = 0;
+    const { worker, ready, context } = start({ now: () => clock });
+    ready();
+    windowOfFour(worker());
+    for (let burst = 0; burst < SHADER_WARM_RELEASE_BREAKER; burst++) {
+      const firstId = burst * 32 + 1;
+      holdShaderPrograms(programs(32, burst * 32), GPU_WORK_PRIORITY.VISIBLE_PREWARM, HOLD_CAP_MS);
+      for (let link = firstId; link < firstId + SHADER_WARM_EVIDENCE_LINKS; link++) {
+        clock += LINK_MS;
+        worker().emit({ kind: 'warmed', id: link, linkMs: LINK_MS });
+      }
+      if (burst === SHADER_WARM_RELEASE_BREAKER - 1) break;
+      expectReleased(burst + 1);
+      drain(worker(), firstId, firstId + 31);
+      expect(shaderWarmSnapshot().standingDown).toBe(false);
+    }
+    expect(shaderWarmSnapshot()).toMatchObject({
+      worker: 'dead',
+      refusal: 'cannot-serve:hold-cap',
+      releases: SHADER_WARM_RELEASE_BREAKER,
+    });
+    expect(worker().terminations).toBe(1);
     expect(shaderWarmDecide(context, GPU_WORK_PRIORITY.VISIBLE_PREWARM, false)).toEqual({
       hold: false,
       bypass: 'unavailable',
     });
+  });
+
+  it('never counts a released hold toward the wedged streak, even with a deadline inside it', () => {
+    // Released on censored evidence alone: no warm lands inside these holds and
+    // a link deadline does, so nothing but the released flag keeps three
+    // not-warm notes from retiring the worker as hold-failures:wedged.
+    const DEADLINE_MS = 4_000;
+    const run = (released: boolean) => {
+      let clock = 0;
+      const { worker, ready } = start({ now: () => clock });
+      ready();
+      windowOfFour(worker());
+      holdShaderPrograms(programs(32), GPU_WORK_PRIORITY.VISIBLE_PREWARM, HOLD_CAP_MS);
+      clock += DEADLINE_MS;
+      for (let link = 1; link <= SHADER_WARM_EVIDENCE_LINKS; link++) {
+        worker().emit({ kind: 'failed', id: link, reason: 'link-deadline', linkMs: DEADLINE_MS });
+      }
+      expectReleased();
+      for (let gate = 0; gate < SHADER_WARM_TIMEOUT_BREAKER; gate++) {
+        noteShaderWarmHold(false, false, clock, released);
+      }
+      return shaderWarmSnapshot();
+    };
+    expect(run(true)).toMatchObject({
+      worker: 'ready',
+      heldReleased: SHADER_WARM_TIMEOUT_BREAKER,
+      heldTimedOut: 0,
+    });
+    // The same notes without the flag are exactly what the streak is for.
+    expect(run(false)).toMatchObject({
+      worker: 'dead',
+      refusal: 'hold-failures:wedged',
+      heldReleased: 0,
+    });
+  });
+
+  it('refuses a hold asked while standing down, so one burst never releases twice', async () => {
+    // A gate decides before its assembly unit runs: it can ask for a hold
+    // after the release although its decision said hold. Opened, that hold
+    // would queue behind the backlog the release gave up on and release the
+    // same burst again, twice more, which retires the worker.
+    let clock = 0;
+    const { worker, ready } = start({ now: () => clock });
+    ready();
+    windowOfFour(worker());
+    holdShaderPrograms(programs(32), GPU_WORK_PRIORITY.VISIBLE_PREWARM, HOLD_CAP_MS);
+    for (let link = 1; link <= SHADER_WARM_EVIDENCE_LINKS; link++) {
+      clock += LINK_MS;
+      worker().emit({ kind: 'warmed', id: link, linkMs: LINK_MS });
+    }
+    expectReleased();
+    const sentBefore = worker().ofKind('warm').length;
+
+    const late = holdShaderPrograms(
+      programs(12, 32),
+      GPU_WORK_PRIORITY.VISIBLE_PREWARM,
+      HOLD_CAP_MS,
+    );
+    expect(late.wasReleased()).toBe(true);
+    expect(await late.settled).toEqual(Array.from({ length: 12 }, () => 'failed'));
+    expect(worker().ofKind('warm')).toHaveLength(sentBefore);
+    for (let link = SHADER_WARM_EVIDENCE_LINKS + 1; link <= 13; link++) {
+      clock += LINK_MS;
+      worker().emit({ kind: 'warmed', id: link, linkMs: LINK_MS });
+    }
+    noteShaderWarmHold(false, false, 0, late.wasReleased());
+    expectReleased(1);
+    expect(shaderWarmSnapshot()).toMatchObject({ heldReleased: 1 });
+    expect(worker().terminations).toBe(0);
+  });
+
+  it('keeps the hold wall time and the releases for the page across a renderer rebuild', () => {
+    // The long-task total the A/B weighs them against lasts the page, so the
+    // two cost terms must too.
+    let clock = 0;
+    const { worker, ready } = start({ now: () => clock });
+    ready();
+    windowOfFour(worker());
+    holdShaderPrograms(programs(32), GPU_WORK_PRIORITY.VISIBLE_PREWARM, HOLD_CAP_MS);
+    for (let link = 1; link <= SHADER_WARM_EVIDENCE_LINKS; link++) {
+      clock += LINK_MS;
+      worker().emit({ kind: 'warmed', id: link, linkMs: LINK_MS });
+    }
+    expectReleased();
+    clock += 1_000;
+    expect(shaderWarmSnapshot().holdWallMs).toBe(SHADER_WARM_EVIDENCE_LINKS * LINK_MS);
+    disposeShaderWarm();
+    expect(shaderWarmSnapshot()).toMatchObject({
+      releases: 1,
+      holdWallMs: SHADER_WARM_EVIDENCE_LINKS * LINK_MS,
+    });
+  });
+
+  it('releases the RTX 3060 cold entry burst instead of retiring the worker', async () => {
+    // A reconstruction of the shape the 2026-09-12 run left in its readout
+    // (not a replay: that run kept one line taken after the verdict). The
+    // window had reached three, six links settled at about 384 ms, one
+    // program was rejected and the worker of the time halved its window to
+    // one for it, with the entry burst still queued. Divided by one, the
+    // queue read as ten seconds against a five second cap and the worker was
+    // retired for a session that, on the next launch, warmed 174 programs.
+    const ENTRY_LINK_MS = 384;
+    let clock = 0;
+    const { worker, ready } = start({ now: () => clock });
+    ready();
+    const stats = (windowLinks: number, state: string) =>
+      worker().emit({
+        kind: 'stats',
+        pending: 26,
+        inFlight: 2,
+        windowLinks,
+        state,
+        warmed: 6,
+        failed: state === 'backoff' ? 1 : 0,
+        retained: 0,
+        cancelled: 0,
+        backoffCount: state === 'backoff' ? 1 : 0,
+        maxWindowObserved: 3,
+        etalonMsPerKchar: 4.5,
+        soloSamples: 2,
+      });
+    stats(3, 'ramp');
+    const burst = holdShaderPrograms(programs(34), GPU_WORK_PRIORITY.LIVE_VIEW, HOLD_CAP_MS);
+    // Three links at a time: each settle lands a third of a link's wall later.
+    for (let link = 1; link <= 6; link++) {
+      clock += ENTRY_LINK_MS / 3;
+      worker().emit({ kind: 'warmed', id: link, linkMs: ENTRY_LINK_MS });
+    }
+    worker().emit({ kind: 'failed', id: 7, reason: 'link-failed' });
+    // Priced at the window of three, the same queue fits what is left of the cap.
+    expect(shaderWarmSnapshot()).toMatchObject({ releases: 0, standingDown: false });
+    stats(1, 'backoff');
+    clock += ENTRY_LINK_MS / 3;
+    worker().emit({ kind: 'warmed', id: 8, linkMs: ENTRY_LINK_MS });
+
+    expectReleased();
+    expect(worker().terminations).toBe(0);
+    expect((await burst.settled).filter((outcome) => outcome === 'warmed')).toHaveLength(7);
+    // The rejected program is named, so the next run can say whether the game
+    // links it (a dry assembly mismatch) or nothing can.
+    expect(shaderWarmSnapshot().failedPrograms).toEqual([
+      { hash: expect.stringMatching(/\|position$/), reason: 'link-failed' },
+    ]);
   });
 
   it('keeps a worker whose links are ten times shorter, on the same queue', () => {
@@ -944,7 +1183,7 @@ describe('the cannot-serve rule: giving up on the worker own evidence', () => {
     expect(shaderWarmSnapshot()).toMatchObject({ worker: 'ready', warmed: 3 });
   });
 
-  it('reads a deadline failure as a censored link, and retires on three with nothing settled', async () => {
+  it('reads a deadline failure as a censored link, and releases on three with nothing settled', async () => {
     // The RTX 4060 Ti capture: no link ever settles, so `links.count` stays
     // zero and the rule was blind on exactly the machine it would help most.
     // A link the worker gave up on at its deadline ran AT LEAST that long,
@@ -970,13 +1209,10 @@ describe('the cannot-serve rule: giving up on the worker own evidence', () => {
       linkMs: DEADLINE_MS,
     });
 
+    expectReleased();
     expect(shaderWarmSnapshot()).toMatchObject({
-      worker: 'dead',
-      // The censored arm names itself: the fleet must tell it from the
-      // settled-evidence baseline.
-      refusal: 'cannot-serve:hold-cap:censored',
       warmed: 0,
-      failed: 32,
+      failed: SHADER_WARM_EVIDENCE_LINKS,
       links: { count: 0, sumMs: 0, maxMs: 0 },
       censoredLinks: {
         count: SHADER_WARM_EVIDENCE_LINKS,
@@ -985,11 +1221,39 @@ describe('the cannot-serve rule: giving up on the worker own evidence', () => {
       },
       heldTimedOut: 0,
     });
-    expect(worker().terminations).toBe(1);
+    expect(worker().terminations).toBe(0);
     expect(await hold.settled).toEqual(Array.from({ length: 32 }, () => 'failed'));
     expect(shaderWarmDecide(context, GPU_WORK_PRIORITY.VISIBLE_PREWARM, false)).toEqual({
       hold: false,
-      bypass: 'unavailable',
+      bypass: 'standing-down',
+    });
+  });
+
+  it('names a retirement on censored evidence apart from the settled baseline', () => {
+    // The censored arm names itself: the fleet must tell it from the
+    // settled-evidence baseline.
+    const DEADLINE_MS = 4_000;
+    let clock = 0;
+    const { worker, ready } = start({ now: () => clock });
+    ready();
+    windowOfFour(worker());
+    for (let burst = 0; burst < SHADER_WARM_RELEASE_BREAKER; burst++) {
+      const firstId = burst * 32 + 1;
+      holdShaderPrograms(programs(32, burst * 32), GPU_WORK_PRIORITY.VISIBLE_PREWARM, HOLD_CAP_MS);
+      clock += DEADLINE_MS;
+      for (let link = firstId; link < firstId + SHADER_WARM_EVIDENCE_LINKS; link++) {
+        worker().emit({ kind: 'failed', id: link, reason: 'link-deadline', linkMs: DEADLINE_MS });
+      }
+      if (burst === SHADER_WARM_RELEASE_BREAKER - 1) break;
+      for (let id = firstId + SHADER_WARM_EVIDENCE_LINKS; id <= firstId + 31; id++) {
+        worker().emit({ kind: 'failed', id, reason: 'link-deadline', linkMs: DEADLINE_MS });
+      }
+      expect(shaderWarmSnapshot()).toMatchObject({ releases: burst + 1, standingDown: false });
+    }
+    expect(shaderWarmSnapshot()).toMatchObject({
+      worker: 'dead',
+      refusal: 'cannot-serve:hold-cap:censored',
+      links: { count: 0, sumMs: 0, maxMs: 0 },
     });
   });
 
@@ -1122,15 +1386,12 @@ describe('the cannot-serve rule: giving up on the worker own evidence', () => {
       clock += LINK_MS;
       worker().emit({ kind: 'warmed', id: link, linkMs: LINK_MS });
     }
-    expect(shaderWarmSnapshot()).toMatchObject({
-      worker: 'dead',
-      refusal: 'cannot-serve:hold-cap',
-      heldTimedOut: 0,
-    });
+    expectReleased();
+    expect(shaderWarmSnapshot().heldTimedOut).toBe(0);
   });
 
   it('judges nothing until the worker first stats message says how wide its window is', () => {
-    // The window is the divisor, and the verdict is final: reading a worker
+    // The window is the divisor: reading a worker
     // that links four at a time as one at a time condemns it four times too
     // fast, over the few hundred milliseconds before its first poll lands.
     let clock = 0;
@@ -1151,10 +1412,7 @@ describe('the cannot-serve rule: giving up on the worker own evidence', () => {
     windowOfFour(worker());
     clock += LINK_MS;
     worker().emit({ kind: 'warmed', id: SHADER_WARM_EVIDENCE_LINKS + 1, linkMs: LINK_MS });
-    expect(shaderWarmSnapshot()).toMatchObject({
-      worker: 'dead',
-      refusal: 'cannot-serve:hold-cap',
-    });
+    expectReleased();
   });
 
   it('reads the rule at a hold note too, before the two expiry rules', () => {
@@ -1176,12 +1434,8 @@ describe('the cannot-serve rule: giving up on the worker own evidence', () => {
 
     clock += 2_000;
     noteShaderWarmHold(true, false, 400);
-    expect(shaderWarmSnapshot()).toMatchObject({
-      worker: 'dead',
-      refusal: 'cannot-serve:hold-cap',
-      held: 1,
-      heldTimedOut: 0,
-    });
+    expectReleased();
+    expect(shaderWarmSnapshot()).toMatchObject({ held: 1, heldTimedOut: 0, heldReleased: 0 });
   });
 
   it('stays retired across the player switching the row off and back on', () => {
@@ -1194,10 +1448,18 @@ describe('the cannot-serve rule: giving up on the worker own evidence', () => {
       const { worker, ready } = start({ search: '', now: () => clock });
       ready();
       windowOfFour(worker());
-      holdShaderPrograms(programs(32), GPU_WORK_PRIORITY.VISIBLE_PREWARM, HOLD_CAP_MS);
-      for (let link = 1; link <= SHADER_WARM_EVIDENCE_LINKS; link++) {
-        clock += LINK_MS;
-        worker().emit({ kind: 'warmed', id: link, linkMs: LINK_MS });
+      for (let burst = 0; burst < SHADER_WARM_RELEASE_BREAKER; burst++) {
+        const firstId = burst * 32 + 1;
+        holdShaderPrograms(
+          programs(32, burst * 32),
+          GPU_WORK_PRIORITY.VISIBLE_PREWARM,
+          HOLD_CAP_MS,
+        );
+        for (let link = firstId; link < firstId + SHADER_WARM_EVIDENCE_LINKS; link++) {
+          clock += LINK_MS;
+          worker().emit({ kind: 'warmed', id: link, linkMs: LINK_MS });
+        }
+        if (burst < SHADER_WARM_RELEASE_BREAKER - 1) drain(worker(), firstId, firstId + 31);
       }
       expect(shaderWarmSnapshot().refusal).toBe('cannot-serve:hold-cap');
 
@@ -1563,6 +1825,319 @@ describe('the auto setting follows the GPU backend', () => {
       mode: 'reveal',
       backend: 'opengl',
     });
+  });
+});
+
+describe('the A/B arm on D3D11 (one release, removed by the decision PR)', () => {
+  const D3D11 =
+    'ANGLE (NVIDIA, NVIDIA GeForce RTX 3060 (0x00002504) Direct3D11 vs_5_0 ps_5_0, D3D11)';
+  const OPENGL = 'ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 3090/PCIe/SSE2, OpenGL 4.5.0)';
+  function backendContext(renderer: string) {
+    return {
+      getContextAttributes: () => ({ antialias: false }),
+      getExtension: (name: string) =>
+        name === 'WEBGL_debug_renderer_info' ? { UNMASKED_RENDERER_WEBGL: 0x9246 } : null,
+      getParameter: (name: number) => (name === 0x9246 ? renderer : ''),
+    };
+  }
+
+  /** A browser profile's storage, as the client reads and writes it. */
+  function profileStore(initial: string | null = null) {
+    const store = {
+      value: initial,
+      writes: 0,
+      get: () => store.value,
+      set: (value: string) => {
+        store.writes++;
+        store.value = value;
+      },
+    };
+    return store;
+  }
+
+  function spawnCounter() {
+    const counter = {
+      spawned: 0,
+      spawn: () => {
+        counter.spawned++;
+        return fakeWorker();
+      },
+    };
+    return counter;
+  }
+
+  it('puts a profile drawn off on the pre-worker path and names the arm as the refusal', () => {
+    const store = profileStore();
+    const counter = spawnCounter();
+    resetShaderWarmForTest({
+      spawn: counter.spawn,
+      search: '',
+      stored: 'auto',
+      abStore: store,
+      random: () => 0.2,
+    });
+    const decision = shaderWarmDecide(
+      backendContext(D3D11),
+      GPU_WORK_PRIORITY.VISIBLE_PREWARM,
+      false,
+    );
+    expect(decision).toEqual({ hold: false, bypass: 'mode-off' });
+    expect(counter.spawned).toBe(0);
+    expect(store.value).toBe('off');
+    expect(shaderWarmSnapshot()).toMatchObject({
+      setting: 'auto',
+      mode: 'off',
+      backend: 'd3d11',
+      worker: 'idle',
+      abArm: 'off',
+      refusal: SHADER_WARM_AB_REFUSAL,
+    });
+  });
+
+  it('keeps the worker for a profile drawn on, with no refusal', () => {
+    const store = profileStore();
+    const counter = spawnCounter();
+    resetShaderWarmForTest({
+      spawn: counter.spawn,
+      search: '',
+      stored: 'auto',
+      abStore: store,
+      random: () => 0.7,
+    });
+    shaderWarmDecide(backendContext(D3D11), GPU_WORK_PRIORITY.VISIBLE_PREWARM, false);
+    expect(counter.spawned).toBe(1);
+    expect(store.value).toBe('on');
+    expect(shaderWarmSnapshot()).toMatchObject({ mode: 'all', abArm: 'on', refusal: null });
+  });
+
+  it('reads the stored arm on a later launch without drawing again', () => {
+    const store = profileStore('off');
+    resetShaderWarmForTest({
+      spawn: () => fakeWorker(),
+      search: '',
+      stored: 'auto',
+      abStore: store,
+      random: () => {
+        throw new Error('drew again');
+      },
+    });
+    shaderWarmDecide(backendContext(D3D11), GPU_WORK_PRIORITY.VISIBLE_PREWARM, false);
+    expect(store.writes).toBe(0);
+    expect(shaderWarmSnapshot()).toMatchObject({ mode: 'off', abArm: 'off' });
+  });
+
+  it('never draws for an explicit setting or a backend auto leaves off', () => {
+    const explicit = profileStore('off');
+    resetShaderWarmForTest({
+      spawn: () => fakeWorker(),
+      search: '?shaderwarm=all',
+      stored: 'auto',
+      abStore: explicit,
+      random: () => 0.2,
+    });
+    shaderWarmDecide(backendContext(D3D11), GPU_WORK_PRIORITY.VISIBLE_PREWARM, false);
+    expect(shaderWarmSnapshot()).toMatchObject({ mode: 'all', abArm: null, refusal: null });
+    expect(explicit.writes).toBe(0);
+
+    const opengl = profileStore();
+    resetShaderWarmForTest({
+      spawn: () => fakeWorker(),
+      search: '',
+      stored: 'auto',
+      abStore: opengl,
+      random: () => 0.2,
+    });
+    shaderWarmDecide(backendContext(OPENGL), GPU_WORK_PRIORITY.VISIBLE_PREWARM, false);
+    expect(shaderWarmSnapshot()).toMatchObject({ mode: 'off', abArm: null, refusal: null });
+    expect(opengl.writes).toBe(0);
+  });
+
+  it('follows the player out of the experiment and back into the stored arm', () => {
+    let stored = 'auto';
+    setShaderWarmStoredSettingSource(() => stored);
+    try {
+      const store = profileStore();
+      const counter = spawnCounter();
+      resetShaderWarmForTest({
+        spawn: counter.spawn,
+        search: '',
+        abStore: store,
+        random: () => 0.2,
+      });
+      shaderWarmDecide(backendContext(D3D11), GPU_WORK_PRIORITY.VISIBLE_PREWARM, false);
+      expect(shaderWarmSnapshot()).toMatchObject({ abArm: 'off', refusal: SHADER_WARM_AB_REFUSAL });
+
+      // An explicit On leaves the experiment: the arm no longer applies.
+      stored = 'all';
+      noteShaderWarmSettingChanged();
+      expect(shaderWarmSnapshot()).toMatchObject({ mode: 'all', abArm: null, refusal: null });
+      shaderWarmDecide(backendContext(D3D11), GPU_WORK_PRIORITY.VISIBLE_PREWARM, false);
+      expect(counter.spawned).toBe(1);
+
+      // Back to Auto: the profile's arm, not a new draw.
+      stored = 'auto';
+      noteShaderWarmSettingChanged();
+      expect(shaderWarmSnapshot()).toMatchObject({
+        mode: 'off',
+        abArm: 'off',
+        worker: 'idle',
+        refusal: SHADER_WARM_AB_REFUSAL,
+      });
+      expect(store.writes).toBe(1);
+    } finally {
+      setShaderWarmStoredSettingSource(() => null);
+    }
+  });
+
+  it('keeps the arm token when the game context later enables an extension', () => {
+    // The worker never ran in the off arm, so there is nothing to retire; the
+    // drift must not overwrite the one token that says which arm this is.
+    resetShaderWarmForTest({
+      spawn: () => fakeWorker(),
+      search: '',
+      stored: 'auto',
+      abStore: profileStore(),
+      random: () => 0.2,
+    });
+    shaderWarmDecide(backendContext(D3D11), GPU_WORK_PRIORITY.VISIBLE_PREWARM, false);
+    noteShaderWarmExtensionDrift('webgl_lose_context');
+    expect(shaderWarmSnapshot()).toMatchObject({ abArm: 'off', refusal: SHADER_WARM_AB_REFUSAL });
+  });
+
+  it('never throws out of a gate when the storage property itself throws', () => {
+    // Where site data is blocked, reading `localStorage` off the global throws
+    // before any method call.
+    const original = Object.getOwnPropertyDescriptor(globalThis, 'localStorage');
+    Object.defineProperty(globalThis, 'localStorage', {
+      configurable: true,
+      get() {
+        throw new Error('SecurityError');
+      },
+    });
+    try {
+      expect(() => {
+        resetShaderWarmForTest({
+          spawn: () => fakeWorker(),
+          search: '',
+          stored: 'auto',
+          abStore: undefined,
+          random: () => 0.2,
+        });
+        shaderWarmDecide(backendContext(D3D11), GPU_WORK_PRIORITY.VISIBLE_PREWARM, false);
+      }).not.toThrow();
+      expect(shaderWarmSnapshot()).toMatchObject({ abArm: 'off', refusal: SHADER_WARM_AB_REFUSAL });
+    } finally {
+      if (original) Object.defineProperty(globalThis, 'localStorage', original);
+      else delete (globalThis as { localStorage?: unknown }).localStorage;
+    }
+  });
+
+  it('keeps the page load draw across renderer rebuilds when storage refuses', () => {
+    // Drawn again at every rebuild, a blocked profile could change arm in the
+    // middle of a session and land in both halves of the comparison.
+    const draws = [0.2, 0.7, 0.7];
+    let calls = 0;
+    const blocked = {
+      get: (): string | null => {
+        throw new Error('blocked');
+      },
+      set: () => {
+        throw new Error('blocked');
+      },
+    };
+    resetShaderWarmForTest({
+      spawn: () => fakeWorker(),
+      search: '',
+      stored: 'auto',
+      abStore: blocked,
+      random: () => draws[calls++] ?? 0.7,
+    });
+    shaderWarmDecide(backendContext(D3D11), GPU_WORK_PRIORITY.VISIBLE_PREWARM, false);
+    expect(shaderWarmSnapshot().abArm).toBe('off');
+    disposeShaderWarm();
+    expect(shaderWarmSnapshot().abArm).toBe('off');
+    shaderWarmDecide(backendContext(D3D11), GPU_WORK_PRIORITY.VISIBLE_PREWARM, false);
+    expect(shaderWarmSnapshot()).toMatchObject({ abArm: 'off', refusal: SHADER_WARM_AB_REFUSAL });
+    expect(calls).toBe(1);
+  });
+
+  it('reads the profile storage only where a draw can happen', () => {
+    // A masked renderer string reads as an unknown backend at every policy
+    // call, which is every gate: no storage read belongs there.
+    let reads = 0;
+    resetShaderWarmForTest({
+      spawn: () => fakeWorker(),
+      search: '',
+      stored: 'auto',
+      abStore: {
+        get: () => {
+          reads++;
+          return null;
+        },
+        set: () => {},
+      },
+      random: () => 0.7,
+    });
+    for (let gate = 0; gate < 5; gate++) {
+      shaderWarmDecide(backendContext(''), GPU_WORK_PRIORITY.VISIBLE_PREWARM, false);
+    }
+    expect(reads).toBe(0);
+    shaderWarmDecide(backendContext(D3D11), GPU_WORK_PRIORITY.VISIBLE_PREWARM, false);
+    expect(reads).toBe(1);
+  });
+
+  it('still draws when the profile storage refuses, once per page load', () => {
+    const counter = spawnCounter();
+    resetShaderWarmForTest({
+      spawn: counter.spawn,
+      search: '',
+      stored: 'auto',
+      abStore: {
+        get: () => {
+          throw new Error('blocked');
+        },
+        set: () => {
+          throw new Error('blocked');
+        },
+      },
+      random: () => 0.2,
+    });
+    const decision = shaderWarmDecide(
+      backendContext(D3D11),
+      GPU_WORK_PRIORITY.VISIBLE_PREWARM,
+      false,
+    );
+    expect(decision).toEqual({ hold: false, bypass: 'mode-off' });
+    expect(shaderWarmSnapshot()).toMatchObject({ abArm: 'off', refusal: SHADER_WARM_AB_REFUSAL });
+    expect(counter.spawned).toBe(0);
+  });
+});
+
+describe('what the readout adds up while gates hold', () => {
+  it('counts the wall time at least one gate was held, and the releases', async () => {
+    let clock = 0;
+    const { worker, ready } = start({ now: () => clock });
+    ready();
+    const first = holdShaderPrograms(
+      [{ vertex: 'void main() { float a; }', fragment: 'void main() {}', index0Attribute: 'p' }],
+      GPU_WORK_PRIORITY.VISIBLE_PREWARM,
+      5_000,
+    );
+    holdShaderPrograms(
+      [{ vertex: 'void main() { float b; }', fragment: 'void main() {}', index0Attribute: 'p' }],
+      GPU_WORK_PRIORITY.VISIBLE_PREWARM,
+      5_000,
+    );
+    const flush = () => new Promise((resolve) => setTimeout(resolve, 0));
+    clock = 300;
+    worker().emit({ kind: 'warmed', id: 1, linkMs: 300 });
+    await first.settled;
+    await flush();
+    clock = 500;
+    worker().emit({ kind: 'warmed', id: 2, linkMs: 500 });
+    await flush();
+    clock = 2_000;
+    expect(shaderWarmSnapshot()).toMatchObject({ holdWallMs: 500, releases: 0, abArm: null });
   });
 });
 
