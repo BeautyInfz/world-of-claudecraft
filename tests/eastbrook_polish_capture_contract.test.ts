@@ -686,8 +686,11 @@ interface AttributionTargetFixture {
 // capture was retaken.
 // Re-minted for the v0.43 release repair after Ascension/mount ordering moved
 // renderer.ts. No capture was retaken.
+// Re-minted for the PR #4036 GPU timer probe merge after PR #4032 through
+// #4035: the renderer probe hooks, screenshot-readback extraction and current
+// release-side renderer leaves combine in one tree. No capture was retaken.
 const PINNED_POLISH_COMPOSITE_FINGERPRINT =
-  'dcc818d8a511cbf4dad4ddd17980f55e147e5bff891ab5de5e9b6141480f8589';
+  '3efa751e20b18ab3e260abfb91667e5de0ae015b49676a5c0196c6aae2142975';
 
 function validPolishAttributionTargets(): AttributionTargetFixture[] {
   return [

@@ -711,6 +711,7 @@ const RENDER_PURE_CORES = [
   'src/render/view_vfx_pose_core.ts',
   'src/render/live_program_watch_core.ts',
   'src/render/mount_preview_framing_core.ts',
+  'src/render/gpu_timer_probe_core.ts',
   'src/render/post_reveal_links_core.ts',
   'src/render/program_key_ledger_core.ts',
   'src/render/renderer_extensions.ts',

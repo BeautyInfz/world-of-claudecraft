@@ -900,7 +900,11 @@ const MONOLITHS: MonolithRow[] = [
     // rider_anchor.ts, so its body-attached aura wiring composes with the batch
     // extraction instead of loosening this row. The resolved tree measures
     // 12814 lines in src/render/renderer.ts. Exact merged count, zero slack.
-    ceiling: 12814,
+    // GPU timer probe: the bug-report screenshot readback moved to
+    // src/render/screenshot_capture.ts, and the current release-side renderer
+    // leaves combine with the probe hooks at 12811 lines. Exact merged count,
+    // zero slack.
+    ceiling: 12811,
     seam: 'a new src/render/<thing>.ts module the renderer calls (src/render/CLAUDE.md)',
   },
   {

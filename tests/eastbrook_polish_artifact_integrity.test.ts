@@ -1380,10 +1380,13 @@ const ACCEPTED_POLISH_V2_METADATA_PATH = path.join(REPO_ROOT, POLISH_SEAL_PATH);
 // capture was retaken.
 // Re-minted for the v0.43 release repair after Ascension/mount ordering moved
 // renderer.ts. No capture was retaken.
+// Re-minted for the PR #4036 GPU timer probe merge after PR #4032 through
+// #4035: the renderer probe hooks, screenshot-readback extraction and current
+// release-side renderer leaves combine in one tree. No capture was retaken.
 const ACCEPTED_POLISH_V2_METADATA_SHA256 =
-  'f8d4f9a3c76142232a50e4f84432dffd88d896472ac6e027251096d60ba16e16';
+  'f46c4655a253c8a071f828940dff1c0263e7950131ff68020e1f2e158ee6a1ce';
 const ACCEPTED_POLISH_V2_COMPOSITE_PROVENANCE =
-  'dcc818d8a511cbf4dad4ddd17980f55e147e5bff891ab5de5e9b6141480f8589';
+  '3efa751e20b18ab3e260abfb91667e5de0ae015b49676a5c0196c6aae2142975';
 const ACCEPTED_POLISH_V2_METADATA = readJsonFile<CaptureMetadata>(ACCEPTED_POLISH_V2_METADATA_PATH);
 const ACCEPTED_POLISH_V2_PROVENANCE = ACCEPTED_POLISH_V2_METADATA.polishProvenance;
 const ACCEPTED_POLISH_V2_TOWN_CONTRACT = ACCEPTED_POLISH_V2_METADATA.records[0]?.townContract;
@@ -2752,7 +2755,9 @@ describe('Eastbrook polish performance and contact evidence', () => {
       // composite first, then this seal. No capture was retaken.
       // Re-minted for the v0.43 release repair after Ascension/mount ordering
       // moved renderer.ts. No capture was retaken.
-    ).toBe('373f25bf57aec53b1d480d2b624af814cc6f2e43fdcc1a3fd03a3a6c5e5ccbb8');
+      // PR #4036 GPU timer probe merge after PR #4032 through #4035:
+      // recomputed LAST over the swept evidence. No capture was retaken.
+    ).toBe('ce52f6706f8dbb7b4c30149b83a15d27d3cf5ac42b196e6a858f737aed02cac0');
   });
 
   it('binds every historical after record to its accepted source and asset provenance', () => {
