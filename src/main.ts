@@ -173,12 +173,13 @@ import { sendOnlineMovementFrame } from './game/online_movement_frame';
 import { padCastPress, padCastRelease } from './game/pad_cast_routing';
 import { createGroundAimReticleSync, padGroundAimCallbacks } from './game/pad_ground_aim_wiring';
 import { padReelItemId } from './game/pad_reel';
+import { dispatchPadSharedEdgeAction } from './game/pad_shared_edge_action';
 import { openTargetSubcommands } from './game/pad_subcommands';
 import { createPadTargetPick } from './game/pad_target_pick';
 import { createPerfMonitor } from './game/perf';
 import { initPerfNudge } from './game/perf_nudge';
 import { startPerfReporter } from './game/perf_reporter';
-import { dispatchPetAction, runPetCommand } from './game/pet_commands';
+import { runPetCommand } from './game/pet_commands';
 import { kickCharacterPreloadStream, runPostEntryWarmups } from './game/post_entry_warmups_core';
 import { newPresentationGateInput, presentationGate } from './game/presentation_gate';
 import { startRealmBuilderRollLoad } from './game/realm_builder_boot';
@@ -2081,12 +2082,8 @@ async function startGame(
       return;
     }
     if (!canUseGameKeysNow()) return; // suppress play actions while a modal/chat is up
-    // The pet edges and the interface toggle share their routing with the
-    // keyboard arm (pet_commands.ts, interface_visibility_core.ts), so the
-    // controller panel (which lists every edge keybind action) can never
-    // offer a bind the pad dispatch drops.
-    if (dispatchPetAction(id, world)) return;
-    if (dispatchInterfaceVisibilityAction(id, interfaceVisibility)) return;
+    // Shared keyboard/controller arms: pet commands, hide-interface, camera zoom.
+    if (dispatchPadSharedEdgeAction(id, { input, interfaceVisibility, world })) return;
     if (id.startsWith('slot')) {
       hud.pressSlot(Number(id.slice(4)));
       return;

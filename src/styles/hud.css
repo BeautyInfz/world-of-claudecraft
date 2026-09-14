@@ -12829,8 +12829,8 @@
   /* One body class hides every HUD surface for a clean screenshot or video:
      each #ui child except the visually-hidden a11y live regions (screen readers
      keep their combat/target/chat announcements), plus the body-level siblings
-     of #ui: the nameplate layer, the Discord panel and banner, the touch
-     controls, and the pad cursor. The developer perf overlay is a #ui child, so
+     of #ui: the nameplate and aura layers, the Discord panel and banner, the
+     touch controls, and the pad cursor. The developer perf overlay is a #ui child, so
      it hides with the rest. Three properties on purpose: `visibility` drops the
      frames from the focus order and the accessibility tree, `opacity` closes
      the hole a descendant that re-declares `visibility: visible` would open
@@ -12840,6 +12840,7 @@
      changes underneath a hidden frame. */
   body.interface-hidden #ui > :not(.visually-hidden),
   body.interface-hidden #nameplates,
+  body.interface-hidden #aura-overlays,
   body.interface-hidden #discord-window,
   body.interface-hidden #discord-cta-banner,
   body.interface-hidden #mobile-controls,

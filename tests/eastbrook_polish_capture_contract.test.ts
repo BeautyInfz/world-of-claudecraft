@@ -684,8 +684,10 @@ interface AttributionTargetFixture {
 // civicShader leaf, shader-prefix diagnostic evidence, Eastbrook monument
 // reveal roots and gated live-program renderer changes land in one tree. No
 // capture was retaken.
+// Re-minted for the v0.43 release repair after Ascension/mount ordering moved
+// renderer.ts. No capture was retaken.
 const PINNED_POLISH_COMPOSITE_FINGERPRINT =
-  '22d90debbf133da1b7c00f4f799ce1c709634daa066f3d084b146953f2387ace';
+  'dcc818d8a511cbf4dad4ddd17980f55e147e5bff891ab5de5e9b6141480f8589';
 
 function validPolishAttributionTargets(): AttributionTargetFixture[] {
   return [

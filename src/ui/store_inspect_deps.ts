@@ -37,6 +37,7 @@ export function storePreviewAppearance(world: StoreInspectWorld): PreviewAppeara
       player.mainhandItemId,
       world.accountCosmetics.weaponSkinLoadout,
       player.skinCatalog ?? 'class',
+      player.offhandItemId ?? null,
     ),
   };
 }

@@ -231,9 +231,13 @@ describe('the dry compile against the real link', () => {
     // Selected by identity, not by "has a diagnostic": a driver that emits a
     // benign info log for a healthy material also earns one, and the
     // runnable assertion below must stay about the broken program.
-    const program = (renderer.info.programs ?? []).find(
-      (entry) => (entry as { type?: string }).type === 'ShaderMaterial',
-    ) as
+    const program = (renderer.info.programs ?? []).find((entry) => {
+      const p = entry as {
+        type?: string;
+        diagnostics?: { runnable?: boolean };
+      };
+      return p.type === 'ShaderMaterial' && p.diagnostics?.runnable === false;
+    }) as
       | {
           diagnostics: {
             runnable: boolean;

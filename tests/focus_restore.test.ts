@@ -492,6 +492,8 @@ describe('bare containment reads of the active element stay out of repaint ladde
     'mount_inspect_controller.ts': 'overlay Tab-trap boundary check, not a restore ladder',
     'spellbook_window.ts':
       'dataset/class-keyed read with no Close rung; a parked root resolves nothing',
+    'social_window.ts':
+      'who-tab local repaint focus capture; restores by field/action identity only',
   };
   const uiFiles = tsFilesUnder(path.join(repoRoot, 'src/ui')).map((f) => ({
     ...f,

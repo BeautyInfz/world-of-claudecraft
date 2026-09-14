@@ -351,7 +351,12 @@ export class SocialWindow {
   // list-read guard and by the tab being open; stops on the first answer.
   private retryWhoIfPending(): void {
     const w = this.deps.world();
-    if (this.tab !== 'who' || w.whoInfo !== null || w.spectating !== null) return;
+    if (
+      this.tab !== 'who' ||
+      (w.whoInfo !== null && w.whoInfo.filter === this.who.search) ||
+      w.spectating !== null
+    )
+      return;
     if (++this.whoRetryTicks < WHO_RETRY_SLOW_TICKS) return;
     this.requestWho();
   }
@@ -1035,7 +1040,8 @@ export class SocialWindow {
     if (w.spectating !== null)
       return `<div class="soc-empty">${esc(t('hud.social.offlineEmpty'))}</div>`;
     const info = w.whoInfo;
-    if (!info) return `<div class="soc-empty">${esc(t('hudChrome.social.who.loading'))}</div>`;
+    if (!info || info.filter !== this.who.search)
+      return `<div class="soc-empty">${esc(t('hudChrome.social.who.loading'))}</div>`;
     const labels = { cls: playerClassDisplayName, zone: localizeZone };
     const rows = whoTabRows(info, this.who, w.player.name, labels);
     const count = whoCountView(info, rows.length);

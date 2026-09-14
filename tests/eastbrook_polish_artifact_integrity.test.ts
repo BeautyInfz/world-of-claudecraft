@@ -1378,10 +1378,12 @@ const ACCEPTED_POLISH_V2_METADATA_PATH = path.join(REPO_ROOT, POLISH_SEAL_PATH);
 // civicShader leaf, shader-prefix diagnostic evidence, Eastbrook monument
 // reveal roots and gated live-program renderer changes land in one tree. No
 // capture was retaken.
+// Re-minted for the v0.43 release repair after Ascension/mount ordering moved
+// renderer.ts. No capture was retaken.
 const ACCEPTED_POLISH_V2_METADATA_SHA256 =
-  'd04e40a2aeabee24fad6516704af54dec57dba3f997067a9bdaf052500c23ff3';
+  'f8d4f9a3c76142232a50e4f84432dffd88d896472ac6e027251096d60ba16e16';
 const ACCEPTED_POLISH_V2_COMPOSITE_PROVENANCE =
-  '22d90debbf133da1b7c00f4f799ce1c709634daa066f3d084b146953f2387ace';
+  'dcc818d8a511cbf4dad4ddd17980f55e147e5bff891ab5de5e9b6141480f8589';
 const ACCEPTED_POLISH_V2_METADATA = readJsonFile<CaptureMetadata>(ACCEPTED_POLISH_V2_METADATA_PATH);
 const ACCEPTED_POLISH_V2_PROVENANCE = ACCEPTED_POLISH_V2_METADATA.polishProvenance;
 const ACCEPTED_POLISH_V2_TOWN_CONTRACT = ACCEPTED_POLISH_V2_METADATA.records[0]?.townContract;
@@ -2748,7 +2750,9 @@ describe('Eastbrook polish performance and contact evidence', () => {
       // composite first, then this seal. No capture was retaken.
       // Re-minted for the PR #4025 merge after PR #4024: same order, the
       // composite first, then this seal. No capture was retaken.
-    ).toBe('83c0f573ab1d0193251cfe7c03459ca8c3ce4610b7f213ae50774b96c805554c');
+      // Re-minted for the v0.43 release repair after Ascension/mount ordering
+      // moved renderer.ts. No capture was retaken.
+    ).toBe('373f25bf57aec53b1d480d2b624af814cc6f2e43fdcc1a3fd03a3a6c5e5ccbb8');
   });
 
   it('binds every historical after record to its accepted source and asset provenance', () => {

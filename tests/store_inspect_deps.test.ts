@@ -107,6 +107,18 @@ describe('storePreviewAppearance', () => {
     const world = fakeWorld({ loadout: { axe: 'glaciersplit_axe' } });
     expect(storePreviewAppearance(world as never).weaponSkinId).toBeNull();
   });
+
+  it('resolves an Armory skin from a matching offhand weapon', () => {
+    const world = fakeWorld({ loadout: { mace: 'starfall_mace' } });
+    world.player.templateId = 'rogue';
+    world.player.mainhandItemId = 'rusty_dagger';
+    world.player.offhandItemId = 'forgefathers_warhammer';
+    expect(storePreviewAppearance(world as never)).toMatchObject({
+      mainhandItemId: 'rusty_dagger',
+      offhandItemId: 'forgefathers_warhammer',
+      weaponSkinId: 'starfall_mace',
+    });
+  });
 });
 
 describe('armoryInspectDeps', () => {

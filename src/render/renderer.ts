@@ -10370,17 +10370,6 @@ export class Renderer {
           v.height,
           priestMarkerStateForAuras(e.auras, this.priestMarkerStateScratch),
         );
-        const ascensionPlan = paladinAscensionVisualPlanInto(e, this.paladinAscensionPlanScratch);
-        v.paladinAscensionVisual = syncPaladinAscensionVisual(
-          v.paladinAscensionVisual,
-          v.group,
-          v.riderAnchor,
-          v.height,
-          ascensionPlan,
-          dt,
-          this.reducedMotion(),
-          v.visual.root,
-        );
         v.paladinAvengingWrathVisual = syncPaladinAvengingWrathVisual(
           v.paladinAvengingWrathVisual,
           v.riderAnchor,
@@ -11256,6 +11245,17 @@ export class Renderer {
       });
       // The rider is placed: carry the body-attached auras to the saddle.
       syncRiderAnchor(v.riderAnchor, v.visual.root);
+      const ascensionPlan = paladinAscensionVisualPlanInto(e, this.paladinAscensionPlanScratch);
+      v.paladinAscensionVisual = syncPaladinAscensionVisual(
+        v.paladinAscensionVisual,
+        v.group,
+        v.riderAnchor,
+        v.height,
+        ascensionPlan,
+        dt,
+        this.reducedMotion(),
+        v.visual.root,
+      );
       v.goblinRocketSledFx?.update(
         dt,
         this.time,
