@@ -70,6 +70,7 @@ describe('sweepEligibleRow', () => {
     expect(sweepEligibleRow(listing({ mine: true }))).toBe(false);
     expect(sweepEligibleRow(listing({ house: true }))).toBe(false);
     expect(sweepEligibleRow(listing({ instance: { name: 'Signed' } }))).toBe(false);
+    expect(sweepEligibleRow(listing({ craftedRecipeId: 'recipe_copper_bar' }))).toBe(false);
     expect(
       sweepEligibleRow(
         listing({ materialSources: [{ source: { signer: 'Mira' }, units: 1 } as never] }),

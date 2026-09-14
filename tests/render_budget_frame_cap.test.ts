@@ -58,6 +58,17 @@ function lowGovernor(minRenderScale = 1): RenderBudgetGovernor {
   return governor;
 }
 
+function ultraGovernor(): RenderBudgetGovernor {
+  const governor = new RenderBudgetGovernor({
+    tier: 'ultra',
+    budget: GFX_BUDGETS.ultra,
+    enabled: true,
+  });
+  governor.reset(1, 1, 1);
+  governor.update(sample({ dt: 0.6, frameMs: 16, totalMs: 16 }));
+  return governor;
+}
+
 interface Run {
   state: RenderBudgetState;
   /** Lowest level each bucket reached over the run. */
@@ -140,6 +151,16 @@ describe('render budget governor: external frame cap versus a GPU-bound frame', 
     expect(probe.state.levels.resolution).toBe(1);
   });
 
+  it('restores terrain detail at the latch instead of leaving the probe shed behind', () => {
+    const result = run(ultraGovernor(), 60, () => ({}));
+
+    expect(result.min.detail).toBeLessThan(1);
+    expect(result.state.externalFrameCap).toBe(true);
+    const latch = run(ultraGovernor(), result.capAtS, () => ({}));
+    expect(latch.state.externalFrameCap).toBe(true);
+    expect(latch.state.levels.detail).toBe(1);
+  });
+
   it('refuses the cap when shedding moves the cadence, and stays shed', () => {
     // A GPU-bound frame that vsync steps between 41.7 and 33.4 ms depending
     // on how much the governor draws: the probe's restore brings the slower
@@ -177,12 +198,13 @@ describe('render budget governor: external frame cap versus a GPU-bound frame', 
     expect(state.reason).not.toBe('frame-cap');
   });
 
-  it('reads a probe whose floors run under budget as refused, and never re-probes on the climb', () => {
+  it('reads a probe whose floors run under budget as refused, then re-probes after the hold', () => {
     // A machine whose floors run at 60 fps and whose baseline flips to the
     // 30 fps vsync step: the probe's own success takes the cadence out of
     // the window, which IS the verdict (shedding works). Recovery then climbs
-    // on measured headroom, the cadence flips back into the window, and the
-    // refusal must hold: a second full shed on every cycle would be a pump.
+    // on measured headroom and the cadence flips back into the window. The
+    // refusal must hold for the cooldown, but a continuous candidate may
+    // probe again once that hold expires.
     const density = (levels: RenderBudgetLevels) =>
       levels.grass + levels.foliage + levels.vfx + levels.lighting;
     const floorDensity =
@@ -192,7 +214,7 @@ describe('render budget governor: external frame cap versus a GPU-bound frame', 
     let probes = 0;
     let capFrames = 0;
     let lastProbe: string | undefined = 'idle';
-    for (let i = 0; i < 30 * 180; i++) {
+    const update = () => {
       state = governor.update(
         sample({
           frameMs: density(state.levels) > floorDensity + 0.05 ? 33.4 : 16.7,
@@ -202,10 +224,18 @@ describe('render budget governor: external frame cap versus a GPU-bound frame', 
       if (state.frameCapProbe === 'shed' && lastProbe !== 'shed') probes++;
       lastProbe = state.frameCapProbe;
       if (state.externalFrameCap) capFrames++;
+    };
+    for (let i = 0; i < 30 * 55; i++) {
+      update();
     }
     expect(probes).toBe(1);
     expect(capFrames).toBe(0);
     expect(state.frameCapProbe).toBe('refused');
+    for (let i = 0; i < 30 * 50 && probes < 2; i++) {
+      update();
+    }
+    expect(probes).toBe(2);
+    expect(capFrames).toBe(0);
   });
 
   it('keeps a fresh refusal through a heavier zone, and re-probes only after the hold', () => {

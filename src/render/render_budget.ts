@@ -615,6 +615,13 @@ export class RenderBudgetGovernor {
     }
     if (
       externalFrameCapCandidate &&
+      this.capRefused &&
+      this.capRefusedAgeS >= EXTERNAL_FRAME_CAP_REFUSAL_HOLD_S
+    ) {
+      this.capRefused = false;
+    }
+    if (
+      externalFrameCapCandidate &&
       !this.externalFrameCap &&
       !this.capRefused &&
       this.capProbe === null
@@ -797,7 +804,7 @@ export class RenderBudgetGovernor {
       // after a real disaster or an interrupted probe) still needs a high
       // state to compare against: the band baselines, the levels a capped
       // session would hold.
-      const high =
+      const high: RenderBudgetLevels =
         this.capProbeOrigin && probe.shedMoved
           ? this.capProbeOrigin
           : {
@@ -806,6 +813,7 @@ export class RenderBudgetGovernor {
               vfx: this.bands.vfx.baseline,
               lighting: this.bands.lighting.baseline,
               resolution: maxRenderScale,
+              detail: this.bands.detail.baseline,
               post: this.bands.post.baseline,
             };
       this.levels.grass = high.grass;
@@ -813,6 +821,7 @@ export class RenderBudgetGovernor {
       this.levels.vfx = high.vfx;
       this.levels.lighting = high.lighting;
       this.levels.resolution = Math.min(maxRenderScale, Math.max(minRenderScale, high.resolution));
+      this.restoreDetailAfterCapProbe(high.detail);
       if (this.pinnedPostLevel == null) this.levels.post = high.post;
       return true;
     }
@@ -828,6 +837,15 @@ export class RenderBudgetGovernor {
     // ladder once more so the restored levels are not shed on the spot.
     this.externalFrameCap = true;
     return true;
+  }
+
+  private restoreDetailAfterCapProbe(level: number): void {
+    if (this.pinnedDetailLevel != null) return;
+    this.detailShed.level = level;
+    this.detailShed.target = level;
+    this.detailShed.overSeconds = 0;
+    this.detailShed.calmSeconds = 0;
+    this.levels.detail = level;
   }
 
   /** Runs on every update, the disabled branch included, so the dev pin holds

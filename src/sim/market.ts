@@ -1271,6 +1271,7 @@ export class Market {
       // goods, so the full payload never crosses the wire. Conditional spread:
       // plain rows stay byte-identical (no `instance: undefined` key).
       ...(l.instance ? { instance: publicInstanceView(l.instance) } : {}),
+      ...(l.craftedRecipeId === undefined ? {} : { craftedRecipeId: l.craftedRecipeId }),
       ...(l.materialSources === undefined
         ? {}
         : { materialSources: cloneMaterialData(l.materialSources) }),

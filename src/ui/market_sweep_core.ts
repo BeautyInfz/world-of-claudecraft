@@ -32,12 +32,10 @@ export interface MarketSweepStage {
 }
 
 /** A browse row that may stage a sweep: someone else's plain, fungible listing
- *  (never mine, never house stock, never an instanced or signed copy). The wire
- *  row does not carry a crafted recipe id, so this is a superset of the sim
- *  planner's eligibility: the server's quote is the truth, and a crafted-recipe
- *  row simply quotes as absent. */
+ *  (never mine, never house stock, never an instanced, crafted, or signed copy). */
 export function sweepEligibleRow(l: MarketListingView): boolean {
   if (l.mine || l.house || l.instance) return false;
+  if (l.craftedRecipeId !== undefined) return false;
   return !l.materialSources?.some(({ source }) => source.signer !== undefined);
 }
 

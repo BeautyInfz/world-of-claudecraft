@@ -29,6 +29,10 @@ export interface MarketListingView {
    *  allowlist (signer/enchant/rolled; never boundTo/bindOnTrade/charges): the
    *  tooltip's enchant line and maker's mark. Absent on plain listings. */
   instance?: ItemInstancePayload;
+  /** Recipe marker carried by a crafted listing. The client does not display the
+   *  id, but Market Sweep needs the bit so it never offers a bulk action the
+   *  server planner rejects. */
+  craftedRecipeId?: string;
   materialSources?: MaterialComposition;
 }
 

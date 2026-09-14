@@ -138,7 +138,12 @@ const quote = (over: Partial<MarketSweepQuote> = {}): MarketSweepQuote => ({
 describe('market window: the Market Sweep card', () => {
   it('offers Sweep only on eligible rows and stages the card with a quote request', () => {
     const h = harness(
-      info([listing(), listing({ id: 8, mine: true }), listing({ id: 9, house: true })]),
+      info([
+        listing(),
+        listing({ id: 8, mine: true }),
+        listing({ id: 9, house: true }),
+        listing({ id: 10, craftedRecipeId: 'recipe_copper_bar' }),
+      ]),
     );
     expect(h.root.querySelectorAll('.mkt-sweep-btn').length).toBe(1);
     expect(card(h.root)).toBeNull();
