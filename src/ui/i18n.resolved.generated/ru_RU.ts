@@ -4400,6 +4400,18 @@ export const ru_RU: EnTranslations = {
       "retentionFooter": "При смене специализации сохраняется 60% навыка.",
       "tutorialLink": "Обучение профессиям"
     },
+    "recipeTracker": {
+      "trackerLabel": "Рецепты",
+      "collapseHint": "Свернуть трекер рецептов",
+      "expandHint": "Развернуть трекер рецептов",
+      "pin": "Закрепить",
+      "unpin": "Открепить",
+      "pinFull": "Трекер рецептов заполнен (не более {cap} рецептов)",
+      "pinAria": "Закрепить {name} в трекере HUD",
+      "unpinAria": "Открепить {name} из трекера HUD",
+      "haveNeed": "{have}/{need}",
+      "resultCount": "{name} x{count}"
+    },
     "crafting": {
       "title": "Крафт",
       "close": "Закрыть крафт",

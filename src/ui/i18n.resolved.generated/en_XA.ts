@@ -4400,6 +4400,18 @@ export const en_XA: EnTranslations = {
       "retentionFooter": "[Ŕéţúŕñš óñ ŕéšþéç: 60% óƒ šķíļļ ķéþţ.]",
       "tutorialLink": "[Þŕóƒéššíóñ ţúţóŕíáļ]"
     },
+    "recipeTracker": {
+      "trackerLabel": "[Ŕéçíþéš]",
+      "collapseHint": "[Çóļļáþšé ŕéçíþé ţŕáçķéŕ]",
+      "expandHint": "[Éẋþáñð ŕéçíþé ţŕáçķéŕ]",
+      "pin": "[Þíñ]",
+      "unpin": "[Úñþíñ]",
+      "pinFull": "[Ţĥé ŕéçíþé ţŕáçķéŕ íš ƒúļļ (úþ ţó {cap} ŕéçíþéš)]",
+      "pinAria": "[Þíñ {name} ţó ţĥé ĤÚÐ ţŕáçķéŕ]",
+      "unpinAria": "[Úñþíñ {name} ƒŕóɱ ţĥé ĤÚÐ ţŕáçķéŕ]",
+      "haveNeed": "[{have}/{need}]",
+      "resultCount": "[{name} ẋ{count}]"
+    },
     "crafting": {
       "title": "[Çŕáƒţíñĝ]",
       "close": "[Çļóšé çŕáƒţíñĝ]",

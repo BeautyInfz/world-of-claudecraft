@@ -455,7 +455,12 @@ const MONOLITHS: MonolithRow[] = [
     // LOWERED 18352 -> 18350 in the review-fix round: the prompt countdown bar
     // moved to createPromptTimeoutBar in src/ui/prompt_dialog.ts alongside the
     // PROMPT_TIMEOUT_MS the sheet's --prompt-timeout-dur mirrors.
-    ceiling: 18350,
+    // Re-measured at the PR #3900 recipe-pin merge into the v0.43 candidate:
+    // the tracker-header extraction pays for most of the recipe tracker wiring,
+    // while the current-release gathering goal and Perfecting arms remain.
+    // `wc -l < src/ui/hud.ts` on the resolved tree is 18351. Exact merged
+    // count, zero slack.
+    ceiling: 18351,
     seam: 'pure view core + thin painter on PainterHost (src/ui/CLAUDE.md)',
   },
   {

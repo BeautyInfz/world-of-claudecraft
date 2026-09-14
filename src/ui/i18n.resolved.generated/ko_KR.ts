@@ -4400,6 +4400,18 @@ export const ko_KR: EnTranslations = {
       "retentionFooter": "전문 기술 재설정 시 숙련도의 60%가 유지됩니다.",
       "tutorialLink": "전문 기술 튜토리얼"
     },
+    "recipeTracker": {
+      "trackerLabel": "제작법",
+      "collapseHint": "제작법 추적기 접기",
+      "expandHint": "제작법 추적기 펼치기",
+      "pin": "고정",
+      "unpin": "고정 해제",
+      "pinFull": "제작법 추적기가 가득 찼습니다 (최대 {cap}개)",
+      "pinAria": "{name} HUD 추적기에 고정",
+      "unpinAria": "{name} HUD 추적기에서 고정 해제",
+      "haveNeed": "{have}/{need}",
+      "resultCount": "{name} x{count}"
+    },
     "crafting": {
       "title": "제작",
       "close": "제작 닫기",

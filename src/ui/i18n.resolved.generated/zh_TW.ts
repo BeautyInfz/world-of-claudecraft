@@ -4400,6 +4400,18 @@ export const zh_TW: EnTranslations = {
       "retentionFooter": "重置專業後保留60%的技能。",
       "tutorialLink": "專業教學"
     },
+    "recipeTracker": {
+      "trackerLabel": "配方",
+      "collapseHint": "收合配方追蹤器",
+      "expandHint": "展開配方追蹤器",
+      "pin": "釘選",
+      "unpin": "取消釘選",
+      "pinFull": "配方追蹤器已滿（最多 {cap} 個配方）",
+      "pinAria": "將{name}釘選到HUD追蹤器",
+      "unpinAria": "從HUD追蹤器取消釘選{name}",
+      "haveNeed": "{have}/{need}",
+      "resultCount": "{name} x{count}"
+    },
     "crafting": {
       "title": "製作",
       "close": "關閉製作",

@@ -218,6 +218,7 @@ const FANOUT_ARMS: readonly string[] = [
   // and per-row page names all resolve at paint, so one forced repaint here
   // keeps the strip from showing the previous language for up to a slow tick.
   'this.updateReliquaryTracker|',
+  'this.updateRecipeTracker|',
   'this.charWindow.renderIfOpen|',
   'this.arenaWindow.relocalize|',
   'this.dungeonFinderWindow.relocalize|',

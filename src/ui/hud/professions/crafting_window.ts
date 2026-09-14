@@ -22,7 +22,6 @@
 // Announcements ride the static #crafting-live region via deps.announce (a
 // region inside the rebuilt subtree is wiped by the same task that writes
 // it, so assistive tech never sees the text).
-
 import type { StationType } from '../../../sim/professions/stations';
 import { markDialogRoot } from '../../dialog_root';
 import { itemDisplayName, tEntity } from '../../entity_i18n';
@@ -61,6 +60,7 @@ import { renderGatheringGoalTrackRow, type TrackRowDeps } from './gathering_goal
 import { professionImageUrl } from './profession_art';
 import { renderProfessionIdentityCard } from './profession_identity_card';
 import type { ProfessionIdentityModel } from './profession_identity_view';
+import { renderCraftingPinChip, type CraftingPinChipDeps } from './crafting_pin_chip';
 
 // Station display names (Professions 2.0): StationType id -> the
 // localized station name, same id-to-key table shape as craftNameText
@@ -79,8 +79,7 @@ const STATION_NAME_KEY: Record<StationType, TranslationKey> = {
 export function stationNameText(type: StationType): string {
   return t(STATION_NAME_KEY[type]);
 }
-
-export interface CraftingWindowDeps extends PainterHostPresentation, TrackRowDeps {
+export interface CraftingWindowDeps extends PainterHostPresentation, TrackRowDeps, CraftingPinChipDeps {
   hideTooltip(): void;
   /** Start a craft (or batch) for `recipeId` with the given count (clamped in sim). */
   onCraft(recipeId: string, count: number): void;
@@ -618,6 +617,7 @@ export function renderCraftingWindow(
         perfectingLink.addEventListener('click', () => deps.onOpenPerfecting?.());
         batchRow.appendChild(perfectingLink);
       }
+      batchRow.appendChild(renderCraftingPinChip(document, row.recipeId, resultName, deps));
       item.appendChild(batchRow);
       renderGatheringGoalTrackRow(item, row.recipeId, resultName, deps);
       // Commission opt-in (the Maker's Bond): a per-recipe pill toggle-chip

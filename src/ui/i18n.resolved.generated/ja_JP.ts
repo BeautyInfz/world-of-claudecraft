@@ -4400,6 +4400,18 @@ export const ja_JP: EnTranslations = {
       "retentionFooter": "リスペック時はスキルの60%を保持します。",
       "tutorialLink": "専門技能チュートリアル"
     },
+    "recipeTracker": {
+      "trackerLabel": "レシピ",
+      "collapseHint": "レシピトラッカーを折りたたむ",
+      "expandHint": "レシピトラッカーを展開",
+      "pin": "ピン留め",
+      "unpin": "ピン解除",
+      "pinFull": "レシピトラッカーが満杯です（最大 {cap} レシピ）",
+      "pinAria": "{name}をHUDトラッカーにピン留め",
+      "unpinAria": "{name}のピン留めをHUDトラッカーから解除",
+      "haveNeed": "{have}/{need}",
+      "resultCount": "{name} x{count}"
+    },
     "crafting": {
       "title": "製作",
       "close": "製作を閉じる",
