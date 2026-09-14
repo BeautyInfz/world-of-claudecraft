@@ -465,7 +465,12 @@ const MONOLITHS: MonolithRow[] = [
     // while this branch's health-text mode override and current HUD surfaces
     // remain. `wc -l < src/ui/hud.ts` on the resolved tree is 18324. Exact
     // merged count, zero slack.
-    ceiling: 18324,
+    // LOWERED 18324 -> 18317 for the touch-peek jitter-tolerance fix: the whole
+    // long-press-to-peek touch gesture (the timer arm/clear plus the new
+    // move-tolerance stand-down) moved into src/ui/touch_peek.ts's
+    // bindTooltipTouchPeek, leaving attachTooltip a thin caller passing it
+    // isMobile/press/hide/showAt. Exact count, zero slack.
+    ceiling: 18317,
     seam: 'pure view core + thin painter on PainterHost (src/ui/CLAUDE.md)',
   },
   {

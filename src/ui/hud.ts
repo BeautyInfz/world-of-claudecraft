@@ -883,7 +883,7 @@ import {
   paintMobTooltipBottomRight as paintMobTooltipBottomRightCore,
   paintTooltipAt as paintTooltipAtCore,
 } from './tooltip_paint';
-import { TOOLTIP_PEEK_MS, TouchPeekGuard } from './touch_peek';
+import { bindTooltipTouchPeek, TouchPeekGuard } from './touch_peek';
 import { bindTouchDoubleTap, bindTouchTap } from './touch_tap';
 import { buildTownFocusView, stepTownFocus, townFocusRenderSig } from './town_focus_view';
 import { renderTownFocusWindow } from './town_focus_window';
@@ -6201,17 +6201,12 @@ export class Hud {
   }
 
   attachTooltip(el: HTMLElement, html: () => string): void {
-    let touchTimer: number | undefined;
     // tooltip box size, measured once in showAt (right after the content is set)
     // and reused by every mousemove: the content cannot change between showAt
     // calls, so re-reading offsetWidth/Height per mousemove only forced a reflow
     let ttW = 0;
     let ttH = 0;
     const mobile = () => document.body.classList.contains('mobile-touch');
-    const clearTouchTimer = () => {
-      if (touchTimer !== undefined) window.clearTimeout(touchTimer);
-      touchTimer = undefined;
-    };
     const showAt = (x: number, y: number, trigger: 'touch' | 'mouse' | 'focus') => {
       // Touch-only path: showing the tooltip means the held control is being
       // inspected, so the release click should peek, not fire its action.
@@ -6228,6 +6223,14 @@ export class Hud {
       const rect = el.getBoundingClientRect();
       showAt(rect.right, rect.top + rect.height / 2, 'focus');
     };
+    const touchPeek = bindTooltipTouchPeek(el, {
+      isMobile: mobile,
+      press: () => this.peekGuard.press(),
+      hide: () => {
+        this.tooltipEl.style.display = 'none';
+      },
+      showAt: (x, y) => showAt(x, y, 'touch'),
+    });
     // A mouse click or a tap focuses the button as a side effect (the browser
     // moves focus to whatever was pressed), which used to fire showNearElement
     // on EVERY action-bar press, not just real keyboard (Tab) navigation. Flag
@@ -6276,35 +6279,25 @@ export class Hud {
       this.tooltipEl.style.top = `${at.top}px`;
     });
     el.addEventListener('mouseleave', () => {
-      clearTouchTimer();
+      touchPeek.clear();
       this.tooltipEl.style.display = 'none';
       // Box hidden: no element owns it, so the next move over any slot re-resolves.
       this.tooltipOwner.release();
     });
     el.addEventListener('focusout', () => {
-      clearTouchTimer();
+      touchPeek.clear();
       this.tooltipEl.style.display = 'none';
       this.tooltipOwner.release();
     });
-    el.addEventListener('pointerdown', (e) => {
-      if (!mobile() || e.pointerType === 'mouse') return;
-      clearTouchTimer();
-      // A fresh press: drop any stale peek and dismiss a lingering tooltip.
-      this.peekGuard.press();
-      this.tooltipEl.style.display = 'none';
-      const x = e.clientX,
-        y = e.clientY;
-      touchTimer = window.setTimeout(() => showAt(x, y, 'touch'), TOOLTIP_PEEK_MS);
-    });
     el.addEventListener('pointerup', () => {
-      clearTouchTimer();
+      touchPeek.clear();
       // Safari desktop never focuses a button on click, so pointerdown's flag
       // above would otherwise never get consumed by a focusin and could wrongly
       // swallow a later, real keyboard-focus tooltip; drop it once the press ends.
       pointerFocusPending = false;
     });
     el.addEventListener('pointercancel', () => {
-      clearTouchTimer();
+      touchPeek.clear();
       pointerFocusPending = false;
     });
   }
