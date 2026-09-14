@@ -13,8 +13,8 @@ import {
   LAST_KEEP_GRAVEYARD_ID,
   LAST_KEEP_SPIRIT_HEALER_ENTITY_ID,
   OVERWORLD_GRAVEYARDS,
-  setActiveWorldContent,
   SPIRIT_HEALER_NPC_ID,
+  setActiveWorldContent,
 } from '../src/sim/data';
 import { PLAYER_BODY_RADIUS } from '../src/sim/pathfind';
 import { Sim } from '../src/sim/sim';
@@ -49,9 +49,7 @@ describe('the Last Keep churchyard is a functional graveyard', () => {
 
   it('was appended after every record that shipped before it', () => {
     const ids = OVERWORLD_GRAVEYARDS.map((g) => g.id);
-    expect(ids.indexOf(LAST_KEEP_GRAVEYARD_ID)).toBeGreaterThan(
-      ids.indexOf('gy_proving_shore'),
-    );
+    expect(ids.indexOf(LAST_KEEP_GRAVEYARD_ID)).toBeGreaterThan(ids.indexOf('gy_proving_shore'));
   });
 
   it('reserves the keep healer id, so adding the yard does not move later ids', () => {
