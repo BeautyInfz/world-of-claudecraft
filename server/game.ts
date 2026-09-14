@@ -299,8 +299,8 @@ import {
   type GuildBankWriteResult,
   loadGuildBanksIntoSim,
 } from './guild_bank_state';
-import { GuildBookHolderIndex, requestGuildBookFlush } from './guild_book_holders';
 import { dispatchGuildBankCommand } from './guild_bank_wire';
+import { GuildBookHolderIndex, requestGuildBookFlush } from './guild_book_holders';
 import { createPaidGuildWithLeaderAtomic } from './guild_create_db';
 import { buyGuildRosterPageAtomic } from './guild_roster_page_db';
 import { guildRosterTransport } from './guild_roster_transport';

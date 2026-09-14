@@ -50,6 +50,7 @@ import {
   DURATION_FRACTION_DIGITS,
   durationChipText,
 } from './craft_row_chip_text';
+import { type CraftingPinChipDeps, renderCraftingPinChip } from './crafting_pin_chip';
 import {
   type CraftingView,
   type CraftLearnHint,
@@ -60,7 +61,6 @@ import { renderGatheringGoalTrackRow, type TrackRowDeps } from './gathering_goal
 import { professionImageUrl } from './profession_art';
 import { renderProfessionIdentityCard } from './profession_identity_card';
 import type { ProfessionIdentityModel } from './profession_identity_view';
-import { renderCraftingPinChip, type CraftingPinChipDeps } from './crafting_pin_chip';
 
 // Station display names (Professions 2.0): StationType id -> the
 // localized station name, same id-to-key table shape as craftNameText
@@ -79,7 +79,10 @@ const STATION_NAME_KEY: Record<StationType, TranslationKey> = {
 export function stationNameText(type: StationType): string {
   return t(STATION_NAME_KEY[type]);
 }
-export interface CraftingWindowDeps extends PainterHostPresentation, TrackRowDeps, CraftingPinChipDeps {
+export interface CraftingWindowDeps
+  extends PainterHostPresentation,
+    TrackRowDeps,
+    CraftingPinChipDeps {
   hideTooltip(): void;
   /** Start a craft (or batch) for `recipeId` with the given count (clamped in sim). */
   onCraft(recipeId: string, count: number): void;

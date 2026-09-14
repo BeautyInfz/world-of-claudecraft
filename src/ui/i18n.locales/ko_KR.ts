@@ -11363,18 +11363,23 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.finder.mech.beast_pit_quake': '야수 구덩이 진동(광역 피해)',
   'hudChrome.finder.mech.wildheart_pulse': '와일드하트 펄스(주기적 광역 피해)',
   'hudChrome.finder.mech.jaguar_roar': '재규어의 포효(넉백)',
-  'hudChrome.finder.mech.brand_of_the_pyre': '화장단의 낙인(중첩되는 화염 표식, 수로의 물로 씻어내기)',
+  'hudChrome.finder.mech.brand_of_the_pyre':
+    '화장단의 낙인(중첩되는 화염 표식, 수로의 물로 씻어내기)',
   'hudChrome.finder.mech.forge_strike': '대장간 강타(중첩되는 방어 전담 교체 약화)',
   'hudChrome.finder.mech.rain_of_cinders': '잉걸불의 비(세 갈래 화염 원뿔, 그 사이에 서기)',
   'hudChrome.finder.mech.falling_cinders': '떨어지는 잉걸불(플레이어 위 운석 원, 밖으로 이동)',
   'hudChrome.finder.mech.revolving_inferno': '회전하는 지옥불(회전하는 화염 광선, 틈으로 통과)',
   'hudChrome.finder.mech.forge_wave': '대장간 파동(확장되는 불의 벽, 두 안전 통로 이용)',
-  'hudChrome.finder.mech.apocalypse_add': '이그니바르의 잿불 소환사(종말을 시전하는 우선 처치 대상, 빠르게 처치)',
-  'hudChrome.finder.mech.judgment_of_the_forge': '대장간의 심판(중간 단계, 유일한 안전 지대에 모이기)',
+  'hudChrome.finder.mech.apocalypse_add':
+    '이그니바르의 잿불 소환사(종말을 시전하는 우선 처치 대상, 빠르게 처치)',
+  'hudChrome.finder.mech.judgment_of_the_forge':
+    '대장간의 심판(중간 단계, 유일한 안전 지대에 모이기)',
   'hudChrome.finder.mech.last_inferno': '마지막 지옥불(생명력 20%에서 45초 폭주)',
-  'hudChrome.finder.mech.chains_of_the_forge': '대장간의 사슬(영웅 전용, 연결된 상대 가까이 머물기)',
+  'hudChrome.finder.mech.chains_of_the_forge':
+    '대장간의 사슬(영웅 전용, 연결된 상대 가까이 머물기)',
   'hudChrome.finder.mech.makers_brand': '창조주의 낙인(중첩되는 방어 전담 교체 약화)',
-  'hudChrome.finder.mech.forgefathers_sweep': '대장장이 아버지의 휩쓸기(비방어 전담 대상 넓은 전방 원뿔)',
+  'hudChrome.finder.mech.forgefathers_sweep':
+    '대장장이 아버지의 휩쓸기(비방어 전담 대상 넓은 전방 원뿔)',
   'hudChrome.finder.mech.tempering_ray': '담금질 광선(표식된 플레이어를 향한 직선, 가로막기)',
   'hudChrome.finder.mech.cinder_orbs': '잉걸불 구슬(표식된 플레이어는 방 가장자리로 산개)',
   'hudChrome.finder.mech.forgestorm': '대장간 폭풍(떨어지는 운석 원, 밖으로 이동)',

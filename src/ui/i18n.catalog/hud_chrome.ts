@@ -7482,7 +7482,6 @@ export const hudChromeStrings = {
       shared_pyre: 'Shared Pyre (gathering circle, split the damage)',
       anvils_decree: "Anvil's Decree (three raid-wide hammer strikes, heal through)",
       masters_assembly: "The Master's Assembly (block the forge beams, rotate blockers)",
-
     },
   },
   // The Book of Deeds window: the deed catalog browser (summary strip,

@@ -11398,15 +11398,21 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'hudChrome.finder.mech.forge_strike': 'フォージストライク（重複するタンク交代デバフ）',
   'hudChrome.finder.mech.rain_of_cinders': '燃えさしの雨（三方向の火炎コーン、その間に立つ）',
   'hudChrome.finder.mech.falling_cinders': '降り注ぐ燃えさし（プレイヤーへの隕石円、範囲外へ移動）',
-  'hudChrome.finder.mech.revolving_inferno': '回転するインフェルノ（回転する火炎光線、隙間を抜ける）',
+  'hudChrome.finder.mech.revolving_inferno':
+    '回転するインフェルノ（回転する火炎光線、隙間を抜ける）',
   'hudChrome.finder.mech.forge_wave': 'フォージウェーブ（広がる火の壁、二つの安全な通路を使う）',
-  'hudChrome.finder.mech.apocalypse_add': 'イグニヴァルの灰呼び（アポカリプスを詠唱する優先討伐対象、素早く倒す）',
-  'hudChrome.finder.mech.judgment_of_the_forge': '鍛冶場の裁き（中間フェーズ、唯一の安全地帯に集合）',
+  'hudChrome.finder.mech.apocalypse_add':
+    'イグニヴァルの灰呼び（アポカリプスを詠唱する優先討伐対象、素早く倒す）',
+  'hudChrome.finder.mech.judgment_of_the_forge':
+    '鍛冶場の裁き（中間フェーズ、唯一の安全地帯に集合）',
   'hudChrome.finder.mech.last_inferno': 'ラストインフェルノ（体力20%で45秒のバーン）',
-  'hudChrome.finder.mech.chains_of_the_forge': '鍛冶場の鎖（ヒロイック限定、繋がれた相手の近くに留まる）',
+  'hudChrome.finder.mech.chains_of_the_forge':
+    '鍛冶場の鎖（ヒロイック限定、繋がれた相手の近くに留まる）',
   'hudChrome.finder.mech.makers_brand': '創造主の烙印（重複するタンク交代デバフ）',
-  'hudChrome.finder.mech.forgefathers_sweep': 'フォージファーザーの薙ぎ払い（非タンクへの広い前方コーン）',
-  'hudChrome.finder.mech.tempering_ray': '焼き入れの光線（マークされたプレイヤーへの直線、割り込んで受ける）',
+  'hudChrome.finder.mech.forgefathers_sweep':
+    'フォージファーザーの薙ぎ払い（非タンクへの広い前方コーン）',
+  'hudChrome.finder.mech.tempering_ray':
+    '焼き入れの光線（マークされたプレイヤーへの直線、割り込んで受ける）',
   'hudChrome.finder.mech.cinder_orbs': '燃えさしの宝珠（マークされたプレイヤーは部屋の端へ散開）',
   'hudChrome.finder.mech.forgestorm': 'フォージストーム（降り注ぐ隕石円、範囲外へ移動）',
   'hudChrome.finder.mech.shared_pyre': '共有の火葬（集合円、ダメージを分担）',

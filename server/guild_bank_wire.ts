@@ -16,10 +16,10 @@
 // The guard token (`consume`) is drawn by the HOST before the shape check, once
 // per message, malformed or not: a flooder pays for every frame it sends.
 
+import type { MaterialSourceTransferSelection } from '../src/sim/material_source_transfer_selection';
 import type { GuildBankLedgerOp } from './bank_ledger';
 import type { GuildBankOpRequest } from './guild_bank_settle_gate';
 import { readMaterialSourceTransferWire } from './material_source_transfer_wire';
-import type { MaterialSourceTransferSelection } from '../src/sim/material_source_transfer_selection';
 
 export type GuildBankCommandName =
   | 'guild_bank_deposit_gold'
@@ -103,11 +103,11 @@ export function dispatchGuildBankCommand(
         const transfer = readMaterialSourceTransferWire(msg, slot);
         if (transfer === null) break;
         const { count, selection } = transfer;
-        host.run(
-          'withdraw',
-          () => sim.guildBankWithdrawFor(pid, slot, count, selection),
-          { slot, count, selection },
-        );
+        host.run('withdraw', () => sim.guildBankWithdrawFor(pid, slot, count, selection), {
+          slot,
+          count,
+          selection,
+        });
       }
       break;
     case 'guild_bank_buy_slots':

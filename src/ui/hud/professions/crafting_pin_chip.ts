@@ -19,7 +19,9 @@ export function renderCraftingPinChip(
   pinBtn.dataset.focusKey = `pin:${recipeId}`;
   const paintPin = (pinned: boolean): void => {
     pinBtn.setAttribute('aria-pressed', pinned ? 'true' : 'false');
-    pinBtn.textContent = t(pinned ? 'hudChrome.recipeTracker.unpin' : 'hudChrome.recipeTracker.pin');
+    pinBtn.textContent = t(
+      pinned ? 'hudChrome.recipeTracker.unpin' : 'hudChrome.recipeTracker.pin',
+    );
     pinBtn.setAttribute(
       'aria-label',
       t(pinned ? 'hudChrome.recipeTracker.unpinAria' : 'hudChrome.recipeTracker.pinAria', {
