@@ -478,7 +478,11 @@ const MONOLITHS: MonolithRow[] = [
     // for the Cosmetics window's store seam line and the store window's
     // relocalize arm. The resolved v0.43 batch plus this extraction measures
     // `wc -l < src/ui/hud.ts` at 18348. Exact merged count, zero slack.
-    ceiling: 18348,
+    // LOWERED again to 18346 with the Who tab merge: the private questNumber
+    // wrapper was the bank family's formatCount (src/ui/count_format.ts), so
+    // the coordinator consumes that leaf and pays the one-line openWhoTab dep.
+    // Exact resolved count, zero slack.
+    ceiling: 18346,
     seam: 'pure view core + thin painter on PainterHost (src/ui/CLAUDE.md)',
   },
   {
@@ -1060,7 +1064,10 @@ const MONOLITHS: MonolithRow[] = [
     // rule moved to src/sim/saved_pos_exit.ts (shared with the server character
     // list). Resolved together on the release/v0.43 line: both changes compose,
     // and the merged tree measures 11878. Exact count, zero slack.
-    ceiling: 11878,
+    // LOWERED again to 11871 with the Who tab: abilityNeedsLineOfSight moved
+    // to src/sim/ability_line_of_sight.ts (a pure rule), paying the two-line
+    // inert whoInfo / whoRequest offline arm. Exact resolved count, zero slack.
+    ceiling: 11871,
     seam: 'a sim system module behind SimContext (src/sim/CLAUDE.md)',
   },
   {
@@ -1487,7 +1494,10 @@ const MONOLITHS: MonolithRow[] = [
     // Guild bank gold notices: kept the current branch's already-lowered pin;
     // the extracted dispatch pays for the notice transport without loosening
     // this ratchet.
-    ceiling: 10095,
+    // LOWERED again to 10042 with the Who tab: the /who visibility rule, the
+    // filter and both projections moved to server/who_roster.ts, paying the
+    // new `who` dispatch case. Exact resolved count, zero slack.
+    ceiling: 10042,
     seam: 'a sibling server module; see the hot-path seams in server/CLAUDE.md',
   },
   {
@@ -1632,7 +1642,10 @@ const MONOLITHS: MonolithRow[] = [
     // Main hotfix integration: combined extractions, exact merged count.
     // Lowered 5540 -> 5509: the CharacterSummary wire type moved to
     // src/net/character_summary.ts (re-exported here); exact count, zero headroom.
-    ceiling: 5509,
+    // LOWERED again to 5496 with the Who tab: the social frame's version-skew
+    // normalization moved to net/social_frame_wire.ts, paying the who mirror.
+    // Exact resolved count, zero headroom.
+    ceiling: 5496,
     seam: 'a src/net sibling module (the refactor/net-online split is the template)',
   },
   {

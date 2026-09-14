@@ -239,6 +239,7 @@ import {
 import { ContinentMapPainter } from './continent_map_painter';
 import { type ContinentZoneRegion, continentZoneAt } from './continent_map_view';
 import { formatMinimapCoords } from './coords';
+import { formatCount } from './count_format';
 import { classCrestId } from './crest_icon_art';
 import { hydrateCrestImageFallbacks } from './crest_image_fallback';
 import { DailyRewardsLauncherPoll } from './daily_rewards_launcher_core';
@@ -2391,7 +2392,7 @@ export class Hud {
         questTitle,
         questNarrative,
         objectiveLabel: questObjectiveLabel,
-        number: (value) => this.questNumber(value),
+        number: (value) => formatCount(value),
         progress: (label, current, total) => this.questProgressText(label, current, total),
         suggestedPlayers: (count) => this.questSuggestedPlayersHtml(count),
         money: (copper) => moneyHtml(copper),
@@ -2547,6 +2548,7 @@ export class Hud {
       selectedQuestId: () => this.questlogWindow.selectedQuestId,
       hasQuest: (questId) => this.sim.questLog.has(questId),
       showError: (text) => this.showError(text),
+      openWhoTab: (filter) => this.socialWindow.openWhoTab(filter),
       afterTabShown: (pane) => {
         window.requestAnimationFrame(() => this.chatFollow.scrollToBottomIfPinned(pane));
       },
@@ -4239,8 +4241,8 @@ export class Hud {
     this.chatWindow.clearPendingLinks();
   }
 
-  maybeHandleQuestShareCommand(raw: string): boolean {
-    return this.chatWindow.maybeHandleQuestShareCommand(raw);
+  maybeHandleLocalChatCommand(raw: string): boolean {
+    return this.chatWindow.maybeHandleLocalChatCommand(raw);
   }
 
   activeChatPlaceholder(): string {
@@ -6874,15 +6876,11 @@ export class Hud {
     });
   }
 
-  private questNumber(value: number): string {
-    return formatNumber(value, { maximumFractionDigits: 0 });
-  }
-
   private questProgressText(label: string, current: number, total: number): string {
     return t('questUi.detail.objectiveProgress', {
       label,
-      current: this.questNumber(current),
-      total: this.questNumber(total),
+      current: formatCount(current),
+      total: formatCount(total),
     });
   }
 
@@ -6938,7 +6936,7 @@ export class Hud {
 
   private questSuggestedPlayersHtml(count?: number): string {
     if (!count) return '';
-    return ` <span class="quest-suggested">${esc(t('questUi.log.suggestedPlayers', { count: this.questNumber(count) }))}</span>`;
+    return ` <span class="quest-suggested">${esc(t('questUi.log.suggestedPlayers', { count: formatCount(count) }))}</span>`;
   }
 
   // The {captureFocus, restoreFocus} pair for a painter window. The bridge logic
@@ -10919,8 +10917,8 @@ export class Hud {
     if (region) {
       html += `<div class="tt-quest-req">${esc(
         t('hudChrome.continentMap.levels', {
-          min: this.questNumber(region.levelMin),
-          max: this.questNumber(region.levelMax),
+          min: formatCount(region.levelMin),
+          max: formatCount(region.levelMax),
         }),
       )}</div>`;
     }
