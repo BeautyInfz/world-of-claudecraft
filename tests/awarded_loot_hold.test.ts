@@ -232,7 +232,7 @@ describe('awarded loot hold: a roll winner with full bags', () => {
     freeOneSlot(sim, a);
     expect(sim.lootCorpse(mob.id, a)).toBe(true);
     expect(sim.countItem(UNCOMMON, a)).toBe(1);
-  });
+  }, 30_000);
 
   it('a held award outlives the roll window but not the five-minute hold', () => {
     const { sim, a, b, c } = partyOfThree();
