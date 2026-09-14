@@ -212,6 +212,7 @@ import {
 import { markSpawnIntroSeen, readSpawnIntroSeen } from './game/spawn_intro_seen';
 import { safeStartupGraphicsPreset } from './game/startup_graphics_safety';
 import { shouldClearTargetOnGroundClick } from './game/target_click';
+import { dispatchTargetingAction, targetingInputCallbacks } from './game/targeting_actions';
 import {
   type TeleportCameraArrival,
   teleportCameraArrivalAfterTick,
@@ -1772,10 +1773,9 @@ async function startGame(
   const input = new Input(
     canvas,
     {
-      onTab: () => world.tabTarget(),
-      onTabPrev: () => world.tabTargetPrev(),
-      onTargetFriendly: () => world.targetNearestFriendly(),
-      onCycleFriendly: () => world.friendlyTabTarget(),
+      // The targeting slice (the Tab cycles, the friendly picks, Pet: Mark, the
+      // F-row party hotkeys): one implementation with the pad arm below.
+      ...targetingInputCallbacks(world, hud, settings),
       // Pet bar (Ctrl+1..5 by default): drive the existing IWorld pet commands.
       onPet: (action) => {
         if (action === 'attack') world.petAttack();
@@ -1783,10 +1783,6 @@ async function startGame(
         else if (action === 'stop') world.setPetMode('passive');
         else world.setPetMode(action); // 'defensive' | 'aggressive'
       },
-      // Ctrl+6 by default: select your own pet, the keyboard route to what clicking
-      // the pet frame does (one implementation, on the Hud, which owns the roster
-      // scan that resolves the pet).
-      onTargetPet: () => hud.targetOwnPet(),
       // slot 0 (key 1) is Attack for every class, auto-attack without needing
       // right-click; keys and clicks share the Hud's remappable slot layout
       onAbility: (slot) => hud.castSlot(slot),
@@ -2085,16 +2081,8 @@ async function startGame(
     }
     hud.cancelGroundAim();
     if (dispatchCollectionAction(id, hud)) return;
+    if (dispatchTargetingAction(id, world, hud, settings)) return;
     switch (id) {
-      case 'target':
-        world.tabTarget();
-        break;
-      case 'targetPrev':
-        world.tabTargetPrev();
-        break;
-      case 'targetFriendly':
-        world.targetNearestFriendly();
-        break;
       // Selecting the people you talk to. The sim's friendly cycle answers heal
       // eligibility and so skips every quest giver, which left a pad player with
       // no way to pick one; targetEntity is the seam that already exists for it.
@@ -2109,9 +2097,6 @@ async function startGame(
         if (next !== null) world.targetEntity(next);
         break;
       }
-      case 'targetFriendlyNext':
-        world.friendlyTabTarget();
-        break;
       case 'interact': {
         // The pad reel (the UX pass): mid fishing cast, the interact press
         // answers the bite by re-using the rod (the sim's armed-window arm),
@@ -2207,9 +2192,6 @@ async function startGame(
         break;
       case 'petAggressive':
         world.setPetMode('aggressive');
-        break;
-      case 'targetPet':
-        hud.targetOwnPet();
         break;
       case 'dungeonFinder':
         hud.toggleDungeonFinder();

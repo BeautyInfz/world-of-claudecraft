@@ -1251,7 +1251,11 @@ const MONOLITHS: MonolithRow[] = [
     // (exact wc -l on the merged tree, zero headroom).
     // Lowered to the exact resolved count after the boot-time graphics capture
     // moved into graphics_rebuild_core.captureGraphicsSettingsSnapshot.
-    ceiling: 11315,
+    // The targeting callbacks and the pad targeting arm moved to
+    // src/game/targeting_actions.ts with the party target hotkeys (18 lines
+    // out), re-measured on the merged tree after the release sync: 11303,
+    // zero headroom.
+    ceiling: 11303,
     seam: 'a src/game/ or src/ui/ sibling module; main.ts is a firewall, not a home',
   },
   {
