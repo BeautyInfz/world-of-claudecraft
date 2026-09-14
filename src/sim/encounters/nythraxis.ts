@@ -978,8 +978,9 @@ export function enforceNythraxisDreadCurseSwap(
   boss: Entity,
   ms: NythraxisMechanicState,
 ): void {
-  const held = boss.aggroTargetId !== null ? ctx.entities.get(boss.aggroTargetId) : null;
-  const prior = ms.dreadCurseHolderId !== null ? ctx.entities.get(ms.dreadCurseHolderId) : null;
+  const held = boss.aggroTargetId !== null ? (ctx.entities.get(boss.aggroTargetId) ?? null) : null;
+  const prior =
+    ms.dreadCurseHolderId !== null ? (ctx.entities.get(ms.dreadCurseHolderId) ?? null) : null;
   const priorCanHold =
     prior !== null &&
     !prior.dead &&
