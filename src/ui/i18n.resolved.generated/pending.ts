@@ -9,25 +9,70 @@
 // Reproducibility is checked by tests/i18n_resolved_equivalence.test.ts.
 
 export const pending: Record<string, readonly string[]> = {
-  "es": [],
-  "es_ES": [],
-  "fr_FR": [],
-  "fr_CA": [],
+  "es": [
+    "hudChrome.finder.lootHeroicChance",
+    "hudChrome.finder.lootHeroicMaybe"
+  ],
+  "es_ES": [
+    "hudChrome.finder.lootHeroicChance",
+    "hudChrome.finder.lootHeroicMaybe"
+  ],
+  "fr_FR": [
+    "hudChrome.finder.lootHeroicChance",
+    "hudChrome.finder.lootHeroicMaybe"
+  ],
+  "fr_CA": [
+    "hudChrome.finder.lootHeroicChance",
+    "hudChrome.finder.lootHeroicMaybe"
+  ],
   "en_CA": [],
-  "it_IT": [],
-  "de_DE": [],
+  "it_IT": [
+    "hudChrome.finder.lootHeroicChance",
+    "hudChrome.finder.lootHeroicMaybe"
+  ],
+  "de_DE": [
+    "hudChrome.finder.lootHeroicChance",
+    "hudChrome.finder.lootHeroicMaybe"
+  ],
   "zh_CN": [],
   "zh_TW": [],
   "ko_KR": [],
   "ja_JP": [],
-  "pt_BR": [],
+  "pt_BR": [
+    "hudChrome.finder.lootHeroicChance",
+    "hudChrome.finder.lootHeroicMaybe"
+  ],
   "ru_RU": [],
-  "cs_CZ": [],
-  "nl_NL": [],
-  "pl_PL": [],
-  "id_ID": [],
-  "tr_TR": [],
-  "sv_SE": [],
-  "vi_VN": [],
-  "da_DK": []
+  "cs_CZ": [
+    "hudChrome.finder.lootHeroicChance",
+    "hudChrome.finder.lootHeroicMaybe"
+  ],
+  "nl_NL": [
+    "hudChrome.finder.lootHeroicChance",
+    "hudChrome.finder.lootHeroicMaybe"
+  ],
+  "pl_PL": [
+    "hudChrome.finder.lootHeroicChance",
+    "hudChrome.finder.lootHeroicMaybe"
+  ],
+  "id_ID": [
+    "hudChrome.finder.lootHeroicChance",
+    "hudChrome.finder.lootHeroicMaybe"
+  ],
+  "tr_TR": [
+    "hudChrome.finder.lootHeroicChance",
+    "hudChrome.finder.lootHeroicMaybe"
+  ],
+  "sv_SE": [
+    "hudChrome.finder.lootHeroicChance",
+    "hudChrome.finder.lootHeroicMaybe"
+  ],
+  "vi_VN": [
+    "hudChrome.finder.lootHeroicChance",
+    "hudChrome.finder.lootHeroicMaybe"
+  ],
+  "da_DK": [
+    "hudChrome.finder.lootHeroicChance",
+    "hudChrome.finder.lootHeroicMaybe"
+  ]
 };

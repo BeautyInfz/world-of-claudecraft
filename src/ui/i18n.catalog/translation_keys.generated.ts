@@ -10023,6 +10023,8 @@ export type TranslationKeyFlat =
   | 'hudChrome.finder.lootChance'
   | 'hudChrome.finder.lootGuaranteed'
   | 'hudChrome.finder.lootHeroic'
+  | 'hudChrome.finder.lootHeroicChance'
+  | 'hudChrome.finder.lootHeroicMaybe'
   | 'hudChrome.finder.lootMaybe'
   | 'hudChrome.finder.mech.ancestral_sap'
   | 'hudChrome.finder.mech.anvils_decree'
