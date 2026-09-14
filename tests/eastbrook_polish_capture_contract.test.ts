@@ -692,8 +692,10 @@ interface AttributionTargetFixture {
 // Re-minted after extracting the remote-body standing-surface sample and
 // terrain-lean stencil out of renderer.ts, and after adding both sampler
 // modules as explicit provenance leaves. No capture was retaken.
+// Re-minted for the v0.43 release repair after the merged renderer sampling
+// imports and frame-cap probe cleanup moved renderer.ts. No capture was retaken.
 const PINNED_POLISH_COMPOSITE_FINGERPRINT =
-  '5d89e436ab8829accf48758615432ce84f57c9ba069ed821bbe02106eecf9655';
+  'fd9a7c26624531cfcf3ce1fc9a5694b82a4ff269f6fa0795ac9e0e2603b9d720';
 
 function validPolishAttributionTargets(): AttributionTargetFixture[] {
   return [

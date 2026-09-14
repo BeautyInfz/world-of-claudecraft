@@ -1386,10 +1386,12 @@ const ACCEPTED_POLISH_V2_METADATA_PATH = path.join(REPO_ROOT, POLISH_SEAL_PATH);
 // Re-minted after extracting the remote-body standing-surface sample and the
 // terrain-lean stencil out of renderer.ts, and after adding both sampler
 // modules as explicit provenance leaves. No capture was retaken.
+// Re-minted for the v0.43 release repair after the merged renderer sampling
+// imports and frame-cap probe cleanup moved renderer.ts. No capture was retaken.
 const ACCEPTED_POLISH_V2_METADATA_SHA256 =
-  '7e5e3c3bbf1f873775a69e61f61a1105286c7f1f33f3fb9ba0a30adaf2eb6364';
+  'f4508386cf9af9bcb4514d146248485012874243dcda92fa65e1731a01944050';
 const ACCEPTED_POLISH_V2_COMPOSITE_PROVENANCE =
-  '5d89e436ab8829accf48758615432ce84f57c9ba069ed821bbe02106eecf9655';
+  'fd9a7c26624531cfcf3ce1fc9a5694b82a4ff269f6fa0795ac9e0e2603b9d720';
 const ACCEPTED_POLISH_V2_METADATA = readJsonFile<CaptureMetadata>(ACCEPTED_POLISH_V2_METADATA_PATH);
 const ACCEPTED_POLISH_V2_PROVENANCE = ACCEPTED_POLISH_V2_METADATA.polishProvenance;
 const ACCEPTED_POLISH_V2_TOWN_CONTRACT = ACCEPTED_POLISH_V2_METADATA.records[0]?.townContract;
@@ -2763,7 +2765,10 @@ describe('Eastbrook polish performance and contact evidence', () => {
       // Remote-body ground-sample extraction (entity_ground_sample.ts and
       // entity_ground_sample_core.ts): recomputed LAST over the swept evidence.
       // No capture was retaken.
-    ).toBe('8b98a02b44cab34d719153f96d3b5b7e7f2903a639548cea4272a7980339f516');
+      // v0.43 release repair after the merged renderer sampling imports and
+      // frame-cap probe cleanup: recomputed LAST over the swept evidence. No
+      // capture was retaken.
+    ).toBe('6e2542bf9279f8478c7931444e5d4e402a44c89547697c361af76463818657ab');
   });
 
   it('binds every historical after record to its accepted source and asset provenance', () => {
