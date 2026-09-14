@@ -1,4 +1,7 @@
-import { HEALING_TRAINING_GROUND_SPAWNS } from './content/healing_training';
+import {
+  HEALING_TRAINING_ENTITY_IDS,
+  HEALING_TRAINING_GROUND_SPAWNS,
+} from './content/healing_training';
 import { HUB_SPARRING_MASTER_ID } from './content/practice_dummies';
 import { MOBS } from './data';
 import { createMob } from './entity';
@@ -8,7 +11,7 @@ import type { WorldContent } from './types';
 
 /**
  * Spawns the Eastbrook Healing Training Ground allies.
- * Trailing spawn consumes only trailing IDs, preserving determinism and
+ * Uses reserved high-range ids, preserving the ordinary nextId stream and
  * byte-identical world generation up to the practice entities.
  */
 export function healingTrainingGroundEnabled(world: WorldContent): boolean {
@@ -20,8 +23,10 @@ export function spawnHealingTrainingGround(ctx: SimContext, world: WorldContent)
   for (const spawn of HEALING_TRAINING_GROUND_SPAWNS) {
     const template = MOBS[spawn.mobId];
     if (!template) continue;
+    const entityId = HEALING_TRAINING_ENTITY_IDS[spawn.mobId];
+    if (ctx.entities.has(entityId)) continue;
     const dummy = createMob(
-      ctx.nextId++,
+      entityId,
       template,
       template.maxLevel,
       ctx.groundPos(spawn.pos.x, spawn.pos.z),

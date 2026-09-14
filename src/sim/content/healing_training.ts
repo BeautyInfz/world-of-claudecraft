@@ -24,6 +24,15 @@ export const HEALING_DUMMY_IDS = [
   HEALING_DUMMY_RANGER_ID,
 ] as const;
 
+/** Reserved entity ids outside the ordinary nextId stream. */
+export const HEALING_TRAINING_ENTITY_IDS = {
+  [HEALING_DUMMY_TANK_ID]: 1_000_000_010,
+  [HEALING_DUMMY_SOLDIER_ID]: 1_000_000_011,
+  [HEALING_DUMMY_SCOUT_ID]: 1_000_000_012,
+  [HEALING_DUMMY_CASTER_ID]: 1_000_000_013,
+  [HEALING_DUMMY_RANGER_ID]: 1_000_000_014,
+} as const satisfies Record<(typeof HEALING_DUMMY_IDS)[number], number>;
+
 const DUMMY_BASE = {
   family: 'humanoid',
   dmgBase: 0,

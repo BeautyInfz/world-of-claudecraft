@@ -4,6 +4,7 @@ import {
   HEALING_DUMMY_IDS,
   HEALING_DUMMY_SCOUT_ID,
   HEALING_DUMMY_TANK_ID,
+  HEALING_TRAINING_ENTITY_IDS,
   HEALING_TRAINING_GROUND_SPAWNS,
 } from '../src/sim/content/healing_training';
 import { BUILTIN_WORLD, MOBS } from '../src/sim/data';
@@ -83,6 +84,7 @@ describe('Healing Training Ground: templates and placement', () => {
       expect(dummy.level).toBe(20);
       expect(dummy.hostile).toBe(false);
       expect(dummy.friendlyPracticeTarget).toBe(true);
+      expect(dummy.id).toBe(HEALING_TRAINING_ENTITY_IDS[spawn.mobId]);
       expect(dummy.maxHp).toBeGreaterThanOrEqual(40000);
 
       const template = MOBS[spawn.mobId];

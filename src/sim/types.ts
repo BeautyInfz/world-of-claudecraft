@@ -8076,13 +8076,13 @@ export const EASTBROOK_NOTICEBOARD_NATIVE_DIMENSIONS = Object.freeze({
 } as const);
 export const EASTBROOK_NOTICEBOARD_INTERACTION_RADIUS = 4 as const;
 // Static world services use their own namespace above the sequential allocator
-// and the reserved 1_000_000_000/1_000_000_001/1_000_000_002 singleton NPC ids
-// (the Vale Cup groundskeeper, FURY in Eastbrook, and Warmarshal Draven Kole in
-// Highwatch). A singleton NPC takes a reserved id AND `dynamic: true` so the
-// generic world-init loop skips it: that loop allocates ids by iterating the
-// merged NPC table in insertion order, so a plain insertion would shift the id
-// of every NPC, camp mob and object created after it, which the parity goldens
-// pin per frame.
+// and reserved 1_000_000_x singleton ids (the Vale Cup groundskeeper, FURY in
+// Eastbrook, Warmarshal Draven Kole in Highwatch, the Crucible vendor, and
+// authored practice dummies). A singleton NPC takes a reserved id AND
+// `dynamic: true` so the generic world-init loop skips it: that loop allocates
+// ids by iterating the merged NPC table in insertion order, so a plain
+// insertion would shift the id of every NPC, camp mob and object created after
+// it, which the parity goldens pin per frame.
 export const STATIC_WORLD_SERVICE_ENTITY_ID_MIN = 2_000_000_001;
 
 /** The one static, interactable noticeboard contract supported by every host. */
