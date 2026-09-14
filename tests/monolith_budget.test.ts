@@ -1284,7 +1284,13 @@ const MONOLITHS: MonolithRow[] = [
     // in-world) moved to src/ui/charselect_hints.ts. Resolved together on the
     // release/v0.43 line: both changes compose, and the merged tree measures
     // 11300. Exact count, zero headroom.
-    ceiling: 11300,
+    // LOWERED 11321 -> 11313 when the pet-bar routing (keyboard onPet and
+    // the five controller pet cases) moved into src/game/pet_commands.ts,
+    // which also paid for the Hide Interface wiring (interface_visibility_*).
+    // Resolved together on the release/v0.43 line with the targeting, roster
+    // hint, pet command, and Hide Interface extractions: `wc -l < src/main.ts`
+    // measures 11292. Exact count, zero headroom.
+    ceiling: 11292,
     seam: 'a src/game/ or src/ui/ sibling module; main.ts is a firewall, not a home',
   },
   {
