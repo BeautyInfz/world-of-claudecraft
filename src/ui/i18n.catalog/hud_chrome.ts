@@ -4344,7 +4344,7 @@ export const hudChromeStrings = {
     duskfireClaim: 'Death grants {value} Wrack',
     pyreGuardian:
       'Generates {ruin} Wrack every {ruinInterval} sec and deals {damage} Fire damage within {radius} yd every {damageInterval} sec',
-    perfectMoment: 'Aether Darts does not consume Arcane Charges and deals 20% increased damage',
+    perfectMoment: 'Aether Darts does not consume Arcane Charges',
     scale: 'Size increased by {pct}%',
     jump: 'Jump height increased by {pct}%',
     // Localized damage-school names spliced into {school} above.
@@ -6836,15 +6836,15 @@ export const hudChromeStrings = {
     attunedZoneLine: '{name} has attuned as {archetype}!',
     attunedBanner: 'Attuned: {title}',
     // The one-time first-tier tutorial panel (profession_tutorial_view.ts),
-    // fired the first time any craft crosses tier 1. Explains the tier cap that
-    // just bit, the craft-wheel identity concept, and that masters offer
+    // fired the first time any profession crosses tier 1. Explains the tier cap
+    // that just bit, the craft-wheel identity concept, and that masters offer
     // attunement quests. {skill} is the first-tier threshold.
     tierTutorial: {
       title: 'Your First Tier',
       tierCap:
-        'A craft reaches its first tier at {skill} skill, and each tier improves what it can make. But a craft only climbs past rare work once it is one of your two majors.',
+        'A profession reaches its first tier at {skill} skill, and each tier improves what it yields or lets you make. Among your craft professions specifically, though, a craft only climbs past rare work once it is one of your two majors.',
       radar:
-        'Your professions form a wheel. Attune to an adjacent pair and those two crafts become uncapped majors, one craft across the wheel becomes a rare-capped hobby, and the rest lie dormant: their knowledge kept, but capped at common until you take them up again.',
+        'Your craft professions form a wheel. Attune to an adjacent pair and those two crafts become uncapped majors, one craft across the wheel becomes a rare-capped hobby, and the rest lie dormant: their knowledge kept, but capped at common until you take them up again.',
       masters:
         'Craft masters in the towns offer attunement quests. Visit one to choose your pair whenever you are ready. Nothing you have learned is ever lost.',
       dismiss: 'Got it',

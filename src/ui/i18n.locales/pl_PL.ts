@@ -3482,10 +3482,6 @@ export const pl_PL: Partial<Record<TranslationKey, string>> = {
   'hudChrome.crafting.tierTutorial.dismiss': 'Rozumiem',
   'hudChrome.crafting.tierTutorial.masters':
     'Mistrzowie rzemiosła w miastach oferują zadania dostrojenia. Odwiedź jednego, by wybrać swoją parę, gdy będziesz gotowy. Niczego, czego się nauczyłeś, nigdy nie tracisz.',
-  'hudChrome.crafting.tierTutorial.radar':
-    'Twoje profesje tworzą koło. Dostrojenie do sąsiadującej pary sprawia, że te dwa rzemiosła stają się nieograniczonymi specjalizacjami, jedno rzemiosło po drugiej stronie koła staje się hobby z pułapem rzadkości, a reszta leży uśpiona: wiedza zachowana, lecz ograniczona do pospolitej, dopóki ponownie jej nie podejmiesz.',
-  'hudChrome.crafting.tierTutorial.tierCap':
-    'Rzemiosło osiąga swój pierwszy poziom przy umiejętności {skill}, a każdy poziom poprawia to, co może wytworzyć. Ale rzemiosło wspina się poza rzadką pracę tylko wtedy, gdy jest jedną z twoich dwóch specjalizacji.',
   'hudChrome.crafting.tierTutorial.title': 'Twój Pierwszy Poziom',
   'hudChrome.crafting.trendNudge':
     'Twoje ręce skłaniają się ku {archetype}. Jego dostrojenie czeka u {master}.',

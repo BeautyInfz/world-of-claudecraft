@@ -12913,10 +12913,6 @@ export const tr_TR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.crafting.tierTutorial.dismiss': 'Anladım',
   'hudChrome.crafting.tierTutorial.masters':
     'Kasabalardaki zanaat ustaları uyum görevleri sunar. Hazır olduğunuzda çiftinizi seçmek için birini ziyaret edin. Öğrendiğiniz hiçbir şey asla kaybolmaz.',
-  'hudChrome.crafting.tierTutorial.radar':
-    'Meslekleriniz bir tekerlek oluşturur. Bitişik bir çifte uyumlanın ve bu iki zanaat sınırsız ana dal olur; tekerin karşısındaki bir zanaat nadir sınırlı hobi olur ve gerisini dormant bırakır: bilgileri korunur ama yeniden alana kadar sıradan seviyede sınırlı kalır.',
-  'hudChrome.crafting.tierTutorial.tierCap':
-    'Bir zanaat ilk kademesine {skill} beceride ulaşır ve her kademe yapabileceklerini geliştirir. Ama bir zanaat, yalnızca iki ana dalınızdan biri olduğunda nadir işin ötesine geçer.',
   'hudChrome.crafting.tierTutorial.title': 'İlk Kademenz',
   'hudChrome.crafting.tierUpToast': '{craft}, {tier} seviyesine yükseldi!',
   'hudChrome.crafting.trendNudge':

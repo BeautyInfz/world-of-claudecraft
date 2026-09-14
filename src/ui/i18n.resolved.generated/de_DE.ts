@@ -4558,8 +4558,8 @@ export const de_DE: EnTranslations = {
       "attunedBanner": "Abgestimmt: {title}",
       "tierTutorial": {
         "title": "Deine erste Stufe",
-        "tierCap": "Ein Handwerk erreicht seine erste Stufe bei {skill} Fertigkeit, und jede Stufe verbessert, was es herstellen kann. Aber ein Handwerk steigt nur über seltene Arbeit hinaus, wenn es einer deiner zwei Hauptberufe ist.",
-        "radar": "Deine Berufe bilden ein Rad. Stimme dich auf ein benachbartes Paar ab und diese zwei Handwerke werden unbegrenzte Hauptberufe, ein Handwerk gegenüber auf dem Rad wird ein auf Selten begrenztes Hobby, und der Rest liegt ruhend: ihr Wissen bewahrt, aber auf Gewöhnlich begrenzt, bis du sie wieder aufnimmst.",
+        "tierCap": "Ein Beruf erreicht seine erste Stufe bei {skill} Fertigkeit, und jede Stufe verbessert, was er hervorbringt oder herstellen lässt. Unter deinen Handwerksberufen steigt ein Handwerk jedoch erst über seltene Arbeiten hinaus, wenn es einer deiner zwei Hauptberufe ist.",
+        "radar": "Deine Handwerksberufe bilden ein Rad. Stimme dich auf ein benachbartes Paar ab und diese zwei Handwerke werden unbegrenzte Hauptberufe, ein Handwerk gegenüber auf dem Rad wird ein auf Selten begrenztes Hobby, und der Rest ruht: ihr Wissen bleibt erhalten, ist aber auf Gewöhnlich begrenzt, bis du sie wieder aufnimmst.",
         "masters": "Handwerksmeister in den Städten bieten Abstimmungsquests an. Besuche einen, um dein Paar zu wählen, wann immer du bereit bist. Nichts, was du gelernt hast, geht je verloren.",
         "dismiss": "Verstanden"
       },

@@ -4300,6 +4300,11 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'entities.mobs.heroic_boss_dummy.name': 'ヒロイックボスダミー',
   'entities.mobs.hub_training_dummy.name': '訓練用ダミー',
   'entities.mobs.hub_healing_dummy.name': '治療用ダミー',
+  'entities.mobs.healing_dummy_tank.name': '負傷した前衛ダミー',
+  'entities.mobs.healing_dummy_soldier.name': '負傷した兵士ダミー',
+  'entities.mobs.healing_dummy_scout.name': '重傷の斥候ダミー',
+  'entities.mobs.healing_dummy_caster.name': '傷ついた術者ダミー',
+  'entities.mobs.healing_dummy_ranger.name': '打ちのめされたレンジャーダミー',
   'entities.mobs.ridge_stalker.name': '尾根の追跡者',
   'entities.mobs.deeprock_kobold.name': 'ディープロックの坑夫',
   'entities.mobs.thornpeak_ogre.name': 'ソーンピーク・オーガ',
@@ -10815,9 +10820,9 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'hudChrome.crafting.attunedBanner': '調律完了：{title}',
   'hudChrome.crafting.tierTutorial.title': '最初のティア',
   'hudChrome.crafting.tierTutorial.tierCap':
-    '技は技能 {skill} で最初のティアに達し、ティアが上がるごとに作れる物が向上します。ただし技がレアを超える作品を作れるのは、それがあなたの二つの主専攻の一つである場合だけです。',
+    '職能は技能 {skill} で最初のティアに達し、ティアが上がるごとに得られるものや作れるものが向上します。ただし製作系の職能に限っては、レアを超える作品へ進めるのは、それがあなたの二つの主専攻の一つになってからです。',
   'hudChrome.crafting.tierTutorial.radar':
-    'あなたの専門は輪を成します。隣り合う一対に調律すると、その二つの技は上限のない主専攻になり、輪の反対側の一つの技はレア上限の趣味になり、残りは休眠します。その知識は保持されますが、再び手に取るまではコモン上限です。',
+    'あなたの製作系職能は輪を成します。隣り合う一対に調律すると、その二つの技は上限のない主専攻になり、輪の反対側の一つの技はレア上限の趣味になり、残りは休眠します。その知識は保持されますが、再び手に取るまではコモン上限です。',
   'hudChrome.crafting.tierTutorial.masters':
     '町の工芸の師匠が調律の依頼を出しています。準備ができたら訪ねて、あなたの組み合わせを選びましょう。学んだことが失われることは決してありません。',
   'hudChrome.crafting.tierTutorial.dismiss': '了解',

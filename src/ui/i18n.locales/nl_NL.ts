@@ -12934,10 +12934,6 @@ export const nl_NL: Partial<Record<TranslationKey, string>> = {
   'hudChrome.crafting.tierTutorial.dismiss': 'Begrepen',
   'hudChrome.crafting.tierTutorial.masters':
     'Ambachtsmeesters in de steden bieden afstemmingsopdrachten aan. Bezoek er een om je paar te kiezen wanneer je er klaar voor bent. Niets wat je hebt geleerd gaat ooit verloren.',
-  'hudChrome.crafting.tierTutorial.radar':
-    'Je beroepen vormen een wiel. Stem af op een naburig paar en die twee ambachten worden onbegrensde hoofdvakken; een ambacht aan de andere kant van het wiel wordt een zeldzaam-begrensde liefhebberij; de rest ligt slapend: hun kennis bewaard, maar begrensd op gewoon totdat je ze weer oppakt.',
-  'hudChrome.crafting.tierTutorial.tierCap':
-    'Een ambacht bereikt zijn eerste niveau bij {skill} vaardigheid, en elk niveau verbetert wat het kan maken. Maar een ambacht klimt pas voorbij zeldzaam werk als het een van je twee hoofdvakken is.',
   'hudChrome.crafting.tierTutorial.title': 'Je Eerste Niveau',
   'hudChrome.crafting.tierUpToast': '{craft} is doorgegaan naar niveau {tier}!',
   'hudChrome.crafting.trendNudge':

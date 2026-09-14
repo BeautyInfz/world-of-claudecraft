@@ -12733,10 +12733,6 @@ export const da_DK: Partial<Record<TranslationKey, string>> = {
   'hudChrome.crafting.tierTutorial.dismiss': 'Forstået',
   'hudChrome.crafting.tierTutorial.masters':
     'Håndværksmestre i byerne tilbyder indstillingsquests. Besøg en for at vælge dit par, når du er klar. Intet du har lært, går nogensinde tabt.',
-  'hudChrome.crafting.tierTutorial.radar':
-    'Dine erhverv danner et hjul. Indstil dig på et nabobpar, og de to håndværk bliver ubegrænsede hovedfag, et håndværk på den anden side af hjulet bliver et sjældent-begrænset hobby, og resten er inaktive: viden bevaret, men begrænset til almindelig, indtil du tager dem op igen.',
-  'hudChrome.crafting.tierTutorial.tierCap':
-    'Et håndværk når sit første niveau ved {skill} færdighed, og hvert niveau forbedrer, hvad det kan lave. Men et håndværk kan kun klatre forbi sjældent arbejde, når det er et af dine to hovedfag.',
   'hudChrome.crafting.tierTutorial.title': 'Dit første niveau',
   'hudChrome.crafting.tierUpToast': '{craft} avanceret til niveau {tier}!',
   'hudChrome.crafting.trendNudge':

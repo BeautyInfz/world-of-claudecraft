@@ -4558,8 +4558,8 @@ export const ko_KR: EnTranslations = {
       "attunedBanner": "조율 완료: {title}",
       "tierTutorial": {
         "title": "첫 티어",
-        "tierCap": "기술은 숙련도 {skill}에서 첫 티어에 도달하며, 티어가 오를수록 만들 수 있는 것이 좋아집니다. 하지만 기술이 희귀 이상의 작품을 만들 수 있는 것은 그것이 당신의 두 주 전공 중 하나일 때뿐입니다.",
-        "radar": "당신의 전문 기술은 바퀴를 이룹니다. 인접한 한 쌍에 조율하면 그 두 기술은 상한 없는 주 전공이 되고, 바퀴 반대편의 한 기술은 희귀 상한의 취미가 되며, 나머지는 비활성 상태가 됩니다. 그 지식은 유지되지만 다시 택하기 전까지는 일반 상한이 적용됩니다.",
+        "tierCap": "전문 기술은 숙련도 {skill}에서 첫 티어에 도달하며, 티어가 오를수록 얻는 산출물이나 만들 수 있는 것이 좋아집니다. 다만 제작 전문 기술의 경우, 그 기술이 당신의 두 주 전공 중 하나가 되어야 희귀 등급을 넘어서는 작업으로 올라갈 수 있습니다.",
+        "radar": "당신의 제작 전문 기술은 바퀴를 이룹니다. 인접한 한 쌍에 조율하면 그 두 기술은 상한 없는 주 전공이 되고, 바퀴 반대편의 한 기술은 희귀 상한의 취미가 되며, 나머지는 비활성 상태가 됩니다. 그 지식은 유지되지만 다시 택하기 전까지는 일반 상한이 적용됩니다.",
         "masters": "마을의 공예 명인들이 조율 임무를 제공합니다. 준비가 되면 찾아가 당신의 조합을 선택하세요. 배운 것은 결코 사라지지 않습니다.",
         "dismiss": "알겠습니다"
       },
@@ -16535,19 +16535,19 @@ export const ko_KR: EnTranslations = {
         "name": "치유용 허수아비"
       },
       "healing_dummy_tank": {
-        "name": "Injured Vanguard Dummy"
+        "name": "부상당한 선봉 허수아비"
       },
       "healing_dummy_soldier": {
-        "name": "Injured Soldier Dummy"
+        "name": "부상당한 병사 허수아비"
       },
       "healing_dummy_scout": {
-        "name": "Critical Scout Dummy"
+        "name": "위급한 정찰병 허수아비"
       },
       "healing_dummy_caster": {
-        "name": "Wounded Spellcaster Dummy"
+        "name": "상처 입은 주문술사 허수아비"
       },
       "healing_dummy_ranger": {
-        "name": "Battered Ranger Dummy"
+        "name": "얻어맞은 순찰자 허수아비"
       },
       "ridge_stalker": {
         "name": "산등성이 추적자"

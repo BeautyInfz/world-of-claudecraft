@@ -3526,8 +3526,7 @@ export const es: Partial<Record<TranslationKey, string>> = {
   'hudChrome.auraEffect.duskfireClaim': 'Al morir, otorga {value} de Ruina',
   'hudChrome.auraEffect.pyreGuardian':
     'Genera {ruin} de Ruina cada {ruinInterval} s e inflige {damage} de daño de Fuego en {radius} m cada {damageInterval} s',
-  'hudChrome.auraEffect.perfectMoment':
-    'Dardos de éter no consume cargas Arcanas y su daño aumenta un 20%',
+  'hudChrome.auraEffect.perfectMoment': 'Dardos de éter no consume cargas Arcanas',
   'hudChrome.auraEffect.elementalConvergencePrimed':
     'Tu próximo hechizo de la otra escuela elemental otorga Convergencia Elemental',
   'hudChrome.auraEffect.formFireball':
@@ -12538,7 +12537,7 @@ export const es: Partial<Record<TranslationKey, string>> = {
     'Marca a un aliado con el eco de un momento más sano y repara {damage} de salud al instante. Durante {duration} s, lo sana un {echoSinglePct}% de tu otro daño Arcano a un objetivo y un {echoAreaPct}% de tu daño Arcano de área. Oleada de éter y Dardos de éter lo sanan en su lugar un {echoDriverPct}% del daño que infligen.',
   'entities.abilities.perfect_moment.name': 'Momento perfecto',
   'entities.abilities.perfect_moment.description':
-    'Obtienes al instante 4 cargas Arcanas y durante 10 s los Dardos de éter no las consumen y su daño aumenta un 20%. (Cronomancia)',
+    'Obtienes al instante 4 cargas Arcanas y durante 10 s los Dardos de éter no las consumen. (Cronomancia)',
   'entities.abilities.aspect_of_the_wild.description':
     'Inspira a los aliados en un radio de 30 m con fuerza salvaje, aumentando su poder de ataque en 45 y su velocidad de ataque un 5% durante 5 min. (talento de Cazador)',
   'entities.abilities.avatar.name': 'Avatar de Guerra',
@@ -13492,10 +13491,6 @@ export const es: Partial<Record<TranslationKey, string>> = {
   'hudChrome.crafting.tierTutorial.dismiss': 'Entendido',
   'hudChrome.crafting.tierTutorial.masters':
     'Los maestros artesanos de los pueblos ofrecen misiones de sintonización. Visita uno para elegir tu camino.',
-  'hudChrome.crafting.tierTutorial.radar':
-    'Tus profesiones forman una rueda. Sintonízate con un par adyacente y esos dos oficios podrán superar el trabajo raro.',
-  'hudChrome.crafting.tierTutorial.tierCap':
-    'Un oficio alcanza su primer nivel con {skill} de habilidad, y cada nivel mejora lo que puede producir.',
   'hudChrome.crafting.tierTutorial.title': 'Tu primer nivel',
   'hudChrome.crafting.trendNudge':
     'Tus manos se inclinan hacia el {archetype}. Su sintonización te espera con {master}.',

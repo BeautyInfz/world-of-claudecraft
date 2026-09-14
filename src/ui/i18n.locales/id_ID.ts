@@ -13037,10 +13037,6 @@ export const id_ID: Partial<Record<TranslationKey, string>> = {
   'hudChrome.crafting.tierTutorial.dismiss': 'Mengerti',
   'hudChrome.crafting.tierTutorial.masters':
     'Para master kerajinan di kota menawarkan misi penyelarasan. Kunjungi salah satu untuk memilih pasanganmu kapan pun kamu siap. Tidak ada yang pernah kamu pelajari yang hilang.',
-  'hudChrome.crafting.tierTutorial.radar':
-    'Profesimu membentuk sebuah roda. Selaraskan ke pasangan yang berdekatan dan dua kerajinan itu menjadi bidang utama tanpa batas, satu kerajinan di seberang roda menjadi hobi terbatas langka, dan sisanya terbengkalai: pengetahuannya tersimpan, tetapi terbatas di umum sampai kamu mengambilnya kembali.',
-  'hudChrome.crafting.tierTutorial.tierCap':
-    'Sebuah kerajinan mencapai tingkat pertamanya pada keahlian {skill}, dan setiap tingkat meningkatkan apa yang bisa dibuatnya. Tetapi sebuah kerajinan hanya naik melampaui pekerjaan langka setelah menjadi salah satu dari dua bidang utamamu.',
   'hudChrome.crafting.tierTutorial.title': 'Tingkat Pertamamu',
   'hudChrome.crafting.tierUpToast': '{craft} maju ke tingkat {tier}!',
   'hudChrome.crafting.trendNudge':

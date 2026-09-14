@@ -13225,10 +13225,6 @@ export const it_IT: Partial<Record<TranslationKey, string>> = {
   'hudChrome.crafting.tierTutorial.dismiss': 'Capito',
   'hudChrome.crafting.tierTutorial.masters':
     'I maestri artigiani nelle citta offrono missioni di sintonizzazione. Visita uno quando sei pronto a scegliere la tua coppia. Niente di cio che hai imparato va mai perduto.',
-  'hudChrome.crafting.tierTutorial.radar':
-    "Le tue professioni formano una ruota. Sintonizzati a una coppia adiacente e quei due mestieri diventano specializzazioni principali senza limiti, un mestiere dall'altra parte della ruota diventa un passatempo con limite raro, e gli altri rimangono dormienti: la loro conoscenza e conservata, ma limitata al comune finche non li riprendi.",
-  'hudChrome.crafting.tierTutorial.tierCap':
-    'Un mestiere raggiunge il suo primo livello a {skill} di competenza, e ogni livello migliora cio che puo produrre. Ma un mestiere sale oltre il lavoro raro solo quando e una delle tue due specializzazioni principali.',
   'hudChrome.crafting.tierTutorial.title': 'Il tuo primo livello',
   'hudChrome.crafting.trendNudge':
     'Le tue mani tendono verso {archetype}. La sua sintonizzazione attende con {master}.',

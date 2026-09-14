@@ -12971,10 +12971,6 @@ export const vi_VN: Partial<Record<TranslationKey, string>> = {
   'hudChrome.crafting.tierTutorial.dismiss': 'Đã hiểu',
   'hudChrome.crafting.tierTutorial.masters':
     'Các bậc thầy thủ công trong thị trấn cung cấp nhiệm vụ thụ ngộ. Hãy thăm một người để chọn đôi khi bạn sẵn sàng. Những gì bạn đã học sẽ không bao giờ mất.',
-  'hudChrome.crafting.tierTutorial.radar':
-    'Các nghề thủ công của bạn tạo thành một bánh xe. Hãy thụ ngộ với một đôi lân cận và hai nghề đó trở thành chuyên ngành không giới hạn, một nghề đối diện trên bánh xe trở thành sở thích bị giới hạn ở mức hiếm.',
-  'hudChrome.crafting.tierTutorial.tierCap':
-    'Một nghề thủ công đạt bậc đầu tiên ở kỹ năng {skill}, và mỗi bậc cải thiện những gì nó có thể làm. Nhưng một nghề chỉ vượt qua công việc hiếm khi nó là một trong những chuyên ngành của bạn.',
   'hudChrome.crafting.tierTutorial.title': 'Bậc Đầu Tiên Của Bạn',
   'hudChrome.crafting.trendNudge':
     'Đôi bàn tay của bạn đang nghiêng về {archetype}. Sự thụ ngộ của nó đang chờ với {master}.',

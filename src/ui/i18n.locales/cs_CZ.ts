@@ -6938,10 +6938,6 @@ export const cs_CZ: Partial<Record<TranslationKey, string>> = {
   'hudChrome.crafting.tierTutorial.dismiss': 'Rozumím',
   'hudChrome.crafting.tierTutorial.masters':
     'Mistři řemesel ve městech nabízejí nalaďovací úkoly. Navstiv jednoho a kdykoli budeš připraven(a), zvol si svůj pár. Nic, co ses naučil(a), není nikdy ztraceno.',
-  'hudChrome.crafting.tierTutorial.radar':
-    'Tvoje profese tvoří kolo. Nalaď se na sousední pár a tato dvě řemesla se stanou neomezenými hlavními obory, jedno řemeslo naproti na kole se stane koníčkem omezeným na vzácné, a ostatní leží dočasně neaktivní: jejich znalosti zachovány, ale omezeny na běžné, dokud je znovu nepoužiješ.',
-  'hudChrome.crafting.tierTutorial.tierCap':
-    'Řemeslo dosáhne své první úrovně při dovednosti {skill} a každá úroveň zlepšuje, co dokáže vyrábět. Ale řemeslo překoná vzácnou práci jen tehdy, když je jedním z tvých dvou hlavních oborů.',
   'hudChrome.crafting.tierTutorial.title': 'Tvoje první úroveň',
   'hudChrome.crafting.title': 'Výroba',
   'hudChrome.crafting.trendNudge':

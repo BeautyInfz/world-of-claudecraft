@@ -4558,8 +4558,8 @@ export const fr_FR: EnTranslations = {
       "attunedBanner": "Harmonisé : {title}",
       "tierTutorial": {
         "title": "Votre premier palier",
-        "tierCap": "Un métier atteint son premier palier à {skill} de compétence, et chaque palier améliore ce qu'il peut produire. Mais un métier ne dépasse le travail rare qu'une fois qu'il est l'une de vos deux majeures.",
-        "radar": "Vos professions forment une roue. Harmonisez-vous à une paire adjacente et ces deux métiers deviennent des majeures sans plafond, le métier opposé sur la roue devient un passe-temps plafonné au rare, et les autres restent dormants : leur savoir conservé, mais plafonné au commun jusqu'à ce que vous les repreniez.",
+        "tierCap": "Une profession atteint son premier palier à {skill} de compétence, et chaque palier améliore ce qu'elle produit ou vous permet de fabriquer. Parmi vos professions d'artisanat précisément, cependant, un métier ne dépasse le travail rare qu'une fois qu'il fait partie de vos deux majeures.",
+        "radar": "Vos professions d'artisanat forment une roue. Harmonisez-vous à une paire adjacente et ces deux métiers deviennent des majeures sans plafond, le métier opposé sur la roue devient un passe-temps plafonné au rare, et les autres restent dormants : leur savoir est conservé, mais plafonné au commun jusqu'à ce que vous les repreniez.",
         "masters": "Les maîtres des métiers en ville proposent des quêtes d'harmonisation. Rendez-leur visite pour choisir votre paire quand vous êtes prêt. Rien de ce que vous avez appris n'est jamais perdu.",
         "dismiss": "Compris"
       },

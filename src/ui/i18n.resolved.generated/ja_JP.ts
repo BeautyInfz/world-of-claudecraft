@@ -4558,8 +4558,8 @@ export const ja_JP: EnTranslations = {
       "attunedBanner": "調律完了：{title}",
       "tierTutorial": {
         "title": "最初のティア",
-        "tierCap": "技は技能 {skill} で最初のティアに達し、ティアが上がるごとに作れる物が向上します。ただし技がレアを超える作品を作れるのは、それがあなたの二つの主専攻の一つである場合だけです。",
-        "radar": "あなたの専門は輪を成します。隣り合う一対に調律すると、その二つの技は上限のない主専攻になり、輪の反対側の一つの技はレア上限の趣味になり、残りは休眠します。その知識は保持されますが、再び手に取るまではコモン上限です。",
+        "tierCap": "職能は技能 {skill} で最初のティアに達し、ティアが上がるごとに得られるものや作れるものが向上します。ただし製作系の職能に限っては、レアを超える作品へ進めるのは、それがあなたの二つの主専攻の一つになってからです。",
+        "radar": "あなたの製作系職能は輪を成します。隣り合う一対に調律すると、その二つの技は上限のない主専攻になり、輪の反対側の一つの技はレア上限の趣味になり、残りは休眠します。その知識は保持されますが、再び手に取るまではコモン上限です。",
         "masters": "町の工芸の師匠が調律の依頼を出しています。準備ができたら訪ねて、あなたの組み合わせを選びましょう。学んだことが失われることは決してありません。",
         "dismiss": "了解"
       },
@@ -16535,19 +16535,19 @@ export const ja_JP: EnTranslations = {
         "name": "治療用ダミー"
       },
       "healing_dummy_tank": {
-        "name": "Injured Vanguard Dummy"
+        "name": "負傷した前衛ダミー"
       },
       "healing_dummy_soldier": {
-        "name": "Injured Soldier Dummy"
+        "name": "負傷した兵士ダミー"
       },
       "healing_dummy_scout": {
-        "name": "Critical Scout Dummy"
+        "name": "重傷の斥候ダミー"
       },
       "healing_dummy_caster": {
-        "name": "Wounded Spellcaster Dummy"
+        "name": "傷ついた術者ダミー"
       },
       "healing_dummy_ranger": {
-        "name": "Battered Ranger Dummy"
+        "name": "打ちのめされたレンジャーダミー"
       },
       "ridge_stalker": {
         "name": "尾根の追跡者"

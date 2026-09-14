@@ -13150,10 +13150,6 @@ export const pt_BR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.crafting.tierTutorial.dismiss': 'Entendido',
   'hudChrome.crafting.tierTutorial.masters':
     'Mestres de ofício nas cidades oferecem missões de sintonização. Visite um para escolher seu par quando estiver pronto. Nada do que aprendeu é perdido jamais.',
-  'hudChrome.crafting.tierTutorial.radar':
-    'Seus ofícios formam uma roda. Sintonize-se a um par adjacente e esses dois ofícios tornam-se seus principais sem limite, um ofício do outro lado da roda torna-se um passatempo limitado ao raro, e o restante fica dormente: o conhecimento é mantido, mas limitado ao comum até você retomá-los.',
-  'hudChrome.crafting.tierTutorial.tierCap':
-    'Um ofício atinge seu primeiro nível com {skill} de habilidade, e cada nível melhora o que pode criar. Mas um ofício só sobe além do trabalho raro quando é um de seus dois principais.',
   'hudChrome.crafting.tierTutorial.title': 'Seu Primeiro Nível',
   'hudChrome.crafting.trendNudge':
     'Suas mãos estão se inclinando para {archetype}. Sua sintonização aguarda com {master}.',

@@ -4333,6 +4333,11 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'entities.mobs.heroic_boss_dummy.name': 'Героический манекен босса',
   'entities.mobs.hub_training_dummy.name': 'Тренировочный манекен',
   'entities.mobs.hub_healing_dummy.name': 'Лечебный манекен',
+  'entities.mobs.healing_dummy_tank.name': 'Раненый манекен-авангард',
+  'entities.mobs.healing_dummy_soldier.name': 'Раненый манекен-солдат',
+  'entities.mobs.healing_dummy_scout.name': 'Критически раненый манекен-разведчик',
+  'entities.mobs.healing_dummy_caster.name': 'Раненый манекен-заклинатель',
+  'entities.mobs.healing_dummy_ranger.name': 'Избитый манекен-следопыт',
   'entities.mobs.ridge_stalker.name': 'Хребтовый охотник',
   'entities.mobs.deeprock_kobold.name': 'Глубокоскальный туннельщик',
   'entities.mobs.thornpeak_ogre.name': 'Огр Терновых Пиков',
@@ -10968,9 +10973,9 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'hudChrome.crafting.attunedBanner': 'Настройка: {title}',
   'hudChrome.crafting.tierTutorial.title': 'Ваш первый ранг',
   'hudChrome.crafting.tierTutorial.tierCap':
-    'Ремесло достигает первого ранга при навыке {skill}, и каждый ранг улучшает то, что можно создать. Но превзойти работу редкого качества ремесло может, лишь став одним из двух ваших главных.',
+    'Профессия достигает первого ранга при навыке {skill}, и каждый ранг улучшает то, что она даёт или позволяет создать. Но именно среди ремесленных профессий ремесло может подняться выше работ редкого качества только тогда, когда оно становится одной из двух ваших главных профессий.',
   'hudChrome.crafting.tierTutorial.radar':
-    'Ваши ремёсла образуют колесо. Настройтесь на соседнюю пару, и эти два ремесла станут главными без потолка, одно ремесло напротив станет увлечением с потолком редкого качества, а остальные уснут: их знания сохранятся, но будут ограничены обычным качеством, пока вы снова не возьмётесь за них.',
+    'Ваши ремесленные профессии образуют колесо. Настройтесь на соседнюю пару, и эти два ремесла станут главными без потолка, одно ремесло напротив станет увлечением с потолком редкого качества, а остальные уснут: их знания сохранятся, но будут ограничены обычным качеством, пока вы снова не возьмётесь за них.',
   'hudChrome.crafting.tierTutorial.masters':
     'Мастера ремёсел в городах дают задания настройки. Зайдите к одному из них, когда будете готовы, и выберите свою пару. Ничто из выученного не теряется.',
   'hudChrome.crafting.tierTutorial.dismiss': 'Понятно',

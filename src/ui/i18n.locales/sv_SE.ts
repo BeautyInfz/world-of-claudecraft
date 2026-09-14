@@ -12872,10 +12872,6 @@ export const sv_SE: Partial<Record<TranslationKey, string>> = {
   'hudChrome.crafting.tierTutorial.dismiss': 'Förstått',
   'hudChrome.crafting.tierTutorial.masters':
     'Hantverksmästare i städerna erbjuder inriktningsuppdrag. Besök en för att välja ditt par när du är redo. Ingenting du lärt dig går någonsin förlorat.',
-  'hudChrome.crafting.tierTutorial.radar':
-    'Dina yrken bildar ett hjul. Inrikta dig på ett angränsande par och de två hantverken blir obegränsade ämnen, ett hantverk tvärsöver hjulet blir en sällsynt-begränsad hobby, och resten ligger vilande: deras kunskap bevarad, men begränsad till vanlig tills du tar upp dem igen.',
-  'hudChrome.crafting.tierTutorial.tierCap':
-    'Ett hantverk når sin första nivå vid {skill} skicklighet, och varje nivå förbättrar vad det kan tillverka. Men ett hantverk klättrar bara förbi sällsynt arbete när det är ett av dina två ämnen.',
   'hudChrome.crafting.tierTutorial.title': 'Din första nivå',
   'hudChrome.crafting.tierUpToast': '{craft} avancerat till nivå {tier}!',
   'hudChrome.crafting.trendNudge':

@@ -12059,9 +12059,9 @@ export const de_DE: Partial<Record<TranslationKey, string>> = {
   'hudChrome.crafting.tierTutorial.masters':
     'Handwerksmeister in den Städten bieten Abstimmungsquests an. Besuche einen, um dein Paar zu wählen, wann immer du bereit bist. Nichts, was du gelernt hast, geht je verloren.',
   'hudChrome.crafting.tierTutorial.radar':
-    'Deine Berufe bilden ein Rad. Stimme dich auf ein benachbartes Paar ab und diese zwei Handwerke werden unbegrenzte Hauptberufe, ein Handwerk gegenüber auf dem Rad wird ein auf Selten begrenztes Hobby, und der Rest liegt ruhend: ihr Wissen bewahrt, aber auf Gewöhnlich begrenzt, bis du sie wieder aufnimmst.',
+    'Deine Handwerksberufe bilden ein Rad. Stimme dich auf ein benachbartes Paar ab und diese zwei Handwerke werden unbegrenzte Hauptberufe, ein Handwerk gegenüber auf dem Rad wird ein auf Selten begrenztes Hobby, und der Rest ruht: ihr Wissen bleibt erhalten, ist aber auf Gewöhnlich begrenzt, bis du sie wieder aufnimmst.',
   'hudChrome.crafting.tierTutorial.tierCap':
-    'Ein Handwerk erreicht seine erste Stufe bei {skill} Fertigkeit, und jede Stufe verbessert, was es herstellen kann. Aber ein Handwerk steigt nur über seltene Arbeit hinaus, wenn es einer deiner zwei Hauptberufe ist.',
+    'Ein Beruf erreicht seine erste Stufe bei {skill} Fertigkeit, und jede Stufe verbessert, was er hervorbringt oder herstellen lässt. Unter deinen Handwerksberufen steigt ein Handwerk jedoch erst über seltene Arbeiten hinaus, wenn es einer deiner zwei Hauptberufe ist.',
   'hudChrome.crafting.tierTutorial.title': 'Deine erste Stufe',
   'hudChrome.crafting.trendNudge':
     'Deine Hände neigen zum {archetype}. Seine Abstimmung wartet bei {master}.',
