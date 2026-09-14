@@ -677,8 +677,11 @@ interface AttributionTargetFixture {
 // Re-minted for the PR #4023 merge after the v0.43.0 batch: the existing
 // runtimeRender leaves and the monument impostor civicShader leaf combine in
 // one tree, so the composite matches neither parent. No capture was retaken.
+// Re-minted for the PR #4024 merge after PR #4023: the monument impostor
+// civicShader leaf and shader-prefix diagnostic remint evidence land in one
+// tree, so the composite matches neither parent. No capture was retaken.
 const PINNED_POLISH_COMPOSITE_FINGERPRINT =
-  '7b67ced1596945821fecb1b0a57d41c3016e35edb2c87f60c1da13dcde0da28b';
+  '5bd0cf58f1805a3933e42fa53ca7a50fbeaa422e7dfb97837d7bb13fe5ce50de';
 
 function validPolishAttributionTargets(): AttributionTargetFixture[] {
   return [
