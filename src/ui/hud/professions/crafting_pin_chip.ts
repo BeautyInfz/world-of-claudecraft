@@ -1,3 +1,4 @@
+import { FOCUS_KEY_ATTR } from '../../focus_restore';
 import { formatNumber, t } from '../../i18n';
 import { RECIPE_TRACK_CAP, type RecipePinToggleResult } from '../../recipe_tracker_view';
 
@@ -16,7 +17,7 @@ export function renderCraftingPinChip(
   const pinBtn = doc.createElement('button');
   pinBtn.type = 'button';
   pinBtn.className = 'crafting-pin-chip';
-  pinBtn.dataset.focusKey = `pin:${recipeId}`;
+  pinBtn.setAttribute(FOCUS_KEY_ATTR, `pin:${recipeId}`);
   const paintPin = (pinned: boolean): void => {
     pinBtn.setAttribute('aria-pressed', pinned ? 'true' : 'false');
     pinBtn.textContent = t(

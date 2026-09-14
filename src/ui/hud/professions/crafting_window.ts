@@ -605,10 +605,8 @@ export function renderCraftingWindow(
         deps.onCraft(row.recipeId, all);
       });
       batchRow.appendChild(createAllBtn);
-      // The subtle Perfecting affordance on apex GEAR rows (deliverable C):
-      // its own control in the batch row, never nested inside the craft
-      // button (a nested interactive is the axe violation the party slivers
-      // already document).
+      // The subtle Perfecting affordance on apex GEAR rows: its own control in
+      // the batch row, never nested inside the craft button.
       if (apex.perfectingTrack && deps.onOpenPerfecting) {
         const perfectingLink = document.createElement('button');
         perfectingLink.type = 'button';
@@ -623,15 +621,8 @@ export function renderCraftingWindow(
       batchRow.appendChild(renderCraftingPinChip(document, row.recipeId, resultName, deps));
       item.appendChild(batchRow);
       renderGatheringGoalTrackRow(item, row.recipeId, resultName, deps);
-      // Commission opt-in (the Maker's Bond): a per-recipe pill toggle-chip
-      // in the card's chip language, right-aligned in the card footer so it
-      // stacks under the gold Craft chip as one action column. Rendered ONLY
-      // for the ruled-in equipment output kinds (crafting_view.ts
-      // commissionEligible, the sim's own predicate). An aria-pressed toggle
-      // button: the accessible name stays the commission label and the state
-      // rides the toggle semantics. Armed state lives with the HUD
-      // (deps.commissionChecked) so a staleness repaint never unticks it;
-      // the click handler mirrors the flip locally instead of repainting.
+      // Commission opt-in: a per-recipe pill toggle-chip for eligible equipment
+      // outputs. HUD-held state survives stale repaints; the click mirrors locally.
       if (row.commissionEligible) {
         const commissionRow = document.createElement('div');
         commissionRow.className = 'crafting-commission-row';

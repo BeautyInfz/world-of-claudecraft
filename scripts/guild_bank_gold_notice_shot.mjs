@@ -11,7 +11,7 @@
 // vite dev client pointed at it (WOC_DEV_API_TARGET); never production.
 //
 // Usage:
-//   GAME_URL=http://localhost:5173 SHOTS_DIR=docs/screenshots/guild-bank-gold-notice \
+//   GAME_URL=http://localhost:5173 SHOTS_DIR=docs/screenshots/guild-bank-history \
 //     SHOT_PREFIX=after node scripts/guild_bank_gold_notice_shot.mjs
 import fs from 'node:fs';
 import puppeteer from 'puppeteer-core';
@@ -19,7 +19,7 @@ import { BROWSER_PATH } from './browser_path.mjs';
 import { suppressGpuNotice } from './lib/gpu_notice_suppress.mjs';
 
 const GAME_URL = process.env.GAME_URL ?? 'http://localhost:5173';
-const OUT = process.env.SHOTS_DIR ?? 'docs/screenshots/guild-bank-gold-notice';
+const OUT = process.env.SHOTS_DIR ?? 'docs/screenshots/guild-bank-history';
 const PREFIX = process.env.SHOT_PREFIX ?? 'after';
 fs.mkdirSync(OUT, { recursive: true });
 

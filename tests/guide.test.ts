@@ -6521,6 +6521,7 @@ describe('Guide wiki completeness corrections (Phase 20, 2026-09-03)', () => {
       // registry row and its live copy are checked against ONE literal each.
       questTracker: 'your tracked quests and their objectives',
       reliquaryTracker: 'your Reliquary pages',
+      recipeTracker: 'recipes you pinned from crafting',
       deedTracker: 'your deed progress',
       delveTracker: 'the delve you are in',
       riftTracker: 'any rift you are taking part in',
@@ -6672,6 +6673,7 @@ describe('Guide wiki completeness corrections (Phase 20, 2026-09-03)', () => {
       'quest-tracker': 'your tracked quests and their objectives',
       'deed-tracker': 'your deed progress',
       'reliquary-tracker': 'your Reliquary pages',
+      'recipe-tracker': 'recipes you pinned from crafting',
       'delve-tracker': 'the delve you are in',
       'rift-tracker': 'any rift you are taking part in',
       'gathering-goal-tracker': 'the recipe or commission you are tracking',

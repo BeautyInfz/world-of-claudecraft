@@ -53,4 +53,27 @@ function ensureUsable(key: 'localStorage' | 'sessionStorage'): void {
 if (typeof window !== 'undefined') {
   ensureUsable('localStorage');
   ensureUsable('sessionStorage');
+
+  if (typeof globalThis.ProgressEvent === 'undefined') {
+    class TestProgressEvent extends Event implements ProgressEvent {
+      readonly lengthComputable: boolean;
+      readonly loaded: number;
+      readonly total: number;
+
+      constructor(type: string, init: ProgressEventInit = {}) {
+        super(type, init);
+        this.lengthComputable = init.lengthComputable ?? false;
+        this.loaded = init.loaded ?? 0;
+        this.total = init.total ?? 0;
+      }
+    }
+
+    for (const target of [window, globalThis] as const) {
+      Object.defineProperty(target, 'ProgressEvent', {
+        value: TestProgressEvent,
+        configurable: true,
+        enumerable: true,
+      });
+    }
+  }
 }

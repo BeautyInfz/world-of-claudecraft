@@ -512,7 +512,7 @@ export class NameplatePainter {
     state.nameColor = '#fff';
     state.level = '';
     state.levelColor = '#fff';
-    state.guild = '';
+    state.guild = entity.kind === 'npc' ? (npcRoleLabel(entity.templateId) ?? '') : '';
     state.guildLabel = '';
     state.guildTier = 0;
     state.title = '';
@@ -650,9 +650,8 @@ export class NameplatePainter {
       // catalog VALUE so a locale owns its brackets). Built here, never in the
       // per-frame draw path, the same cadence contract as guildLabel.
       if (entity.kind === 'npc') {
-        const roleLabel = npcRoleLabel(entity.templateId);
+        const roleLabel = state.guild;
         if (roleLabel) {
-          state.guild = roleLabel;
           state.guildLabel = t('hudChrome.nameplate.npcRoleTag', { role: roleLabel });
         }
       }

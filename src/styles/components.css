@@ -7020,7 +7020,7 @@
     padding: 4px 12px;
     border: 1px solid var(--color-border-showcase);
     border-radius: 999px;
-    background: rgba(0, 0, 0, 0.3);
+    background: var(--color-card-inset);
     color: var(--color-text-muted);
     font-family: var(--title-font);
     font-size: 11px;
@@ -7033,7 +7033,7 @@
   .crafting-pin-chip[aria-pressed="true"] {
     color: var(--gold);
     border-color: var(--gold-dim);
-    background: rgb(200 163 74 / 12%);
+    background: color-mix(in srgb, var(--gold) 12%, transparent);
   }
   .train-row.train-known {
     cursor: default;

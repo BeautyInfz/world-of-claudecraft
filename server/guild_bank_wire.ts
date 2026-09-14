@@ -79,13 +79,13 @@ export function dispatchGuildBankCommand(
     case 'guild_bank_deposit_gold':
       if (typeof msg.amount === 'number') {
         const amount = msg.amount;
-        host.run('deposit_gold', () => sim.guildBankDepositGoldFor(pid, amount));
+        host.run('deposit_gold', () => sim.guildBankDepositGoldFor(pid, amount), { amount });
       }
       break;
     case 'guild_bank_withdraw_gold':
       if (typeof msg.amount === 'number') {
         const amount = msg.amount;
-        host.run('withdraw_gold', () => sim.guildBankWithdrawGoldFor(pid, amount));
+        host.run('withdraw_gold', () => sim.guildBankWithdrawGoldFor(pid, amount), { amount });
       }
       break;
     case 'guild_bank_deposit':
@@ -94,7 +94,11 @@ export function dispatchGuildBankCommand(
         const transfer = readMaterialSourceTransferWire(msg, slot);
         if (transfer === null) break;
         const { count, selection } = transfer;
-        host.run('deposit', () => sim.guildBankDepositFor(pid, slot, count, selection));
+        host.run('deposit', () => sim.guildBankDepositFor(pid, slot, count, selection), {
+          slot,
+          count,
+          selection,
+        });
       }
       break;
     case 'guild_bank_withdraw':
@@ -111,7 +115,7 @@ export function dispatchGuildBankCommand(
       }
       break;
     case 'guild_bank_buy_slots':
-      host.run('buy_slots', () => sim.guildBankBuySlotsFor(pid));
+      host.run('buy_slots', () => sim.guildBankBuySlotsFor(pid), {});
       break;
   }
 }

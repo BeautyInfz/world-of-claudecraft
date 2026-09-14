@@ -41,14 +41,14 @@ describe('guild bank wire dispatch', () => {
   it('routes a gold deposit through the runner under the deposit_gold op', () => {
     const rig = makeHost();
     dispatchGuildBankCommand(rig.host, 'guild_bank_deposit_gold', { amount: 5000 }, 7);
-    expect(rig.run).toHaveBeenCalledWith('deposit_gold', expect.any(Function));
+    expect(rig.run).toHaveBeenCalledWith('deposit_gold', expect.any(Function), { amount: 5000 });
     expect(rig.sim.guildBankDepositGoldFor).toHaveBeenCalledWith(7, 5000);
   });
 
   it('routes a gold withdrawal through the runner under the withdraw_gold op', () => {
     const rig = makeHost();
     dispatchGuildBankCommand(rig.host, 'guild_bank_withdraw_gold', { amount: 250 }, 7);
-    expect(rig.run).toHaveBeenCalledWith('withdraw_gold', expect.any(Function));
+    expect(rig.run).toHaveBeenCalledWith('withdraw_gold', expect.any(Function), { amount: 250 });
     expect(rig.sim.guildBankWithdrawGoldFor).toHaveBeenCalledWith(7, 250);
   });
 
@@ -81,7 +81,7 @@ describe('guild bank wire dispatch', () => {
   it('routes buy_slots with no payload', () => {
     const rig = makeHost();
     dispatchGuildBankCommand(rig.host, 'guild_bank_buy_slots', {}, 7);
-    expect(rig.run).toHaveBeenCalledWith('buy_slots', expect.any(Function));
+    expect(rig.run).toHaveBeenCalledWith('buy_slots', expect.any(Function), {});
     expect(rig.sim.guildBankBuySlotsFor).toHaveBeenCalledWith(7);
   });
 
