@@ -460,7 +460,12 @@ const MONOLITHS: MonolithRow[] = [
     // while the current-release gathering goal and Perfecting arms remain.
     // `wc -l < src/ui/hud.ts` on the resolved tree is 18351. Exact merged
     // count, zero slack.
-    ceiling: 18351,
+    // Re-measured at the target-frame raid-marker merge into this release
+    // candidate: the descriptor extraction pays for most of the marker wiring,
+    // while this branch's health-text mode override and current HUD surfaces
+    // remain. `wc -l < src/ui/hud.ts` on the resolved tree is 18324. Exact
+    // merged count, zero slack.
+    ceiling: 18324,
     seam: 'pure view core + thin painter on PainterHost (src/ui/CLAUDE.md)',
   },
   {
