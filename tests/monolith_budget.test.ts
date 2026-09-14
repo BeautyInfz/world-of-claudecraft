@@ -1311,7 +1311,14 @@ const MONOLITHS: MonolithRow[] = [
     // Resolved together on the release/v0.43 line with the targeting, roster
     // hint, pet command, and Hide Interface extractions: `wc -l < src/main.ts`
     // measures 11292. Exact count, zero headroom.
-    ceiling: 11292,
+    // Lowered to 11320 by the root-anchored :has() fix: the click-move marker's
+    // DOM writes moved to src/game/click_move_marker.ts and the composer's
+    // focus-mirrored classes to src/ui/chat_composer_focus_controller.ts, which
+    // paid for the start-screen class drop and the two new imports.
+    // Resolved together on the v0.43 line after the current release-side
+    // extractions above; `wc -l < src/main.ts` measures 11290. Exact merged
+    // count, zero headroom.
+    ceiling: 11290,
     seam: 'a src/game/ or src/ui/ sibling module; main.ts is a firewall, not a home',
   },
   {
