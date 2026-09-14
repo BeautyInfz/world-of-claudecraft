@@ -497,6 +497,39 @@ describe('mailSend: mergeable instanced attachments bundle into one parcel', () 
     for (const s of got) expect(s.instance).toEqual(SIGNED);
   });
 
+  it('keeps a count-N mergeable instanced parcel stable across serialize/load before take', () => {
+    const { sim, sender } = mailSetup();
+    sim.addItemInstance(BOOTS, { ...SIGNED }, sender);
+    sim.addItemInstance(BOOTS, { ...SIGNED }, sender);
+    sim.addItemInstance(BOOTS, { ...SIGNED }, sender);
+    sim.mailSend(
+      'Rex',
+      'restart',
+      'hold these',
+      0,
+      [{ itemId: BOOTS, count: 3, instance: SIGNED }],
+      sender,
+    );
+    expect(mailCodes(sim.drainEvents())).toContain('sent');
+    const save = JSON.parse(JSON.stringify(sim.serializeMail()));
+
+    const sim2 = makeWorld();
+    sim2.addPlayer('warrior', 'Sender');
+    const recipient2 = sim2.addPlayer('mage', 'Rex');
+    sim2.loadMail(save);
+    const loaded = bookOf(sim2).find((m) => m.items.length > 0);
+    expect(loaded?.items).toEqual([
+      expect.objectContaining({ itemId: BOOTS, count: 3, instance: SIGNED }),
+    ]);
+
+    tickFor(sim2, MAIL_DELIVERY_SECONDS + 1);
+    moveToMailbox(sim2, recipient2);
+    sim2.mailTake(firstPlayerLetterId(sim2, recipient2), recipient2);
+    const got = slotsOf(sim2, recipient2, BOOTS);
+    expect(got.reduce((n, s) => n + s.count, 0)).toBe(3);
+    for (const s of got) expect(s.instance).toEqual(SIGNED);
+  });
+
   it('requesting more than is held is refused, never a partial bundle', () => {
     const { sim, sender } = mailSetup();
     sim.addItemInstance(BOOTS, { ...SIGNED }, sender);
@@ -514,6 +547,38 @@ describe('mailSend: mergeable instanced attachments bundle into one parcel', () 
     expect(codes).not.toContain('sent');
     expect(slotsOf(sim, sender, BOOTS)).toHaveLength(2);
     expect(sim.players.get(sender)!.copper).toBe(10000);
+  });
+
+  it('counts projected crafted-recipe buckets against the parcel cap before escrow', () => {
+    const { sim, sender } = mailSetup();
+    sim.addItemInstance(BOOTS, { ...SIGNED }, sender, 1, { craftedRecipeId: 'recipeA' });
+    sim.addItemInstance(BOOTS, { ...SIGNED }, sender, 2, { craftedRecipeId: 'recipeB' });
+    sim.addItem(BREAD, 1, sender);
+    sim.addItem('roasted_boar', 1, sender);
+    const breadBefore = sim.countItem(BREAD, sender);
+    const boarBefore = sim.countItem('roasted_boar', sender);
+
+    sim.mailSend(
+      'Rex',
+      'too much',
+      'one staged chip would split',
+      0,
+      [
+        { itemId: BOOTS, count: 3, instance: SIGNED },
+        { itemId: BREAD, count: 1 },
+        { itemId: 'roasted_boar', count: 1 },
+      ],
+      sender,
+    );
+
+    const codes = mailCodes(sim.drainEvents());
+    expect(codes).toContain('tooManyParcels');
+    expect(codes).not.toContain('sent');
+    expect(slotsOf(sim, sender, BOOTS).reduce((n, s) => n + s.count, 0)).toBe(3);
+    expect(sim.countItem(BREAD, sender)).toBe(breadBefore);
+    expect(sim.countItem('roasted_boar', sender)).toBe(boarBefore);
+    expect(metaOf(sim, sender).copper).toBe(10000);
+    expect(bookOf(sim).filter((m) => m.items.length > 0)).toHaveLength(0);
   });
 
   it('never blends provenance: differently-crafted stacks bundle as SEPARATE buckets even in one request', () => {
