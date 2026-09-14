@@ -674,8 +674,11 @@ interface AttributionTargetFixture {
 // Re-minted for the v0.43.0 merge of the gather coarse key after the
 // zone-feature sweep extraction: the merged runtimeRender.renderer leaf
 // matches neither parent. No capture was retaken.
+// Re-minted for the PR #4023 merge after the v0.43.0 batch: the existing
+// runtimeRender leaves and the monument impostor civicShader leaf combine in
+// one tree, so the composite matches neither parent. No capture was retaken.
 const PINNED_POLISH_COMPOSITE_FINGERPRINT =
-  '4d90884fd4a4c9d83bc62a78044768317f530a6c86e3cb30161ff9eca1c136da';
+  '7b67ced1596945821fecb1b0a57d41c3016e35edb2c87f60c1da13dcde0da28b';
 
 function validPolishAttributionTargets(): AttributionTargetFixture[] {
   return [
