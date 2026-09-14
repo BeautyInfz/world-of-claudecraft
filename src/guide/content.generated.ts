@@ -265,7 +265,6 @@ export interface GuideProfCurve {
   rareEvent: { oneIn: number; yieldMult: number; flavors: { ore: string; wood: string; herb: string } };
   specimenChancePct: number;
   farm: {
-    plantCastSec: number;
     lifeFloor: number;
     keepChancePctAtZero: number;
     keepChancePctAtCap: number;
@@ -18263,7 +18262,7 @@ export const GUIDE_PROF_GATHERING: GuideProfGathering[] = [
         "priceCopper": null,
         "vendors": [],
         "craftedBy": "engineering",
-        "wieldProficiency": 40
+        "wieldProficiency": 25
       },
       {
         "name": "Skysilver Hoe",
@@ -18272,7 +18271,7 @@ export const GUIDE_PROF_GATHERING: GuideProfGathering[] = [
         "priceCopper": null,
         "vendors": [],
         "craftedBy": "engineering",
-        "wieldProficiency": 70
+        "wieldProficiency": 50
       },
       {
         "name": "Osmium Hoe",
@@ -18283,7 +18282,7 @@ export const GUIDE_PROF_GATHERING: GuideProfGathering[] = [
         "craftedBy": "engineering",
         "priceMarks": 24,
         "marksClears": 3,
-        "wieldProficiency": 85
+        "wieldProficiency": 75
       },
       {
         "name": "Evergarden Hoe",
@@ -18332,7 +18331,6 @@ export const GUIDE_PROF_CURVE: GuideProfCurve = {
   },
   "specimenChancePct": 16,
   "farm": {
-    "plantCastSec": 2,
     "lifeFloor": 3,
     "keepChancePctAtZero": 15,
     "keepChancePctAtCap": 50,

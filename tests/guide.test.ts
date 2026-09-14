@@ -119,7 +119,6 @@ import {
   FARM_HARVEST_LIFE_FLOOR,
   FARM_KEEP_CHANCE_BASE,
   FARM_KEEP_CHANCE_SKILL_SCALE,
-  FARM_PLANT_CAST_SEC,
   FARM_TONIC_BONUS_CHANCE,
   FARM_TONIC_BONUS_PICKS,
   FARMING_GAIN_SCHEDULE,
@@ -164,7 +163,7 @@ import {
 import {
   TIER4_TOOL_WIELD_PROFICIENCY,
   TIER5_TOOL_WIELD_PROFICIENCY,
-  WIELD_REQUIREMENT_BY_TIER,
+  wieldRequirementFor,
 } from '../src/sim/professions/wield_gate';
 import {
   ARENA_DAILY_TAPER_FLOOR_START,
@@ -2585,10 +2584,11 @@ describe('Guide professions gathering accuracy', () => {
       expect(miningHtml, `a node page must still carry "${clause}"`).toContain(clause);
     }
 
-    // The rhythm: planting is the live cast constant, harvesting is instant,
-    // and nothing is refused for bag room (harvestCrop guards on dead, bed,
-    // range, plot and readiness only).
-    expect(html).toContain(`${formatNumber(FARM_PLANT_CAST_SEC)} seconds flat at every rung`);
+    // The rhythm: planting and harvesting are both instant (the farming-tools
+    // report retired the plant cast), and nothing is refused for bag room
+    // (harvestCrop guards on dead, bed, range, plot and readiness only).
+    expect(html).toContain('Planting is instant');
+    expect(html).not.toContain('seconds flat at every rung');
     expect(html).toContain('Pulling a ripe crop is instant');
     expect(html).toContain('no bag check to refuse it');
     expect(html).toContain('it grants no character XP at all');
@@ -2924,16 +2924,12 @@ describe('Guide professions gathering accuracy', () => {
           ALL_RECIPES.find((r) => r.resultItemId === itemId)?.professionId,
         );
       }
-      // R22 wield column: land tools above tier 1 publish the frozen wield
-      // requirement; tier 1 and every fishing rod publish none (rods are the
-      // structural exemption, wield_gate.ts). This is a MIRROR (generator and
-      // expectation both read the same constants); the absolute literal pins
-      // live in tests/professions_tool_gate.test.ts (85/100) and
-      // tests/delve_shop.test.ts (24/56 and every gate).
-      if (use.professionId !== 'fishing' && use.tier >= 2) {
-        expect(rows[0].wieldProficiency, `${itemId} wield requirement`).toBe(
-          WIELD_REQUIREMENT_BY_TIER[use.tier],
-        );
+      // R22 wield column: tools publish the requirement for their own trade.
+      // Fishing rods remain the structural exemption, while farming hoes use
+      // the crop ladder rather than the land-node tool ladder.
+      const wieldReq = wieldRequirementFor(use.professionId, use.tier);
+      if (wieldReq > 0) {
+        expect(rows[0].wieldProficiency, `${itemId} wield requirement`).toBe(wieldReq);
       } else {
         expect(rows[0].wieldProficiency, `${itemId} must publish no wield`).toBeUndefined();
       }
