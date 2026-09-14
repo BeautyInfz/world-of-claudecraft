@@ -404,6 +404,7 @@ import {
 } from './sim/types';
 import { zoneBiomeAt } from './sim/world';
 import { startSitePresence } from './site_presence';
+import { applyAbsorbOverlayGate } from './ui/absorb_overlay_gate';
 import {
   accountPortalModel,
   deactivateConfirmReady,
@@ -2397,9 +2398,14 @@ async function startGame(
       renderer.setWaterRipples(settings.set('waterRipples', !!value));
       return;
     }
+    if (key === 'partyFrameShowAbsorbs') {
+      // Party rows read it live (Hud.updatePartyFrames); the player / target
+      // overlays are gated by one root class hud.css keys on.
+      applyAbsorbOverlayGate(document.documentElement, settings.set(key, !!value));
+      return;
+    }
     if (
       key === 'partyFrameShowResource' ||
-      key === 'partyFrameShowAbsorbs' ||
       key === 'partyFrameShowAuras' ||
       key === 'partyFrameShowPets' ||
       key === 'partyFrameShowSelf'
