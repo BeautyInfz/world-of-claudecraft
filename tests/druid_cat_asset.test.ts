@@ -11,45 +11,22 @@ const CLIPS = [
   'Attack_Left',
   'Attack_Right',
   'Bite',
-  'CombatIdle',
   'Death',
   'Fall',
   'Finisher',
   'Hit_Left',
-  'Hit_Right',
-  'Idle',
   'Idle_Look',
   'Jump',
   'Land',
   'Pounce',
   'ProwlIdle',
   'ProwlWalk',
-  'Rise',
   'Run',
-  'Sit',
-  'SitDown',
   'Swim',
-  'SwimIdle',
-  'SwimSurface',
-  'Wade',
   'Walk',
   'WalkBack',
 ];
-const LOOPS = [
-  'Idle',
-  'CombatIdle',
-  'Walk',
-  'WalkBack',
-  'Run',
-  'ProwlIdle',
-  'ProwlWalk',
-  'Fall',
-  'Sit',
-  'Swim',
-  'SwimSurface',
-  'SwimIdle',
-  'Wade',
-];
+const LOOPS = ['Idle_Look', 'Walk', 'WalkBack', 'Run', 'ProwlIdle', 'ProwlWalk', 'Fall', 'Swim'];
 let root: Root;
 const clip = (name: string) => root.listAnimations().find((a) => a.getName() === name)!;
 const duration = (a: Animation) =>
@@ -193,21 +170,18 @@ describe('druid cat shipping animation asset', () => {
   });
 
   it('deforms the actual skin into grounded seated and collapsed poses', () => {
-    const standing = skinnedBounds(clip('Idle'), 0);
+    const standing = skinnedBounds(clip('Idle_Look'), 0);
     expect(standing.min.y).toBeGreaterThan(-0.001);
     expect(standing.max.y).toBeCloseTo(0.6372, 2);
     for (const [name, t] of [
       ['Run', 0],
-      ['Sit', 1],
       ['Death', 1.2],
-      ['Rise', 1],
     ] as const) {
       const bounds = skinnedBounds(clip(name), t);
       expect(bounds.min.y, name).toBeGreaterThan(-0.002);
       expect(bounds.min.y, name).toBeLessThan(0.015);
       expect(bounds.getSize(new Vector3()).length(), name).toBeGreaterThan(0.6);
       if (name === 'Death') expect(bounds.max.y).toBeLessThan(0.35);
-      if (name === 'Sit') expect(bounds.max.y).toBeGreaterThan(0.64);
     }
     // The longer run cycle has a deliberate airborne suspension phase.
     expect(skinnedBounds(clip('Run'), 0.2).min.y).toBeGreaterThan(0.02);
@@ -217,7 +191,7 @@ describe('druid cat shipping animation asset', () => {
     const skin = root.listSkins()[0];
     const hips = skin.listJoints().find((node) => node.getName() === 'DEF-spine')!;
     const hipsY = (name: string, t: number) => matricesAt(clip(name), t).get(hips)!.elements[13];
-    const standHips = hipsY('Idle', 0);
+    const standHips = hipsY('Idle_Look', 0);
     expect(standHips).toBeGreaterThan(0.1);
     for (let i = 0; i <= 8; i++) {
       const idleT = (duration(clip('ProwlIdle')) * i) / 8;
@@ -261,7 +235,7 @@ describe('druid cat shipping animation asset', () => {
     expect(legBones.length).toBeGreaterThan(12);
     // ProwlIdle is the one standing idle that leaves the bind stance: the
     // stalk crouch folds every leg (pinned below), so it is excluded here.
-    for (const name of ['Idle', 'Idle_Look', 'CombatIdle']) {
+    for (const name of ['Idle_Look']) {
       for (let i = 0; i <= 12; i++) {
         const posed = matricesAt(clip(name), (duration(clip(name)) * i) / 12);
         for (const { node, rest } of legBones) {
@@ -279,9 +253,7 @@ describe('druid cat shipping animation asset', () => {
       'Finisher',
       'Pounce',
       'Hit_Left',
-      'Hit_Right',
       'Land',
-      'Rise',
     ]) {
       const posed = matricesAt(clip(name), duration(clip(name)));
       for (const { node, rest } of legBones) {
@@ -306,11 +278,8 @@ describe('druid cat shipping animation asset', () => {
       'Bite',
       'Finisher',
       'Hit_Left',
-      'Hit_Right',
       'Death',
-      'Rise',
       'Pounce',
-      'SitDown',
     ]) {
       const a = clip(name),
         initial = matricesAt(a, 0);
@@ -386,7 +355,6 @@ describe('druid cat shipping animation asset', () => {
     ['WalkBack', 30, 0.25, [0, 0.5, 0.75, 0.25], 4.82101],
     ['Run', 18, 0.22, [0.48, 0.54, 0, 0.06], 9.13075],
     ['ProwlWalk', 30, 0.22, [0, 0.5, 0.5, 0], 5.47846],
-    ['Wade', 30, 0.25, [0, 0.5, 0.75, 0.25], 4.82105],
   ] as const)(
     '%s matches measured paw contact speed without vertical skating',
     (name, frames, duty, shifts, ref) => {

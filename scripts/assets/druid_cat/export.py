@@ -19,7 +19,8 @@ def export_cat(path):
     rig.select_set(True)
     mesh.select_set(True)
     bpy.context.view_layer.objects.active = rig
-    rig.animation_data.action = bpy.data.actions['Idle']
+    # The rest frame: Idle, or Idle_Look once the compact set retired Idle.
+    rig.animation_data.action = bpy.data.actions.get('Idle') or bpy.data.actions['Idle_Look']
     bpy.context.scene.frame_set(1)
     bpy.ops.export_scene.gltf(
         filepath=str(destination), export_format='GLB', use_selection=True,

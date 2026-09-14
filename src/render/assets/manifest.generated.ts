@@ -380,7 +380,7 @@ export const MEDIA_ASSETS: Record<string, string> =
   "models/creatures/dragonkin_elite.glb": "/media/models/creatures/dragonkin_elite.891ec2588590.glb",
   "models/creatures/dragonkin_mob.glb": "/media/models/creatures/dragonkin_mob.94166df6974c.glb",
   "models/creatures/drogmar.glb": "/media/models/creatures/drogmar.4b4899941e1a.glb",
-  "models/creatures/druid_cat_form.glb": "/media/models/creatures/druid_cat_form.4c4d8e40f86b.glb",
+  "models/creatures/druid_cat_form.glb": "/media/models/creatures/druid_cat_form.0bd32766d67c.glb",
   "models/creatures/duskwisp.glb": "/media/models/creatures/duskwisp.1985c1a388d8.glb",
   "models/creatures/elemental_ability_anims.glb": "/media/models/creatures/elemental_ability_anims.9c59ebbf3790.glb",
   "models/creatures/ember_sentinel.glb": "/media/models/creatures/ember_sentinel.dcdcf7e8bb77.glb",

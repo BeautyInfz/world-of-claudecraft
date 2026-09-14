@@ -20255,7 +20255,7 @@ export const GUIDE_MODELS: Record<string, GuideModelSpec> = {
   },
   "form_cat": {
     "url": "models/creatures/druid_cat_form.glb",
-    "idle": "Idle",
+    "idle": "Idle_Look",
     "height": 1.92
   },
   "form_travel": {

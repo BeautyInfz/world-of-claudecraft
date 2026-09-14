@@ -559,9 +559,11 @@ const BEAR_FORM: ClipMap = {
 // Jump holds its airborne final pose, and Land fires only on real touchdown.
 // Utility spells intentionally have no gesture override, so buffs never swipe.
 const DRUID_CAT_FORM: ClipMap = {
-  idle: 'Idle',
-  idleVariants: ['Idle_Look'],
-  combatIdle: 'CombatIdle',
+  // The compact 17-clip export retired Idle, CombatIdle, Sit/SitDown, Rise,
+  // Wade, SwimSurface, SwimIdle and Hit_Right: Idle_Look is the idle, Swim is
+  // the one water clip, Hit_Left the one flinch; combat idle, sit, wade and
+  // the flourish fall back to the base machine's defaults (idle / walk).
+  idle: 'Idle_Look',
   prowlIdle: 'ProwlIdle',
   prowlWalk: 'ProwlWalk',
   walk: 'Walk',
@@ -576,18 +578,14 @@ const DRUID_CAT_FORM: ClipMap = {
     pounce: 'Pounce',
     redharvest: 'Finisher',
   },
-  hit: ['Hit_Left', 'Hit_Right'],
+  hit: ['Hit_Left'],
   death: 'Death',
   jump: 'Jump',
   land: 'Land',
   fall: 'Fall',
-  sitDown: 'SitDown',
-  sitIdle: 'Sit',
   swim: 'Swim',
-  swimSurface: 'SwimSurface',
-  swimIdle: 'SwimIdle',
-  wade: 'Wade',
-  flourish: 'Rise',
+  swimSurface: 'Swim',
+  swimIdle: 'Swim',
 };
 
 // Custom wild boar rig (wild_boar.glb)

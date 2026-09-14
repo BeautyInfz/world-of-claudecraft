@@ -100,7 +100,7 @@ export const MOVE_CLIPS = [
   'Spider_Walk',
   'Walking_A',
 ];
-export const IDLE_CLIPS = ['Idle', 'Flying_Idle', 'Idle1', 'Idle_Combat', 'Spider_Idle'];
+export const IDLE_CLIPS = ['Idle', 'Flying_Idle', 'Idle1', 'Idle_Combat', 'Spider_Idle', 'Idle_Look'];
 export const ATTACK_CLIPS = [
   'Attack',
   'Attack1 (marracca)',

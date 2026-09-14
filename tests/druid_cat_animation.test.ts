@@ -8,32 +8,23 @@ import { newLocoTrack, updateLocomotion } from '../src/render/locomotion';
 import type { Entity } from '../src/sim/types';
 
 const CAT_CLIPS = [
-  'Idle',
-  'Idle_Look',
-  'CombatIdle',
-  'Walk',
-  'WalkBack',
-  'Run',
-  'ProwlIdle',
-  'ProwlWalk',
-  'Jump',
-  'Land',
-  'Fall',
   'Attack_Left',
   'Attack_Right',
   'Bite',
-  'Pounce',
+  'Death',
+  'Fall',
   'Finisher',
   'Hit_Left',
-  'Hit_Right',
-  'Death',
-  'SitDown',
-  'Sit',
+  'Idle_Look',
+  'Jump',
+  'Land',
+  'Pounce',
+  'ProwlIdle',
+  'ProwlWalk',
+  'Run',
   'Swim',
-  'SwimSurface',
-  'SwimIdle',
-  'Wade',
-  'Rise',
+  'Walk',
+  'WalkBack',
 ];
 // Keep the production mixer's cadence assertions tied to the shipped clip times.
 const glb = readFileSync(new URL('../public/models/creatures/druid_cat_form.glb', import.meta.url));
@@ -173,19 +164,19 @@ describe('druid cat production animation runtime', () => {
     visual.update(FRAME, state(), true);
     expect(active()).toBe('Land');
     advance(state());
-    expect(active()).toBe('Idle');
+    expect(active()).toBe('Idle_Look');
   });
 
   it('enters stationary paddling after a jump into water without a ground landing', () => {
     advance(state({ airborne: true }), 70);
     visual.update(FRAME, state({ swimming: true }), true);
-    expect(active()).toBe('SwimIdle');
+    expect(active()).toBe('Swim');
     expect(peek(visual).actions.get('Land')?.isScheduled()).toBe(false);
   });
 
   it.each([
     [{ airborne: true }, 'Jump'],
-    [{ swimming: true }, 'SwimIdle'],
+    [{ swimming: true }, 'Swim'],
   ] as const)(
     'interrupts a ground recovery immediately for the next physical pose',
     (motion, clip) => {
@@ -215,8 +206,9 @@ describe('druid cat production animation runtime', () => {
     expect(active()).toBe('ProwlWalk');
     advance(state({ stealthed: true, moving: true, backwards: true, speed: 4.32 }));
     expect(peek(visual).current.timeScale).toBeLessThan(0);
+    // The compact set has no combat idle: the stance is the plain idle.
     advance(state({ combat: true }));
-    expect(active()).toBe('CombatIdle');
+    expect(active()).toBe('Idle_Look');
   });
 
   it('foot-matches a slowed run through the cat gait and timing metadata', () => {
@@ -259,7 +251,7 @@ describe('druid cat production animation runtime', () => {
     [4.55, { backwards: true }, 'WalkBack', 4.82101],
     [6.65, { stealthed: true, running: true }, 'ProwlWalk', 5.47846],
     [10.5, { running: true }, 'Run', 9.13075],
-    [4.2, { wading: true }, 'Wade', 4.82105],
+    [4.2, { wading: true }, 'Walk', 2.78992],
   ] as const)('matches planted foot speed at %s with %s (%s)', (speed, flags, clip, reference) => {
     advance(state({ moving: true, speed, ...flags }));
     expect(active()).toBe(clip);
@@ -278,12 +270,9 @@ describe('druid cat production animation runtime', () => {
     }
   });
 
-  it('uses the cat wade reference while the original wolf retains its water cadence', () => {
+  it('wades on the walk cycle (no wade clip) while the original wolf retains its water cadence', () => {
     advance(state({ moving: true, wading: true, speed: 2.2 }));
-    expect(active()).toBe('Wade');
-    // 2.2 / 4.82105 would be .46; the wade floor holds the stroke at .65 so a
-    // slow ford never crawls, the same floor the humanoid default path pins below.
-    expect(peek(visual).current.timeScale).toBeCloseTo(0.65, 3);
+    expect(active()).toBe('Walk');
     expect(locomotionTimeScale('wade', state({ speed: 2.2 }))).toBe(0.65);
     expect(locomotionTimeScale('wade', state({ speed: 4.2 }))).toBe(1);
   });
@@ -295,36 +284,35 @@ describe('druid cat production animation runtime', () => {
     expect(active()).toBe('Death');
     expect(peek(visual).actions.get('Land')?.isScheduled()).toBe(false);
     visual.update(FRAME, state(), true);
-    expect(active()).toBe('Rise');
+    expect(active()).toBe('Idle_Look');
     advance(state());
-    expect(active()).toBe('Idle');
+    expect(active()).toBe('Idle_Look');
   });
 
-  it('finishes the sit-down transition into a held seated loop', () => {
+  it('sits on the idle (the compact set has no seated clips) and stands back into a walk', () => {
     visual.update(FRAME, state({ sitting: true }), true);
-    expect(active()).toBe('SitDown');
     advance(state({ sitting: true }));
-    expect(active()).toBe('Sit');
+    expect(active()).toBe('Idle_Look');
     advance(state({ moving: true, backwards: true, speed: 4.55 }));
     expect(active()).toBe('WalkBack');
   });
 
   it('keeps horizontal paddling at its authored waterline through a swim stop', () => {
     advance(state({ swimming: true, moving: true, speed: 3.2 }));
-    expect(active()).toBe('SwimSurface');
+    expect(active()).toBe('Swim');
     const movingRise = peek(visual).poseWrap.position.y;
     // The authored .21 rise has at most .08 of procedural bob, in either pose.
     expect(movingRise).toBeGreaterThanOrEqual(0.13 - 0.0001);
     expect(movingRise).toBeLessThanOrEqual(0.29 + 0.0001);
     advance(state({ swimming: true }));
-    expect(active()).toBe('SwimIdle');
+    expect(active()).toBe('Swim');
     expect(peek(visual).poseWrap.position.y).toBeGreaterThanOrEqual(0.13 - 0.0001);
     expect(peek(visual).poseWrap.position.y).toBeLessThanOrEqual(0.29 + 0.0001);
     expect(Math.abs(peek(visual).poseWrap.position.y - movingRise)).toBeLessThan(0.2);
     advance(state({ swimming: true, moving: true, submerged: true, speed: 3.2 }));
     expect(active()).toBe('Swim');
     advance(state({ moving: true, wading: true, speed: 4.2 }));
-    expect(active()).toBe('Wade');
+    expect(active()).toBe('Walk');
   });
 
   it.each([
@@ -339,7 +327,7 @@ describe('druid cat production animation runtime', () => {
     expect(active()).toBe(clip);
     expect(peek(visual).current.timeScale).toBe(1);
     advance(state());
-    expect(active()).toBe('Idle');
+    expect(active()).toBe('Idle_Look');
   });
 
   it('alternates auto-attack swipes and gives utility buffs no attack gesture', () => {

@@ -141,7 +141,7 @@ try {
     await new Promise((resolve) => setTimeout(resolve, 500));
     // The level grant makes a transient deed banner; it is not part of a pose capture.
     await page.addStyleTag({ content: '#banner { display: none !important; }' });
-    await scenario(page, `${label} idle`, { reset: true, steps: 25 }, 'Idle');
+    await scenario(page, `${label} idle`, { reset: true, steps: 25 }, 'Idle_Look');
     await capture(page, `${label}-idle`);
     if (!mobile) {
       await page.evaluate((id) => {
@@ -215,10 +215,10 @@ try {
       page,
       'surface paddling',
       { reset: true, position: water, stage: { onGround: false }, steps: 12 },
-      'SwimIdle',
+      'Swim',
     );
     await capture(page, 'desktop-swim-idle');
-    await scenario(page, 'surface stroke', { move: { forward: true }, steps: 16 }, 'SwimSurface');
+    await scenario(page, 'surface stroke', { move: { forward: true }, steps: 16 }, 'Swim');
     await capture(page, 'desktop-swim-surface');
     await scenario(
       page,
@@ -231,7 +231,7 @@ try {
       page,
       'resurface stroke',
       { position: water, move: { forward: true }, steps: 12 },
-      'SwimSurface',
+      'Swim',
     );
     await scenario(
       page,
@@ -242,7 +242,7 @@ try {
         stage: { onGround: false, vy: -1 },
         steps: 25,
       },
-      'SwimIdle',
+      'Swim',
     );
     check(
       'water entry does not play ground landing',
@@ -268,7 +268,7 @@ try {
       g.sim.startAutoAttack();
       return dummy.id;
     });
-    await scenario(page, 'combat stance and autos', { steps: 70 }, 'CombatIdle');
+    await scenario(page, 'combat stance and autos', { steps: 70 }, 'Idle_Look');
     await capture(page, 'desktop-combat');
     for (const [ability, clip] of [
       ['claw', 'Attack_Left'],
@@ -294,8 +294,8 @@ try {
     }, targetId);
     // The rip Finisher above runs 0.9s; give the one-shot room to fade before the sit
     // base takes over, or the first sample still reads the attack.
-    await scenario(page, 'sit down', { reset: true, chat: '/sit', steps: 6 }, 'SitDown');
-    await scenario(page, 'seated loop', { steps: 45 }, 'Sit');
+    await scenario(page, 'sit down', { reset: true, chat: '/sit', steps: 6 }, 'Idle_Look');
+    await scenario(page, 'seated loop', { steps: 45 }, 'Idle_Look');
     await capture(page, 'desktop-sit');
     await scenario(
       page,
@@ -308,9 +308,9 @@ try {
       page,
       'recovery',
       { stage: { dead: false, hp: 800 }, renderOnly: true, steps: 1 },
-      'Rise',
+      'Idle_Look',
     );
-    await scenario(page, 'recovery idle', { reset: true, steps: 40 }, 'Idle');
+    await scenario(page, 'recovery idle', { reset: true, steps: 40 }, 'Idle_Look');
     console.log('Recording actual gameplay frames');
     report.video = await recordDruidCat(page, out);
     await page.close();

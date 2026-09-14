@@ -47,6 +47,15 @@ arc. Jump ends in a held, extended pose; Land starts from that pose and plays on
 touchdown. Combat anticipation, strike and recovery are authored separately.
 Pounce does not invent a movement mechanic for the existing stun ability.
 
+## The compact 17-clip set
+
+v15 retired nine clips to shrink the shipped file: Idle, CombatIdle, SwimIdle,
+SwimSurface, Sit, SitDown, Rise, Wade and Hit_Right. Idle_Look is the idle,
+Swim is the one water clip and Hit_Left the one flinch; combat idle, sitting,
+wading and the flourish fall back to the base machine's idle / walk. The clip
+map, the ship spec's keepClips, the asset and runtime pins and the acceptance
+drive all name exactly these 17.
+
 ## Revision lineage and the stalk crouch
 
 The shipped clips come from the Codex revision chain v3 to v11 over the same rig
@@ -81,9 +90,12 @@ node scripts/build_media_manifest.mjs generate
 npx vitest run tests/druid_cat_asset.test.ts tests/druid_cat_animation.test.ts
 ```
 
-The compressor requires Khronos `ktx` on PATH or its directory in `KTX_BIN`.
-It retains the detailed Tripo texture with the project's UASTC policy. Never
-ship the intermediate webp-textured GLB or simplify this skinned mesh.
+The texture step is `encode_ktx2.mjs` in this directory (needs Khronos `ktx`,
+see `compress_glb_textures.mjs` for the install) rather than the shared
+compressor: the shared script's Tripo rule picks UASTC, which costs 1.19 MB at
+1024, while ETC1S holds the fur at 169 KB and keeps the whole 17-clip GLB at
+888 KB. Never ship the intermediate webp-textured GLB or simplify this skinned
+mesh.
 
 At normalized height 1.92 (a fifth above the world wolves; measured at 1.1 and scaled by 1.92/1.1), planted-paw measurements give Walk 2.78992,
 WalkBack 4.82101, Run 9.13075, ProwlWalk 5.47846 and Wade 4.82105 game units/second.

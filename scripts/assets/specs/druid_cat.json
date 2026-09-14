@@ -6,9 +6,7 @@
       "type": "character",
       "maxTex": 1024,
       "keepClips": [
-        "Idle",
         "Idle_Look",
-        "CombatIdle",
         "Walk",
         "WalkBack",
         "Run",
@@ -23,15 +21,8 @@
         "Pounce",
         "Finisher",
         "Hit_Left",
-        "Hit_Right",
         "Death",
-        "SitDown",
-        "Sit",
-        "Swim",
-        "SwimSurface",
-        "SwimIdle",
-        "Wade",
-        "Rise"
+        "Swim"
       ]
     }
   ]
