@@ -391,9 +391,7 @@ describe('druid cat shipping animation asset', () => {
             ? VISUALS.form_cat.walkBackRef
             : name === 'Run'
               ? VISUALS.form_cat.runRef
-              : name === 'Wade'
-                ? VISUALS.form_cat.wadeRef
-                : VISUALS.form_cat.prowlRef;
+              : VISUALS.form_cat.prowlRef;
       expect(actualRef).toBe(ref);
     },
   );
