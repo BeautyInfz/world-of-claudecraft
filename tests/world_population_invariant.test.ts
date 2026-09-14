@@ -10,7 +10,6 @@
 // Deliberately driven through the real Sim and the real content tables: the
 // point is to exercise every shipped escort, not a fixture.
 import { describe, expect, it } from 'vitest';
-import { HUB_HEALING_DUMMY_ID, HUB_TRAINING_DUMMY_ID } from '../src/sim/content/practice_dummies';
 import {
   HEALING_DUMMY_CASTER_ID,
   HEALING_DUMMY_RANGER_ID,
@@ -18,6 +17,7 @@ import {
   HEALING_DUMMY_SOLDIER_ID,
   HEALING_DUMMY_TANK_ID,
 } from '../src/sim/content/healing_training';
+import { HUB_HEALING_DUMMY_ID, HUB_TRAINING_DUMMY_ID } from '../src/sim/content/practice_dummies';
 import { CAMPS, DUNGEON_X_THRESHOLD, ESCORTS, MOBS } from '../src/sim/data';
 import { Sim } from '../src/sim/sim';
 import type { Entity } from '../src/sim/types';
