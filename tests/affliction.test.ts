@@ -1229,46 +1229,49 @@ describe('Affliction Warlock', () => {
     expect(doomValue(sim.player)).toBe(9);
   });
 
-  it.each([
-    1, 2, 3,
-  ])('spends %i Fate Threads at Consume start and adds one Condemnation per Thread per tick', (threadCount) => {
-    const sim = makeAffliction();
-    const target = addTarget(sim);
-    finishCast(sim, 'evil_eye', target);
-    for (let cast = 0; cast < threadCount; cast++) {
-      finishCast(sim, 'needle_of_fate', target);
-    }
-    consumeDoom(ctx(sim), sim.player);
-    const primaryEye = target.auras.find((aura) => aura.kind === 'affliction_eye');
-    if (!primaryEye) throw new Error('Expected primary Evil Eye');
-    primaryEye.tickTimer = 1000;
-    sim.targetEntity(target.id);
-    sim.player.resource = sim.player.maxResource;
+  it.each([1, 2, 3])(
+    'spends %i Fate Threads at Consume start and adds one Condemnation per Thread per tick',
+    (threadCount) => {
+      const sim = makeAffliction();
+      const target = addTarget(sim);
+      finishCast(sim, 'evil_eye', target);
+      for (let cast = 0; cast < threadCount; cast++) {
+        finishCast(sim, 'needle_of_fate', target);
+      }
+      consumeDoom(ctx(sim), sim.player);
+      const primaryEye = target.auras.find((aura) => aura.kind === 'affliction_eye');
+      if (!primaryEye) throw new Error('Expected primary Evil Eye');
+      primaryEye.tickTimer = 1000;
+      sim.targetEntity(target.id);
+      sim.player.resource = sim.player.maxResource;
 
-    sim.castAbility('drain_life');
+      sim.castAbility('drain_life');
 
-    expect(ownedFateThreads(sim.player)).toBe(0);
-    expect(
-      sim.player.auras.find((aura) => aura.kind === 'affliction_consume_threads')?.stacks,
-    ).toBe(threadCount);
-    const doomDeltas: number[] = [];
-    let previousDoom = doomValue(sim.player);
-    for (
-      let tick = 0;
-      tick < 20 * 7 && (sim.player.castingAbility || ctx(sim).pendingProjectiles.length > 0);
-      tick++
-    ) {
-      sim.tick();
-      const currentDoom = doomValue(sim.player);
-      if (currentDoom === previousDoom) continue;
-      doomDeltas.push(currentDoom - previousDoom);
-      previousDoom = currentDoom;
-    }
+      expect(ownedFateThreads(sim.player)).toBe(0);
+      expect(
+        sim.player.auras.find((aura) => aura.kind === 'affliction_consume_threads')?.stacks,
+      ).toBe(threadCount);
+      const doomDeltas: number[] = [];
+      let previousDoom = doomValue(sim.player);
+      for (
+        let tick = 0;
+        tick < 20 * 7 && (sim.player.castingAbility || ctx(sim).pendingProjectiles.length > 0);
+        tick++
+      ) {
+        sim.tick();
+        const currentDoom = doomValue(sim.player);
+        if (currentDoom === previousDoom) continue;
+        doomDeltas.push(currentDoom - previousDoom);
+        previousDoom = currentDoom;
+      }
 
-    expect(doomDeltas).toEqual([...Array(3).fill(2 + threadCount), 3]);
-    expect(doomValue(sim.player)).toBe(9 + threadCount * 3);
-    expect(sim.player.auras.some((aura) => aura.kind === 'affliction_consume_threads')).toBe(false);
-  });
+      expect(doomDeltas).toEqual([...Array(3).fill(2 + threadCount), 3]);
+      expect(doomValue(sim.player)).toBe(9 + threadCount * 3);
+      expect(sim.player.auras.some((aura) => aura.kind === 'affliction_consume_threads')).toBe(
+        false,
+      );
+    },
+  );
 
   it('still spends Fate Threads when Consume is interrupted and does not leak their bonus', () => {
     const sim = makeAffliction();

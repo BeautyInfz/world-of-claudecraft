@@ -12528,10 +12528,10 @@ export class Hud {
                 this.chatLogFrom(
                   ev.from,
                   text,
-                CHAT_TEMPLATE_KEYS.raidWarning,
-                'raidWarning',
-                ev.fromPid,
-                ev.flair,
+                  CHAT_TEMPLATE_KEYS.raidWarning,
+                  'raidWarning',
+                  ev.fromPid,
+                  ev.flair,
                   ev.fromTitle,
                   ev.classId,
                 );
