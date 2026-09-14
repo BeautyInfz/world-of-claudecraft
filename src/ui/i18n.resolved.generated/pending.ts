@@ -10,6 +10,9 @@
 
 export const pending: Record<string, readonly string[]> = {
   "es": [
+    "devCommand.actions.town.description",
+    "devCommand.actions.town.label",
+    "devCommand.fields.town",
     "entities.mobs.healing_dummy_caster.name",
     "entities.mobs.healing_dummy_ranger.name",
     "entities.mobs.healing_dummy_scout.name",
@@ -145,6 +148,9 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.wocMarket.tabHistory"
   ],
   "es_ES": [
+    "devCommand.actions.town.description",
+    "devCommand.actions.town.label",
+    "devCommand.fields.town",
     "entities.mobs.healing_dummy_caster.name",
     "entities.mobs.healing_dummy_ranger.name",
     "entities.mobs.healing_dummy_scout.name",
@@ -280,6 +286,9 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.wocMarket.tabHistory"
   ],
   "fr_FR": [
+    "devCommand.actions.town.description",
+    "devCommand.actions.town.label",
+    "devCommand.fields.town",
     "entities.mobs.healing_dummy_caster.name",
     "entities.mobs.healing_dummy_ranger.name",
     "entities.mobs.healing_dummy_scout.name",
@@ -413,6 +422,9 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.wocMarket.tabHistory"
   ],
   "fr_CA": [
+    "devCommand.actions.town.description",
+    "devCommand.actions.town.label",
+    "devCommand.fields.town",
     "entities.mobs.healing_dummy_caster.name",
     "entities.mobs.healing_dummy_ranger.name",
     "entities.mobs.healing_dummy_scout.name",
@@ -547,6 +559,9 @@ export const pending: Record<string, readonly string[]> = {
   ],
   "en_CA": [],
   "it_IT": [
+    "devCommand.actions.town.description",
+    "devCommand.actions.town.label",
+    "devCommand.fields.town",
     "entities.mobs.healing_dummy_caster.name",
     "entities.mobs.healing_dummy_ranger.name",
     "entities.mobs.healing_dummy_scout.name",
@@ -682,6 +697,9 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.wocMarket.tabHistory"
   ],
   "de_DE": [
+    "devCommand.actions.town.description",
+    "devCommand.actions.town.label",
+    "devCommand.fields.town",
     "entities.mobs.healing_dummy_caster.name",
     "entities.mobs.healing_dummy_ranger.name",
     "entities.mobs.healing_dummy_scout.name",
@@ -815,6 +833,9 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.wocMarket.tabHistory"
   ],
   "zh_CN": [
+    "devCommand.actions.town.description",
+    "devCommand.actions.town.label",
+    "devCommand.fields.town",
     "hudChrome.pullTimer.countdown",
     "hudChrome.pullTimer.pull",
     "hudChrome.pullTimer.start",
@@ -826,6 +847,9 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.wocMarket.saleTypeBuyNow"
   ],
   "zh_TW": [
+    "devCommand.actions.town.description",
+    "devCommand.actions.town.label",
+    "devCommand.fields.town",
     "hudChrome.pullTimer.countdown",
     "hudChrome.pullTimer.pull",
     "hudChrome.pullTimer.start",
@@ -837,6 +861,9 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.wocMarket.saleTypeBuyNow"
   ],
   "ko_KR": [
+    "devCommand.actions.town.description",
+    "devCommand.actions.town.label",
+    "devCommand.fields.town",
     "hudChrome.pullTimer.countdown",
     "hudChrome.pullTimer.pull",
     "hudChrome.pullTimer.start",
@@ -848,6 +875,9 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.wocMarket.saleTypeBuyNow"
   ],
   "ja_JP": [
+    "devCommand.actions.town.description",
+    "devCommand.actions.town.label",
+    "devCommand.fields.town",
     "hudChrome.pullTimer.countdown",
     "hudChrome.pullTimer.pull",
     "hudChrome.pullTimer.start",
@@ -859,6 +889,9 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.wocMarket.saleTypeBuyNow"
   ],
   "pt_BR": [
+    "devCommand.actions.town.description",
+    "devCommand.actions.town.label",
+    "devCommand.fields.town",
     "entities.mobs.healing_dummy_caster.name",
     "entities.mobs.healing_dummy_ranger.name",
     "entities.mobs.healing_dummy_scout.name",
@@ -994,6 +1027,9 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.wocMarket.tabHistory"
   ],
   "ru_RU": [
+    "devCommand.actions.town.description",
+    "devCommand.actions.town.label",
+    "devCommand.fields.town",
     "hudChrome.pullTimer.countdown",
     "hudChrome.pullTimer.pull",
     "hudChrome.pullTimer.start",
@@ -1005,6 +1041,9 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.wocMarket.saleTypeBuyNow"
   ],
   "cs_CZ": [
+    "devCommand.actions.town.description",
+    "devCommand.actions.town.label",
+    "devCommand.fields.town",
     "entities.mobs.healing_dummy_caster.name",
     "entities.mobs.healing_dummy_ranger.name",
     "entities.mobs.healing_dummy_scout.name",
@@ -1140,6 +1179,9 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.wocMarket.tabHistory"
   ],
   "nl_NL": [
+    "devCommand.actions.town.description",
+    "devCommand.actions.town.label",
+    "devCommand.fields.town",
     "entities.mobs.healing_dummy_caster.name",
     "entities.mobs.healing_dummy_ranger.name",
     "entities.mobs.healing_dummy_scout.name",
@@ -1275,6 +1317,9 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.wocMarket.tabHistory"
   ],
   "pl_PL": [
+    "devCommand.actions.town.description",
+    "devCommand.actions.town.label",
+    "devCommand.fields.town",
     "entities.mobs.healing_dummy_caster.name",
     "entities.mobs.healing_dummy_ranger.name",
     "entities.mobs.healing_dummy_scout.name",
@@ -1410,6 +1455,9 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.wocMarket.tabHistory"
   ],
   "id_ID": [
+    "devCommand.actions.town.description",
+    "devCommand.actions.town.label",
+    "devCommand.fields.town",
     "entities.mobs.healing_dummy_caster.name",
     "entities.mobs.healing_dummy_ranger.name",
     "entities.mobs.healing_dummy_scout.name",
@@ -1545,6 +1593,9 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.wocMarket.tabHistory"
   ],
   "tr_TR": [
+    "devCommand.actions.town.description",
+    "devCommand.actions.town.label",
+    "devCommand.fields.town",
     "entities.mobs.healing_dummy_caster.name",
     "entities.mobs.healing_dummy_ranger.name",
     "entities.mobs.healing_dummy_scout.name",
@@ -1680,6 +1731,9 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.wocMarket.tabHistory"
   ],
   "sv_SE": [
+    "devCommand.actions.town.description",
+    "devCommand.actions.town.label",
+    "devCommand.fields.town",
     "entities.mobs.healing_dummy_caster.name",
     "entities.mobs.healing_dummy_ranger.name",
     "entities.mobs.healing_dummy_scout.name",
@@ -1815,6 +1869,9 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.wocMarket.tabHistory"
   ],
   "vi_VN": [
+    "devCommand.actions.town.description",
+    "devCommand.actions.town.label",
+    "devCommand.fields.town",
     "entities.mobs.healing_dummy_caster.name",
     "entities.mobs.healing_dummy_ranger.name",
     "entities.mobs.healing_dummy_scout.name",
@@ -1950,6 +2007,9 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.wocMarket.tabHistory"
   ],
   "da_DK": [
+    "devCommand.actions.town.description",
+    "devCommand.actions.town.label",
+    "devCommand.fields.town",
     "entities.mobs.healing_dummy_caster.name",
     "entities.mobs.healing_dummy_ranger.name",
     "entities.mobs.healing_dummy_scout.name",
