@@ -689,8 +689,11 @@ interface AttributionTargetFixture {
 // Re-minted for the PR #4036 GPU timer probe merge after PR #4032 through
 // #4035: the renderer probe hooks, screenshot-readback extraction and current
 // release-side renderer leaves combine in one tree. No capture was retaken.
+// Re-minted after extracting the remote-body standing-surface sample and
+// terrain-lean stencil out of renderer.ts, and after adding both sampler
+// modules as explicit provenance leaves. No capture was retaken.
 const PINNED_POLISH_COMPOSITE_FINGERPRINT =
-  '3efa751e20b18ab3e260abfb91667e5de0ae015b49676a5c0196c6aae2142975';
+  '5d89e436ab8829accf48758615432ce84f57c9ba069ed821bbe02106eecf9655';
 
 function validPolishAttributionTargets(): AttributionTargetFixture[] {
   return [
@@ -997,6 +1000,12 @@ describe('Eastbrook polish capture contract', () => {
       rendererIntegrationSha256: await fileSha256(
         EASTBROOK_POLISH_PROVENANCE_INPUTS.rendererIntegration,
       ),
+      entityGroundSampleSha256: await fileSha256(
+        EASTBROOK_POLISH_PROVENANCE_INPUTS.entityGroundSample,
+      ),
+      entityGroundSampleCoreSha256: await fileSha256(
+        EASTBROOK_POLISH_PROVENANCE_INPUTS.entityGroundSampleCore,
+      ),
       entityViewPolicySha256: await fileSha256(EASTBROOK_POLISH_PROVENANCE_INPUTS.entityViewPolicy),
       viewPriorityPolicySha256: await fileSha256(
         EASTBROOK_POLISH_PROVENANCE_INPUTS.viewPriorityPolicy,
@@ -1013,6 +1022,16 @@ describe('Eastbrook polish capture contract', () => {
     });
     expect(policyOnlyChange.fingerprint).not.toBe(provenance.fingerprint);
     expect(policyOnlyChange.components.runtimeRender.entityViewPolicy.sha256).toBe('0'.repeat(64));
+    const samplerChange = deriveEastbrookPolishCompositeProvenance({
+      ...provenanceInputs,
+      entityGroundSampleSha256: '1'.repeat(64),
+    });
+    const samplerCoreChange = deriveEastbrookPolishCompositeProvenance({
+      ...provenanceInputs,
+      entityGroundSampleCoreSha256: '2'.repeat(64),
+    });
+    expect(samplerChange.fingerprint).not.toBe(provenance.fingerprint);
+    expect(samplerCoreChange.fingerprint).not.toBe(provenance.fingerprint);
     // On a mismatch the diagnostics module names the moved leaf against the
     // committed evidence seal, reports whether any fingerprinted input is
     // dirty vs HEAD (the stale-mint hazard: the 2026-08-05 craft-cast pin
@@ -1054,6 +1073,14 @@ describe('Eastbrook polish capture contract', () => {
           sha256: expect.stringMatching(/^[a-f0-9]{64}$/),
         },
         runtimeRender: {
+          entityGroundSample: {
+            path: 'src/render/entity_ground_sample.ts',
+            sha256: expect.stringMatching(/^[a-f0-9]{64}$/),
+          },
+          entityGroundSampleCore: {
+            path: 'src/render/entity_ground_sample_core.ts',
+            sha256: expect.stringMatching(/^[a-f0-9]{64}$/),
+          },
           entityViewPolicy: {
             path: 'src/render/entity_view_policy_core.ts',
             sha256: expect.stringMatching(/^[a-f0-9]{64}$/),
@@ -1927,6 +1954,8 @@ describe('Eastbrook polish capture contract', () => {
       'npcFacings:',
       'polishProvenance',
       'deriveEastbrookPolishCompositeProvenance({',
+      'EASTBROOK_POLISH_PROVENANCE_INPUTS.entityGroundSample',
+      'EASTBROOK_POLISH_PROVENANCE_INPUTS.entityGroundSampleCore',
       'EASTBROOK_POLISH_PROVENANCE_INPUTS.entityViewPolicy',
       'TOWN_CONTRACT',
     ]) {

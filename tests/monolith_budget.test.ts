@@ -904,7 +904,14 @@ const MONOLITHS: MonolithRow[] = [
     // src/render/screenshot_capture.ts, and the current release-side renderer
     // leaves combine with the probe hooks at 12811 lines. Exact merged count,
     // zero slack.
-    ceiling: 12811,
+    // LOWERED after extracting the remote-body standing-surface sample (the
+    // terrain, rift-lift and prop-top read behind the airborne heuristic) into
+    // src/render/entity_ground_sample.ts over the entity_ground_sample_core.ts
+    // cadence, together with the terrain-lean gradient stencil, so a standing
+    // body no longer samples the terrain on every frame or every interval.
+    // Reviewer cadence fix kept that extraction and the current resolved tree
+    // measures 12798 lines. Exact merged count, zero slack.
+    ceiling: 12798,
     seam: 'a new src/render/<thing>.ts module the renderer calls (src/render/CLAUDE.md)',
   },
   {

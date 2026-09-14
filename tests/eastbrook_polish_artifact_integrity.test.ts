@@ -1383,10 +1383,13 @@ const ACCEPTED_POLISH_V2_METADATA_PATH = path.join(REPO_ROOT, POLISH_SEAL_PATH);
 // Re-minted for the PR #4036 GPU timer probe merge after PR #4032 through
 // #4035: the renderer probe hooks, screenshot-readback extraction and current
 // release-side renderer leaves combine in one tree. No capture was retaken.
+// Re-minted after extracting the remote-body standing-surface sample and the
+// terrain-lean stencil out of renderer.ts, and after adding both sampler
+// modules as explicit provenance leaves. No capture was retaken.
 const ACCEPTED_POLISH_V2_METADATA_SHA256 =
-  'f46c4655a253c8a071f828940dff1c0263e7950131ff68020e1f2e158ee6a1ce';
+  '7e5e3c3bbf1f873775a69e61f61a1105286c7f1f33f3fb9ba0a30adaf2eb6364';
 const ACCEPTED_POLISH_V2_COMPOSITE_PROVENANCE =
-  '3efa751e20b18ab3e260abfb91667e5de0ae015b49676a5c0196c6aae2142975';
+  '5d89e436ab8829accf48758615432ce84f57c9ba069ed821bbe02106eecf9655';
 const ACCEPTED_POLISH_V2_METADATA = readJsonFile<CaptureMetadata>(ACCEPTED_POLISH_V2_METADATA_PATH);
 const ACCEPTED_POLISH_V2_PROVENANCE = ACCEPTED_POLISH_V2_METADATA.polishProvenance;
 const ACCEPTED_POLISH_V2_TOWN_CONTRACT = ACCEPTED_POLISH_V2_METADATA.records[0]?.townContract;
@@ -2757,7 +2760,10 @@ describe('Eastbrook polish performance and contact evidence', () => {
       // moved renderer.ts. No capture was retaken.
       // PR #4036 GPU timer probe merge after PR #4032 through #4035:
       // recomputed LAST over the swept evidence. No capture was retaken.
-    ).toBe('ce52f6706f8dbb7b4c30149b83a15d27d3cf5ac42b196e6a858f737aed02cac0');
+      // Remote-body ground-sample extraction (entity_ground_sample.ts and
+      // entity_ground_sample_core.ts): recomputed LAST over the swept evidence.
+      // No capture was retaken.
+    ).toBe('8b98a02b44cab34d719153f96d3b5b7e7f2903a639548cea4272a7980339f516');
   });
 
   it('binds every historical after record to its accepted source and asset provenance', () => {
