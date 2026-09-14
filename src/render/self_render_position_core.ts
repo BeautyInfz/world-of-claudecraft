@@ -153,10 +153,16 @@ export function updateSelfRenderPosition(
       // A replay residual is the same kind of gap: a teleport-scale one is
       // dropped rather than glided (same rule as captureHandoffOffset).
       const residual = reconciled.kind === 'reconciled' ? reconciled.residual : null;
-      if (residual && !exceedsSnapDistance(residual)) {
-        state.offset.x += residual.x;
-        state.offset.y += residual.y;
-        state.offset.z += residual.z;
+      if (residual) {
+        if (exceedsSnapDistance(residual)) {
+          state.offset.x = 0;
+          state.offset.y = 0;
+          state.offset.z = 0;
+        } else {
+          state.offset.x += residual.x;
+          state.offset.y += residual.y;
+          state.offset.z += residual.z;
+        }
       }
       decayOffset(state.offset, dt);
       state.position.x = predicted.x + state.offset.x;

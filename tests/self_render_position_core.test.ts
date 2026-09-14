@@ -343,6 +343,28 @@ describe('updateSelfRenderPosition predictor path', () => {
     expect(state.position).toEqual({ x: 104200, y: 0, z: -1253 });
   });
 
+  it('clears a stale handoff offset when a teleport-scale reconciled residual arrives', () => {
+    const state = createSelfRenderPositionState();
+    state.offset = { x: 2, y: -0.5, z: 1 };
+    const player = playerAt({ x: 0, y: 0, z: 0 }, { x: 0, y: 0, z: 0 });
+    updateSelfRenderPosition(
+      state,
+      player,
+      SEED,
+      1,
+      FRAME_DT,
+      0,
+      {
+        kind: 'reconciled',
+        position: { x: 104200, y: 0, z: -1253 },
+        residual: { x: -104336, y: 0, z: 1365 },
+      },
+      false,
+    );
+    expect(state.offset).toEqual({ x: 0, y: 0, z: 0 });
+    expect(state.position).toEqual({ x: 104200, y: 0, z: -1253 });
+  });
+
   it('clears the handoff offset outright on an authoritative discontinuity', () => {
     const state = createSelfRenderPositionState();
     const player = playerAt({ x: 10, y: 0, z: 0 }, { x: 10, y: 0, z: 0 });
