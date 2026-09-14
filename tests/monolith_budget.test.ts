@@ -452,6 +452,9 @@ const MONOLITHS: MonolithRow[] = [
     // measured combined count is below both parent pins (18574 / 18489).
     // Re-measured at the release/v0.43.0 sync: the review-fix batches
     // and the release's own extractions both landed; wc -l on the merged tree.
+    // LOWERED 18350 -> 18336 at the sell-confirm policy: actionBarIconBg moved
+    // out to src/ui/hud/action_bar/action_bar_icon_bg.ts (a pure key-to-url
+    // resolver), paying for the policy import. Exact count, zero slack.
     // LOWERED 18352 -> 18350 in the review-fix round: the prompt countdown bar
     // moved to createPromptTimeoutBar in src/ui/prompt_dialog.ts alongside the
     // PROMPT_TIMEOUT_MS the sheet's --prompt-timeout-dur mirrors.
@@ -486,7 +489,11 @@ const MONOLITHS: MonolithRow[] = [
     // world-map "grab the paper" pan math moved to mapDragPanCenter in
     // map_pan_core.ts. `wc -l < src/ui/hud.ts` on the resolved v0.43 batch
     // tree is 18339. Exact merged count, zero slack.
-    ceiling: 18339,
+    // Re-measured resolving PR #4035 into the current v0.43 merge probe:
+    // the sell-confirm policy extraction and the later release candidate
+    // extractions compose below both parent pins. `wc -l < src/ui/hud.ts`
+    // on the resolved tree is 18325. Exact merged count, zero slack.
+    ceiling: 18325,
     seam: 'pure view core + thin painter on PainterHost (src/ui/CLAUDE.md)',
   },
   {

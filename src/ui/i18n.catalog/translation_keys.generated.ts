@@ -10888,6 +10888,8 @@ export type TranslationKeyFlat =
   | 'hudChrome.options.clickMoveRight'
   | 'hudChrome.options.combineActionBars'
   | 'hudChrome.options.confirmVendorSell'
+  | 'hudChrome.options.confirmVendorSellMinQuality'
+  | 'hudChrome.options.confirmVendorSellMinQualityNote'
   | 'hudChrome.options.confirmVendorSellNote'
   | 'hudChrome.options.discordPresence'
   | 'hudChrome.options.discordPresenceNote'
