@@ -62,7 +62,7 @@ export const zh_CN: EnTranslations = {
       "x": "X",
       "z": "Z",
       "dungeon": "地下城",
-      "town": "Town",
+      "town": "镇",
       "difficulty": "难度",
       "name": "名称",
       "spec": "专精",
@@ -162,8 +162,8 @@ export const zh_CN: EnTranslations = {
         "description": "移动到精确的世界坐标。"
       },
       "town": {
-        "label": "Town hub",
-        "description": "Teleport to a town hub by name."
+        "label": "城镇中心",
+        "description": "按名字传送到城镇中心。"
       },
       "dungeon": {
         "label": "进入地下城",
@@ -368,10 +368,10 @@ export const zh_CN: EnTranslations = {
       "inProgressError": "就绪确认已在进行中。"
     },
     "pullTimer": {
-      "start": "Pull in {seconds} sec!",
+      "start": "拉入 {seconds} 秒！",
       "cancel": "开怪倒计时已取消。",
       "countdown": "{seconds}",
-      "pull": "PULL!"
+      "pull": "拉！"
     },
     "death": {
       "resurrectAtCorpse": "在尸体旁复活",
@@ -4069,7 +4069,7 @@ export const zh_CN: EnTranslations = {
       "ignoredTab": "已忽略",
       "blockedTab": "屏蔽",
       "who": {
-        "tab": "Who",
+        "tab": "WHO",
         "searchPlaceholder": "名字、区域或公会",
         "search": "搜索",
         "loading": "正在向服务器查询在线玩家...",
@@ -4080,10 +4080,10 @@ export const zh_CN: EnTranslations = {
         "classFilter": "按职业筛选",
         "allClasses": "所有职业",
         "colStatus": "状态",
-        "colName": "Name",
+        "colName": "姓名",
         "colLevel": "等级",
         "colClass": "职业",
-        "colZone": "Zone",
+        "colZone": "区",
         "colGuild": "公会",
         "sortTitle": "按{column}排序"
       },
@@ -5352,11 +5352,11 @@ export const zh_CN: EnTranslations = {
       "colBuyNow": "一口价",
       "colTimeLeft": "剩余时间",
       "colBuyer": "买家",
-      "colSoldAt": "Sold",
+      "colSoldAt": "卖",
       "colSalePrice": "成交价",
-      "colSaleType": "Type",
+      "colSaleType": "类型",
       "saleTypeAuction": "拍卖",
-      "saleTypeBuyNow": "Buy now",
+      "saleTypeBuyNow": "立即购买",
       "saleTypeDirected": "定向出售",
       "saleTypeUnknown": "未知",
       "historyEmpty": "暂无销售记录。",

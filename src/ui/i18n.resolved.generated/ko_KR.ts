@@ -62,7 +62,7 @@ export const ko_KR: EnTranslations = {
       "x": "X",
       "z": "Z",
       "dungeon": "던전",
-      "town": "Town",
+      "town": "도시",
       "difficulty": "난이도",
       "name": "이름",
       "spec": "전문화",
@@ -162,8 +162,8 @@ export const ko_KR: EnTranslations = {
         "description": "정확한 세계 좌표로 이동합니다."
       },
       "town": {
-        "label": "Town hub",
-        "description": "Teleport to a town hub by name."
+        "label": "타운 허브",
+        "description": "이름을 사용하여 타운 허브로 순간이동합니다."
       },
       "dungeon": {
         "label": "던전 입장",
@@ -368,10 +368,10 @@ export const ko_KR: EnTranslations = {
       "inProgressError": "준비 확인이 이미 진행 중입니다."
     },
     "pullTimer": {
-      "start": "Pull in {seconds} sec!",
+      "start": "{seconds}초 동안 당겨보세요!",
       "cancel": "풀 카운트다운이 취소되었습니다.",
       "countdown": "{seconds}",
-      "pull": "PULL!"
+      "pull": "당기다!"
     },
     "death": {
       "resurrectAtCorpse": "시신에서 부활",
@@ -4069,7 +4069,7 @@ export const ko_KR: EnTranslations = {
       "ignoredTab": "무시됨",
       "blockedTab": "차단",
       "who": {
-        "tab": "Who",
+        "tab": "WHO",
         "searchPlaceholder": "이름, 지역 또는 길드",
         "search": "검색",
         "loading": "접속 중인 플레이어를 확인하는 중...",
@@ -4080,10 +4080,10 @@ export const ko_KR: EnTranslations = {
         "classFilter": "직업으로 필터",
         "allClasses": "모든 직업",
         "colStatus": "상태",
-        "colName": "Name",
+        "colName": "이름",
         "colLevel": "레벨",
         "colClass": "직업",
-        "colZone": "Zone",
+        "colZone": "존",
         "colGuild": "길드",
         "sortTitle": "{column} 기준 정렬"
       },
@@ -5352,11 +5352,11 @@ export const ko_KR: EnTranslations = {
       "colBuyNow": "즉시 구매가",
       "colTimeLeft": "남은 시간",
       "colBuyer": "구매자",
-      "colSoldAt": "Sold",
+      "colSoldAt": "판매된",
       "colSalePrice": "판매 가격",
-      "colSaleType": "Type",
+      "colSaleType": "유형",
       "saleTypeAuction": "경매",
-      "saleTypeBuyNow": "Buy now",
+      "saleTypeBuyNow": "지금 구매",
       "saleTypeDirected": "지정 판매",
       "saleTypeUnknown": "알 수 없음",
       "historyEmpty": "아직 판매 기록이 없습니다.",

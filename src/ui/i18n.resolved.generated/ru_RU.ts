@@ -62,7 +62,7 @@ export const ru_RU: EnTranslations = {
       "x": "X",
       "z": "Z",
       "dungeon": "Подземелье",
-      "town": "Town",
+      "town": "Город",
       "difficulty": "Сложность",
       "name": "Имя",
       "spec": "Специализация",
@@ -162,8 +162,8 @@ export const ru_RU: EnTranslations = {
         "description": "Переместиться в точные координаты мира."
       },
       "town": {
-        "label": "Town hub",
-        "description": "Teleport to a town hub by name."
+        "label": "Городской центр",
+        "description": "Телепортируйтесь в центр города по имени."
       },
       "dungeon": {
         "label": "Войти в подземелье",
@@ -368,10 +368,10 @@ export const ru_RU: EnTranslations = {
       "inProgressError": "Проверка готовности уже идёт."
     },
     "pullTimer": {
-      "start": "Pull in {seconds} sec!",
+      "start": "Вытяните {seconds} сек!",
       "cancel": "Таймер начала боя отменён.",
       "countdown": "{seconds}",
-      "pull": "PULL!"
+      "pull": "ТЯНУТЬ!"
     },
     "death": {
       "resurrectAtCorpse": "Воскреснуть у тела",
@@ -4069,7 +4069,7 @@ export const ru_RU: EnTranslations = {
       "ignoredTab": "Игнорируемые",
       "blockedTab": "Заблокированные",
       "who": {
-        "tab": "Who",
+        "tab": "ВОЗ",
         "searchPlaceholder": "Имя, зона или гильдия",
         "search": "Искать",
         "loading": "Запрашиваем у мира, кто в сети...",
@@ -4080,10 +4080,10 @@ export const ru_RU: EnTranslations = {
         "classFilter": "Фильтр по классу",
         "allClasses": "Все классы",
         "colStatus": "Статус",
-        "colName": "Name",
+        "colName": "Имя",
         "colLevel": "Уровень",
         "colClass": "Класс",
-        "colZone": "Zone",
+        "colZone": "Зона",
         "colGuild": "Гильдия",
         "sortTitle": "Сортировать по: {column}"
       },
@@ -5352,11 +5352,11 @@ export const ru_RU: EnTranslations = {
       "colBuyNow": "Выкуп",
       "colTimeLeft": "Осталось",
       "colBuyer": "Покупатель",
-      "colSoldAt": "Sold",
+      "colSoldAt": "Продал",
       "colSalePrice": "Цена продажи",
-      "colSaleType": "Type",
+      "colSaleType": "Тип",
       "saleTypeAuction": "Аукцион",
-      "saleTypeBuyNow": "Buy now",
+      "saleTypeBuyNow": "Купить сейчас",
       "saleTypeDirected": "Адресная продажа",
       "saleTypeUnknown": "Неизвестно",
       "historyEmpty": "Продаж пока нет.",

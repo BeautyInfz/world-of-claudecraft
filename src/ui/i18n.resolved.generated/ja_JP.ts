@@ -62,7 +62,7 @@ export const ja_JP: EnTranslations = {
       "x": "X",
       "z": "Z",
       "dungeon": "ダンジョン",
-      "town": "Town",
+      "town": "町",
       "difficulty": "難易度",
       "name": "名前",
       "spec": "スペック",
@@ -162,8 +162,8 @@ export const ja_JP: EnTranslations = {
         "description": "正確なワールド座標へ移動します。"
       },
       "town": {
-        "label": "Town hub",
-        "description": "Teleport to a town hub by name."
+        "label": "タウンハブ",
+        "description": "名前を指定して町の中心部にテレポートします。"
       },
       "dungeon": {
         "label": "ダンジョンに入る",
@@ -368,10 +368,10 @@ export const ja_JP: EnTranslations = {
       "inProgressError": "準備確認はすでに進行中です。"
     },
     "pullTimer": {
-      "start": "Pull in {seconds} sec!",
+      "start": "{seconds} 秒以内に押してください!",
       "cancel": "プルタイマーをキャンセルしました。",
       "countdown": "{seconds}",
-      "pull": "PULL!"
+      "pull": "引く！"
     },
     "death": {
       "resurrectAtCorpse": "亡骸で復活",
@@ -4069,7 +4069,7 @@ export const ja_JP: EnTranslations = {
       "ignoredTab": "無視中",
       "blockedTab": "ブロック",
       "who": {
-        "tab": "Who",
+        "tab": "誰が",
         "searchPlaceholder": "名前、ゾーン、またはギルド",
         "search": "検索",
         "loading": "オンラインのプレイヤーを確認しています...",
@@ -4080,10 +4080,10 @@ export const ja_JP: EnTranslations = {
         "classFilter": "クラスで絞り込む",
         "allClasses": "すべてのクラス",
         "colStatus": "状態",
-        "colName": "Name",
+        "colName": "名前",
         "colLevel": "レベル",
         "colClass": "クラス",
-        "colZone": "Zone",
+        "colZone": "ゾーン",
         "colGuild": "ギルド",
         "sortTitle": "{column}で並べ替え"
       },
@@ -5352,11 +5352,11 @@ export const ja_JP: EnTranslations = {
       "colBuyNow": "即決価格",
       "colTimeLeft": "残り時間",
       "colBuyer": "購入者",
-      "colSoldAt": "Sold",
+      "colSoldAt": "販売済み",
       "colSalePrice": "販売価格",
-      "colSaleType": "Type",
+      "colSaleType": "タイプ",
       "saleTypeAuction": "オークション",
-      "saleTypeBuyNow": "Buy now",
+      "saleTypeBuyNow": "今すぐ購入",
       "saleTypeDirected": "指定販売",
       "saleTypeUnknown": "不明",
       "historyEmpty": "まだ販売記録がありません。",
