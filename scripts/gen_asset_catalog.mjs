@@ -40,8 +40,14 @@ function toEntry(full) {
   return { id, category, label, path: `/${rel}` };
 }
 
+// The world foliage field's decimated-bark copies
+// (scripts/assets/decimate_foliage_bark.mjs) are not placeable: an authored
+// map places the full-detail original, at any scale.
+const FOLIAGE_FIELD_COPY = /^foliage\/[a-z]+_\d+_field$/;
+
 const entries = walk(modelsDir)
   .map(toEntry)
+  .filter((e) => !FOLIAGE_FIELD_COPY.test(e.id))
   .sort((a, b) => a.id.localeCompare(b.id));
 
 const byCat = {};

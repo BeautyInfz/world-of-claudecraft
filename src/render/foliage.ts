@@ -209,11 +209,17 @@ const LEAF_UP_NORMAL_BLEND = 0.7;
 const BUCKET_DEPTH = 240;
 
 const MODEL_DIR = 'models/foliage/';
+// Variants the field draws from a `_field` copy with decimated bark
+// (scripts/assets/decimate_foliage_bark.mjs); the great trees, the Thornhollow
+// dressing and the oakTree prop keep the full-detail originals.
+const FIELD_BARK_DECIMATED = { pine: [1, 2, 4], oak: [1, 2, 4, 5], twisted: [1, 2, 3] };
+const treeUrl = (species: keyof typeof FIELD_BARK_DECIMATED, i: number): string =>
+  `${MODEL_DIR}${species}_${i}${FIELD_BARK_DECIMATED[species].includes(i) ? '_field' : ''}.glb`;
 const FOLIAGE_MODEL_URLS_HIGH = {
   // pine_3 is shipped but unused: its 462-tri canopy reads as a dead pole
-  pine: [1, 2, 4, 5].map((i) => `${MODEL_DIR}pine_${i}.glb`),
-  oak: [1, 2, 3, 4, 5].map((i) => `${MODEL_DIR}oak_${i}.glb`),
-  twisted: [1, 2, 3].map((i) => `${MODEL_DIR}twisted_${i}.glb`),
+  pine: [1, 2, 4, 5].map((i) => treeUrl('pine', i)),
+  oak: [1, 2, 3, 4, 5].map((i) => treeUrl('oak', i)),
+  twisted: [1, 2, 3].map((i) => treeUrl('twisted', i)),
   dead: [1, 2, 3].map((i) => `${MODEL_DIR}dead_${i}.glb`),
   rock: [1, 2, 3].map((i) => `${MODEL_DIR}rock_${i}.glb`),
   bush: [`${MODEL_DIR}bush.glb`],
@@ -222,9 +228,9 @@ const FOLIAGE_MODEL_URLS_HIGH = {
   mushroom: [`${MODEL_DIR}mushroom.glb`],
 };
 const FOLIAGE_MODEL_URLS_LOW = {
-  pine: [1].map((i) => `${MODEL_DIR}pine_${i}.glb`),
-  oak: [1].map((i) => `${MODEL_DIR}oak_${i}.glb`),
-  twisted: [1].map((i) => `${MODEL_DIR}twisted_${i}.glb`),
+  pine: [1].map((i) => treeUrl('pine', i)),
+  oak: [1].map((i) => treeUrl('oak', i)),
+  twisted: [1].map((i) => treeUrl('twisted', i)),
   dead: [1].map((i) => `${MODEL_DIR}dead_${i}.glb`),
   rock: [1].map((i) => `${MODEL_DIR}rock_${i}.glb`),
   bush: [`${MODEL_DIR}bush.glb`],
