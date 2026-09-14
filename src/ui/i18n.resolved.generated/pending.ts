@@ -10,6 +10,11 @@
 
 export const pending: Record<string, readonly string[]> = {
   "es": [
+    "entities.mobs.healing_dummy_caster.name",
+    "entities.mobs.healing_dummy_ranger.name",
+    "entities.mobs.healing_dummy_scout.name",
+    "entities.mobs.healing_dummy_soldier.name",
+    "entities.mobs.healing_dummy_tank.name",
     "guide.interfacePage.framesGovernedTalkingHead",
     "hudChrome.bugReport.online",
     "hudChrome.charSidebar.crafting",
@@ -126,6 +131,11 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.wocMarket.tabHistory"
   ],
   "es_ES": [
+    "entities.mobs.healing_dummy_caster.name",
+    "entities.mobs.healing_dummy_ranger.name",
+    "entities.mobs.healing_dummy_scout.name",
+    "entities.mobs.healing_dummy_soldier.name",
+    "entities.mobs.healing_dummy_tank.name",
     "guide.interfacePage.framesGovernedTalkingHead",
     "hudChrome.bugReport.online",
     "hudChrome.charSidebar.crafting",
@@ -242,6 +252,11 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.wocMarket.tabHistory"
   ],
   "fr_FR": [
+    "entities.mobs.healing_dummy_caster.name",
+    "entities.mobs.healing_dummy_ranger.name",
+    "entities.mobs.healing_dummy_scout.name",
+    "entities.mobs.healing_dummy_soldier.name",
+    "entities.mobs.healing_dummy_tank.name",
     "guide.interfacePage.framesGovernedTalkingHead",
     "hudChrome.bugReport.online",
     "hudChrome.charSidebar.crafting",
@@ -358,6 +373,11 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.wocMarket.tabHistory"
   ],
   "fr_CA": [
+    "entities.mobs.healing_dummy_caster.name",
+    "entities.mobs.healing_dummy_ranger.name",
+    "entities.mobs.healing_dummy_scout.name",
+    "entities.mobs.healing_dummy_soldier.name",
+    "entities.mobs.healing_dummy_tank.name",
     "guide.interfacePage.framesGovernedTalkingHead",
     "hudChrome.bugReport.online",
     "hudChrome.charSidebar.crafting",
@@ -475,6 +495,11 @@ export const pending: Record<string, readonly string[]> = {
   ],
   "en_CA": [],
   "it_IT": [
+    "entities.mobs.healing_dummy_caster.name",
+    "entities.mobs.healing_dummy_ranger.name",
+    "entities.mobs.healing_dummy_scout.name",
+    "entities.mobs.healing_dummy_soldier.name",
+    "entities.mobs.healing_dummy_tank.name",
     "guide.interfacePage.framesGovernedTalkingHead",
     "hudChrome.bugReport.online",
     "hudChrome.charSidebar.crafting",
@@ -591,6 +616,11 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.wocMarket.tabHistory"
   ],
   "de_DE": [
+    "entities.mobs.healing_dummy_caster.name",
+    "entities.mobs.healing_dummy_ranger.name",
+    "entities.mobs.healing_dummy_scout.name",
+    "entities.mobs.healing_dummy_soldier.name",
+    "entities.mobs.healing_dummy_tank.name",
     "guide.interfacePage.framesGovernedTalkingHead",
     "hudChrome.bugReport.online",
     "hudChrome.charSidebar.crafting",
@@ -707,6 +737,11 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.wocMarket.tabHistory"
   ],
   "zh_CN": [
+    "entities.mobs.healing_dummy_caster.name",
+    "entities.mobs.healing_dummy_ranger.name",
+    "entities.mobs.healing_dummy_scout.name",
+    "entities.mobs.healing_dummy_soldier.name",
+    "entities.mobs.healing_dummy_tank.name",
     "hudChrome.questTracker.objectiveValue",
     "hudChrome.recipeTracker.haveNeed",
     "hudChrome.recipeTracker.resultCount",
@@ -715,6 +750,11 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.wocMarket.saleTypeBuyNow"
   ],
   "zh_TW": [
+    "entities.mobs.healing_dummy_caster.name",
+    "entities.mobs.healing_dummy_ranger.name",
+    "entities.mobs.healing_dummy_scout.name",
+    "entities.mobs.healing_dummy_soldier.name",
+    "entities.mobs.healing_dummy_tank.name",
     "hudChrome.questTracker.objectiveValue",
     "hudChrome.recipeTracker.haveNeed",
     "hudChrome.recipeTracker.resultCount",
@@ -723,6 +763,11 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.wocMarket.saleTypeBuyNow"
   ],
   "ko_KR": [
+    "entities.mobs.healing_dummy_caster.name",
+    "entities.mobs.healing_dummy_ranger.name",
+    "entities.mobs.healing_dummy_scout.name",
+    "entities.mobs.healing_dummy_soldier.name",
+    "entities.mobs.healing_dummy_tank.name",
     "hudChrome.questTracker.objectiveValue",
     "hudChrome.recipeTracker.haveNeed",
     "hudChrome.recipeTracker.resultCount",
@@ -731,6 +776,11 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.wocMarket.saleTypeBuyNow"
   ],
   "ja_JP": [
+    "entities.mobs.healing_dummy_caster.name",
+    "entities.mobs.healing_dummy_ranger.name",
+    "entities.mobs.healing_dummy_scout.name",
+    "entities.mobs.healing_dummy_soldier.name",
+    "entities.mobs.healing_dummy_tank.name",
     "hudChrome.questTracker.objectiveValue",
     "hudChrome.recipeTracker.haveNeed",
     "hudChrome.recipeTracker.resultCount",
@@ -739,6 +789,11 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.wocMarket.saleTypeBuyNow"
   ],
   "pt_BR": [
+    "entities.mobs.healing_dummy_caster.name",
+    "entities.mobs.healing_dummy_ranger.name",
+    "entities.mobs.healing_dummy_scout.name",
+    "entities.mobs.healing_dummy_soldier.name",
+    "entities.mobs.healing_dummy_tank.name",
     "guide.interfacePage.framesGovernedTalkingHead",
     "hudChrome.bugReport.online",
     "hudChrome.charSidebar.crafting",
@@ -855,6 +910,11 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.wocMarket.tabHistory"
   ],
   "ru_RU": [
+    "entities.mobs.healing_dummy_caster.name",
+    "entities.mobs.healing_dummy_ranger.name",
+    "entities.mobs.healing_dummy_scout.name",
+    "entities.mobs.healing_dummy_soldier.name",
+    "entities.mobs.healing_dummy_tank.name",
     "hudChrome.questTracker.objectiveValue",
     "hudChrome.recipeTracker.haveNeed",
     "hudChrome.recipeTracker.resultCount",
@@ -863,6 +923,11 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.wocMarket.saleTypeBuyNow"
   ],
   "cs_CZ": [
+    "entities.mobs.healing_dummy_caster.name",
+    "entities.mobs.healing_dummy_ranger.name",
+    "entities.mobs.healing_dummy_scout.name",
+    "entities.mobs.healing_dummy_soldier.name",
+    "entities.mobs.healing_dummy_tank.name",
     "guide.interfacePage.framesGovernedTalkingHead",
     "hudChrome.bugReport.online",
     "hudChrome.charSidebar.crafting",
@@ -979,6 +1044,11 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.wocMarket.tabHistory"
   ],
   "nl_NL": [
+    "entities.mobs.healing_dummy_caster.name",
+    "entities.mobs.healing_dummy_ranger.name",
+    "entities.mobs.healing_dummy_scout.name",
+    "entities.mobs.healing_dummy_soldier.name",
+    "entities.mobs.healing_dummy_tank.name",
     "guide.interfacePage.framesGovernedTalkingHead",
     "hudChrome.bugReport.online",
     "hudChrome.charSidebar.crafting",
@@ -1095,6 +1165,11 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.wocMarket.tabHistory"
   ],
   "pl_PL": [
+    "entities.mobs.healing_dummy_caster.name",
+    "entities.mobs.healing_dummy_ranger.name",
+    "entities.mobs.healing_dummy_scout.name",
+    "entities.mobs.healing_dummy_soldier.name",
+    "entities.mobs.healing_dummy_tank.name",
     "guide.interfacePage.framesGovernedTalkingHead",
     "hudChrome.bugReport.online",
     "hudChrome.charSidebar.crafting",
@@ -1211,6 +1286,11 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.wocMarket.tabHistory"
   ],
   "id_ID": [
+    "entities.mobs.healing_dummy_caster.name",
+    "entities.mobs.healing_dummy_ranger.name",
+    "entities.mobs.healing_dummy_scout.name",
+    "entities.mobs.healing_dummy_soldier.name",
+    "entities.mobs.healing_dummy_tank.name",
     "guide.interfacePage.framesGovernedTalkingHead",
     "hudChrome.bugReport.online",
     "hudChrome.charSidebar.crafting",
@@ -1327,6 +1407,11 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.wocMarket.tabHistory"
   ],
   "tr_TR": [
+    "entities.mobs.healing_dummy_caster.name",
+    "entities.mobs.healing_dummy_ranger.name",
+    "entities.mobs.healing_dummy_scout.name",
+    "entities.mobs.healing_dummy_soldier.name",
+    "entities.mobs.healing_dummy_tank.name",
     "guide.interfacePage.framesGovernedTalkingHead",
     "hudChrome.bugReport.online",
     "hudChrome.charSidebar.crafting",
@@ -1443,6 +1528,11 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.wocMarket.tabHistory"
   ],
   "sv_SE": [
+    "entities.mobs.healing_dummy_caster.name",
+    "entities.mobs.healing_dummy_ranger.name",
+    "entities.mobs.healing_dummy_scout.name",
+    "entities.mobs.healing_dummy_soldier.name",
+    "entities.mobs.healing_dummy_tank.name",
     "guide.interfacePage.framesGovernedTalkingHead",
     "hudChrome.bugReport.online",
     "hudChrome.charSidebar.crafting",
@@ -1559,6 +1649,11 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.wocMarket.tabHistory"
   ],
   "vi_VN": [
+    "entities.mobs.healing_dummy_caster.name",
+    "entities.mobs.healing_dummy_ranger.name",
+    "entities.mobs.healing_dummy_scout.name",
+    "entities.mobs.healing_dummy_soldier.name",
+    "entities.mobs.healing_dummy_tank.name",
     "guide.interfacePage.framesGovernedTalkingHead",
     "hudChrome.bugReport.online",
     "hudChrome.charSidebar.crafting",
@@ -1675,6 +1770,11 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.wocMarket.tabHistory"
   ],
   "da_DK": [
+    "entities.mobs.healing_dummy_caster.name",
+    "entities.mobs.healing_dummy_ranger.name",
+    "entities.mobs.healing_dummy_scout.name",
+    "entities.mobs.healing_dummy_soldier.name",
+    "entities.mobs.healing_dummy_tank.name",
     "guide.interfacePage.framesGovernedTalkingHead",
     "hudChrome.bugReport.online",
     "hudChrome.charSidebar.crafting",
