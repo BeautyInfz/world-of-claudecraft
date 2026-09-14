@@ -663,13 +663,7 @@ describe('Nythraxis encounter module (N1)', () => {
     nythraxis.updateNythraxisDreadCurse(ctx, boss, st);
     expect(st.dreadCurseHolderId).toBe(dps[0].id);
 
-    teleport(
-      sim,
-      dps[0],
-      boss.spawnPos.x + NYTHRAXIS_ROOM_RADIUS + 5,
-      boss.spawnPos.z,
-      boss.pos.y,
-    );
+    teleport(sim, dps[0], boss.spawnPos.x + NYTHRAXIS_ROOM_RADIUS + 5, boss.spawnPos.z, boss.pos.y);
     ctx.applyTaunt(tank, boss);
     st.dreadCurseTimer = 0.01;
     nythraxis.updateNythraxisDreadCurse(ctx, boss, st);
