@@ -33,7 +33,7 @@ import {
   type TalentModifiers,
   type TalentRowLevel,
 } from '../sim/content/talents';
-import { resolveActiveWeaponSkin, withWeaponSkinApplied } from '../sim/content/weapon_skin_rules';
+import { resolveEntityWeaponSkin } from '../sim/content/weapon_skin_rules';
 import { WEAPON_SKINS } from '../sim/content/weapon_skins';
 import {
   ALL_RECIPES,
@@ -4104,12 +4104,7 @@ export class ClientWorld extends ReconWireState implements IWorld {
       // Same re-resolve the offline Sim does (setPlayerSkin): the body decides
       // which skin types apply, so the optimistic local view must swap the
       // displayed skin with the body rather than wait for the next snapshot.
-      p.weaponSkinId = resolveActiveWeaponSkin(
-        p.templateId,
-        p.mainhandItemId,
-        p.weaponSkinLoadout,
-        catalog,
-      );
+      p.weaponSkinId = resolveEntityWeaponSkin(p);
     }
     this.cmd({ cmd: 'change_skin', skin: idx, catalog });
   }
@@ -4216,12 +4211,7 @@ export class ClientWorld extends ReconWireState implements IWorld {
         // body change and re-resolves like changeSkin and Sim.setPlayerSkin do.
         // Without it a mech hunter's sword skin stayed displayed on a class rig
         // that cannot render one, until the next authoritative snapshot.
-        current.weaponSkinId = resolveActiveWeaponSkin(
-          current.templateId,
-          current.mainhandItemId,
-          current.weaponSkinLoadout,
-          current.skinCatalog,
-        );
+        current.weaponSkinId = resolveEntityWeaponSkin(current);
         this.cosmeticsChanged = true;
       }
     }
