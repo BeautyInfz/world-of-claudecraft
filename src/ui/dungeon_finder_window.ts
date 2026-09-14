@@ -449,7 +449,9 @@ export class DungeonFinderWindow {
         : esc(
             d.lockout === 'daily'
               ? t('hudChrome.finder.lockoutDaily')
-              : t('hudChrome.finder.lockoutNone'),
+              : d.lockout === 'weekly'
+                ? t('hudChrome.finder.lockoutWeekly')
+                : t('hudChrome.finder.lockoutNone'),
           );
     const attunement = d.attunementQuestId
       ? `<div class="df-meta-row">${esc(
