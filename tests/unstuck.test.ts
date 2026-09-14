@@ -1121,6 +1121,43 @@ describe('unstuck area identity', () => {
     expect(meta.moveInput.forward).toBe(false);
   });
 
+  it('completes a battleground ESC attempt when menu neutral input leaves residual wall velocity', () => {
+    const { sim, match, pid } = activeBattleground();
+    const player = forceBattlegroundWallContact(sim, match, pid);
+    const meta = required(sim.meta(pid), 'battleground player metadata');
+    const origin = battlegroundOrigin(match.slot);
+    const wallX = Math.sin(player.facing);
+    const wallZ = Math.cos(player.facing);
+
+    meta.moveInput.forward = false;
+    player.vx = wallX * 0.2;
+    player.vz = wallZ * 0.2;
+    sim.drainEvents();
+
+    expect(sim.unstuck(pid)).toBe(true);
+    sim.drainEvents();
+    const events = tickMany(sim, UNSTUCK_COUNTDOWN_SECONDS * 20);
+    const completed = eventsOf(events).find((event) => event.phase === 'completed');
+
+    expect(completed?.area).toMatchObject({
+      kind: 'battleground',
+      id: 'thornhollow_fields',
+      instanceId: String(match.id),
+      slot: match.slot,
+    });
+    expect(completed?.destination.localX).toBeCloseTo(player.pos.x - origin.x, 6);
+    expect(completed?.destination.localZ).toBeCloseTo(player.pos.z - origin.z, 6);
+    expect(sim.bgMatchFor(pid)).toBe(match);
+    expect(isBgPos(player.pos.x)).toBe(true);
+    expect(
+      Math.hypot(
+        player.pos.x - (origin.x + BG_GRAVEYARDS[0].x),
+        player.pos.z - (origin.z + BG_GRAVEYARDS[0].z),
+      ),
+    ).toBeLessThanOrEqual(Math.hypot(BG_GRAVEYARDS[0].hw, BG_GRAVEYARDS[0].hd));
+    expect(meta.moveInput.forward).toBe(false);
+  });
+
   it('expires the battleground wall-press ESC grace instead of creating a delayed shortcut', () => {
     const { sim, match, pid } = activeBattleground();
     forceBattlegroundWallContact(sim, match, pid);
