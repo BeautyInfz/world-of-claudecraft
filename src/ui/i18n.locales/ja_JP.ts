@@ -893,6 +893,15 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'hudChrome.readyCheck.notReady': '準備未完了',
   'hudChrome.readyCheck.result':
     '準備確認：{ready} 人準備完了、{notReady} 人準備未完了、{noResponse} 人未回答。',
+  'hudChrome.readyCheck.title': '準備確認',
+  'hudChrome.readyCheck.close': '閉じる',
+  'hudChrome.readyCheck.status': '準備完了：{ready}/{total}',
+  'hudChrome.readyCheck.waiting': '応答を待っています...',
+  'hudChrome.readyCheck.memberReady': '{name} は準備完了です。',
+  'hudChrome.readyCheck.memberNotReady': '{name} は準備未完了です。',
+  'hudChrome.readyCheck.memberPending': '{name} はまだ応答していません。',
+  'hudChrome.pullTimer.cancel': 'プルタイマーをキャンセルしました。',
+  'hud.chat.templates.raidWarning': '[レイド警告] {name}: {message}',
   'hudChrome.loot.chestTitle': '宝箱',
   'hudChrome.loot.takeLootButton': '戦利品を取る',
   'hudChrome.loot.takeLootTooltip':

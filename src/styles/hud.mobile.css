@@ -9219,6 +9219,13 @@
     max-height: calc(var(--app-vh, 100dvh) / var(--ui-scale, 1) - 20px);
   }
 
+  body.mobile-touch .crafting-reagent-line,
+  body.mobile-touch .crafting-fee-line,
+  body.mobile-touch .crafting-skill-line {
+    font-size: 13px;
+    overflow-wrap: anywhere;
+  }
+
   /* Raid Warning alert stack (raid_warning_banner.ts) on mobile touch */
   body.mobile-touch #raid-warning-banner {
     top: 6%;

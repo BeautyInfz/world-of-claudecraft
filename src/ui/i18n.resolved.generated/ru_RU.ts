@@ -348,23 +348,23 @@ export const ru_RU: EnTranslations = {
       "banner": "Наблюдение за {name}"
     },
     "readyCheck": {
-      "title": "Ready Check",
-      "close": "Close",
+      "title": "Проверка готовности",
+      "close": "Закрыть",
       "prompt": "{name} начал проверку готовности. Вы готовы?",
       "ready": "Готов",
       "notReady": "Не готов",
-      "status": "Ready: {ready}/{total}",
-      "waiting": "Waiting for responses...",
-      "memberReady": "{name} is ready.",
-      "memberNotReady": "{name} is not ready.",
-      "memberPending": "{name} has not responded yet.",
+      "status": "Готовы: {ready}/{total}",
+      "waiting": "Ожидание ответов...",
+      "memberReady": "{name} готов.",
+      "memberNotReady": "{name} не готов.",
+      "memberPending": "{name} ещё не ответил.",
       "result": "Проверка готовности: {ready} готовы, {notReady} не готовы, {noResponse} без ответа.",
       "notInPartyError": "Чтобы начать проверку готовности, вы должны состоять в группе.",
       "inProgressError": "Проверка готовности уже идёт."
     },
     "pullTimer": {
       "start": "Pull in {seconds} sec!",
-      "cancel": "Pull cancelled.",
+      "cancel": "Таймер начала боя отменён.",
       "countdown": "{seconds}",
       "pull": "PULL!"
     },
@@ -10196,7 +10196,7 @@ export const ru_RU: EnTranslations = {
       "templates": {
         "battleground": "[Поле боя] {name}: {message}",
         "party": "[Группа] {name}: {message}",
-        "raidWarning": "[Raid Warning] {name}: {message}",
+        "raidWarning": "[Рейдовое предупреждение] {name}: {message}",
         "yell": "{name} кричит: {message}",
         "whisper": "{name} шепчет: {message}",
         "toWhisper": "Кому {name}: {message}",

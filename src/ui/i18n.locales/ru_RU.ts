@@ -895,6 +895,15 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'hudChrome.readyCheck.notReady': 'Не готов',
   'hudChrome.readyCheck.result':
     'Проверка готовности: {ready} готовы, {notReady} не готовы, {noResponse} без ответа.',
+  'hudChrome.readyCheck.title': 'Проверка готовности',
+  'hudChrome.readyCheck.close': 'Закрыть',
+  'hudChrome.readyCheck.status': 'Готовы: {ready}/{total}',
+  'hudChrome.readyCheck.waiting': 'Ожидание ответов...',
+  'hudChrome.readyCheck.memberReady': '{name} готов.',
+  'hudChrome.readyCheck.memberNotReady': '{name} не готов.',
+  'hudChrome.readyCheck.memberPending': '{name} ещё не ответил.',
+  'hudChrome.pullTimer.cancel': 'Таймер начала боя отменён.',
+  'hud.chat.templates.raidWarning': '[Рейдовое предупреждение] {name}: {message}',
   'hudChrome.loot.chestTitle': 'Сундук',
   'hudChrome.loot.takeLootButton': 'Взять добычу',
   'hudChrome.loot.takeLootTooltip':

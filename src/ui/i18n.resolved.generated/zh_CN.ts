@@ -348,23 +348,23 @@ export const zh_CN: EnTranslations = {
       "banner": "正在观察 {name}"
     },
     "readyCheck": {
-      "title": "Ready Check",
-      "close": "Close",
+      "title": "就绪确认",
+      "close": "关闭",
       "prompt": "{name} 发起了准备确认。你准备好了吗？",
       "ready": "准备就绪",
       "notReady": "未准备",
-      "status": "Ready: {ready}/{total}",
-      "waiting": "Waiting for responses...",
-      "memberReady": "{name} is ready.",
-      "memberNotReady": "{name} is not ready.",
-      "memberPending": "{name} has not responded yet.",
+      "status": "已就绪：{ready}/{total}",
+      "waiting": "等待回应...",
+      "memberReady": "{name} 已准备就绪。",
+      "memberNotReady": "{name} 尚未准备好。",
+      "memberPending": "{name} 尚未回应。",
       "result": "准备确认：{ready} 人就绪，{notReady} 人未准备，{noResponse} 人未响应。",
       "notInPartyError": "你必须加入队伍才能发起就绪确认。",
       "inProgressError": "就绪确认已在进行中。"
     },
     "pullTimer": {
       "start": "Pull in {seconds} sec!",
-      "cancel": "Pull cancelled.",
+      "cancel": "开怪倒计时已取消。",
       "countdown": "{seconds}",
       "pull": "PULL!"
     },
@@ -10196,7 +10196,7 @@ export const zh_CN: EnTranslations = {
       "templates": {
         "battleground": "[战场] {name}：{message}",
         "party": "[队伍] {name}：{message}",
-        "raidWarning": "[Raid Warning] {name}: {message}",
+        "raidWarning": "[团队警告] {name}：{message}",
         "yell": "{name}大喊：{message}",
         "whisper": "{name}悄悄说：{message}",
         "toWhisper": "对{name}说：{message}",

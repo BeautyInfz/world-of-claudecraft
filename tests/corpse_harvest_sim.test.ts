@@ -2509,8 +2509,10 @@ describe('a pick of nothing but unmapped families is refused, claim intact (#250
     // 191, not 189: the Eastbrook hub practice dummies (src/sim/content/practice_dummies.ts,
     // hub_training_dummy and hub_healing_dummy) ship untagged too, the same shape as the
     // Bone Spike above: they are struck or healed, never harvested, so they grow MOBS
-    // without touching `tagged` either.
-    expect(Object.keys(MOBS).length - tagged.length).toBe(191);
+    // without touching `tagged` either. Plus the five Eastbrook healing-training
+    // role dummies (src/sim/content/healing_training.ts), which are friendly
+    // practice targets, not corpses to butcher: 196.
+    expect(Object.keys(MOBS).length - tagged.length).toBe(196);
     withMixedTemplates(() => {
       const mixed = mixedTemplates();
       expect(mixed.map(([id]) => id).sort()).toEqual(

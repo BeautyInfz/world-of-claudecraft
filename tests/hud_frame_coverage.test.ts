@@ -156,6 +156,9 @@ const FRAME_EXEMPT: Record<string, string> = {
   'arena-status': 'match-scoped arena status strip, pointer-inert',
   'dfinder-proposal-popup': 'transient dungeon-finder proposal popup',
   'bg-proposal-popup': 'transient battleground proposal popup',
+  'raid-warning-banner': 'transient raid warning alert stack, pointer-inert and time-limited',
+  'ready-check-leader-window':
+    'transient party-leader status popup for an active ready check, hidden outside that check',
   'practice-tracker':
     'live DPS readout strip (src/ui/hud/practice/), read-only text: not yet promoted to a movable frame (pre-existing gap, not introduced by this change)',
   'hub-lesson-coach':

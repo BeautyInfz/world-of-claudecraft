@@ -470,7 +470,9 @@ const MONOLITHS: MonolithRow[] = [
     // move-tolerance stand-down) moved into src/ui/touch_peek.ts's
     // bindTooltipTouchPeek, leaving attachTooltip a thin caller passing it
     // isMobile/press/hide/showAt. Exact count, zero slack.
-    ceiling: 18317,
+    // Re-measured after the v0.43 ready-check and raid-warning integration:
+    // `wc -l < src/ui/hud.ts` is 18356. Exact count, zero slack.
+    ceiling: 18356,
     seam: 'pure view core + thin painter on PainterHost (src/ui/CLAUDE.md)',
   },
   {
@@ -1046,7 +1048,9 @@ const MONOLITHS: MonolithRow[] = [
     // measures 11923, below both arms, so the ceiling follows it down. Exact
     // merged count, zero slack: any further growth reds again.
     // Main hotfix integration: combined extractions, exact merged count.
-    ceiling: 11879,
+    // Re-measured after wiring the Eastbrook healing-training spawner into
+    // Sim: `wc -l < src/sim/sim.ts` is 11908. Exact count, zero slack.
+    ceiling: 11908,
     seam: 'a sim system module behind SimContext (src/sim/CLAUDE.md)',
   },
   {

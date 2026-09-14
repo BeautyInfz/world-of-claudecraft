@@ -891,6 +891,15 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.readyCheck.notReady': '준비 안 됨',
   'hudChrome.readyCheck.result':
     '준비 확인: {ready}명 준비 완료, {notReady}명 준비 안 됨, {noResponse}명 무응답.',
+  'hudChrome.readyCheck.title': '준비 확인',
+  'hudChrome.readyCheck.close': '닫기',
+  'hudChrome.readyCheck.status': '준비 완료: {ready}/{total}',
+  'hudChrome.readyCheck.waiting': '응답을 기다리는 중...',
+  'hudChrome.readyCheck.memberReady': '{name} 님은 준비되었습니다.',
+  'hudChrome.readyCheck.memberNotReady': '{name} 님은 준비되지 않았습니다.',
+  'hudChrome.readyCheck.memberPending': '{name} 님은 아직 응답하지 않았습니다.',
+  'hudChrome.pullTimer.cancel': '풀 카운트다운이 취소되었습니다.',
+  'hud.chat.templates.raidWarning': '[공격대 경고] {name}: {message}',
   'hudChrome.loot.chestTitle': '상자',
   'hudChrome.loot.takeLootButton': '전리품 가져가기',
   'hudChrome.loot.takeLootTooltip':

@@ -2694,8 +2694,8 @@
     /* Tracks the var-driven bar thickness above so the text stays vertically
        centred at any playerFrameHeight / targetFrameHeight. */
     line-height: var(--uf-bar-height, 15px);
-    color: #fff;
-    text-shadow: 1px 1px 1px #000;
+    color: var(--color-white);
+    text-shadow: 1px 1px 1px var(--color-keyline);
     font-weight: bold;
     z-index: 4;
   }
@@ -8416,21 +8416,19 @@
     box-sizing: border-box;
   }
   .raid-warning-line {
-    color: #ff5500;
+    color: var(--color-raid-warning-text);
     font-size: 34px;
     font-weight: bold;
     font-family: var(--title-font);
     letter-spacing: 0.8px;
     padding: 8px 26px;
-    border: 1px solid rgba(255, 85, 0, 0.45);
+    border: 1px solid var(--color-raid-warning-border);
     border-radius: 8px;
-    background: rgba(20, 10, 5, 0.8);
+    background: var(--color-raid-warning-bg);
     box-shadow:
-      0 0 18px rgba(255, 85, 0, 0.35),
-      0 4px calc(18px * var(--fx-shadow, 1)) var(--color-art-shadow);
-    text-shadow:
-      0 0 16px rgba(255, 85, 0, 0.85),
-      2px 2px 6px #000;
+      var(--shadow-raid-warning-glow),
+      0 4px 18px var(--color-art-shadow);
+    text-shadow: var(--shadow-raid-warning-text);
     text-align: center;
     white-space: normal;
     overflow-wrap: anywhere;
@@ -8452,45 +8450,43 @@
     transform: translateX(-50%);
     width: 220px;
     min-height: 140px;
-    background: rgba(14, 18, 24, 0.95);
-    border: 1.5px solid #d4af37;
+    background: var(--color-ready-check-bg);
+    border: 1.5px solid var(--color-ready-check-border);
     border-radius: 8px;
-    box-shadow:
-      0 6px 20px rgba(0, 0, 0, 0.75),
-      0 0 10px rgba(212, 175, 55, 0.25);
+    box-shadow: var(--shadow-ready-check);
     padding: 10px 14px;
     z-index: 120;
     pointer-events: auto;
     font-family: var(--font-ui, sans-serif);
-    color: #e8e8e8;
+    color: var(--color-ready-check-text);
     box-sizing: border-box;
   }
   #ready-check-leader-window .rck-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+    border-bottom: 1px solid var(--color-ready-check-rule);
     padding-bottom: 6px;
     margin-bottom: 8px;
   }
   #ready-check-leader-window .rck-title {
     font-weight: bold;
     font-size: 14px;
-    color: #ffd100;
+    color: var(--color-ready-check-title);
     letter-spacing: 0.5px;
     font-family: var(--title-font, sans-serif);
   }
   #ready-check-leader-window .rck-close {
     background: none;
     border: none;
-    color: #999;
+    color: var(--color-ready-check-muted);
     font-size: 16px;
     cursor: pointer;
     padding: 0 4px;
     line-height: 1;
   }
   #ready-check-leader-window .rck-close:hover {
-    color: #fff;
+    color: var(--color-white);
   }
   #ready-check-leader-window .rck-roster {
     display: flex;
@@ -8504,7 +8500,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 3px 6px;
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--color-ready-check-row);
     border-radius: 4px;
   }
   #ready-check-leader-window .rck-name {
@@ -8525,19 +8521,19 @@
     font-weight: bold;
   }
   #ready-check-leader-window .rck-status.rck-yes {
-    color: #2ed573;
-    text-shadow: 0 0 8px rgba(46, 213, 115, 0.7);
+    color: var(--color-ready-check-yes);
+    text-shadow: var(--shadow-ready-check-yes);
   }
   #ready-check-leader-window .rck-status.rck-no {
-    color: #ff4757;
-    text-shadow: 0 0 8px rgba(255, 71, 87, 0.7);
+    color: var(--color-ready-check-no);
+    text-shadow: var(--shadow-ready-check-no);
   }
   #ready-check-leader-window .rck-status-line {
     margin-top: 8px;
     padding-top: 6px;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-top: 1px solid var(--color-ready-check-rule-muted);
     font-size: 11px;
-    color: #aaa;
+    color: var(--color-ready-check-muted-soft);
     text-align: center;
   }
   /* Reduced-motion celebrations (hud.ts showBanner motion=false): the banner

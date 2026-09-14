@@ -92,7 +92,9 @@ describe('mob portrait source manifest', () => {
     // Nythraxis Bone Spike the mechanics redo raises under impaled raiders.
     // 245: plus the Eastbrook hub practice yard's own two dummies
     // (hub_training_dummy, hub_healing_dummy).
-    expect(liveIds).toHaveLength(245);
+    // 250: plus the five Eastbrook healing-training role dummies, each with
+    // its own rendered portrait.
+    expect(liveIds).toHaveLength(250);
     expect(manifest.portraitCount).toBe(liveIds.length);
     expect(manifest.portraits.map((portrait) => portrait.id)).toEqual(liveIds);
     expect(manifest.schemaVersion).toBe(2);
