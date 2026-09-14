@@ -272,8 +272,8 @@ import { applyCharacterFormVisibility } from './entity_gate_stand_in_core';
 import { sampleGroundTilt, sampleStandingSurface } from './entity_ground_sample';
 import {
   createEntityGroundSample,
-  entityGroundSamplePhaseS,
   type EntityGroundSample,
+  entityGroundSamplePhaseS,
 } from './entity_ground_sample_core';
 import {
   entityViewCandidatePriority,

@@ -5,8 +5,8 @@ import {
   createEntityGroundSample,
   ENTITY_GROUND_RESAMPLE_S,
   ENTITY_GROUND_RESAMPLE_YD,
-  entityGroundSamplePhaseS,
   entityGroundSampleDue,
+  entityGroundSamplePhaseS,
 } from '../src/render/entity_ground_sample_core';
 import { PLAYER_MAX_CLIMB_SLOPE } from '../src/sim/pathfind';
 
