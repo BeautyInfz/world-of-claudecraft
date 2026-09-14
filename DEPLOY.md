@@ -849,12 +849,21 @@ For off-box safety, sync the directory to S3 occasionally:
   the warm-up worker was alive on the reporting client, and
   `shader_warm_refusal` carries the cause when it was not (`none` when there is
   none, one `extension-drift` series for the whole family, `other` for a cause
-  this server's vocabulary does not know). Its cardinality is the two active
+  this server's vocabulary does not know). One value is NOT a refusal: `ab:off`
+  marks the `off` arm of the one-release D3D11 A/B experiment on the `auto`
+  setting (`shaderWarmAbArmFor` in `src/render/shader_warm_client_core.ts`), so a
+  refusal-share reading must exclude it while the experiment runs, or the d3d11
+  refusal share roughly doubles. Its cardinality is the two active
   values times that fixed vocabulary, pre-registered at zero like the rest of
   the family. The SQL drill-down is the two client_perf_reports columns behind
   it (`shader_warm_worker_active`, `shader_warm_refusal`, both bounded at
   ingest), plus `raw_summary.shaderWarm` for the per-session detail (mode,
-  setting, backend, and the warmed / held counts).
+  setting, backend, the warmed / held counts, the summed and wall hold time,
+  the cannot-serve releases, and `abArm`, the only field that names the `on`
+  arm). The `held` and `heldReleased` counts include holds a gate asked for
+  while the worker was standing down after a release, which were refused at
+  once and hid nothing. For D3D11 `auto` sessions `raw_summary.shaderWarm.mode`
+  also shifts during the experiment: the `off` arm resolves to `off`.
   `raw_summary` itself is capped in bytes by a priority shed ladder
   (`server/perf_report_shed.ts`): an oversized report loses its biggest,
   least diagnostic blocks one rung at a time and records them under

@@ -298,6 +298,7 @@ function prewarmStats(): NonNullable<NonNullable<PerfSnapshot['renderer']>['prew
         submittedUnits: 2,
         settledUnits: 1,
         failedUnits: 0,
+        rejectedUnits: 0,
         backoffCount: 0,
         noProgressCount: 0,
         lastSettlementMs: 120,
@@ -2084,6 +2085,9 @@ describe('perf reporter world-entry blocks', () => {
       heldWarm: 3,
       heldTimedOut: 1,
       holdMs: 120,
+      holdWallMs: 90,
+      releases: 0,
+      abArm: 'on',
       workerStats: {
         pending: 2,
         inFlight: 1,
@@ -2124,6 +2128,10 @@ describe('perf reporter world-entry blocks', () => {
       warmed: 8,
       held: 4,
       heldTimedOut: 1,
+      holdMs: 120,
+      holdWallMs: 90,
+      releases: 0,
+      abArm: 'on',
     });
     // The two typed fields the server stores as columns.
     expect(body.shaderWarmWorkerActive).toBe(true);
