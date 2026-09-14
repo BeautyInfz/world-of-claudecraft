@@ -5920,6 +5920,12 @@ export const TARGETS = [
       // BEFORE is the same scene on the base checkout (no note).
       { key: 'desktop-ordinary-held', ordinaryHeld: true, selectTab: 'engineering' },
       { key: 'mobile-ordinary-held', ordinaryHeld: true, mobile: true, selectTab: 'engineering' },
+      // The charm-bill retune (five Chime Shards to one): the two charm
+      // recipes on the enchanting tab, with the FULL old bill in the bags
+      // (five shards, fourteen essence, ten dust) so both arms read
+      // craftable and the reagent line, not affordability, is the subject.
+      { key: 'desktop-charm-bill', charmBill: true, selectTab: 'enchanting' },
+      { key: 'mobile-charm-bill', charmBill: true, mobile: true, selectTab: 'enchanting' },
       { key: 'desktop-identity-attuned', identity: true, selectTab: 'alchemy' },
       { key: 'mobile-identity-attuned', identity: true, mobile: true, selectTab: 'alchemy' },
       {
@@ -6029,6 +6035,23 @@ export const TARGETS = [
             const meta = sim?.players?.get(sim.primaryId);
             if (meta) meta.knownRecipes.add('recipe_bronze_hoe');
           }
+          if (staging.charmBill) {
+            for (const [id, n] of [
+              ['arcane_shard', 5],
+              ['arcane_essence', 14],
+              ['arcane_dust', 10],
+            ]) {
+              try {
+                sim?.addItem(id, n);
+              } catch {}
+            }
+            const meta = sim?.players?.get(sim.primaryId);
+            if (meta) {
+              meta.craftSkills = { ...meta.craftSkills, enchanting: 30 };
+              meta.knownRecipes.add('recipe_gatherers_cache');
+              meta.knownRecipes.add('recipe_artisans_eye');
+            }
+          }
           if (staging.identity) {
             // The identity-card framings (phase 22): stub the IWorld read with
             // the professions target's cap-legal attuned Smith, so the card
@@ -6089,6 +6112,7 @@ export const TARGETS = [
           vaultNote: variant?.vaultNote ?? null,
           // The Bronze Hoe ordinary-grade note (named here for the same reason).
           ordinaryHeld: Boolean(variant?.ordinaryHeld),
+          charmBill: Boolean(variant?.charmBill),
         },
       );
       // A first-open crafting window with several icon-bearing recipe rows takes
@@ -6096,7 +6120,7 @@ export const TARGETS = [
       // bags/map windows do (getBoundingClientRect can report 0x0 for 2-4s), so
       // poll for a real size instead of guessing a fixed wait.
       const open = await pollForSize(page, '#crafting-window');
-      if (open && (variant?.fourStates || variant?.discount)) {
+      if (open && (variant?.fourStates || variant?.discount || variant?.charmBill)) {
         // Staging mid-tier craft skills trips the once-ever first-tier
         // explainer modal over the window, on a drain-window delay rather
         // than synchronously; poll-dismiss it so the shot frames the recipe
