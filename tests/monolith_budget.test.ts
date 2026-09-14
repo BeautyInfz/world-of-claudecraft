@@ -885,7 +885,11 @@ const MONOLITHS: MonolithRow[] = [
     // Lowered again when the gather-node shadow shed and reach hide moved
     // behind GatherNodesView.update (the two guard blocks collapsed to one
     // call each and the shadowLightDirection scratch left the renderer).
-    ceiling: 12815,
+    // PR #4017's mounted-rider buff VFX fix extracted view_vfx_pose.ts and
+    // rider_anchor.ts, so its body-attached aura wiring composes with the batch
+    // extraction instead of loosening this row. The resolved tree measures
+    // 12814 lines in src/render/renderer.ts. Exact merged count, zero slack.
+    ceiling: 12814,
     seam: 'a new src/render/<thing>.ts module the renderer calls (src/render/CLAUDE.md)',
   },
   {
