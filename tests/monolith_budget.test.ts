@@ -1075,7 +1075,10 @@ const MONOLITHS: MonolithRow[] = [
     // LOWERED again to 11871 with the Who tab: abilityNeedsLineOfSight moved
     // to src/sim/ability_line_of_sight.ts (a pure rule), paying the two-line
     // inert whoInfo / whoRequest offline arm. Exact resolved count, zero slack.
-    ceiling: 11871,
+    // Market Sweep also moved the flee-eligibility predicate and delve
+    // companion predicate to siblings, paying for the two market sweep
+    // delegates. The composed tree measures 11863. Exact count, zero slack.
+    ceiling: 11863,
     seam: 'a sim system module behind SimContext (src/sim/CLAUDE.md)',
   },
   {
@@ -1511,7 +1514,10 @@ const MONOLITHS: MonolithRow[] = [
     // LOWERED again to 10042 with the Who tab: the /who visibility rule, the
     // filter and both projections moved to server/who_roster.ts, paying the
     // new `who` dispatch case. Exact resolved count, zero slack.
-    ceiling: 10042,
+    // Market Sweep then moved the World Market command bodies to
+    // server/market_commands.ts while the labels stayed here for the scanner.
+    // The composed tree measures 10015. Exact count, zero slack.
+    ceiling: 10015,
     seam: 'a sibling server module; see the hot-path seams in server/CLAUDE.md',
   },
   {
@@ -1659,7 +1665,10 @@ const MONOLITHS: MonolithRow[] = [
     // LOWERED again to 5496 with the Who tab: the social frame's version-skew
     // normalization moved to net/social_frame_wire.ts, paying the who mirror.
     // Exact resolved count, zero headroom.
-    ceiling: 5496,
+    // Market Sweep also moved anchorFields to src/net/anchor_fields.ts, paying
+    // for the two market sweep sends. The composed tree measures 5495. Exact
+    // count, zero slack.
+    ceiling: 5495,
     seam: 'a src/net sibling module (the refactor/net-online split is the template)',
   },
   {

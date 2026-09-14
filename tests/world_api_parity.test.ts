@@ -305,6 +305,8 @@ export const IWORLD_MEMBERS = [
   { name: 'marketList', kind: 'method' },
   { name: 'marketListInstance', kind: 'method' },
   { name: 'marketBuy', kind: 'method' },
+  { name: 'marketSweepQuote', kind: 'method' },
+  { name: 'marketSweep', kind: 'method' },
   { name: 'marketCancel', kind: 'method' },
   { name: 'marketCollect', kind: 'method' },
   // --- Ravenpost mail reads + commands ---
@@ -856,10 +858,12 @@ describe('IWORLD_MEMBERS is the pinned IWorld contract (anti-loosening)', () => 
     // reconciled by arithmetic in the diff. Run `npx vitest run
     // tests/world_api_parity.test.ts` before merge lands to confirm the
     // facet-file exhaustiveness checks (AssertNever) also pass on the fully
-    // resolved production tree.
-    expect(IWORLD_MEMBERS.length).toBe(373);
+    // resolved production tree. The Market Sweep adds marketSweepQuote and
+    // marketSweep (IWorldMarket, both methods), while the Who tab adds
+    // whoInfo (data) and whoRequest (method), leaving 375 (104 data + 271).
+    expect(IWORLD_MEMBERS.length).toBe(375);
     expect(DATA_MEMBERS.length).toBe(104);
-    expect(METHOD_MEMBERS.length).toBe(269);
+    expect(METHOD_MEMBERS.length).toBe(271);
   });
   it('has no duplicate member names', () => {
     const names = IWORLD_MEMBERS.map((m) => m.name);
@@ -1090,6 +1094,8 @@ describe('IWORLD_MEMBERS is the pinned IWorld contract (anti-loosening)', () => 
       'marketListInstance',
       'marketSearch',
       'marketSellPriceCheck',
+      'marketSweep',
+      'marketSweepQuote',
       'mountLessonActive',
       'mountRaceCancel',
       'mountRaceStart',
@@ -1508,6 +1514,8 @@ describe('IWORLD_MEMBERS is the pinned IWorld contract (anti-loosening)', () => 
       'marketListInstance',
       'marketSearch',
       'marketSellPriceCheck',
+      'marketSweep',
+      'marketSweepQuote',
       'mountLessonActive',
       'mountRaceCancel',
       'mountRaceStart',
@@ -2017,6 +2025,8 @@ const FACET_MARKET = [
   'marketList',
   'marketListInstance',
   'marketBuy',
+  'marketSweepQuote',
+  'marketSweep',
   'marketCancel',
   'marketCollect',
 ] as const satisfies readonly (keyof IWorldMarket)[];
@@ -2366,17 +2376,11 @@ describe('W1: aggregate IWorld member set equals the disjoint union of the facet
 
   it('the facet union equals the pinned IWORLD_MEMBERS set', () => {
     const union = Object.values(FACET_MEMBER_ARRAYS).flatMap((arr) => [...arr]);
-    // Mirrors the IWORLD_MEMBERS.length pin above (370), counted directly off
-    // the resolved literal now that src/world_api/inventory.ts,
-    // src/world_api/professions.ts, and src/world_api/combat.ts are resolved:
-    // the merge carries the professions activeMobileStationCrafts rename plus
-    // the release's four Nythraxis data readouts and the resolvedAbility
-    // method common to both parents. Run `npx vitest run
-    // tests/world_api_parity.test.ts` before merge lands to confirm the
-    // facet arrays actually reconstruct IWORLD_MEMBERS with no gaps or
-    // collisions; this pin and the one above must always agree.
-    expect(union.length, 'union size before dedup (catches a duplicated member)').toBe(373);
-    expect(new Set(union).size, 'union size after dedup (catches a duplicated member)').toBe(373);
+    // Mirrors the IWORLD_MEMBERS.length pin above. The composed tree carries
+    // the Who tab's two social-graph members plus Market Sweep's two market
+    // methods, so this pin and the one above must agree at 375.
+    expect(union.length, 'union size before dedup (catches a duplicated member)').toBe(375);
+    expect(new Set(union).size, 'union size after dedup (catches a duplicated member)').toBe(375);
     const sortedUnion = [...union].sort();
     const pinned = IWORLD_MEMBERS.map((m) => m.name).sort();
     expect(sortedUnion).toEqual(pinned);

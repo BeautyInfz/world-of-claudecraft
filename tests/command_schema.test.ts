@@ -168,8 +168,10 @@ const repoRoot = fileURLToPath(new URL('..', import.meta.url));
 // `npx vitest run tests/command_schema.test.ts` before merge lands.
 // +1 send / +1 dispatch for the Social window's Who tab (`who`: a structured
 // realm roster answered by the `who` frame; the chat /who stays as it was).
-const EXPECTED_SEND_COUNT = 223;
-const EXPECTED_DISPATCH_COUNT = 237;
+// Market Sweep composes on top of it with `market_sweep_quote` and
+// `market_sweep`, both client-sent and server-dispatched.
+const EXPECTED_SEND_COUNT = 225;
+const EXPECTED_DISPATCH_COUNT = 239;
 const EXPECTED_DISPATCH_ONLY_COUNT = 14;
 
 // The chat sub-channel routing switch (server/game.ts `switch
