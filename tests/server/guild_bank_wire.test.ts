@@ -16,7 +16,7 @@ function makeHost() {
   };
   // The host runner is what the coordinator sits behind; here it just runs
   // the mutation so the sim call and the op label can both be asserted.
-  const run = vi.fn((_op: string, mutate: () => void) => mutate());
+  const run = vi.fn((_op: string, mutate: () => void, _request?: unknown) => mutate());
   const host: GuildBankWireHost = { sim, run };
   return { host, sim, run };
 }
