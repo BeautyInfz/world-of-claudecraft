@@ -706,6 +706,8 @@ export interface Aura {
   value3?: number; // imbue: judgement max; Greater Invisibility: aftereffect duration
   tickInterval?: number;
   tickTimer?: number;
+  tickDamage?: number;
+  tickDoom?: number;
   // Sim-only periodic ramp: after each resolved DoT tick, increase `stacks`
   // and recompute `value` as per-stack damage times stacks, up to this cap.
   // The wire already mirrors the resulting value/stacks, so clients do not
@@ -3549,6 +3551,8 @@ export type AbilityEffect =
       charges: number;
       doomPerProc: number;
       damage: number;
+      interval?: number;
+      tickDoom?: number;
     }
   | {
       type: 'afflictionCruelPact';

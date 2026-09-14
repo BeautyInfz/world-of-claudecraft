@@ -5221,6 +5221,7 @@ export const ABILITIES: Record<string, AbilityDef> = {
     range: 30,
     school: 'shadow',
     requiresTarget: true,
+    projectile: false,
     effects: [
       {
         type: 'afflictionViolence',
@@ -5228,10 +5229,12 @@ export const ABILITIES: Record<string, AbilityDef> = {
         charges: 3,
         doomPerProc: 7,
         damage: 16,
+        interval: 2,
+        tickDoom: 2,
       },
     ],
     description:
-      'Hexes the enemy for 8 sec. Its next 3 damaging actions each generate 7 Condemnation and lash it for 17 Shadow damage.',
+      'Hexes the enemy for 8 sec, dealing Shadow damage and generating 2 Condemnation every 2 sec. Its next 3 damaging actions each generate 7 Condemnation and lash it for 17 Shadow damage.',
   },
   cruel_pact: {
     id: 'cruel_pact',

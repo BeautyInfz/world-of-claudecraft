@@ -12,6 +12,7 @@ import {
   FATE_THREAD_MAX,
   FATE_THREAD_SENTENCE_DAMAGE_PER_STACK,
   gainDoom,
+  hasAfflictionConsumePushbackImmunity,
   JUDGMENT_SENTENCE_DAMAGE_MULT,
   maledictGazeDamage,
   onAfflictionDamage,
@@ -1228,49 +1229,46 @@ describe('Affliction Warlock', () => {
     expect(doomValue(sim.player)).toBe(9);
   });
 
-  it.each([1, 2, 3])(
-    'spends %i Fate Threads at Consume start and adds one Condemnation per Thread per tick',
-    (threadCount) => {
-      const sim = makeAffliction();
-      const target = addTarget(sim);
-      finishCast(sim, 'evil_eye', target);
-      for (let cast = 0; cast < threadCount; cast++) {
-        finishCast(sim, 'needle_of_fate', target);
-      }
-      consumeDoom(ctx(sim), sim.player);
-      const primaryEye = target.auras.find((aura) => aura.kind === 'affliction_eye');
-      if (!primaryEye) throw new Error('Expected primary Evil Eye');
-      primaryEye.tickTimer = 1000;
-      sim.targetEntity(target.id);
-      sim.player.resource = sim.player.maxResource;
+  it.each([
+    1, 2, 3,
+  ])('spends %i Fate Threads at Consume start and adds one Condemnation per Thread per tick', (threadCount) => {
+    const sim = makeAffliction();
+    const target = addTarget(sim);
+    finishCast(sim, 'evil_eye', target);
+    for (let cast = 0; cast < threadCount; cast++) {
+      finishCast(sim, 'needle_of_fate', target);
+    }
+    consumeDoom(ctx(sim), sim.player);
+    const primaryEye = target.auras.find((aura) => aura.kind === 'affliction_eye');
+    if (!primaryEye) throw new Error('Expected primary Evil Eye');
+    primaryEye.tickTimer = 1000;
+    sim.targetEntity(target.id);
+    sim.player.resource = sim.player.maxResource;
 
-      sim.castAbility('drain_life');
+    sim.castAbility('drain_life');
 
-      expect(ownedFateThreads(sim.player)).toBe(0);
-      expect(
-        sim.player.auras.find((aura) => aura.kind === 'affliction_consume_threads')?.stacks,
-      ).toBe(threadCount);
-      const doomDeltas: number[] = [];
-      let previousDoom = doomValue(sim.player);
-      for (
-        let tick = 0;
-        tick < 20 * 7 && (sim.player.castingAbility || ctx(sim).pendingProjectiles.length > 0);
-        tick++
-      ) {
-        sim.tick();
-        const currentDoom = doomValue(sim.player);
-        if (currentDoom === previousDoom) continue;
-        doomDeltas.push(currentDoom - previousDoom);
-        previousDoom = currentDoom;
-      }
+    expect(ownedFateThreads(sim.player)).toBe(0);
+    expect(
+      sim.player.auras.find((aura) => aura.kind === 'affliction_consume_threads')?.stacks,
+    ).toBe(threadCount);
+    const doomDeltas: number[] = [];
+    let previousDoom = doomValue(sim.player);
+    for (
+      let tick = 0;
+      tick < 20 * 7 && (sim.player.castingAbility || ctx(sim).pendingProjectiles.length > 0);
+      tick++
+    ) {
+      sim.tick();
+      const currentDoom = doomValue(sim.player);
+      if (currentDoom === previousDoom) continue;
+      doomDeltas.push(currentDoom - previousDoom);
+      previousDoom = currentDoom;
+    }
 
-      expect(doomDeltas).toEqual([...Array(3).fill(2 + threadCount), 3]);
-      expect(doomValue(sim.player)).toBe(9 + threadCount * 3);
-      expect(sim.player.auras.some((aura) => aura.kind === 'affliction_consume_threads')).toBe(
-        false,
-      );
-    },
-  );
+    expect(doomDeltas).toEqual([...Array(3).fill(2 + threadCount), 3]);
+    expect(doomValue(sim.player)).toBe(9 + threadCount * 3);
+    expect(sim.player.auras.some((aura) => aura.kind === 'affliction_consume_threads')).toBe(false);
+  });
 
   it('still spends Fate Threads when Consume is interrupted and does not leak their bonus', () => {
     const sim = makeAffliction();
@@ -2346,5 +2344,104 @@ describe('Affliction Warlock', () => {
     resolveSentence(ctx(sim), sim.player, primary, 'Sentence', 1.1);
 
     expect(secondary.hp).toBe(hp);
+  });
+
+  it('grants pushback immunity to Consume when channeling with 3 Fate Threads, but not with fewer', () => {
+    const sim = makeAffliction();
+    const target = addTarget(sim);
+    const attacker = addTarget(sim, 5);
+    finishCast(sim, 'evil_eye', target);
+
+    // 1. Channeling with 0 threads takes normal pushback
+    sim.castAbility('drain_life');
+    expect(sim.player.channeling).toBe(true);
+    const initialRemaining0 = sim.player.castRemaining;
+    ctx(sim).dealDamage(attacker, sim.player, 50, false, 'physical', 'Strike', 'hit');
+    expect(sim.player.castRemaining).toBeLessThan(initialRemaining0);
+
+    // Cancel and reset
+    ctx(sim).cancelCast(sim.player);
+    sim.player.gcdRemaining = 0;
+
+    // 2. Channeling with 3 threads is immune to damage pushback
+    for (let cast = 0; cast < 3; cast++) {
+      finishCast(sim, 'needle_of_fate', target);
+    }
+    expect(ownedFateThreads(sim.player)).toBe(3);
+    sim.castAbility('drain_life');
+    expect(sim.player.channeling).toBe(true);
+    expect(hasAfflictionConsumePushbackImmunity(sim.player)).toBe(true);
+    const initialRemaining3 = sim.player.castRemaining;
+    ctx(sim).dealDamage(attacker, sim.player, 50, false, 'physical', 'Strike', 'hit');
+    // Time remaining should NOT be reduced by damage pushback
+    expect(sim.player.castRemaining).toBe(initialRemaining3);
+  });
+
+  it('ticks Hex of Violence periodically as a DoT and scales its periodic damage with Spell Power', () => {
+    const sim = makeAffliction();
+    const target = addTarget(sim);
+    finishCast(sim, 'evil_eye', target);
+    consumeDoom(ctx(sim), sim.player);
+
+    const eyeAura = target.auras.find((a) => a.kind === 'affliction_eye');
+    if (eyeAura) eyeAura.tickTimer = 1000; // prevent maledict gaze interference
+
+    finishCast(sim, 'hex_of_violence', target);
+    const violenceAura = target.auras.find((a) => a.id === 'hex_of_violence');
+    expect(violenceAura).toBeDefined();
+    expect(violenceAura?.tickInterval).toBe(2);
+
+    const baseTickDamage = violenceAura?.tickDamage ?? 0;
+    expect(baseTickDamage).toBeGreaterThan(16); // 16 base + spell power scaling
+
+    // Advance 2 seconds (40 ticks at 20 Hz)
+    const hpBefore = target.hp;
+    const doomBefore = doomValue(sim.player);
+    for (let i = 0; i < 40; i++) sim.tick();
+
+    expect(target.hp).toBeLessThan(hpBefore);
+    expect(doomValue(sim.player)).toBeGreaterThan(doomBefore);
+  });
+
+  it('keeps Hex of Violence ticking for its full duration after all 3 reactive charges are consumed', () => {
+    const sim = makeAffliction();
+    const target = addTarget(sim);
+    const victimId = sim.addPlayer('warrior', 'Victim');
+    const victim = sim.entities.get(victimId);
+    if (!victim) throw new Error('Expected victim');
+    victim.pos = { ...sim.player.pos };
+
+    finishCast(sim, 'evil_eye', target);
+    finishCast(sim, 'hex_of_violence', target);
+
+    const violence = target.auras.find((a) => a.id === 'hex_of_violence');
+    expect(violence?.charges).toBe(3);
+
+    // Consume all 3 reactive charges
+    for (let hit = 0; hit < 3; hit++) {
+      ctx(sim).dealDamage(target, victim, 10, false, 'physical', 'Claw', 'hit');
+    }
+
+    expect(violence?.charges).toBe(0);
+    // Aura must still be present on target for its DoT duration
+    expect(target.auras.some((a) => a.id === 'hex_of_violence')).toBe(true);
+
+    const hpBefore = target.hp;
+    // Advance 2 seconds for a periodic DoT tick
+    for (let i = 0; i < 40; i++) sim.tick();
+    expect(target.hp).toBeLessThan(hpBefore);
+  });
+
+  it('applies Hex of Violence instantly on cast completion without launching a projectile', () => {
+    const sim = makeAffliction();
+    const target = addTarget(sim, 25);
+    finishCast(sim, 'evil_eye', target);
+
+    expect(ctx(sim).pendingProjectiles.length).toBe(0);
+    sim.targetEntity(target.id);
+    sim.castAbility('hex_of_violence');
+
+    expect(target.auras.some((a) => a.id === 'hex_of_violence')).toBe(true);
+    expect(ctx(sim).pendingProjectiles.length).toBe(0);
   });
 });

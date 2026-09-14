@@ -4031,6 +4031,13 @@ export function runEffects(
       }
       case 'afflictionViolence': {
         if (target) {
+          const spBonus = dotTickBonus(
+            abilityScalingPower(p, ability),
+            ability,
+            eff.duration,
+            eff.interval ?? 2,
+            talentDmgMult * (1 + mods.global.dotDmgPct),
+          );
           applyHexOfViolence(
             ctx,
             p,
@@ -4039,6 +4046,9 @@ export function runEffects(
             eff.charges,
             eff.doomPerProc,
             eff.damage,
+            spBonus,
+            eff.interval ?? 2,
+            eff.tickDoom ?? 2,
           );
         }
         break;

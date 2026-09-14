@@ -540,7 +540,11 @@ export function applyHexOfViolence(
   charges: number,
   doomPerProc: number,
   damage: number,
+  spellPowerBonus = 0,
+  interval = 2,
+  tickDoom = 2,
 ): void {
+  const totalDamage = damage + spellPowerBonus;
   ctx.applyAura(target, {
     id: 'hex_of_violence',
     name: 'Hex of Violence',
@@ -550,6 +554,10 @@ export function applyHexOfViolence(
     value: doomPerProc,
     value2: damage,
     charges,
+    tickInterval: interval,
+    tickTimer: interval,
+    tickDamage: totalDamage,
+    tickDoom,
     sourceId: warlock.id,
     school: 'shadow',
   });
@@ -908,6 +916,12 @@ export function clearAfflictionConsumeThreads(ctx: SimContext, warlock: Entity):
   if (threads) removeOwnedAura(ctx, warlock, threads);
 }
 
+export function hasAfflictionConsumePushbackImmunity(entity: Entity): boolean {
+  return entity.auras.some(
+    (aura) => aura.kind === 'affliction_consume_threads' && (aura.stacks ?? 0) >= FATE_THREAD_MAX,
+  );
+}
+
 export function afflictionConsumeThreadDoomBonus(warlock: Entity): number {
   const threads = warlock.auras.find(
     (aura) => aura.kind === 'affliction_consume_threads' && aura.sourceId === warlock.id,
@@ -1016,6 +1030,38 @@ export function tickAfflictionAura(ctx: SimContext, target: Entity, aura: Aura, 
   }
 }
 
+export function tickHexOfViolence(ctx: SimContext, target: Entity, aura: Aura): void {
+  if (target.dead) return;
+  const warlock = ctx.entities.get(aura.sourceId);
+  if (!warlock || warlock.dead) return;
+  const marked = eyeAura(target, warlock.id);
+  const doomGain = aura.tickDoom ?? 2;
+  gainDoom(ctx, warlock, marked ? eyeGeneration(marked, doomGain, warlock) : doomGain);
+  ctx.emit({
+    type: 'spellfx',
+    sourceId: warlock.id,
+    targetId: target.id,
+    school: 'shadow',
+    fx: 'tick',
+  });
+  const tickDmg = aura.tickDamage ?? aura.value2 ?? 16;
+  ctx.dealDamage(
+    warlock,
+    target,
+    tickDmg,
+    false,
+    'shadow',
+    aura.name,
+    'hit',
+    true,
+    undefined,
+    false,
+    false,
+    false,
+    'hex_of_violence',
+  );
+}
+
 /**
  * A marked enemy that dies pays out one last time. Below the level cap the only
  * reliable generation is Needle of Fate, so normal mobs die long before the pool
@@ -1085,12 +1131,6 @@ export function onAfflictionDamage(
       false,
       'hex_of_violence',
     );
-  }
-  for (let index = source.auras.length - 1; index >= 0; index--) {
-    const aura = source.auras[index];
-    if (aura.kind === 'affliction_violence' && (aura.charges ?? 0) <= 0) {
-      removeOwnedAura(ctx, source, aura);
-    }
   }
 
   for (const accomplice of source.auras) {

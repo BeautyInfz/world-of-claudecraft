@@ -98,6 +98,7 @@ import {
   completeNeedleOfFateCast,
   consumeFateThreadsForDrain,
   gainDoom,
+  hasAfflictionConsumePushbackImmunity,
 } from './affliction';
 import { shouldPreserveQueuedSentence } from './affliction_sentence_queue';
 import {
@@ -884,6 +885,7 @@ export function cancelCast(ctx: SimContext, p: Entity): void {
 
 export function pushbackCast(p: Entity): void {
   if (hasCastShield(p)) return;
+  if (p.castingAbility === 'drain_life' && hasAfflictionConsumePushbackImmunity(p)) return;
   // Item-set caster bonus scales damage-driven pushback (1 = fully immune).
   const factor = 1 - p.castPushbackReduction;
   if (factor <= 0) return;

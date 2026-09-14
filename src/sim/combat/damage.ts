@@ -76,6 +76,7 @@ import { WORLD_BOSS_CORPSE_SECONDS, worldBossLootContributors } from '../world_b
 import {
   afflictionOnDeath,
   clearAfflictionState,
+  hasAfflictionConsumePushbackImmunity,
   mitigateVicariousSuffering,
   onAfflictionDamage,
 } from './affliction';
@@ -164,7 +165,8 @@ function ignoresDamagePushback(ctx: SimContext, target: Entity, abilityId: strin
   return (
     abilityId === 'ghost_wolf' ||
     ABILITIES[abilityId]?.uninterruptible === true ||
-    ctx.resolvedAbility(abilityId, target.id)?.damagePushbackImmune === true
+    ctx.resolvedAbility(abilityId, target.id)?.damagePushbackImmune === true ||
+    (abilityId === 'drain_life' && hasAfflictionConsumePushbackImmunity(target))
   );
 }
 
