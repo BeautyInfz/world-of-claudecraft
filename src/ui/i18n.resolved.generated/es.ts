@@ -348,12 +348,25 @@ export const es: EnTranslations = {
       "banner": "Observando a {name}"
     },
     "readyCheck": {
+      "title": "Ready Check",
+      "close": "Close",
       "prompt": "{name} ha iniciado una comprobación de disponibilidad. ¿Estás listo?",
       "ready": "Listo",
       "notReady": "No está listo",
+      "status": "Ready: {ready}/{total}",
+      "waiting": "Waiting for responses...",
+      "memberReady": "{name} is ready.",
+      "memberNotReady": "{name} is not ready.",
+      "memberPending": "{name} has not responded yet.",
       "result": "Comprobación de disponibilidad: {ready} listos, {notReady} no listos y {noResponse} sin respuesta.",
       "notInPartyError": "Debes estar en un grupo para iniciar una comprobación de disponibilidad.",
       "inProgressError": "Ya hay una comprobación de disponibilidad en curso."
+    },
+    "pullTimer": {
+      "start": "Pull in {seconds} sec!",
+      "cancel": "Pull cancelled.",
+      "countdown": "{seconds}",
+      "pull": "PULL!"
     },
     "death": {
       "resurrectAtCorpse": "Resucitar en el cadáver",
@@ -4558,8 +4571,8 @@ export const es: EnTranslations = {
       "attunedBanner": "Sintonizado: {title}",
       "tierTutorial": {
         "title": "Tu primer nivel",
-        "tierCap": "A profession reaches its first tier at {skill} skill, and each tier improves what it yields or lets you make. Among your craft professions specifically, though, a craft only climbs past rare work once it is one of your two majors.",
-        "radar": "Your craft professions form a wheel. Attune to an adjacent pair and those two crafts become uncapped majors, one craft across the wheel becomes a rare-capped hobby, and the rest lie dormant: their knowledge kept, but capped at common until you take them up again.",
+        "tierCap": "A craft reaches its first tier at {skill} skill, and each tier improves what it can make. But a craft only climbs past rare work once it is one of your two majors.",
+        "radar": "Your professions form a wheel. Attune to an adjacent pair and those two crafts become uncapped majors, one craft across the wheel becomes a rare-capped hobby, and the rest lie dormant: their knowledge kept, but capped at common until you take them up again.",
         "masters": "Los maestros artesanos de los pueblos ofrecen misiones de sintonización. Visita uno para elegir tu camino.",
         "dismiss": "Entendido"
       },
@@ -10183,6 +10196,7 @@ export const es: EnTranslations = {
       "templates": {
         "battleground": "[Campo de batalla] {name}: {message}",
         "party": "[Grupo] {name}: {message}",
+        "raidWarning": "[Raid Warning] {name}: {message}",
         "yell": "{name} grita: {message}",
         "whisper": "{name} susurra: {message}",
         "toWhisper": "A {name}: {message}",

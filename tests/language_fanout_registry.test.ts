@@ -148,6 +148,10 @@ const FANOUT_ARMS: readonly string[] = [
   // would fail as stale rather than as unclassified.
   'this.gatheringGoalController.relocalize|',
   'this.partyFramesPainter.relocalize|',
+  // The leader's ready-check window caches only its bottom status line, since
+  // the roster itself is player names plus icons and the static title/close
+  // chrome rides data-i18n on the page shell.
+  'this.readyCheckLeaderWindow.relocalize|',
   'this.raidBossGuideWindow.relocalize|',
   'this.mapPainter.relocalize|',
   'this.delvePainter.relocalize|',

@@ -348,12 +348,25 @@ export const fr_FR: EnTranslations = {
       "banner": "Vous observez {name}"
     },
     "readyCheck": {
+      "title": "Ready Check",
+      "close": "Close",
       "prompt": "{name} a lancé une vérification de disponibilité. Êtes-vous prêt ?",
       "ready": "Prêt",
       "notReady": "Pas prêt",
+      "status": "Ready: {ready}/{total}",
+      "waiting": "Waiting for responses...",
+      "memberReady": "{name} is ready.",
+      "memberNotReady": "{name} is not ready.",
+      "memberPending": "{name} has not responded yet.",
       "result": "Vérification de disponibilité : {ready} prêts, {notReady} pas prêts, {noResponse} sans réponse.",
       "notInPartyError": "Vous devez être dans un groupe pour lancer une vérification de disponibilité.",
       "inProgressError": "Une vérification de disponibilité est déjà en cours."
+    },
+    "pullTimer": {
+      "start": "Pull in {seconds} sec!",
+      "cancel": "Pull cancelled.",
+      "countdown": "{seconds}",
+      "pull": "PULL!"
     },
     "death": {
       "resurrectAtCorpse": "Ressusciter près du cadavre",
@@ -10183,6 +10196,7 @@ export const fr_FR: EnTranslations = {
       "templates": {
         "battleground": "[Champs de Thornhollow] {name} : {message}",
         "party": "[Groupe] {name} : {message}",
+        "raidWarning": "[Raid Warning] {name}: {message}",
         "yell": "{name} crie : {message}",
         "whisper": "{name} chuchote : {message}",
         "toWhisper": "À {name} : {message}",

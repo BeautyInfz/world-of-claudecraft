@@ -348,12 +348,25 @@ export const de_DE: EnTranslations = {
       "banner": "{name} wird beobachtet"
     },
     "readyCheck": {
+      "title": "Ready Check",
+      "close": "Close",
       "prompt": "{name} hat einen Bereitschaftscheck gestartet. Bist du bereit?",
       "ready": "Bereit",
       "notReady": "Nicht bereit",
+      "status": "Ready: {ready}/{total}",
+      "waiting": "Waiting for responses...",
+      "memberReady": "{name} is ready.",
+      "memberNotReady": "{name} is not ready.",
+      "memberPending": "{name} has not responded yet.",
       "result": "Bereitschaftscheck: {ready} bereit, {notReady} nicht bereit, {noResponse} ohne Antwort.",
       "notInPartyError": "Du musst einer Gruppe angehören, um einen Bereitschaftscheck zu starten.",
       "inProgressError": "Ein Bereitschaftscheck läuft bereits."
+    },
+    "pullTimer": {
+      "start": "Pull in {seconds} sec!",
+      "cancel": "Pull cancelled.",
+      "countdown": "{seconds}",
+      "pull": "PULL!"
     },
     "death": {
       "resurrectAtCorpse": "Am Leichnam wiederbeleben",
@@ -10183,6 +10196,7 @@ export const de_DE: EnTranslations = {
       "templates": {
         "battleground": "[Schlachtfeld] {name}: {message}",
         "party": "[Gruppe] {name}: {message}",
+        "raidWarning": "[Raid Warning] {name}: {message}",
         "yell": "{name} schreit: {message}",
         "whisper": "{name} flüstert: {message}",
         "toWhisper": "An {name}: {message}",

@@ -658,7 +658,6 @@ const DOM_GLOBAL_VALUE_ALLOWLIST = new Set([join(repoRoot, 'src/ui/safe_local_st
 // identity tint terms in UnrealBloom's composite shader.
 const RENDER_PURE_CORES = [
   'src/render/arena_wall_occlusion_core.ts',
-  'src/render/gather_batch_reach_core.ts',
   'src/render/outdoor_light_rig_core.ts',
   'src/render/wall_backface_cull_core.ts',
   'src/render/dungeon_banner_core.ts',
@@ -688,6 +687,8 @@ const RENDER_PURE_CORES = [
   'src/render/characters/anim_state_entity_core.ts',
   'src/render/characters/death_grounding_core.ts',
   'src/render/entry_detail_horizon_core.ts',
+  'src/render/gather_batch_reach_core.ts',
+  'src/render/zone_feature_cells_core.ts',
   'src/render/characters/portrait_bitmap_transfer_core.ts',
   'src/render/characters/portrait_capture_lane_core.ts',
   'src/render/quest_beacon_core.ts',
@@ -888,7 +889,6 @@ const RENDER_PURE_CORES = [
   'src/render/weapon_vfx_apply_queue_core.ts',
   'src/render/weapon_vfx_emissive_core.ts',
   'src/render/zone_dressing_lod_core.ts',
-  'src/render/zone_feature_cells_core.ts',
   'src/render/zone_feature_visibility_core.ts',
   'src/render/zone_eviction_core.ts',
   'src/render/zone_prewarm_templates_core.ts',
@@ -2453,6 +2453,7 @@ const UI_DOM_MODULES = [
   'src/ui/chat_command_menu.ts',
   'src/ui/claudium_window.ts',
   'src/ui/continent_art.ts',
+  'src/ui/touch_peek.ts',
   'src/ui/hud/professions/crafting_window.ts',
   'src/ui/hud/professions/commission_order_window.ts',
   // The spin celebration's live element: created, listened to, mounted on
@@ -2582,6 +2583,7 @@ const UI_DOM_MODULES = [
   'src/ui/hud/professions/professions_window.ts',
   'src/ui/raid_boss_guide_window.ts',
   'src/ui/raid_boss_guide_model_controller.ts',
+  'src/ui/hud/chat/ready_check_leader_window.ts',
   // The binder that gives a purchase-intent ledger a durable half. It reaches
   // localStorage (through the safe_local_storage seam, the one sanctioned door)
   // and the clock, which is precisely why it is not in the pure record core it
@@ -2618,11 +2620,6 @@ const UI_DOM_MODULES = [
   'src/ui/target_swing_timer_bars.ts',
   'src/ui/theme.ts',
   'src/ui/touch_item_drag.ts',
-  // bindTooltipTouchPeek binds pointerdown/pointermove/pointerup/pointercancel
-  // to the caller's element and owns a window.setTimeout/clearTimeout peek
-  // timer: the same DOM-owning shape as touch_item_drag.ts's own long-press
-  // gesture above, for the identical scroll-vs-hold disambiguation.
-  'src/ui/touch_peek.ts',
   'src/ui/touch_tap.ts',
   'src/ui/town_focus_window.ts',
   // The tracker-stack seat applier: owns a resize listener and bounded

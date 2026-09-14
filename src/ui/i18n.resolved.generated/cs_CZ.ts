@@ -348,12 +348,25 @@ export const cs_CZ: EnTranslations = {
       "banner": "Sleduješ {name}"
     },
     "readyCheck": {
+      "title": "Ready Check",
+      "close": "Close",
       "prompt": "Hráč {name} zahájil kontrolu připravenosti. Jsi připraven(a)?",
       "ready": "Připraven(a)",
       "notReady": "Nepřipraven(a)",
+      "status": "Ready: {ready}/{total}",
+      "waiting": "Waiting for responses...",
+      "memberReady": "{name} is ready.",
+      "memberNotReady": "{name} is not ready.",
+      "memberPending": "{name} has not responded yet.",
       "result": "Kontrola připravenosti: {ready} připraveno, {notReady} nepřipraveno, {noResponse} bez odpovědi.",
       "notInPartyError": "Abys mohl(a) zahájit kontrolu připravenosti, musíš být ve skupině.",
       "inProgressError": "Kontrola připravenosti už probíhá."
+    },
+    "pullTimer": {
+      "start": "Pull in {seconds} sec!",
+      "cancel": "Pull cancelled.",
+      "countdown": "{seconds}",
+      "pull": "PULL!"
     },
     "death": {
       "resurrectAtCorpse": "Vzkřísit u mrtvoly",
@@ -4558,8 +4571,8 @@ export const cs_CZ: EnTranslations = {
       "attunedBanner": "Naladěno: {title}",
       "tierTutorial": {
         "title": "Tvoje první úroveň",
-        "tierCap": "A profession reaches its first tier at {skill} skill, and each tier improves what it yields or lets you make. Among your craft professions specifically, though, a craft only climbs past rare work once it is one of your two majors.",
-        "radar": "Your craft professions form a wheel. Attune to an adjacent pair and those two crafts become uncapped majors, one craft across the wheel becomes a rare-capped hobby, and the rest lie dormant: their knowledge kept, but capped at common until you take them up again.",
+        "tierCap": "A craft reaches its first tier at {skill} skill, and each tier improves what it can make. But a craft only climbs past rare work once it is one of your two majors.",
+        "radar": "Your professions form a wheel. Attune to an adjacent pair and those two crafts become uncapped majors, one craft across the wheel becomes a rare-capped hobby, and the rest lie dormant: their knowledge kept, but capped at common until you take them up again.",
         "masters": "Mistři řemesel ve městech nabízejí nalaďovací úkoly. Navstiv jednoho a kdykoli budeš připraven(a), zvol si svůj pár. Nic, co ses naučil(a), není nikdy ztraceno.",
         "dismiss": "Rozumím"
       },
@@ -10183,6 +10196,7 @@ export const cs_CZ: EnTranslations = {
       "templates": {
         "battleground": "[Bitevní pole] {name}: {message}",
         "party": "[Skupina] {name}: {message}",
+        "raidWarning": "[Raid Warning] {name}: {message}",
         "yell": "{name} křičí: {message}",
         "whisper": "{name} šeptá: {message}",
         "toWhisper": "Pro {name}: {message}",

@@ -348,12 +348,25 @@ export const vi_VN: EnTranslations = {
       "banner": "Đang xem {name}"
     },
     "readyCheck": {
+      "title": "Ready Check",
+      "close": "Close",
       "prompt": "{name} đã bắt đầu kiểm tra sẵn sàng. Bạn đã sẵn sàng chưa?",
       "ready": "Sẵn Sàng",
       "notReady": "Chưa Sẵn Sàng",
+      "status": "Ready: {ready}/{total}",
+      "waiting": "Waiting for responses...",
+      "memberReady": "{name} is ready.",
+      "memberNotReady": "{name} is not ready.",
+      "memberPending": "{name} has not responded yet.",
       "result": "Kiểm tra sẵn sàng: {ready} sẵn sàng, {notReady} chưa sẵn sàng, {noResponse} không phản hồi.",
       "notInPartyError": "Bạn phải ở trong tổ đội để bắt đầu kiểm tra sẵn sàng.",
       "inProgressError": "Một lượt kiểm tra sẵn sàng đang diễn ra."
+    },
+    "pullTimer": {
+      "start": "Pull in {seconds} sec!",
+      "cancel": "Pull cancelled.",
+      "countdown": "{seconds}",
+      "pull": "PULL!"
     },
     "death": {
       "resurrectAtCorpse": "Hồi Sinh Tại Xác Chết",
@@ -4558,8 +4571,8 @@ export const vi_VN: EnTranslations = {
       "attunedBanner": "Đã Thụ Ngộ: {title}",
       "tierTutorial": {
         "title": "Bậc Đầu Tiên Của Bạn",
-        "tierCap": "A profession reaches its first tier at {skill} skill, and each tier improves what it yields or lets you make. Among your craft professions specifically, though, a craft only climbs past rare work once it is one of your two majors.",
-        "radar": "Your craft professions form a wheel. Attune to an adjacent pair and those two crafts become uncapped majors, one craft across the wheel becomes a rare-capped hobby, and the rest lie dormant: their knowledge kept, but capped at common until you take them up again.",
+        "tierCap": "A craft reaches its first tier at {skill} skill, and each tier improves what it can make. But a craft only climbs past rare work once it is one of your two majors.",
+        "radar": "Your professions form a wheel. Attune to an adjacent pair and those two crafts become uncapped majors, one craft across the wheel becomes a rare-capped hobby, and the rest lie dormant: their knowledge kept, but capped at common until you take them up again.",
         "masters": "Các bậc thầy thủ công trong thị trấn cung cấp nhiệm vụ thụ ngộ. Hãy thăm một người để chọn đôi khi bạn sẵn sàng. Những gì bạn đã học sẽ không bao giờ mất.",
         "dismiss": "Đã hiểu"
       },
@@ -10183,6 +10196,7 @@ export const vi_VN: EnTranslations = {
       "templates": {
         "battleground": "[Chiến Trường] {name}: {message}",
         "party": "[Tổ Đội] {name}: {message}",
+        "raidWarning": "[Raid Warning] {name}: {message}",
         "yell": "{name} hét: {message}",
         "whisper": "{name} nhắn riêng: {message}",
         "toWhisper": "Gửi {name}: {message}",

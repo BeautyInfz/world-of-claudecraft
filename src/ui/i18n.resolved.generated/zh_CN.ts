@@ -348,12 +348,25 @@ export const zh_CN: EnTranslations = {
       "banner": "正在观察 {name}"
     },
     "readyCheck": {
+      "title": "Ready Check",
+      "close": "Close",
       "prompt": "{name} 发起了准备确认。你准备好了吗？",
       "ready": "准备就绪",
       "notReady": "未准备",
+      "status": "Ready: {ready}/{total}",
+      "waiting": "Waiting for responses...",
+      "memberReady": "{name} is ready.",
+      "memberNotReady": "{name} is not ready.",
+      "memberPending": "{name} has not responded yet.",
       "result": "准备确认：{ready} 人就绪，{notReady} 人未准备，{noResponse} 人未响应。",
       "notInPartyError": "你必须加入队伍才能发起就绪确认。",
       "inProgressError": "就绪确认已在进行中。"
+    },
+    "pullTimer": {
+      "start": "Pull in {seconds} sec!",
+      "cancel": "Pull cancelled.",
+      "countdown": "{seconds}",
+      "pull": "PULL!"
     },
     "death": {
       "resurrectAtCorpse": "在尸体旁复活",
@@ -10183,6 +10196,7 @@ export const zh_CN: EnTranslations = {
       "templates": {
         "battleground": "[战场] {name}：{message}",
         "party": "[队伍] {name}：{message}",
+        "raidWarning": "[Raid Warning] {name}: {message}",
         "yell": "{name}大喊：{message}",
         "whisper": "{name}悄悄说：{message}",
         "toWhisper": "对{name}说：{message}",

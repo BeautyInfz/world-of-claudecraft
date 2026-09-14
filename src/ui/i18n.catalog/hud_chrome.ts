@@ -46,12 +46,25 @@ export const hudChromeStrings = {
   // Raid/party ready-check prompt (the leader ran /ready). The buttons answer the
   // yes/no prompt; the outcome is announced in chat by the sim.
   readyCheck: {
+    title: 'Ready Check',
+    close: 'Close',
     prompt: '{name} has started a ready check. Are you ready?',
     ready: 'Ready',
     notReady: 'Not Ready',
+    status: 'Ready: {ready}/{total}',
+    waiting: 'Waiting for responses...',
+    memberReady: '{name} is ready.',
+    memberNotReady: '{name} is not ready.',
+    memberPending: '{name} has not responded yet.',
     result: 'Ready check: {ready} ready, {notReady} not ready, {noResponse} no response.',
     notInPartyError: 'You must be in a party to start a ready check.',
     inProgressError: 'A ready check is already in progress.',
+  },
+  pullTimer: {
+    start: 'Pull in {seconds} sec!',
+    cancel: 'Pull cancelled.',
+    countdown: '{seconds}',
+    pull: 'PULL!',
   },
   // WoW-style death loop overlay (release -> ghost run -> resurrect). The release
   // button and "You have died." title reuse the hud.core.* keys; these are the
@@ -6836,15 +6849,15 @@ export const hudChromeStrings = {
     attunedZoneLine: '{name} has attuned as {archetype}!',
     attunedBanner: 'Attuned: {title}',
     // The one-time first-tier tutorial panel (profession_tutorial_view.ts),
-    // fired the first time any profession crosses tier 1. Explains the tier cap
-    // that just bit, the craft-wheel identity concept, and that masters offer
+    // fired the first time any craft crosses tier 1. Explains the tier cap that
+    // just bit, the craft-wheel identity concept, and that masters offer
     // attunement quests. {skill} is the first-tier threshold.
     tierTutorial: {
       title: 'Your First Tier',
       tierCap:
-        'A profession reaches its first tier at {skill} skill, and each tier improves what it yields or lets you make. Among your craft professions specifically, though, a craft only climbs past rare work once it is one of your two majors.',
+        'A craft reaches its first tier at {skill} skill, and each tier improves what it can make. But a craft only climbs past rare work once it is one of your two majors.',
       radar:
-        'Your craft professions form a wheel. Attune to an adjacent pair and those two crafts become uncapped majors, one craft across the wheel becomes a rare-capped hobby, and the rest lie dormant: their knowledge kept, but capped at common until you take them up again.',
+        'Your professions form a wheel. Attune to an adjacent pair and those two crafts become uncapped majors, one craft across the wheel becomes a rare-capped hobby, and the rest lie dormant: their knowledge kept, but capped at common until you take them up again.',
       masters:
         'Craft masters in the towns offer attunement quests. Visit one to choose your pair whenever you are ready. Nothing you have learned is ever lost.',
       dismiss: 'Got it',

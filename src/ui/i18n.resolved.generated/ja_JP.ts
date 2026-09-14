@@ -348,12 +348,25 @@ export const ja_JP: EnTranslations = {
       "banner": "{name}を観戦中"
     },
     "readyCheck": {
+      "title": "Ready Check",
+      "close": "Close",
       "prompt": "{name} が準備確認を開始しました。準備はいいですか？",
       "ready": "準備完了",
       "notReady": "準備未完了",
+      "status": "Ready: {ready}/{total}",
+      "waiting": "Waiting for responses...",
+      "memberReady": "{name} is ready.",
+      "memberNotReady": "{name} is not ready.",
+      "memberPending": "{name} has not responded yet.",
       "result": "準備確認：{ready} 人準備完了、{notReady} 人準備未完了、{noResponse} 人未回答。",
       "notInPartyError": "準備確認を開始するにはパーティーに参加している必要があります。",
       "inProgressError": "準備確認はすでに進行中です。"
+    },
+    "pullTimer": {
+      "start": "Pull in {seconds} sec!",
+      "cancel": "Pull cancelled.",
+      "countdown": "{seconds}",
+      "pull": "PULL!"
     },
     "death": {
       "resurrectAtCorpse": "亡骸で復活",
@@ -10183,6 +10196,7 @@ export const ja_JP: EnTranslations = {
       "templates": {
         "battleground": "[戦場] {name}: {message}",
         "party": "[パーティ] {name}: {message}",
+        "raidWarning": "[Raid Warning] {name}: {message}",
         "yell": "{name}の叫び: {message}",
         "whisper": "{name}のささやき: {message}",
         "toWhisper": "{name}へ: {message}",

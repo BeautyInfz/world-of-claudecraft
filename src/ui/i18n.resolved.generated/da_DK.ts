@@ -348,12 +348,25 @@ export const da_DK: EnTranslations = {
       "banner": "Tilskuer til {name}"
     },
     "readyCheck": {
+      "title": "Ready Check",
+      "close": "Close",
       "prompt": "{name} har startet et klar-tjek. Er du klar?",
       "ready": "Klar",
       "notReady": "Ikke klar",
+      "status": "Ready: {ready}/{total}",
+      "waiting": "Waiting for responses...",
+      "memberReady": "{name} is ready.",
+      "memberNotReady": "{name} is not ready.",
+      "memberPending": "{name} has not responded yet.",
       "result": "Klar-tjek: {ready} klar, {notReady} ikke klar, {noResponse} uden svar.",
       "notInPartyError": "Du skal være i en gruppe for at starte et klar-tjek.",
       "inProgressError": "Et klar-tjek er allerede i gang."
+    },
+    "pullTimer": {
+      "start": "Pull in {seconds} sec!",
+      "cancel": "Pull cancelled.",
+      "countdown": "{seconds}",
+      "pull": "PULL!"
     },
     "death": {
       "resurrectAtCorpse": "Genopstå ved liget",
@@ -4558,8 +4571,8 @@ export const da_DK: EnTranslations = {
       "attunedBanner": "Indstillet: {title}",
       "tierTutorial": {
         "title": "Dit første niveau",
-        "tierCap": "A profession reaches its first tier at {skill} skill, and each tier improves what it yields or lets you make. Among your craft professions specifically, though, a craft only climbs past rare work once it is one of your two majors.",
-        "radar": "Your craft professions form a wheel. Attune to an adjacent pair and those two crafts become uncapped majors, one craft across the wheel becomes a rare-capped hobby, and the rest lie dormant: their knowledge kept, but capped at common until you take them up again.",
+        "tierCap": "A craft reaches its first tier at {skill} skill, and each tier improves what it can make. But a craft only climbs past rare work once it is one of your two majors.",
+        "radar": "Your professions form a wheel. Attune to an adjacent pair and those two crafts become uncapped majors, one craft across the wheel becomes a rare-capped hobby, and the rest lie dormant: their knowledge kept, but capped at common until you take them up again.",
         "masters": "Håndværksmestre i byerne tilbyder indstillingsquests. Besøg en for at vælge dit par, når du er klar. Intet du har lært, går nogensinde tabt.",
         "dismiss": "Forstået"
       },
@@ -10183,6 +10196,7 @@ export const da_DK: EnTranslations = {
       "templates": {
         "battleground": "[Slagmark] {name}: {message}",
         "party": "[Gruppe] {name}: {message}",
+        "raidWarning": "[Raid Warning] {name}: {message}",
         "yell": "{name} råber: {message}",
         "whisper": "{name} hvisker: {message}",
         "toWhisper": "Til {name}: {message}",

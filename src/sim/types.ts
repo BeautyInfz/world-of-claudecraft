@@ -1963,6 +1963,8 @@ export interface MobTemplate {
   /** Optional mandatory encounter threshold. Damage cannot move the mob below
    * this max-HP fraction until encounter logic clears its runtime floor. */
   damageFloorPct?: number;
+  /** Optional resting HP fraction for friendly practice targets that should stay healable. */
+  restHpFraction?: number;
   loot: LootEntry[];
   scale: number; // render hint
   color: number; // render hint
@@ -2029,8 +2031,6 @@ export interface MobTemplate {
   // (mob/practice_dummies.ts) so a healer always has something real to heal and
   // the target resets itself for the next player.
   friendlyPracticeTarget?: boolean;
-  // Custom resting health fraction for friendly practice targets (default: 0.35).
-  restHpFraction?: number;
   // Take PASSIVE idle draws off the shared world stream (Entity.offStreamRng).
   // CampDef.offStream covers a wholly new camp; this covers a template that
   // REPLACED shipped content in an existing camp slot, where the spawn draws
@@ -6057,6 +6057,21 @@ export interface ReadyCheck {
   responses: Map<number, 'ready' | 'notready' | 'pending'>; // pid -> answer
 }
 
+export interface ReadyCheckMemberResponse {
+  pid: number;
+  name: string;
+  state: 'ready' | 'notready' | 'pending';
+}
+
+// An active party/raid pull timer (/pull X).
+export interface PullTimer {
+  partyId: number;
+  initiator: number;
+  endsAt: number;
+  totalSeconds: number;
+  lastAnnounced: number;
+}
+
 // A player's active riding-lesson attempt (src/sim/mounts_training.ts), kept on
 // PlayerMeta.mountTraining. Session-only: never persisted/serialized (unlike the
 // one-time mountTrainingFeePaid flag also on PlayerMeta), so a save/load never
@@ -6548,6 +6563,8 @@ export type SimEvent = { pid?: number } & (
         // purpose: talking to the opposing side is the whole reason it exists
         // (players were falling back to General for it).
         | 'battleground'
+        // Party/raid leader alert broadcast to all party members.
+        | 'raidWarning'
         | 'guild'
         | 'officer'
         | 'world'
@@ -6571,11 +6588,24 @@ export type SimEvent = { pid?: number } & (
       // for every player-sourced chat line (mob/boss yells omit it, same as
       // fromTitle).
       classId?: PlayerClass;
+      // Optional localization identity for generated system chat. Player-authored
+      // chat stays literal `text`; generated lines carry this so clients render
+      // them through the catalog while older clients can still fall back to text.
+      textKey?: string;
+      textValues?: Record<string, string | number>;
     }
   | { type: 'partyInvite'; fromPid: number; fromName: string }
   // The party/raid leader started a ready check: the recipient's client plays a
   // sound and shows a yes/no prompt (social/ready_check.ts). Personal (pid set).
   | { type: 'readyCheckStart'; fromName: string }
+  // Live status update for the party/raid leader during a ready check. Personal (pid set to leader).
+  | {
+      type: 'readyCheckStatus';
+      initiatorPid: number;
+      partyId: number;
+      responses: ReadyCheckMemberResponse[];
+      done: boolean;
+    }
   // A player resurrection is never automatic: the dead recipient chooses whether
   // to return. Personal (pid set), with all visible copy composed client-side.
   | { type: 'resurrectionOffer'; fromName: string }

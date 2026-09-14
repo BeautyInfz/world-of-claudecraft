@@ -348,12 +348,25 @@ export const ko_KR: EnTranslations = {
       "banner": "{name} 관전 중"
     },
     "readyCheck": {
+      "title": "Ready Check",
+      "close": "Close",
       "prompt": "{name} 님이 준비 확인을 시작했습니다. 준비되셨습니까?",
       "ready": "준비 완료",
       "notReady": "준비 안 됨",
+      "status": "Ready: {ready}/{total}",
+      "waiting": "Waiting for responses...",
+      "memberReady": "{name} is ready.",
+      "memberNotReady": "{name} is not ready.",
+      "memberPending": "{name} has not responded yet.",
       "result": "준비 확인: {ready}명 준비 완료, {notReady}명 준비 안 됨, {noResponse}명 무응답.",
       "notInPartyError": "준비 확인을 시작하려면 파티에 속해 있어야 합니다.",
       "inProgressError": "준비 확인이 이미 진행 중입니다."
+    },
+    "pullTimer": {
+      "start": "Pull in {seconds} sec!",
+      "cancel": "Pull cancelled.",
+      "countdown": "{seconds}",
+      "pull": "PULL!"
     },
     "death": {
       "resurrectAtCorpse": "시신에서 부활",
@@ -10183,6 +10196,7 @@ export const ko_KR: EnTranslations = {
       "templates": {
         "battleground": "[전장] {name}: {message}",
         "party": "[파티] {name}: {message}",
+        "raidWarning": "[Raid Warning] {name}: {message}",
         "yell": "{name} 외침: {message}",
         "whisper": "{name} 귓속말: {message}",
         "toWhisper": "{name}에게: {message}",

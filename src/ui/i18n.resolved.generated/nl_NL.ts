@@ -348,12 +348,25 @@ export const nl_NL: EnTranslations = {
       "banner": "Toeschouwer bij {name}"
     },
     "readyCheck": {
+      "title": "Ready Check",
+      "close": "Close",
       "prompt": "{name} heeft een gereedheidscontrole gestart. Ben je gereed?",
       "ready": "Gereed",
       "notReady": "Niet gereed",
+      "status": "Ready: {ready}/{total}",
+      "waiting": "Waiting for responses...",
+      "memberReady": "{name} is ready.",
+      "memberNotReady": "{name} is not ready.",
+      "memberPending": "{name} has not responded yet.",
       "result": "Gereedheidscontrole: {ready} gereed, {notReady} niet gereed, {noResponse} geen antwoord.",
       "notInPartyError": "Je moet in een groep zitten om een gereedheidscontrole te starten.",
       "inProgressError": "Er is al een gereedheidscontrole bezig."
+    },
+    "pullTimer": {
+      "start": "Pull in {seconds} sec!",
+      "cancel": "Pull cancelled.",
+      "countdown": "{seconds}",
+      "pull": "PULL!"
     },
     "death": {
       "resurrectAtCorpse": "Herrijs bij je lijk",
@@ -4558,8 +4571,8 @@ export const nl_NL: EnTranslations = {
       "attunedBanner": "Afgestemd: {title}",
       "tierTutorial": {
         "title": "Je Eerste Niveau",
-        "tierCap": "A profession reaches its first tier at {skill} skill, and each tier improves what it yields or lets you make. Among your craft professions specifically, though, a craft only climbs past rare work once it is one of your two majors.",
-        "radar": "Your craft professions form a wheel. Attune to an adjacent pair and those two crafts become uncapped majors, one craft across the wheel becomes a rare-capped hobby, and the rest lie dormant: their knowledge kept, but capped at common until you take them up again.",
+        "tierCap": "A craft reaches its first tier at {skill} skill, and each tier improves what it can make. But a craft only climbs past rare work once it is one of your two majors.",
+        "radar": "Your professions form a wheel. Attune to an adjacent pair and those two crafts become uncapped majors, one craft across the wheel becomes a rare-capped hobby, and the rest lie dormant: their knowledge kept, but capped at common until you take them up again.",
         "masters": "Ambachtsmeesters in de steden bieden afstemmingsopdrachten aan. Bezoek er een om je paar te kiezen wanneer je er klaar voor bent. Niets wat je hebt geleerd gaat ooit verloren.",
         "dismiss": "Begrepen"
       },
@@ -10183,6 +10196,7 @@ export const nl_NL: EnTranslations = {
       "templates": {
         "battleground": "[Slagveld] {name}: {message}",
         "party": "[Groep] {name}: {message}",
+        "raidWarning": "[Raid Warning] {name}: {message}",
         "yell": "{name} schreeuwt: {message}",
         "whisper": "{name} fluistert: {message}",
         "toWhisper": "Aan {name}: {message}",

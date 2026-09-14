@@ -437,6 +437,8 @@ import {
 import { type ChatClock, clampChatClock, formatChatTimestamp } from './hud/chat/chat_timestamp';
 import { ChatWindowController } from './hud/chat/chat_window_controller';
 import { DEED_NAME_TOKEN, deedChatLinkEl, deedLineNodes } from './hud/chat/deed_chat_line';
+import { RaidWarningBanner } from './hud/chat/raid_warning_banner';
+import { ReadyCheckLeaderWindow } from './hud/chat/ready_check_leader_window';
 import { CosmeticsWindow } from './hud/cosmetics';
 import { SkinEventController } from './hud/cosmetics/skin_event_controller';
 import {
@@ -883,7 +885,7 @@ import {
   paintMobTooltipBottomRight as paintMobTooltipBottomRightCore,
   paintTooltipAt as paintTooltipAtCore,
 } from './tooltip_paint';
-import { bindTooltipTouchPeek, TouchPeekGuard } from './touch_peek';
+import { TOOLTIP_PEEK_MS, TouchPeekGuard } from './touch_peek';
 import { bindTouchDoubleTap, bindTouchTap } from './touch_tap';
 import { buildTownFocusView, stepTownFocus, townFocusRenderSig } from './town_focus_view';
 import { renderTownFocusWindow } from './town_focus_window';
@@ -1200,6 +1202,7 @@ const CRAFTING_TAB_KEY = 'woc_crafting_tab';
 const CHAT_TEMPLATE_KEYS = {
   party: 'hud.chat.templates.party',
   battleground: 'hud.chat.templates.battleground',
+  raidWarning: 'hud.chat.templates.raidWarning',
   yell: 'hud.chat.templates.yell',
   whisper: 'hud.chat.templates.whisper',
   toWhisper: 'hud.chat.templates.toWhisper',
@@ -1212,6 +1215,10 @@ const CHAT_TEMPLATE_KEYS = {
   roll: 'hud.chat.templates.roll',
   say: 'hud.chat.templates.say',
 } satisfies Record<string, TranslationKey>;
+
+function localizeChatBody(ev: Extract<SimEvent, { type: 'chat' }>): string {
+  return ev.textKey ? t(ev.textKey as TranslationKey, ev.textValues) : ev.text;
+}
 // world map: terrain is pre-rendered for the whole zone at this resolution
 // (cached per zone) and a sub-rect is blitted for the current zoom.
 const MAP_BG_RES = 480;
@@ -1444,6 +1451,10 @@ export class Hud {
   // top-center lines fed by the questProgress event, aria-hidden decoration
   // (the chat log + live region carry the announced copy).
   private readonly questBanner = new QuestProgressBanner($('#quest-banner'));
+  private readonly raidWarningBanner = new RaidWarningBanner($('#raid-warning-banner'));
+  private readonly readyCheckLeaderWindow = new ReadyCheckLeaderWindow(
+    $('#ready-check-leader-window'),
+  );
   private subzoneEl = $('#subzone-banner');
   private tooltipEl = $('#tooltip');
   // Which element last painted the shared #tooltip box, so a hovered slot can
@@ -6201,12 +6212,17 @@ export class Hud {
   }
 
   attachTooltip(el: HTMLElement, html: () => string): void {
+    let touchTimer: number | undefined;
     // tooltip box size, measured once in showAt (right after the content is set)
     // and reused by every mousemove: the content cannot change between showAt
     // calls, so re-reading offsetWidth/Height per mousemove only forced a reflow
     let ttW = 0;
     let ttH = 0;
     const mobile = () => document.body.classList.contains('mobile-touch');
+    const clearTouchTimer = () => {
+      if (touchTimer !== undefined) window.clearTimeout(touchTimer);
+      touchTimer = undefined;
+    };
     const showAt = (x: number, y: number, trigger: 'touch' | 'mouse' | 'focus') => {
       // Touch-only path: showing the tooltip means the held control is being
       // inspected, so the release click should peek, not fire its action.
@@ -6223,14 +6239,6 @@ export class Hud {
       const rect = el.getBoundingClientRect();
       showAt(rect.right, rect.top + rect.height / 2, 'focus');
     };
-    const touchPeek = bindTooltipTouchPeek(el, {
-      isMobile: mobile,
-      press: () => this.peekGuard.press(),
-      hide: () => {
-        this.tooltipEl.style.display = 'none';
-      },
-      showAt: (x, y) => showAt(x, y, 'touch'),
-    });
     // A mouse click or a tap focuses the button as a side effect (the browser
     // moves focus to whatever was pressed), which used to fire showNearElement
     // on EVERY action-bar press, not just real keyboard (Tab) navigation. Flag
@@ -6279,25 +6287,35 @@ export class Hud {
       this.tooltipEl.style.top = `${at.top}px`;
     });
     el.addEventListener('mouseleave', () => {
-      touchPeek.clear();
+      clearTouchTimer();
       this.tooltipEl.style.display = 'none';
       // Box hidden: no element owns it, so the next move over any slot re-resolves.
       this.tooltipOwner.release();
     });
     el.addEventListener('focusout', () => {
-      touchPeek.clear();
+      clearTouchTimer();
       this.tooltipEl.style.display = 'none';
       this.tooltipOwner.release();
     });
+    el.addEventListener('pointerdown', (e) => {
+      if (!mobile() || e.pointerType === 'mouse') return;
+      clearTouchTimer();
+      // A fresh press: drop any stale peek and dismiss a lingering tooltip.
+      this.peekGuard.press();
+      this.tooltipEl.style.display = 'none';
+      const x = e.clientX,
+        y = e.clientY;
+      touchTimer = window.setTimeout(() => showAt(x, y, 'touch'), TOOLTIP_PEEK_MS);
+    });
     el.addEventListener('pointerup', () => {
-      touchPeek.clear();
+      clearTouchTimer();
       // Safari desktop never focuses a button on click, so pointerdown's flag
       // above would otherwise never get consumed by a focusin and could wrongly
       // swallow a later, real keyboard-focus tooltip; drop it once the press ends.
       pointerFocusPending = false;
     });
     el.addEventListener('pointercancel', () => {
-      touchPeek.clear();
+      clearTouchTimer();
       pointerFocusPending = false;
     });
   }
@@ -7003,6 +7021,7 @@ export class Hud {
     // locale, so relocalize() clears the latch for exactly one rebuild.
     this.gatheringGoalController.relocalize();
     this.partyFramesPainter.relocalize();
+    this.readyCheckLeaderWindow.relocalize();
     this.raidBossGuideWindow.relocalize();
     // The world map rasterizes its labels into sprites keyed on the RESOLVED
     // string, so a switch can never draw the old language; clearing is about not
@@ -12503,6 +12522,23 @@ export class Hud {
                 ev.classId,
               );
               break;
+            case 'raidWarning':
+              {
+                const text = localizeChatBody(ev);
+                this.chatLogFrom(
+                  ev.from,
+                  text,
+                CHAT_TEMPLATE_KEYS.raidWarning,
+                'raidWarning',
+                ev.fromPid,
+                ev.flair,
+                  ev.fromTitle,
+                  ev.classId,
+                );
+                audio.raidWarning();
+                this.raidWarningBanner.show(text);
+              }
+              break;
             case 'yell':
               this.chatLogFrom(
                 localizeAuthoredYellSpeakerName(
@@ -12740,6 +12776,9 @@ export class Hud {
             // let the sim's own 30s timeout bucket the straggler.
             () => {},
           );
+          break;
+        case 'readyCheckStatus':
+          this.readyCheckLeaderWindow.update(ev);
           break;
         case 'resurrectionOffer':
           // An offer completing against a player who is no longer dead (they

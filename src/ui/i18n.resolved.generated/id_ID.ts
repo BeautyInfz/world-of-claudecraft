@@ -348,12 +348,25 @@ export const id_ID: EnTranslations = {
       "banner": "Menonton {name}"
     },
     "readyCheck": {
+      "title": "Ready Check",
+      "close": "Close",
       "prompt": "{name} memulai pemeriksaan kesiapan. Apakah kamu siap?",
       "ready": "Siap",
       "notReady": "Belum Siap",
+      "status": "Ready: {ready}/{total}",
+      "waiting": "Waiting for responses...",
+      "memberReady": "{name} is ready.",
+      "memberNotReady": "{name} is not ready.",
+      "memberPending": "{name} has not responded yet.",
       "result": "Pemeriksaan kesiapan: {ready} siap, {notReady} belum siap, {noResponse} tidak merespons.",
       "notInPartyError": "Kamu harus berada dalam grup untuk memulai pemeriksaan kesiapan.",
       "inProgressError": "Pemeriksaan kesiapan sedang berlangsung."
+    },
+    "pullTimer": {
+      "start": "Pull in {seconds} sec!",
+      "cancel": "Pull cancelled.",
+      "countdown": "{seconds}",
+      "pull": "PULL!"
     },
     "death": {
       "resurrectAtCorpse": "Bangkit di Jasad",
@@ -4558,8 +4571,8 @@ export const id_ID: EnTranslations = {
       "attunedBanner": "Selaras: {title}",
       "tierTutorial": {
         "title": "Tingkat Pertamamu",
-        "tierCap": "A profession reaches its first tier at {skill} skill, and each tier improves what it yields or lets you make. Among your craft professions specifically, though, a craft only climbs past rare work once it is one of your two majors.",
-        "radar": "Your craft professions form a wheel. Attune to an adjacent pair and those two crafts become uncapped majors, one craft across the wheel becomes a rare-capped hobby, and the rest lie dormant: their knowledge kept, but capped at common until you take them up again.",
+        "tierCap": "A craft reaches its first tier at {skill} skill, and each tier improves what it can make. But a craft only climbs past rare work once it is one of your two majors.",
+        "radar": "Your professions form a wheel. Attune to an adjacent pair and those two crafts become uncapped majors, one craft across the wheel becomes a rare-capped hobby, and the rest lie dormant: their knowledge kept, but capped at common until you take them up again.",
         "masters": "Para master kerajinan di kota menawarkan misi penyelarasan. Kunjungi salah satu untuk memilih pasanganmu kapan pun kamu siap. Tidak ada yang pernah kamu pelajari yang hilang.",
         "dismiss": "Mengerti"
       },
@@ -10183,6 +10196,7 @@ export const id_ID: EnTranslations = {
       "templates": {
         "battleground": "[Medan Thornhollow] {name}: {message}",
         "party": "[Party] {name}: {message}",
+        "raidWarning": "[Raid Warning] {name}: {message}",
         "yell": "{name} berteriak: {message}",
         "whisper": "{name} berbisik: {message}",
         "toWhisper": "Kepada {name}: {message}",

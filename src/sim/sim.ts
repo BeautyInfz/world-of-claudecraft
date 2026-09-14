@@ -278,7 +278,6 @@ import { formatMoney } from './format_money';
 import * as groundAoeReadouts from './ground_aoe_readouts';
 import type { GuildBankState, GuildMembership } from './guild_bank';
 import * as guildBankMod from './guild_bank';
-import { spawnHealingTrainingGround } from './healing_training';
 import { spawnHubPractice } from './hub_practice';
 import * as raidReadouts from './ignivar_raid_readouts';
 import * as interaction from './interaction';
@@ -802,6 +801,7 @@ import {
 } from './social/fiesta';
 import * as fiestaBotsMod from './social/fiesta_bots';
 import { PartyMachine } from './social/party';
+import * as pullTimerMod from './social/pull_timer';
 import * as readyCheckMod from './social/ready_check';
 import { SpatialGrid } from './spatial';
 import { diminishedCrowdControlDuration as diminishedCrowdControlDurationImpl } from './stun_dr';
@@ -869,6 +869,7 @@ import {
   type PendingResurrection,
   type PetMode,
   type PlayerClass,
+  type PullTimer,
   type QuestProgress,
   type QuestState,
   questObjectiveRequired,
@@ -1307,7 +1308,16 @@ export interface ResolvedAbility {
 }
 
 export interface SentChat {
-  channel: 'say' | 'yell' | 'whisper' | 'general' | 'party' | 'battleground' | 'world' | 'lfg';
+  channel:
+    | 'say'
+    | 'yell'
+    | 'whisper'
+    | 'general'
+    | 'party'
+    | 'battleground'
+    | 'raidWarning'
+    | 'world'
+    | 'lfg';
   message: string;
   target?: string;
 }
@@ -1930,6 +1940,7 @@ export class Sim {
   // Active party/raid ready checks, keyed by party id (social/ready_check.ts). Swept
   // in the end-of-tick block by updateReadyChecks. Exposed to the seam as ctx.readyChecks.
   readyChecks = new Map<number, ReadyCheck>();
+  pullTimers = new Map<number, PullTimer>();
   // Player-cast resurrection offers are transient authoritative combat state.
   // They are intentionally not persisted and expire on the deterministic Sim clock.
   pendingResurrections = new Map<number, PendingResurrection>();
@@ -2637,7 +2648,6 @@ export class Sim {
     // identical to a world without them.
     initEscortsImpl(this.ctx);
     spawnHubPractice(this.ctx, worldContent);
-    spawnHealingTrainingGround(this.ctx, worldContent);
   }
 
   private spawnHealerPracticeDummy(): void {
@@ -5340,6 +5350,9 @@ export class Sim {
       get readyChecks() {
         return sim.readyChecks;
       },
+      get pullTimers() {
+        return sim.pullTimers;
+      },
       get pendingResurrections() {
         return sim.pendingResurrections;
       },
@@ -5530,6 +5543,8 @@ export class Sim {
       partyOf: sim.partyOf.bind(sim),
       partyInvite: (targetPid: number, pid?: number) => sim.party.partyInvite(targetPid, pid),
       readyCheckStart: (pid?: number) => sim.readyCheckStart(pid),
+      pullTimerStart: (rawCommand: string, pid?: number) => sim.pullTimerStart(rawCommand, pid),
+      pullTimerCancel: (pid?: number) => sim.pullTimerCancel(pid),
       removeFromParty: (pid: number, verb: string) => sim.party.removeFromParty(pid, verb),
       // Dungeon Finder formation seam (points at the party machine); lazy arrow
       // since `sim.party` is built after ctx.
@@ -6269,6 +6284,7 @@ export class Sim {
     lap?.('arena');
     this.updateTradesAndInvites();
     this.updateReadyChecks();
+    this.updatePullTimers();
     resurrectionOfferMod.updateResurrectionOffers(this.ctx);
     // Commission order board retention sweep (issue #1298): draws no rng, so
     // appending here is safe (the Vale Cup zero-rng-phase precedent); expires
@@ -9499,6 +9515,18 @@ export class Sim {
 
   updateReadyChecks(): void {
     readyCheckMod.updateReadyChecks(this.ctx);
+  }
+
+  pullTimerStart(rawCommand: string, pid?: number): void {
+    pullTimerMod.pullTimerStart(this.ctx, rawCommand, pid);
+  }
+
+  pullTimerCancel(pid?: number): void {
+    pullTimerMod.pullTimerCancel(this.ctx, pid);
+  }
+
+  updatePullTimers(): void {
+    pullTimerMod.updatePullTimers(this.ctx);
   }
 
   partyAccept(pid?: number): void {

@@ -348,12 +348,25 @@ export const tr_TR: EnTranslations = {
       "banner": "{name} izleniyor"
     },
     "readyCheck": {
+      "title": "Ready Check",
+      "close": "Close",
       "prompt": "{name} bir hazır kontrolü başlattı. Hazır mısın?",
       "ready": "Hazır",
       "notReady": "Hazır Değil",
+      "status": "Ready: {ready}/{total}",
+      "waiting": "Waiting for responses...",
+      "memberReady": "{name} is ready.",
+      "memberNotReady": "{name} is not ready.",
+      "memberPending": "{name} has not responded yet.",
       "result": "Hazır kontrolü: {ready} hazır, {notReady} hazır değil, {noResponse} yanıt vermedi.",
       "notInPartyError": "Hazır kontrolü başlatmak için bir grupta olmalısın.",
       "inProgressError": "Bir hazır kontrolü zaten sürüyor."
+    },
+    "pullTimer": {
+      "start": "Pull in {seconds} sec!",
+      "cancel": "Pull cancelled.",
+      "countdown": "{seconds}",
+      "pull": "PULL!"
     },
     "death": {
       "resurrectAtCorpse": "Cesedinin Başında Diril",
@@ -4558,8 +4571,8 @@ export const tr_TR: EnTranslations = {
       "attunedBanner": "Uyumlu: {title}",
       "tierTutorial": {
         "title": "İlk Kademenz",
-        "tierCap": "A profession reaches its first tier at {skill} skill, and each tier improves what it yields or lets you make. Among your craft professions specifically, though, a craft only climbs past rare work once it is one of your two majors.",
-        "radar": "Your craft professions form a wheel. Attune to an adjacent pair and those two crafts become uncapped majors, one craft across the wheel becomes a rare-capped hobby, and the rest lie dormant: their knowledge kept, but capped at common until you take them up again.",
+        "tierCap": "A craft reaches its first tier at {skill} skill, and each tier improves what it can make. But a craft only climbs past rare work once it is one of your two majors.",
+        "radar": "Your professions form a wheel. Attune to an adjacent pair and those two crafts become uncapped majors, one craft across the wheel becomes a rare-capped hobby, and the rest lie dormant: their knowledge kept, but capped at common until you take them up again.",
         "masters": "Kasabalardaki zanaat ustaları uyum görevleri sunar. Hazır olduğunuzda çiftinizi seçmek için birini ziyaret edin. Öğrendiğiniz hiçbir şey asla kaybolmaz.",
         "dismiss": "Anladım"
       },
@@ -10183,6 +10196,7 @@ export const tr_TR: EnTranslations = {
       "templates": {
         "battleground": "[Savaş Alanı] {name}: {message}",
         "party": "[Grup] {name}: {message}",
+        "raidWarning": "[Raid Warning] {name}: {message}",
         "yell": "{name} bağırıyor: {message}",
         "whisper": "{name} fısıldıyor: {message}",
         "toWhisper": "{name} kişisine: {message}",
