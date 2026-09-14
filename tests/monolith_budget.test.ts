@@ -1056,7 +1056,11 @@ const MONOLITHS: MonolithRow[] = [
     // Main hotfix integration: combined extractions, exact merged count.
     // Re-measured after wiring the Eastbrook healing-training spawner into
     // Sim: `wc -l < src/sim/sim.ts` is 11908. Exact count, zero slack.
-    ceiling: 11908,
+    // Incoming arm lowered 11879 -> 11849: the saved-position instance-exit
+    // rule moved to src/sim/saved_pos_exit.ts (shared with the server character
+    // list). Resolved together on the release/v0.43 line: both changes compose,
+    // and the merged tree measures 11878. Exact count, zero slack.
+    ceiling: 11878,
     seam: 'a sim system module behind SimContext (src/sim/CLAUDE.md)',
   },
   {
@@ -1261,7 +1265,11 @@ const MONOLITHS: MonolithRow[] = [
     // src/game/targeting_actions.ts with the party target hotkeys (18 lines
     // out), re-measured on the merged tree after the release sync: 11303,
     // zero headroom.
-    ceiling: 11303,
+    // Incoming arm lowered 11321 -> 11318: the roster hint lines (zone +
+    // in-world) moved to src/ui/charselect_hints.ts. Resolved together on the
+    // release/v0.43 line: both changes compose, and the merged tree measures
+    // 11300. Exact count, zero headroom.
+    ceiling: 11300,
     seam: 'a src/game/ or src/ui/ sibling module; main.ts is a firewall, not a home',
   },
   {
@@ -1622,7 +1630,9 @@ const MONOLITHS: MonolithRow[] = [
     // OSSBrain integration: entity flair decoding moved to net/entity_flair_wire.ts.
     // Measured after formatting; lower the ratchet with the extraction.
     // Main hotfix integration: combined extractions, exact merged count.
-    ceiling: 5540,
+    // Lowered 5540 -> 5509: the CharacterSummary wire type moved to
+    // src/net/character_summary.ts (re-exported here); exact count, zero headroom.
+    ceiling: 5509,
     seam: 'a src/net sibling module (the refactor/net-online split is the template)',
   },
   {

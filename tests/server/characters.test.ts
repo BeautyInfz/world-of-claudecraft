@@ -358,6 +358,9 @@ describe('character list handlers', () => {
         skin: 3,
         skinCatalog: 'mech',
         equipment: { mainhand: 'worn_sword', offhand: 'eastbrook_buckler' },
+        // Saved inside Hollow Crypt (dungeon 0 of the instance plane): the list
+        // reports the DOOR's zone, exactly where addPlayer will put the character.
+        pos: { x: 100100, z: 0 },
       }),
       force_rename: false,
       last_played: new Date('2026-01-02T03:04:05.000Z'),
@@ -412,6 +415,7 @@ describe('character list handlers', () => {
           // player one free design (created_at is null in this fixture, so it
           // is the never-designed arm carrying it, not the window).
           appearanceRerollAvailable: true,
+          zoneId: 'eastbrook_vale',
         },
         {
           id: 2,
@@ -434,6 +438,7 @@ describe('character list handlers', () => {
           // player one free design (created_at is null in this fixture, so it
           // is the never-designed arm carrying it, not the window).
           appearanceRerollAvailable: true,
+          zoneId: 'eastbrook_vale', // state null -> no position -> the world start's zone
         },
       ],
     };
@@ -477,6 +482,30 @@ describe('buildCharacterList weapon skin resolution', () => {
       { mace: 'starfall_mace' },
     ) as { characters: { weaponSkinId: string | null }[] };
     expect(bare.characters[0].weaponSkinId).toBeNull();
+  });
+});
+
+describe('buildCharacterList zoneId', () => {
+  it('reports the world-start zone for a mid-match battleground save, not the band', async () => {
+    // Distinct from the state-null arm above: this row HAS a position, and the
+    // rule (not a missing field) is what sends it to the world start.
+    setCharactersDbForTests({
+      listCharacters: async () => [charRow({ id: 3, state: st({ pos: { x: 129410, z: 0 } }) })],
+      loadAccountCosmetics: async () => ({
+        completedQuestIds: [],
+        mechChromaIds: [],
+        weaponSkinIds: [],
+        weaponSkinLoadout: {},
+        mountSkinIds: [],
+      }),
+    });
+    installRuntime({ isCharacterOnline: () => false });
+    const res = await callHandler('GET', '/api/characters', {
+      account: { accountId: 7, scope: 'full' },
+    });
+    expect(res.status).toBe(200);
+    const body = res.body as { characters: { id: number; zoneId: string | null }[] };
+    expect(body.characters.map((c) => [c.id, c.zoneId])).toEqual([[3, 'eastbrook_vale']]);
   });
 });
 
