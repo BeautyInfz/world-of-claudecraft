@@ -100,6 +100,7 @@ import {
   hasAfflictionConsumePushbackImmunity,
 } from './affliction';
 import { shouldPreserveQueuedSentence } from './affliction_sentence_queue';
+import { abilityCastSurvivesMovement, heldMovementInputWouldMove } from './cast_move_gate';
 import {
   hasUnbreakableMovementLock,
   isInStasis,
@@ -1695,6 +1696,55 @@ export function castAbility(
     }
   }
 
+  // Brain Freeze (combat/frost_mage.ts): consumed HERE, after every gate
+  // above (so a blocked cast never eats the proc) and before the cast-time /
+  // cost / cooldown reads below: the armed Flurry goes instant, skips its
+  // cooldown and carries its 30% baked into the resolved effects.
+  res = applyBrainFreezeOverride(ctx, p, res);
+  // Solar Reprisal shares one choice across the Protection Paladin's ranged
+  // strike, self-sustain strike, and ally-capable filler heal. Consume only
+  // after all cast gates succeed, then bake the chosen override into this cast.
+  res = applySolarReprisalOverride(ctx, p, res);
+  // Dawn's Wrath is a stored extra Tolling Hammer cast, not a cooldown reset:
+  // consume it only after every cast gate succeeds, then leave any existing
+  // cooldown untouched by resolving this one cast with a zero-second cooldown.
+  res = applyDawnsWrathOverride(ctx, p, res);
+
+  // Owner 2026-07-13: spell haste shortens the global cooldown (floored at MIN_GCD),
+  // so gear/Bloodlust/Temporal Acceleration haste speeds the whole rotation, not just
+  // cast bars. spellHasteMult is 1 for anyone without spell haste, so their GCD is
+  // unchanged.
+  const gcd = Math.max(MIN_GCD, ctx.playerGcdFor(meta.cls) / spellHasteMult(p));
+  // A channel keeps its duration, so it must not eat a next_cast_instant charge.
+  let consumedInstantAura: Aura | null = null;
+  if (
+    !ability.channel &&
+    res.castTime > 0 &&
+    (ability.school !== 'physical' || hasScopedNextCastInstant(p, ability.id))
+  ) {
+    consumedInstantAura = consumeNextCastInstantAura(ctx, p, ability.id);
+  }
+  const instantBaseCastTime =
+    consumedInstantAura !== null ? 0 : res.castTime * shamanCastTimeMultiplier(p, ability.id);
+  const castTime =
+    afflictionAdjustedCastTime(p, ability.id, instantBaseCastTime) *
+    destructionCastTimeMult(p, ability.id) *
+    ashenFocusCastTimeMult(ctx, p, meta, ability.id);
+  // A press that cannot survive movement (abilityCastSurvivesMovement) is denied
+  // OUTRIGHT here, before the GCD arms or any cast-commit body state is changed,
+  // when the player's held movement input would actually move this tick. A root,
+  // steep-ground control strip, or dismount lock matches player_motion's own
+  // cancellation gate: those states mean the input is held but the body is not
+  // moving, so the cast may start normally.
+  if (
+    (ability.channel || (castTime > 0 && !togglingOff)) &&
+    heldMovementInputWouldMove(p, meta.moveInput, ctx.cfg.seed) &&
+    !abilityCastSurvivesMovement(p, ability.id, res)
+  ) {
+    ctx.error(p.id, "You can't cast while moving.");
+    return;
+  }
+
   if (p.sitting) ctx.standUp(p);
   if (p.weaponStowed) drawWeapon(p);
   if (ability.id !== 'ghost_wolf' && p.auras.some((a) => a.id === 'ghost_wolf')) {
@@ -1757,41 +1807,6 @@ export function castAbility(
     return;
   }
   p.castTargetId = target?.id ?? null;
-
-  // Brain Freeze (combat/frost_mage.ts): consumed HERE, after every gate
-  // above (so a blocked cast never eats the proc) and before the cast-time /
-  // cost / cooldown reads below: the armed Flurry goes instant, skips its
-  // cooldown and carries its 30% baked into the resolved effects.
-  res = applyBrainFreezeOverride(ctx, p, res);
-  // Solar Reprisal shares one choice across the Protection Paladin's ranged
-  // strike, self-sustain strike, and ally-capable filler heal. Consume only
-  // after all cast gates succeed, then bake the chosen override into this cast.
-  res = applySolarReprisalOverride(ctx, p, res);
-  // Dawn's Wrath is a stored extra Tolling Hammer cast, not a cooldown reset:
-  // consume it only after every cast gate succeeds, then leave any existing
-  // cooldown untouched by resolving this one cast with a zero-second cooldown.
-  res = applyDawnsWrathOverride(ctx, p, res);
-
-  // Owner 2026-07-13: spell haste shortens the global cooldown (floored at MIN_GCD),
-  // so gear/Bloodlust/Temporal Acceleration haste speeds the whole rotation, not just
-  // cast bars. spellHasteMult is 1 for anyone without spell haste, so their GCD is
-  // unchanged.
-  const gcd = Math.max(MIN_GCD, ctx.playerGcdFor(meta.cls) / spellHasteMult(p));
-  // A channel keeps its duration, so it must not eat a next_cast_instant charge.
-  let consumedInstantAura: Aura | null = null;
-  if (
-    !ability.channel &&
-    res.castTime > 0 &&
-    (ability.school !== 'physical' || hasScopedNextCastInstant(p, ability.id))
-  ) {
-    consumedInstantAura = consumeNextCastInstantAura(ctx, p, ability.id);
-  }
-  const instantBaseCastTime =
-    consumedInstantAura !== null ? 0 : res.castTime * shamanCastTimeMultiplier(p, ability.id);
-  const castTime =
-    afflictionAdjustedCastTime(p, ability.id, instantBaseCastTime) *
-    destructionCastTimeMult(p, ability.id) *
-    ashenFocusCastTimeMult(ctx, p, meta, ability.id);
   // A free cast is consumed where the cost is actually billed: here for channels
   // and instants (this tick resolves them via the local `res`), but for cast-time
   // spells the bill lands in applyAbility at completion, which RE-RESOLVES the

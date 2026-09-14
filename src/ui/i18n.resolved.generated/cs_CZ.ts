@@ -10392,6 +10392,7 @@ export const cs_CZ: EnTranslations = {
       "stunned": "Jsi omráčen(a)!",
       "silenced": "Jsi umlčen(a)!",
       "busy": "Jsi zaneprázdněn(a).",
+      "cannotCastWhileMoving": "You can't cast while moving.",
       "abilityNotReady": "Tato schopnost ještě není připravená.",
       "notEnoughRage": "Nedostatek vzteku!",
       "notEnoughEnergy": "Nedostatek energie!",

@@ -10,27 +10,33 @@
 
 export const pending: Record<string, readonly string[]> = {
   "es": [
+    "hud.errors.cannotCastWhileMoving",
     "hudChrome.finder.lootHeroicChance",
     "hudChrome.finder.lootHeroicMaybe"
   ],
   "es_ES": [
+    "hud.errors.cannotCastWhileMoving",
     "hudChrome.finder.lootHeroicChance",
     "hudChrome.finder.lootHeroicMaybe"
   ],
   "fr_FR": [
+    "hud.errors.cannotCastWhileMoving",
     "hudChrome.finder.lootHeroicChance",
     "hudChrome.finder.lootHeroicMaybe"
   ],
   "fr_CA": [
+    "hud.errors.cannotCastWhileMoving",
     "hudChrome.finder.lootHeroicChance",
     "hudChrome.finder.lootHeroicMaybe"
   ],
   "en_CA": [],
   "it_IT": [
+    "hud.errors.cannotCastWhileMoving",
     "hudChrome.finder.lootHeroicChance",
     "hudChrome.finder.lootHeroicMaybe"
   ],
   "de_DE": [
+    "hud.errors.cannotCastWhileMoving",
     "hudChrome.finder.lootHeroicChance",
     "hudChrome.finder.lootHeroicMaybe"
   ],
@@ -39,39 +45,48 @@ export const pending: Record<string, readonly string[]> = {
   "ko_KR": [],
   "ja_JP": [],
   "pt_BR": [
+    "hud.errors.cannotCastWhileMoving",
     "hudChrome.finder.lootHeroicChance",
     "hudChrome.finder.lootHeroicMaybe"
   ],
   "ru_RU": [],
   "cs_CZ": [
+    "hud.errors.cannotCastWhileMoving",
     "hudChrome.finder.lootHeroicChance",
     "hudChrome.finder.lootHeroicMaybe"
   ],
   "nl_NL": [
+    "hud.errors.cannotCastWhileMoving",
     "hudChrome.finder.lootHeroicChance",
     "hudChrome.finder.lootHeroicMaybe"
   ],
   "pl_PL": [
+    "hud.errors.cannotCastWhileMoving",
     "hudChrome.finder.lootHeroicChance",
     "hudChrome.finder.lootHeroicMaybe"
   ],
   "id_ID": [
+    "hud.errors.cannotCastWhileMoving",
     "hudChrome.finder.lootHeroicChance",
     "hudChrome.finder.lootHeroicMaybe"
   ],
   "tr_TR": [
+    "hud.errors.cannotCastWhileMoving",
     "hudChrome.finder.lootHeroicChance",
     "hudChrome.finder.lootHeroicMaybe"
   ],
   "sv_SE": [
+    "hud.errors.cannotCastWhileMoving",
     "hudChrome.finder.lootHeroicChance",
     "hudChrome.finder.lootHeroicMaybe"
   ],
   "vi_VN": [
+    "hud.errors.cannotCastWhileMoving",
     "hudChrome.finder.lootHeroicChance",
     "hudChrome.finder.lootHeroicMaybe"
   ],
   "da_DK": [
+    "hud.errors.cannotCastWhileMoving",
     "hudChrome.finder.lootHeroicChance",
     "hudChrome.finder.lootHeroicMaybe"
   ]

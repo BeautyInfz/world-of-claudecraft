@@ -10392,6 +10392,7 @@ export const ru_RU: EnTranslations = {
       "stunned": "Вы оглушены!",
       "silenced": "Вы лишены дара речи!",
       "busy": "Вы заняты.",
+      "cannotCastWhileMoving": "Вы не можете применять заклинания в движении.",
       "abilityNotReady": "Эта способность еще не готова.",
       "notEnoughRage": "Недостаточно ярости!",
       "notEnoughEnergy": "Недостаточно энергии!",
