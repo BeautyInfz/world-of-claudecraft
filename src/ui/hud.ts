@@ -8217,8 +8217,8 @@ export class Hud {
   // the SAME IWorld.useItem seam castSlot's item arm uses (offline runs the sim
   // directly, online sends the authoritative 'use' command), minus the
   // hotbar-eligibility gate: the ids come pre-filtered from consumable_bar_view,
-  // which deliberately INCLUDES elixirs and scrolls (usable from bags, never
-  // hotbar-placeable).
+  // which deliberately INCLUDES elixirs and scrolls; elixirs are hotbar-placeable
+  // too, while scrolls stay tray/bag consumables.
   private buildMobileConsumableSeat(): void {
     this.mobileConsumableSeat =
       buildMobileConsumableSeat({
