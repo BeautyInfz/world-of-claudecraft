@@ -680,8 +680,12 @@ interface AttributionTargetFixture {
 // Re-minted for the PR #4024 merge after PR #4023: the monument impostor
 // civicShader leaf and shader-prefix diagnostic remint evidence land in one
 // tree, so the composite matches neither parent. No capture was retaken.
+// Re-minted for the PR #4025 merge after PR #4024: the monument impostor
+// civicShader leaf, shader-prefix diagnostic evidence, Eastbrook monument
+// reveal roots and gated live-program renderer changes land in one tree. No
+// capture was retaken.
 const PINNED_POLISH_COMPOSITE_FINGERPRINT =
-  '5bd0cf58f1805a3933e42fa53ca7a50fbeaa422e7dfb97837d7bb13fe5ce50de';
+  '22d90debbf133da1b7c00f4f799ce1c709634daa066f3d084b146953f2387ace';
 
 function validPolishAttributionTargets(): AttributionTargetFixture[] {
   return [
