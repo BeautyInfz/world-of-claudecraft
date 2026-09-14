@@ -1427,13 +1427,13 @@ function dynamicFields(e: Entity, includeAuras = true): Record<string, unknown> 
   if (e.riftSliding) out.sld = 1; // ice-slide: render a frozen gliding pose
   // Ledge climb: quantized progress (1..99), not the arc. The client never
   // re-simulates the pull (the server owns it and streams the resulting
-  // positions); it needs to know a climb is running, to stop predicting a
-  // fall, and how far through it is so the pull-up pose tracks the motion.
-  // Any non-zero value reads as "climbing" on older clients.
+  // positions); it needs the movement bit to stop predicting a fall, plus
+  // progress so the pull-up pose tracks the motion.
   if (e.climb) {
     const t = e.climb.elapsed / e.climb.duration;
     out.cl = Math.max(1, Math.min(99, Math.round(t * 100)));
   }
+  if (e.leap) out.lp = 1; // Vaulting Charge: server-owned movement arc
   if (e.weaponStowed) out.ws = 1; // Z-key sheathe: weapons render on the back
   if (e.helmHidden) out.hh = 1; // paperdoll eye toggle: kit helm left off the composed body
   if (e.aggroTargetId !== null) out.aggro = e.aggroTargetId;

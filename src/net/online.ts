@@ -2899,9 +2899,9 @@ export class ClientWorld extends ReconWireState implements IWorld {
       e.sitting = !!w.sit;
       e.riftSliding = !!w.sld;
       e.climbing = !!w.cl;
-      // Quantized 1..99 progress through the pull (see server snapshot);
-      // undefined when not climbing so the visual falls back to its own clock.
+      // Quantized 1..99 pull progress; undefined when idle so the visual falls back to its own clock.
       e.climbProgress = typeof w.cl === 'number' && w.cl > 0 ? w.cl / 100 : undefined;
+      e.leaping = !!w.lp;
       e.afk = !!w.ak; // /afk display bit: drives the nameplate tag + social presence dot
       e.weaponStowed = !!w.ws;
       e.helmHidden = !!w.hh;

@@ -3884,6 +3884,7 @@ async function startGame(
     playerImmobilized: false,
     posX: 0,
     climbing: undefined,
+    leaping: undefined,
     riftFloor: null,
   };
   function updateCamera(frameDt: number, interpFacing: number): void {
@@ -4567,6 +4568,7 @@ async function startGame(
     selfMotionGateArgs.playerImmobilized = playerImmobilized();
     selfMotionGateArgs.posX = pe.pos.x;
     selfMotionGateArgs.climbing = pe.climbing;
+    selfMotionGateArgs.leaping = pe.leaping;
     selfMotionGateArgs.riftFloor = net.riftFloor;
     const selfPredictionEnabled =
       !SELF_MOTION_DISABLED && selfMotionPredictionEnabled(selfMotionGateArgs);

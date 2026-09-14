@@ -4748,6 +4748,8 @@ export interface ClientMirroredEntityFields {
    *  0..1 through the pull at the snapshot cadence; the visual smooths it. */
   climbing?: boolean;
   climbProgress?: number;
+  /** Mirror of an in-flight Vaulting Charge: a bare server-owned movement bit. */
+  leaping?: boolean;
 }
 
 export interface Entity extends ClientMirroredEntityFields {
