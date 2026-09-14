@@ -482,7 +482,11 @@ const MONOLITHS: MonolithRow[] = [
     // wrapper was the bank family's formatCount (src/ui/count_format.ts), so
     // the coordinator consumes that leaf and pays the one-line openWhoTab dep.
     // Exact resolved count, zero slack.
-    ceiling: 18346,
+    // LOWERED again 18346 -> 18339 with the instance-plan zoom-out: the
+    // world-map "grab the paper" pan math moved to mapDragPanCenter in
+    // map_pan_core.ts. `wc -l < src/ui/hud.ts` on the resolved v0.43 batch
+    // tree is 18339. Exact merged count, zero slack.
+    ceiling: 18339,
     seam: 'pure view core + thin painter on PainterHost (src/ui/CLAUDE.md)',
   },
   {
