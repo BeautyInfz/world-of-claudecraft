@@ -34,7 +34,9 @@ import {
 } from '../../sim/varkhul_cinder_artificer';
 import { ITEM_WEAPON_VARIANTS } from '../../ui/weapon_variants';
 import type { OverheadEmoteId } from '../../world_api';
+import type { LocoGaitThresholds } from '../locomotion';
 import { VARKHUL_FORGING_STRIKE_TIMESCALE } from '../varkhul_forge_hammer';
+import type { LocomotionRateLimits } from './anim_state';
 import { NPC_PROP_SET_IDS, type NpcPropSet } from './npc_looks';
 
 export interface EmoteClipSpec {
@@ -68,6 +70,9 @@ export interface ClipMap {
    *  Its pose should match what the rig's attack and hit one-shots open and
    *  close on, so those blend into and out of it without a snap. */
   combatIdle?: string;
+  /** Low stalking poses for a concealed quadruped. Absent = ordinary gait. */
+  prowlIdle?: string;
+  prowlWalk?: string;
   walk: string;
   run: string;
   /** one-shot swing clips, rotated per attack */
@@ -211,7 +216,19 @@ export interface VisualDef {
   tintStrength?: number;
   /** u/s at which the walk/run cycles look right (timeScale matching) */
   walkRef?: number;
+  walkBackRef?: number;
   runRef?: number;
+  prowlRef?: number;
+  wadeRef?: number;
+  locomotionRateLimits?: LocomotionRateLimits;
+  /** Opt-in gait coverage for short quadrupeds; other rigs keep global thresholds. */
+  gait?: LocoGaitThresholds;
+  runTimeScaleMin?: number;
+  /** Pose-wrapper rise in world units for swimming and stationary paddling.
+   *  Horizontal animal rigs keep their own waterline instead of the humanoid tread sink. */
+  swimRise?: { stroke: number; tread: number };
+  /** Swimming head top above the entity pivot, including swimRise, at scale 1. */
+  swimHeadHeight?: number;
   attackTimeScale?: number;
   deathTimeScale?: number;
   /** Cut out of locomotion into idle instead of crossfading.
@@ -503,8 +520,8 @@ const WOLF_BAKED: ClipMap = {
 // (Bark, Howl, "Idle Alert", Sneak) specific to this named rare; this
 // blends Howl's rear-back windup into Attack's lunge for a howl-then-pounce,
 // more dramatic than the plain Attack every other WOLF_BAKED user (mob_wolf,
-// form_cat) still plays. WOLF_BAKED itself is untouched: both still read it,
-// and changing the shared base would change player druid/shaman form combat
+// form_ghost_wolf) still plays. WOLF_BAKED itself is untouched: both still read it,
+// and changing the shared base would change player shaman form combat
 // feel, out of scope here. greyjaw already ships and wires BOTH
 // Idle_HitReact_Left and Idle_HitReact_Right (via animal()), so no
 // hit-variety work is needed here: this override is attack-only.
@@ -536,6 +553,41 @@ const BEAR_FORM: ClipMap = {
   // a paddling walk beats the steep no-clip procedural prone on a quadruped,
   // the same call the wolf forms make
   swim: 'Walk',
+};
+
+// The cat is an in-place quadruped: world motion owns the leap trajectory,
+// Jump holds its airborne final pose, and Land fires only on real touchdown.
+// Utility spells intentionally have no gesture override, so buffs never swipe.
+const DRUID_CAT_FORM: ClipMap = {
+  idle: 'Idle',
+  idleVariants: ['Idle_Look'],
+  combatIdle: 'CombatIdle',
+  prowlIdle: 'ProwlIdle',
+  prowlWalk: 'ProwlWalk',
+  walk: 'Walk',
+  walkBack: 'WalkBack',
+  run: 'Run',
+  attack: ['Attack_Left', 'Attack_Right'],
+  attackByAbility: {
+    claw: 'Attack_Left',
+    rake: 'Attack_Right',
+    ferocious_bite: 'Bite',
+    rip: 'Finisher',
+    pounce: 'Pounce',
+    redharvest: 'Finisher',
+  },
+  hit: ['Hit_Left', 'Hit_Right'],
+  death: 'Death',
+  jump: 'Jump',
+  land: 'Land',
+  fall: 'Fall',
+  sitDown: 'SitDown',
+  sitIdle: 'Sit',
+  swim: 'Swim',
+  swimSurface: 'SwimSurface',
+  swimIdle: 'SwimIdle',
+  wade: 'Wade',
+  flourish: 'Rise',
 };
 
 // Custom wild boar rig (wild_boar.glb)
@@ -1997,10 +2049,33 @@ export const VISUALS: Record<string, VisualDef> = {
       cast: 'Cast',
     },
   },
-  // Druid Wolf Form AND shaman Shadewolf (ghost_wolf renders this visual with
-  // the ghost material on top). Same custom baked wolf as the world wolves;
-  // the tawny tint keeps the druid form readable against grey pack wolves.
   form_cat: {
+    url: `${CREATURES}/druid_cat_form.glb`,
+    // Sized a fifth above the world wolves (mob_wolf / form_ghost_wolf are 1.6)
+    // so the druid's cat reads as the bigger predator on the field.
+    height: 1.92,
+    clips: DRUID_CAT_FORM,
+    authoredAtlas: true,
+    // Measured planted-paw speeds at height 1.1 (tests/druid_cat_asset.test.ts),
+    // scaled by 1.92/1.1 with the height; clip durations retain a slower walk.
+    walkRef: 2.78992,
+    walkBackRef: 4.82101,
+    runRef: 9.13075,
+    prowlRef: 5.47846,
+    wadeRef: 4.82105,
+    // Longer walk cycles stay slower than Run while matching actual movement speed.
+    locomotionRateLimits: { walkMax: 2, prowlMax: 2.2, runMax: 2.05, wadeMax: 1.6 },
+    gait: { runEnter: 3.2, runExit: 2.6 },
+    // Scaled with the body: a 1.92 cat at the slowed-run band (3.2 yd/s over a
+    // 9.13 ref) sits at .35, so the floor drops to .3 to keep the feet matched.
+    runTimeScaleMin: 0.3,
+    swimRise: { stroke: 0.21, tread: 0.21 },
+    swimHeadHeight: 1.74,
+    attackTimeScale: 1,
+    deathTimeScale: 1,
+  },
+  // Shaman Shadewolf retains the original wolf, tint and ghost-material overlay.
+  form_ghost_wolf: {
     url: `${CREATURES}/wolf_basic.glb`,
     height: 1.6,
     clips: WOLF_BAKED,

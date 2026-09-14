@@ -68,11 +68,13 @@ describe('character presentation sleep wiring', () => {
     const update = characterVisual.slice(start, end);
 
     const edgeAt = update.indexOf(
-      'shouldPlayLanding(this.wasAirborne, s.airborne, s.dead, !!this.action(landClip))',
+      'shouldPlayLanding(this.wasAirborne, s.airborne, s.dead, !!this.action(landClip), s.swimming)',
     );
     const latchAt = update.indexOf('this.currentOneShotIsLanding = true;', edgeAt);
     const stateAt = update.indexOf('const desired = this.desiredBase(s);', latchAt);
-    const cancelAt = update.indexOf('MOVING_STATES.has(desired)', stateAt);
+    // The landing yields to movement, a re-jump, a stationary swim or a moving
+    // cast through one predicate (anim_state.ts shouldInterruptLanding).
+    const cancelAt = update.indexOf('shouldInterruptLanding(s)', stateAt);
     const handoffAt = update.indexOf(
       'this.fadeTo(this.baseAction(), this.baseTransitionFade(desired), false);',
       cancelAt,

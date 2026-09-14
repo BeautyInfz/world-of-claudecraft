@@ -17,6 +17,9 @@ export interface AnimOverrideFacts {
   /** The mob's live aggro target, or null. Present on both hosts: the sim sets
    *  it, the server wires it as `aggro`, and ClientWorld mirrors it. */
   aggroTargetId: number | null;
+  kind?: string;
+  targetId?: number | null;
+  autoAttack?: boolean;
   /** Rift ice-slide in progress (the sim glides the body at speed). Optional to
    *  match `Entity`, where it is only set on a sliding player. */
   riftSliding?: boolean;
@@ -31,14 +34,19 @@ export function applyEntityAnimOverrides(
   e: AnimOverrideFacts,
   visuallyDead: boolean,
   characterEffects = 0,
+  stealthed = false,
 ): void {
   // Engaged with someone: a rig that ships a battle stance holds it between
   // swings instead of relaxing into its idle. Reading the aggro target (rather
   // than `inCombat`, which is server-only: net/online.ts stubs it false) keeps
   // this identical on both hosts with no new wire traffic, so peers brace the
-  // same way. Players have no stance clip today, and they carry their selection
-  // in targetId rather than aggroTargetId, so they are unaffected either way.
-  st.combat = e.aggroTargetId !== null && !visuallyDead;
+  // same way. Players brace only with an active auto-attack and a target:
+  // selecting someone alone is not a combat signal. Those fields replicate too.
+  st.combat =
+    !visuallyDead &&
+    (e.aggroTargetId !== null ||
+      (e.kind === 'player' && e.autoAttack === true && e.targetId != null));
+  st.stealthed = stealthed && !visuallyDead;
   // Ice slide: the sim glides the player at speed but they should read as FROZEN
   // (gliding stiff on the ice), not sprinting. Suppress locomotion + airborne so
   // the state machine holds a static pose while they slide. Last, so it also
@@ -49,6 +57,7 @@ export function applyEntityAnimOverrides(
     st.running = false;
     st.airborne = false;
     st.combat = false;
+    st.stealthed = false;
   }
   // Impaled on a Nythraxis Bone Spike: the body lies pinned to the floor, so
   // the rig takes the DEATH pose while alive. `dead` is a level the visual
@@ -64,5 +73,6 @@ export function applyEntityAnimOverrides(
     st.running = false;
     st.airborne = false;
     st.combat = false;
+    st.stealthed = false;
   }
 }

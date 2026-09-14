@@ -7382,8 +7382,8 @@
       "tick": 135,
       "time": 6.75,
       "nextId": 1020,
-      "state": "2500854e",
-      "events": "034160e5",
+      "state": "3be756d4",
+      "events": "00c1c249",
       "rng": {
         "draws": 894,
         "digest": "56ec9ce1"
@@ -8305,7 +8305,7 @@
               "duration": 3600,
               "id": "cat_form",
               "kind": "form_cat",
-              "name": "Wolf Form",
+              "name": "Cat Form",
               "remaining": 3600,
               "school": "physical",
               "sourceId": 1010,
@@ -8815,7 +8815,7 @@
       "time": 6.75,
       "nextId": 1020,
       "state": "349d8eec",
-      "events": "96e5d864",
+      "events": "2ce1839a",
       "rng": {
         "draws": 894,
         "digest": "56ec9ce1"

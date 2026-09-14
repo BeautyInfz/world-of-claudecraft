@@ -222,7 +222,7 @@ describe('Moongrove engine', () => {
 });
 
 describe('Wildfang engine', () => {
-  it('applies Wildfang AP tuning to the Wolf Form bonus', () => {
+  it('applies Wildfang AP tuning to the Cat Form bonus', () => {
     const { sim, player } = rig('feral');
     const meta = sim.meta(player.id);
     expect(meta).toBeDefined();

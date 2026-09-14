@@ -6728,7 +6728,7 @@ function grixRespawnWindow(): Scenario {
   };
 }
 
-// Wolf Form AUTO attacks, the arm druid_engines deliberately does not drive
+// Cat Form AUTO attacks, the arm druid_engines deliberately does not drive
 // (it scripts specials only): the fixed 1.0s cat cadence swings against a
 // bear-form control on the same staff swinging at the weapon speed. The cat
 // lane lands ~1.8x the swings (and rng draws) of the bear lane over the same
@@ -6739,7 +6739,7 @@ function catFormAutoSwing(): Scenario {
     name: 'cat_form_auto_swing',
     coverage: [
       'class:druid (Wildfang cat + Bruin control)',
-      'Wolf Form fixed-cadence auto-attack: 1.0s swing timer, normalized mainhand weapon roll',
+      'Cat Form fixed-cadence auto-attack: 1.0s swing timer, normalized mainhand weapon roll',
       'bear-form control swinging at the equipped weapon speed on the same loadout',
     ],
     sampleEvery: 5,
