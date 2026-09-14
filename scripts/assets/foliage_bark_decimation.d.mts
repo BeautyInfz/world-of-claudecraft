@@ -14,6 +14,8 @@ export interface FoliageFieldBarkAsset {
 
 export const FOLIAGE_FIELD_BARK_ASSETS: readonly FoliageFieldBarkAsset[];
 
+export function isFoliageFieldCopyCatalogId(id: string): boolean;
+
 export function isFoliageBarkMaterial(name: string): boolean;
 
 export interface FoliageBarkSimplifier {

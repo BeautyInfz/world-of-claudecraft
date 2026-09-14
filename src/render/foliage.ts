@@ -45,6 +45,7 @@ import {
   insideGrassHubExclusion,
 } from './foliage_core';
 import { survivesLeanDecimation } from './foliage_decimation_core';
+import { FOLIAGE_MODEL_DIR as MODEL_DIR, treeUrl } from './foliage_field_models';
 import {
   createFoliageFrameWindows,
   type FoliageFrameInput,
@@ -208,13 +209,6 @@ const LEAF_UP_NORMAL_BLEND = 0.7;
 // foliage draw budget — see the perBucket caps in the species specs
 const BUCKET_DEPTH = 240;
 
-const MODEL_DIR = 'models/foliage/';
-// Variants the field draws from a `_field` copy with decimated bark
-// (scripts/assets/decimate_foliage_bark.mjs); the great trees, the Thornhollow
-// dressing and the oakTree prop keep the full-detail originals.
-const FIELD_BARK_DECIMATED = { pine: [1, 2, 4], oak: [1, 2, 4, 5], twisted: [1, 2, 3] };
-const treeUrl = (species: keyof typeof FIELD_BARK_DECIMATED, i: number): string =>
-  `${MODEL_DIR}${species}_${i}${FIELD_BARK_DECIMATED[species].includes(i) ? '_field' : ''}.glb`;
 const FOLIAGE_MODEL_URLS_HIGH = {
   // pine_3 is shipped but unused: its 462-tri canopy reads as a dead pole
   pine: [1, 2, 4, 5].map((i) => treeUrl('pine', i)),

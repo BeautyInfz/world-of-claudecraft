@@ -88,6 +88,18 @@ export const FOLIAGE_FIELD_BARK_ASSETS = Object.freeze([
   },
 ]);
 
+const FIELD_COPY_CATALOG_IDS = new Set(
+  FOLIAGE_FIELD_BARK_ASSETS.map(({ outputPath }) =>
+    outputPath.replace(/^models\//, '').replace(/\.glb$/, ''),
+  ),
+);
+
+/** Whether an editor asset catalog id (`foliage/pine_1_field`, as
+ *  scripts/gen_asset_catalog.mjs derives it) names one of the stage outputs. */
+export function isFoliageFieldCopyCatalogId(id) {
+  return FIELD_COPY_CATALOG_IDS.has(id);
+}
+
 /** The trunk materials of the tree kit (the non-leaf `Bark_*` names of foliage.ts MAT_POLICY). */
 export function isFoliageBarkMaterial(name) {
   return name.startsWith('Bark_');
@@ -127,50 +139,12 @@ function bakedPositions(accessor, matrix) {
   return out;
 }
 
-function primitiveParents(property) {
-  return property.listParents().filter((parent) => parent.propertyType === PropertyType.PRIMITIVE);
-}
-
 function meshWorldMatrix(mesh) {
   const nodes = mesh.listParents().filter((parent) => parent.propertyType === PropertyType.NODE);
   if (nodes.length !== 1) {
     throw new Error(`Bark mesh ${mesh.getName()} is instanced by ${nodes.length} nodes`);
   }
   return nodes[0].getWorldMatrix();
-}
-
-function dropUnreferencedVertices(primitive, triangleIndices) {
-  if (primitive.listTargets().length > 0) throw new Error('Bark primitive has morph targets');
-  const indices = primitive.getIndices();
-  const vertexCount = primitive.getAttribute('POSITION').getCount();
-  const remap = new Int32Array(vertexCount).fill(-1);
-  const compactIndices = new Uint32Array(triangleIndices.length);
-  let kept = 0;
-  for (let i = 0; i < triangleIndices.length; i++) {
-    const vertex = triangleIndices[i];
-    if (remap[vertex] < 0) remap[vertex] = kept++;
-    compactIndices[i] = remap[vertex];
-  }
-  const IndexArray = indices.getArray().constructor;
-  if (kept > (IndexArray === Uint16Array ? 65_535 : 2 ** 32 - 1)) {
-    throw new Error(`Bark keeps ${kept} vertices, too many for ${IndexArray.name}`);
-  }
-  for (const accessor of [indices, ...primitive.listAttributes()]) {
-    if (primitiveParents(accessor).length !== 1) {
-      throw new Error(`Bark accessor ${accessor.getName() || '<unnamed>'} is shared`);
-    }
-  }
-  for (const accessor of primitive.listAttributes()) {
-    const source = accessor.getArray();
-    const size = accessor.getElementSize();
-    const compact = new source.constructor(kept * size);
-    for (let vertex = 0; vertex < vertexCount; vertex++) {
-      if (remap[vertex] < 0) continue;
-      compact.set(source.subarray(vertex * size, (vertex + 1) * size), remap[vertex] * size);
-    }
-    accessor.setArray(compact);
-  }
-  indices.setArray(IndexArray.from(compactIndices));
 }
 
 function classifyPrimitives(document) {
@@ -230,10 +204,10 @@ function largestBoundsShift(before, after) {
  * Simplify the one bark primitive of a foliage tree to its triangle budget,
  * as the approved foliage bench arm did at runtime: a permissive
  * meshoptimizer collapse over the renderer-baked positions, the count
- * deciding. The collapse keeps original vertices only; the vertices it no
- * longer references are dropped. Every other primitive, material, texture
- * and extension is kept, and the document is finished by the vertex
- * pipeline. Throws when an invariant does not hold.
+ * deciding. The collapse keeps original vertices only; the vertex pipeline
+ * that finishes the document drops the ones it no longer references. Every
+ * other primitive, material, texture and extension is kept. Throws when an
+ * invariant does not hold.
  */
 export async function decimateFoliageBarkDocument(
   document,
@@ -281,9 +255,14 @@ export async function decimateFoliageBarkDocument(
   if (barkBoundsShift > FOLIAGE_BARK_BOUNDS_TOLERANCE) {
     throw new Error(`Bark bounds moved by ${barkBoundsShift}`);
   }
-  dropUnreferencedVertices(barkPrimitive, simplified);
+  // The simplifier returns source vertex ids, so they fit the source index type.
+  indices.setArray(indices.getArray().constructor.from(simplified));
   await optimizeFoliageVertexDocument(document, encoder);
 
+  // Safety checks against a future vertex pipeline: today's weld and reorder
+  // cannot change the primitive set, the bark triangle count, the textures or
+  // the bounds. The non-bark check also catches a leaf sharing the bark's
+  // index accessor.
   const after = classifyPrimitives(document);
   if (after.bark.length !== 1 || after.other.length !== other.length) {
     throw new Error('Primitive set changed during decimation');

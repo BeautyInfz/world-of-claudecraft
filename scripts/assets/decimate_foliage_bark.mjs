@@ -6,7 +6,7 @@
 //
 // Usage: node scripts/assets/decimate_foliage_bark.mjs [--write-pins]
 //   --write-pins  accept an output sha256 that differs from its pin, write it,
-//                 and print the new pins to paste into the table
+//                 and print the new pins plus the remaining re-pin steps
 import { createHash } from 'node:crypto';
 import { readFileSync, renameSync, rmSync, statSync } from 'node:fs';
 import path from 'node:path';
@@ -90,4 +90,13 @@ if (repinned.length > 0) {
   for (const { outputPath, outputSha256 } of repinned) {
     console.log(`  ${outputPath}: '${outputSha256}'`);
   }
+  console.log(
+    [
+      '\nRemaining re-pin steps:',
+      '  1. paste the same outputSha256 values into EXPECTED in',
+      '     tests/foliage_field_bark_decimation.test.ts, with the bark tris and verts printed above',
+      '  2. node scripts/build_media_manifest.mjs generate',
+      '  3. npx vitest run tests/foliage_field_bark_decimation.test.ts',
+    ].join('\n'),
+  );
 }
