@@ -868,7 +868,12 @@ const MONOLITHS: MonolithRow[] = [
     // Restored per-ability resurrection school lookup removes one line.
     // Lowered again after extracting the per-frame zone-feature sweep (fog rule,
     // apparent-size reach, shadow-range flip) into src/render/zone_feature_sweep.ts.
-    ceiling: 12822,
+    // Lowered again for the gather-node shadow shed and reach hide, after the
+    // combined tree measured 12815 lines in src/render/renderer.ts.
+    // Lowered again when the gather-node shadow shed and reach hide moved
+    // behind GatherNodesView.update (the two guard blocks collapsed to one
+    // call each and the shadowLightDirection scratch left the renderer).
+    ceiling: 12815,
     seam: 'a new src/render/<thing>.ts module the renderer calls (src/render/CLAUDE.md)',
   },
   {

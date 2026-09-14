@@ -671,8 +671,11 @@ interface AttributionTargetFixture {
 // PR fen-features-subcull: remint after merging release/v0.43.0 into the branch.
 // The renderer leaf differs from the release tree by the zone-feature sweep
 // extraction; captures, performance measurements and capture identity are unchanged.
+// Re-minted for the v0.43.0 merge of the gather coarse key after the
+// zone-feature sweep extraction: the merged runtimeRender.renderer leaf
+// matches neither parent. No capture was retaken.
 const PINNED_POLISH_COMPOSITE_FINGERPRINT =
-  'faf74aded65e0c50da1dd4f352d76e24d564270eb4d5074a756b0d6bab34be42';
+  '4d90884fd4a4c9d83bc62a78044768317f530a6c86e3cb30161ff9eca1c136da';
 
 function validPolishAttributionTargets(): AttributionTargetFixture[] {
   return [
