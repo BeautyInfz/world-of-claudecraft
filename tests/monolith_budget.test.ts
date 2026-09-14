@@ -1902,13 +1902,8 @@ const MONOLITHS: MonolithRow[] = [
     // Re-pinned to the exact merged count of the v0.41.0 base sync into the
     // raid branch: both arms extracted and added independently, so neither
     // parent pin fits the combined file; the merged count is the honest bound.
-    // RE-PINNED at the merge of release/v0.41.0 (tip 3e801dc925, the Ignivar
-    // raid span) into feature/masterwrought (base e19d832b47): this row did not
-    // conflict, and that is exactly why it is measured (a conflict marks
-    // disagreement about TEXT; this gate is about SIZE). BOTH parent pins for
-    // the record: ours 2804, the release 2433. Measured on the merged tree,
-    // never reconciled by arithmetic. Exact merged count, zero slack.
-    ceiling: 2432,
+    // Lowered after the rift sanctum slab plan moved to rift_platform_core.ts.
+    ceiling: 2424,
     seam: 'a new src/render/<thing>.ts module (src/render/CLAUDE.md)',
   },
   {
