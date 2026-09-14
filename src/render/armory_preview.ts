@@ -23,6 +23,7 @@ import {
 } from './characters/preview_appearance';
 import { disposeOwnedWeaponSkinMaterials } from './characters/weapon_skin_materials';
 import { trackWebGLContext } from './context_release';
+import { previewPixelRatio } from './preview_pixel_ratio';
 import { shaderDebugRequested } from './shader_debug_flag';
 import {
   createWeaponVfx,
@@ -86,7 +87,7 @@ export function createArmoryPreview(
 ): ArmoryPreviewHandle {
   const renderer = new THREE.WebGLRenderer({ canvas, alpha: false, antialias: true });
   renderer.debug.checkShaderErrors = shaderDebugRequested();
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setPixelRatio(previewPixelRatio(window.devicePixelRatio));
   renderer.setSize(Math.max(1, container.clientWidth), Math.max(1, container.clientHeight), false);
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.outputColorSpace = THREE.SRGBColorSpace;

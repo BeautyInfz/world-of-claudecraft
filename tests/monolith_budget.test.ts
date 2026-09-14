@@ -472,7 +472,13 @@ const MONOLITHS: MonolithRow[] = [
     // isMobile/press/hide/showAt. Exact count, zero slack.
     // Re-measured after the v0.43 ready-check and raid-warning integration:
     // `wc -l < src/ui/hud.ts` is 18356. Exact count, zero slack.
-    ceiling: 18356,
+    // LOWERED again by the mount-skin preview (feature/store-mount-preview):
+    // the two tracker headers' compact-touch chip test moved to
+    // src/ui/mobile_hud_layout.ts isCompactTouchHud and touchBagsShown, paying
+    // for the Cosmetics window's store seam line and the store window's
+    // relocalize arm. The resolved v0.43 batch plus this extraction measures
+    // `wc -l < src/ui/hud.ts` at 18348. Exact merged count, zero slack.
+    ceiling: 18348,
     seam: 'pure view core + thin painter on PainterHost (src/ui/CLAUDE.md)',
   },
   {
@@ -2030,7 +2036,14 @@ const MONOLITHS: MonolithRow[] = [
     // src/ui/store_mount_purchase.ts (the spend controller), the store body's
     // button wiring moved to src/ui/store_body_actions.ts, and both grant-SKU
     // controllers now build over one seam object (store_spend_controllers.ts).
-    ceiling: 1262,
+    //
+    // LOWERED 1262 -> 1258 by the mount-skin preview (feature/store-mount-preview):
+    // the two inspect overlays' deps moved to src/ui/store_inspect_deps.ts and
+    // the eligibility text to src/ui/daily_rewards_reason_view.ts, which paid for
+    // the mount inspect's own lifecycle lines with room to spare (the review
+    // round's close / relocalize / graphics-restore seams for the mount panel
+    // spent part of that room).
+    ceiling: 1258,
     seam: 'a pure view-core plus a thin painter sibling (src/ui/CLAUDE.md)',
   },
   {
