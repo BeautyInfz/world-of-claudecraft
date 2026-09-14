@@ -1438,6 +1438,9 @@ const MONOLITHS: MonolithRow[] = [
     // below both parent pins. Exact merged count, zero slack.
     // Mount skins: bank the coordinator extraction at its measured size.
     // Main hotfix integration: combined extractions, exact merged count.
+    // Guild bank gold notices: kept the current branch's already-lowered pin;
+    // the extracted dispatch pays for the notice transport without loosening
+    // this ratchet.
     ceiling: 10095,
     seam: 'a sibling server module; see the hot-path seams in server/CLAUDE.md',
   },
