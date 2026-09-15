@@ -3078,6 +3078,7 @@ export const tr_TR: EnTranslations = {
       "elementalConvergencePrimed": "Diğer element okulundan bir sonraki büyün Element Yakınsaması kazandırır",
       "hunterFerocity": "{stacks} Sürü Vahşeti: evcil hayvanın {pct}% daha fazla hasar verir",
       "cooldownCap": "Bu pencerede {used} / {cap} sn bekleme süresi azaltımı kullanıldı",
+      "bruinRushWindow": "Kurt Formu mana harcamaz ve Bruin Hücumu hedefini sabitleyerek {sec} saniye boyunca %{pct} yavaşlatır",
       "funeralHarvestLock": "Cenaze Hasadı henüz başka bir Ruh Parçası oluşturamaz",
       "leadenHexLock": "Kurşun Büyüsü bu hedefi henüz yeniden kökleyemez",
       "forbiddenReflectionReady": "Uygun bir sonraki Karabüyücü bekleme süren yeniden kullanılabilir",
@@ -3190,7 +3191,7 @@ export const tr_TR: EnTranslations = {
       "elementalTrance": "Alınan hasar {pct}% azalır. Verdiğin tüm hasarın {mana}%'i manaya dönüşür",
       "stealth": "Oculto; velocidad de movimiento reducida un {pct}%",
       "formBear": "Bruin Formu: can ve zırh artışı",
-      "formCat": "Forma felina: daño cuerpo a cuerpo y energía",
+      "wolfForm": "Wolf Form: melee damage and energy; movement speed increased by {pct}%",
       "formTravel": "Fleet Formu: hareket hızı {pct}% artar",
       "formFireball": "Kor Formu: hareket hızı {pct}% artırıldı; saldırılar ve büyüler devre dışı",
       "formMoonkin": "Aykuşu Formu: büyü hasarı {pct}% ve zırh {armorPct}% artar",
@@ -6617,6 +6618,7 @@ export const tr_TR: EnTranslations = {
       "formsNote": "Bir druid, şekil değiştirerek dövüşür. Çoğu druid yeteneği tek bir şekle aittir, bu yüzden içinde bulunduğun form neyi büyüleyebileceğine karar verir, ve şekil değiştirmek biraz mana harcar. İstediğin kadar sık, dövüş içinde ya da dışında şekil değiştirebilirsin.",
       "formsAutoUnshift": "Formdayken yapılan bir iyileştirme ya da hasar büyüsü seni formdan kendiliğinden çıkarır. Formu bu yolla bırakmak bedavadır ve genel bekleme süreni harcamaz, yani anlık bir büyü tuşa bastığın anda çıkar. Forma geri dönmek sıradan bir yetenektir ve yine mana ile genel bekleme süreni tüketir.",
       "formsMoonwing": "Bir Denge druidi bir şekil daha kazanır: Aykuşu Formu, bu uzmanlığın dövüştüğü büyücü şeklidir. Büyülerini koruyan tek hayvan şeklidir ve değneğin yalnızca bu şekilde ya da normal büyücü şeklinde çalışır.",
+      "formsWolfEngage": "Bir kurt dövüşü Bruin Hücumu ile açar, hedefi sabitlemek için hemen Kurt Formuna geçer, gizli değilken Atılış ile mesafeyi kapatır ve Yere Serme ile düşmanı yerinde tutar.",
       "formLine": {
         "form_bear": "Tank şekli: ağır bir post, mana yerine öfke ve düşmanların sana vurmaya devam etmesini sağlayan ekstra tehdit.",
         "form_cat": "Yakın dövüş hasarı şekli: bir hırsız gibi enerji ve kombo puanları, ve çok daha az tehdit.",
@@ -12068,7 +12070,7 @@ export const tr_TR: EnTranslations = {
       },
       "cat_form": {
         "name": "Kurt Formu",
-        "description": "Seni bir kurda dönüştürür: çeviklik seviyenle yükselir, saldırı gücü +8 artı seviye başına 2, saldırıların enerji ve kombo puanı kullanır ve %29 daha az tehdit üretirsin. Büyücü biçimine dönmek için yeniden kullan."
+        "description": "Seni bir kurda dönüştürür: çeviklik seviyenle yükselir, saldırı gücü +8 artı seviye başına 2, saldırıların enerji ve kombo puanı kullanır ve %29 daha az tehdit üretirsin. Herhangi bir biçime geçmek Ağır Aksak Adım kazandırır: 3 sn boyunca %60 hareket hızı, her 20 saniyede bir kez. Büyücü biçimine dönmek için yeniden kullan."
       },
       "claw": {
         "name": "Yırtan Pençe",
@@ -12133,7 +12135,15 @@ export const tr_TR: EnTranslations = {
       },
       "pounce": {
         "name": "Sinsi Darbe",
-        "description": "Hedefi 2 saniye boyunca sersemleten gizlilik açılışı. 1 kombo puanı kazandırır. Yalnızca Kurt Formu."
+        "description": "Hedefi 2 saniye boyunca sersemleten gizlilik açılışı. 1 kombo puanı kazandırır. Yalnızca Kurt Formu. Gizlilik dışında bu düğme Atılış olur."
+      },
+      "lunge": {
+        "name": "Atılış",
+        "description": "12 yardaya kadar uzaktaki bir düşmana atılır, %60 silah hasarı verir ve 1 kombo puanı kazandırır. Yalnızca Kurt Formu."
+      },
+      "hamstring_bite": {
+        "name": "Yere Serme",
+        "description": "Hedefi 1 sn artı kombo puanı başına 1 sn sersemleten bitirici hamle (5 kombo puanı: 6 sn). Yalnızca Kurt Formu."
       },
       "insect_swarm": {
         "name": "Sokan Sürü",
@@ -12847,7 +12857,7 @@ export const tr_TR: EnTranslations = {
       },
       "bear_charge": {
         "name": "Bruin Hücumu",
-        "description": "Bir düşmana hücum ederek 9 öfke üretir ve onu 1 saniye sersemletir. 8-25 yarda menzil. Yalnızca Bruin Formu."
+        "description": "Bir düşmana hücum ederek 9 öfke üretir ve onu 1 saniye sersemletir. Sonraki 3 saniye boyunca Kurt Formu ücretsizdir ve hedefi sabitleyerek 4 saniye boyunca %50 yavaşlatır. 8-25 yarda menzil. Yalnızca Bruin Formu."
       },
       "demoralizing_roar": {
         "name": "Sindiren Kükreme",
@@ -12855,7 +12865,7 @@ export const tr_TR: EnTranslations = {
       },
       "prowl": {
         "name": "Sinsi Sokulma",
-        "description": "Kurt Formundayken gizliliğe geçer ve 5% daha yavaş hareket edersin. Dövüş sırasında kullanılamaz."
+        "description": "Kurt Formundayken gizliliğe geçer. Dövüş sırasında kullanılamaz."
       },
       "rake": {
         "name": "Deri Yüzme",

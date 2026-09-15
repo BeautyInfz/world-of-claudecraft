@@ -3078,6 +3078,7 @@ export const pl_PL: EnTranslations = {
       "elementalConvergencePrimed": "Twój następny czar z innej szkoły żywiołu nadaje Konwergencję Żywiołów",
       "hunterFerocity": "{stacks} Zaciekłości Sfory: twój towarzysz zadaje o {pct}% więcej obrażeń",
       "cooldownCap": "Wykorzystano {used} z {cap} s skrócenia czasu odnowienia w tym oknie",
+      "bruinRushWindow": "Postać wilka nie kosztuje many i przygważdża cel twojej Szarży Bruina, spowalniając go o {pct}% na {sec} sek.",
       "funeralHarvestLock": "Funeral Harvest nie może jeszcze stworzyć kolejnego Odłamka Duszy",
       "leadenHexLock": "Ołowiana Klątwa nie może jeszcze ponownie unieruchomić tego celu",
       "forbiddenReflectionReady": "Możesz ponownie rzucić swoją następną kwalifikującą się umiejętność czarnoksiężnika, mimo że jest w odnowieniu",
@@ -3190,7 +3191,7 @@ export const pl_PL: EnTranslations = {
       "elementalTrance": "Otrzymywane obrażenia zmniejszone o {pct}%. {mana}% wszystkich zadawanych przez ciebie obrażeń zamienia się w manę",
       "stealth": "Verborgen; Bewegungstempo um {pct}% verringert",
       "formBear": "Postać Bruina: zwiększone zdrowie i pancerz",
-      "formCat": "Katzengestalt: Nahkampfschaden und Energie",
+      "wolfForm": "Wolf Form: melee damage and energy; movement speed increased by {pct}%",
       "formTravel": "Postać Fleet: prędkość ruchu zwiększona o {pct}%",
       "formFireball": "Postać Żaru: prędkość ruchu zwiększona o {pct}%; ataki i czary są wyłączone",
       "formMoonkin": "Postać księżycowej sowy: obrażenia zaklęć zwiększone o {pct}%, a pancerz o {armorPct}%",
@@ -6617,6 +6618,7 @@ export const pl_PL: EnTranslations = {
       "formsNote": "Druid walczy, zmieniając kształt. Większość zdolności druida należy do jednej postaci, więc to, w jakiej formie się znajdujesz, decyduje, co możesz rzucić, a przemiana kosztuje odrobinę many. Możesz przemieniać się w walce i poza nią, tak często, jak chcesz.",
       "formsAutoUnshift": "Leczenie lub zaklęcie zadające obrażenia rzucone w formie samo cię z niej wyprowadza. Opuszczenie formy w ten sposób jest darmowe i nie zużywa globalnego czasu odnowienia, więc błyskawiczne zaklęcie odpala się w chwili naciśnięcia. Powrót do formy to zwykła zdolność i nadal kosztuje manę oraz globalny czas odnowienia.",
       "formsMoonwing": "Druid o specjalizacji Równowaga zyskuje jeszcze jedną postać, Postać księżycowej sowy, formę rzucającego, w jakiej walczy. To jedyna zwierzęca postać, która zachowuje twoje zaklęcia, a różdżka działa tylko w niej albo w twojej zwykłej postaci rzucającego.",
+      "formsWolfEngage": "Wilk otwiera walkę Szarżą Bruina, od razu zmienia się w postać wilka, by przygwoździć cel, skraca dystans Wypadem, gdy się nie skrada, i zatrzymuje wroga Obaleniem.",
       "formLine": {
         "form_bear": "Postać do tankowania: gruba skóra, wściekłość zamiast many i dodatkowe zagrożenie, dzięki któremu wrogowie wciąż atakują ciebie.",
         "form_cat": "Postać do obrażeń w zwarciu: energia i punkty kombinacji, jak u łotrzyka, oraz znacznie mniej zagrożenia.",
@@ -12068,7 +12070,7 @@ export const pl_PL: EnTranslations = {
       },
       "cat_form": {
         "name": "Postać wilka",
-        "description": "Zmienia cię w wilka: zręczność rośnie z twoim poziomem, moc ataku +8 plus 2 na poziom, twoje ataki używają energii i punktów kombinacji, a ty generujesz o 29% mniejsze zagrożenie. Rzuć ponownie, by wrócić do postaci rzucającego zaklęcia."
+        "description": "Zmienia cię w wilka: zręczność rośnie z twoim poziomem, moc ataku +8 plus 2 na poziom, twoje ataki używają energii i punktów kombinacji, a ty generujesz o 29% mniejsze zagrożenie. Zmiana w dowolną postać przyznaje Długi krok: 60% prędkości ruchu na 3 sekundy, raz na 20 sekund. Rzuć ponownie, by wrócić do postaci rzucającego zaklęcia."
       },
       "claw": {
         "name": "Szarpiący pazur",
@@ -12133,7 +12135,15 @@ export const pl_PL: EnTranslations = {
       },
       "pounce": {
         "name": "Skradający cios",
-        "description": "Otwarcie ze skradania, które ogłusza cel na 2 sek. Przyznaje 1 punkt kombinacji. Tylko w postaci wilka."
+        "description": "Otwarcie ze skradania, które ogłusza cel na 2 sek. Przyznaje 1 punkt kombinacji. Tylko w postaci wilka. Poza skradaniem ten przycisk to Wypad."
+      },
+      "lunge": {
+        "name": "Wypad",
+        "description": "Rzucasz się na wroga oddalonego o maksymalnie 12 jardów, zadając 60% obrażeń broni i przyznając 1 punkt kombinacji. Tylko w postaci wilka."
+      },
+      "hamstring_bite": {
+        "name": "Obalenie",
+        "description": "Umiejętność kończąca, która ogłusza cel na 1 sekundę plus 1 sekundę za punkt combo (5 punktów combo: 6 sekund). Tylko w postaci wilka."
       },
       "insect_swarm": {
         "name": "Żądlący rój",
@@ -12847,7 +12857,7 @@ export const pl_PL: EnTranslations = {
       },
       "bear_charge": {
         "name": "Szarża Bruina",
-        "description": "Szarżuj na wroga, generując 9 wściekłości i ogłuszając go na 1 sek. Zasięg 8-25 jardów. Tylko w postaci Bruina."
+        "description": "Szarżuj na wroga, generując 9 wściekłości i ogłuszając go na 1 sek. Przez 3 sek. potem Postać wilka jest darmowa i przygważdża cel, spowalniając go o 50% na 4 sek. Zasięg 8-25 jardów. Tylko w postaci Bruina."
       },
       "demoralizing_roar": {
         "name": "Tchórzliwy ryk",
@@ -12855,7 +12865,7 @@ export const pl_PL: EnTranslations = {
       },
       "prowl": {
         "name": "Podchody",
-        "description": "Wchodzi w skradanie w postaci wilka, poruszając się o 5% wolniej. Nie można użyć w walce."
+        "description": "Wchodzi w skradanie w postaci wilka. Nie można użyć w walce."
       },
       "rake": {
         "name": "Zdzieranie",

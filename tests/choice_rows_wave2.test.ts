@@ -99,7 +99,7 @@ describe('rogue wave 2 choice rows', () => {
 });
 
 describe('druid wave 2 choice rows', () => {
-  it('Loping Stride triggers once per internal cooldown after a form change', () => {
+  it('Longstride keeps the baseline Loping Stride to once per internal cooldown', () => {
     const { sim, p } = rig('druid', 20, { 5: 'dru_r5_ferocity' });
     castAndSettle(sim, 'cat_form', 1);
     expect(p.auras.some((a) => a.id === 'loping_stride' && a.kind === 'buff_speed')).toBe(true);

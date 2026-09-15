@@ -3078,6 +3078,7 @@ export const en_CA: EnTranslations = {
       "elementalConvergencePrimed": "Your next spell from the other elemental school grants Elemental Convergence",
       "hunterFerocity": "{stacks} Pack Ferocity: your pet deals {pct}% more damage",
       "cooldownCap": "{used} of {cap} sec of cooldown reduction used in this window",
+      "bruinRushWindow": "Wolf Form costs no mana and Pins your Bruin Rush target, slowing it by {pct}% for {sec} sec",
       "funeralHarvestLock": "Funeral Harvest cannot create another Soul Fragment yet",
       "leadenHexLock": "Leaden Hex cannot root this target again yet",
       "forbiddenReflectionReady": "Your next eligible Warlock cooldown can be cast again",
@@ -3190,7 +3191,7 @@ export const en_CA: EnTranslations = {
       "elementalTrance": "Damage taken reduced by {pct}%. {mana}% of all damage you deal is converted to mana",
       "stealth": "Concealed; movement speed reduced by {pct}%",
       "formBear": "Bruin Form: increased health and armor",
-      "formCat": "Wolf Form: melee damage and energy",
+      "wolfForm": "Wolf Form: melee damage and energy; movement speed increased by {pct}%",
       "formTravel": "Fleet Form: movement speed increased by {pct}%",
       "formFireball": "Ember Form: movement speed increased by {pct}%; attacks and spells are disabled",
       "formMoonkin": "Moonwing Form: spell damage increased by {pct}% and armor increased by {armorPct}%",
@@ -6617,6 +6618,7 @@ export const en_CA: EnTranslations = {
       "formsNote": "A druid fights by changing shape. Most druid abilities belong to one shape, so the form you are in decides what you can cast, and shifting costs a little mana. You can shift in or out of combat, as often as you like.",
       "formsAutoUnshift": "A heal or a damaging spell cast while shifted shifts you out for you. Leaving a shape that way is free and does not spend your global cooldown, so an instant spell goes off the moment you press it. Shifting back in is an ordinary ability, and still costs mana and your global cooldown.",
       "formsMoonwing": "A Moongrove druid gains one more shape, Moonwing Form, the caster shape a Balance druid fights in. It is the one animal shape that keeps your spells, and your wand only works in it or in your normal caster form.",
+      "formsWolfEngage": "A Wolf opens a fight with Bruin Rush, shifts straight into Wolf Form to Pin the target, closes the gap with Lunge when it is not stalking, and holds an enemy still with Takedown.",
       "formLine": {
         "form_bear": "The tanking shape: a heavy hide, rage instead of mana, and extra threat so enemies keep swinging at you.",
         "form_cat": "The melee damage shape: energy and combo points, like a rogue, and much less threat.",
@@ -12051,7 +12053,7 @@ export const en_CA: EnTranslations = {
       },
       "bear_form": {
         "name": "Bruin Form",
-        "description": "Shapeshift into a bear: armor +110%, maximum health +30%, greatly increased attack power, your attacks build rage and generate 30% more threat. Cast again to return to caster form."
+        "description": "Shapeshift into a bear: armor +110%, maximum health +30%, greatly increased attack power, your attacks build rage and generate 30% more threat. Shifting into any form grants Loping Stride, a short burst of movement speed. Cast again to return to caster form."
       },
       "maul": {
         "name": "Bonecrush",
@@ -12068,7 +12070,7 @@ export const en_CA: EnTranslations = {
       },
       "cat_form": {
         "name": "Wolf Form",
-        "description": "Shapeshift into a wolf: agility rises with your level, attack power +8 plus 2 per level, your attacks use energy and combo points, and you generate 29% less threat. Cast again to return to caster form."
+        "description": "Shapeshift into a wolf: agility rises with your level, attack power +8 plus 2 per level, your attacks use energy and combo points, you move 15% faster, and you generate 29% less threat. Shifting into any form grants Loping Stride, a short burst of movement speed. Cast again to return to caster form."
       },
       "claw": {
         "name": "Rendclaw",
@@ -12109,7 +12111,7 @@ export const en_CA: EnTranslations = {
       },
       "travel_form": {
         "name": "Fleet Form",
-        "description": "Instantly shift into a swift fleet form, increasing movement speed by 40%. You cannot use other abilities while shifted, but can shift in or out of combat, ideal for escaping."
+        "description": "Instantly shift into a swift fleet form, increasing movement speed by 40% and removing breakable roots and slows. You cannot use other abilities while shifted, but can shift in or out of combat, ideal for escaping. Shifting into any form grants Loping Stride, a short burst of movement speed."
       },
       "enrage": {
         "name": "Stoke",
@@ -12133,7 +12135,15 @@ export const en_CA: EnTranslations = {
       },
       "pounce": {
         "name": "Slinkstrike",
-        "description": "A stealth opener that stuns the target for 2 sec. Awards 1 combo point. Wolf Form only."
+        "description": "A stealth opener that stuns the target for 2 sec. Awards 1 combo point. Wolf Form only. Out of stealth this button is Lunge."
+      },
+      "lunge": {
+        "name": "Lunge",
+        "description": "Lunge at an enemy up to 12 yd away. On arrival, deals 60% weapon damage and awards 1 combo point; a lunge cut short refunds its cooldown. Wolf Form only."
+      },
+      "hamstring_bite": {
+        "name": "Takedown",
+        "description": "Finishing move that stuns the target for 1 sec plus 1 sec per combo point (5 combo points: 6 sec). Wolf Form only."
       },
       "insect_swarm": {
         "name": "Stinging Swarm",
@@ -12342,7 +12352,7 @@ export const en_CA: EnTranslations = {
       },
       "moonkin_form": {
         "name": "Moonwing Form",
-        "description": "Shapeshift into a fearsome Moonkin, increasing your spell damage by 20% and your armor by 50%. Lasts until you shift out. Cast again to return to caster form. (Balance signature)"
+        "description": "Shapeshift into a fearsome Moonkin, increasing your spell damage by 20% and your armor by 50%. Lasts until you shift out. Shifting into any form grants Loping Stride, a short burst of movement speed. Cast again to return to caster form. (Balance signature)"
       },
       "feral_charge": {
         "name": "Primal Surge",
@@ -12847,7 +12857,7 @@ export const en_CA: EnTranslations = {
       },
       "bear_charge": {
         "name": "Bruin Rush",
-        "description": "Charge an enemy, generating 9 rage and stunning it for 1 sec. 8-25 yd range. Bruin Form only."
+        "description": "Rush an enemy, generating 9 rage and stunning it for 1 sec. For 3 sec afterwards, or until you leave combat, Wolf Form is free and Pins that target (the one you Rushed), slowing it by 50% for 4 sec. 8-25 yd range. Bruin Form only."
       },
       "demoralizing_roar": {
         "name": "Craven Roar",
@@ -12855,7 +12865,7 @@ export const en_CA: EnTranslations = {
       },
       "prowl": {
         "name": "Stalk",
-        "description": "Enter stealth while in Wolf Form, moving 5% slower. Cannot be used in combat."
+        "description": "Enter stealth while in Wolf Form. Cannot be used in combat."
       },
       "rake": {
         "name": "Flense",

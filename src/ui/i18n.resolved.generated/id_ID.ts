@@ -3078,6 +3078,7 @@ export const id_ID: EnTranslations = {
       "elementalConvergencePrimed": "Mantra berikutmu dari sekolah elemen lain memberikan Konvergensi Elemen",
       "hunterFerocity": "{stacks} Keganasan Kawanan: hewan peliharaanmu memberi {pct}% lebih banyak kerusakan",
       "cooldownCap": "{used} dari {cap} dtk pengurangan jeda terpakai dalam jendela ini",
+      "bruinRushWindow": "Wujud Serigala tidak memakai mana dan menjepit target Terjangan Bruin-mu, memperlambatnya {pct}% selama {sec} dtk",
       "funeralHarvestLock": "Funeral Harvest belum bisa menciptakan Serpihan Jiwa lagi",
       "leadenHexLock": "Kutuk Timah belum bisa mengakar target ini lagi",
       "forbiddenReflectionReady": "Jeda Penyihir Iblis berikutnya yang memenuhi syarat dapat dirapal kembali",
@@ -3190,7 +3191,7 @@ export const id_ID: EnTranslations = {
       "elementalTrance": "Kerusakan yang diterima berkurang {pct}%. {mana}% dari semua kerusakan yang kamu berikan diubah menjadi mana",
       "stealth": "Oculto; velocidad de movimiento reducida un {pct}%",
       "formBear": "Wujud Bruin: nyawa dan zirah meningkat",
-      "formCat": "Forma felina: daño cuerpo a cuerpo y energía",
+      "wolfForm": "Wolf Form: melee damage and energy; movement speed increased by {pct}%",
       "formTravel": "Wujud Fleet: kecepatan gerak meningkat sebesar {pct}%",
       "formFireball": "Ember Form: kecepatan gerak meningkat {pct}%; serangan dan mantra dinonaktifkan",
       "formMoonkin": "Wujud Burung Bulan: kerusakan sihir meningkat {pct}% dan zirah meningkat {armorPct}%",
@@ -6617,6 +6618,7 @@ export const id_ID: EnTranslations = {
       "formsNote": "Seorang druid bertarung dengan berganti wujud. Sebagian besar kemampuan druid terikat pada satu wujud tertentu, jadi wujud yang sedang kamu tempati menentukan apa yang bisa kamu rapalkan, dan berganti wujud menghabiskan sedikit mana. Kamu bisa berubah wujud masuk atau keluar dari pertempuran, sesering yang kamu mau.",
       "formsAutoUnshift": "Penyembuhan atau sihir serangan yang dirapal saat berwujud akan mengeluarkanmu dari wujud itu secara otomatis. Keluar dari wujud dengan cara ini gratis dan tidak memakai jeda global, jadi sihir instan langsung meluncur begitu kau menekannya. Kembali ke wujud adalah kemampuan biasa dan tetap memakan mana serta jeda global.",
       "formsMoonwing": "Druid Keseimbangan mendapat satu wujud lagi, Wujud Burung Bulan, wujud perapal yang menjadi cara bertarung druid Keseimbangan. Inilah satu-satunya wujud hewan yang tetap mempertahankan mantramu, dan tongkat sihirmu hanya berfungsi dalam wujud ini atau dalam wujud perapal normalmu.",
+      "formsWolfEngage": "Serigala membuka pertarungan dengan Terjangan Bruin, langsung berubah ke Wujud Serigala untuk menjepit target, menutup jarak dengan Terkaman saat tidak menyelinap, dan menahan musuh dengan Penjatuhan.",
       "formLine": {
         "form_bear": "Wujud tank: kulit tebal, Amarah alih-alih mana, dan ancaman ekstra agar musuh terus menyerangmu.",
         "form_cat": "Wujud kerusakan jarak dekat: Energi dan poin combo, seperti penyamun, dan ancaman yang jauh lebih sedikit.",
@@ -12068,7 +12070,7 @@ export const id_ID: EnTranslations = {
       },
       "cat_form": {
         "name": "Wujud Serigala",
-        "description": "Mengubahmu menjadi serigala: agility naik seiring levelmu, daya serang +8 ditambah 2 per level, seranganmu memakai energi dan poin kombo, dan kamu menghasilkan 29% ancaman lebih sedikit. Rapal lagi untuk kembali ke wujud pemantra."
+        "description": "Mengubahmu menjadi serigala: agility naik seiring levelmu, daya serang +8 ditambah 2 per level, seranganmu memakai energi dan poin kombo, dan kamu menghasilkan 29% ancaman lebih sedikit. Berubah ke wujud apa pun memberi Langkah Berderap Lambat: 60% kecepatan gerak selama 3 dtk, sekali setiap 20 dtk. Rapal lagi untuk kembali ke wujud pemantra."
       },
       "claw": {
         "name": "Cakar Perobek",
@@ -12133,7 +12135,15 @@ export const id_ID: EnTranslations = {
       },
       "pounce": {
         "name": "Terkaman Senyap",
-        "description": "Pembuka siluman yang membuat target terpana selama 2 detik. Memberi 1 poin kombo. Hanya dalam Wujud Serigala."
+        "description": "Pembuka siluman yang membuat target terpana selama 2 detik. Memberi 1 poin kombo. Hanya dalam Wujud Serigala. Di luar siluman, tombol ini adalah Terkaman."
+      },
+      "lunge": {
+        "name": "Terkaman",
+        "description": "Terkam musuh hingga 12 yard jauhnya, memberikan 60% kerusakan senjata dan menghasilkan 1 poin kombo. Hanya dalam Wujud Serigala."
+      },
+      "hamstring_bite": {
+        "name": "Penjatuhan",
+        "description": "Jurus penutup yang membuat target terpana selama 1 detik plus 1 detik per poin combo (5 poin combo: 6 detik). Hanya dalam Wujud Serigala."
       },
       "insect_swarm": {
         "name": "Kerumunan Penyengat",
@@ -12847,7 +12857,7 @@ export const id_ID: EnTranslations = {
       },
       "bear_charge": {
         "name": "Terjangan Bruin",
-        "description": "Menerjang musuh, menghasilkan 9 amarah dan menyetrumnya selama 1 detik. Jangkauan 8-25 yard. Hanya dalam Wujud Bruin."
+        "description": "Menerjang musuh, menghasilkan 9 amarah dan menyetrumnya selama 1 detik. Selama 3 detik setelahnya, Wujud Serigala gratis dan menjepit target, memperlambatnya 50% selama 4 detik. Jangkauan 8-25 yard. Hanya dalam Wujud Bruin."
       },
       "demoralizing_roar": {
         "name": "Auman Pengecut",
@@ -12855,7 +12865,7 @@ export const id_ID: EnTranslations = {
       },
       "prowl": {
         "name": "Mengintai",
-        "description": "Masuk ke siluman saat dalam Wujud Serigala, bergerak 5% lebih lambat. Tidak dapat digunakan dalam pertempuran."
+        "description": "Masuk ke siluman saat dalam Wujud Serigala. Tidak dapat digunakan dalam pertempuran."
       },
       "rake": {
         "name": "Kupasan",

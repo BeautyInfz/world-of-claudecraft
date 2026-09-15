@@ -945,6 +945,8 @@ export const cs_CZ: Partial<Record<TranslationKey, string>> = {
   'guide.classPage.formsHeading': 'Změna podoby',
   'guide.classPage.formsMoonwing':
     'Druid Měsíčního háje získá ještě jednu podobu, Podobu měsíčního křídla, v níž bojuje jako sesilatel. Je to jediná zvířecí podoba, která si ponechá tvá kouzla, a hůlka funguje jen v ní nebo v tvé běžné sesilatelské podobě.',
+  'guide.classPage.formsWolfEngage':
+    'Vlk zahajuje boj Medvědím výpadem, hned se přemění do Vlčí podoby, aby cíl přišpendlil, mimo plížení se přiblíží Výpadem a nepřítele zastaví Sražením.',
   'guide.classPage.formsNote':
     'Druid bojuje měněním podoby. Většina druidských schopností patří k jedné podobě, takže to, v jaké jsi právě podobě, rozhoduje, co můžeš seslat, a přeměna stojí trochu many. Měnit podobu můžeš v boji i mimo něj, tak často, jak chceš.',
   'guide.classPage.mageEleHeading': 'Vodní elementál',
@@ -4748,7 +4750,7 @@ export const cs_CZ: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.charge.description':
     'Vyrazí k nepříteli, vygeneruje 9 vzteku a omráčí ho na 1 s. Dosah 8-25 yardů.',
   'entities.abilities.bear_charge.description':
-    'Vyrazí k nepříteli, vygeneruje 9 vzteku a omráčí ho na 1 s. Dosah 8-25 yardů. Pouze v medvědí podobě.',
+    'Vyrazí k nepříteli, vygeneruje 9 vzteku a omráčí ho na 1 s. Po dobu 3 s poté je Vlčí podoba zdarma a přišpendlí cíl, čímž ho zpomalí o 50 % na 4 s. Dosah 8-25 yardů. Pouze v medvědí podobě.',
   'wallet.appConnected': 'Aplikace připojena',
   'wallet.balanceAmount': '{amount} $WOC',
   'wallet.balanceAria': 'Ověřený zůstatek peněženky Solana: {balance}',
@@ -6429,7 +6431,6 @@ export const cs_CZ: Partial<Record<TranslationKey, string>> = {
   'hudChrome.auraEffect.dodgeReduce': 'Snižuje šanci na vyhnutí o {pct} %',
   'hudChrome.auraEffect.dot': 'Způsobuje {value} {school} poškození každých {interval} s',
   'hudChrome.auraEffect.formBear': 'Medvědí podoba: zvýšené zdraví a brnění',
-  'hudChrome.auraEffect.formCat': 'Vlčí podoba: poškození na blízko a energie',
   'hudChrome.auraEffect.formTravel': 'Cestovní podoba: rychlost pohybu zvýšena o {pct} %',
   'hudChrome.auraEffect.haste': 'Zvyšuje rychlost útoku a sesílání o {pct} %',
   'hudChrome.auraEffect.healAbsorb': 'Absorbuje {value} příchozího léčení',
@@ -7604,7 +7605,7 @@ export const cs_CZ: Partial<Record<TranslationKey, string>> = {
     'Okamžitě zaútočíš v krvavém šílenství za 60 % poškození zbraně plus {damage}. (Hlavní schopnost Fury)',
   'entities.abilities.bloodthirst.name': 'Pouštění žilou',
   'entities.abilities.cat_form.description':
-    'Promění tě ve vlka: obratnost roste s tvou úrovní, útočná síla +8 plus 2 za úroveň, tvé útoky používají energii a combo body a vytváříš o 29 % nižší hrozbu. Sešli znovu, aby ses vrátil do sesilatelské podoby.',
+    'Promění tě ve vlka: obratnost roste s tvou úrovní, útočná síla +8 plus 2 za úroveň, tvé útoky používají energii a combo body a vytváříš o 29 % nižší hrozbu. Přeměna do jakékoli podoby udělí Dlouhý krok: 60 % rychlosti pohybu na 3 s, jednou za 20 s. Sešli znovu, aby ses vrátil do sesilatelské podoby.',
   'entities.abilities.cat_form.name': 'Vlčí podoba',
   'entities.abilities.charge.name': 'Nápor',
   'entities.abilities.cheap_shot.name': 'Rána do břicha',
@@ -7810,8 +7811,14 @@ export const cs_CZ: Partial<Record<TranslationKey, string>> = {
     'Promění nepřítele v ropuchu až na {duration} s. Ropucha bloudí a rychle se léčí. Jakékoli poškození efekt přeruší. Jen bestie a humanoidi.',
   'entities.abilities.polymorph.name': 'Očarování',
   'entities.abilities.pounce.description':
-    'Zahajovací útok z plížení, který omráčí cíl na 2 s. Udělí 1 combo bod. Pouze ve vlčí podobě.',
+    'Zahajovací útok z plížení, který omráčí cíl na 2 s. Udělí 1 combo bod. Pouze ve vlčí podobě. Bez plížení je toto tlačítko Výpad.',
   'entities.abilities.pounce.name': 'Plíživý úder',
+  'entities.abilities.lunge.description':
+    'Vrhni se na nepřítele až 12 yardů daleko, způsob 60 % poškození zbraní a získej 1 combo bod. Pouze ve vlčí podobě.',
+  'entities.abilities.lunge.name': 'Výpad',
+  'entities.abilities.hamstring_bite.description':
+    'Dokončovací útok, který omráčí cíl na 1 s plus 1 s za combo bod (5 combo bodů: 6 s). Pouze ve vlčí podobě.',
+  'entities.abilities.hamstring_bite.name': 'Sražení',
   'entities.abilities.power_word_fortitude.description':
     'Zvyšuje Výdrž každého člena skupiny o {buff} % na 30 min.',
   'entities.abilities.power_word_fortitude.name': 'Litanie odhodlání',
@@ -7819,7 +7826,7 @@ export const cs_CZ: Partial<Record<TranslationKey, string>> = {
     'Zaštítí spřátelený cíl a pohltí {damage} poškození po 30 s. Věrouka navíc spojí cíl s tvým svatým poškozením na 30 s.',
   'entities.abilities.power_word_shield.name': 'Žalm ochrany',
   'entities.abilities.prowl.description':
-    'Vstoupíš do plížení ve vlčí podobě a pohybuješ se o 5 % pomaleji. Nelze použít v boji.',
+    'Vstoupíš do plížení ve vlčí podobě. Nelze použít v boji.',
   'entities.abilities.prowl.name': 'Plížení',
   'entities.abilities.pyroblast.description':
     'Vrhe obrovský ohnivý balvan, který způsobí {damage} ohnivého poškození plus další poškození v čase.',
@@ -13826,6 +13833,8 @@ export const cs_CZ: Partial<Record<TranslationKey, string>> = {
   'hudChrome.auraEffect.castShield': 'Sesílání nelze přerušit ani zpozdit poškozením',
   'hudChrome.auraEffect.cauterizeFatigue': 'Vypálení nemůže zabránit dalšímu smrtelnému zásahu',
   'hudChrome.auraEffect.cooldownCap': 'Využito {used} z {cap} s snížení doby obnovy v tomto okně',
+  'hudChrome.auraEffect.bruinRushWindow':
+    'Vlčí podoba nestojí manu a přišpendlí cíl tvého Medvědího výpadu, čímž ho zpomalí o {pct} % na {sec} s',
   'hudChrome.auraEffect.desolation':
     'Zbývá {charges} nabití: tvůj příští Zkázný šíp se sešle o {castPct} % rychleji, nebo tvůj příští Ohnivý déšť dopadne okamžitě',
   'hudChrome.auraEffect.duskfireClaim': 'Smrt uděluje {value} Zkázy',

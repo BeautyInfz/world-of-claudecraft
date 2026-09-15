@@ -942,6 +942,8 @@ export const tr_TR: Partial<Record<TranslationKey, string>> = {
   'guide.classPage.formsHeading': 'Şekil Değiştirme',
   'guide.classPage.formsMoonwing':
     'Bir Denge druidi bir şekil daha kazanır: Aykuşu Formu, bu uzmanlığın dövüştüğü büyücü şeklidir. Büyülerini koruyan tek hayvan şeklidir ve değneğin yalnızca bu şekilde ya da normal büyücü şeklinde çalışır.',
+  'guide.classPage.formsWolfEngage':
+    'Bir kurt dövüşü Bruin Hücumu ile açar, hedefi sabitlemek için hemen Kurt Formuna geçer, gizli değilken Atılış ile mesafeyi kapatır ve Yere Serme ile düşmanı yerinde tutar.',
   'guide.classPage.formsNote':
     'Bir druid, şekil değiştirerek dövüşür. Çoğu druid yeteneği tek bir şekle aittir, bu yüzden içinde bulunduğun form neyi büyüleyebileceğine karar verir, ve şekil değiştirmek biraz mana harcar. İstediğin kadar sık, dövüş içinde ya da dışında şekil değiştirebilirsin.',
   'guide.classPage.mageEleHeading': 'Su Elementali',
@@ -5272,7 +5274,7 @@ export const tr_TR: Partial<Record<TranslationKey, string>> = {
     'Tüm grup üyelerinin saldırı gücünü 30 dakika boyunca %{buff} artıran bir nara.',
   'entities.abilities.battle_shout.name': 'Demir Nara',
   'entities.abilities.bear_charge.description':
-    'Bir düşmana hücum ederek 9 öfke üretir ve onu 1 saniye sersemletir. 8-25 yarda menzil. Yalnızca Bruin Formu.',
+    'Bir düşmana hücum ederek 9 öfke üretir ve onu 1 saniye sersemletir. Sonraki 3 saniye boyunca Kurt Formu ücretsizdir ve hedefi sabitleyerek 4 saniye boyunca %50 yavaşlatır. 8-25 yarda menzil. Yalnızca Bruin Formu.',
   'entities.abilities.bear_charge.name': 'Bruin Hücumu',
   'entities.abilities.bear_form.description':
     'Bir ayıya dönüş: zırh +%110, azami sağlık +%30, saldırı gücü büyük ölçüde artar, saldırıların öfke biriktirir ve %30 daha fazla tehdit üretir. Büyücü formuna dönmek için tekrar kullan.',
@@ -5292,7 +5294,7 @@ export const tr_TR: Partial<Record<TranslationKey, string>> = {
     'Bir kan çılgınlığıyla anında %60 silah hasarı artı {damage} veren bir saldırı yap. (Hiddet imzası)',
   'entities.abilities.bloodthirst.name': 'Kan Akıtma',
   'entities.abilities.cat_form.description':
-    'Seni bir kurda dönüştürür: çeviklik seviyenle yükselir, saldırı gücü +8 artı seviye başına 2, saldırıların enerji ve kombo puanı kullanır ve %29 daha az tehdit üretirsin. Büyücü biçimine dönmek için yeniden kullan.',
+    'Seni bir kurda dönüştürür: çeviklik seviyenle yükselir, saldırı gücü +8 artı seviye başına 2, saldırıların enerji ve kombo puanı kullanır ve %29 daha az tehdit üretirsin. Herhangi bir biçime geçmek Ağır Aksak Adım kazandırır: 3 sn boyunca %60 hareket hızı, her 20 saniyede bir kez. Büyücü biçimine dönmek için yeniden kullan.',
   'entities.abilities.cat_form.name': 'Kurt Formu',
   'entities.abilities.charge.description':
     'Bir düşmana hücum ederek 9 öfke üretir ve onu 1 saniye sersemletir. 8-25 yarda menzil.',
@@ -5507,8 +5509,14 @@ export const tr_TR: Partial<Record<TranslationKey, string>> = {
     'Düşmanı {duration} saniyeye kadar bir kurbağaya dönüştürür. Kurbağa başıboş dolaşır ve hızla iyileşir. Herhangi bir hasar etkiyi bozar. Yalnızca canavarlar ve insansılar.',
   'entities.abilities.polymorph.name': 'Büyüleme',
   'entities.abilities.pounce.description':
-    'Hedefi 2 saniye boyunca sersemleten gizlilik açılışı. 1 kombo puanı kazandırır. Yalnızca Kurt Formu.',
+    'Hedefi 2 saniye boyunca sersemleten gizlilik açılışı. 1 kombo puanı kazandırır. Yalnızca Kurt Formu. Gizlilik dışında bu düğme Atılış olur.',
   'entities.abilities.pounce.name': 'Sinsi Darbe',
+  'entities.abilities.lunge.description':
+    '12 yardaya kadar uzaktaki bir düşmana atılır, %60 silah hasarı verir ve 1 kombo puanı kazandırır. Yalnızca Kurt Formu.',
+  'entities.abilities.lunge.name': 'Atılış',
+  'entities.abilities.hamstring_bite.description':
+    'Hedefi 1 sn artı kombo puanı başına 1 sn sersemleten bitirici hamle (5 kombo puanı: 6 sn). Yalnızca Kurt Formu.',
+  'entities.abilities.hamstring_bite.name': 'Yere Serme',
   'entities.abilities.power_word_fortitude.description':
     'Her grup üyesinin Dayanıklılığını 30 dakika boyunca %{buff} artırır.',
   'entities.abilities.power_word_fortitude.name': 'Azim Yakarışı',
@@ -5516,7 +5524,7 @@ export const tr_TR: Partial<Record<TranslationKey, string>> = {
     'Dost bir hedefi kalkanlar ve 30 sn boyunca {damage} hasar emer. Disiplin ayrıca hedefi 30 sn boyunca Kutsal hasarına bağlar.',
   'entities.abilities.power_word_shield.name': 'Koruma Mezmuru',
   'entities.abilities.prowl.description':
-    'Kurt Formundayken gizliliğe geçer ve 5% daha yavaş hareket edersin. Dövüş sırasında kullanılamaz.',
+    'Kurt Formundayken gizliliğe geçer. Dövüş sırasında kullanılamaz.',
   'entities.abilities.prowl.name': 'Sinsi Sokulma',
   'entities.abilities.pyroblast.description':
     'Devasa ateşli bir kaya fırlatarak {damage} Ateş hasarı ve ek olarak zamana yayılı hasar verir.',
@@ -10676,7 +10684,6 @@ export const tr_TR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.auraEffect.imbueRange': 'Silah güçlendirildi: Hukum ile {min} ila {max} bonus hasar',
   'hudChrome.auraEffect.stealth': 'Oculto; velocidad de movimiento reducida un {pct}%',
   'hudChrome.auraEffect.formBear': 'Bruin Formu: can ve zırh artışı',
-  'hudChrome.auraEffect.formCat': 'Forma felina: daño cuerpo a cuerpo y energía',
   'hudChrome.auraEffect.formTravel': 'Fleet Formu: hareket hızı {pct}% artar',
   'hudChrome.auraEffect.defensiveStance': 'Korumali Durus: alınan hasar azalır, daha fazla tehdit',
   'hudChrome.auraEffect.righteousFury':
@@ -13941,6 +13948,8 @@ export const tr_TR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.auraEffect.cauterizeFatigue': 'Dağlama başka bir öldürücü darbeyi henüz engelleyemez',
   'hudChrome.auraEffect.cooldownCap':
     'Bu pencerede {used} / {cap} sn bekleme süresi azaltımı kullanıldı',
+  'hudChrome.auraEffect.bruinRushWindow':
+    'Kurt Formu mana harcamaz ve Bruin Hücumu hedefini sabitleyerek {sec} saniye boyunca %{pct} yavaşlatır',
   'hudChrome.auraEffect.desolation':
     '{charges} yük: bir sonraki Yıkım Okun {castPct}% daha hızlı okunur ya da bir sonraki Ateş Yağmurun anında iner',
   'hudChrome.auraEffect.duskfireClaim': '{value} Harabiyet kazandıran ölüm',

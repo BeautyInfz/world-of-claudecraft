@@ -2234,6 +2234,15 @@ export function runEffects(
           sourceId: p.id,
           school: ability.school,
         });
+        // A stun-only opener that awards a combo point (Slinkstrike: its stun is
+        // its whole effect list, so no strike arm above ever paid the point the
+        // tooltip promised). Paid once the stun has landed, the incapacitate
+        // arm's rule; the comboAwarded latch keeps a strike-plus-stun ability
+        // at one point per cast.
+        if (ability.awardsCombo && !comboAwarded) {
+          ctx.awardCombo(p, target, ability.awardsCombo);
+          comboAwarded = true;
+        }
         // Sundering Gavel (hammer_of_justice) and Gut Punch (cheap_shot)
         // sound at the target; every other stun has no dedicated recording
         // and stays silent here.
