@@ -1455,7 +1455,10 @@ const MONOLITHS: MonolithRow[] = [
     // LOWERED 10095 -> 10082 at the account-wide Book of Deeds / Reliquary change:
     // the Book heavy keys moved into server/deeds_wire.ts and the Curator
     // standing stamp into server/curator_standing.ts.
-    ceiling: 10082,
+    // Guild board categories: the guild_pledge_settings dispatch arm's field
+    // validation moved to server/guild_pledge_settings_cmd.ts. Merged with the
+    // account-wide books extraction above; exact merged count, zero slack.
+    ceiling: 10076,
     seam: 'a sibling server module; see the hot-path seams in server/CLAUDE.md',
   },
   {
@@ -1602,7 +1605,10 @@ const MONOLITHS: MonolithRow[] = [
     // grace to src/net/despawn_grace.ts (5523), and the account-wide Book of Deeds /
     // Reliquary change moved the deeds / Reliquary / account-ledger self-decode
     // into src/net/book_wire.ts. Exact count, zero slack.
-    ceiling: 5506,
+    // Guild board categories: the board path builder, the page decode and the
+    // pledge-settings frame decode moved to src/net/guild_board_wire.ts. Merged
+    // with the book_wire extraction above; exact merged count, zero slack.
+    ceiling: 5498,
     seam: 'a src/net sibling module (the refactor/net-online split is the template)',
   },
   {
@@ -1755,7 +1761,11 @@ const MONOLITHS: MonolithRow[] = [
     // the character_deeds DDL moved into DEEDS_SCHEMA (server/deeds_db.ts) and
     // the new account_relic_finds DDL landed as ACCOUNT_LEDGER_SCHEMA
     // (server/account_ledger_db.ts), both applied by ensureSchema.
-    ceiling: 4715,
+    // Guild board categories: topGuilds and its GuildLeaderRow moved whole to
+    // server/guild_board_db.ts beside the new officer-roster read. Merged with
+    // the DEEDS_SCHEMA / ACCOUNT_LEDGER_SCHEMA move above; exact merged count,
+    // zero slack.
+    ceiling: 4641,
     seam: 'a domain <domain>_db.ts module with its own *_SCHEMA (server/CLAUDE.md)',
   },
   {

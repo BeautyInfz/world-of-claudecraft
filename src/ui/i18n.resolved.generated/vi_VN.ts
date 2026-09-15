@@ -1244,6 +1244,8 @@ export const vi_VN: EnTranslations = {
       "noteLabel": "Ghi chú bảng tin",
       "notePlaceholder": "Cho các thành viên tương lai biết bang hội của bạn đang tìm kiếm điều gì",
       "save": "Lưu",
+      "newPlayerFriendlyLabel": "New player friendly",
+      "newPlayerFriendlyHint": "Shown on the recruits' board at the Proving Shore signpost.",
       "yourPledge": "Cam kết của bạn: {guild}",
       "since": "Đã cam kết {date}",
       "withdraw": "Rút cam kết"
@@ -2251,6 +2253,12 @@ export const vi_VN: EnTranslations = {
       "linkHint": "Shift-click để chia sẻ vật phẩm này trong khung chat."
     },
     "plurals": {
+      "guildBoardShown": {
+        "one": "{count} guild shown",
+        "few": "{count} guilds shown",
+        "many": "{count} guilds shown",
+        "other": "{count} guilds shown"
+      },
       "commissionMasterworks": {
         "one": "{count} kiệt tác",
         "few": "{count} kiệt tác",
@@ -3758,6 +3766,15 @@ export const vi_VN: EnTranslations = {
       "subtitle": "Các bang hội trong vương quốc",
       "rosterTitle": "Xem danh sách thành viên của {guild}",
       "back": "Quay Lại",
+      "filters": "Board filters",
+      "newPlayerFriendly": "New player friendly",
+      "newPlayerFriendlyTitle": "This guild welcomes new players",
+      "filterNewPlayersTitle": "Show only guilds that welcome new players",
+      "filterEmpty": "No guild has opened its doors to new players yet.",
+      "showAll": "Show all guilds",
+      "officersOnline": "Officers online",
+      "officersOnlineLabel": "Officers online: {names}",
+      "officerEntry": "{name} ({rank})",
       "popupTitle": "Bảng Thông Báo Bang Hội",
       "close": "Đóng"
     },

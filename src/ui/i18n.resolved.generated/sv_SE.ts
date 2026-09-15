@@ -1244,6 +1244,8 @@ export const sv_SE: EnTranslations = {
       "noteLabel": "Anslag",
       "notePlaceholder": "Berätta för blivande medlemmar vad ditt gille söker",
       "save": "Spara",
+      "newPlayerFriendlyLabel": "New player friendly",
+      "newPlayerFriendlyHint": "Shown on the recruits' board at the Proving Shore signpost.",
       "yourPledge": "Ditt löfte: {guild}",
       "since": "Lovade {date}",
       "withdraw": "Dra tillbaka löfte"
@@ -2251,6 +2253,12 @@ export const sv_SE: EnTranslations = {
       "linkHint": "Skift-klicka för att länka det här föremålet i chatten."
     },
     "plurals": {
+      "guildBoardShown": {
+        "one": "{count} guild shown",
+        "few": "{count} guilds shown",
+        "many": "{count} guilds shown",
+        "other": "{count} guilds shown"
+      },
       "commissionMasterworks": {
         "one": "{count} mästerverk",
         "few": "{count} mästerverk",
@@ -3758,6 +3766,15 @@ export const sv_SE: EnTranslations = {
       "subtitle": "Rikets gillen",
       "rosterTitle": "Visa medlemslistan för {guild}",
       "back": "Tillbaka",
+      "filters": "Board filters",
+      "newPlayerFriendly": "New player friendly",
+      "newPlayerFriendlyTitle": "This guild welcomes new players",
+      "filterNewPlayersTitle": "Show only guilds that welcome new players",
+      "filterEmpty": "No guild has opened its doors to new players yet.",
+      "showAll": "Show all guilds",
+      "officersOnline": "Officers online",
+      "officersOnlineLabel": "Officers online: {names}",
+      "officerEntry": "{name} ({rank})",
       "popupTitle": "Gillesskylt",
       "close": "Stäng"
     },

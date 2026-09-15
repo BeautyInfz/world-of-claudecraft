@@ -1244,6 +1244,8 @@ export const cs_CZ: EnTranslations = {
       "noteLabel": "Poznámka na nástěnce",
       "notePlaceholder": "Napiš budoucím členům, koho tvůj cech hledá",
       "save": "Uložit",
+      "newPlayerFriendlyLabel": "New player friendly",
+      "newPlayerFriendlyHint": "Shown on the recruits' board at the Proving Shore signpost.",
       "yourPledge": "Tvoje přihláška: {guild}",
       "since": "Přihlášeno {date}",
       "withdraw": "Zrušit přihlášku"
@@ -2251,6 +2253,12 @@ export const cs_CZ: EnTranslations = {
       "linkHint": "Shift + kliknutí vloží odkaz na tento předmět do chatu."
     },
     "plurals": {
+      "guildBoardShown": {
+        "one": "{count} guild shown",
+        "few": "{count} guilds shown",
+        "many": "{count} guilds shown",
+        "other": "{count} guilds shown"
+      },
       "commissionMasterworks": {
         "one": "{count} mistrovsky kovaný předmět",
         "few": "{count} mistrovsky kované předměty",
@@ -3758,6 +3766,15 @@ export const cs_CZ: EnTranslations = {
       "subtitle": "Cechy říše",
       "rosterTitle": "Zobrazit seznam členů cechu {guild}",
       "back": "Zpět",
+      "filters": "Board filters",
+      "newPlayerFriendly": "New player friendly",
+      "newPlayerFriendlyTitle": "This guild welcomes new players",
+      "filterNewPlayersTitle": "Show only guilds that welcome new players",
+      "filterEmpty": "No guild has opened its doors to new players yet.",
+      "showAll": "Show all guilds",
+      "officersOnline": "Officers online",
+      "officersOnlineLabel": "Officers online: {names}",
+      "officerEntry": "{name} ({rank})",
       "popupTitle": "Cechovní vývěska",
       "close": "Zavřít"
     },

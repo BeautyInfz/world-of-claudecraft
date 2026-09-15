@@ -1244,6 +1244,8 @@ export const pt_BR: EnTranslations = {
       "noteLabel": "Nota do quadro",
       "notePlaceholder": "Diga aos aspirantes o que sua guilda está procurando",
       "save": "Salvar",
+      "newPlayerFriendlyLabel": "New player friendly",
+      "newPlayerFriendlyHint": "Shown on the recruits' board at the Proving Shore signpost.",
       "yourPledge": "Sua candidatura: {guild}",
       "since": "Candidatou-se em {date}",
       "withdraw": "Retirar candidatura"
@@ -2251,6 +2253,12 @@ export const pt_BR: EnTranslations = {
       "linkHint": "Shift-clique para vincular este item no chat."
     },
     "plurals": {
+      "guildBoardShown": {
+        "one": "{count} guild shown",
+        "few": "{count} guilds shown",
+        "many": "{count} guilds shown",
+        "other": "{count} guilds shown"
+      },
       "commissionMasterworks": {
         "one": "{count} obra-prima",
         "few": "{count} obras-primas",
@@ -3758,6 +3766,15 @@ export const pt_BR: EnTranslations = {
       "subtitle": "Guildas do reino",
       "rosterTitle": "Ver a lista de membros de {guild}",
       "back": "Voltar",
+      "filters": "Board filters",
+      "newPlayerFriendly": "New player friendly",
+      "newPlayerFriendlyTitle": "This guild welcomes new players",
+      "filterNewPlayersTitle": "Show only guilds that welcome new players",
+      "filterEmpty": "No guild has opened its doors to new players yet.",
+      "showAll": "Show all guilds",
+      "officersOnline": "Officers online",
+      "officersOnlineLabel": "Officers online: {names}",
+      "officerEntry": "{name} ({rank})",
       "popupTitle": "Placa da Guilda",
       "close": "Fechar"
     },

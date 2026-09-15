@@ -1244,6 +1244,8 @@ export const es_ES: EnTranslations = {
       "noteLabel": "Nota del tablón",
       "notePlaceholder": "Cuéntales a los aspirantes qué busca tu hermandad",
       "save": "Guardar",
+      "newPlayerFriendlyLabel": "New player friendly",
+      "newPlayerFriendlyHint": "Shown on the recruits' board at the Proving Shore signpost.",
       "yourPledge": "Tu compromiso: {guild}",
       "since": "Comprometido el {date}",
       "withdraw": "Retirar compromiso"
@@ -2251,6 +2253,12 @@ export const es_ES: EnTranslations = {
       "linkHint": "Mayús+clic para enlazar este objeto en el chat."
     },
     "plurals": {
+      "guildBoardShown": {
+        "one": "{count} guild shown",
+        "few": "{count} guilds shown",
+        "many": "{count} guilds shown",
+        "other": "{count} guilds shown"
+      },
       "commissionMasterworks": {
         "one": "{count} obra maestra",
         "few": "{count} obras maestras",
@@ -3758,6 +3766,15 @@ export const es_ES: EnTranslations = {
       "subtitle": "Hermandades del reino",
       "rosterTitle": "Ver la lista de miembros de {guild}",
       "back": "Atrás",
+      "filters": "Board filters",
+      "newPlayerFriendly": "New player friendly",
+      "newPlayerFriendlyTitle": "This guild welcomes new players",
+      "filterNewPlayersTitle": "Show only guilds that welcome new players",
+      "filterEmpty": "No guild has opened its doors to new players yet.",
+      "showAll": "Show all guilds",
+      "officersOnline": "Officers online",
+      "officersOnlineLabel": "Officers online: {names}",
+      "officerEntry": "{name} ({rank})",
       "popupTitle": "Cartel de la hermandad",
       "close": "Cerrar"
     },
