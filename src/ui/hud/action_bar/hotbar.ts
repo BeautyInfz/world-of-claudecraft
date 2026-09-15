@@ -443,7 +443,6 @@ export function syncHotbarActions(
     ) {
       continue;
     }
-    if (!autoPlaceAbilityIds.has(id)) continue;
 
     const group = groupMap.get(id);
     if (group) {
