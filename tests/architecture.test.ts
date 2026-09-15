@@ -620,6 +620,10 @@ const UI_PURE_CORES = [
   'src/game/perf_shader_warm_core.ts',
   'src/game/ui_effects_profile.ts',
   'src/game/ui_tier_knobs.ts',
+  // The Toggle Friendly Nameplates view pref (Ctrl+V): module state the input
+  // layer owns and the nameplate painter reads, so render imports it as a game
+  // leaf the same way it reads the tier knobs. Pure: no DOM, no sim, no renderer.
+  'src/game/nameplate_view_prefs.ts',
   'src/game/nearby_interaction_core.ts',
   'src/ui/trade_view.ts',
   'src/ui/trade_woc_view.ts',
@@ -998,6 +1002,7 @@ const BARE_NAMED = [
   'src/ui/chat_bubble_style.ts',
   'src/game/ui_effects_profile.ts',
   'src/game/ui_tier_knobs.ts',
+  'src/game/nameplate_view_prefs.ts',
   'src/render/cast_bar.ts',
   'src/ui/safe_local_storage.ts',
   'src/ui/claudium_purchase_bridge.ts',
@@ -1999,6 +2004,7 @@ function deriveBareNamedCores(uiCores: string[], renderCores: string[]): string[
 // allowlist, so a synchronized delete leaves BARE_NAMED disagreeing with THIS list
 // instead of only agreeing with itself.
 const EXPECTED_BARE_NAMED = [
+  'src/game/nameplate_view_prefs.ts',
   'src/game/presentation_gate.ts',
   'src/game/stale_chrome_focus.ts',
   'src/game/ui_effects_profile.ts',
