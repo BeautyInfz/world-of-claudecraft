@@ -53,7 +53,7 @@ major.
 | `/dev nyx rend` | Three bots (six) marked; purple Soulfire pools where they stood, 15 s normal (one pool per bot, overlapping pools tick from each one) or 12 s heroic (one pool per stacked group, overlapping pools tick once) |
 | `/dev nyx rage` | Deathless Rage cast; then `/dev nyx wards` makes three bots complete the wardstones (interrupt + stun), or wait and eat the 82% (115%) |
 | `/dev nyx phase3` | Health to 29%: The King's Wrath once no major is in flight |
-| `/dev nyx storm` | Bone Storm: he ignores threat, whirls, charges four bots, slams, spikes mid-storm, then comes back to you |
+| `/dev nyx storm` | Bone Storm: he ignores threat, whirls, charges four bots, slams, then comes back to you |
 | `/dev nyx enrage 10` | The Crown Endures in 10 s: the yells, then the enrage buff and its ramp |
 
 `/dev hp <1-100>` with him targeted sets his health directly. `/dev raid reset`

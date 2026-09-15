@@ -98,13 +98,12 @@ import {
   NYTHRAXIS_BONE_STORM_GRAVEBREAKER_REARM_SECONDS,
   NYTHRAXIS_BONE_STORM_SPEED_MULT,
   NYTHRAXIS_BONE_STORM_WHIRL_TICK_SECONDS,
-  nythraxisBoneSlamDamageMaxHp,
   nythraxisBoneStormCadence,
   nythraxisBoneStormChargeIndex,
   nythraxisBoneStormChargeTarget,
   nythraxisBoneStormDone,
   nythraxisBoneStormReached,
-  nythraxisBoneStormSpikeDue,
+  nythraxisBoneStormSlamMaxHp,
   nythraxisBoneStormWhirlTickMaxHp,
   pointInNythraxisBoneStorm,
 } from '../nythraxis_bone_storm';
@@ -651,7 +650,8 @@ export function updateNythraxisEncounter(ctx: SimContext, boss: Entity): void {
     startNythraxisKingsWrath(ctx, boss, st);
   }
   // Bone Storm owns the boss's body (he runs): like the Rage cast, no new cast
-  // starts until it ends, except the mid-storm spike the storm casts itself.
+  // starts until it ends, the regular Bone Spike cadence included (its timer
+  // is frozen below this return); the storm casts no spike of its own.
   if (storming) return;
 
   if (st.deathlessStunRemaining > 0) {
@@ -2021,8 +2021,8 @@ export function startNythraxisBoneStorm(
 
 /**
  * Drive the live storm: the whirl tick, the charge windows (one hash-ranked
- * target each, the boss runs at it and Bone Slams on arrival), the mid-storm
- * spike, and the pickup when it ends. Returns true while a storm is live.
+ * target each, the boss runs at it and Bone Slams on arrival), and the pickup
+ * when it ends. Returns true while a storm is live.
  */
 export function updateNythraxisBoneStorm(
   ctx: SimContext,
@@ -2091,11 +2091,6 @@ export function updateNythraxisBoneStorm(
       }
     }
   }
-  // One Bone Spike lands mid-storm on both difficulties.
-  if (!storm.spikeCast && nythraxisBoneStormSpikeDue(storm.elapsed)) {
-    storm.spikeCast = true;
-    castNythraxisBoneSpike(ctx, boss, st, room, nythraxisDifficulty(ctx, boss));
-  }
   if (nythraxisBoneStormDone(storm.elapsed)) endNythraxisBoneStorm(ctx, boss, st);
   return true;
 }
@@ -2112,7 +2107,10 @@ function slamNythraxisBoneStorm(
   const storm = ms.boneStorm;
   if (!storm) return;
   storm.slammed = true;
-  const slam = nythraxisBoneSlamDamageMaxHp(nythraxisDifficulty(ctx, boss));
+  // The storm's first slam lands on a raid that has not spread yet: softer.
+  const opening = !storm.openingSlamSpent;
+  storm.openingSlamSpent = true;
+  const slam = nythraxisBoneStormSlamMaxHp(nythraxisDifficulty(ctx, boss), opening);
   for (const p of room) {
     if (p.dead || !pointInNythraxisBoneStorm(boss.pos, p.pos)) continue;
     ctx.dealDamage(
