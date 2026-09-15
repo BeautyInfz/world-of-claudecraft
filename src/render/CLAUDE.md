@@ -694,15 +694,24 @@ GPU work signs. Each rule names its seam and its guard.
   `?shaderwarmready=<ms>` lengthens the worker's ready deadline for a probe on a
   backend whose GPU process is busy at boot (Windows OpenGL).
   THE CHARACTER-SELECT CORPUS (`src/game/shader_cache_warmup.ts`, decisions in
-  `shader_warmup_core.ts`) is the other arm of the same cache, and the ONE producer
-  that is not a client of the scheduler, by construction rather than by exemption:
-  it replays the previous session's recorded program set on a hidden context while
-  the character-select screen is idle, before any `Renderer` (and so any
-  `background_gpu_queue`) exists, one program per animation frame, and every world
-  entry stops it as its first statement (`enterWorld` and `startOffline`, pinned by
-  the wiring block of `tests/shader_cache_warmup.test.ts`), so no live frame ever
-  shares the main thread with a submission; what the GPU process still resolves
-  after the click is the entry's own program set landing in the shared cache. It
+  `shader_warmup_core.ts`) is the other arm of the same cache. Its REPLAY half is
+  the ONE producer that is not a client of the scheduler, by construction rather
+  than by exemption: it replays the previous session's recorded program set on a
+  hidden context while the character-select screen is idle, before any `Renderer`
+  (and so any `background_gpu_queue`) exists, one program per animation frame, and
+  every world entry stops it as its first statement (`enterWorld` and
+  `startOffline`, pinned by the wiring block of `tests/shader_cache_warmup.test.ts`),
+  so no live frame ever shares the main thread with a submission; what the GPU
+  process still resolves after the click is the entry's own program set landing in
+  the shared cache. Its RECORD half runs in live frames 25 s after the reveal, so it
+  IS a client: `main.ts` hands it the renderer's queue
+  (`finishShaderWarmup(renderer.webgl, { queue: renderer.backgroundGpuWork })`) and
+  `src/game/shader_corpus_slices.ts` runs one BACKGROUND unit per BATCH of
+  program reads (`CORPUS_READ_BATCH`; a read is a synchronous driver round trip
+  that waits for the GPU frame in flight, paid once per batch), per chunk
+  encoded and per chunk fed to the gzip stream (the deflate runs on the main
+  thread inside the write, so the gzip unit holds its tail), under the `corpus-read`,
+  `corpus-encode` and `corpus-gzip` label kinds the budget prices separately. It
   reads the same stored option and the same pin as the worker (`readWarmupQuery`):
   Off silences it, `auto` and On keep it (the backend rule is the worker's: a
   second context linking DURING play; this arm was measured on the OpenGL desktops
