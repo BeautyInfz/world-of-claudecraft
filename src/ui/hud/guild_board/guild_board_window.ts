@@ -517,6 +517,8 @@ export class GuildBoardWindow {
     focus: Focus,
     seq: number,
   ): Promise<void> {
+    // The count line belongs to the ranking; the drill-in says nothing on it.
+    this.setStatus(el, null);
     let view = buildGuildRosterView({ kind: 'loading', guild });
     try {
       const info = await world.guildRoster(guild);

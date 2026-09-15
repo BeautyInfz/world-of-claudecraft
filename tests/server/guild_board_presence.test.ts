@@ -15,6 +15,7 @@ import {
   attachOfficerPresence,
   createGuildBoardPresence,
   GUILD_BOARD_PRESENCE_DEADLINE_MS,
+  GUILD_BOARD_PRESENCE_DEMAND_TTL_MS,
   GUILD_BOARD_PRESENCE_RETRY_MS,
   GUILD_BOARD_PRESENCE_TTL_MS,
   type GuildOfficerRoster,
@@ -228,25 +229,84 @@ describe('createGuildBoardPresence', () => {
     error.mockRestore();
   });
 
-  it('warm() reads the roster off the request path and never rejects', async () => {
+  it('warm() is demand-gated: an idle realm pays nothing, a viewed board refreshes', async () => {
+    expect(GUILD_BOARD_PRESENCE_DEMAND_TTL_MS).toBe(10 * 60_000);
+    let now = 0;
     const readOfficers = vi.fn(async () => ROWS);
-    const presence = createGuildBoardPresence({ readOfficers, now: () => 0 });
+    const presence = createGuildBoardPresence({ readOfficers, now: () => now });
     await presence.warm();
+    expect(readOfficers).not.toHaveBeenCalled();
+    // A served page registers demand; the next warm refreshes, and the
+    // warmed roster then serves a page with no read of its own.
+    await presence.attach([entry(1, 'Gatekept')], () => false);
     expect(readOfficers).toHaveBeenCalledTimes(1);
-    // The warmed roster serves the next page with no read of its own.
+    now = 30_000;
+    await presence.warm();
+    expect(readOfficers).toHaveBeenCalledTimes(2);
     const out = await presence.attach([entry(1, 'Gatekept')], (id) => id === 9);
     expect(out[0].onlineOfficers).toEqual([{ name: 'Warden', rank: 'leader' }]);
-    expect(readOfficers).toHaveBeenCalledTimes(1);
+    expect(readOfficers).toHaveBeenCalledTimes(2);
+    // Demand lapses: the loop stops paying for a board nobody opens.
+    now = 30_000 + 10 * 60_000;
+    await presence.warm();
+    expect(readOfficers).toHaveBeenCalledTimes(2);
+  });
 
+  it('warm() forces the refresh even while the roster is still fresh (the loop runs on the TTL cadence)', async () => {
+    let now = 0;
+    const readOfficers = vi.fn(async () => ROWS);
+    const presence = createGuildBoardPresence({ readOfficers, ttlMs: 30_000, now: () => now });
+    await presence.attach([entry(1, 'Gatekept')], () => false);
+    now = 29_999;
+    // read() would still serve the cached roster here; the warm must not.
+    await presence.warm();
+    expect(readOfficers).toHaveBeenCalledTimes(2);
+  });
+
+  it('warm() never rejects: a failing refresh is logged and arms the retry window', async () => {
     const error = vi.spyOn(console, 'error').mockImplementation(() => {});
-    const failing = createGuildBoardPresence({
-      readOfficers: async () => {
-        throw new Error('db down');
-      },
-      now: () => 0,
+    let now = 0;
+    let down = false;
+    const readOfficers = vi.fn(async () => {
+      if (down) throw new Error('db down');
+      return ROWS;
     });
-    await expect(failing.warm()).resolves.toBeUndefined();
+    const presence = createGuildBoardPresence({ readOfficers, retryMs: 5_000, now: () => now });
+    await presence.attach([entry(1, 'Gatekept')], () => false);
+    down = true;
+    presence.bust();
+    await expect(presence.warm()).resolves.toBeUndefined();
     expect(error).toHaveBeenCalledTimes(1);
+    // Inside the window a page is served bare with no read of its own.
+    now = 1_000;
+    expect(await presence.attach([entry(1, 'Gatekept')], () => true)).toEqual([
+      entry(1, 'Gatekept'),
+    ]);
+    expect(readOfficers).toHaveBeenCalledTimes(2);
+    error.mockRestore();
+  });
+
+  it('a successful read inside the retry window re-arms presence at once', async () => {
+    // The window exists to stop a DOWN database being hammered; a read that
+    // succeeds (the warm loop, typically) must not leave pages bare until
+    // the window lapses.
+    const error = vi.spyOn(console, 'error').mockImplementation(() => {});
+    let now = 0;
+    let down = true;
+    const readOfficers = vi.fn(async () => {
+      if (down) throw new Error('db down');
+      return ROWS;
+    });
+    const presence = createGuildBoardPresence({ readOfficers, retryMs: 5_000, now: () => now });
+    const page = [entry(1, 'Gatekept')];
+    expect(await presence.attach(page, () => true)).toEqual(page);
+    down = false;
+    now = 1_000;
+    await presence.warm();
+    expect(readOfficers).toHaveBeenCalledTimes(2);
+    const out = await presence.attach(page, (id) => id === 9);
+    expect(out[0].onlineOfficers).toEqual([{ name: 'Warden', rank: 'leader' }]);
+    expect(readOfficers).toHaveBeenCalledTimes(2);
     error.mockRestore();
   });
 });

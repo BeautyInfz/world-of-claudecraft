@@ -180,11 +180,17 @@ into, and a live sign that someone who can actually answer a pledge is online.
   only, names only, no positions; the roster read carries the moderation
   eligibility screen and is bust-wired to the moderation hook.
 - Presence is best-effort and may never add a database round trip's latency
-  to the board: the roster is warmed on the board caches' cadence (the
-  `warmLeaderboards` loop in `server/main.ts`), a request waits at most
-  `GUILD_BOARD_PRESENCE_DEADLINE_MS` on a read still in flight before serving
-  the page bare (the read keeps running and installs for the next caller),
-  and a failed cold read is not retried for `GUILD_BOARD_PRESENCE_RETRY_MS`.
+  to the board: while a board was served within
+  `GUILD_BOARD_PRESENCE_DEMAND_TTL_MS` the roster is force-refreshed on the
+  board caches' cadence (the `warmLeaderboards` loop in `server/main.ts`,
+  demand-gated like the Renown board so an idle realm pays nothing), a
+  request waits at most `GUILD_BOARD_PRESENCE_DEADLINE_MS` on a read still
+  in flight before serving the page bare (the read keeps running and
+  installs for the next caller), and a failed read is not retried for
+  `GUILD_BOARD_PRESENCE_RETRY_MS` (a success clears the window at once).
+  The presence budget is charged before the wait, so a page served bare on
+  the deadline still spent its token: that request already lost presence,
+  so the charge costs a player nothing visible.
 
 ## Architecture (the seams this rides)
 

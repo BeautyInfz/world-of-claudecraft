@@ -93,9 +93,10 @@ export interface GuildBoardPresence {
     isOnline: (characterId: number) => boolean,
   ): Promise<GuildLeaderboardEntry[]>;
   /** Refresh the roster OFF the request path (the main.ts warm loop, on the
-   *  board caches' cadence), so the first viewer after a refresh or a bust
-   *  never pays the read inline. Never rejects: a failure is logged and the
-   *  next request degrades to a presence-free page like any other. */
+   *  board caches' cadence) while the board is being viewed, so a viewer
+   *  never pays the read inline once the board is warm. Never rejects: a
+   *  failure is logged and the next request degrades to a presence-free
+   *  page like any other. */
   warm(): Promise<void>;
   /** Drop the cached roster (the moderation bust hook). */
   bust(): void;
@@ -113,11 +114,18 @@ export const GUILD_BOARD_PRESENCE_DEADLINE_MS = 250;
  *  log) a fresh attempt the moment the last one settled. */
 export const GUILD_BOARD_PRESENCE_RETRY_MS = 5_000;
 
+/** The warm loop keeps the roster fresh only while a board was served
+ *  within this window (the Renown board's demand gate, deeds_board_warm.ts):
+ *  an idle realm pays nothing; the first viewer after an idle stretch pays
+ *  at most the deadline above and gets presence from the next page on. */
+export const GUILD_BOARD_PRESENCE_DEMAND_TTL_MS = 10 * 60_000;
+
 export interface GuildBoardPresenceDeps {
   readOfficers: () => Promise<GuildOfficerRow[]>;
   ttlMs?: number;
   deadlineMs?: number;
   retryMs?: number;
+  demandTtlMs?: number;
   /** Injected clock for tests; production omits it (Date.now). */
   now?: () => number;
 }
@@ -128,19 +136,26 @@ export function createGuildBoardPresence(deps: GuildBoardPresenceDeps): GuildBoa
   const now = deps.now ?? Date.now;
   const deadlineMs = deps.deadlineMs ?? GUILD_BOARD_PRESENCE_DEADLINE_MS;
   const retryMs = deps.retryMs ?? GUILD_BOARD_PRESENCE_RETRY_MS;
+  const demandTtlMs = deps.demandTtlMs ?? GUILD_BOARD_PRESENCE_DEMAND_TTL_MS;
   const roster: CachedRead<GuildOfficerRoster> = createCachedRead(
     async () => rosterByGuild(await deps.readOfficers()),
     { ttlMs: deps.ttlMs ?? GUILD_BOARD_PRESENCE_TTL_MS, now: deps.now },
   );
   // The clock reading before which requests skip the roster (set by a failed
-  // cold read, cleared by a bust); 0 means "try".
+  // cold read, cleared by a success or a bust); 0 means "try".
   let retryAt = 0;
+  // When a page was last served (the warm loop's demand gate); null = never
+  // (never 0: an injected test clock legitimately starts there).
+  let lastDemandAt: number | null = null;
 
   // The roster, or null when the read failed. A failure after at least one
   // success never lands here: createCachedRead stale-serves it.
   const readRoster = (): Promise<GuildOfficerRoster | null> =>
     roster.read().then(
-      (value) => value,
+      (value) => {
+        retryAt = 0;
+        return value;
+      },
       (err: unknown) => {
         retryAt = now() + retryMs;
         console.error('guild board presence read failed:', err);
@@ -164,13 +179,25 @@ export function createGuildBoardPresence(deps: GuildBoardPresenceDeps): GuildBoa
   return {
     async attach(leaders, isOnline) {
       if (leaders.length === 0) return [];
+      lastDemandAt = now();
       if (now() < retryAt) return [...leaders];
       const byGuild = await withinDeadline(readRoster());
       if (byGuild === null) return [...leaders];
       return attachOfficerPresence(leaders, byGuild, isOnline);
     },
     async warm() {
-      await readRoster();
+      // Demand-gated: no page served within the window means no refresh.
+      if (lastDemandAt === null || now() - lastDemandAt >= demandTtlMs) return;
+      // A FORCED refresh, never read(): the warm loop runs on the same cadence
+      // as the TTL, so read() would find the roster still fresh on every other
+      // tick and leave it to expire mid-interval for a viewer to pay inline.
+      try {
+        await roster.refresh();
+        retryAt = 0;
+      } catch (err) {
+        retryAt = now() + retryMs;
+        console.error('guild board presence read failed:', err);
+      }
     },
     bust() {
       roster.bust();
