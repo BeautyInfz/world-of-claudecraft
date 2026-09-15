@@ -1244,6 +1244,8 @@ export const id_ID: EnTranslations = {
       "noteLabel": "Catatan papan",
       "notePlaceholder": "Ceritakan apa yang dicari guildmu kepada calon anggota",
       "save": "Simpan",
+      "newPlayerFriendlyLabel": "New player friendly",
+      "newPlayerFriendlyHint": "Shown on the recruits' board at the Proving Shore signpost.",
       "yourPledge": "Lamaranmu: {guild}",
       "since": "Melamar {date}",
       "withdraw": "Tarik lamaran"
@@ -2251,6 +2253,12 @@ export const id_ID: EnTranslations = {
       "linkHint": "Shift-klik untuk menautkan item ini di obrolan."
     },
     "plurals": {
+      "guildBoardShown": {
+        "one": "{count} guild shown",
+        "few": "{count} guilds shown",
+        "many": "{count} guilds shown",
+        "other": "{count} guilds shown"
+      },
       "commissionMasterworks": {
         "one": "{count} mahakarya",
         "few": "{count} mahakarya",
@@ -3758,6 +3766,15 @@ export const id_ID: EnTranslations = {
       "subtitle": "Guild-guild di realm",
       "rosterTitle": "Lihat daftar anggota {guild}",
       "back": "Kembali",
+      "filters": "Board filters",
+      "newPlayerFriendly": "New player friendly",
+      "newPlayerFriendlyTitle": "This guild welcomes new players",
+      "filterNewPlayersTitle": "Show only guilds that welcome new players",
+      "filterEmpty": "No guild has opened its doors to new players yet.",
+      "showAll": "Show all guilds",
+      "officersOnline": "Officers online",
+      "officersOnlineLabel": "Officers online: {names}",
+      "officerEntry": "{name} ({rank})",
       "popupTitle": "Papan Petunjuk Guild",
       "close": "Tutup"
     },
