@@ -6389,6 +6389,7 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'hudChrome.leaderboard.mergedPrs': 'マージ済みPR',
   'hudChrome.leaderboard.devEmpty': 'ランク入りのコントリビューターはまだいません。',
   'hudChrome.leaderboard.podiumLabel': 'トップ3',
+  'hudChrome.leaderboard.prestigeTitle': '威信 {rank}',
   'hudChrome.leaderboard.unclaimed': '空席',
   'hudChrome.widgets.worldCoordinates': 'ワールド座標',
   'hudChrome.plurals.guildMembers.one': 'あなたは{rank}、{count}人のメンバー',

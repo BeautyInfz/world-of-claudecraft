@@ -1223,7 +1223,8 @@ export const de_DE: EnTranslations = {
       "mergedPrs": "Zusammengeführte PRs",
       "devEmpty": "Noch keine platzierten Mitwirkenden.",
       "podiumLabel": "Top three",
-      "unclaimed": "Unclaimed"
+      "unclaimed": "Unclaimed",
+      "prestigeTitle": "Prestige {rank}"
     },
     "pledge": {
       "open": "Nimmt Gelöbnisse an",

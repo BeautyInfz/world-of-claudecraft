@@ -210,6 +210,7 @@ describe('leaderboard window podium', () => {
       dailyRewardLeaderboard: () => paged(daily, { day: '2026-09-15' }),
     });
     await openOn(el, lb, 'devs');
+    expect(places(el)).toEqual(['1', '2', '3']);
     expect(el.querySelector('.lb-standing .lb-name')?.textContent).toContain('@ari-dev');
     (el.querySelector('[data-leaderboard-tab="daily"]') as HTMLButtonElement).click();
     await flush();

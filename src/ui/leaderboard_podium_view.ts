@@ -39,7 +39,12 @@ export interface PodiumSplit<T> {
   listed: T[];
 }
 
-/** Split one page into its podium and the rows listed beneath it. */
+/**
+ * Split one page into its podium and the rows listed beneath it. Every board
+ * ranks its page server-side by position (row_number or index plus one), so a
+ * place matches at most one row; a duplicate rank would be dropped here, never
+ * listed twice.
+ */
 export function podiumSplit<T>(
   pageIndex: number,
   entries: readonly T[],

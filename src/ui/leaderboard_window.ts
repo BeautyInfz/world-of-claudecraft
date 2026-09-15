@@ -697,7 +697,7 @@ export class LeaderboardWindow {
     // &starf; renders the prestige star without a literal symbol glyph in source.
     const star =
       r.prestigeRank > 0
-        ? `<span class="lb-prestige" title="${esc(`${t('game.prestige.rank')} ${formatNumber(r.prestigeRank, { maximumFractionDigits: 0 })}`)}">&starf;${formatNumber(r.prestigeRank, { maximumFractionDigits: 0 })}</span> `
+        ? `<span class="lb-prestige" title="${esc(t('hudChrome.leaderboard.prestigeTitle', { rank: formatNumber(r.prestigeRank, { maximumFractionDigits: 0 }) }))}">&starf;${formatNumber(r.prestigeRank, { maximumFractionDigits: 0 })}</span> `
         : '';
     const title = r.knownClass ? ` title="${esc(classDisplayName(r.cls))}"` : '';
     const you = r.me ? ` <span class="lb-you">(${esc(t('game.leaderboard.you'))})</span>` : '';

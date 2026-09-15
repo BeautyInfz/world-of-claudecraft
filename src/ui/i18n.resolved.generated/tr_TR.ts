@@ -1223,7 +1223,8 @@ export const tr_TR: EnTranslations = {
       "mergedPrs": "Birleştirilen PR'ler",
       "devEmpty": "Henüz sıralı katkıcı yok.",
       "podiumLabel": "Top three",
-      "unclaimed": "Unclaimed"
+      "unclaimed": "Unclaimed",
+      "prestigeTitle": "Prestige {rank}"
     },
     "pledge": {
       "open": "Başvuru kabul ediliyor",

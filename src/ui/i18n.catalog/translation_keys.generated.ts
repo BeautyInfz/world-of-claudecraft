@@ -10442,6 +10442,7 @@ export type TranslationKeyFlat =
   | 'hudChrome.leaderboard.members'
   | 'hudChrome.leaderboard.mergedPrs'
   | 'hudChrome.leaderboard.podiumLabel'
+  | 'hudChrome.leaderboard.prestigeTitle'
   | 'hudChrome.leaderboard.tabDevs'
   | 'hudChrome.leaderboard.tabGuilds'
   | 'hudChrome.leaderboard.tabPlayers'

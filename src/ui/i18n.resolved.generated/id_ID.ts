@@ -1223,7 +1223,8 @@ export const id_ID: EnTranslations = {
       "mergedPrs": "PR Digabungkan",
       "devEmpty": "Belum ada kontributor berperingkat.",
       "podiumLabel": "Top three",
-      "unclaimed": "Unclaimed"
+      "unclaimed": "Unclaimed",
+      "prestigeTitle": "Prestige {rank}"
     },
     "pledge": {
       "open": "Menerima lamaran",

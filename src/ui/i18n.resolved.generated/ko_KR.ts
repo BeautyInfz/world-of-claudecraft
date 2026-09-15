@@ -1223,7 +1223,8 @@ export const ko_KR: EnTranslations = {
       "mergedPrs": "병합된 PR",
       "devEmpty": "아직 순위에 오른 기여자가 없습니다.",
       "podiumLabel": "상위 3명",
-      "unclaimed": "비어 있음"
+      "unclaimed": "비어 있음",
+      "prestigeTitle": "명예 {rank}"
     },
     "pledge": {
       "open": "서약 받는 중",

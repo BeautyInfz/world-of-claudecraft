@@ -99,9 +99,11 @@ describe('ranking ledger tokens', () => {
   it('no theme preset re-emits a ranking token, so the fixed pairs hold on every preset', () => {
     const rankingNames = [...tokensCss.matchAll(/\s(--color-ranking-[a-z-]+):/g)].map((m) => m[1]);
     expect(rankingNames.length).toBeGreaterThan(10);
+    // The two gold foregrounds in PAIRS are fixed values on this ground as well.
+    const fixedNames = [...rankingNames, '--color-gold-300', '--color-gold-500'];
     for (const id of PRESET_ORDER) {
       const vars = themeCssVars(resolveTheme({ preset: id, custom: {} }));
-      for (const name of rankingNames) expect(vars[name], `${id} re-emits ${name}`).toBeUndefined();
+      for (const name of fixedNames) expect(vars[name], `${id} re-emits ${name}`).toBeUndefined();
     }
   });
 });

@@ -8,6 +8,7 @@
 import { describe, expect, it } from 'vitest';
 import type { DeedsLeaderboardRow } from '../src/ui/deeds_leaderboard_view';
 import type { DevLeaderboardRow } from '../src/ui/dev_leaderboard_view';
+import { devTierByIndex, devTierDisplayName } from '../src/ui/dev_tier';
 import type { GuildLeaderboardRow } from '../src/ui/guild_leaderboard_view';
 import {
   dailyPodiumSlot,
@@ -34,8 +35,12 @@ function dom(card: PodiumSlotHtml): HTMLElement {
 }
 
 function noInjectedMarkup(host: HTMLElement): void {
-  // A dev badge is the one legitimate image; nothing player-authored may add one.
-  expect(host.querySelectorAll('img:not(.lb-dev-badge)')).toHaveLength(0);
+  // A dev badge is the one legitimate image, and only with the procedural data
+  // url; nothing player-authored may add one.
+  for (const img of Array.from(host.querySelectorAll('img'))) {
+    expect(img.classList.contains('lb-dev-badge')).toBe(true);
+    expect(img.getAttribute('src')).toMatch(/^data:image\/svg\+xml,/);
+  }
   expect(host.querySelector('[onerror]')).toBeNull();
 }
 
@@ -81,8 +86,7 @@ describe('playersPodiumSlot', () => {
     expect(stats).toEqual(['20', '34']);
     expect(host.querySelector('.lb-deed-title')?.textContent).toBe('the Wanderer');
     const star = host.querySelector('.lb-prestige');
-    expect(star?.getAttribute('title')).toMatch(/2$/);
-    expect(star?.getAttribute('title')?.length).toBeGreaterThan(1);
+    expect(star?.getAttribute('title')).toBe('Prestige 2');
   });
 
   it('renders no title span for an untitled or stale title', () => {
@@ -175,15 +179,29 @@ describe('devPodiumSlot', () => {
     ...over,
   });
 
-  it('escapes the login and keeps the badge tier (or the merged count)', () => {
+  it('escapes the login and falls back to the merged count below the first tier', () => {
     const card = devPodiumSlot(at(dev({ login: HOSTILE, me: true })));
     const host = dom(card);
     noInjectedMarkup(host);
     expect(host.querySelector('.n')?.textContent).toContain(`@${HOSTILE}`);
     expect(card.me).toBe(true);
     expect(host.querySelector('.m')?.textContent).toBe('42');
-    const detail = host.querySelector('.d');
-    expect(detail?.querySelector('.lb-dev-tier, .lbp-stat')).not.toBeNull();
+    expect(host.querySelector('img')).toBeNull();
+    expect(host.querySelector('.lb-dev-tier')).toBeNull();
+    expect(host.querySelector('.d .lbp-stat-value')?.textContent).toBe('42');
+  });
+
+  it('renders the badge and the tier name once a tier is earned', () => {
+    const tier = devTierByIndex(1);
+    if (!tier) throw new Error('dev tier 1 is missing');
+    const host = dom(devPodiumSlot(at(dev({ login: HOSTILE, devTier: 1 }))));
+    noInjectedMarkup(host);
+    expect(host.querySelectorAll('img')).toHaveLength(1);
+    expect(host.querySelector('img.lb-dev-badge')?.getAttribute('src')).toMatch(
+      /^data:image\/svg\+xml,/,
+    );
+    expect(host.querySelector('.d .lb-dev-tier')?.textContent).toBe(devTierDisplayName(tier));
+    expect(host.querySelector('.d .lbp-stat')).toBeNull();
   });
 });
 

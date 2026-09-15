@@ -1223,7 +1223,8 @@ export const pl_PL: EnTranslations = {
       "mergedPrs": "Scalone PR-y",
       "devEmpty": "Brak sklasyfikowanych kontrybutorów.",
       "podiumLabel": "Top three",
-      "unclaimed": "Unclaimed"
+      "unclaimed": "Unclaimed",
+      "prestigeTitle": "Prestige {rank}"
     },
     "pledge": {
       "open": "Przyjmuje przysięgi",

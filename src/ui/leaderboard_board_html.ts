@@ -64,7 +64,7 @@ export function playersPodiumSlot(
     // The ladder row's prestige treatment: the star keeps its rank tooltip.
     const star =
       row.prestigeRank > 0
-        ? `<span class="lb-prestige" title="${esc(`${t('game.prestige.rank')} ${whole(row.prestigeRank)}`)}">&starf;${whole(row.prestigeRank)}</span> `
+        ? `<span class="lb-prestige" title="${esc(t('hudChrome.leaderboard.prestigeTitle', { rank: whole(row.prestigeRank) }))}">&starf;${whole(row.prestigeRank)}</span> `
         : '';
     const title = row.knownClass ? ` title="${esc(classDisplayName(row.cls))}"` : '';
     const deedTitle = row.title ? titleText(row.title) : '';

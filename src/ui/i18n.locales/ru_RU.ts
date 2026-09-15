@@ -6497,6 +6497,7 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'hudChrome.leaderboard.mergedPrs': 'Слито PR',
   'hudChrome.leaderboard.devEmpty': 'Пока нет участников в рейтинге.',
   'hudChrome.leaderboard.podiumLabel': 'Тройка лучших',
+  'hudChrome.leaderboard.prestigeTitle': 'Престиж {rank}',
   'hudChrome.leaderboard.unclaimed': 'Свободно',
   'hudChrome.widgets.worldCoordinates': 'Координаты мира',
   'hudChrome.plurals.guildMembers.one': 'вы {rank}, {count} участник',

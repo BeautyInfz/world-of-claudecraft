@@ -1223,7 +1223,8 @@ export const en_XA: EnTranslations = {
       "mergedPrs": "[Ɱéŕĝéð ÞŔš]",
       "devEmpty": "[Ñó ŕáñķéð çóñţŕíƀúţóŕš ýéţ.]",
       "podiumLabel": "[Ţóþ ţĥŕéé]",
-      "unclaimed": "[Úñçļáíɱéð]"
+      "unclaimed": "[Úñçļáíɱéð]",
+      "prestigeTitle": "[Þŕéšţíĝé {rank}]"
     },
     "pledge": {
       "open": "[Áççéþţíñĝ þļéðĝéš]",

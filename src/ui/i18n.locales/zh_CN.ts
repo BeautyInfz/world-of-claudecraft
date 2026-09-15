@@ -6161,6 +6161,7 @@ export const zh_CN: Partial<Record<TranslationKey, string>> = {
   'hudChrome.leaderboard.mergedPrs': '已合并 PR',
   'hudChrome.leaderboard.devEmpty': '还没有上榜的贡献者。',
   'hudChrome.leaderboard.podiumLabel': '前三名',
+  'hudChrome.leaderboard.prestigeTitle': '声望 {rank}',
   'hudChrome.leaderboard.unclaimed': '虚位以待',
   'hudChrome.widgets.worldCoordinates': '世界坐标',
   'hudChrome.plurals.guildMembers.one': '你是{rank}，{count}名成员',

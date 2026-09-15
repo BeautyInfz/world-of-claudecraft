@@ -1223,7 +1223,8 @@ export const ru_RU: EnTranslations = {
       "mergedPrs": "Слито PR",
       "devEmpty": "Пока нет участников в рейтинге.",
       "podiumLabel": "Тройка лучших",
-      "unclaimed": "Свободно"
+      "unclaimed": "Свободно",
+      "prestigeTitle": "Престиж {rank}"
     },
     "pledge": {
       "open": "Принимает присяги",

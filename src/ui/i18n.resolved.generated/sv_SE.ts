@@ -1223,7 +1223,8 @@ export const sv_SE: EnTranslations = {
       "mergedPrs": "Sammanslagna PR:er",
       "devEmpty": "Inga rankade bidragsgivare ännu.",
       "podiumLabel": "Top three",
-      "unclaimed": "Unclaimed"
+      "unclaimed": "Unclaimed",
+      "prestigeTitle": "Prestige {rank}"
     },
     "pledge": {
       "open": "Tar emot löften",

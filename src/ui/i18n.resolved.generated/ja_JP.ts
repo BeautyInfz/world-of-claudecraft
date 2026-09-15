@@ -1223,7 +1223,8 @@ export const ja_JP: EnTranslations = {
       "mergedPrs": "マージ済みPR",
       "devEmpty": "ランク入りのコントリビューターはまだいません。",
       "podiumLabel": "トップ3",
-      "unclaimed": "空席"
+      "unclaimed": "空席",
+      "prestigeTitle": "威信 {rank}"
     },
     "pledge": {
       "open": "誓約受付中",

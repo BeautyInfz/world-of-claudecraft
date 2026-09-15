@@ -1223,7 +1223,8 @@ export const zh_TW: EnTranslations = {
       "mergedPrs": "已合併 PR",
       "devEmpty": "還沒有上榜的貢獻者。",
       "podiumLabel": "前三名",
-      "unclaimed": "虛位以待"
+      "unclaimed": "虛位以待",
+      "prestigeTitle": "威望 {rank}"
     },
     "pledge": {
       "open": "接受宣誓",

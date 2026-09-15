@@ -6357,6 +6357,7 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.leaderboard.mergedPrs': '병합된 PR',
   'hudChrome.leaderboard.devEmpty': '아직 순위에 오른 기여자가 없습니다.',
   'hudChrome.leaderboard.podiumLabel': '상위 3명',
+  'hudChrome.leaderboard.prestigeTitle': '명예 {rank}',
   'hudChrome.leaderboard.unclaimed': '비어 있음',
   'hudChrome.widgets.worldCoordinates': '세계 좌표',
   'hudChrome.plurals.guildMembers.one': '당신은 {rank}, {count}명 회원',

@@ -1223,7 +1223,8 @@ export const da_DK: EnTranslations = {
       "mergedPrs": "Flettede PR'er",
       "devEmpty": "Ingen rangerede bidragydere endnu.",
       "podiumLabel": "Top three",
-      "unclaimed": "Unclaimed"
+      "unclaimed": "Unclaimed",
+      "prestigeTitle": "Prestige {rank}"
     },
     "pledge": {
       "open": "Accepterer løfter",
