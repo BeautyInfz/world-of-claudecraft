@@ -1500,9 +1500,11 @@ const MONOLITHS: MonolithRow[] = [
     // Main hotfix integration: combined extractions, exact merged count.
     // Re-measured resolving PR #3978 into the current v0.43 batch head: the
     // Who tab and Market Sweep server extractions compose with the account-wide
-    // Book of Deeds / Reliquary server split. `wc -l < server/game.ts` is
-    // 10002. Exact count, zero slack.
-    ceiling: 10002,
+    // Book of Deeds / Reliquary server split.
+    // Guild board categories: the guild_pledge_settings dispatch arm's field
+    // validation moved to server/guild_pledge_settings_cmd.ts. Merged with the
+    // batch work above; `wc -l < server/game.ts` is 9996. Exact count, zero slack.
+    ceiling: 9996,
     seam: 'a sibling server module; see the hot-path seams in server/CLAUDE.md',
   },
   {
@@ -1647,9 +1649,12 @@ const MONOLITHS: MonolithRow[] = [
     // Main hotfix integration: combined extractions, exact merged count.
     // Re-measured resolving PR #3978 into the current v0.43 batch head: the
     // Who tab, Market Sweep, CPU-hygiene, and account-wide book-wire
-    // extractions compose below both parent pins. `wc -l < src/net/online.ts`
-    // is 5461. Exact count, zero slack.
-    ceiling: 5461,
+    // extractions compose below both parent pins.
+    // Guild board categories: the board path builder, the page decode and the
+    // pledge-settings frame decode moved to src/net/guild_board_wire.ts. Merged
+    // with the book_wire extraction above; `wc -l < src/net/online.ts` is 5446.
+    // Exact count, zero slack.
+    ceiling: 5446,
     seam: 'a src/net sibling module (the refactor/net-online split is the template)',
   },
   {
@@ -1800,8 +1805,12 @@ const MONOLITHS: MonolithRow[] = [
     // Mount skins: bank the coordinator extraction at its measured size.
     // Re-measured resolving PR #3978 into the current v0.43 batch head: the
     // perf-report DB extraction composes with the Deeds and account-ledger DDL
-    // splits. `wc -l < server/db.ts` is 4569. Exact count, zero slack.
-    ceiling: 4569,
+    // splits.
+    // Guild board categories: topGuilds and its GuildLeaderRow moved whole to
+    // server/guild_board_db.ts beside the new officer-roster read. Merged with
+    // the DEEDS_SCHEMA / ACCOUNT_LEDGER_SCHEMA move above; `wc -l < server/db.ts`
+    // is 4495. Exact count, zero slack.
+    ceiling: 4495,
     seam: 'a domain <domain>_db.ts module with its own *_SCHEMA (server/CLAUDE.md)',
   },
   {

@@ -1267,6 +1267,8 @@ export const ja_JP: EnTranslations = {
       "noteLabel": "掲示メッセージ",
       "notePlaceholder": "ギルドが求める仲間について書きましょう",
       "save": "保存",
+      "newPlayerFriendlyLabel": "初心者歓迎",
+      "newPlayerFriendlyHint": "修練の浜の掲示板の新人向け一覧に表示されます。",
       "yourPledge": "あなたの誓約：{guild}",
       "since": "{date}に誓約",
       "withdraw": "誓約を取り下げる"
@@ -2291,6 +2293,12 @@ export const ja_JP: EnTranslations = {
       "linkHint": "Shift + クリックでこのアイテムをチャットにリンクします。"
     },
     "plurals": {
+      "guildBoardShown": {
+        "one": "{count} 件のギルドを表示中",
+        "few": "{count} 件のギルドを表示中",
+        "many": "{count} 件のギルドを表示中",
+        "other": "{count} 件のギルドを表示中"
+      },
       "commissionMasterworks": {
         "one": "傑作{count}点",
         "few": "傑作{count}点",
@@ -3822,6 +3830,15 @@ export const ja_JP: EnTranslations = {
       "subtitle": "ワールドのギルド",
       "rosterTitle": "{guild}のメンバー一覧を見る",
       "back": "戻る",
+      "filters": "掲示板の絞り込み",
+      "newPlayerFriendly": "初心者歓迎",
+      "newPlayerFriendlyTitle": "このギルドは新規プレイヤーを歓迎しています",
+      "filterNewPlayersTitle": "新規プレイヤーを歓迎するギルドのみ表示",
+      "filterEmpty": "まだ新規プレイヤーに門戸を開いたギルドはありません。",
+      "showAll": "すべてのギルドを表示",
+      "officersOnline": "幹部がオンライン",
+      "officersOnlineLabel": "オンラインの幹部: {names}",
+      "officerEntry": "{name} ({rank})",
       "popupTitle": "ギルドの掲示柱",
       "close": "閉じる"
     },

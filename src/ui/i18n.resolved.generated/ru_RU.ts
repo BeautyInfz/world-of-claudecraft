@@ -1267,6 +1267,8 @@ export const ru_RU: EnTranslations = {
       "noteLabel": "Заметка на доске",
       "notePlaceholder": "Расскажите соискателям, кого ищет ваша гильдия",
       "save": "Сохранить",
+      "newPlayerFriendlyLabel": "Для новичков",
+      "newPlayerFriendlyHint": "Показывается на доске новичков у указателя Берега Испытаний.",
       "yourPledge": "Ваша присяга: {guild}",
       "since": "Присяга от {date}",
       "withdraw": "Отозвать присягу"
@@ -2291,6 +2293,12 @@ export const ru_RU: EnTranslations = {
       "linkHint": "Shift + клик, чтобы вставить ссылку на этот предмет в чат."
     },
     "plurals": {
+      "guildBoardShown": {
+        "one": "Показана {count} гильдия",
+        "few": "Показано {count} гильдии",
+        "many": "Показано {count} гильдий",
+        "other": "Показано {count} гильдии"
+      },
       "commissionMasterworks": {
         "one": "{count} шедевр",
         "few": "{count} шедевра",
@@ -3822,6 +3830,15 @@ export const ru_RU: EnTranslations = {
       "subtitle": "Гильдии мира",
       "rosterTitle": "Просмотреть состав гильдии {guild}",
       "back": "Назад",
+      "filters": "Фильтры доски",
+      "newPlayerFriendly": "Для новичков",
+      "newPlayerFriendlyTitle": "Эта гильдия рада новичкам",
+      "filterNewPlayersTitle": "Показывать только гильдии, открытые для новичков",
+      "filterEmpty": "Пока ни одна гильдия не открыла двери новичкам.",
+      "showAll": "Показать все гильдии",
+      "officersOnline": "Офицеры в сети",
+      "officersOnlineLabel": "Офицеры в сети: {names}",
+      "officerEntry": "{name} ({rank})",
       "popupTitle": "Гильдейский столб",
       "close": "Закрыть"
     },

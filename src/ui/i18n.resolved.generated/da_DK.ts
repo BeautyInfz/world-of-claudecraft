@@ -1267,6 +1267,8 @@ export const da_DK: EnTranslations = {
       "noteLabel": "Opslagsbesked",
       "notePlaceholder": "Fortæl håbefulde medlemmer, hvad jeres laug søger",
       "save": "Gem",
+      "newPlayerFriendlyLabel": "New player friendly",
+      "newPlayerFriendlyHint": "Shown on the recruits' board at the Proving Shore signpost.",
       "yourPledge": "Dit løfte: {guild}",
       "since": "Løfte afgivet {date}",
       "withdraw": "Træk løfte tilbage"
@@ -2291,6 +2293,12 @@ export const da_DK: EnTranslations = {
       "linkHint": "Shift-klik for at linke denne genstand i chatten."
     },
     "plurals": {
+      "guildBoardShown": {
+        "one": "{count} guild shown",
+        "few": "{count} guilds shown",
+        "many": "{count} guilds shown",
+        "other": "{count} guilds shown"
+      },
       "commissionMasterworks": {
         "one": "{count} mesterværk",
         "few": "{count} mesterværker",
@@ -3822,6 +3830,15 @@ export const da_DK: EnTranslations = {
       "subtitle": "Rigets laug",
       "rosterTitle": "Se medlemslisten for {guild}",
       "back": "Tilbage",
+      "filters": "Board filters",
+      "newPlayerFriendly": "New player friendly",
+      "newPlayerFriendlyTitle": "This guild welcomes new players",
+      "filterNewPlayersTitle": "Show only guilds that welcome new players",
+      "filterEmpty": "No guild has opened its doors to new players yet.",
+      "showAll": "Show all guilds",
+      "officersOnline": "Officers online",
+      "officersOnlineLabel": "Officers online: {names}",
+      "officerEntry": "{name} ({rank})",
       "popupTitle": "Laugsskilt",
       "close": "Luk"
     },

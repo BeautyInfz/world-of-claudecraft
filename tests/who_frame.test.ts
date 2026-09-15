@@ -281,7 +281,7 @@ describe('social_frame_wire normalization (moved out of online.ts unchanged)', (
         rank: 'member',
         members: [],
         events: [],
-        pledgeSettings: { enabled: true, minLevel: 1, note: '' },
+        pledgeSettings: { enabled: true, minLevel: 1, note: '', newPlayerFriendly: false },
         pledges: [],
         tier: 0,
       },

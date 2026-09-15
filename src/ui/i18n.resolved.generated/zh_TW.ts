@@ -1267,6 +1267,8 @@ export const zh_TW: EnTranslations = {
       "noteLabel": "榜單留言",
       "notePlaceholder": "告訴有意加入的玩家你的公會在尋找什麼",
       "save": "儲存",
+      "newPlayerFriendlyLabel": "新手友善",
+      "newPlayerFriendlyHint": "顯示在試煉之濱告示牌的新人看板上。",
       "yourPledge": "你的宣誓：{guild}",
       "since": "宣誓於{date}",
       "withdraw": "撤回宣誓"
@@ -2291,6 +2293,12 @@ export const zh_TW: EnTranslations = {
       "linkHint": "Shift + 點擊可在聊天中連結該物品。"
     },
     "plurals": {
+      "guildBoardShown": {
+        "one": "顯示 {count} 個公會",
+        "few": "顯示 {count} 個公會",
+        "many": "顯示 {count} 個公會",
+        "other": "顯示 {count} 個公會"
+      },
       "commissionMasterworks": {
         "one": "{count}件傑作",
         "few": "{count}件傑作",
@@ -3822,6 +3830,15 @@ export const zh_TW: EnTranslations = {
       "subtitle": "本世界的公會",
       "rosterTitle": "查看{guild}的成員名單",
       "back": "返回",
+      "filters": "看板篩選",
+      "newPlayerFriendly": "新手友善",
+      "newPlayerFriendlyTitle": "這個公會歡迎新玩家",
+      "filterNewPlayersTitle": "只顯示歡迎新玩家的公會",
+      "filterEmpty": "還沒有公會向新玩家敞開大門。",
+      "showAll": "顯示全部公會",
+      "officersOnline": "幹部在線",
+      "officersOnlineLabel": "在線幹部：{names}",
+      "officerEntry": "{name} ({rank})",
       "popupTitle": "公會告示柱",
       "close": "關閉"
     },

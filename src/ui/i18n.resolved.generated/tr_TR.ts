@@ -1267,6 +1267,8 @@ export const tr_TR: EnTranslations = {
       "noteLabel": "Pano notu",
       "notePlaceholder": "Adaylara loncanın ne aradığını anlat",
       "save": "Kaydet",
+      "newPlayerFriendlyLabel": "New player friendly",
+      "newPlayerFriendlyHint": "Shown on the recruits' board at the Proving Shore signpost.",
       "yourPledge": "Başvurun: {guild}",
       "since": "{date} tarihinde başvurdu",
       "withdraw": "Başvuruyu geri çek"
@@ -2291,6 +2293,12 @@ export const tr_TR: EnTranslations = {
       "linkHint": "Bu eşyayı sohbete bağlamak için Shift+tıkla."
     },
     "plurals": {
+      "guildBoardShown": {
+        "one": "{count} guild shown",
+        "few": "{count} guilds shown",
+        "many": "{count} guilds shown",
+        "other": "{count} guilds shown"
+      },
       "commissionMasterworks": {
         "one": "{count} şaheser",
         "few": "{count} şaheser",
@@ -3822,6 +3830,15 @@ export const tr_TR: EnTranslations = {
       "subtitle": "Diyarın loncaları",
       "rosterTitle": "{guild} loncasının üye listesini gör",
       "back": "Geri",
+      "filters": "Board filters",
+      "newPlayerFriendly": "New player friendly",
+      "newPlayerFriendlyTitle": "This guild welcomes new players",
+      "filterNewPlayersTitle": "Show only guilds that welcome new players",
+      "filterEmpty": "No guild has opened its doors to new players yet.",
+      "showAll": "Show all guilds",
+      "officersOnline": "Officers online",
+      "officersOnlineLabel": "Officers online: {names}",
+      "officerEntry": "{name} ({rank})",
       "popupTitle": "Lonca Tabelası",
       "close": "Kapat"
     },

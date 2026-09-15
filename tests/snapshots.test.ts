@@ -3633,7 +3633,7 @@ describe('guild nameplate wire', () => {
         motdSetBy: '',
         members: [],
         events: [],
-        pledgeSettings: { enabled: true, minLevel: 1, note: '' },
+        pledgeSettings: { enabled: true, minLevel: 1, note: '', newPlayerFriendly: false },
         pledges: [],
         tier: 0,
       },

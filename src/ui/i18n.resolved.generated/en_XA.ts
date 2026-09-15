@@ -1267,6 +1267,8 @@ export const en_XA: EnTranslations = {
       "noteLabel": "[Ɓóáŕð ñóţé]",
       "notePlaceholder": "[Ţéļļ ášþíŕíñĝ ɱéɱƀéŕš ŵĥáţ ýóúŕ ĝúíļð íš ļóóķíñĝ ƒóŕ]",
       "save": "[Šáʋé]",
+      "newPlayerFriendlyLabel": "[Ñéŵ þļáýéŕ ƒŕíéñðļý]",
+      "newPlayerFriendlyHint": "[Šĥóŵñ óñ ţĥé ŕéçŕúíţš' ƀóáŕð áţ ţĥé Þŕóʋíñĝ Šĥóŕé šíĝñþóšţ.]",
       "yourPledge": "[Ýóúŕ þļéðĝé: {guild}]",
       "since": "[Þļéðĝéð {date}]",
       "withdraw": "[Ŵíţĥðŕáŵ þļéðĝé]"
@@ -2291,6 +2293,12 @@ export const en_XA: EnTranslations = {
       "linkHint": "[Šĥíƒţ-çļíçķ ţó ļíñķ ţĥíš íţéɱ íñ çĥáţ.]"
     },
     "plurals": {
+      "guildBoardShown": {
+        "one": "[{count} ĝúíļð šĥóŵñ]",
+        "few": "[{count} ĝúíļðš šĥóŵñ]",
+        "many": "[{count} ĝúíļðš šĥóŵñ]",
+        "other": "[{count} ĝúíļðš šĥóŵñ]"
+      },
       "commissionMasterworks": {
         "one": "[{count} ɱášţéŕŵóŕķ]",
         "few": "[{count} ɱášţéŕŵóŕķš]",
@@ -3822,6 +3830,15 @@ export const en_XA: EnTranslations = {
       "subtitle": "[Ĝúíļðš óƒ ţĥé ŕéáļɱ]",
       "rosterTitle": "[Ʋíéŵ ţĥé ŕóšţéŕ óƒ {guild}]",
       "back": "[Ɓáçķ]",
+      "filters": "[Ɓóáŕð ƒíļţéŕš]",
+      "newPlayerFriendly": "[Ñéŵ þļáýéŕ ƒŕíéñðļý]",
+      "newPlayerFriendlyTitle": "[Ţĥíš ĝúíļð ŵéļçóɱéš ñéŵ þļáýéŕš]",
+      "filterNewPlayersTitle": "[Šĥóŵ óñļý ĝúíļðš ţĥáţ ŵéļçóɱé ñéŵ þļáýéŕš]",
+      "filterEmpty": "[Ñó ĝúíļð ĥáš óþéñéð íţš ðóóŕš ţó ñéŵ þļáýéŕš ýéţ.]",
+      "showAll": "[Šĥóŵ áļļ ĝúíļðš]",
+      "officersOnline": "[Óƒƒíçéŕš óñļíñé]",
+      "officersOnlineLabel": "[Óƒƒíçéŕš óñļíñé: {names}]",
+      "officerEntry": "[{name} ({rank})]",
       "popupTitle": "[Ĝúíļð Šíĝñþóšţ]",
       "close": "[Çļóšé]"
     },

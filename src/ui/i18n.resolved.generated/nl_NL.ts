@@ -1267,6 +1267,8 @@ export const nl_NL: EnTranslations = {
       "noteLabel": "Bordnotitie",
       "notePlaceholder": "Vertel aspirant-leden waarnaar je gilde op zoek is",
       "save": "Opslaan",
+      "newPlayerFriendlyLabel": "New player friendly",
+      "newPlayerFriendlyHint": "Shown on the recruits' board at the Proving Shore signpost.",
       "yourPledge": "Je gelofte: {guild}",
       "since": "Gezworen op {date}",
       "withdraw": "Gelofte intrekken"
@@ -2291,6 +2293,12 @@ export const nl_NL: EnTranslations = {
       "linkHint": "Shift-klik om dit voorwerp in de chat te delen."
     },
     "plurals": {
+      "guildBoardShown": {
+        "one": "{count} guild shown",
+        "few": "{count} guilds shown",
+        "many": "{count} guilds shown",
+        "other": "{count} guilds shown"
+      },
       "commissionMasterworks": {
         "one": "{count} meesterwerk",
         "few": "{count} meesterwerken",
@@ -3822,6 +3830,15 @@ export const nl_NL: EnTranslations = {
       "subtitle": "Gildes van het rijk",
       "rosterTitle": "Bekijk de ledenlijst van {guild}",
       "back": "Terug",
+      "filters": "Board filters",
+      "newPlayerFriendly": "New player friendly",
+      "newPlayerFriendlyTitle": "This guild welcomes new players",
+      "filterNewPlayersTitle": "Show only guilds that welcome new players",
+      "filterEmpty": "No guild has opened its doors to new players yet.",
+      "showAll": "Show all guilds",
+      "officersOnline": "Officers online",
+      "officersOnlineLabel": "Officers online: {names}",
+      "officerEntry": "{name} ({rank})",
       "popupTitle": "Gildebord",
       "close": "Sluiten"
     },

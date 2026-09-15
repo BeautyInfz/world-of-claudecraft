@@ -67,13 +67,10 @@ import {
   curatorRankFromOwned,
   pageCompletion,
   RELIQUARY_PAGES_BY_ID,
-  restoreReliquaryState,
-  type SavedReliquaryState,
 } from '../sim/reliquary';
 import { riftFloorColliders } from '../sim/rift/rift_gen';
 import type { ResolvedAbility } from '../sim/sim';
 import {
-  type Aura,
   cloneItemInstancePayload,
   type DeedStats,
   type DungeonDifficulty,
@@ -143,7 +140,9 @@ import {
   type GuildBankInfo,
   type GuildBankLogKind,
   type GuildBankLogView,
+  type GuildBoardCategory,
   type GuildLeaderboardPage,
+  type GuildPledgeSettings,
   type GuildRosterInfo,
   type IWorld,
   isOverheadEmoteId,
@@ -217,6 +216,7 @@ import { decodeEntityFlairWire } from './entity_flair_wire';
 import { reanchorDecision } from './entity_reanchor';
 import { applyGroundTelegraphSnapshot } from './ground_telegraph_wire';
 import { GuildBankLogMirror } from './guild_bank_log_mirror';
+import { decodeGuildBoardPage, emptyGuildBoardPage, guildBoardPath } from './guild_board_wire';
 import { foldInputAck } from './input_ack';
 import { INPUT_SEND_TIMER_INTERVAL_MS, inputFlushGateOpen } from './input_send_cadence';
 import { inputSignature } from './input_signature';
@@ -4487,8 +4487,8 @@ export class ClientWorld extends ReconWireState implements IWorld {
   guildPledgeDecide(name: string, accept: boolean): void {
     this.cmd({ cmd: 'guild_pledge_decide', name, accept });
   }
-  setGuildPledgeSettings(enabled: boolean, minLevel: number, note: string): void {
-    this.cmd({ cmd: 'guild_pledge_settings', enabled, minLevel, note });
+  setGuildPledgeSettings(settings: GuildPledgeSettings): void {
+    this.cmd({ cmd: 'guild_pledge_settings', ...settings });
   }
   guildDecline(): void {
     this.cmd({ cmd: 'guild_decline' });
@@ -5221,34 +5221,19 @@ export class ClientWorld extends ReconWireState implements IWorld {
     }
   }
   // Guild high-score board (REST GET, no wire command): ?board=guilds ranks
-  // guilds by summed member lifetime XP. Realm-scoped (default), paged exactly
-  // like the player board above.
+  // guilds by summed member lifetime XP, realm-scoped and paged like the player
+  // board above; `category` narrows it server-side (guild_board_wire.ts).
   async guildLeaderboard(
     page = 0,
     pageSize = LEADERBOARD_PAGE_SIZE,
+    category: GuildBoardCategory | null = null,
   ): Promise<GuildLeaderboardPage> {
-    const empty: GuildLeaderboardPage = {
-      leaders: [],
-      page: 0,
-      pageCount: 1,
-      total: 0,
-      pageSize,
-    };
     try {
-      const res = await fetch(
-        apiUrl(`/api/leaderboard?board=guilds&page=${page}&pageSize=${pageSize}`, this.base),
-      );
-      if (!res.ok) return empty;
-      const data = await res.json();
-      return {
-        leaders: data.leaders ?? [],
-        page: data.page ?? page,
-        pageCount: data.pageCount ?? 1,
-        total: data.total ?? data.leaders?.length ?? 0,
-        pageSize: data.pageSize ?? pageSize,
-      };
+      const res = await fetch(apiUrl(guildBoardPath(page, pageSize, category), this.base));
+      if (!res.ok) return emptyGuildBoardPage(pageSize, category);
+      return decodeGuildBoardPage(await res.json(), page, pageSize);
     } catch {
-      return empty;
+      return emptyGuildBoardPage(pageSize, category);
     }
   }
   // The signpost guild board's roster drill-in (REST GET, no wire command):

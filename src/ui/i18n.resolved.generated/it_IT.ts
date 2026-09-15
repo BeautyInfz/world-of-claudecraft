@@ -1267,6 +1267,8 @@ export const it_IT: EnTranslations = {
       "noteLabel": "Nota della bacheca",
       "notePlaceholder": "Racconta agli aspiranti membri cosa cerca la tua gilda",
       "save": "Salva",
+      "newPlayerFriendlyLabel": "New player friendly",
+      "newPlayerFriendlyHint": "Shown on the recruits' board at the Proving Shore signpost.",
       "yourPledge": "Il tuo giuramento: {guild}",
       "since": "Giurato il {date}",
       "withdraw": "Ritira il giuramento"
@@ -2291,6 +2293,12 @@ export const it_IT: EnTranslations = {
       "linkHint": "Shift-clic per collegare questo oggetto in chat."
     },
     "plurals": {
+      "guildBoardShown": {
+        "one": "{count} guild shown",
+        "few": "{count} guilds shown",
+        "many": "{count} guilds shown",
+        "other": "{count} guilds shown"
+      },
       "commissionMasterworks": {
         "one": "{count} capolavoro",
         "few": "{count} capolavori",
@@ -3822,6 +3830,15 @@ export const it_IT: EnTranslations = {
       "subtitle": "Le gilde del reame",
       "rosterTitle": "Visualizza l'elenco membri di {guild}",
       "back": "Indietro",
+      "filters": "Board filters",
+      "newPlayerFriendly": "New player friendly",
+      "newPlayerFriendlyTitle": "This guild welcomes new players",
+      "filterNewPlayersTitle": "Show only guilds that welcome new players",
+      "filterEmpty": "No guild has opened its doors to new players yet.",
+      "showAll": "Show all guilds",
+      "officersOnline": "Officers online",
+      "officersOnlineLabel": "Officers online: {names}",
+      "officerEntry": "{name} ({rank})",
       "popupTitle": "Cartello della Gilda",
       "close": "Chiudi"
     },

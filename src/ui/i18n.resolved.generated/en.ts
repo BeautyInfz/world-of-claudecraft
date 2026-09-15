@@ -1267,6 +1267,8 @@ export const en: EnTranslations = {
       "noteLabel": "Board note",
       "notePlaceholder": "Tell aspiring members what your guild is looking for",
       "save": "Save",
+      "newPlayerFriendlyLabel": "New player friendly",
+      "newPlayerFriendlyHint": "Shown on the recruits' board at the Proving Shore signpost.",
       "yourPledge": "Your pledge: {guild}",
       "since": "Pledged {date}",
       "withdraw": "Withdraw pledge"
@@ -2291,6 +2293,12 @@ export const en: EnTranslations = {
       "linkHint": "Shift-click to link this item in chat."
     },
     "plurals": {
+      "guildBoardShown": {
+        "one": "{count} guild shown",
+        "few": "{count} guilds shown",
+        "many": "{count} guilds shown",
+        "other": "{count} guilds shown"
+      },
       "commissionMasterworks": {
         "one": "{count} masterwork",
         "few": "{count} masterworks",
@@ -3822,6 +3830,15 @@ export const en: EnTranslations = {
       "subtitle": "Guilds of the realm",
       "rosterTitle": "View the roster of {guild}",
       "back": "Back",
+      "filters": "Board filters",
+      "newPlayerFriendly": "New player friendly",
+      "newPlayerFriendlyTitle": "This guild welcomes new players",
+      "filterNewPlayersTitle": "Show only guilds that welcome new players",
+      "filterEmpty": "No guild has opened its doors to new players yet.",
+      "showAll": "Show all guilds",
+      "officersOnline": "Officers online",
+      "officersOnlineLabel": "Officers online: {names}",
+      "officerEntry": "{name} ({rank})",
       "popupTitle": "Guild Signpost",
       "close": "Close"
     },

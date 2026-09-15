@@ -1267,6 +1267,8 @@ export const pl_PL: EnTranslations = {
       "noteLabel": "Notatka na tablicy",
       "notePlaceholder": "Napisz przyszłym członkom, kogo szuka twoja gildia",
       "save": "Zapisz",
+      "newPlayerFriendlyLabel": "New player friendly",
+      "newPlayerFriendlyHint": "Shown on the recruits' board at the Proving Shore signpost.",
       "yourPledge": "Twoja przysięga: {guild}",
       "since": "Przysięga złożona {date}",
       "withdraw": "Wycofaj przysięgę"
@@ -2291,6 +2293,12 @@ export const pl_PL: EnTranslations = {
       "linkHint": "Kliknij z Shift, aby wstawić link do tego przedmiotu na czacie."
     },
     "plurals": {
+      "guildBoardShown": {
+        "one": "{count} guild shown",
+        "few": "{count} guilds shown",
+        "many": "{count} guilds shown",
+        "other": "{count} guilds shown"
+      },
       "commissionMasterworks": {
         "one": "{count} mistrzowsko kuty przedmiot",
         "few": "{count} mistrzowsko kute przedmioty",
@@ -3822,6 +3830,15 @@ export const pl_PL: EnTranslations = {
       "subtitle": "Gildie królestwa",
       "rosterTitle": "Zobacz skład gildii {guild}",
       "back": "Wstecz",
+      "filters": "Board filters",
+      "newPlayerFriendly": "New player friendly",
+      "newPlayerFriendlyTitle": "This guild welcomes new players",
+      "filterNewPlayersTitle": "Show only guilds that welcome new players",
+      "filterEmpty": "No guild has opened its doors to new players yet.",
+      "showAll": "Show all guilds",
+      "officersOnline": "Officers online",
+      "officersOnlineLabel": "Officers online: {names}",
+      "officerEntry": "{name} ({rank})",
       "popupTitle": "Tablica gildii",
       "close": "Zamknij"
     },

@@ -7,6 +7,7 @@
 // accepting (the feature's default), no open pledges, tier 0, no standing
 // pledge. The friend/block/ignore lists default to empty for the same reason.
 import type { SocialInfo } from '../world_api';
+import { decodeGuildPledgeSettings } from './guild_board_wire';
 
 /** The `social` frame as it arrives (loosely typed at the trust boundary). */
 export interface SocialFrameLike {
@@ -24,7 +25,7 @@ export function socialInfoFromFrame(msg: SocialFrameLike): SocialInfo {
   const guild = msg.guild
     ? {
         ...msg.guild,
-        pledgeSettings: msg.guild.pledgeSettings ?? { enabled: true, minLevel: 1, note: '' },
+        pledgeSettings: decodeGuildPledgeSettings(msg.guild.pledgeSettings),
         pledges: msg.guild.pledges ?? [],
         tier: msg.guild.tier ?? 0,
       }

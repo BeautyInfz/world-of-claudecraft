@@ -1267,6 +1267,8 @@ export const de_DE: EnTranslations = {
       "noteLabel": "Pinnwandnotiz",
       "notePlaceholder": "Erzähl angehenden Mitgliedern, wonach deine Gilde sucht",
       "save": "Speichern",
+      "newPlayerFriendlyLabel": "New player friendly",
+      "newPlayerFriendlyHint": "Shown on the recruits' board at the Proving Shore signpost.",
       "yourPledge": "Dein Gelöbnis: {guild}",
       "since": "Gelobt am {date}",
       "withdraw": "Gelöbnis zurückziehen"
@@ -2291,6 +2293,12 @@ export const de_DE: EnTranslations = {
       "linkHint": "Umschalt-Klick, um diesen Gegenstand im Chat zu verlinken."
     },
     "plurals": {
+      "guildBoardShown": {
+        "one": "{count} guild shown",
+        "few": "{count} guilds shown",
+        "many": "{count} guilds shown",
+        "other": "{count} guilds shown"
+      },
       "commissionMasterworks": {
         "one": "{count} Meisterwerk",
         "few": "{count} Meisterwerke",
@@ -3822,6 +3830,15 @@ export const de_DE: EnTranslations = {
       "subtitle": "Gilden des Reichs",
       "rosterTitle": "Die Mitgliederliste von {guild} ansehen",
       "back": "Zurück",
+      "filters": "Board filters",
+      "newPlayerFriendly": "New player friendly",
+      "newPlayerFriendlyTitle": "This guild welcomes new players",
+      "filterNewPlayersTitle": "Show only guilds that welcome new players",
+      "filterEmpty": "No guild has opened its doors to new players yet.",
+      "showAll": "Show all guilds",
+      "officersOnline": "Officers online",
+      "officersOnlineLabel": "Officers online: {names}",
+      "officerEntry": "{name} ({rank})",
       "popupTitle": "Gilden-Wegweiser",
       "close": "Schließen"
     },
