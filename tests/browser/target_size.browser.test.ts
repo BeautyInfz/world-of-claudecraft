@@ -568,10 +568,14 @@ describe('desktop target-size: dense list controls clear the >=24px SC 2.5.8 flo
   });
 
   it('social tabs', () => {
-    const tab = el('button', { class: 'soc-tab' });
+    // Shipped markup: social_window mints 'soc-tab ui-tab', and the height that
+    // clears the floor is the library's --tab-h. A bare .soc-tab has kept only
+    // geometry since the tab look moved onto .ui-tab, so it would measure a
+    // padding box no shipped control ever renders.
+    const tab = el('button', { class: 'soc-tab ui-tab' });
     tab.textContent = 'Friends';
     document.body.appendChild(tab);
-    expectAtLeastDesktopFloor(tab, '.soc-tab');
+    expectAtLeastDesktopFloor(tab, '.soc-tab.ui-tab');
   });
 
   it('the guild board presence dot clears the 24px floor around its 10px visual', () => {

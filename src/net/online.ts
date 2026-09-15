@@ -209,6 +209,7 @@ import {
   type DesktopWalletStatus,
   parseDesktopWalletHandoffStatus,
 } from './desktop_wallet_handoff';
+import { pruneMissingEntities } from './despawn_grace';
 import { dungeonEntrySnapshotFacing } from './dungeon_entry_facing';
 import { decodeEntityFlairWire } from './entity_flair_wire';
 import { reanchorDecision } from './entity_reanchor';
@@ -1258,6 +1259,7 @@ export class ClientWorld extends ReconWireState implements IWorld {
   // of the roster data. ---
   cfg: { seed: number; playerClass: PlayerClass };
   entities = new Map<number, Entity>();
+  entityRosterVersion = 0;
   playerId = -1;
   private ownPlayerId = -1;
   private readonly ownPlayerClass: PlayerClass;
@@ -2736,6 +2738,7 @@ export class ClientWorld extends ReconWireState implements IWorld {
         e.facing = w.f;
         e.prevFacing = w.f;
         this.entities.set(w.id, e);
+        this.entityRosterVersion++;
       }
       if (hasIdentity) {
         e.kind = w.k;
@@ -3441,37 +3444,17 @@ export class ClientWorld extends ReconWireState implements IWorld {
     // grace applies only near/beyond the interest boundary; a close-range
     // disappearance (an enemy going stealth) still hides immediately.
     // (A `keep`-listed entity counts as seen above, so its timer is cleared.)
-    const self = this.entities.get(this.playerId);
-    const missingSince = this.missingSince;
-    for (const [id, e] of this.entities) {
-      if (id === this.playerId) continue;
-      // Keep the moderator's last own-self record while a different player is
-      // presented as self. The spectate-clear frame can then restore the original
-      // identity immediately instead of exposing a blank entity before the next
-      // server snapshot arrives.
-      if (typeof this.spectating === 'string' && id === this.ownPlayerId) {
-        missingSince.delete(id);
-        continue;
-      }
-      if (seen.has(id)) {
-        missingSince.delete(id);
-        continue;
-      }
-      const dx = self ? e.pos.x - self.pos.x : 0;
-      const dz = self ? e.pos.z - self.pos.z : 0;
-      if (dx * dx + dz * dz < DESPAWN_GRACE_MIN_DIST_SQ) {
-        this.entities.delete(id);
-        missingSince.delete(id);
-        continue;
-      }
-      const since = missingSince.get(id);
-      if (since === undefined) {
-        missingSince.set(id, now);
-      } else if (now - since >= DESPAWN_GRACE_MS) {
-        this.entities.delete(id);
-        missingSince.delete(id);
-      }
-    }
+    this.entityRosterVersion += pruneMissingEntities({
+      entities: this.entities,
+      seen,
+      missingSince: this.missingSince,
+      playerId: this.playerId,
+      ownPlayerId: this.ownPlayerId,
+      spectating: this.spectating,
+      now,
+      graceMs: DESPAWN_GRACE_MS,
+      immediateDropDistSq: DESPAWN_GRACE_MIN_DIST_SQ,
+    });
   }
 
   // -----------------------------------------------------------------------

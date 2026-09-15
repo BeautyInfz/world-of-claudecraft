@@ -294,6 +294,7 @@ function makeFakeHost() {
     get entities() {
       return entities;
     },
+    entityRosterVersion: 0,
     players: new Map(),
     masteryResetNoticeCounter: { pending: 0 },
     stationPlacements: [],

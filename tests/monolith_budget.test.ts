@@ -99,7 +99,14 @@ const MONOLITHS: MonolithRow[] = [
     // wiring, the wallet re-arm, and the scroll-after-focus ordering. The
     // review round (the hold's lazy first-render attach, the no-rung scroll
     // carve-out) fits inside the same count. Exact count, zero slack.
-    ceiling: 2475,
+    // Down 2475 -> 2419 at the Sales History tab: the browse detail pane
+    // (detailPaneHtml/bidFormHtml/confirmFieldsHtml) moved to
+    // src/ui/woc_market_detail_html.ts (the activity-html precedent), and the
+    // new tab's own table markup lives in src/ui/woc_market_sales_html.ts, so
+    // the fourth tab's window glue landed under the old ceiling (net of the
+    // v0.43.0 sync merge, which trimmed overlapping browse markup). Exact
+    // count, zero slack.
+    ceiling: 2419,
     seam: 'a pure view-core module beside it (src/ui/woc_market_view.ts) that this window renders from',
   },
   {
@@ -443,12 +450,12 @@ const MONOLITHS: MonolithRow[] = [
     // The aura-tracks release sync (186dd8fe7f) composes its system-text
     // extraction with the OSSBrain long-press and tooltip modules. The
     // measured combined count is below both parent pins (18574 / 18489).
-    // Compose the mount cosmetics and practice lesson extractions.
-    // Measured combined size; retain zero headroom after the release merge.
-    // LOWERED for the coin-icon money readout extraction (moneyHtml moved out
-    // to src/ui/money_html.ts so the social tab's roster confirm shares it);
-    // the coordinator keeps three one-line deps wirings. Exact count, zero slack.
-    ceiling: 18461,
+    // Re-measured at the release/v0.43.0 sync: the review-fix batches
+    // and the release's own extractions both landed; wc -l on the merged tree.
+    // LOWERED 18352 -> 18350 in the review-fix round: the prompt countdown bar
+    // moved to createPromptTimeoutBar in src/ui/prompt_dialog.ts alongside the
+    // PROMPT_TIMEOUT_MS the sheet's --prompt-timeout-dur mirrors.
+    ceiling: 18350,
     seam: 'pure view core + thin painter on PainterHost (src/ui/CLAUDE.md)',
   },
   {
@@ -460,7 +467,11 @@ const MONOLITHS: MonolithRow[] = [
     // release-side import/export panel composed with the batch settings rows.
     // Measured with wc -l on the merged tree. Exact count, zero headroom.
     file: 'src/ui/options_window.ts',
-    ceiling: 2843,
+    // LOWERED 2955 -> 2840 on the redesign review: the Interface panel's three
+    // bespoke rows (the chat timestamp pair, the chat-window reset, the Unlock
+    // Interface action) moved to src/ui/options_interface_rows.ts. Exact count,
+    // zero slack.
+    ceiling: 2840,
     seam: 'a pure view model (src/ui/options_view.ts) painted with the shared settings_controls.ts builders; sub-panels as sibling modules',
   },
   {
@@ -840,7 +851,10 @@ const MONOLITHS: MonolithRow[] = [
     // Measured after formatting; lower the ratchet with the extraction.
     // Mount skins: bank the coordinator extraction at its measured size.
     // Restored per-ability resurrection school lookup removes one line.
-    ceiling: 12851,
+    // CPU-hygiene review: the ranked and required view candidates share the
+    // scan module's liveViewCandidate check (present, view-less, admitted),
+    // which drops the coordinator's own admission call. Exact count.
+    ceiling: 12850,
     seam: 'a new src/render/<thing>.ts module the renderer calls (src/render/CLAUDE.md)',
   },
   {
@@ -1013,7 +1027,11 @@ const MONOLITHS: MonolithRow[] = [
     // measures 11923, below both arms, so the ceiling follows it down. Exact
     // merged count, zero slack: any further growth reds again.
     // Main hotfix integration: combined extractions, exact merged count.
-    ceiling: 11879,
+    // Down 11879 -> 11857 at the CPU-hygiene lot: the rift floor descriptor
+    // builder moved to src/sim/rift/rift_floor_view.ts, and the lot's own
+    // addition (the entityRosterVersion field plus its SimContext binding)
+    // landed under the old count. Exact count, zero slack.
+    ceiling: 11857,
     seam: 'a sim system module behind SimContext (src/sim/CLAUDE.md)',
   },
   {
@@ -1208,7 +1226,11 @@ const MONOLITHS: MonolithRow[] = [
     // Measured after formatting; lower the ratchet with the extraction.
     // Compose the mount cosmetics and practice lesson extractions.
     // Measured combined size; retain zero headroom after the release merge.
-    ceiling: 11332,
+    // Weapon-coat amounts now share src/ui/ability_imbue_text.ts with live tooltips.
+    // Re-measured at the release/v0.43.0 sync that brought PR 3778 in: the
+    // release count 11327 minus the redesign's own 6 extracted lines = 11321
+    // (exact wc -l on the merged tree, zero headroom).
+    ceiling: 11321,
     seam: 'a src/game/ or src/ui/ sibling module; main.ts is a firewall, not a home',
   },
   {
@@ -1568,10 +1590,10 @@ const MONOLITHS: MonolithRow[] = [
     // OSSBrain integration: entity flair decoding moved to net/entity_flair_wire.ts.
     // Measured after formatting; lower the ratchet with the extraction.
     // Main hotfix integration: combined extractions, exact merged count.
-    // Guild board categories: the board path builder, the page decode and
-    // the pledge-settings frame decode moved to src/net/guild_board_wire.ts.
-    // Exact count.
-    ceiling: 5532,
+    // Down 5540 -> 5523 at the CPU-hygiene lot: the interest-boundary despawn
+    // grace moved to src/net/despawn_grace.ts, and the lot's entityRosterVersion
+    // field and bumps landed under the old count. Exact count, zero slack.
+    ceiling: 5523,
     seam: 'a src/net sibling module (the refactor/net-online split is the template)',
   },
   {
@@ -1781,7 +1803,11 @@ const MONOLITHS: MonolithRow[] = [
     // Re-pinned to the exact merged count of the OSSBrain v0.41.0 base
     // merge: both parents had already ratcheted for their own work, so
     // the composite is the honest size. Exact count, zero slack.
-    ceiling: 3945,
+    // Down 3945 -> 3943 at the Sales History tab: the sale/query/seller read
+    // types moved to woc_market_sale_types.ts (the economy-types leaf
+    // pattern), which more than paid for the realmSalesHistory read added
+    // here. Measured on the v0.43.0-rebased tree. Exact count, zero slack.
+    ceiling: 3943,
     seam: 'a woc_market_<thing>.ts sibling behind WocMarketDeps (the drift-warn split is the template)',
   },
   {
@@ -2087,7 +2113,10 @@ const MONOLITHS: MonolithRow[] = [
     // another method cluster here.
     file: 'src/ui/hud/professions/professions_window.ts',
     // Harvest entry chrome and bindings now live in a sibling controller.
-    ceiling: 836,
+    // LOWERED 847 -> 824 on the redesign review: the craft row's role and
+    // ceiling chip labels and its next-unlock line moved to
+    // src/ui/hud/professions/craft_row_labels.ts. Exact count, zero slack.
+    ceiling: 824,
     seam: 'a pure view-core plus a thin painter sibling (src/ui/hud/CLAUDE.md)',
   },
   {
@@ -2100,7 +2129,10 @@ const MONOLITHS: MonolithRow[] = [
     // apex-channel-to-translation-key table moved to apex_recipe_view.ts.
     // Exact count, zero slack.
     file: 'src/ui/hud/professions/crafting_window.ts',
-    ceiling: 766,
+    // LOWERED 771 -> 747 on the redesign review: the difficulty label table and
+    // the cast-duration chip text moved to
+    // src/ui/hud/professions/craft_row_chip_text.ts. Exact count, zero slack.
+    ceiling: 747,
     seam: 'a pure view-core plus a thin painter sibling (src/ui/hud/CLAUDE.md)',
   },
 ];

@@ -363,6 +363,7 @@ describe('classifyDiff', () => {
       'src/sim/combat/stealth_focus.ts',
       'src/sim/combat/auto_attack.ts',
       'src/sim/combat/poison_coating.ts',
+      'src/ui/ability_imbue_text.ts',
     ]) {
       const plan = classifyDiff([file]);
       expect(
@@ -377,6 +378,7 @@ describe('classifyDiff', () => {
       'melting-acid',
       'instant-poison',
       'deadly-poison',
+      'deadly-poison-mobile',
       'nightshade-coating',
       'sap',
       'eye-jab',
@@ -668,7 +670,7 @@ describe('classifyDiff', () => {
     expect(windowSrc).toContain('aria-disabled="true"');
     expect(script).toContain("getAttribute('aria-disabled') === 'true'");
     expect(script).toContain("getAttribute('aria-pressed') === 'true'");
-    expect(windowSrc).toContain('class="reliquary-page-row" data-page=');
+    expect(windowSrc).toContain('class="reliquary-page-row ui-card" data-page=');
     expect(script).toContain('.reliquary-page-row');
     // And the routing: both halves of the tracker pair reach the target.
     for (const path of [
