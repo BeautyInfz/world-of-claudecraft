@@ -279,7 +279,7 @@ containers.
 
 This acceptance covers BOTH audiences, not just the sheet: the entity-wire
 standing below is bank-inclusive through the same seam
-(`refreshCuratorStanding` scores `characterReliquaryOwnership`, whose mount
+(`refreshCuratorStanding` scores `accountReliquaryOwnership`, whose mount
 surface is live `ownedMounts`), so everyone within interest radius receives
 the same bank-derived aggregate the sheet publishes. Because reins trade like
 any item, borrowed reins raise the broadcast standing until the next sweep
@@ -353,6 +353,16 @@ Overview note say so at rank 5, and every LIVE border deed unlock logs a wear hi
 back-credits (the on-join catch-up) log no hint at all, by the same rule that
 keeps them free of banners and celebration audio; the pure unlock plan is what
 draws that line, and `tests/deeds_view.test.ts` pins it.
+
+The whole family is account-wide. A rank bridge, a completion-ladder deed,
+or an Illumination is decided over the account union
+(`accountReliquaryOwnership`, the one ownership read every grant path uses)
+and granted to every character on the account, each recorded as an earner
+in its own right: the finder in its fill chain, a live sibling in the same
+tick (`syncAccountRelicGrants`, driven by the server's ledger fan-out), an
+offline alt at its next join. The model, the maintainer ruling behind it, and
+the tests that pin it are recorded once in `docs/design/deeds.md`, "The
+account ledger"; this section does not restate them.
 
 First-ever page Illumination is a persisted, sticky record
 (`illuminatedPages` on the reliquary blob, once per durable record): the
@@ -462,11 +472,6 @@ evaluated over the ownership options.
     - Rule 1 still binds: counts feed no completion, rank, drop rate, deed,
       or reward. They are shown, and nothing consumes them.
 - Power rewards, pity timers, or drop-rate buffs for incomplete pages.
-- Account-wide GRANTS: no longer deferred, SHIPPED by maintainer ruling (following jgyy's
-  PR #3933). A rank bridge, completion-ladder, or illumination deed is decided
-  over the account union and granted to every character on the account, each
-  recorded as an earner (`syncAccountRelicGrants` in `src/sim/reliquary.ts`;
-  the model is stated in `docs/design/deeds.md`, "The account ledger").
 - Housing museum props (no housing system yet).
 - A per-character third-party API. Still deferred: no endpoint may serve one
   character's Reliquary state beyond the existing public sheet fields.

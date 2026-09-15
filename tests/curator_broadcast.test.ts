@@ -34,9 +34,9 @@ import { pool } from '../server/db';
 import { type ClientSession, GameServer } from '../server/game';
 import { RELIQUARY_PAGES } from '../src/sim/content/reliquary';
 import {
+  accountReliquaryOwnership,
   CURATOR_RANK_THRESHOLDS,
   catalogCharacterCompletion,
-  characterReliquaryOwnership,
   curatorRankFromOwned,
 } from '../src/sim/reliquary';
 import type { PlayerClass } from '../src/sim/types';
@@ -521,7 +521,7 @@ describe('GameServer.refreshCuratorStanding (real ownership resolution)', () => 
     // independent page-table walk above, which is what catches a refresher
     // that swapped in a different helper agreeing with itself.
     const meta = server.sim.meta(session.pid)!;
-    expect(e.relicsTotal).toBe(catalogCharacterCompletion(characterReliquaryOwnership(meta)).total);
+    expect(e.relicsTotal).toBe(catalogCharacterCompletion(accountReliquaryOwnership(meta)).total);
     expect(e.relicsTotal).toBe(characterScopedTotalByWalk());
     expect(e.relicsTotal).toBeGreaterThan(1);
   });
@@ -550,7 +550,7 @@ describe('GameServer.refreshCuratorStanding (real ownership resolution)', () => 
     (server as any).refreshCuratorStanding(session);
     const e = server.sim.entities.get(session.pid)!;
     const meta = server.sim.meta(session.pid)!;
-    const expected = catalogCharacterCompletion(characterReliquaryOwnership(meta));
+    const expected = catalogCharacterCompletion(accountReliquaryOwnership(meta));
     expect(e.relicsOwned).toBe(expected.owned);
     expect(e.relicsTotal).toBe(expected.total);
     expect(e.curatorRank).toBe(curatorRankFromOwned(expected.owned));
@@ -611,7 +611,7 @@ describe('GameServer.refreshCuratorStanding (real ownership resolution)', () => 
     // relic scores too, so the true owned count is the ten finds PLUS whatever
     // that pass granted. What this asserts is that join stamped the character's
     // WHOLE live ownership, not that the catalog has a particular size.
-    const expected = catalogCharacterCompletion(characterReliquaryOwnership(meta));
+    const expected = catalogCharacterCompletion(accountReliquaryOwnership(meta));
     expect(expected.owned).toBeGreaterThanOrEqual(10);
     expect(e.relicsOwned).toBe(expected.owned);
     expect(e.relicsTotal).toBe(expected.total);

@@ -238,17 +238,27 @@ account ledger (`src/sim/account_ledger.ts`), and its scope model is fixed:
   is decided from the acting character's own state, so its earners all did
   the thing themselves. The Reliquary-derived deeds (Curator rank bridges,
   the completion ladder, Illumination) are the exception, by maintainer
-  ruling and matching jgyy's PR #3933: they are decided over the ACCOUNT
-  union (`characterReliquaryOwnership` returns it) and granted to every
-  character on the account. The character whose find tipped the read earns
-  them in its fill chain, a live sibling in the same tick
-  (`syncAccountRelicGrants`, re-run by the server fan-out when a sibling's
-  ledger grows), and an offline alt at its next join (the join retro,
-  retro-flagged, no live banner). Each recipient is recorded as an earner in
-  its own right, so the card lists every character that holds the deed.
-  A relic an alt already found moves no rank count when this character finds
-  it too, so no rank crossing is faked (`tests/account_ledger_sim.test.ts`,
-  `tests/account_ledger_wire.test.ts`).
+  ruling (recorded on the review thread of
+  [PR #3978](https://github.com/levy-street/world-of-claudecraft/pull/3978),
+  matching jgyy's PR #3933): they are decided over the ACCOUNT union
+  (`accountReliquaryOwnership`, the ONE ownership read every grant path
+  uses) and granted to every character on the account. The character whose
+  find tipped the read earns them in its fill chain, live (the one
+  celebration: its banner, guild marquee, and feed card). A live sibling
+  receives them in the same tick (`syncAccountRelicGrants`, re-run by the
+  server fan-out when the sibling's ledger gains a relic or a Horizons title
+  deed, the only growth that can move a rank or completion read) and an
+  offline alt at its next join (`retroFallbackGrants`, whose rank, ladder,
+  and illumination syncs read the union); both of those grants are
+  retro-flagged, so neither banners nor marquees a find another character
+  made. Each recipient is recorded as an earner in its own right, so the
+  card lists every character that holds the deed. A relic an alt already
+  found moves no rank count when this character finds it too, so no rank
+  crossing is faked (`tests/account_ledger_sim.test.ts`,
+  `tests/account_ledger_wire.test.ts`, `tests/server/account_ledger_service.test.ts`).
+  A sibling's first own relic on a page an alt completed mid-session does
+  illuminate the page for the sibling (the join sweep folds a page completed
+  before the join in silently); pinned in `tests/reliquary_state.test.ts`.
 - **The display lane is account-wide.** The Book's earned state, header pair,
   category counts, Renown, recent strip, and the title and border pickers all
   read the union of `deedsEarned` and the ledger (`IWorldDeeds.accountDeeds`),

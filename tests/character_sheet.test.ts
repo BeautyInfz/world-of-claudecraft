@@ -764,4 +764,14 @@ describe('characterSheet: the Reliquary pair reads the account ledger', () => {
     expect(sheet.reliquary.owned).toBe(1);
     expect(characterSheet(input({ visibility: 'public' })).reliquary.owned).toBe(0);
   });
+
+  it('accepts the ids-only Sets view the public handlers pass (accountLedgerKeysFor)', () => {
+    // The /c/ page and both JSON sheets hand in AccountLedgerKeys (two Sets of
+    // ids, no earner detail), not the join-time Maps ledger: membership is
+    // all the pair needs, and this pins the key format the cache serves.
+    const keys = { deeds: new Set<string>(), relics: new Set(['item:cryptbone_helm']) };
+    const sheet = characterSheet(input({ visibility: 'public', accountLedger: keys }));
+    expect(sheet.reliquary.owned).toBe(1);
+    expect(sheet.reliquary.curatorRank).toBe(1);
+  });
 });

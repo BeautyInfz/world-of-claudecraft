@@ -34,7 +34,7 @@ import { pointsSpent } from './content/talents';
 import { ITEMS, MOBS, zoneAt } from './data';
 import { LAUNCH_PAPERDOLL_SLOTS } from './launch_paperdoll_slots';
 import {
-  characterReliquaryOwnership,
+  accountReliquaryOwnership,
   isHorizonsTitleDeed,
   maybeSyncCuratorRankDeeds,
   noteReliquaryMark,
@@ -776,8 +776,8 @@ export function grantDeed(
   if (meta.deedsEarned.has(deedId)) return false;
   meta.deedsEarned.set(deedId, ctx.utcDay);
   // The account ledger lists this character among the deed's earners from the
-  // same stamp (src/sim/account_ledger.ts): the display lane reads the union,
-  // the grant lane above stays character-scoped.
+  // same stamp (src/sim/account_ledger.ts): both books and the Reliquary grant
+  // lane read the union; every other deed's evaluator stays character-scoped.
   recordAccountDeed(meta.accountLedger, deedId, selfEarner(meta, ctx.utcDay));
   meta.renown += def.renown;
   const legacy = MILESTONE_DEED_TO_LEGACY[deedId];
@@ -805,7 +805,7 @@ export function grantDeed(
     // grantDeed and this hook builds a fresh snapshot for its own level, so
     // a full ladder cascade builds a handful of snapshots. Bounded by the
     // ladder depth and once-ever per character; accepted.
-    const titleOwnership = characterReliquaryOwnership(meta);
+    const titleOwnership = accountReliquaryOwnership(meta);
     const retroOpts = opts?.retro ? ({ retro: true } as const) : undefined;
     maybeSyncCuratorRankDeeds(ctx, meta, retroOpts, titleOwnership);
     // A title relic earned ANYWHERE (a pvp title as the last missing relic)
@@ -1499,7 +1499,7 @@ export function retroFallbackGrants(ctx: SimContext, meta: PlayerMeta, player: E
   // ONE ownership snapshot for the three syncs below (deed surface live, so
   // each sync sees the grants of the one before it; a join would otherwise
   // scan inventory + bank once per sync).
-  const joinOwnership = characterReliquaryOwnership(meta);
+  const joinOwnership = accountReliquaryOwnership(meta);
   syncCuratorRankDeeds(ctx, meta, { retro: true }, joinOwnership);
   // Phase 18 completion ladder, retro-flagged like the rank bridges: a
   // veteran who finished a flagship page, the Conquerors shelf, or the whole

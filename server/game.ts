@@ -1601,7 +1601,7 @@ export class GameServer {
   private readonly ledger = new AccountLedgerService({
     sim: () => this.sim,
     sessions: () => this.clients.values(),
-    syncAccountGrants: (pid) => syncAccountRelicGrants(this.sim.ctx, this.sim.meta(pid)),
+    syncGrants: (pid, opts) => syncAccountRelicGrants(this.sim.ctx, this.sim.meta(pid), opts),
   });
   private readonly bankVaultLedgerGuardCoordinator: BankVaultLedgerGuardCoordinator =
     createBankVaultLedgerGuardCoordinator(() => Date.now() / 1000, {

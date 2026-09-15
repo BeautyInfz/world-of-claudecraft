@@ -1,12 +1,14 @@
 // The account ledger inside the sim (src/sim/account_ledger.ts wired through
 // deeds.ts, reliquary.ts, and sim.ts): the grant paths append the acting
 // character, the relicRecorded event fires once per (relic, character), the
-// title/border validators accept an alt's deed, the display-lane reads union
-// the ledger while the GRANT lane stays character-scoped, and the join seed
-// lists the restored character for what its blob proves.
+// title/border validators accept an alt's deed, both the display lane and the
+// Reliquary grant lane read the account union (the model recorded in
+// docs/design/deeds.md, "The account ledger"), and the join seed lists the
+// restored character for what its blob proves.
 import { describe, expect, it } from 'vitest';
 import {
   type AccountEarner,
+  type AccountLedger,
   accountRelicKey,
   freshAccountLedger,
   recordAccountDeed,
@@ -20,7 +22,7 @@ import {
   accountReliquaryOwnership,
   CURATOR_RANK_DEFS,
   catalogRankOwned,
-  characterReliquaryOwnership,
+  curatorRankFromOwned,
   noteReliquaryMark,
   pageCompletion,
   RELIQUARY_PAGES_BY_ID,
@@ -171,8 +173,7 @@ describe('both lanes read the account union: display, and the Reliquary-derived 
     expect(sim.reliquaryAccountFinds.get('item:cryptbone_helm')).toEqual([ALT]);
     // The character's own discovery set is untouched: the union, never a copy.
     expect(meta.deedStats.itemsDiscovered.has(CATALOGUE_RELIC)).toBe(false);
-    // Both ownership reads are the same union now (the maintainer ruling).
-    expect(catalogRankOwned(characterReliquaryOwnership(meta))).toBe(1);
+    // The one ownership read every grant path uses is that same union.
     expect(catalogRankOwned(accountReliquaryOwnership(meta))).toBe(1);
   });
 
@@ -191,7 +192,7 @@ describe('both lanes read the account union: display, and the Reliquary-derived 
     // primary's facet) completes the page.
     const page = pageCompletion(
       RELIQUARY_PAGES_BY_ID[FLAGSHIP_PAGE],
-      characterReliquaryOwnership(meta),
+      accountReliquaryOwnership(meta),
     );
     expect(page.complete).toBe(true);
     // The join retro granted the Illumination deed to this character too, and
@@ -254,26 +255,47 @@ describe('both lanes read the account union: display, and the Reliquary-derived 
     expect((evs[0] as { retro?: boolean }).retro).toBeUndefined();
   });
 
-  it('a relic an alt already holds does not fake a rank crossing when this character finds it too', () => {
-    // Eight alt-found relics (the page one short of complete, so no ladder
-    // title moves the count) put the account at Curator rank 1; this
-    // character finding one of the SAME eight moves no count, so no rank-up
-    // rides the unlock event and no deed lands.
+  /** Seed `count` catalogued item relics onto the ledger as the alt's finds,
+   *  drawn from Thunzharr minus its last relic (so the flagship page stays one
+   *  short and no ladder title moves the count) and then from the Hollow Crypt
+   *  uniques (a page far too large for two fills to complete). Returns the
+   *  seeded relics in order. */
+  function seedAltItemFinds(meta: { accountLedger: AccountLedger }, count: number) {
+    const thunzharr = RELIQUARY_PAGES_BY_ID[FLAGSHIP_PAGE].relics.slice(0, -1);
+    const crypt = RELIQUARY_PAGES_BY_ID[PAGE_ID].relics;
+    const pool = [...thunzharr, ...crypt].filter(
+      (r): r is Extract<typeof r, { kind: 'item' }> => r.kind === 'item',
+    );
+    expect(pool.length).toBeGreaterThan(count);
+    expect(crypt.length - (count - thunzharr.length)).toBeGreaterThan(1);
+    const seeded = pool.slice(0, count);
+    for (const relic of seeded) {
+      recordAccountRelic(meta.accountLedger, accountRelicKey('item', relic.itemId), ALT);
+    }
+    return seeded;
+  }
+
+  it('a relic an alt already holds does not fake a rank crossing when this character finds it too (item path)', () => {
+    // Ten alt-found relics put the account at Curator rank 2 (threshold 10)
+    // with no page complete. This character finding one of the SAME ten moves
+    // no count, so no rank-up rides the unlock event and no bridge lands.
+    // DECISIVE: without the alreadyOnAccount guard the item path reads the
+    // prior count as nine, reports a rank 1 to 2 crossing on the event, and
+    // grants col_reliquary_rank_2.
     const { sim, meta } = makeSim();
     sim.tick();
-    const relics = RELIQUARY_PAGES_BY_ID[FLAGSHIP_PAGE].relics.slice(0, -1);
-    for (const relic of relics) {
-      if (relic.kind === 'item') {
-        recordAccountRelic(meta.accountLedger, accountRelicKey('item', relic.itemId), ALT);
-      }
-    }
-    const first = relics[0];
-    if (first.kind !== 'item') throw new Error('expected an item relic');
-    const before = catalogRankOwned(characterReliquaryOwnership(meta));
-    expect(before).toBe(relics.length);
+    const seeded = seedAltItemFinds(meta, 10);
+    const first = seeded[0];
+    expect(sim.reliquaryPageCompletion(FLAGSHIP_PAGE)?.complete).toBe(false);
+    expect(sim.reliquaryPageCompletion(PAGE_ID)?.complete).toBe(false);
+    expect(catalogRankOwned(accountReliquaryOwnership(meta))).toBe(10);
+    expect(curatorRankFromOwned(10)).toBe(2);
+    expect(curatorRankFromOwned(9)).toBe(1);
+    expect(meta.deedsEarned.has('col_reliquary_rank_2')).toBe(false);
     const deedsBefore = meta.deedsEarned.size;
     markItemDiscovered(sim.ctx, meta, first.itemId);
-    expect(catalogRankOwned(characterReliquaryOwnership(meta))).toBe(before);
+    expect(catalogRankOwned(accountReliquaryOwnership(meta))).toBe(10);
+    expect(meta.deedsEarned.has('col_reliquary_rank_2')).toBe(false);
     expect(meta.deedsEarned.size).toBe(deedsBefore);
     // This character is now the relic's SECOND finder on the ledger.
     expect(
@@ -284,6 +306,34 @@ describe('both lanes read the account union: display, and the Reliquary-derived 
     const unlock = sim
       .tick()
       .find((ev) => ev.type === 'reliquaryUnlock' && ev.itemId === first.itemId) as
+      | { curatorRank?: number }
+      | undefined;
+    expect(unlock).toBeDefined();
+    expect(unlock?.curatorRank).toBeUndefined();
+  });
+
+  it('the mark path twin: a mark an alt already holds does not fake a rank crossing either', () => {
+    // Nine account-held fills INCLUDING the mark: noteReliquaryMark reads its
+    // prior count before the add (nine either way), so without the guard the
+    // post-add count would read ten and cross into rank 2. With it, a mark the
+    // account already holds adds nothing.
+    const { sim, meta } = makeSim();
+    sim.tick();
+    seedAltItemFinds(meta, 8);
+    recordAccountRelic(meta.accountLedger, accountRelicKey('mark', MARK_ID), ALT);
+    expect(catalogRankOwned(accountReliquaryOwnership(meta))).toBe(9);
+    expect(meta.deedsEarned.has('col_reliquary_rank_2')).toBe(false);
+    const deedsBefore = meta.deedsEarned.size;
+    expect(noteReliquaryMark(sim.ctx, meta, MARK_ID)).toBe(true);
+    expect(catalogRankOwned(accountReliquaryOwnership(meta))).toBe(9);
+    expect(meta.deedsEarned.has('col_reliquary_rank_2')).toBe(false);
+    expect(meta.deedsEarned.size).toBe(deedsBefore);
+    expect(
+      meta.accountLedger.relics.get(accountRelicKey('mark', MARK_ID))?.map((e) => e.characterId),
+    ).toEqual([99, 0]);
+    const unlock = sim
+      .tick()
+      .find((ev) => ev.type === 'reliquaryUnlock' && ev.markId === MARK_ID) as
       | { curatorRank?: number }
       | undefined;
     expect(unlock).toBeDefined();

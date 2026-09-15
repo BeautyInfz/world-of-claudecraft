@@ -199,17 +199,33 @@ describe('account ledger over the wire', () => {
     markItemDiscovered(sim.ctx, metaA, last.itemId);
     // Hilda's own fill chain granted her the deed at once...
     expect(metaA.deedsEarned.has(FLAGSHIP_DEED)).toBe(true);
-    tickThrough(server); // ...and the fan-out's grant sync gave it to Bram
+    const hildaTick = tickThrough(server); // ...and the fan-out's grant sync gave it to Bram
     expect(metaB.deedsEarned.has(FLAGSHIP_DEED)).toBe(true);
-    tickThrough(server); // Bram's grant fans back so both ledgers list both
-    for (const meta of [metaA, metaB]) {
-      expect(
-        meta.accountLedger.deeds
-          .get(FLAGSHIP_DEED)
-          ?.map((e) => e.characterId)
-          .sort(),
-      ).toEqual([42, 43]);
-    }
+    const bramTick = tickThrough(server); // Bram's grant fans back so both ledgers list both
+    // Both ledgers list both, each in the order its own session saw the
+    // grants land (no sort, so the order is a pinned fact, not a wish). On
+    // Hilda's: her own append, then Bram's entry from his fan-out. On Bram's:
+    // his own grant FIRST, because it rode the relic fan-out (Hilda's find
+    // reached his ledger, the union read the page complete, and his ladder
+    // granted) before her deed entry was fanned out in the same routing pass;
+    // Hilda's copy then follows. A relog reads the table's own order.
+    expect(metaA.accountLedger.deeds.get(FLAGSHIP_DEED)?.map((e) => e.characterId)).toEqual([
+      42, 43,
+    ]);
+    expect(metaB.accountLedger.deeds.get(FLAGSHIP_DEED)?.map((e) => e.characterId)).toEqual([
+      43, 42,
+    ]);
+    // One grant, one celebration: Hilda's unlock is live (her guild marquee
+    // and the feed card), while the sibling grant the fan-out ran for Bram is
+    // retro-flagged like the join path's, so it never marquees "Bram earned
+    // Light of Thunzharr" for a find Hilda made.
+    const unlocks = (evs: SimEvent[], pid: number) =>
+      evs.filter(
+        (ev): ev is Extract<SimEvent, { type: 'deedUnlocked' }> =>
+          ev.type === 'deedUnlocked' && ev.deedId === FLAGSHIP_DEED && ev.pid === pid,
+      );
+    expect(unlocks(hildaTick, a.pid).map((ev) => ev.retro)).toEqual([undefined]);
+    expect(unlocks(bramTick, b.pid).map((ev) => ev.retro)).toEqual([true]);
   });
 
   it('a stranger account learns nothing', () => {

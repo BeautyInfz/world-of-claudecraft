@@ -9,11 +9,13 @@
 //   character's own state and this ledger.
 // - The Reliquary-derived deeds (Curator rank bridges, the completion ladder,
 //   Illumination) are granted from that union to EVERY character on the
-//   account (the maintainer ruling, the model of jgyy's pull request 3933):
-//   the character whose find tipped the read earns them at once, a live
-//   sibling in the same tick (the server's fan-out re-runs the grant syncs),
-//   an offline alt at its next join (the join retro), and each of them is
-//   recorded here as an earner in its own right. Every other deed stays a
+//   account (the maintainer ruling; see docs/design/deeds.md, "The account
+//   ledger", which links the review thread that made it, and jgyy's pull
+//   request 3933 for the model): the character whose find tipped the read
+//   earns them at once, a live sibling in the same tick (the server's fan-out
+//   re-runs the grant syncs, retro-flagged), an offline alt at its next join
+//   (the join retro, retro-flagged), and each of them is recorded here as an
+//   earner in its own right. Every other deed stays a
 //   per-character accomplishment. Nothing in this module grants, denies, or
 //   mutates a deed or a relic fill.
 //

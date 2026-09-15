@@ -16,6 +16,7 @@ vi.mock('pg', () => ({
 
 import { loadAccountLedgerKeys } from '../../server/account_ledger_db';
 import {
+  ACCOUNT_LEDGER_KEYS_MAX_ENTRIES,
   ACCOUNT_LEDGER_KEYS_TTL_MS,
   accountLedgerKeysFor,
   bustAccountLedgerKeys,
@@ -74,7 +75,14 @@ describe('accountLedgerKeysFor', () => {
     const c = await accountLedgerKeysFor(7);
     expect(calls).toBe(3);
     expect([...c.deeds]).toEqual(['d7:3']);
-    expect(ACCOUNT_LEDGER_KEYS_TTL_MS).toBeGreaterThan(0);
+  });
+
+  it('pins the TTL and the entry bound as literals: the sheet is the scrape target', () => {
+    // 60 s bounds staleness when a bust is lost (another realm process wrote
+    // the row); 5000 entries bounds what an anonymous scrape can make the
+    // process hold. Both are the guard, so a drift is a reviewed change here.
+    expect(ACCOUNT_LEDGER_KEYS_TTL_MS).toBe(60_000);
+    expect(ACCOUNT_LEDGER_KEYS_MAX_ENTRIES).toBe(5000);
   });
 
   it('a cold-read failure rejects (the sheet arms degrade to own fills) and does not poison the entry', async () => {
