@@ -1425,6 +1425,9 @@ describe('delta snapshots', () => {
 
     druidServer.sim.castAbility('travel_form', druid.pid);
     druidServer.sim.tick();
+    // Every shift now grants the baseline Loping Stride burst (60% for 3 sec,
+    // combat/druid_engines.ts); this row reads the FORM's own speed, so shed it.
+    player.auras = player.auras.filter((aura) => aura.id !== 'loping_stride');
 
     const row = druidServer.liveSessions().find((p) => p.characterId === 10)!;
     expect(row.moveSpeedMultiplier).toBeCloseTo(1.4);
@@ -3576,7 +3579,7 @@ describe('guild nameplate wire', () => {
         motdSetBy: '',
         members: [],
         events: [],
-        pledgeSettings: { enabled: true, minLevel: 1, note: '' },
+        pledgeSettings: { enabled: true, minLevel: 1, note: '', newPlayerFriendly: false },
         pledges: [],
         tier: 0,
       },
@@ -5097,6 +5100,7 @@ describe('online mount command and race-event transport', () => {
 // that stay unconditional.
 const ALL_DELTA_KEYS = [
   'aborder',
+  'acct',
   'achg',
   'achr',
   'ap',
@@ -6401,7 +6405,7 @@ describe('gather node cooldown wire round trip (ncd)', () => {
 });
 
 describe('delta-key contract pins (anti-drift)', () => {
-  it('ALL_DELTA_KEYS contains exactly 94 unique keys in sorted order', () => {
+  it('ALL_DELTA_KEYS contains exactly 95 unique keys in sorted order', () => {
     // +1: guildBank (Guild Bank Phase 2), +1: the battleground bg key, +1: the
     // commission order board's corder key (issue #1298), +1: the character
     // sheet's lifetime played-time key ptime, for 67, then +16: the static
@@ -6443,9 +6447,10 @@ describe('delta-key contract pins (anti-drift)', () => {
     // hpref (a gathering-adjacent self scalar, sibling of gprof/tfocus/tslot),
     // for 92. Intentional Gathering PR4 adds the owner-only tracked-goal
     // full-view key ggoal (its own leaf, gathering_goal_wire.ts, not folded
-    // into the gprof/tfocus/tslot/hpref cluster), for 94.
-    expect(ALL_DELTA_KEYS).toHaveLength(94);
-    expect(new Set(ALL_DELTA_KEYS).size).toBe(94);
+    // into the gprof/tfocus/tslot/hpref cluster), for 94. The account ledger
+    // (src/sim/account_ledger.ts) adds the heavy self key acct, for 95.
+    expect(ALL_DELTA_KEYS).toHaveLength(95);
+    expect(new Set(ALL_DELTA_KEYS).size).toBe(95);
     expect([...ALL_DELTA_KEYS]).toEqual([...ALL_DELTA_KEYS].sort());
   });
 
@@ -6606,8 +6611,9 @@ describe('delta-key contract pins (anti-drift)', () => {
     // inside the recursive server-tree scrape) makes 92. Intentional
     // Gathering PR4's ggoal (emitted from the new gathering_goal_wire.ts
     // sibling, likewise inside the recursive scrape) makes 93.
-    // The candidate self in-combat key cbt brings the combined inventory to 94.
-    expect(scraped.size).toBe(94);
+    // The candidate self in-combat key cbt brings the combined inventory to 94;
+    // the account ledger's acct key (server/deeds_wire.ts) makes it 95.
+    expect(scraped.size).toBe(95);
     expect([...scraped].sort()).toEqual([...ALL_DELTA_KEYS].sort());
   });
 
@@ -7805,6 +7811,8 @@ describe('Ignivar meteor snapshot parity', () => {
       ],
     } as NonNullable<typeof boss.ignivar>;
     server.sim.entities.set(boss.id, boss);
+    // The raid readouts walk the instance slots' mob lists, never the roster.
+    server.sim.instances[0].mobIds.push(boss.id);
 
     broadcast(server);
 
@@ -8046,6 +8054,8 @@ describe('Nythraxis Grave Eruption snapshot parity', () => {
       },
     } as unknown as NonNullable<typeof boss.nythraxis>;
     server.sim.entities.set(boss.id, boss);
+    // The raid readouts walk the instance slots' mob lists, never the roster.
+    server.sim.instances[0].mobIds.push(boss.id);
 
     broadcast(server);
 
@@ -8186,6 +8196,8 @@ describe('Varkhul Forgestorm snapshot parity', () => {
       ],
     } as unknown as NonNullable<typeof boss.varkhul>;
     server.sim.entities.set(boss.id, boss);
+    // The raid readouts walk the instance slots' mob lists, never the roster.
+    server.sim.instances[0].mobIds.push(boss.id);
 
     broadcast(server);
 
@@ -8439,6 +8451,8 @@ describe('Varkhul Cinder Orbs snapshot parity', () => {
       ],
     } as unknown as NonNullable<typeof boss.varkhul>;
     server.sim.entities.set(boss.id, boss);
+    // The raid readouts walk the instance slots' mob lists, never the roster.
+    server.sim.instances[0].mobIds.push(boss.id);
 
     broadcast(server);
 

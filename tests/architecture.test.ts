@@ -209,6 +209,10 @@ describe('live graphics profile architecture', () => {
 // import), so it is registered here even though it lives in src/game. Paths are
 // repo-relative for the failure messages.
 const UI_PURE_CORES = [
+  'src/ui/party_pids_core.ts',
+  // The one face-button tone rule, shared by the interact prompt and the pad
+  // hint strip so a printed glyph and its colour can never disagree.
+  'src/ui/micro_menu_state_view.ts',
   'src/ui/ability_tooltip_lines.ts',
   'src/ui/proc_ready_glow_core.ts',
   'src/ui/reticle_ticks_core.ts',
@@ -229,6 +233,11 @@ const UI_PURE_CORES = [
   'src/ui/aura_overlay_view.ts',
   'src/ui/banner_queue.ts',
   'src/ui/item_kind_label.ts',
+  // The coin-icon money readout (moneyHtml): the shared money markup authority
+  // the Hud's PainterHost deps, the bags / bank / vault / mailbox windows and
+  // the social tab's roster confirm compose; bare-named, so its import bans
+  // are enforced here rather than only by the residual no-host rule.
+  'src/ui/money_html.ts',
   // The shared item-tooltip authority (the phase 13 QA): a bare-named pure
   // core several registered cores and the DOM windows beside them import, so
   // its import bans are enforced here rather than only by the residual
@@ -351,6 +360,7 @@ const UI_PURE_CORES = [
   'src/ui/guild_bank_view.ts',
   'src/ui/item_set_tooltip_view.ts',
   'src/ui/weapon_proc_view.ts',
+  'src/ui/controller_options_view.ts',
   'src/ui/options_view.ts',
   'src/ui/hud/loot_explorer/loot_explorer_view.ts',
   'src/ui/hud/vendor/vendor_view.ts',
@@ -474,6 +484,8 @@ const UI_PURE_CORES = [
   'src/ui/woc_balance_chip.ts',
   'src/ui/woc_market_chrome.ts',
   'src/ui/woc_market_activity_html.ts',
+  'src/ui/woc_market_detail_html.ts',
+  'src/ui/woc_market_sales_html.ts',
   'src/ui/guild_tag.ts',
   'src/ui/wallet_bridge_reason_text.ts',
   'src/ui/terms_link.ts',
@@ -500,11 +512,14 @@ const UI_PURE_CORES = [
   'src/ui/castle_plan_core.ts',
   'src/ui/map_gather_tip_memo.ts',
   'src/ui/map_window_view.ts',
+  'src/ui/map_sidebar_view.ts',
   'src/ui/continent_land_mask_core.ts',
   'src/ui/map_show_on_map_core.ts',
   'src/ui/continent_map_view.ts',
   'src/ui/map_open_sea_edge_core.ts',
   'src/ui/map_quest_list_view.ts',
+  'src/ui/quest_tracking_core.ts',
+  'src/ui/quest_map_location_core.ts',
   'src/ui/arena_window_view.ts',
   'src/ui/pvp_record_core.ts',
   'src/ui/pvp_tabs_view.ts',
@@ -608,11 +623,13 @@ const UI_PURE_CORES = [
   'src/game/perf_shader_warm_core.ts',
   'src/game/ui_effects_profile.ts',
   'src/game/ui_tier_knobs.ts',
+  'src/game/nearby_interaction_core.ts',
   'src/ui/trade_view.ts',
   'src/ui/trade_woc_view.ts',
   'src/ui/hud/rift/rift_floor_tracker_view.ts',
   'src/ui/hud/practice/practice_dps_view.ts',
   'src/ui/hud/practice/hub_lesson_view.ts',
+  'src/ui/hud/talking_head/talking_head_core.ts',
   'src/ui/hud/woc_trade/woc_trade_offer_view.ts',
   'src/ui/hud/target_dots/target_dots_view.ts',
   'src/ui/safe_local_storage.ts',
@@ -642,6 +659,8 @@ const DOM_GLOBAL_VALUE_ALLOWLIST = new Set([join(repoRoot, 'src/ui/safe_local_st
 // post_bloom_shader_core is the host-agnostic GLSL source patch for the
 // identity tint terms in UnrealBloom's composite shader.
 const RENDER_PURE_CORES = [
+  'src/render/tree_hide_index_core.ts',
+  'src/render/view_candidate_scan_core.ts',
   'src/render/arena_wall_occlusion_core.ts',
   'src/render/outdoor_light_rig_core.ts',
   'src/render/wall_backface_cull_core.ts',
@@ -902,6 +921,7 @@ const BARE_NAMED = [
   'src/ui/market_name_color.ts',
   'src/ui/market_armor_badge.ts',
   'src/ui/usd_text.ts',
+  'src/ui/money_html.ts',
   'src/ui/woc_tokens_text.ts',
   'src/ui/woc_log_tones.ts',
   'src/ui/hud/professions/profession_log_tones.ts',
@@ -909,6 +929,8 @@ const BARE_NAMED = [
   'src/ui/woc_balance_chip.ts',
   'src/ui/woc_market_chrome.ts',
   'src/ui/woc_market_activity_html.ts',
+  'src/ui/woc_market_detail_html.ts',
+  'src/ui/woc_market_sales_html.ts',
   'src/ui/guild_tag.ts',
   'src/ui/wallet_bridge_reason_text.ts',
   'src/ui/terms_link.ts',
@@ -2042,6 +2064,7 @@ const EXPECTED_BARE_NAMED = [
   'src/ui/minimap_markers.ts',
   'src/ui/mob_idle_sfx.ts',
   'src/ui/mobile_hud_layout.ts',
+  'src/ui/money_html.ts',
   'src/ui/party_collapse.ts',
   'src/ui/party_frames.ts',
   'src/ui/pet_action_icons.ts',
@@ -2067,7 +2090,9 @@ const EXPECTED_BARE_NAMED = [
   'src/ui/woc_log_tones.ts',
   'src/ui/woc_market_activity_html.ts',
   'src/ui/woc_market_chrome.ts',
+  'src/ui/woc_market_detail_html.ts',
   'src/ui/woc_market_reason_text.ts',
+  'src/ui/woc_market_sales_html.ts',
   'src/ui/woc_tokens_text.ts',
   'src/ui/xp_bar.ts',
 ];
@@ -2422,6 +2447,9 @@ const UI_DOM_MODULES = [
   'src/ui/hud/quest/quest_strip_controller.ts',
   'src/ui/hud/quest/quest_strip_gesture_controller.ts',
   'src/ui/hud/cross_hotbar/cross_hotbar_controller.ts',
+  'src/ui/options_window_shell.ts',
+  'src/ui/options_interface_rows.ts',
+  'src/ui/hud/talking_head/talking_head_controller.ts',
   'src/ui/char_skin_window.ts',
   'src/ui/char_window.ts',
   'src/ui/charselect_news.ts',
@@ -2504,6 +2532,10 @@ const UI_DOM_MODULES = [
   'src/ui/map_bg.ts',
   'src/ui/map_marker_icon_loader.ts',
   'src/ui/map_marker_palette_lifecycle.ts',
+  // The World Map atlas rail adapter: it owns the rail subtree (a click listener
+  // on the injected root plus an innerHTML swap) and reads document.activeElement
+  // so the focused chip or quest row survives that swap.
+  'src/ui/map_sidebar_controller.ts',
   'src/ui/market_window.ts',
   'src/ui/woc_market_window.ts',
   'src/ui/material_sources_dialog.ts',

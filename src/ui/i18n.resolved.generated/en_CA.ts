@@ -902,6 +902,7 @@ export const en_CA: EnTranslations = {
     },
     "questTracker": {
       "count": "({count})",
+      "objectiveValue": "{current} / {total}",
       "collapseHint": "Collapse quest tracker",
       "expandHint": "Expand quest tracker"
     },
@@ -1243,6 +1244,8 @@ export const en_CA: EnTranslations = {
       "noteLabel": "Board note",
       "notePlaceholder": "Tell aspiring members what your guild is looking for",
       "save": "Save",
+      "newPlayerFriendlyLabel": "New player friendly",
+      "newPlayerFriendlyHint": "Shown on the recruits' board at the Proving Shore signpost.",
       "yourPledge": "Your pledge: {guild}",
       "since": "Pledged {date}",
       "withdraw": "Withdraw pledge"
@@ -1266,6 +1269,9 @@ export const en_CA: EnTranslations = {
       "previous": "Previous runs",
       "runLabel": "Run {index}",
       "runSummary": "{total} in {time}"
+    },
+    "talkingHead": {
+      "label": "Dialogue"
     },
     "hubLesson": {
       "target": "Target the dummy to begin.",
@@ -1729,6 +1735,9 @@ export const en_CA: EnTranslations = {
     },
     "controller": {
       "title": "Controller",
+      "device": "Connected Device",
+      "deviceConnected": "Connected",
+      "deviceDisconnected": "No controller detected",
       "glyphStyle": "Button Labels",
       "glyphStyleAuto": "Auto",
       "glyphStyleXbox": "Xbox",
@@ -1753,7 +1762,7 @@ export const en_CA: EnTranslations = {
       "crossHotbarHelp": "Hold a trigger to light eight action-bar slots on the d-pad and face buttons. Tap the other trigger to swap to the second set.",
       "crossHotbarResetLayout": "Reset Cross Hotbar",
       "crossHotbarPosition": "{trigger} + {button}",
-      "crossHotbarOwnsButtons": "The triggers and the d-pad belong to the cross hotbar while it is on, so they are set up below rather than here.",
+      "crossHotbarOwnsButtons": "The triggers modify the cross hotbar while it is on. D-pad directions remain editable here for menus and movement.",
       "cancelAction": "Cancel / Back",
       "subcommandsAction": "Subcommands / Map",
       "cycleHudAction": "Cycle Interface",
@@ -1764,7 +1773,7 @@ export const en_CA: EnTranslations = {
       "crossHotbarDisplayMinimal": "Only While Held",
       "crossHotbarArrangeChord": "{bumper} + {button}",
       "crossHotbarCarrying": "Carrying {action}: confirm on a cell to place it, cancel to put it back.",
-      "crossHotbarEditHint": "Arranging: confirm picks up from a cell or the spellbook and drops on a cell, cancel clears one.",
+      "crossHotbarEditHint": "Arranging · d-pad moves · confirm picks up and places · cancel clears a cell",
       "crossHotbarEditHelp": "Hold the left bumper and press the top face button to arrange the bar with the controller."
     },
     "perf": {
@@ -2161,6 +2170,22 @@ export const en_CA: EnTranslations = {
       "showPlaytimeAria": "Show time played",
       "hidePlaytimeAria": "Hide time played"
     },
+    "charSidebar": {
+      "label": "Character details",
+      "subtitle": "Level {level} {className} . {archetype} . Hobby: {hobby}",
+      "subtitleNoHobby": "Level {level} {className} . {archetype}",
+      "stats": "Stats",
+      "progression": "Progression",
+      "skills": "Skills",
+      "gathering": "Gathering",
+      "crafting": "Crafting",
+      "openProfessions": "Open Professions"
+    },
+    "questLog": {
+      "completed": "Completed",
+      "zoneSummary": "{count} ({ready} ready)",
+      "shiftHint": "Shift-click a quest to link it in chat."
+    },
     "statInfo": {
       "fromYour": "From your {value} {stat}:",
       "names": {
@@ -2274,6 +2299,12 @@ export const en_CA: EnTranslations = {
       "linkHint": "Shift-click to link this item in chat."
     },
     "plurals": {
+      "guildBoardShown": {
+        "one": "{count} guild shown",
+        "few": "{count} guilds shown",
+        "many": "{count} guilds shown",
+        "other": "{count} guilds shown"
+      },
       "commissionMasterworks": {
         "one": "{count} masterwork",
         "few": "{count} masterworks",
@@ -2403,6 +2434,7 @@ export const en_CA: EnTranslations = {
     },
     "bugReport": {
       "menuButton": "Report a Bug",
+      "online": "Online",
       "realm": "World",
       "character": "Character",
       "position": "Position",
@@ -3060,6 +3092,7 @@ export const en_CA: EnTranslations = {
       "elementalConvergencePrimed": "Your next spell from the other elemental school grants Elemental Convergence",
       "hunterFerocity": "{stacks} Pack Ferocity: your pet deals {pct}% more damage",
       "cooldownCap": "{used} of {cap} sec of cooldown reduction used in this window",
+      "bruinRushWindow": "Wolf Form costs no mana and Pins your Bruin Rush target, slowing it by {pct}% for {sec} sec",
       "funeralHarvestLock": "Funeral Harvest cannot create another Soul Fragment yet",
       "leadenHexLock": "Leaden Hex cannot root this target again yet",
       "forbiddenReflectionReady": "Your next eligible Warlock cooldown can be cast again",
@@ -3172,7 +3205,7 @@ export const en_CA: EnTranslations = {
       "elementalTrance": "Damage taken reduced by {pct}%. {mana}% of all damage you deal is converted to mana",
       "stealth": "Concealed; movement speed reduced by {pct}%",
       "formBear": "Bruin Form: increased health and armor",
-      "formCat": "Wolf Form: melee damage and energy",
+      "wolfForm": "Wolf Form: melee damage and energy; movement speed increased by {pct}%",
       "formTravel": "Fleet Form: movement speed increased by {pct}%",
       "formFireball": "Ember Form: movement speed increased by {pct}%; attacks and spells are disabled",
       "formMoonkin": "Moonwing Form: spell damage increased by {pct}% and armor increased by {armorPct}%",
@@ -3280,6 +3313,7 @@ export const en_CA: EnTranslations = {
       "lock": "Lock player frame"
     },
     "partyFrames": {
+      "header": "Party",
       "section": "Party and Raid Frames",
       "optionsSection": "Party Frame Options",
       "unlock": "Move party and raid frames",
@@ -3778,6 +3812,15 @@ export const en_CA: EnTranslations = {
       "subtitle": "Guilds of the realm",
       "rosterTitle": "View the roster of {guild}",
       "back": "Back",
+      "filters": "Board filters",
+      "newPlayerFriendly": "New player friendly",
+      "newPlayerFriendlyTitle": "This guild welcomes new players",
+      "filterNewPlayersTitle": "Show only guilds that welcome new players",
+      "filterEmpty": "No guild has opened its doors to new players yet.",
+      "showAll": "Show all guilds",
+      "officersOnline": "Officers online",
+      "officersOnlineLabel": "Officers online: {names}",
+      "officerEntry": "{name} ({rank})",
       "popupTitle": "Guild Signpost",
       "close": "Close"
     },
@@ -4050,7 +4093,7 @@ export const en_CA: EnTranslations = {
       },
       "roster": {
         "seats": "{count} of {cap} seats",
-        "expand": "Expand roster (+{seats} seats for {price})",
+        "expand": "Expand roster",
         "maxed": "The roster is at its largest size",
         "confirm": "Expand the guild roster by {seats} seats for {price}? The gold comes from your own purse and is not refunded.",
         "confirmAction": "Expand",
@@ -4064,7 +4107,6 @@ export const en_CA: EnTranslations = {
       }
     },
     "gathering": {
-      "title": "Gathering",
       "mining": "Mining",
       "logging": "Logging",
       "herbalism": "Herbalism",
@@ -4248,9 +4290,7 @@ export const en_CA: EnTranslations = {
       "noviceBody": "Farming skill grows every time you bring in a crop. Sow a seed in any garden bed to begin."
     },
     "archetypeTitle": {
-      "label": "Title",
-      "none": "None",
-      "hobbyLabel": "Hobby"
+      "none": "None"
     },
     "archetypePair": {
       "engineering+alchemy": "Bombardier",
@@ -4420,7 +4460,9 @@ export const en_CA: EnTranslations = {
       "hobbyLabel": "Hobby: {craft}",
       "majorsLabel": "Majors: {a} and {b}",
       "pairsHeld": "Pairs held: {count}",
-      "returnsLabel": "Returns: {count}"
+      "returnsLabel": "Returns: {count}",
+      "retentionFooter": "Returns on respec: 60% of skill kept.",
+      "tutorialLink": "Profession tutorial"
     },
     "crafting": {
       "title": "Crafting",
@@ -4455,6 +4497,7 @@ export const en_CA: EnTranslations = {
       "vaultUnreachable": "The Materials Vault is out of reach here.",
       "craftFeeLine": "Craft fee: {fee} each",
       "empty": "No recipes known yet.",
+      "materialsFooter": "Materials in your vault are drawn automatically. Learn more recipes at the station.",
       "resultAria": "Craft {name}",
       "craftedToast": "Crafted: {name}",
       "craftedToastQty": "Crafted: {name} x{qty}",
@@ -4556,6 +4599,9 @@ export const en_CA: EnTranslations = {
       "commissionToggleHint": "Binds to the first character to receive it in a trade.",
       "commissionUnbound": "Commission piece: binds to the first recipient",
       "commissionBound": "Commission piece: bound to its recipient"
+    },
+    "marketWindow": {
+      "mixedListingsFooter": "The Merchant restocks common goods; player listings sit beside them at their asking price."
     },
     "itemMenu": {
       "use": "Use",
@@ -4991,6 +5037,10 @@ export const en_CA: EnTranslations = {
       "ownedTooltipStatus": "Catalogued in The Reliquary",
       "missingTooltipStatus": "Not yet found",
       "firstFindClears": "First found on clear {count}",
+      "foundBy": "Found by {names}",
+      "finderWithDate": "{name} ({date})",
+      "sharedScopeNote": "Shared by every character on your account",
+      "sharedScopeHint": "A relic found by any character on your account fills the page here too.",
       "unlockToast": "Relic catalogued: {name}",
       "illuminateBanner": "Page illuminated: {name}",
       "illuminateToast": "Every relic on {name} is filled.",
@@ -5124,6 +5174,10 @@ export const en_CA: EnTranslations = {
       "progressAria": "Progress: {current} of {target}",
       "renownChip": "{renown} Renown",
       "earnedDate": "Earned {date}",
+      "earnedBy": "Earned by {names}",
+      "earnerWithDate": "{name} ({date})",
+      "accountScopeNote": "Shared by every character on your account",
+      "accountScopeHint": "A deed any character on your account accomplishes is earned here too, and the Book names who earned it.",
       "featRibbon": "Feat",
       "hiddenBadge": "Hidden",
       "titleChip": "Title reward",
@@ -5173,6 +5227,33 @@ export const en_CA: EnTranslations = {
       "toggleAria": "Switch between the world map, zone map, and instance map",
       "levels": "Levels {min} to {max}"
     },
+    "mapAtlas": {
+      "level": "Level {level}",
+      "landmarkCount": "{count} landmarks",
+      "filtersAria": "Map layers",
+      "filters": {
+        "quests": "Quests",
+        "gather": "Gather",
+        "dungeons": "Dungeons",
+        "services": "Services",
+        "players": "Players"
+      },
+      "trackedQuests": "Tracked quests",
+      "noTrackedQuests": "No tracked quests",
+      "availableNearby": "Available nearby",
+      "noNearbyQuests": "No nearby quests",
+      "distance": "{distance} yards",
+      "showRoute": "Show Route",
+      "untrack": "Untrack",
+      "track": "Track",
+      "legend": {
+        "dungeon": "Dungeon",
+        "ore": "Ore",
+        "herb": "Herb",
+        "mail": "Mail",
+        "passage": "Passage"
+      }
+    },
     "arenaGate": {
       "minLevelNote": "Requires level {level}"
     },
@@ -5191,6 +5272,7 @@ export const en_CA: EnTranslations = {
       "tabBrowse": "Browse",
       "tabSell": "Sell",
       "tabActivity": "My Activities",
+      "tabHistory": "Sales History",
       "tabsLabel": "$WOC Exchange sections",
       "loading": "Loading the Exchange...",
       "loadFailed": "The Exchange could not be reached. Try again shortly.",
@@ -5215,6 +5297,16 @@ export const en_CA: EnTranslations = {
       "colCurrentBid": "Current bid",
       "colBuyNow": "Buy now",
       "colTimeLeft": "Time left",
+      "colBuyer": "Buyer",
+      "colSoldAt": "Sold",
+      "colSalePrice": "Sale price",
+      "colSaleType": "Type",
+      "saleTypeAuction": "Auction",
+      "saleTypeBuyNow": "Buy now",
+      "saleTypeDirected": "Directed",
+      "saleTypeUnknown": "Unknown",
+      "historyEmpty": "No sales recorded yet.",
+      "historyError": "Sales history could not be loaded.",
       "reserveMet": "Reserve met",
       "reserveNotMet": "Reserve not met",
       "yourListing": "Your listing",
@@ -6107,6 +6199,7 @@ export const en_CA: EnTranslations = {
       "framesMoveBodyEditFrames": "Your frame, your target frame, and your party frames can all be moved. Each carries a small move button in its corner: unlock it, drag the frame where you want it, and lock it again so a stray click cannot shift it. Edit Frames, at the top of the Frames tab in the Interface options, loosens the rest of the interface at once, those three frames with it: the action bars, the cast bar, the swing bar, the experience bar, the minimap, the button rail, the pet frame, the stance bar, the buff and debuff rows, and the Wishlist Reminder chip, each wearing a name chip while it is loose. If they end up somewhere you regret, Reset to Defaults at the foot of that same Frames tab snaps them all back to where they started.",
       "framesGovernedExtra": "Edit Frames also loosens the tracker stack below (your tracked quests and their objectives, your deed progress, your Reliquary pages, the delve you are in, any rift you are taking part in, and the recipe or commission you are tracking), the pet action bar beside your pet frame, the Target dots frame for your debuffs across nearby enemies, the paladin's Devotion medallion, the warlock's Affliction Bar, the spell-proc overlay, the off-hand swing timer for dual-wielders, and the tabbed damage meter window, each wearing its own name chip while it is loose.",
       "framesGovernedAuraTracks": "Edit Frames also loosens the six opt-in aura tracks once you have switched them on from the Combat tab of the same Interface options: the My Buffs track, the Defensive Cooldowns track, the My Shields track, the Offensive Cooldowns track, the Movement and Stealth track, and the My Buffs on Allies track. Every track is off by default, and each wears its own name chip while it is loose.",
+      "framesGovernedTalkingHead": "Edit Frames also loosens the Dialogue panel, which carries an NPC's spoken line while that NPC is out of your view; it wears its name chip while it is loose.",
       "barsTitle": "Bars, timers, and combat text",
       "barsBody": "Your cast bar appears in the middle of the screen, just above your action bars, whenever you cast or channel, and carries the spell's name and the time left. Your target gets a cast bar of its own on its frame, so you can see what is coming and answer it.\n\nA thin swing bar sits under your cast bar and fills between your weapon swings, so a melee or ranged attacker can see when the next automatic hit lands. Fighting with a weapon in each hand adds a second bar right below it, filling on its own separate clock, so you can time your abilities between BOTH swings instead of just one.\n\nYour experience bar runs the full width under your action bars, ticked into segments, with a lighter stretch showing the rested experience you have banked.\n\nSwim under water and a blue breath bar appears at the top of the screen. It drains while your head is under, flashes red once it runs out and you begin to drown, and refills quickly the moment you surface. Space swims you up, and the Swim Down key, Ctrl by default, takes you deeper.\n\nDamage and healing float up over whatever they landed on as small numbers, so you can read a fight without reading text. The Combat tab in your chat box keeps the full written record.",
       "aurasTitle": "Buffs and debuffs",
@@ -6464,6 +6557,7 @@ export const en_CA: EnTranslations = {
       "formsNote": "A druid fights by changing shape. Most druid abilities belong to one shape, so the form you are in decides what you can cast, and shifting costs a little mana. You can shift in or out of combat, as often as you like.",
       "formsAutoUnshift": "A heal or a damaging spell cast while shifted shifts you out for you. Leaving a shape that way is free and does not spend your global cooldown, so an instant spell goes off the moment you press it. Shifting back in is an ordinary ability, and still costs mana and your global cooldown.",
       "formsMoonwing": "A Moongrove druid gains one more shape, Moonwing Form, the caster shape a Balance druid fights in. It is the one animal shape that keeps your spells, and your wand only works in it or in your normal caster form.",
+      "formsWolfEngage": "A Wolf opens a fight with Bruin Rush, shifts straight into Wolf Form to Pin the target, closes the gap with Lunge when it is not stalking, and holds an enemy still with Takedown.",
       "formLine": {
         "form_bear": "The tanking shape: a heavy hide, rage instead of mana, and extra threat so enemies keep swinging at you.",
         "form_cat": "The melee damage shape: energy and combo points, like a rogue, and much less threat.",
@@ -6993,7 +7087,7 @@ export const en_CA: EnTranslations = {
     "deedsPage": {
       "intro": "The Book of Deeds is where the world keeps score of all you have done, from your first steps out of the starting valley to the hardest fights the realm can offer. Earn deeds as you play, wear the titles they grant, and watch your Renown climb.",
       "howHeading": "How deeds work",
-      "howBody": "Deeds are earned and kept one character at a time, so every hero you play builds a Book of their own; only the realm leaderboard gathers your Renown across every character you play, counting each deed just once. Each deed spells out plainly what it asks of you, right there in the Book of Deeds in game, so you always know what to chase, and you can set a watch on the ones you are after to keep them in sight while you play. A small few stay secret and reveal themselves only once you have earned them. The Book also keeps itself honest: whatever your past record can prove, it credits on the spot, so a veteran never opens it to an empty page; only the counting deeds begin their tally fresh.",
+      "howBody": "Deeds are earned one character at a time, but the Book of Deeds is shared by every character on your account: a deed any of them accomplishes is earned for all of them, the Book names who earned it and when, and a title or border it rewards can be worn by any of your characters. The realm leaderboard gathers your Renown the same way, counting each deed just once. Each deed spells out plainly what it asks of you, right there in the Book of Deeds in game, so you always know what to chase, and you can set a watch on the ones you are after to keep them in sight while you play. A small few stay secret and reveal themselves only once you have earned them. The Book also keeps itself honest: whatever your past record can prove, it credits on the spot, so a veteran never opens it to an empty page; only the counting deeds begin their tally fresh.",
       "renownHeading": "Renown",
       "renownBody": "Renown is the score behind the Book. Every deed you earn is worth a set amount, and your total only ever climbs, so a quiet week never costs you ground. A handful turn on luck rather than skill, other collection deeds are their own reward, and Feats are an honor apart, so none of those are worth any Renown. Deeds without Renown still count toward completion in your Book; they simply never score. Feats are the one exception, kept outside the count entirely.",
       "rewardsHeading": "Titles and borders",
@@ -7031,7 +7125,7 @@ export const en_CA: EnTranslations = {
     "reliquaryPage": {
       "intro": "The Reliquary is the museum of unique spoils you have catalogued: dungeon chase uniques, profession trophies, mounts, weapon skins, and titles. It pairs with the Book of Deeds the way a trophy hall pairs with an achievement book.",
       "howHeading": "How the collection works",
-      "howBody": "Open The Reliquary in game (default Shift+X). Each shelf holds pages of unique relics. Fill a silhouette when you obtain that piece for the first time on the character, and illuminate a page when every relic on it is filled. A few pages are labeled Retired or Personal: they sit outside completion, so they never gate a shelf or the whole catalog. Live finds toast and refresh the open window; progress is character-scoped except weapon skins, which are account cosmetics.",
+      "howBody": "Open The Reliquary in game (default Shift+X). Each shelf holds pages of unique relics. Fill a silhouette when any character on your account obtains that piece for the first time, and illuminate a page when every relic on it is filled. A few pages are labeled Retired or Personal: they sit outside completion, so they never gate a shelf or the whole catalog. Live finds toast and refresh the open window; progress is shared by every character on the account, so a relic one character finds fills the page for all of them.",
       "ranksHeading": "Curator ranks",
       "ranksBody": "Curator ranks rise with unique catalogued fills and grant only cosmetic titles and borders. They never grant combat power, drop rate, or pity. Account weapon skins do not score Curator rank so prestige stays character-durable, and relics on Retired or Personal pages score nothing toward it either.",
       "retiredTag": "Retired",
@@ -11882,7 +11976,7 @@ export const en_CA: EnTranslations = {
       },
       "bear_form": {
         "name": "Bruin Form",
-        "description": "Shapeshift into a bear: armor +110%, maximum health +30%, greatly increased attack power, your attacks build rage and generate 30% more threat. Cast again to return to caster form."
+        "description": "Shapeshift into a bear: armor +110%, maximum health +30%, greatly increased attack power, your attacks build rage and generate 30% more threat. Shifting into any form grants Loping Stride, a short burst of movement speed. Cast again to return to caster form."
       },
       "maul": {
         "name": "Bonecrush",
@@ -11899,7 +11993,7 @@ export const en_CA: EnTranslations = {
       },
       "cat_form": {
         "name": "Wolf Form",
-        "description": "Shapeshift into a wolf: agility rises with your level, attack power +8 plus 2 per level, your attacks use energy and combo points, and you generate 29% less threat. Cast again to return to caster form."
+        "description": "Shapeshift into a wolf: agility rises with your level, attack power +8 plus 2 per level, your attacks use energy and combo points, you move 15% faster, and you generate 29% less threat. Shifting into any form grants Loping Stride, a short burst of movement speed. Cast again to return to caster form."
       },
       "claw": {
         "name": "Rendclaw",
@@ -11940,7 +12034,7 @@ export const en_CA: EnTranslations = {
       },
       "travel_form": {
         "name": "Fleet Form",
-        "description": "Instantly shift into a swift fleet form, increasing movement speed by 40%. You cannot use other abilities while shifted, but can shift in or out of combat, ideal for escaping."
+        "description": "Instantly shift into a swift fleet form, increasing movement speed by 40% and removing breakable roots and slows. You cannot use other abilities while shifted, but can shift in or out of combat, ideal for escaping. Shifting into any form grants Loping Stride, a short burst of movement speed."
       },
       "enrage": {
         "name": "Stoke",
@@ -11964,7 +12058,15 @@ export const en_CA: EnTranslations = {
       },
       "pounce": {
         "name": "Slinkstrike",
-        "description": "A stealth opener that stuns the target for 2 sec. Awards 1 combo point. Wolf Form only."
+        "description": "A stealth opener that stuns the target for 2 sec. Awards 1 combo point. Wolf Form only. Out of stealth this button is Lunge."
+      },
+      "lunge": {
+        "name": "Lunge",
+        "description": "Lunge at an enemy up to 12 yd away. On arrival, deals 60% weapon damage and awards 1 combo point; a lunge cut short refunds its cooldown. Wolf Form only."
+      },
+      "hamstring_bite": {
+        "name": "Takedown",
+        "description": "Finishing move that stuns the target for 1 sec plus 1 sec per combo point (5 combo points: 6 sec). Wolf Form only."
       },
       "insect_swarm": {
         "name": "Stinging Swarm",
@@ -12173,7 +12275,7 @@ export const en_CA: EnTranslations = {
       },
       "moonkin_form": {
         "name": "Moonwing Form",
-        "description": "Shapeshift into a fearsome Moonkin, increasing your spell damage by 20% and your armor by 50%. Lasts until you shift out. Cast again to return to caster form. (Balance signature)"
+        "description": "Shapeshift into a fearsome Moonkin, increasing your spell damage by 20% and your armor by 50%. Lasts until you shift out. Shifting into any form grants Loping Stride, a short burst of movement speed. Cast again to return to caster form. (Balance signature)"
       },
       "feral_charge": {
         "name": "Primal Surge",
@@ -12678,7 +12780,7 @@ export const en_CA: EnTranslations = {
       },
       "bear_charge": {
         "name": "Bruin Rush",
-        "description": "Charge an enemy, generating 9 rage and stunning it for 1 sec. 8-25 yd range. Bruin Form only."
+        "description": "Rush an enemy, generating 9 rage and stunning it for 1 sec. For 3 sec afterwards, or until you leave combat, Wolf Form is free and Pins that target (the one you Rushed), slowing it by 50% for 4 sec. 8-25 yd range. Bruin Form only."
       },
       "demoralizing_roar": {
         "name": "Craven Roar",
@@ -12686,7 +12788,7 @@ export const en_CA: EnTranslations = {
       },
       "prowl": {
         "name": "Stalk",
-        "description": "Enter stealth while in Wolf Form, moving 5% slower. Cannot be used in combat."
+        "description": "Enter stealth while in Wolf Form. Cannot be used in combat."
       },
       "rake": {
         "name": "Flense",

@@ -665,8 +665,18 @@ interface AttributionTargetFixture {
 // with Drakelands/hotkey renderer work. No capture was retaken.
 // PR3946: remint the renderer leaf after restoring school-aware resurrection VFX.
 // Existing captures, performance measurements and capture identity are unchanged.
+// v0.42.0 dependency-floor bump (sharp, js-yaml, vitest): the lockfile is a
+// fingerprint input, so every shipping GLB was size-preserving re-minted and this
+// seal follows the swept evidence. No capture was retaken.
+// Re-minted for the CPU-hygiene lot: the view-candidate scan and the drop
+// half of the view policy moved out of renderer.ts, and the rift ambience,
+// fishing bobber and Nythraxis painter consumers changed there, so the
+// runtimeRender.renderer leaf moved. No capture was retaken.
+// Re-minted again for its review round: the ranked and required view
+// candidates now share the scan module's liveViewCandidate check, so the
+// same leaf moved once more. No capture was retaken.
 const PINNED_POLISH_COMPOSITE_FINGERPRINT =
-  '5a8a04a27406a5ade4b29472c74b6d2c10764286c86d05cae5eae2fc45b89ae1';
+  '07b43fcb404bb316c61f8efff90e4e54755fe3392de832f2aee8e09fbcaa8abf';
 
 function validPolishAttributionTargets(): AttributionTargetFixture[] {
   return [

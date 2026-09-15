@@ -65,7 +65,7 @@ export const zh_CN: EnTranslations = {
       "difficulty": "难度",
       "name": "名称",
       "spec": "专精",
-      "bed": "Bed id (optional)"
+      "bed": "田畦ID（可选）"
     },
     "difficulty": {
       "normal": "普通",
@@ -153,8 +153,8 @@ export const zh_CN: EnTranslations = {
         "description": "提高一项采集专业技能。"
       },
       "farmgrow": {
-        "label": "Ripen crops",
-        "description": "Bring your planted crop beds to their ready time, or one bed by id. Nothing else changes: the outcome was rolled when you planted."
+        "label": "催熟作物",
+        "description": "将所有已种植的田畦推进至成熟时间，也可按ID指定一处田畦。其他内容保持不变：收获结果在种植时就已随机确定。"
       },
       "teleport": {
         "label": "传送",
@@ -902,6 +902,7 @@ export const zh_CN: EnTranslations = {
     },
     "questTracker": {
       "count": "（{count}）",
+      "objectiveValue": "{current} / {total}",
       "collapseHint": "收起任务追踪器",
       "expandHint": "展开任务追踪器"
     },
@@ -1243,6 +1244,8 @@ export const zh_CN: EnTranslations = {
       "noteLabel": "榜单留言",
       "notePlaceholder": "告诉有意加入的玩家你的公会在寻找什么",
       "save": "保存",
+      "newPlayerFriendlyLabel": "新手友好",
+      "newPlayerFriendlyHint": "显示在试炼之滨告示牌的新人看板上。",
       "yourPledge": "你的宣誓：{guild}",
       "since": "宣誓于{date}",
       "withdraw": "撤回宣誓"
@@ -1261,11 +1264,14 @@ export const zh_CN: EnTranslations = {
     "practiceDps": {
       "title": "训练假人",
       "liveDps": "{value} DPS",
-      "liveLabel": "This run",
+      "liveLabel": "本次练习",
       "prompt": "攻击假人以开始一轮测试",
       "previous": "之前的测试",
-      "runLabel": "Run {index}",
-      "runSummary": "{total} in {time}"
+      "runLabel": "第 {index} 次练习",
+      "runSummary": "{time} 内 {total}"
+    },
+    "talkingHead": {
+      "label": "对话"
     },
     "hubLesson": {
       "target": "先将假人设为目标。",
@@ -1357,9 +1363,9 @@ export const zh_CN: EnTranslations = {
       "utility": "移动与潜行",
       "friendly": "我给队友的增益",
       "shields": "我的护盾",
-      "row": "{aura} on {unit}",
+      "row": "{aura} 对 {unit} 生效",
       "selfRow": "{aura}",
-      "mode": "on",
+      "mode": "开启",
       "overflow": "还有{count}项未显示"
     },
     "targetDots": {
@@ -1729,6 +1735,9 @@ export const zh_CN: EnTranslations = {
     },
     "controller": {
       "title": "手柄",
+      "device": "已连接设备",
+      "deviceConnected": "已连接",
+      "deviceDisconnected": "未检测到手柄",
       "glyphStyle": "按键标签",
       "glyphStyleAuto": "自动",
       "glyphStyleXbox": "Xbox",
@@ -2161,6 +2170,22 @@ export const zh_CN: EnTranslations = {
       "showPlaytimeAria": "显示游戏时长",
       "hidePlaytimeAria": "隐藏游戏时长"
     },
+    "charSidebar": {
+      "label": "角色详情",
+      "subtitle": "{level}级 {className} . {archetype} . 爱好：{hobby}",
+      "subtitleNoHobby": "{level}级 {className} . {archetype}",
+      "stats": "属性",
+      "progression": "进度",
+      "skills": "技能",
+      "gathering": "采集",
+      "crafting": "制作",
+      "openProfessions": "打开专业"
+    },
+    "questLog": {
+      "completed": "已完成",
+      "zoneSummary": "{count}个（{ready}个可交付）",
+      "shiftHint": "按住 Shift 点击任务可将其链接到聊天中。"
+    },
     "statInfo": {
       "fromYour": "来自你的 {value} 点{stat}：",
       "names": {
@@ -2274,6 +2299,12 @@ export const zh_CN: EnTranslations = {
       "linkHint": "Shift + 点击可在聊天中链接该物品。"
     },
     "plurals": {
+      "guildBoardShown": {
+        "one": "显示 {count} 个公会",
+        "few": "显示 {count} 个公会",
+        "many": "显示 {count} 个公会",
+        "other": "显示 {count} 个公会"
+      },
       "commissionMasterworks": {
         "one": "{count}件杰作",
         "few": "{count}件杰作",
@@ -2403,6 +2434,7 @@ export const zh_CN: EnTranslations = {
     },
     "bugReport": {
       "menuButton": "报告错误",
+      "online": "在线",
       "realm": "服务器",
       "character": "角色",
       "position": "坐标",
@@ -3060,6 +3092,7 @@ export const zh_CN: EnTranslations = {
       "elementalConvergencePrimed": "你的下一个不同元素学派法术将触发元素汇聚",
       "hunterFerocity": "{stacks} 层兽群凶性：你的宠物造成的伤害提高 {pct}%",
       "cooldownCap": "此时间窗已使用 {used}/{cap} 秒冷却缩减",
+      "bruinRushWindow": "狼形态无需法力，并钉制你的巨熊冲锋目标，使其减速 {pct}%，持续 {sec} 秒",
       "funeralHarvestLock": "葬礼收割暂时无法再次生成灵魂碎片",
       "leadenHexLock": "铅沉妖术暂时无法再次定身此目标",
       "forbiddenReflectionReady": "下一个符合条件的术士冷却技能可再次施放",
@@ -3083,7 +3116,7 @@ export const zh_CN: EnTranslations = {
       "suddenDeath": "下一次斩杀不消耗怒气并无视生命值要求",
       "aoeEcho": "剩余 {charges} 次回响：单体技能对附近最多 {targets} 个敌人造成 {pct}% 伤害",
       "sureCrit": "接下来 {charges} 个伤害技能必定暴击",
-      "temporalEcho": "施法者的奥术伤害会治疗你，单体伤害转化 {singlePct}%，范围伤害转化 {areaPct}%",
+      "temporalEcho": "施法者的奥术伤害会治疗你，单体伤害转化 {singlePct}%，范围伤害转化 {areaPct}%。以太涌动和以太飞镖在单独的时光回响上按4倍加成计算。群体回响会产生等量的治疗储备，按照缺失生命值在生命低于60%的被标记盟友之间分配",
       "arcaneCharge": "{stacks} 层奥术充能：以太涌动伤害提高 {damagePct}%，施法加快 {castPct}%，法力消耗变为 {costMult} 倍",
       "physicalReduction": "受到的物理伤害降低 {pct}%",
       "temporalHourglass": "免疫伤害且无法行动；恢复生命并加速冷却。右键点击可取消。",
@@ -3172,7 +3205,7 @@ export const zh_CN: EnTranslations = {
       "elementalTrance": "受到的伤害降低{pct}%。你造成的所有伤害的{mana}%转化为法力值",
       "stealth": "已隐匿；移动速度降低 {pct}%",
       "formBear": "巨熊形态：生命值和护甲提高",
-      "formCat": "猫形态：近战伤害与能量",
+      "wolfForm": "狼形态：近战伤害与能量；移动速度提高 {pct}%",
       "formTravel": "迅捷形态：移动速度提高 {pct}%",
       "formFireball": "火球形态：移动速度提高 {pct}%；无法攻击或施法",
       "formMoonkin": "月翼形态：法术伤害提高 {pct}%，护甲提高 {armorPct}%",
@@ -3202,7 +3235,7 @@ export const zh_CN: EnTranslations = {
       "fingersOfFrost": "剩余 {charges} 层：冰枪术视目标为冻结状态，并造成 {pct}% 的冻结伤害",
       "brainFreeze": "下一次冰风暴瞬发且无视冷却时间",
       "wintersChill": "剩余 {charges} 层：符合条件的法术视此目标为冻结状态",
-      "icicles": "{value}/{max} 根冰刺；达到 {max} 根时可施放冰川尖刺",
+      "icicles": "{value}/{max} 根冰刺；达到 {max} 根时可施放凝霜冰针",
       "desolation": "剩余 {charges} 层：下一次混乱箭施法加快 {castPct}%，或下一次火焰之雨立即落下",
       "ruinousBrand": "剩余 {charges} 次复制：直接法术在此复制 {otherPct}% 伤害；若此目标也是主目标则复制 {selfPct}%",
       "duskfireClaim": "目标死亡时获得 {value} 点毁灭",
@@ -3280,6 +3313,7 @@ export const zh_CN: EnTranslations = {
       "lock": "锁定玩家框"
     },
     "partyFrames": {
+      "header": "队伍",
       "section": "队伍和团队框体",
       "optionsSection": "队伍框体选项",
       "unlock": "移动队伍和团队框体",
@@ -3778,6 +3812,15 @@ export const zh_CN: EnTranslations = {
       "subtitle": "本服务器的公会",
       "rosterTitle": "查看{guild}的成员名单",
       "back": "返回",
+      "filters": "看板筛选",
+      "newPlayerFriendly": "新手友好",
+      "newPlayerFriendlyTitle": "这个公会欢迎新玩家",
+      "filterNewPlayersTitle": "只显示欢迎新玩家的公会",
+      "filterEmpty": "还没有公会向新玩家敞开大门。",
+      "showAll": "显示全部公会",
+      "officersOnline": "官员在线",
+      "officersOnlineLabel": "在线官员：{names}",
+      "officerEntry": "{name} ({rank})",
       "popupTitle": "公会告示柱",
       "close": "关闭"
     },
@@ -4050,7 +4093,7 @@ export const zh_CN: EnTranslations = {
       },
       "roster": {
         "seats": "{count} / {cap} 席位",
-        "expand": "扩充名册（+{seats} 席位，{price}）",
+        "expand": "扩充名册",
         "maxed": "名册已达最大规模",
         "confirm": "花费 {price} 为公会名册扩充 {seats} 个席位？金币从你自己的钱包扣除，不予退还。",
         "confirmAction": "扩充",
@@ -4064,7 +4107,6 @@ export const zh_CN: EnTranslations = {
       }
     },
     "gathering": {
-      "title": "采集",
       "mining": "采矿",
       "logging": "伐木",
       "herbalism": "草药学",
@@ -4248,9 +4290,7 @@ export const zh_CN: EnTranslations = {
       "noviceBody": "每收成一次作物，耕作技能都会提升。在任意田畦播下种子即可开始。"
     },
     "archetypeTitle": {
-      "label": "称号",
-      "none": "无",
-      "hobbyLabel": "爱好"
+      "none": "无"
     },
     "archetypePair": {
       "engineering+alchemy": "爆破师",
@@ -4420,7 +4460,9 @@ export const zh_CN: EnTranslations = {
       "hobbyLabel": "爱好：{craft}",
       "majorsLabel": "主修：{a}和{b}",
       "pairsHeld": "已持有组合：{count}",
-      "returnsLabel": "回归：{count}"
+      "returnsLabel": "回归：{count}",
+      "retentionFooter": "重置专业后保留60%的技能。",
+      "tutorialLink": "专业教程"
     },
     "crafting": {
       "title": "制作",
@@ -4455,6 +4497,7 @@ export const zh_CN: EnTranslations = {
       "vaultUnreachable": "此处无法使用材料仓库。",
       "craftFeeLine": "制作费：每件 {fee}",
       "empty": "尚无已知配方。",
+      "materialsFooter": "仓库中的材料会自动取用。可在制作站学习更多配方。",
       "resultAria": "制作{name}",
       "craftedToast": "已制作:{name}",
       "craftedToastQty": "已制作:{name} x{qty}",
@@ -4516,7 +4559,7 @@ export const zh_CN: EnTranslations = {
       "noBagSpace": "背包空间不足，无法存放制作的物品。",
       "dailyLimit": "该物品每天只能制作一次。",
       "dailyLimitRetry": "该物品每天只能制作一次。{duration}后可再次制作。",
-      "oncePerDay": "Once per day",
+      "oncePerDay": "每天一次",
       "skillReqLine": "需要{craft} {skill}",
       "difficultyFull": "完整技能成长",
       "difficultyReduced": "技能成长减少",
@@ -4556,6 +4599,9 @@ export const zh_CN: EnTranslations = {
       "commissionToggleHint": "将绑定给交易中第一个收到它的角色。",
       "commissionUnbound": "委托制品：将绑定给第一位收货人",
       "commissionBound": "委托制品：已绑定给收货人"
+    },
+    "marketWindow": {
+      "mixedListingsFooter": "商人会补充普通商品；玩家上架的物品会以其要价并列显示。"
     },
     "itemMenu": {
       "use": "使用",
@@ -4991,6 +5037,10 @@ export const zh_CN: EnTranslations = {
       "ownedTooltipStatus": "已收录于圣物库",
       "missingTooltipStatus": "尚未获得",
       "firstFindClears": "首次获得于第 {count} 次通关",
+      "foundBy": "由 {names} 发现",
+      "finderWithDate": "{name}（{date}）",
+      "sharedScopeNote": "账号下所有角色共享",
+      "sharedScopeHint": "账号内任一角色找到的圣物也会在此填满该页。",
       "unlockToast": "圣物已收录：{name}",
       "illuminateBanner": "页面已点亮：{name}",
       "illuminateToast": "{name} 上的每一件圣物均已填满。",
@@ -5124,6 +5174,10 @@ export const zh_CN: EnTranslations = {
       "progressAria": "进度：{current}/{target}",
       "renownChip": "{renown} 名望",
       "earnedDate": "获得于 {date}",
+      "earnedBy": "由 {names} 获得",
+      "earnerWithDate": "{name}（{date}）",
+      "accountScopeNote": "账号下所有角色共享",
+      "accountScopeHint": "账号内任一角色完成的功业在此同样算达成，且书中会记下是谁完成的。",
       "featRibbon": "壮举",
       "hiddenBadge": "隐藏",
       "titleChip": "头衔奖励",
@@ -5170,8 +5224,35 @@ export const zh_CN: EnTranslations = {
       "toWorld": "世界地图",
       "toZone": "地区地图",
       "toInstance": "副本地图",
-      "toggleAria": "在世界地图和地区地图之间切换",
+      "toggleAria": "在世界地图、地区地图和副本地图之间切换",
       "levels": "等级 {min} 到 {max}"
+    },
+    "mapAtlas": {
+      "level": "等级 {level}",
+      "landmarkCount": "{count} 个地标",
+      "filtersAria": "地图图层",
+      "filters": {
+        "quests": "任务",
+        "gather": "采集",
+        "dungeons": "地下城",
+        "services": "服务",
+        "players": "玩家"
+      },
+      "trackedQuests": "追踪中的任务",
+      "noTrackedQuests": "没有追踪中的任务",
+      "availableNearby": "附近可接任务",
+      "noNearbyQuests": "附近没有可接任务",
+      "distance": "{distance} 码",
+      "showRoute": "显示路线",
+      "untrack": "取消追踪",
+      "track": "追踪",
+      "legend": {
+        "dungeon": "地下城",
+        "ore": "矿石",
+        "herb": "草药",
+        "mail": "邮箱",
+        "passage": "通道"
+      }
     },
     "arenaGate": {
       "minLevelNote": "需要等级 {level}"
@@ -5191,6 +5272,7 @@ export const zh_CN: EnTranslations = {
       "tabBrowse": "浏览",
       "tabSell": "出售",
       "tabActivity": "我的动态",
+      "tabHistory": "销售记录",
       "tabsLabel": "$WOC 交易所分区",
       "loading": "正在加载交易所...",
       "loadFailed": "无法连接交易所，请稍后再试。",
@@ -5215,6 +5297,16 @@ export const zh_CN: EnTranslations = {
       "colCurrentBid": "当前出价",
       "colBuyNow": "一口价",
       "colTimeLeft": "剩余时间",
+      "colBuyer": "买家",
+      "colSoldAt": "Sold",
+      "colSalePrice": "成交价",
+      "colSaleType": "Type",
+      "saleTypeAuction": "拍卖",
+      "saleTypeBuyNow": "Buy now",
+      "saleTypeDirected": "定向出售",
+      "saleTypeUnknown": "未知",
+      "historyEmpty": "暂无销售记录。",
+      "historyError": "无法加载销售记录。",
       "reserveMet": "已达底价",
       "reserveNotMet": "未达底价",
       "yourListing": "你的挂单",
@@ -6107,6 +6199,7 @@ export const zh_CN: EnTranslations = {
       "framesMoveBodyEditFrames": "你的框体、目标框体和队伍框体都可以移动。每个框体角上都有一个小小的移动按钮：解开它，把框体拖到你想要的位置，再锁上，这样一次误点就挪不动它。界面选项里“头像框”标签页顶部的“编辑框体”会一次松开界面的其余部分，这三个框体也随之一起松开：动作条、施法条、挥击条、经验条、小地图、按钮栏、宠物框体、姿态条、增益行与减益行，还有“愿望单提醒”小标签，松开期间每一件都挂着自己的名牌。如果挪到了让你后悔的地方，同一个“头像框”标签页底部的“恢复默认”会把它们统统弹回最初的位置。",
       "framesGovernedExtra": "“编辑框体”还会一并松开下方的追踪器堆栈(你追踪的任务及其目标、你的功绩进度、你的圣物库页面、你所在的探秘、你正在参与的任何裂隙，以及你正在追踪的配方或委托)、宠物框体旁的宠物动作条、显示你对附近敌人所施减益的“目标减益”框体、圣骑士的“虔诚”勋章、术士的“痛苦资源条”、法术触发浮层、双持武器时的副手挥击条，以及带标签页的伤害统计窗口，松开期间每一件都挂着自己的名牌。",
       "framesGovernedAuraTracks": "“编辑框体”还会松开六条可选的光环轨道，前提是你已在同一“界面”选项的“战斗”页中开启它们：“我的增益”轨道、“防御性冷却”轨道、“我的护盾”轨道、“攻击性冷却”轨道、“移动与潜行”轨道，以及“我给队友的增益”轨道。所有轨道默认关闭，松开期间每一条都挂着自己的名牌。",
+      "framesGovernedTalkingHead": "“编辑框体”也会解锁对话面板：当某个 NPC 不在你的视野内时，它承载该 NPC 说出的台词；处于解锁状态时它会显示自己的名称标签。",
       "barsTitle": "各类条、计时与战斗文字",
       "barsBody": "你施法或引导时，施法条会出现在屏幕中央、动作条正上方，并带着法术的名称与剩余时间。你的目标在它自己的框体上也有一条施法条，好让你看清接下来会发生什么并作出应对。\n\n施法条下方是一条细细的挥击条，它在你两次武器挥击之间填充，让近战或远程攻击者看清下一次自动攻击何时落下。\n\n你的经验条横贯动作条下方的整个宽度，被刻成一段一段，其中较亮的一截表示你已经存下的休息经验。\n\n潜入水下时，屏幕顶部会出现一条蓝色的呼吸条。头没在水里时它会一直下降，耗尽后会闪红并让你开始溺水，而你一浮出水面它就迅速回满。空格键让你上浮，下潜键（默认为 Ctrl）带你潜得更深。\n\n伤害与治疗会以小小的数字从命中之处向上飘起，让你不必读文字也能看懂一场战斗。聊天框里的“战斗”标签页保留着完整的文字记录。",
       "aurasTitle": "增益与减益",
@@ -6464,6 +6557,7 @@ export const zh_CN: EnTranslations = {
       "formsNote": "德鲁伊靠变形作战。大多数德鲁伊技能都归属于某一种形态，因此你当前所处的形态决定了你能施放什么，而变形本身会消耗少量法力。无论是否身处战斗，你都可以随时变形，次数不限。",
       "formsAutoUnshift": "变身时施放治疗或伤害法术会自动为你解除变身。以这种方式离开形态不消耗法力，也不占用公共冷却时间，因此瞬发法术会在你按下的那一刻释放。重新变身是普通技能，依然消耗法力并占用公共冷却时间。",
       "formsMoonwing": "平衡系德鲁伊还会多得到一种形态：枭兽形态，也就是平衡德鲁伊作战时所用的施法形态。它是唯一保留法术的野兽形态，而你的魔杖也只在这个形态或你普通的施法形态下才能使用。",
+      "formsWolfEngage": "狼以巨熊冲锋开战，随即变为狼形态钉制目标，未潜行时用扑击拉近距离，再用扑倒把敌人钉在原地。",
       "formLine": {
         "form_bear": "坦克形态：厚实的兽皮，以怒气取代法力，还有额外的威胁值，让敌人始终朝你挥拳。",
         "form_cat": "近战输出形态：像盗贼一样使用能量与连击点，威胁值也低得多。",
@@ -6993,7 +7087,7 @@ export const zh_CN: EnTranslations = {
     "deedsPage": {
       "intro": "功绩之书记录着你在这个世界所做的一切，从走出新手山谷的第一步，到王国所能提供的最艰难的战斗。一边游玩一边赢得功绩，佩戴它们授予的头衔，看着你的名望不断攀升。",
       "howHeading": "功绩如何运作",
-      "howBody": "功绩以单个角色为单位逐一赢得并留存，因此你所扮演的每一位英雄都会各自积累自己的功绩之书；只有王国的排行榜才会汇总你所扮演的所有角色的名望，且每个功绩只计一次。每个功绩都在游戏内的功绩之书中清楚写明它的要求，让你始终知道该追求什么；你还可以对心仪的功绩设置追踪，让它们在你游玩时时刻不离视线。少数功绩会保持隐秘，只有在你赢得它们之后才会揭晓。这本书还讲求诚实：凡是你过往的记录足以证明的，它都会当场记上，因此老玩家绝不会翻开一页空白；只有计数类的功绩才从零开始累计。",
+      "howBody": "功业由每个角色各自完成，但功业之书由账号内所有角色共享：任一角色完成的功业对所有角色都算达成，书中会记下是谁在何时完成的，它奖励的称号或边框也可由你的任何角色佩戴。领域排行榜以同样的方式汇总你的声望，每项功业只计一次。每项功业都在游戏内的功业之书中清楚写明要求，让你始终知道该追求什么，还可以把想要的功业加入关注，在游玩时随时留意。少数功业保持隐秘，只有在你达成后才会显现。这本书也会保持诚实：凡是你过去的记录能够证明的，都会当场记入，因此老玩家翻开时绝不会是空白一页；只有计数类功业会重新开始计数。",
       "renownHeading": "名望",
       "renownBody": "名望是功绩之书背后的分数。你所获得的每一项功绩都值一个固定的数额，而你的总数只会上升，因此清闲的一周绝不会让你失去阵地。其中少数靠的是运气而非本事，另一些收藏类功绩本身即是回报，而壮举则是另一种荣誉，所以这几类都不值任何名望。没有名望的功绩仍计入你这本书的完成度；它们只是从不计分。壮举是唯一的例外，被完全排除在计数之外。",
       "rewardsHeading": "头衔与边框",
@@ -7031,7 +7125,7 @@ export const zh_CN: EnTranslations = {
     "reliquaryPage": {
       "intro": "圣物库是你已收录的独特战利品博物馆：地下城追逐装备、专业奖杯、坐骑、武器外观与头衔。它与功绩之书的关系，就像奖杯厅与成就簿的关系。",
       "howHeading": "收藏如何运作",
-      "howBody": "在游戏中打开圣物库（默认 Shift+X）。每个架上有多页独特圣物。角色首次获得该件时填满剪影；一页上的圣物全部填满时点亮该页。少数页面标注“绝版”或“专属”：它们不计入达成，不会阻碍书架或全库的完成。实时发现会弹出提示并刷新已打开的窗口；进度按角色计算，武器外观除外（账号外观）。",
+      "howBody": "在游戏中打开圣物库（默认 Shift+X）。每个架上有多页独特圣物。账号内任一角色首次获得该件时填满剪影；一页上的圣物全部填满时点亮该页。少数页面标注“绝版”或“专属”：它们不计入达成，不会阻碍书架或全库的完成。实时发现会弹出提示并刷新已打开的窗口；进度由账号内所有角色共享，一个角色找到的圣物会为所有角色填满该页。",
       "ranksHeading": "策展人等级",
       "ranksBody": "策展人等级随已收录的独特圣物上升，仅授予装饰性头衔与边框。不会提供战斗强度、掉落率或保底。账号武器外观不计策展人等级，因此声望保持角色持久。绝版与专属页面上的圣物同样不计入等级。",
       "retiredTag": "绝版",
@@ -7256,7 +7350,7 @@ export const zh_CN: EnTranslations = {
       "matFmt": "{name}×{count}",
       "outputFmt": "{name}×{count}",
       "comboReq": "需要{a}与{b}",
-      "oncePerDay": "Once per day",
+      "oncePerDay": "每日一次",
       "effectFood": "食用后在{seconds}秒内恢复{amount}点生命值。",
       "effectWellFed": "吃完后进入精神饱满状态：{stat}+{value}，持续{minutes}分钟。",
       "effectWellFedAura": "吃完后获得{aura}，持续{minutes}分钟。",
@@ -11899,7 +11993,7 @@ export const zh_CN: EnTranslations = {
       },
       "cat_form": {
         "name": "狼形态",
-        "description": "将你化为一头狼：敏捷随你的等级提升，攻击强度 +8 外加每级 2 点，你的攻击消耗能量与连击点，并且你产生的威胁降低 29%。再次施放即可变回施法形态。"
+        "description": "将你化为一头狼：敏捷随你的等级提升，攻击强度 +8 外加每级 2 点，你的攻击消耗能量与连击点，并且你产生的威胁降低 29%。变为任意形态都会获得疾跃步伐：移动速度提高 60%，持续 3 秒，每 20 秒一次。再次施放即可变回施法形态。"
       },
       "claw": {
         "name": "裂爪",
@@ -11964,7 +12058,15 @@ export const zh_CN: EnTranslations = {
       },
       "pounce": {
         "name": "匿袭",
-        "description": "一个潜行开场技，昏迷目标 2 秒。奖励 1 个连击点。仅限狼形态。"
+        "description": "一个潜行开场技，昏迷目标 2 秒。奖励 1 个连击点。仅限狼形态。 未潜行时，此按钮为扑击。"
+      },
+      "lunge": {
+        "name": "扑击",
+        "description": "扑向最远12码外的敌人，造成60%武器伤害并获得1个连击点。仅限狼形态使用。"
+      },
+      "hamstring_bite": {
+        "name": "扑倒",
+        "description": "终结技，昏迷目标 1 秒外加每点连击点 1 秒（5 点连击点：6 秒）。仅限狼形态使用。"
       },
       "insect_swarm": {
         "name": "蜇刺虫群",
@@ -12678,7 +12780,7 @@ export const zh_CN: EnTranslations = {
       },
       "bear_charge": {
         "name": "巨熊冲锋",
-        "description": "冲向一名敌人，生成9点怒气并将其昏迷1秒。射程8-25码。仅限巨熊形态使用。"
+        "description": "冲向一名敌人，生成9点怒气并将其昏迷1秒。之后3秒内，狼形态无需消耗并钉制目标，使其减速50%，持续4秒。射程8-25码。仅限巨熊形态使用。"
       },
       "demoralizing_roar": {
         "name": "怯懦咆哮",
@@ -12686,7 +12788,7 @@ export const zh_CN: EnTranslations = {
       },
       "prowl": {
         "name": "潜行",
-        "description": "在狼形态下进入潜行状态，移动速度降低 5%。无法在战斗中使用。"
+        "description": "在狼形态下进入潜行状态。无法在战斗中使用。"
       },
       "rake": {
         "name": "剐削",

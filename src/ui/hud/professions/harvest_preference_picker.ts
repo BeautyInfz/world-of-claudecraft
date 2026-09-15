@@ -59,6 +59,7 @@ import type { HarvestPreference } from '../../../sim/professions/harvest_prefere
 import { itemDisplayName } from '../../entity_i18n';
 import { FOCUS_KEY_ATTR } from '../../focus_restore';
 import { t } from '../../i18n';
+import { iconDataUrl } from '../../icons';
 import { knownItemDef } from '../../known_item';
 import { rovingTarget } from '../../roving_index';
 import { renderGatheringSourceDetail } from './gathering_source_painter';
@@ -133,17 +134,29 @@ export function renderHarvestPreferencePicker(
   const root = document.createElement('div');
   root.className = 'harvest-preference';
 
+  const header = document.createElement('div');
+  header.className = 'harvest-preference-header ui-win-head';
+  const emblem = document.createElement('img');
+  emblem.className = 'harvest-preference-emblem';
+  emblem.src = iconDataUrl('item', 'field_kit');
+  emblem.alt = '';
+  emblem.draggable = false;
+  header.appendChild(emblem);
   const title = document.createElement('div');
-  title.className = 'harvest-preference-title';
+  title.className = 'harvest-preference-title ui-win-title';
   title.id = titleId;
   title.textContent = t('hudChrome.harvestPreference.title');
-  root.appendChild(title);
+  header.appendChild(title);
+  root.appendChild(header);
+  const body = document.createElement('div');
+  body.className = 'harvest-preference-body';
+  root.appendChild(body);
 
   if (view.currentUnavailableItemId !== null) {
     const note = document.createElement('div');
     note.className = 'harvest-preference-current-unavailable';
     note.textContent = currentUnavailableText(view.currentUnavailableItemId);
-    root.appendChild(note);
+    body.appendChild(note);
   }
 
   const hint = document.createElement('div');
@@ -152,7 +165,7 @@ export function renderHarvestPreferencePicker(
   hint.setAttribute('aria-live', 'polite');
   hint.textContent = t('hudChrome.harvestPreference.pickHint');
   hint.hidden = view.selectedToken !== null;
-  root.appendChild(hint);
+  body.appendChild(hint);
 
   let draftToken: string | null = view.selectedToken;
   let terminal = false;
@@ -160,14 +173,14 @@ export function renderHarvestPreferencePicker(
 
   const applyButton = document.createElement('button');
   applyButton.type = 'button';
-  applyButton.className = 'btn';
+  applyButton.className = 'btn ui-btn ui-btn--red';
   applyButton.setAttribute(FOCUS_KEY_ATTR, 'apply');
   applyButton.textContent = t('hudChrome.harvestPreference.applyButton');
   applyButton.disabled = draftToken === null;
 
   const cancelButton = document.createElement('button');
   cancelButton.type = 'button';
-  cancelButton.className = 'btn btn-secondary';
+  cancelButton.className = 'btn ui-btn';
   cancelButton.setAttribute(FOCUS_KEY_ATTR, 'cancel');
   cancelButton.textContent = t('hudChrome.harvestPreference.cancelButton');
 
@@ -240,12 +253,23 @@ export function renderHarvestPreferencePicker(
     const button = document.createElement('button');
     button.type = 'button';
     button.setAttribute('role', 'radio');
-    button.className = 'harvest-preference-row';
+    button.className = 'harvest-preference-row ui-card';
     button.dataset.harvestChoice = row.token;
     button.setAttribute(FOCUS_KEY_ATTR, `radio:${row.token}`);
     button.setAttribute('aria-checked', row.token === view.selectedToken ? 'true' : 'false');
     button.tabIndex = index === tabStop ? 0 : -1;
-    button.textContent = rowLabelText(row.itemId);
+    const art = document.createElement('img');
+    art.className = 'harvest-preference-icon';
+    art.src = iconDataUrl('item', row.itemId ?? 'field_kit');
+    art.alt = '';
+    art.draggable = false;
+    const label = document.createElement('span');
+    label.className = 'harvest-preference-label';
+    label.textContent = rowLabelText(row.itemId);
+    const indicator = document.createElement('span');
+    indicator.className = 'harvest-preference-radio';
+    indicator.setAttribute('aria-hidden', 'true');
+    button.append(art, label, indicator);
     button.addEventListener('click', () => selectRow(index, false));
     button.addEventListener('keydown', (e) => {
       const ke = e as KeyboardEvent;
@@ -258,13 +282,13 @@ export function renderHarvestPreferencePicker(
     list.appendChild(li);
     buttons.push(button);
   });
-  root.appendChild(list);
+  body.appendChild(list);
 
   if (sourceDetail) {
     sourceDetail.className = 'harvest-preference-source-container';
     const initialRow = view.rows.find((row) => row.token === view.selectedToken);
     refreshSourceDetail(sourceDetail, initialRow?.itemId ?? null);
-    root.appendChild(sourceDetail);
+    body.appendChild(sourceDetail);
     // Associate the already-checked row with the freshly painted detail, the
     // same content-before-focus order selectRow keeps (no focus move happens
     // here; this paint has not moved focus at all yet). All (itemId null)
@@ -276,7 +300,7 @@ export function renderHarvestPreferencePicker(
   }
 
   const actions = document.createElement('div');
-  actions.className = 'harvest-preference-actions';
+  actions.className = 'harvest-preference-actions ui-win-foot';
   applyButton.addEventListener('click', () => {
     if (!canAct() || draftToken === null) return;
     terminal = true;

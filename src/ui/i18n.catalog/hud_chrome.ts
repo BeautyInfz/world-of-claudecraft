@@ -590,12 +590,16 @@ export const hudChromeStrings = {
       energy: 'Energy',
     },
   },
-  // On-screen quest tracker. The "(N)" count shown beside the header while the
-  // tracker is collapsed (the number is spliced in via formatNumber), plus the
-  // header button's state-aware hover/title hint (Collapse while expanded,
-  // Expand while collapsed).
+  // On-screen quest tracker. The "(N)" count beside a collapsed deed/Reliquary
+  // header (the number is spliced in via formatNumber), the bare "4 / 8" value
+  // column the quest tracker's counted objective rows carry opposite their
+  // label, plus the header button's state-aware hover/title hint (Collapse
+  // while expanded, Expand while collapsed).
   questTracker: {
     count: '({count})',
+    // Both numbers arrive already localized; a locale that writes the fraction
+    // tight ("4/8") drops the spaces here.
+    objectiveValue: '{current} / {total}',
     collapseHint: 'Collapse quest tracker',
     expandHint: 'Expand quest tracker',
   },
@@ -1344,6 +1348,10 @@ export const hudChromeStrings = {
     noteLabel: 'Board note',
     notePlaceholder: 'Tell aspiring members what your guild is looking for',
     save: 'Save',
+    // Guild board categories (src/sim/guild_board_category.ts): the
+    // new-player-friendly opt-in in the same editor, and its helper line.
+    newPlayerFriendlyLabel: 'New player friendly',
+    newPlayerFriendlyHint: "Shown on the recruits' board at the Proving Shore signpost.",
     // The unguilded viewer's own standing pledge (social window guild tab).
     yourPledge: 'Your pledge: {guild}',
     since: 'Pledged {date}',
@@ -1394,6 +1402,9 @@ export const hudChromeStrings = {
   // time, beside a real control (a keybind, a tab, a row, the history
   // arrow), never a wall of text. Wordy (M16): the five non-Latin fills
   // land in this same change.
+  talkingHead: {
+    label: 'Dialogue',
+  },
   hubLesson: {
     target: 'Target the dummy to begin.',
     openWindow: 'Open {meters}.',
@@ -2227,6 +2238,9 @@ export const hudChromeStrings = {
   // hardware glyphs in gamepad_map and need no translation.
   controller: {
     title: 'Controller',
+    device: 'Connected Device',
+    deviceConnected: 'Connected',
+    deviceDisconnected: 'No controller detected',
     glyphStyle: 'Button Labels',
     glyphStyleAuto: 'Auto',
     glyphStyleXbox: 'Xbox',
@@ -2256,7 +2270,7 @@ export const hudChromeStrings = {
     crossHotbarResetLayout: 'Reset Cross Hotbar',
     crossHotbarPosition: '{trigger} + {button}',
     crossHotbarOwnsButtons:
-      'The triggers and the d-pad belong to the cross hotbar while it is on, so they are set up below rather than here.',
+      'The triggers modify the cross hotbar while it is on. D-pad directions remain editable here for menus and movement.',
     cancelAction: 'Cancel / Back',
     subcommandsAction: 'Subcommands / Map',
     cycleHudAction: 'Cycle Interface',
@@ -2267,10 +2281,16 @@ export const hudChromeStrings = {
     crossHotbarDisplayMinimal: 'Only While Held',
     crossHotbarArrangeChord: '{bumper} + {button}',
     crossHotbarCarrying: 'Carrying {action}: confirm on a cell to place it, cancel to put it back.',
+    // The button words stay generic (confirm / cancel): both are rebindable and
+    // brand-dependent, and the chord that leaves the mode is the one the player
+    // just pressed to enter it, so the line names what each press DOES instead.
     crossHotbarEditHint:
-      'Arranging: confirm picks up from a cell or the spellbook and drops on a cell, cancel clears one.',
+      'Arranging · d-pad moves · confirm picks up and places · cancel clears a cell',
     crossHotbarEditHelp:
       'Hold the left bumper and press the top face button to arrange the bar with the controller.',
+    // The pad hint strip and the micro-menu legend: a controller's replacement
+    // for the keyboard's implicit key knowledge. The glyph beside each label is
+    // a hardware name from gamepad_map, so only the action words are keyed.
   },
   // Performance overlay (the customizable in-game stats panel + its Options
   // sub-view). Player-facing, so every label is a key here; the live numbers in
@@ -2746,6 +2766,22 @@ export const hudChromeStrings = {
     showPlaytimeAria: 'Show time played',
     hidePlaytimeAria: 'Hide time played',
   },
+  charSidebar: {
+    label: 'Character details',
+    subtitle: 'Level {level} {className} . {archetype} . Hobby: {hobby}',
+    subtitleNoHobby: 'Level {level} {className} . {archetype}',
+    stats: 'Stats',
+    progression: 'Progression',
+    skills: 'Skills',
+    gathering: 'Gathering',
+    crafting: 'Crafting',
+    openProfessions: 'Open Professions',
+  },
+  questLog: {
+    completed: 'Completed',
+    zoneSummary: '{count} ({ready} ready)',
+    shiftHint: 'Shift-click a quest to link it in chat.',
+  },
   // Character-screen stat tooltips (hover a stat on the C panel). The stat NAMES
   // reuse itemUi.stats.*; only these descriptions / effect lines / notes are new.
   // The breakdown numbers are recomputed live from the player's current stats
@@ -2935,6 +2971,14 @@ export const hudChromeStrings = {
   // carry the real distinct forms only in the locales that need them (ru_RU). The
   // count is auto-supplied as {count}. Keep all four categories present per base.
   plurals: {
+    // The signpost guild board's live count line ({count} pre-formatted): a
+    // screen reader hears how many guilds a read (or a filter flip) produced.
+    guildBoardShown: {
+      one: '{count} guild shown',
+      few: '{count} guilds shown',
+      many: '{count} guilds shown',
+      other: '{count} guilds shown',
+    },
     // The commission board's crafter's-record counts (Masterwrought phase
     // 14): lifetime masterworks crafted and legendaries forged, off the
     // accepter's deed stat counters.
@@ -3094,6 +3138,7 @@ export const hudChromeStrings = {
   // position/screenshot plus a free-text description and posts to the server.
   bugReport: {
     menuButton: 'Report a Bug',
+    online: 'Online',
     realm: 'World',
     character: 'Character',
     position: 'Position',
@@ -4173,6 +4218,9 @@ export const hudChromeStrings = {
       'Your next spell from the other elemental school grants Elemental Convergence',
     hunterFerocity: '{stacks} Pack Ferocity: your pet deals {pct}% more damage',
     cooldownCap: '{used} of {cap} sec of cooldown reduction used in this window',
+    // wordy (M16): filled in the five non-Latin locales in this change.
+    bruinRushWindow:
+      'Wolf Form costs no mana and Pins your Bruin Rush target, slowing it by {pct}% for {sec} sec',
     funeralHarvestLock: 'Funeral Harvest cannot create another Soul Fragment yet',
     leadenHexLock: 'Leaden Hex cannot root this target again yet',
     forbiddenReflectionReady: 'Your next eligible Warlock cooldown can be cast again',
@@ -4317,7 +4365,9 @@ export const hudChromeStrings = {
       'Damage taken reduced by {pct}%. {mana}% of all damage you deal is converted to mana',
     stealth: 'Concealed; movement speed reduced by {pct}%',
     formBear: 'Bruin Form: increased health and armor',
-    formCat: 'Wolf Form: melee damage and energy',
+    // wolfForm replaced formCat when the Wolf Form mobility pass added the
+    // resolved {pct} (a reword is a new key: the old rows were retired).
+    wolfForm: 'Wolf Form: melee damage and energy; movement speed increased by {pct}%',
     formTravel: 'Fleet Form: movement speed increased by {pct}%',
     formFireball: 'Ember Form: movement speed increased by {pct}%; attacks and spells are disabled',
     formMoonkin:
@@ -4517,6 +4567,7 @@ export const hudChromeStrings = {
     lock: 'Lock player frame',
   },
   partyFrames: {
+    header: 'Party',
     section: 'Party and Raid Frames',
     // The Frames tab's one labelled subsection (options window): every
     // declarative row there tunes the party frames now. Wordy (M16):
@@ -5323,6 +5374,23 @@ export const hudChromeStrings = {
     subtitle: 'Guilds of the realm',
     rosterTitle: 'View the roster of {guild}',
     back: 'Back',
+    // The category filter strip above the ranking (one tick box per
+    // category, src/sim/guild_board_category.ts) and the row chip a guild
+    // that opted in wears; the Proving Shore signpost opens with the box
+    // ticked. filterEmpty + showAll are the filtered board's empty state.
+    filters: 'Board filters',
+    newPlayerFriendly: 'New player friendly',
+    newPlayerFriendlyTitle: 'This guild welcomes new players',
+    filterNewPlayersTitle: 'Show only guilds that welcome new players',
+    filterEmpty: 'No guild has opened its doors to new players yet.',
+    showAll: 'Show all guilds',
+    // The live "officers online" dot beside a guild name: the legend in the
+    // filter strip, the tooltip title, and the dot's accessible name
+    // ({names} is a localized list of "Name (Rank)" entries).
+    officersOnline: 'Officers online',
+    officersOnlineLabel: 'Officers online: {names}',
+    // One entry of that list: the officer's name and localized rank.
+    officerEntry: '{name} ({rank})',
     // The 'listings' arm of the noticeboard event opens the signpost popup
     // (src/ui/noticeboard_popup.ts). Guild names and notes are world data,
     // spliced verbatim like player names, never translated.
@@ -5781,12 +5849,13 @@ export const hudChromeStrings = {
     // count against the guild's cap, the Guild Master's buy button and its
     // confirm prompt, the guild-wide success line, and the refusal codes the
     // server answers with (hud.ts renders them from result_code_keys.ts).
-    // {seats} is the page size, {price} the formatted page price, {cap} the
-    // seat cap, {name} the buyer's character name spliced verbatim.
+    // {seats} is the page size, {price} the page price (the confirm prompt
+    // splices coin-icon markup into it, so the button itself carries neither),
+    // {cap} the seat cap, {name} the buyer's character name spliced verbatim.
     // Wordy, M16: the five non-Latin fills land in this same change.
     roster: {
       seats: '{count} of {cap} seats',
-      expand: 'Expand roster (+{seats} seats for {price})',
+      expand: 'Expand roster',
       maxed: 'The roster is at its largest size',
       confirm:
         'Expand the guild roster by {seats} seats for {price}? The gold comes from your own purse and is not refunded.',
@@ -5803,7 +5872,6 @@ export const hudChromeStrings = {
   // Gathering proficiency section on the character sheet (#1124). Profession
   // display names mirror src/sim/content/professions.ts (GatheringProfessionId).
   gathering: {
-    title: 'Gathering',
     mining: 'Mining',
     logging: 'Logging',
     herbalism: 'Herbalism',
@@ -6278,9 +6346,7 @@ export const hudChromeStrings = {
   // fallback, just untitled), and `hobbyLabel` heads the hobby line (#1294).
   // The title NAMES live under archetypePair below, keyed by canonical pair id.
   archetypeTitle: {
-    label: 'Title',
     none: 'None',
-    hobbyLabel: 'Hobby',
   },
   // Pair-named archetype titles (Professions 2.0): one named title per
   // selectable adjacent-pair attunement, keyed by the CANONICAL PAIR ID from
@@ -6550,6 +6616,8 @@ export const hudChromeStrings = {
     majorsLabel: 'Majors: {a} and {b}',
     pairsHeld: 'Pairs held: {count}',
     returnsLabel: 'Returns: {count}',
+    retentionFooter: 'Returns on respec: 60% of skill kept.',
+    tutorialLink: 'Profession tutorial',
   },
   // Crafting window (#1127): the minimal common-tier crafting action, one row
   // per known recipe, a Craft button enabled only when every reagent is held.
@@ -6623,6 +6691,8 @@ export const hudChromeStrings = {
     // the row's Create and Create All controls can submit multi-craft batches.
     craftFeeLine: 'Craft fee: {fee} each',
     empty: 'No recipes known yet.',
+    materialsFooter:
+      'Materials in your vault are drawn automatically. Learn more recipes at the station.',
     resultAria: 'Craft {name}',
     // The SOLE player-visible line for a craft grant (#2430). The grant hub's
     // own 'loot' event no longer prints its "You receive:" line for a craft
@@ -6845,6 +6915,10 @@ export const hudChromeStrings = {
     commissionUnbound: 'Commission piece: binds to the first recipient',
     commissionBound: 'Commission piece: bound to its recipient',
   },
+  marketWindow: {
+    mixedListingsFooter:
+      'The Merchant restocks common goods; player listings sit beside them at their asking price.',
+  },
   // Bag-item context menu verbs (Professions 2.0): the row labels for
   // the right-click / touch action menu (bag_item_context_menu.ts). The first
   // row mirrors the classic left-click action (equip gear, use everything else);
@@ -6990,8 +7064,8 @@ export const hudChromeStrings = {
     // it: how a piece becomes Perfected is the Perfecting stage's own copy.
     notPerfected: 'Only a Perfected item can bear that enchant.',
     enchantSkillTooLow: 'Your Enchanting skill is too low for that enchant.',
-    // Riftbound bands are forge-only (rift/band_ladder.ts); the enchanting
-    // profession refuses them by id.
+    // Retired deny: bands take ring enchants now (rift/progression.ts). The
+    // string stays so an older server's rift_gear reply still renders.
     riftGear: 'Riftbound bands take Rift gems, not enchants.',
     replaceTag: 'Replaces {enchant}',
     sameEnchantTag: 'Already applied',
@@ -7501,6 +7575,14 @@ export const hudChromeStrings = {
     // slot would invalidate every shipped overlay fill, so the two meanings
     // coexist and this note is the guard.
     firstFindClears: 'First found on clear {count}',
+    // The account-wide Reliquary (src/sim/account_ledger.ts): which characters
+    // on the account found the relic (owned-cell tooltip), and the summary
+    // band's scope disclosure beside the count.
+    foundBy: 'Found by {names}',
+    finderWithDate: '{name} ({date})',
+    sharedScopeNote: 'Shared by every character on your account',
+    // The note's tooltip (the wording is jgyy's accountWideHint from PR #3933).
+    sharedScopeHint: 'A relic found by any character on your account fills the page here too.',
     unlockToast: 'Relic catalogued: {name}',
     illuminateBanner: 'Page illuminated: {name}',
     illuminateToast: 'Every relic on {name} is filled.',
@@ -7716,6 +7798,15 @@ export const hudChromeStrings = {
     progressAria: 'Progress: {current} of {target}',
     renownChip: '{renown} Renown',
     earnedDate: 'Earned {date}',
+    // The account-wide Book (src/sim/account_ledger.ts): which characters on
+    // the account earned the deed, each with its earn date where one is
+    // recorded (deeds_window.ts card foot), and the summary band's scope
+    // disclosure (the ranked-surface rule: a re-scoped count names its scope).
+    earnedBy: 'Earned by {names}',
+    earnerWithDate: '{name} ({date})',
+    accountScopeNote: 'Shared by every character on your account',
+    accountScopeHint:
+      'A deed any character on your account accomplishes is earned here too, and the Book names who earned it.',
     featRibbon: 'Feat',
     hiddenBadge: 'Hidden',
     titleChip: 'Title reward',
@@ -7808,6 +7899,39 @@ export const hudChromeStrings = {
     // Hover tooltip over a zone region: its name plus the suggested level band.
     levels: 'Levels {min} to {max}',
   },
+  // World map atlas rail. These labels name visible filters, quest actions,
+  // region facts, and the compact marker legend; wordy values carry same-change
+  // fills in the five non-Latin runtime overlays.
+  mapAtlas: {
+    level: 'Level {level}',
+    landmarkCount: '{count} landmarks',
+    filtersAria: 'Map layers',
+    filters: {
+      quests: 'Quests',
+      gather: 'Gather',
+      dungeons: 'Dungeons',
+      services: 'Services',
+      players: 'Players',
+    },
+    trackedQuests: 'Tracked quests',
+    noTrackedQuests: 'No tracked quests',
+    availableNearby: 'Available nearby',
+    noNearbyQuests: 'No nearby quests',
+    distance: '{distance} yards',
+    showRoute: 'Show Route',
+    // The tracking pair. Both labels live here because the two controls that
+    // flip local quest tracking share them: the atlas rail's Untrack button and
+    // the quest log's per-quest toggle, which is the way back from untracked.
+    untrack: 'Untrack',
+    track: 'Track',
+    legend: {
+      dungeon: 'Dungeon',
+      ore: 'Ore',
+      herb: 'Herb',
+      mail: 'Mail',
+      passage: 'Passage',
+    },
+  },
   // Ranked Arena's minimum-level queue gate (src/sim/social/arena.ts
   // arenaQueueJoin, 1v1/2v2 only): the arena window's disabled-queue note
   // when the local character is below the floor.
@@ -7842,6 +7966,8 @@ export const hudChromeStrings = {
     // "My", said outright: the tab is the viewer's own bids and listings, and
     // the bare "Activity" read as a market-wide feed (Zyzz's dev-test note).
     tabActivity: 'My Activities',
+    // The Sales History tab: every completed sale on the realm, newest first.
+    tabHistory: 'Sales History',
     // The tab strip's own accessible name (the store's 'WOC Store sections'
     // precedent), never the window title twice.
     tabsLabel: '$WOC Exchange sections',
@@ -7889,6 +8015,21 @@ export const hudChromeStrings = {
     colCurrentBid: 'Current bid',
     colBuyNow: 'Buy now',
     colTimeLeft: 'Time left',
+    // The Sales History table columns (Item and Seller reuse the two above).
+    colBuyer: 'Buyer',
+    colSoldAt: 'Sold',
+    colSalePrice: 'Sale price',
+    colSaleType: 'Type',
+    // The sale-type cell values (independent of the filter labels: a filter
+    // reads "Buy now", a completed sale reads its type the same but they
+    // translate separately). An unstamped pre-feature sale reads Unknown.
+    saleTypeAuction: 'Auction',
+    saleTypeBuyNow: 'Buy now',
+    saleTypeDirected: 'Directed',
+    saleTypeUnknown: 'Unknown',
+    // The Sales History faces.
+    historyEmpty: 'No sales recorded yet.',
+    historyError: 'Sales history could not be loaded.',
     reserveMet: 'Reserve met',
     reserveNotMet: 'Reserve not met',
     yourListing: 'Your listing',

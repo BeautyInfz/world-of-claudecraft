@@ -65,7 +65,7 @@ export const ko_KR: EnTranslations = {
       "difficulty": "난이도",
       "name": "이름",
       "spec": "전문화",
-      "bed": "Bed id (optional)"
+      "bed": "경작지 ID (선택 사항)"
     },
     "difficulty": {
       "normal": "일반",
@@ -153,8 +153,8 @@ export const ko_KR: EnTranslations = {
         "description": "채집 전문 기술을 올립니다."
       },
       "farmgrow": {
-        "label": "Ripen crops",
-        "description": "Bring your planted crop beds to their ready time, or one bed by id. Nothing else changes: the outcome was rolled when you planted."
+        "label": "작물 익히기",
+        "description": "심어 둔 모든 경작지 또는 ID로 지정한 경작지 하나를 수확 가능한 시점까지 진행시킵니다. 그 외에는 바뀌지 않습니다. 수확 결과는 심을 때 이미 무작위로 결정되었습니다."
       },
       "teleport": {
         "label": "순간이동",
@@ -902,6 +902,7 @@ export const ko_KR: EnTranslations = {
     },
     "questTracker": {
       "count": "({count})",
+      "objectiveValue": "{current} / {total}",
       "collapseHint": "퀘스트 추적기 접기",
       "expandHint": "퀘스트 추적기 펼치기"
     },
@@ -1243,6 +1244,8 @@ export const ko_KR: EnTranslations = {
       "noteLabel": "게시판 메모",
       "notePlaceholder": "길드가 어떤 동료를 찾는지 알려 주세요",
       "save": "저장",
+      "newPlayerFriendlyLabel": "신규 플레이어 환영",
+      "newPlayerFriendlyHint": "수련의 해안 게시판의 신입 목록에 표시됩니다.",
       "yourPledge": "내 서약: {guild}",
       "since": "{date}에 서약",
       "withdraw": "서약 철회"
@@ -1261,11 +1264,14 @@ export const ko_KR: EnTranslations = {
     "practiceDps": {
       "title": "훈련용 허수아비",
       "liveDps": "{value} DPS",
-      "liveLabel": "This run",
+      "liveLabel": "이번 연습",
       "prompt": "허수아비를 공격하여 측정을 시작하세요",
       "previous": "이전 측정",
-      "runLabel": "Run {index}",
-      "runSummary": "{total} in {time}"
+      "runLabel": "{index}번째 연습",
+      "runSummary": "{time} 동안 {total}"
+    },
+    "talkingHead": {
+      "label": "대화"
     },
     "hubLesson": {
       "target": "먼저 허수아비를 대상으로 삼으세요.",
@@ -1357,9 +1363,9 @@ export const ko_KR: EnTranslations = {
       "utility": "이동 및 은신",
       "friendly": "아군에게 건 내 버프",
       "shields": "내 보호막",
-      "row": "{aura} on {unit}",
+      "row": "{unit}에게 {aura} 적용",
       "selfRow": "{aura}",
-      "mode": "on",
+      "mode": "켜짐",
       "overflow": "{count}개 더 표시되지 않음"
     },
     "targetDots": {
@@ -1729,6 +1735,9 @@ export const ko_KR: EnTranslations = {
     },
     "controller": {
       "title": "컨트롤러",
+      "device": "연결된 장치",
+      "deviceConnected": "연결됨",
+      "deviceDisconnected": "컨트롤러가 감지되지 않음",
       "glyphStyle": "버튼 표시",
       "glyphStyleAuto": "자동",
       "glyphStyleXbox": "Xbox",
@@ -2161,6 +2170,22 @@ export const ko_KR: EnTranslations = {
       "showPlaytimeAria": "플레이 시간 표시",
       "hidePlaytimeAria": "플레이 시간 숨기기"
     },
+    "charSidebar": {
+      "label": "캐릭터 세부 정보",
+      "subtitle": "레벨 {level} {className} . {archetype} . 취미: {hobby}",
+      "subtitleNoHobby": "레벨 {level} {className} . {archetype}",
+      "stats": "능력치",
+      "progression": "진행도",
+      "skills": "기술",
+      "gathering": "채집",
+      "crafting": "제작",
+      "openProfessions": "전문 기술 열기"
+    },
+    "questLog": {
+      "completed": "완료됨",
+      "zoneSummary": "{count}개（완료 {ready}개）",
+      "shiftHint": "Shift를 누른 채 퀘스트를 클릭하면 채팅에 링크됩니다."
+    },
     "statInfo": {
       "fromYour": "당신의 {value} {stat}에서:",
       "names": {
@@ -2274,6 +2299,12 @@ export const ko_KR: EnTranslations = {
       "linkHint": "Shift + 클릭하면 이 아이템을 채팅에 연결합니다."
     },
     "plurals": {
+      "guildBoardShown": {
+        "one": "길드 {count}개 표시 중",
+        "few": "길드 {count}개 표시 중",
+        "many": "길드 {count}개 표시 중",
+        "other": "길드 {count}개 표시 중"
+      },
       "commissionMasterworks": {
         "one": "걸작 {count}점",
         "few": "걸작 {count}점",
@@ -2403,6 +2434,7 @@ export const ko_KR: EnTranslations = {
     },
     "bugReport": {
       "menuButton": "버그 신고",
+      "online": "온라인",
       "realm": "월드",
       "character": "캐릭터",
       "position": "좌표",
@@ -3060,6 +3092,7 @@ export const ko_KR: EnTranslations = {
       "elementalConvergencePrimed": "다음에 다른 원소 계열 주문을 시전하면 원소 융합이 발동합니다",
       "hunterFerocity": "무리의 흉포함 {stacks}중첩: 야수가 입히는 피해가 {pct}% 증가합니다",
       "cooldownCap": "이 구간에서 재사용 대기시간 감소 {used}/{cap}초를 사용했습니다",
+      "bruinRushWindow": "늑대 변신이 마나를 소모하지 않으며 큰곰 돌진 대상을 고정하여 {sec}초 동안 이동 속도를 {pct}% 감소시킵니다",
       "funeralHarvestLock": "장례 수확이 아직 다음 영혼 조각을 생성할 수 없습니다",
       "leadenHexLock": "납빛 주술이 아직 이 대상을 다시 이동 불가로 만들 수 없습니다",
       "forbiddenReflectionReady": "다음 적용 가능한 흑마법사 재사용 기술을 다시 사용할 수 있습니다",
@@ -3083,7 +3116,7 @@ export const ko_KR: EnTranslations = {
       "suddenDeath": "다음 마무리 일격은 분노를 소모하지 않고 생명력 조건을 무시합니다",
       "aoeEcho": "메아리 {charges}회 남음: 단일 대상 기술이 주변 최대 {targets}명에게 {pct}% 피해를 줍니다",
       "sureCrit": "다음 공격 기술 {charges}회가 반드시 치명타로 적중합니다",
-      "temporalEcho": "시전자의 비전 피해가 단일 대상 피해의 {singlePct}%, 광역 피해의 {areaPct}%만큼 당신을 치유합니다",
+      "temporalEcho": "시전자의 비전 피해가 단일 대상 피해의 {singlePct}%, 광역 피해의 {areaPct}%만큼 당신을 치유합니다. 에테르 쇄도와 에테르 화살은 개별 시간의 메아리에 4배 보너스를 적용합니다. 집단 메아리는 같은 양의 치유 예비량을 만들고, 체력이 60% 미만인 표식이 있는 아군에게 잃은 생명력에 따라 나눠 줍니다",
       "arcaneCharge": "비전 충전 {stacks}중첩: 에테르 쇄도의 피해가 {damagePct}% 증가하고 시전이 {castPct}% 빨라지며 마나가 {costMult}배 듭니다",
       "physicalReduction": "받는 물리 피해가 {pct}% 감소합니다",
       "temporalHourglass": "피해에 면역이고 행동할 수 없습니다. 생명력을 회복하고 재사용 대기시간을 가속합니다. 우클릭으로 취소할 수 있습니다.",
@@ -3172,7 +3205,7 @@ export const ko_KR: EnTranslations = {
       "elementalTrance": "받는 피해가 {pct}% 감소합니다. 입힌 모든 피해의 {mana}%가 마나로 전환됩니다",
       "stealth": "은폐 상태, 이동 속도가 {pct}% 감소합니다",
       "formBear": "큰곰 변신: 생명력과 방어도 증가",
-      "formCat": "표범 변신: 근접 피해와 기력",
+      "wolfForm": "늑대 변신: 근접 피해와 기력, 이동 속도가 {pct}% 증가합니다",
       "formTravel": "쾌속 형태: 이동 속도가 {pct}% 증가합니다",
       "formFireball": "화염구 형상: 이동 속도 {pct}% 증가, 공격 및 주문 사용 불가",
       "formMoonkin": "달날개 변신: 주문 공격력이 {pct}%, 방어도가 {armorPct}% 증가합니다",
@@ -3202,7 +3235,7 @@ export const ko_KR: EnTranslations = {
       "fingersOfFrost": "충전 {charges}회 남음: 얼음창이 대상을 빙결 상태로 간주하고 빙결 피해 {pct}%를 줍니다",
       "brainFreeze": "다음 눈보라가 즉시 시전되고 재사용 대기시간을 무시합니다",
       "wintersChill": "충전 {charges}회 남음: 적용 가능한 주문이 이 대상을 빙결 상태로 간주합니다",
-      "icicles": "고드름 {value}/{max}개. {max}개면 빙하 쐐기를 사용할 수 있습니다",
+      "icicles": "고드름 {value}/{max}개. {max}개면 서리 바늘을 사용할 수 있습니다",
       "desolation": "충전 {charges}회 남음: 다음 혼돈의 화살 시전이 {castPct}% 빨라지거나 불의 비가 즉시 떨어집니다",
       "ruinousBrand": "복제 {charges}회 남음: 직접 주문 피해의 {otherPct}%를 이곳에 복제하며, 이곳이 주 대상이면 {selfPct}%를 복제합니다",
       "duskfireClaim": "대상이 죽으면 파멸을 {value} 얻습니다",
@@ -3280,6 +3313,7 @@ export const ko_KR: EnTranslations = {
       "lock": "플레이어 프레임 고정"
     },
     "partyFrames": {
+      "header": "파티",
       "section": "파티 및 공격대 프레임",
       "optionsSection": "파티 프레임 옵션",
       "unlock": "파티 및 공격대 프레임 이동",
@@ -3778,6 +3812,15 @@ export const ko_KR: EnTranslations = {
       "subtitle": "월드의 길드",
       "rosterTitle": "{guild}의 명단 보기",
       "back": "뒤로",
+      "filters": "게시판 필터",
+      "newPlayerFriendly": "신규 플레이어 환영",
+      "newPlayerFriendlyTitle": "이 길드는 신규 플레이어를 환영합니다",
+      "filterNewPlayersTitle": "신규 플레이어를 환영하는 길드만 표시",
+      "filterEmpty": "아직 신규 플레이어에게 문을 연 길드가 없습니다.",
+      "showAll": "모든 길드 보기",
+      "officersOnline": "임원 접속 중",
+      "officersOnlineLabel": "접속 중인 임원: {names}",
+      "officerEntry": "{name} ({rank})",
       "popupTitle": "길드 게시 기둥",
       "close": "닫기"
     },
@@ -4050,7 +4093,7 @@ export const ko_KR: EnTranslations = {
       },
       "roster": {
         "seats": "{count} / {cap} 자리",
-        "expand": "명단 확장 (+{seats}자리, {price})",
+        "expand": "명단 확장",
         "maxed": "명단이 이미 최대 규모입니다",
         "confirm": "{price}(으)로 길드 명단을 {seats}자리 확장하시겠습니까? 골드는 본인의 소지금에서 차감되며 환불되지 않습니다.",
         "confirmAction": "확장",
@@ -4064,7 +4107,6 @@ export const ko_KR: EnTranslations = {
       }
     },
     "gathering": {
-      "title": "채집",
       "mining": "채광",
       "logging": "벌목",
       "herbalism": "약초학",
@@ -4248,9 +4290,7 @@ export const ko_KR: EnTranslations = {
       "noviceBody": "작물을 수확할 때마다 농사 숙련도가 올라갑니다. 아무 작물밭에나 씨앗을 심어 시작하세요."
     },
     "archetypeTitle": {
-      "label": "칭호",
-      "none": "없음",
-      "hobbyLabel": "취미"
+      "none": "없음"
     },
     "archetypePair": {
       "engineering+alchemy": "폭격수",
@@ -4420,7 +4460,9 @@ export const ko_KR: EnTranslations = {
       "hobbyLabel": "취미: {craft}",
       "majorsLabel": "주 전공: {a}, {b}",
       "pairsHeld": "보유한 조합: {count}",
-      "returnsLabel": "복귀: {count}"
+      "returnsLabel": "복귀: {count}",
+      "retentionFooter": "전문 기술 재설정 시 숙련도의 60%가 유지됩니다.",
+      "tutorialLink": "전문 기술 튜토리얼"
     },
     "crafting": {
       "title": "제작",
@@ -4455,6 +4497,7 @@ export const ko_KR: EnTranslations = {
       "vaultUnreachable": "여기에서는 재료 보관소를 사용할 수 없습니다.",
       "craftFeeLine": "제작 수수료: 개당 {fee}",
       "empty": "알려진 제작법이 없습니다.",
+      "materialsFooter": "보관함의 재료는 자동으로 사용됩니다. 작업대에서 더 많은 제작법을 배우세요.",
       "resultAria": "{name} 제작",
       "craftedToast": "제작 완료:{name}",
       "craftedToastQty": "제작 완료:{name} x{qty}",
@@ -4516,7 +4559,7 @@ export const ko_KR: EnTranslations = {
       "noBagSpace": "가방에 제작한 아이템을 넣을 공간이 없습니다.",
       "dailyLimit": "하루에 한 번만 제작할 수 있습니다.",
       "dailyLimitRetry": "하루에 한 번만 제작할 수 있습니다. {duration} 후에 다시 제작할 수 있습니다.",
-      "oncePerDay": "Once per day",
+      "oncePerDay": "하루 한 번",
       "skillReqLine": "{craft} {skill} 필요",
       "difficultyFull": "숙련도 전량 상승",
       "difficultyReduced": "숙련도 상승 감소",
@@ -4556,6 +4599,9 @@ export const ko_KR: EnTranslations = {
       "commissionToggleHint": "거래로 처음 받는 캐릭터에게 귀속됩니다.",
       "commissionUnbound": "주문 제작품: 첫 수령인에게 귀속됩니다",
       "commissionBound": "주문 제작품: 수령인에게 귀속되어 있습니다"
+    },
+    "marketWindow": {
+      "mixedListingsFooter": "상인은 일반 상품을 보충하며, 플레이어 매물은 판매자가 정한 가격으로 함께 표시됩니다."
     },
     "itemMenu": {
       "use": "사용",
@@ -4991,6 +5037,10 @@ export const ko_KR: EnTranslations = {
       "ownedTooltipStatus": "성물고에 수록됨",
       "missingTooltipStatus": "아직 찾지 못함",
       "firstFindClears": "첫 획득: 클리어 {count}회차",
+      "foundBy": "{names} 발견",
+      "finderWithDate": "{name} ({date})",
+      "sharedScopeNote": "계정의 모든 캐릭터가 공유",
+      "sharedScopeHint": "계정의 어떤 캐릭터가 찾은 성유물이든 여기서도 페이지를 채웁니다.",
       "unlockToast": "성물 수록: {name}",
       "illuminateBanner": "페이지 조명됨: {name}",
       "illuminateToast": "{name}의 모든 성물이 채워졌습니다.",
@@ -5124,6 +5174,10 @@ export const ko_KR: EnTranslations = {
       "progressAria": "진행도: {current}/{target}",
       "renownChip": "명성 {renown}",
       "earnedDate": "{date} 획득",
+      "earnedBy": "{names} 획득",
+      "earnerWithDate": "{name} ({date})",
+      "accountScopeNote": "계정의 모든 캐릭터가 공유",
+      "accountScopeHint": "계정의 어떤 캐릭터가 이룬 업적이든 여기서도 달성으로 기록되며, 서에는 누가 달성했는지가 남습니다.",
       "featRibbon": "위업",
       "hiddenBadge": "숨김",
       "titleChip": "칭호 보상",
@@ -5170,8 +5224,35 @@ export const ko_KR: EnTranslations = {
       "toWorld": "세계 지도",
       "toZone": "지역 지도",
       "toInstance": "인스턴스 지도",
-      "toggleAria": "세계 지도와 지역 지도 전환",
+      "toggleAria": "세계 지도, 지역 지도, 인스턴스 지도 전환",
       "levels": "레벨 {min}부터 {max}까지"
+    },
+    "mapAtlas": {
+      "level": "레벨 {level}",
+      "landmarkCount": "랜드마크 {count}개",
+      "filtersAria": "지도 레이어",
+      "filters": {
+        "quests": "퀘스트",
+        "gather": "채집",
+        "dungeons": "던전",
+        "services": "시설",
+        "players": "플레이어"
+      },
+      "trackedQuests": "추적 중인 퀘스트",
+      "noTrackedQuests": "추적 중인 퀘스트 없음",
+      "availableNearby": "근처에서 받을 수 있음",
+      "noNearbyQuests": "근처에 받을 수 있는 퀘스트 없음",
+      "distance": "{distance}야드",
+      "showRoute": "경로 표시",
+      "untrack": "추적 해제",
+      "track": "추적",
+      "legend": {
+        "dungeon": "던전",
+        "ore": "광석",
+        "herb": "약초",
+        "mail": "우편",
+        "passage": "통로"
+      }
     },
     "arenaGate": {
       "minLevelNote": "레벨 {level} 필요"
@@ -5191,6 +5272,7 @@ export const ko_KR: EnTranslations = {
       "tabBrowse": "둘러보기",
       "tabSell": "판매",
       "tabActivity": "내 활동",
+      "tabHistory": "판매 내역",
       "tabsLabel": "$WOC 거래소 섹션",
       "loading": "거래소를 불러오는 중...",
       "loadFailed": "거래소에 연결할 수 없습니다. 잠시 후 다시 시도하세요.",
@@ -5215,6 +5297,16 @@ export const ko_KR: EnTranslations = {
       "colCurrentBid": "현재 입찰가",
       "colBuyNow": "즉시 구매가",
       "colTimeLeft": "남은 시간",
+      "colBuyer": "구매자",
+      "colSoldAt": "Sold",
+      "colSalePrice": "판매 가격",
+      "colSaleType": "Type",
+      "saleTypeAuction": "경매",
+      "saleTypeBuyNow": "Buy now",
+      "saleTypeDirected": "지정 판매",
+      "saleTypeUnknown": "알 수 없음",
+      "historyEmpty": "아직 판매 기록이 없습니다.",
+      "historyError": "판매 내역을 불러올 수 없습니다.",
       "reserveMet": "최저가 도달",
       "reserveNotMet": "최저가 미달",
       "yourListing": "내 등록",
@@ -6107,6 +6199,7 @@ export const ko_KR: EnTranslations = {
       "framesMoveBodyEditFrames": "내 프레임과 대상 프레임, 파티 프레임은 모두 옮길 수 있습니다. 각 프레임 모서리에는 작은 이동 버튼이 하나씩 있습니다. 잠금을 풀고 원하는 자리로 끌어다 놓은 다음 다시 잠그면, 잘못 누른 클릭에 프레임이 밀려나지 않습니다. 인터페이스 옵션의 프레임 탭 맨 위에 있는 프레임 편집은 그 세 프레임과 함께 나머지 인터페이스도 한 번에 풀어 줍니다. 행동 단축바와 시전 바, 공격 속도 바, 경험치 바, 미니맵, 버튼 열, 소환수 프레임, 태세 바, 강화 효과와 약화 효과 줄, 그리고 찜 목록 알림 칩까지, 풀려 있는 동안에는 저마다 이름 칩을 달고 있습니다. 자리가 마음에 들지 않게 되었다면 같은 프레임 탭 맨 아래의 기본값 복원으로 전부 처음 자리로 되돌릴 수 있습니다.",
       "framesGovernedExtra": "\"프레임 편집\"은 그 아래 쌓이는 추적기 무리(추적 중인 퀘스트와 그 목표, 업적 진행도, 성물고 페이지, 지금 들어와 있는 탐굴, 참여 중인 균열, 그리고 추적 중인 제작법이나 의뢰)와 소환수 프레임 옆 소환수 행동 단축바, 주변 적에게 건 약화 효과를 모아 보여주는 \"대상 디버프\" 프레임, 성기사의 \"헌신\" 메달, 흑마법사의 \"고통 자원 막대\", 주문 발동 오버레이, 이도류일 때의 보조 무기 공격 속도 바, 그리고 탭으로 나뉜 피해 측정기 창까지 함께 풀어 주며, 풀려 있는 동안에는 저마다 이름 칩을 달고 있습니다.",
       "framesGovernedAuraTracks": "\"프레임 편집\"은 같은 인터페이스 옵션의 전투 탭에서 켠 선택형 오라 트랙 여섯 개, 곧 \"내 버프\" 트랙, \"방어 재사용 대기시간\" 트랙, \"내 보호막\" 트랙, \"공격 재사용 대기시간\" 트랙, \"이동 및 은신\" 트랙, \"아군에게 건 내 버프\" 트랙도 함께 풀어 줍니다. 모든 트랙은 기본적으로 꺼져 있으며, 풀려 있는 동안에는 저마다 이름 칩을 달고 있습니다.",
+      "framesGovernedTalkingHead": "프레임 편집은 대화 패널도 해제합니다. 대화 패널은 말하는 NPC가 시야 밖에 있을 때 그 NPC의 대사를 담으며, 해제된 동안에는 자신의 이름 칩을 표시합니다.",
       "barsTitle": "바와 시간 표시, 전투 문자",
       "barsBody": "주문을 시전하거나 정신을 집중할 때마다 화면 한가운데, 행동 단축바 바로 위에 시전 바가 나타나 주문 이름과 남은 시간을 알려 줍니다. 대상도 자기 프레임에 시전 바를 가지므로, 무엇이 날아오는지 보고 답할 수 있습니다.\n\n시전 바 아래에는 가느다란 공격 속도 바가 있어 무기를 휘두르는 사이를 채웁니다. 근접이나 원거리 공격자는 다음 자동 공격이 언제 들어가는지 볼 수 있습니다.\n\n경험치 바는 행동 단축바 아래를 가로질러 화면 전체 폭으로 이어지며 눈금으로 나뉘어 있고, 밝게 표시된 구간이 쌓아 둔 휴식 경험치를 보여 줍니다.\n\n물속으로 헤엄쳐 들어가면 화면 위쪽에 파란 호흡 바가 나타납니다. 머리가 잠겨 있는 동안 줄어들고, 다 떨어져 익사가 시작되면 붉게 깜빡이며, 물 위로 올라오는 순간 빠르게 다시 찹니다. 스페이스로 위로 헤엄치고, 기본값이 Ctrl인 아래로 헤엄치기 키로 더 깊이 내려갑니다.\n\n피해와 치유는 맞은 대상 위로 작은 숫자가 되어 떠오르므로, 글을 읽지 않고도 전투를 읽어 낼 수 있습니다. 채팅창의 전투 탭에는 온전한 기록이 글로 남습니다.",
       "aurasTitle": "강화 효과와 약화 효과",
@@ -6464,6 +6557,7 @@ export const ko_KR: EnTranslations = {
       "formsNote": "드루이드는 형태를 바꾸며 싸웁니다. 드루이드의 능력은 대부분 특정 형태에 속하므로, 지금 어떤 형태인지가 무엇을 쓸 수 있는지를 결정하며, 변신에는 약간의 마나가 듭니다. 전투 중이든 아니든 원하는 만큼 자주 변신할 수 있습니다.",
       "formsAutoUnshift": "변신한 채로 치유 주문이나 공격 주문을 시전하면 형태가 알아서 풀립니다. 이렇게 형태를 벗는 데에는 마나가 들지 않고 공용 재사용 대기시간도 쓰지 않으므로, 즉시 시전 주문은 누른 그 순간에 나갑니다. 다시 변신하는 것은 평범한 능력이라 여전히 마나와 공용 재사용 대기시간이 듭니다.",
       "formsMoonwing": "조화 전문화 드루이드는 형태를 하나 더 얻습니다. 조화 드루이드가 싸울 때 쓰는 시전자 형태인 달빛야수 변신입니다. 주문을 그대로 쓸 수 있는 유일한 동물 형태이며, 마법봉은 이 형태나 평범한 시전자 모습에서만 쓸 수 있습니다.",
+      "formsWolfEngage": "늑대는 큰곰 돌진으로 싸움을 열고, 곧바로 늑대 변신으로 바꿔 대상을 고정하며, 은신하지 않을 때는 도약 습격으로 거리를 좁히고, 쓰러뜨리기로 적을 붙잡아 둡니다.",
       "formLine": {
         "form_bear": "방어를 맡는 형태입니다. 두꺼운 가죽을 두르고, 마나 대신 분노를 쓰며, 위협 수준을 더 쌓아 적이 계속 당신을 때리게 합니다.",
         "form_cat": "근접 피해를 맡는 형태입니다. 도적처럼 기력과 연계 점수를 쓰고, 위협 수준은 훨씬 적게 쌓습니다.",
@@ -6993,7 +7087,7 @@ export const ko_KR: EnTranslations = {
     "deedsPage": {
       "intro": "업적의 서는 시작의 골짜기를 벗어나는 첫걸음부터 왕국이 내놓을 수 있는 가장 힘든 싸움까지, 당신이 이룬 모든 것을 세계가 기록해 두는 곳입니다. 플레이하며 업적을 얻고, 그것이 주는 칭호를 걸치고, 명성이 오르는 것을 지켜보세요.",
       "howHeading": "업적의 작동 방식",
-      "howBody": "업적은 캐릭터 한 명 한 명이 따로 얻고 그 캐릭터에 간직되므로, 당신이 플레이하는 모든 영웅이 저마다 자기만의 업적의 서를 채워 갑니다. 당신의 모든 캐릭터에 걸쳐 명성을 한데 모으는 것은 오직 왕국의 순위표뿐이며, 그곳에서는 각 업적을 한 번씩만 셉니다. 각 업적은 게임 내 업적의 서에서 무엇을 요구하는지 분명히 알려 주므로 무엇을 좇아야 할지 언제나 알 수 있고, 노리는 업적에 추적을 걸어 두면 플레이하는 동안 눈앞에서 놓치지 않을 수 있습니다. 소수의 업적은 비밀로 남아 있다가 당신이 얻은 뒤에야 모습을 드러냅니다. 업적의 서는 스스로 정직함도 지킵니다. 지난 기록이 증명할 수 있는 것은 그 자리에서 바로 인정해 주므로, 노장이 빈 페이지를 펼치는 일은 없습니다. 오직 횟수를 세는 업적만이 처음부터 새로 셉니다.",
+      "howBody": "업적은 캐릭터마다 달성하지만, 업적의 서는 계정의 모든 캐릭터가 공유합니다. 어느 캐릭터가 이룬 업적이든 모두의 것으로 기록되고, 서에는 누가 언제 달성했는지가 남으며, 보상인 칭호나 테두리는 어떤 캐릭터라도 착용할 수 있습니다. 서버 순위표도 같은 방식으로 명성을 모아 각 업적을 한 번만 셉니다. 각 업적은 게임 속 업적의 서에 요구 사항을 분명히 적어 두어 무엇을 좇을지 늘 알 수 있고, 노리는 업적을 감시에 올려 플레이하는 동안 시야에 둘 수 있습니다. 극소수는 비밀로 남아 달성했을 때만 드러납니다. 서는 스스로도 정직함을 지킵니다. 과거 기록으로 증명할 수 있는 것은 즉시 인정되어 베테랑이 빈 페이지를 여는 일은 없으며, 횟수를 세는 업적만 새로 집계를 시작합니다.",
       "renownHeading": "명성",
       "renownBody": "명성은 업적의 서 뒤에 있는 점수입니다. 얻어낸 업적마다 정해진 값이 있고 총합은 오르기만 하므로, 한가한 한 주가 발판을 앗아가는 일은 없습니다. 몇 가지는 실력보다 운에 달렸고, 다른 수집 업적들은 그 자체가 보상이며, 위업은 또 다른 영예이므로, 그 어느 것도 명성을 주지 않습니다. 명성이 없는 업적도 당신의 서를 채우는 데는 여전히 셈해집니다. 다만 점수가 되지 않을 뿐입니다. 위업만이 유일한 예외로, 셈에서 아예 빠져 있습니다.",
       "rewardsHeading": "칭호와 테두리",
@@ -7031,7 +7125,7 @@ export const ko_KR: EnTranslations = {
     "reliquaryPage": {
       "intro": "성물고는 목록에 올린 고유 전리품의 박물관입니다. 던전 추격 장비, 전문 기술 트로피, 탈것, 무기 스킨, 칭호. 공적 책과의 관계는 트로피 홀과 업적 책과 같습니다.",
       "howHeading": "수집 작동 방식",
-      "howBody": "게임에서 성물고를 엽니다(기본 Shift+X). 각 선반에 고유 성유물 페이지가 있습니다. 캐릭터가 그 조각을 처음 얻으면 실루엣이 채워지고, 페이지의 모든 성유물이 채워지면 페이지가 밝혀집니다. '단종' 또는 '전용'으로 표시된 일부 페이지는 달성 대상에서 제외되어 선반이나 전체 완성을 막지 않습니다. 실시간 발견은 알림과 열린 창 새로고침으로 이어집니다. 진행도는 캐릭터 단위이며 무기 스킨만 계정 장식입니다.",
+      "howBody": "게임에서 성물고를 엽니다(기본 Shift+X). 각 선반에 고유 성유물 페이지가 있습니다. 계정의 어떤 캐릭터든 그 조각을 처음 얻으면 실루엣이 채워지고, 페이지의 모든 성유물이 채워지면 페이지가 밝혀집니다. '단종' 또는 '전용'으로 표시된 일부 페이지는 달성 대상에서 제외되어 선반이나 전체 완성을 막지 않습니다. 실시간 발견은 알림과 열린 창 새로고침으로 이어집니다. 진행도는 계정의 모든 캐릭터가 공유하므로, 한 캐릭터가 찾은 성유물은 모두의 페이지를 채웁니다.",
       "ranksHeading": "큐레이터 등급",
       "ranksBody": "큐레이터 등급은 목록에 올린 고유 채움에 따라 오르며 장식 칭호와 테두리만 줍니다. 전투 능력, 드롭률, 천장 보정은 없습니다. 계정 무기 스킨은 큐레이터 등급에 들어가지 않아 명성은 캐릭터에 남습니다. 단종·전용 페이지의 성유물도 등급에 들어가지 않습니다.",
       "retiredTag": "단종",
@@ -7256,7 +7350,7 @@ export const ko_KR: EnTranslations = {
       "matFmt": "{name} x{count}",
       "outputFmt": "{name} x{count}",
       "comboReq": "{a}와 {b} 필요",
-      "oncePerDay": "Once per day",
+      "oncePerDay": "하루 한 번",
       "effectFood": "먹으면 {seconds}초에 걸쳐 생명력을 {amount} 회복합니다.",
       "effectWellFed": "식사를 마치면 잘 먹음: {minutes}분간 {stat} +{value}.",
       "effectWellFedAura": "식사를 마치면 {minutes}분간 {aura} 효과를 얻습니다.",
@@ -11899,7 +11993,7 @@ export const ko_KR: EnTranslations = {
       },
       "cat_form": {
         "name": "늑대 변신",
-        "description": "당신을 늑대로 바꿉니다. 민첩성이 레벨에 따라 오르고, 전투력은 +8에 레벨당 2가 더해지며, 공격은 기력과 연계 점수를 쓰고, 당신이 만드는 위협 수준이 29% 줄어듭니다. 다시 시전하면 시전자 모습으로 돌아옵니다."
+        "description": "당신을 늑대로 바꿉니다. 민첩성이 레벨에 따라 오르고, 전투력은 +8에 레벨당 2가 더해지며, 공격은 기력과 연계 점수를 쓰고, 당신이 만드는 위협 수준이 29% 줄어듭니다. 어떤 모습으로든 변신하면 질주 보폭을 얻습니다. 3초 동안 이동 속도가 60% 증가하며, 20초에 한 번만 발동합니다. 다시 시전하면 시전자 모습으로 돌아옵니다."
       },
       "claw": {
         "name": "찢는 발톱",
@@ -11964,7 +12058,15 @@ export const ko_KR: EnTranslations = {
       },
       "pounce": {
         "name": "살금 기습",
-        "description": "은신 상태에서 사용하는 시작 공격으로 대상을 2초 동안 기절시킵니다. 연계 점수 1점을 얻습니다. 늑대 변신 전용."
+        "description": "은신 상태에서 사용하는 시작 공격으로 대상을 2초 동안 기절시킵니다. 연계 점수 1점을 얻습니다. 늑대 변신 전용. 은신 상태가 아니면 이 버튼은 도약 습격이 됩니다."
+      },
+      "lunge": {
+        "name": "도약 습격",
+        "description": "최대 12yd 떨어진 적에게 달려들어 무기 공격력의 60%만큼 피해를 입히고 연계 점수 1을 얻습니다. 늑대 변신 상태에서만 사용 가능."
+      },
+      "hamstring_bite": {
+        "name": "쓰러뜨리기",
+        "description": "대상을 1초에 더해 연계 점수 하나당 1초 기절시키는 마무리 기술입니다 (연계 점수 5: 6초). 늑대 변신 상태에서만 사용 가능."
       },
       "insect_swarm": {
         "name": "쏘는 벌레 떼",
@@ -12678,7 +12780,7 @@ export const ko_KR: EnTranslations = {
       },
       "bear_charge": {
         "name": "큰곰 돌진",
-        "description": "적에게 돌진하여 분노 9를 생성하고 1초 동안 기절시킵니다. 사거리 8-25yd. 큰곰 변신 상태에서만 사용 가능."
+        "description": "적에게 돌진하여 분노 9를 생성하고 1초 동안 기절시킵니다. 이후 3초 동안 늑대 변신은 무료이며 대상을 고정하여 4초 동안 이동 속도를 50% 감소시킵니다. 사거리 8-25yd. 큰곰 변신 상태에서만 사용 가능."
       },
       "demoralizing_roar": {
         "name": "비겁한 포효",
@@ -12686,7 +12788,7 @@ export const ko_KR: EnTranslations = {
       },
       "prowl": {
         "name": "몰래 접근",
-        "description": "늑대 변신 상태에서 은신하고 이동 속도가 5% 감소합니다. 전투 중에는 사용할 수 없습니다."
+        "description": "늑대 변신 상태에서 은신합니다. 전투 중에는 사용할 수 없습니다."
       },
       "rake": {
         "name": "저미기",

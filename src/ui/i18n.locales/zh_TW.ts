@@ -258,6 +258,8 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'hudChrome.pledge.noteLabel': '榜單留言',
   'hudChrome.pledge.notePlaceholder': '告訴有意加入的玩家你的公會在尋找什麼',
   'hudChrome.pledge.save': '儲存',
+  'hudChrome.pledge.newPlayerFriendlyLabel': '新手友善',
+  'hudChrome.pledge.newPlayerFriendlyHint': '顯示在試煉之濱告示牌的新人看板上。',
   'hudChrome.pledge.yourPledge': '你的宣誓：{guild}',
   'hudChrome.pledge.since': '宣誓於{date}',
   'hudChrome.pledge.withdraw': '撤回宣誓',
@@ -1202,7 +1204,7 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'hudChrome.social.billboard.result.set': '公會公告板已更新。',
   'hudChrome.social.billboard.result.notOfficer': '只有幹部和會長可以編輯公告板。',
   'hudChrome.social.roster.seats': '{count} / {cap} 席位',
-  'hudChrome.social.roster.expand': '擴充名冊（+{seats} 席位，{price}）',
+  'hudChrome.social.roster.expand': '擴充名冊',
   'hudChrome.social.roster.maxed': '名冊已達最大規模',
   'hudChrome.social.roster.confirm':
     '花費 {price} 為公會名冊擴充 {seats} 個席位？金幣將從你自己的錢包扣除，不予退還。',
@@ -3626,7 +3628,7 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
     '對目標低吼：你的威脅值提高到其最仇恨敵人的水平，並強迫其攻擊你 3 秒。僅限巨熊形態。',
   'entities.abilities.cat_form.name': '狼形態',
   'entities.abilities.cat_form.description':
-    '將你化為一頭狼：敏捷隨你的等級提升，攻擊強度 +8 外加每級 2 點，你的攻擊消耗能量與連擊點，並且你產生的威脅降低 29%。再次施放即可變回施法形態。',
+    '將你化為一頭狼：敏捷隨你的等級提升，攻擊強度 +8 外加每級 2 點，你的攻擊消耗能量與連擊點，並且你產生的威脅降低 29%。變為任意形態都會獲得疾躍步伐：移動速度提高 60%，持續 3 秒，每 20 秒一次。再次施放即可變回施法形態。',
   'entities.abilities.claw.name': '裂爪',
   'entities.abilities.claw.description':
     '用利爪攻擊敵人，造成武器傷害加 {damage}。獎勵 1 個連擊點。僅限狼形態。',
@@ -3663,8 +3665,14 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.dash.name': '急奔',
   'entities.abilities.dash.description': '向前衝刺，使移動速度提高 50%，持續 15 秒。僅限狼形態。',
   'entities.abilities.pounce.name': '匿蹤突襲',
+  'entities.abilities.lunge.description':
+    '撲向最遠 12 碼外的敵人，造成 60% 武器傷害並獲得 1 個連擊點。僅限狼形態。',
+  'entities.abilities.lunge.name': '撲擊',
+  'entities.abilities.hamstring_bite.description':
+    '終結技，昏迷目標 1 秒外加每點連擊點 1 秒（5 點連擊點：6 秒）。僅限狼形態。',
+  'entities.abilities.hamstring_bite.name': '撲倒',
   'entities.abilities.pounce.description':
-    '一個潛行開場技，昏迷目標 2 秒。獎勵 1 個連擊點。僅限狼形態。',
+    '一個潛行開場技，昏迷目標 2 秒。獎勵 1 個連擊點。僅限狼形態。 未隱匿時，此按鈕為撲擊。',
   'entities.abilities.insect_swarm.name': '螫刺蟲群',
   'entities.abilities.insect_swarm.description':
     '敵人被蟲群侵襲，在 12 秒內受到 {damage} 點自然傷害。',
@@ -3711,13 +3719,12 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
     '將一隻怨魂裔束縛於你的意志之下，這是一種精英惡魔，會從遠處降下沉重的暗影傷害。漫長的冷卻時間限制了牠的毀滅性力量。召喚新的惡魔會驅散你目前的惡魔。你同時只能擁有一隻惡魔。',
   'entities.abilities.bear_charge.name': '巨熊衝鋒',
   'entities.abilities.bear_charge.description':
-    '向敵人衝鋒，產生 9 點怒氣並將其昏迷 1 秒。射程 8-25 公尺。僅限巨熊形態。',
+    '向敵人衝鋒，產生 9 點怒氣並將其昏迷 1 秒。之後 3 秒內，狼形態無需消耗並釘制目標，使其減速 50%，持續 4 秒。射程 8-25 公尺。僅限巨熊形態。',
   'entities.abilities.demoralizing_roar.name': '怯懦咆哮',
   'entities.abilities.demoralizing_roar.description':
     '挫敗附近敵人的士氣，使其攻擊強度降低 20，持續 20 秒。僅限巨熊形態。',
   'entities.abilities.prowl.name': '潛獵',
-  'entities.abilities.prowl.description':
-    '在狼形態下進入隱匿狀態，移動速度降低 5%。無法於戰鬥中使用。',
+  'entities.abilities.prowl.description': '在狼形態下進入隱匿狀態。無法於戰鬥中使用。',
   'entities.abilities.rake.name': '剮擊',
   'entities.abilities.rake.description':
     '撕裂敵人，造成武器傷害外加 {damage} 點，並造成持續 18 秒的流血傷害。給予 1 點連擊點。僅限狼形態。',
@@ -6428,7 +6435,7 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
     '壯舉自成一類：它們是傳承與世界首創的記錄，是那些與逝去紀元相關、或只會發生一次的功績。它們不帶來任何名望，也不計入完成度，將作為對往昔功業的紀念被永久保存。',
   'guide.deedsPage.featsHeading': '壯舉',
   'guide.deedsPage.howBody':
-    '功績以單一角色為單位逐一贏得並留存，因此你所扮演的每一位英雄都會各自累積自己的功績之書；只有王國的排行榜才會匯總你所扮演的所有角色的名望，且每個功績只計一次。每個功績都在遊戲內的功績之書中清楚寫明它的要求，讓你始終知道該追求什麼；你也可以追蹤心儀的功績，讓它們在遊玩時常在眼前。少數功績會保持隱密，只有在你贏得它們之後才會揭曉。功績之書也對自己誠實：凡是你過往的記錄能夠證明的，它都會當場記上功勞，因此老練的玩家絕不會翻開一頁空白；只有計數類的功績才會從零開始累計。',
+    '功業由每個角色各自完成，但功業之書由帳號內所有角色共享：任一角色完成的功業對所有角色都算達成，書中會記下是誰在何時完成的，它獎勵的稱號或邊框也可由你的任何角色佩戴。領域排行榜以同樣的方式彙總你的聲望，每項功業只計一次。每項功業都在遊戲內的功業之書中清楚寫明要求，讓你始終知道該追求什麼，還可以把想要的功業加入關注，在遊玩時隨時留意。少數功業保持隱密，只有在你達成後才會顯現。這本書也會保持誠實：凡是你過去的紀錄能夠證明的，都會當場記入，因此老玩家翻開時絕不會是空白一頁；只有計數類功業會重新開始計數。',
   'guide.deedsPage.howHeading': '功績如何運作',
   'guide.deedsPage.intro':
     '功績之書記錄著你在這個世界所做的一切，從走出新手山谷的第一步，到王國所能提供的最艱難的戰鬥。一邊遊玩一邊贏得功績，佩戴它們授予的頭銜，看著你的名望不斷攀升。',
@@ -6489,7 +6496,7 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
     '聖物庫是你已收錄的獨特戰利品博物館：地城追逐裝備、專業獎盃、坐騎、武器外觀與頭銜。它與功績之書的關係，就像獎盃廳與成就簿的關係。',
   'guide.reliquaryPage.howHeading': '收藏如何運作',
   'guide.reliquaryPage.howBody':
-    '在遊戲中開啟聖物庫（預設 Shift+X）。每個架上有多頁獨特聖物。角色首次獲得該件時填滿剪影；一頁上的聖物全部填滿時點亮該頁。少數頁面標註「絕版」或「專屬」：它們不計入達成，不會阻礙書架或全庫的完成。即時發現會跳出提示並重新整理已開啟的視窗；進度按角色計算，武器外觀除外（帳號外觀）。',
+    '在遊戲中開啟聖物庫（預設 Shift+X）。每個架上有多頁獨特聖物。帳號內任一角色首次獲得該件時填滿剪影；一頁上的聖物全部填滿時點亮該頁。少數頁面標註「絕版」或「專屬」：它們不計入達成，不會阻礙書架或全庫的完成。即時發現會跳出提示並重新整理已開啟的視窗；進度由帳號內所有角色共享，一個角色找到的聖物會為所有角色填滿該頁。',
   'guide.reliquaryPage.ranksHeading': '策展人等級',
   'guide.reliquaryPage.ranksBody':
     '策展人等級隨已收錄的獨特聖物上升，僅授予裝飾性頭銜與邊框。不會提供戰鬥強度、掉落率或保底。帳號武器外觀不計策展人等級，因此聲望保持角色持久。絕版與專屬頁面上的聖物同樣不計入等級。',
@@ -8293,7 +8300,7 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'hudChrome.auraEffect.imbueRange': '武器附魔：裁決時造成 {min} 到 {max} 點額外傷害',
   'hudChrome.auraEffect.stealth': '隱蔽；移動速度降低 {pct}%',
   'hudChrome.auraEffect.formBear': '巨熊形態：生命值與護甲提高',
-  'hudChrome.auraEffect.formCat': '貓形態：近戰傷害與能量',
+  'hudChrome.auraEffect.wolfForm': '狼形態：近戰傷害與能量；移動速度提高 {pct}%',
   'hudChrome.auraEffect.formTravel': '迅捷形態：移動速度提高 {pct}%',
   'hudChrome.auraEffect.defensiveStance': '戒備姿態：受到的傷害降低，威脅值提高',
   'hudChrome.auraEffect.righteousFury': '燃燒誓言：神聖傷害產生的威脅值大幅提高',
@@ -9434,6 +9441,18 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'hudChrome.noticeboard.subtitle': '本世界的公會',
   'hudChrome.noticeboard.rosterTitle': '查看{guild}的成員名單',
   'hudChrome.noticeboard.back': '返回',
+  'hudChrome.noticeboard.filters': '看板篩選',
+  'hudChrome.noticeboard.newPlayerFriendly': '新手友善',
+  'hudChrome.noticeboard.newPlayerFriendlyTitle': '這個公會歡迎新玩家',
+  'hudChrome.noticeboard.filterNewPlayersTitle': '只顯示歡迎新玩家的公會',
+  'hudChrome.noticeboard.filterEmpty': '還沒有公會向新玩家敞開大門。',
+  'hudChrome.noticeboard.showAll': '顯示全部公會',
+  'hudChrome.noticeboard.officersOnline': '幹部在線',
+  'hudChrome.noticeboard.officersOnlineLabel': '在線幹部：{names}',
+  'hudChrome.plurals.guildBoardShown.one': '顯示 {count} 個公會',
+  'hudChrome.plurals.guildBoardShown.few': '顯示 {count} 個公會',
+  'hudChrome.plurals.guildBoardShown.many': '顯示 {count} 個公會',
+  'hudChrome.plurals.guildBoardShown.other': '顯示 {count} 個公會',
   'hudChrome.noticeboard.popupTitle': '公會告示柱',
   'hudChrome.noticeboard.close': '關閉',
   'hudChrome.mailbox.subtitle': '渡鴉郵驛',
@@ -9661,6 +9680,14 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'hudChrome.wocMarket.sellerError': '無法載入最近的成交。',
   'hudChrome.wocMarket.sellerSaleRow': '{time}：{item} 以 {usd} 售予 {buyer}',
   'hudChrome.wocMarket.colSeller': '賣家',
+  'hudChrome.wocMarket.colBuyer': '買家',
+  'hudChrome.wocMarket.colSalePrice': '成交價',
+  'hudChrome.wocMarket.tabHistory': '銷售記錄',
+  'hudChrome.wocMarket.saleTypeAuction': '拍賣',
+  'hudChrome.wocMarket.saleTypeDirected': '定向出售',
+  'hudChrome.wocMarket.saleTypeUnknown': '未知',
+  'hudChrome.wocMarket.historyEmpty': '暫無銷售記錄。',
+  'hudChrome.wocMarket.historyError': '無法載入銷售記錄。',
   'hudChrome.wocMarket.colCurrentBid': '目前出價',
   'hudChrome.wocMarket.colBuyNow': '直購價',
   'hudChrome.wocMarket.colTimeLeft': '剩餘時間',
@@ -9902,7 +9929,6 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'hudChrome.calendar.events.delveDay.note': '哈爾文修士在圖上做了標記：宜探坍塌聖物窖。',
   'hudChrome.calendar.events.moongateCommunion.title': '月門共禱',
   'hudChrome.calendar.events.moongateCommunion.note': '朝聖者在月中之月下聚於神廟月門。',
-  'hudChrome.gathering.title': '採集',
   'hudChrome.gathering.mining': '採礦',
   'hudChrome.gathering.logging': '伐木',
   'hudChrome.gathering.herbalism': '藥草學',
@@ -10194,9 +10220,7 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'entities.items.highwatch_barley_porridge.name': '高望大麥粥',
   'entities.items.evergarden_braised_greens.name': '常青園燜青菜',
   'entities.items.harvest_feast.name': '豐收盛宴',
-  'hudChrome.archetypeTitle.label': '稱號',
   'hudChrome.archetypeTitle.none': '無',
-  'hudChrome.archetypeTitle.hobbyLabel': '愛好',
   'hudChrome.archetypePair.engineering+alchemy': '爆破師',
   'hudChrome.archetypePair.alchemy+cooking': '藥劑師',
   'hudChrome.archetypePair.cooking+leatherworking': '捕獸人',
@@ -10849,6 +10873,11 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'hudChrome.deeds.progressAria': '進度：{current}/{target}',
   'hudChrome.deeds.renownChip': '{renown} 名望',
   'hudChrome.deeds.earnedDate': '獲得於 {date}',
+  'hudChrome.deeds.earnedBy': '由 {names} 獲得',
+  'hudChrome.deeds.earnerWithDate': '{name}（{date}）',
+  'hudChrome.deeds.accountScopeNote': '帳號下所有角色共享',
+  'hudChrome.deeds.accountScopeHint':
+    '帳號內任一角色完成的功業在此同樣算達成，且書中會記下是誰完成的。',
   'hudChrome.deeds.hiddenBadge': '隱藏',
   'hudChrome.deeds.titleChip': '頭銜獎勵',
   'hudChrome.deeds.borderChip': '邊框獎勵',
@@ -12036,6 +12065,10 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'hudChrome.reliquary.ownedTooltipStatus': '已收錄於聖物庫',
   'hudChrome.reliquary.missingTooltipStatus': '尚未獲得',
   'hudChrome.reliquary.firstFindClears': '首次獲得於第 {count} 次通關',
+  'hudChrome.reliquary.foundBy': '由 {names} 發現',
+  'hudChrome.reliquary.finderWithDate': '{name}（{date}）',
+  'hudChrome.reliquary.sharedScopeNote': '帳號下所有角色共享',
+  'hudChrome.reliquary.sharedScopeHint': '帳號內任一角色找到的聖物也會在此填滿該頁。',
   'hudChrome.reliquary.unlockToast': '聖物已收錄：{name}',
   'hudChrome.reliquary.illuminateBanner': '頁面已點亮：{name}',
   'hudChrome.reliquary.illuminateToast': '{name} 上的每一件聖物均已填滿。',
@@ -13026,7 +13059,7 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'hudChrome.continentMap.title': '世界地圖',
   'hudChrome.continentMap.summary': '世界地圖。選擇一個地區以開啟其地圖。',
   'hudChrome.continentMap.toWorld': '世界地圖',
-  'hudChrome.continentMap.toggleAria': '在世界地圖與地區地圖之間切換',
+  'hudChrome.continentMap.toggleAria': '在世界地圖、地區地圖與副本地圖之間切換',
   'hudChrome.continentMap.levels': '等級 {min} 至 {max}',
   'hudChrome.continentMap.toZone': '地區地圖',
   'hudChrome.enchanting.wornTagIndexed': '已裝備（{slot}{index}）',
@@ -13822,6 +13855,8 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'guide.classPage.formsHeading': '變形',
   'guide.classPage.formsMoonwing':
     '平衡專精的德魯伊會多獲得一種形態：梟獸形態，那是平衡德魯伊作戰時所處的施法形態。它是唯一保留你法術的動物形態，而你的魔杖也只有在它或你平常的施法形態下才能使用。',
+  'guide.classPage.formsWolfEngage':
+    '狼以巨熊衝鋒開戰，隨即變為狼形態釘制目標，未隱匿時用撲擊拉近距離，再用撲倒把敵人定在原地。',
   'guide.classPage.formsAutoUnshift':
     '變身時施放治療或傷害法術會自動為你解除變身。以這種方式離開形態不消耗法力，也不占用全域冷卻，因此瞬發法術會在你按下的那一刻釋放。重新變身是普通技能，依然消耗法力並占用全域冷卻。',
   'guide.classPage.formsNote':
@@ -14619,6 +14654,8 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'hudChrome.auraEffect.castShield': '施法不會因受到傷害而中斷或延遲',
   'hudChrome.auraEffect.cauterizeFatigue': '灸灼無法再次阻止致命傷害',
   'hudChrome.auraEffect.cooldownCap': '此時間窗已使用 {used}/{cap} 秒冷卻縮減',
+  'hudChrome.auraEffect.bruinRushWindow':
+    '狼形態無需法力，並釘制你的巨熊衝鋒目標，使其減速 {pct}%，持續 {sec} 秒',
   'hudChrome.auraEffect.dawnsWrath': '制裁之錘：無生命限制 · +1次 · 冷卻0 · 傷害+{pct}%',
   'hudChrome.auraEffect.desolation':
     '剩餘 {charges} 層：下一次混沌箭施法加快 {castPct}%，或下一次火焰之雨立即落下',
@@ -14645,7 +14682,7 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
     '幽暝：第{stacks}/{max}層。自暮紗中使用先制技各累積1層。達到{max}層時，你的先制技可在明處使用，且下一次施展不消耗資源，耗盡全部3層並開啟暗影纏身',
   'hudChrome.auraEffect.healEcho': '生命值低於 {threshold}% 時恢復 {value} 點生命值',
   'hudChrome.auraEffect.hunterFerocity': '{stacks} 層獸群凶性：你的寵物造成的傷害提高 {pct}%',
-  'hudChrome.auraEffect.icicles': '{value}/{max} 根冰柱；達到 {max} 根時可施放冰川尖刺',
+  'hudChrome.auraEffect.icicles': '{value}/{max} 根冰柱；達到 {max} 根時可施放凝霜冰針',
   'hudChrome.auraEffect.internalCooldown': '計時結束前此效果無法再次觸發',
   'hudChrome.auraEffect.leadenHexLock': '鉛沉妖術暫時無法再次定身此目標',
   'hudChrome.auraEffect.mendingCurrent': '儲存 {value} 點治療量，隨時間釋放或由湧流癒合消耗',
@@ -14686,7 +14723,7 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'hudChrome.auraEffect.sureCrit': '接下來 {charges} 個傷害技能必定造成致命一擊',
   'hudChrome.auraEffect.sweepingStrikes': '單體攻擊還會對附近 {targets} 個敵人造成 {pct}% 傷害',
   'hudChrome.auraEffect.temporalEcho':
-    '施法者的秘法傷害會治療你，單體傷害轉化 {singlePct}%，範圍傷害轉化 {areaPct}%',
+    '施法者的秘法傷害會治療你，單體傷害轉化 {singlePct}%，範圍傷害轉化 {areaPct}%。以太湧動和乙太飛鏢在單獨的時光迴響上按4倍加成計算。群體迴響會產生等量的治療儲備，按照缺失生命值在生命低於60%的被標記盟友之間分配',
   'hudChrome.auraEffect.veiledEdge': '你的下一次潛伏者一擊造成雙倍傷害',
   'hudChrome.auraEffect.veiledEdgeStrike': '你的下一次潛伏者一擊造成的武器傷害提高{pct}%',
   'hudChrome.auraEffect.coldsightRead':
@@ -15766,6 +15803,8 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
     '你自己的框架、目標框架與隊伍框架全都可以移動。每個框架的角落都帶著一顆小小的移動按鈕：解除鎖定，把框架拖到你要的位置，再重新鎖上，這樣一次失手的點擊就無法把它挪走。「介面」選項中「頭像框」分頁最上方的「編輯框體」，則會一口氣鬆開其餘的整個介面，連同這三個框架一起：動作列、施法條、揮擊條、經驗條、小地圖、按鈕列、寵物框架、姿態列、增益與減益列，以及「願望清單提醒」小標籤，每一個在鬆開期間都掛著一枚名稱標籤。萬一它們跑到你會後悔的地方，同一個「頭像框」分頁底部的「恢復預設」會把它們全部彈回原本的位置。',
   'guide.interfacePage.framesGovernedExtra':
     '「編輯框體」也會一併鬆開下方那疊追蹤面板(你追蹤中的任務與它們的目標、你的功績進度、你的聖物庫頁面、你所在的秘探、你正參與的任何裂隙，以及你正在追蹤的配方或委託)、寵物框架旁的寵物動作列、顯示你對附近敵人所施減益的「目標減益」框架、聖騎士的「虔誠」勳章、術士的「痛苦資源條」、法術觸發浮層、雙持武器時的副手揮擊條，以及附分頁的傷害統計視窗，每一個在鬆開期間都掛著一枚名稱標籤。',
+  'guide.interfacePage.framesGovernedTalkingHead':
+    '「編輯框體」也會解鎖對話面板：當某個 NPC 不在你的視野內時，它承載該 NPC 說出的台詞；處於解鎖狀態時它會顯示自己的名稱標籤。',
   'guide.interfacePage.framesGovernedAuraTracks':
     '「編輯框體」也會鬆開六條可選的光環軌道，前提是你已在同一「介面」選項的「戰鬥」分頁中開啟它們：「我的增益」軌道、「防禦性冷卻」軌道、「我的護盾」軌道、「攻擊性冷卻」軌道、「移動與潛行」軌道，以及「我給隊友的增益」軌道。所有軌道預設關閉，每一條在鬆開期間都掛著一枚名稱標籤。',
   'guide.interfacePage.mapBodyZoneFirst':
@@ -15818,6 +15857,7 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'hudChrome.realmBuilder.pastEmpty': '榮譽榜上還沒有名字。',
   'hudChrome.realmBuilder.close': '關閉',
   'worldContent.realmBuilderMonumentName': '王國建造者紀念碑',
+  'hudChrome.talkingHead.label': '對話',
   'hudChrome.hubLesson.target': '先將假人設為目標。',
   'hudChrome.hubLesson.openWindow': '打開{meters}。',
   'hudChrome.hubLesson.openWindowTouch': '打開{menu} → {more} → {meters}。',
@@ -15948,6 +15988,49 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'hudChrome.wocMarket.walletCardDismiss': '隱藏錢包卡片',
   'loading.kickedByModerator': '管理員已將您中斷連線：{reason}',
   'loading.rendererContextLost': '3D 渲染器遺失了圖形內容，且無法恢復。請嘗試重新整理。',
+  'hudChrome.charSidebar.label': '角色詳情',
+  'hudChrome.charSidebar.subtitle': '{level}級 {className} . {archetype} . 興趣：{hobby}',
+  'hudChrome.charSidebar.subtitleNoHobby': '{level}級 {className} . {archetype}',
+  'hudChrome.charSidebar.stats': '屬性',
+  'hudChrome.charSidebar.progression': '進度',
+  'hudChrome.charSidebar.skills': '技能',
+  'hudChrome.charSidebar.gathering': '採集',
+  'hudChrome.charSidebar.crafting': '製作',
+  'hudChrome.charSidebar.openProfessions': '開啟專業',
+  'hudChrome.questLog.completed': '已完成',
+  'hudChrome.questLog.zoneSummary': '{count}個（{ready}個可交付）',
+  'hudChrome.questLog.shiftHint': '按住 Shift 點擊任務可將其連結到聊天中。',
+  'hudChrome.bugReport.online': '線上',
+  'hudChrome.controller.device': '已連接裝置',
+  'hudChrome.controller.deviceConnected': '已連接',
+  'hudChrome.controller.deviceDisconnected': '未偵測到手把',
+  'hudChrome.crafting.materialsFooter': '保管庫中的材料會自動取用。可在製作站學習更多配方。',
+  'hudChrome.partyFrames.header': '隊伍',
+  'hudChrome.professions.retentionFooter': '重置專業後保留60%的技能。',
+  'hudChrome.professions.tutorialLink': '專業教學',
+  'hudChrome.marketWindow.mixedListingsFooter':
+    '商人會補充普通商品；玩家上架的物品會以其要價並列顯示。',
+  'hudChrome.mapAtlas.track': '追蹤',
+  'hudChrome.mapAtlas.level': '等級 {level}',
+  'hudChrome.mapAtlas.landmarkCount': '{count} 個地標',
+  'hudChrome.mapAtlas.filtersAria': '地圖圖層',
+  'hudChrome.mapAtlas.filters.quests': '任務',
+  'hudChrome.mapAtlas.filters.gather': '採集',
+  'hudChrome.mapAtlas.filters.dungeons': '地城',
+  'hudChrome.mapAtlas.filters.services': '服務',
+  'hudChrome.mapAtlas.filters.players': '玩家',
+  'hudChrome.mapAtlas.trackedQuests': '追蹤中的任務',
+  'hudChrome.mapAtlas.noTrackedQuests': '沒有追蹤中的任務',
+  'hudChrome.mapAtlas.availableNearby': '附近可接任務',
+  'hudChrome.mapAtlas.noNearbyQuests': '附近沒有可接任務',
+  'hudChrome.mapAtlas.distance': '{distance} 碼',
+  'hudChrome.mapAtlas.showRoute': '顯示路線',
+  'hudChrome.mapAtlas.untrack': '取消追蹤',
+  'hudChrome.mapAtlas.legend.dungeon': '地城',
+  'hudChrome.mapAtlas.legend.ore': '礦石',
+  'hudChrome.mapAtlas.legend.herb': '草藥',
+  'hudChrome.mapAtlas.legend.mail': '信箱',
+  'hudChrome.mapAtlas.legend.passage': '通道',
 
   'hudChrome.wocStore.mountSkinType': '坐騎造型',
   'hudChrome.cosmetics.title': '外觀',
@@ -15974,6 +16057,18 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'hudChrome.cosmetics.mechEmpty': '尚未擁有戰鬥機甲配色。',
   'hudChrome.cosmetics.mountsIntro': '坐騎造型會覆蓋在此角色騎乘的任何坐騎上，絕不改變速度。',
   'hudChrome.cosmetics.mechIntro': '戰鬥機甲會取代此角色的身體。一次只能穿戴一種配色。',
+  'hudChrome.auraTracks.mode': '開啟',
+  'hudChrome.auraTracks.row': '{aura} 對 {unit} 生效',
+  'hudChrome.auraTracks.selfRow': '{aura}',
+  'hudChrome.crafting.oncePerDay': '每天一次',
+  'hudChrome.masterwrought.slotsValue': '{used} / {cap}',
+  'hudChrome.meters.millions': '{value}m',
+  'hudChrome.meters.thousands': '{value}k',
+  'hudChrome.practiceDps.liveDps': '{value} DPS',
+  'hudChrome.practiceDps.liveLabel': '本次練習',
+  'hudChrome.practiceDps.runLabel': '第 {index} 次練習',
+  'hudChrome.practiceDps.runSummary': '{time} 內 {total}',
+
   'entities.abilities.grove_awakening.description':
     '呼喚隊伍或團隊中 40 碼內且在你視線內的所有陣亡成員回到你身邊復活，並恢復30%生命值和法力值。戰鬥中無法施放。（恢復）',
   'entities.abilities.grove_awakening.name': '林地覺醒',
@@ -15983,4 +16078,10 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.wildwake.description':
     '催發倒下的盟友驟然綻放，使其回到你身邊復活，恢復35%生命值和法力值，即使激戰正酣也能施放。（恢復）',
   'entities.abilities.wildwake.name': '野性復甦',
+
+  'devCommand.actions.farmgrow.description':
+    '將所有已種植的田畦推進至成熟時間，也可按ID指定一處田畦。其他內容保持不變：收穫結果在種植時就已隨機決定。',
+  'devCommand.actions.farmgrow.label': '催熟作物',
+  'devCommand.fields.bed': '田畦ID（選填）',
+  'guide.profPages.oncePerDay': '每日一次',
 };
