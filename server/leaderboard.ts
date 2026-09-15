@@ -70,7 +70,7 @@ import type { Ctx, RouteDef } from './http/types';
 import { json } from './http_util';
 import type { LiveReportTarget } from './moderation_db';
 import { recordUsageMetric } from './provider_usage';
-import { publicReadRateLimited } from './ratelimit';
+import { guildBoardPresenceRateLimited, publicReadRateLimited } from './ratelimit';
 import { REALM, REALM_DIRECTORY } from './realm';
 import { steamEnabled } from './steam/config';
 
@@ -391,12 +391,14 @@ export async function buildGuildBoardResponse(
   const body = buildGuildBoard(realm, scope, entries, page, pageSize, category);
   if (scope !== LEADERBOARD_SCOPE_DEFAULT) return body;
   // Presence names characters who are online RIGHT NOW to an anonymous
-  // caller, so it rides the shared per-IP public-read budget
-  // (publicReadRateLimited, the sibling public reads' limiter): a caller
-  // past the budget still gets the board, just without presence, so a
-  // scraper cannot poll officer activity at request rate while a player
-  // opening the signpost is never met with a 429.
-  if (body.leaders.length === 0 || !publicReadRateLimited(req).allowed) return body;
+  // caller, so it is metered per IP on its OWN bucket
+  // (guildBoardPresenceRateLimited): a caller past the budget still gets
+  // the board, just without presence, so a scraper cannot poll officer
+  // activity at request rate while a player opening the signpost is never
+  // met with a 429. Never the shared public-read bucket: this route never
+  // 429s itself, so spending that budget here would let board browsing
+  // starve the roster drill-in and the other public reads.
+  if (body.leaders.length === 0 || !guildBoardPresenceRateLimited(req).allowed) return body;
   return { ...body, leaders: await presence.attach(body.leaders, isOnline) };
 }
 

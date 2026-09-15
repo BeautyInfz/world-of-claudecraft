@@ -3766,6 +3766,10 @@ export async function startServer(): Promise<http.Server> {
     void refreshGuildLeaderboardShared
       .global()
       .catch((err) => console.error('guild leaderboard refresh failed (global):', err));
+    // The guild board's officer roster (guild_board_presence.ts) rides the
+    // same cadence, so the first viewer after a refresh or a bust never pays
+    // the roster read inline on the request path; warm() never rejects.
+    void guildBoardPresence.warm();
     // Demand-gated: the Renown board is a full-table roll-up, so keep it warm
     // only while it is actually being viewed (a request within
     // DEEDS_BOARD_DEMAND_TTL_MS). An idle board pays nothing here; a cold or stale

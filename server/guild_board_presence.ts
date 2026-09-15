@@ -68,7 +68,9 @@ export function onlineOfficersOf(
  * NEW array; a row with an online officer becomes a new object carrying
  * `onlineOfficers`, a row with none is passed through by reference (so an
  * idle realm allocates nothing beyond the page array), and the cached
- * entries are never mutated (they are frozen and shared across requests).
+ * entries are never mutated: they are SHARED across every request for a
+ * whole cache window (main.ts installs them raw, not frozen), so a row
+ * decorated in place would poison the board for every viewer.
  */
 export function attachOfficerPresence(
   leaders: readonly GuildLeaderboardEntry[],
@@ -82,20 +84,40 @@ export function attachOfficerPresence(
 }
 
 export interface GuildBoardPresence {
-  /** Decorate a served page with live officer presence. Never rejects: a
-   *  cold roster read that fails serves the page without presence (logged),
-   *  so the board itself is never held hostage to the roster query. */
+  /** Decorate a served page with live officer presence. Never rejects and
+   *  never holds the board: a cold roster read that fails, or one still in
+   *  flight past the deadline, serves the page without presence (logged), so
+   *  the board itself is never held hostage to the roster query. */
   attach(
     leaders: readonly GuildLeaderboardEntry[],
     isOnline: (characterId: number) => boolean,
   ): Promise<GuildLeaderboardEntry[]>;
+  /** Refresh the roster OFF the request path (the main.ts warm loop, on the
+   *  board caches' cadence), so the first viewer after a refresh or a bust
+   *  never pays the read inline. Never rejects: a failure is logged and the
+   *  next request degrades to a presence-free page like any other. */
+  warm(): Promise<void>;
   /** Drop the cached roster (the moderation bust hook). */
   bust(): void;
 }
 
+/** How long a request waits on a roster read still in flight before serving
+ *  the page bare. Presence is best-effort decoration, so it may never add a
+ *  DB round trip's latency to a public board read: a cold read past this
+ *  bound keeps running (single-flight) and installs for the next caller. */
+export const GUILD_BOARD_PRESENCE_DEADLINE_MS = 250;
+
+/** After a cold roster read FAILS, how long requests skip the roster before
+ *  trying again. Single-flight bounds concurrency to one read, not the rate:
+ *  without this window every request on a down database would start (and
+ *  log) a fresh attempt the moment the last one settled. */
+export const GUILD_BOARD_PRESENCE_RETRY_MS = 5_000;
+
 export interface GuildBoardPresenceDeps {
   readOfficers: () => Promise<GuildOfficerRow[]>;
   ttlMs?: number;
+  deadlineMs?: number;
+  retryMs?: number;
   /** Injected clock for tests; production omits it (Date.now). */
   now?: () => number;
 }
@@ -103,24 +125,56 @@ export interface GuildBoardPresenceDeps {
 /** Build a presence layer over one officer-roster read (the production
  *  instance below reads Postgres; tests inject a fake). */
 export function createGuildBoardPresence(deps: GuildBoardPresenceDeps): GuildBoardPresence {
+  const now = deps.now ?? Date.now;
+  const deadlineMs = deps.deadlineMs ?? GUILD_BOARD_PRESENCE_DEADLINE_MS;
+  const retryMs = deps.retryMs ?? GUILD_BOARD_PRESENCE_RETRY_MS;
   const roster: CachedRead<GuildOfficerRoster> = createCachedRead(
     async () => rosterByGuild(await deps.readOfficers()),
     { ttlMs: deps.ttlMs ?? GUILD_BOARD_PRESENCE_TTL_MS, now: deps.now },
   );
+  // The clock reading before which requests skip the roster (set by a failed
+  // cold read, cleared by a bust); 0 means "try".
+  let retryAt = 0;
+
+  // The roster, or null when the read failed. A failure after at least one
+  // success never lands here: createCachedRead stale-serves it.
+  const readRoster = (): Promise<GuildOfficerRoster | null> =>
+    roster.read().then(
+      (value) => value,
+      (err: unknown) => {
+        retryAt = now() + retryMs;
+        console.error('guild board presence read failed:', err);
+        return null;
+      },
+    );
+
+  // The read, or null once the deadline passes first; the read itself keeps
+  // running and installs its result for the next caller.
+  const withinDeadline = (
+    read: Promise<GuildOfficerRoster | null>,
+  ): Promise<GuildOfficerRoster | null> => {
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const deadline = new Promise<null>((resolve) => {
+      timer = setTimeout(() => resolve(null), deadlineMs);
+      timer.unref?.();
+    });
+    return Promise.race([read, deadline]).finally(() => clearTimeout(timer));
+  };
+
   return {
     async attach(leaders, isOnline) {
       if (leaders.length === 0) return [];
-      let byGuild: GuildOfficerRoster;
-      try {
-        byGuild = await roster.read();
-      } catch (err) {
-        console.error('guild board presence read failed:', err);
-        return [...leaders];
-      }
+      if (now() < retryAt) return [...leaders];
+      const byGuild = await withinDeadline(readRoster());
+      if (byGuild === null) return [...leaders];
       return attachOfficerPresence(leaders, byGuild, isOnline);
+    },
+    async warm() {
+      await readRoster();
     },
     bust() {
       roster.bust();
+      retryAt = 0;
     },
   };
 }

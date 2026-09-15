@@ -170,12 +170,21 @@ into, and a live sign that someone who can actually answer a pledge is online.
   sessions, so it carries no presence rather than a wrong one. A server
   that predates presence sends no field, and the client shows no dot.
 - Presence names characters who are online right now to an anonymous
-  caller (the board is a public read), so it rides the shared per-IP
-  public-read budget: a caller past the budget still gets the board, only
-  without presence, so a scraper cannot poll officer activity at request
-  rate while a player at a signpost is never met with a 429. Officers only,
-  names only, no positions; the roster read carries the moderation
+  caller (the board is a public read), so it is metered per IP on its OWN
+  bucket (`guildBoardPresenceRateLimited`, `server/ratelimit.ts`): a caller
+  past the budget still gets the board, only without presence, so a scraper
+  cannot poll officer activity at request rate while a player at a signpost
+  is never met with a 429. Never the shared public-read bucket: the board
+  never 429s itself, so spending that budget here would let signpost
+  browsing starve the roster drill-in and the other public reads. Officers
+  only, names only, no positions; the roster read carries the moderation
   eligibility screen and is bust-wired to the moderation hook.
+- Presence is best-effort and may never add a database round trip's latency
+  to the board: the roster is warmed on the board caches' cadence (the
+  `warmLeaderboards` loop in `server/main.ts`), a request waits at most
+  `GUILD_BOARD_PRESENCE_DEADLINE_MS` on a read still in flight before serving
+  the page bare (the read keeps running and installs for the next caller),
+  and a failed cold read is not retried for `GUILD_BOARD_PRESENCE_RETRY_MS`.
 
 ## Architecture (the seams this rides)
 

@@ -52,8 +52,10 @@ import {
   setLeaderboardDbForTests,
 } from '../../server/leaderboard';
 import {
+  GUILD_BOARD_PRESENCE_MAX_PER_MINUTE,
   PUBLIC_READ_MAX_PER_MINUTE,
   publicReadRateLimited,
+  resetGuildBoardPresenceRateLimits,
   resetPublicReadRateLimits,
 } from '../../server/ratelimit';
 import { DEEDS } from '../../src/sim/content/deeds';
@@ -1212,6 +1214,12 @@ describe('GET /api/leaderboard?board=guilds categories and presence', () => {
     expect(first.leaders[0]).toBe(again.leaders[0]);
     expect(first.total).toBe(1);
     expect(buildGuildBoard(REALM_NAME, 'realm', ranking, 0, 50, null).leaders[0]).toBe(ranking[0]);
+    // The decisive pin: filter() and slice() both preserve element identity,
+    // so only the memo makes a later read of the SAME array ignore a row
+    // pushed onto it after the slice was paid (main.ts never mutates a
+    // cached array; a refresh installs a new one, the case below).
+    ranking.push(friendlyRow(4));
+    expect(buildGuildBoard(REALM_NAME, 'realm', ranking, 0, 50, 'newPlayerFriendly').total).toBe(1);
     // A refreshed ranking (a new array, the way main.ts installs one) is a fresh slice.
     const refreshed = [guildRow(1), friendlyRow(2), friendlyRow(3)];
     expect(buildGuildBoard(REALM_NAME, 'realm', refreshed, 0, 50, 'newPlayerFriendly').total).toBe(
@@ -1244,6 +1252,7 @@ describe('GET /api/leaderboard?board=guilds categories and presence', () => {
           isOnline(7) ? { ...l, onlineOfficers: [{ name: 'Boss', rank: 'leader' }] } : l,
         );
       },
+      warm: async () => {},
       bust: () => {},
     });
     configureLeaderboardRuntime(
@@ -1274,16 +1283,20 @@ describe('GET /api/leaderboard?board=guilds categories and presence', () => {
     await handlerFor('/api/leaderboard')(global);
     const gb = captured(global.res).body as { leaders: GuildLeaderboardEntry[] };
     expect(seen).toHaveLength(1);
+    expect(gb.leaders).toHaveLength(3);
     expect(gb.leaders.every((l) => l.onlineOfficers === undefined)).toBe(true);
   });
 
-  it('withholds presence (never the board) from a caller past the shared public-read budget', async () => {
+  it('withholds presence (never the board) from a caller past the presence budget, on its OWN bucket', async () => {
+    resetGuildBoardPresenceRateLimits();
+    resetPublicReadRateLimits();
     let attaches = 0;
     setGuildBoardPresenceForTests({
       attach: async (leaders) => {
         attaches++;
         return leaders.map((l) => ({ ...l, onlineOfficers: [{ name: 'Boss', rank: 'leader' }] }));
       },
+      warm: async () => {},
       bust: () => {},
     });
     configureLeaderboardRuntime(
@@ -1302,12 +1315,19 @@ describe('GET /api/leaderboard?board=guilds categories and presence', () => {
     expect(
       ((await read()).body as { leaders: GuildLeaderboardEntry[] }).leaders[0].onlineOfficers,
     ).toEqual([{ name: 'Boss', rank: 'leader' }]);
-    for (let i = 0; i < PUBLIC_READ_MAX_PER_MINUTE; i++) await read();
+    for (let i = 0; i < GUILD_BOARD_PRESENCE_MAX_PER_MINUTE; i++) await read();
     const throttled = await read();
     expect(throttled.status).toBe(200);
     expect(
       (throttled.body as { leaders: GuildLeaderboardEntry[] }).leaders[0].onlineOfficers,
     ).toBeUndefined();
-    expect(attaches).toBeLessThanOrEqual(PUBLIC_READ_MAX_PER_MINUTE);
+    expect(attaches).toBeLessThanOrEqual(GUILD_BOARD_PRESENCE_MAX_PER_MINUTE);
+    // The board never 429s itself, so its budget must be its own: after a
+    // whole presence window is spent from this IP, a sibling public read on
+    // the SHARED bucket (the search handler) still answers 200.
+    const sibling = fakeCtx({ method: 'GET', url: '/api/search' });
+    await handlerFor('/api/search')(sibling);
+    expect(captured(sibling.res).status).toBe(200);
+    resetGuildBoardPresenceRateLimits();
   });
 });

@@ -38,8 +38,13 @@ import {
   topArenaRatings,
   topLifetimeXp,
 } from '../../server/db';
-import { topGuildOfficers, topGuilds } from '../../server/guild_board_db';
+import {
+  GUILD_BOARD_OFFICER_ROWS_MAX,
+  topGuildOfficers,
+  topGuilds,
+} from '../../server/guild_board_db';
 import { moderateAccount, setOnAccountModerated } from '../../server/moderation_db';
+import { REALM } from '../../server/realm';
 
 // The one eligibility predicate, pinned as a LITERAL (never the exported
 // constant compared to itself): a banned account (banned_at set) fails the
@@ -80,6 +85,33 @@ async function capturedSql(run: () => Promise<unknown>): Promise<string[]> {
   try {
     await run();
     return spy.mock.calls.map((call) => String(call[0]));
+  } finally {
+    connectSpy.mockRestore();
+    spy.mockRestore();
+  }
+}
+
+/** Spy pool.query, run the read, and return every captured bind-parameter list. */
+async function capturedParams(run: () => Promise<unknown>): Promise<unknown[][]> {
+  const spy = vi
+    .spyOn(pool, 'query')
+    .mockImplementation(() => Promise.resolve(emptyResult()) as never);
+  const connectSpy = vi.spyOn(pool, 'connect').mockImplementation(
+    async () =>
+      ({
+        query: (text: string, values?: unknown[]) =>
+          text === 'BEGIN' ||
+          text === 'COMMIT' ||
+          text === 'ROLLBACK' ||
+          text.startsWith('SET LOCAL')
+            ? Promise.resolve(emptyResult())
+            : (pool.query as (t: string, v?: unknown[]) => Promise<unknown>)(text, values),
+        release() {},
+      }) as unknown as PoolClient,
+  );
+  try {
+    await run();
+    return spy.mock.calls.map((call) => (call[1] ?? []) as unknown[]);
   } finally {
     connectSpy.mockRestore();
     spy.mockRestore();
@@ -138,6 +170,11 @@ describe('every ranked board query embeds the fragment', () => {
     expect(sql).toContain("gm.rank IN ('leader', 'officer')");
     expect(sql).toContain("CASE gm.rank WHEN 'leader' THEN 0 ELSE 1 END");
     expect(sql).toContain('LIMIT $2');
+    // The bound values, not just the placeholders: the realm and the row cap
+    // (LEADERBOARD_MAX * 4 = 4000, pinned as the literal) reach $1 / $2.
+    const params = await capturedParams(() => topGuildOfficers());
+    expect(params).toEqual([[REALM, 4000]]);
+    expect(GUILD_BOARD_OFFICER_ROWS_MAX).toBe(4000);
   });
 
   it('deeds (the Renown roll-up aggregation embeds the fragment at BOTH eligibility sites)', async () => {
@@ -391,6 +428,15 @@ describe('main.ts wiring', () => {
     // The guild board's officer roster (guild_board_presence.ts): a moderated
     // officer's name leaves the presence tooltip as fast as the boards.
     expect(body).toContain('guildBoardPresence.bust()');
+    // And the roster is WARMED on the board caches' cadence (the
+    // warmLeaderboards closure), so the first viewer after a refresh or a
+    // bust never pays the roster read on the request path. Comment-stripped
+    // like the bust body above.
+    const warmStart = src.indexOf('const warmLeaderboards = () => {');
+    expect(warmStart).toBeGreaterThan(-1);
+    const warmEnd = src.indexOf('setInterval(warmLeaderboards', warmStart);
+    expect(warmEnd).toBeGreaterThan(warmStart);
+    expect(stripComments(src.slice(warmStart, warmEnd))).toContain('guildBoardPresence.warm()');
     // Not a board, but the same immediacy: the per-character lifetime-XP rank
     // cache (server/character_rank_cache.ts). A ban/unban changes every OTHER
     // eligible character's ahead/total counts, so the whole cache is dropped

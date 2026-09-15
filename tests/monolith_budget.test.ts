@@ -1593,7 +1593,11 @@ const MONOLITHS: MonolithRow[] = [
     // Down 5540 -> 5523 at the CPU-hygiene lot: the interest-boundary despawn
     // grace moved to src/net/despawn_grace.ts, and the lot's entityRosterVersion
     // field and bumps landed under the old count. Exact count, zero slack.
-    ceiling: 5523,
+    // Down 5523 -> 5515 with guild board categories: the board path builder,
+    // the page decode and the pledge-settings frame decode moved to
+    // src/net/guild_board_wire.ts. Measured on the release/v0.43.0-merged
+    // tree. Exact count, zero slack.
+    ceiling: 5515,
     seam: 'a src/net sibling module (the refactor/net-online split is the template)',
   },
   {
