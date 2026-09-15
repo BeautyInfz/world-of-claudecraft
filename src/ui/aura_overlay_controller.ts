@@ -32,7 +32,11 @@ import {
 } from './aura_watchlist_core';
 import type { PainterHostWriters } from './painter_host';
 import { createReadyGlowPlan, type ReadyGlowSignal } from './proc_ready_glow_core';
-import { createReticleTicksView, type ReticleTickInput } from './reticle_ticks_core';
+import {
+  createReticleTicksView,
+  type ReticleTickInput,
+  type ReticleTicksState,
+} from './reticle_ticks_core';
 
 const clampPosition = (value: number): number =>
   Math.round(Math.min(1, Math.max(0, value)) * 10_000) / 10_000;
@@ -61,8 +65,9 @@ export interface AuraOverlayControllerDeps {
   talents?(): TalentAllocation;
   iconUrl(abilityId: string): string;
   paintGroundRings?(rings: readonly AuraGroundRingState[]): void;
-  /** Paint the reticle tick ring. Injected like paintGroundRings. */
-  paintReticleTicks?(state: { slots: readonly unknown[]; count: number }): void;
+  /** Paint the reticle tick ring. Injected like paintGroundRings. The state is
+   *  the core's REUSED container: read it during the call, never retain it. */
+  paintReticleTicks?(state: ReticleTicksState): void;
   /** Play one alert cue at this gain. Injected so the controller stays testable
    *  without an AudioContext; the Hud wires it to the shared sfx engine. */
   playCue?(cueId: string, volume: number): void;

@@ -570,7 +570,7 @@ const HOT_PAINTERS: ReadonlyArray<ScannedPainter> = [
   // as it is MINTED into the pool (the pool only grows to the high-water tick
   // count), and the .setAttribute is the one aria-hidden on the ring root in
   // buildRoot, which runs once at HUD construction. Every state write after that
-  // (angle, radius, colour, lit, present) is facet-routed.
+  // (angle, colour, lit, present) is facet-routed.
   {
     file: 'reticle_ticks_painter.ts',
     allow: { '.className': 1, '.setAttribute': 1 },

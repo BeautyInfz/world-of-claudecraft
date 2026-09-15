@@ -1126,9 +1126,9 @@ describe('AuraOverlayController proc signal channels', () => {
       known: warriorKnown,
       iconUrl: (id) => `/icons/${id}.png`,
       playHaptic: (shape) => haptics.push(shape),
+      // The core hands over its REUSED container, so copy the live slots out.
       paintReticleTicks: (state) => {
-        const slots = state.slots as { id: string; active: boolean; angleDeg: number }[];
-        ticks.push(slots.slice(0, state.count).map((s) => ({ ...s })));
+        ticks.push(state.slots.slice(0, state.count).map((s) => ({ ...s })));
       },
     });
     return { controller, haptics, ticks };

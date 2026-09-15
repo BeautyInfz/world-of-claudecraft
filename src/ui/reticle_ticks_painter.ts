@@ -3,7 +3,9 @@
 //
 // Thin by contract. Every angle and slot decision lives in reticle_ticks_core;
 // this file owns only nodes and writes, and every write goes through the elided
-// PainterHost writers, so a frame where nothing changed touches no DOM.
+// PainterHost writers, so a frame where nothing changed touches no DOM. The ring
+// radius is the sheet's (--tick-radius on #reticle-ticks in components.css), not
+// a per-frame write: nothing here needs to know it.
 //
 // The ring is decorative chrome for a screen reader (the aura strip and the combat
 // log already announce the same events in text), so the root is aria-hidden rather
@@ -12,16 +14,8 @@
 import type { PainterHostWriters } from './painter_host';
 import type { ReticleTicksState } from './reticle_ticks_core';
 
-/** Distance from screen centre to the inner end of a tick, in px before UI scale. */
-const RADIUS_PX = 96;
-
-interface TickNode {
-  el: HTMLElement;
-  key: string;
-}
-
 export class ReticleTicksPainter {
-  private readonly nodes: TickNode[] = [];
+  private readonly nodes: HTMLElement[] = [];
 
   constructor(
     private readonly writers: PainterHostWriters,
@@ -43,17 +37,20 @@ export class ReticleTicksPainter {
       const el = this.root.ownerDocument.createElement('span');
       el.className = 'reticle-tick';
       this.root.appendChild(el);
-      this.nodes.push({ el, key: '' });
+      this.nodes.push(el);
     }
     for (let i = 0; i < this.nodes.length; i++) {
-      const node = this.nodes[i];
+      const el = this.nodes[i];
       const slot = i < state.count ? state.slots[i] : null;
-      this.writers.toggleClass(node.el, 'present', slot !== null);
+      this.writers.toggleClass(el, 'present', slot !== null);
+      // Written for EVERY pooled node, present or not: .reticle-tick.lit paints at
+      // full opacity on its own, so a node that just left the ring with its lit
+      // state still on would keep glowing at its old angle until the pool grew
+      // again. Unrouting or unwatching a proc while its aura is up hit exactly that.
+      this.writers.toggleClass(el, 'lit', slot?.active === true);
       if (!slot) continue;
-      this.writers.setStyleProp(node.el, '--tick-angle', `${slot.angleDeg}deg`);
-      this.writers.setStyleProp(node.el, '--tick-radius', `${RADIUS_PX}px`);
-      this.writers.setStyleProp(node.el, '--tick-color', slot.color);
-      this.writers.toggleClass(node.el, 'lit', slot.active);
+      this.writers.setStyleProp(el, '--tick-angle', `${slot.angleDeg}deg`);
+      this.writers.setStyleProp(el, '--tick-color', slot.color);
     }
   }
 }

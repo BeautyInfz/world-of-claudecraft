@@ -16057,6 +16057,9 @@
   /* Reticle tick ring: one mark per proc routed to the screen-centre channel.
      Pointer-events none throughout, so it can never eat a click on the world. */
   #reticle-ticks {
+    /* Distance from screen centre to the inner end of a tick. The sheet owns it;
+       the painter writes only each tick's angle, colour and state. */
+    --tick-radius: 96px;
     position: fixed;
     left: 50%;
     top: 50%;
@@ -16075,9 +16078,9 @@
     border-radius: 2px;
     background: var(--color-text-muted);
     opacity: 0;
-    transform-origin: 50% var(--tick-radius, 96px);
+    transform-origin: 50% var(--tick-radius);
     rotate: var(--tick-angle, 0deg);
-    translate: 0 calc(-1 * var(--tick-radius, 96px));
+    translate: 0 calc(-1 * var(--tick-radius));
     transition:
       opacity 120ms linear,
       background-color 120ms linear;
