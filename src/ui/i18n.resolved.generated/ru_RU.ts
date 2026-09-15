@@ -1221,7 +1221,10 @@ export const ru_RU: EnTranslations = {
       "devName": "Участник",
       "devTierCol": "Значок",
       "mergedPrs": "Слито PR",
-      "devEmpty": "Пока нет участников в рейтинге."
+      "devEmpty": "Пока нет участников в рейтинге.",
+      "podiumLabel": "Тройка лучших",
+      "unclaimed": "Свободно",
+      "prestigeTitle": "Престиж {rank}"
     },
     "pledge": {
       "open": "Принимает присяги",

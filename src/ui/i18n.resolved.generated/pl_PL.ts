@@ -1221,7 +1221,10 @@ export const pl_PL: EnTranslations = {
       "devName": "Kontrybutor",
       "devTierCol": "Odznaka",
       "mergedPrs": "Scalone PR-y",
-      "devEmpty": "Brak sklasyfikowanych kontrybutorów."
+      "devEmpty": "Brak sklasyfikowanych kontrybutorów.",
+      "podiumLabel": "Top three",
+      "unclaimed": "Unclaimed",
+      "prestigeTitle": "Prestige {rank}"
     },
     "pledge": {
       "open": "Przyjmuje przysięgi",

@@ -1221,7 +1221,10 @@ export const en: EnTranslations = {
       "devName": "Contributor",
       "devTierCol": "Badge",
       "mergedPrs": "Merged PRs",
-      "devEmpty": "No ranked contributors yet."
+      "devEmpty": "No ranked contributors yet.",
+      "podiumLabel": "Top three",
+      "unclaimed": "Unclaimed",
+      "prestigeTitle": "Prestige {rank}"
     },
     "pledge": {
       "open": "Accepting pledges",

@@ -1221,7 +1221,10 @@ export const id_ID: EnTranslations = {
       "devName": "Kontributor",
       "devTierCol": "Lencana",
       "mergedPrs": "PR Digabungkan",
-      "devEmpty": "Belum ada kontributor berperingkat."
+      "devEmpty": "Belum ada kontributor berperingkat.",
+      "podiumLabel": "Top three",
+      "unclaimed": "Unclaimed",
+      "prestigeTitle": "Prestige {rank}"
     },
     "pledge": {
       "open": "Menerima lamaran",

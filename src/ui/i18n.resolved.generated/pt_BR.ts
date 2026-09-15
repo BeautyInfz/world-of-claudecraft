@@ -1221,7 +1221,10 @@ export const pt_BR: EnTranslations = {
       "devName": "Colaborador",
       "devTierCol": "Insígnia",
       "mergedPrs": "PRs integrados",
-      "devEmpty": "Nenhum colaborador classificado ainda."
+      "devEmpty": "Nenhum colaborador classificado ainda.",
+      "podiumLabel": "Top three",
+      "unclaimed": "Unclaimed",
+      "prestigeTitle": "Prestige {rank}"
     },
     "pledge": {
       "open": "Aceitando candidaturas",

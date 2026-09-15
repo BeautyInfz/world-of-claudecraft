@@ -1221,7 +1221,10 @@ export const es: EnTranslations = {
       "devName": "Colaborador",
       "devTierCol": "Insignia",
       "mergedPrs": "PR fusionadas",
-      "devEmpty": "Aún no hay colaboradores clasificados."
+      "devEmpty": "Aún no hay colaboradores clasificados.",
+      "podiumLabel": "Top three",
+      "unclaimed": "Unclaimed",
+      "prestigeTitle": "Prestige {rank}"
     },
     "pledge": {
       "open": "Acepta compromisos",

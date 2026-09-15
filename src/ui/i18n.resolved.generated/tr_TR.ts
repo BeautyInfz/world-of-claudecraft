@@ -1221,7 +1221,10 @@ export const tr_TR: EnTranslations = {
       "devName": "Katkıcı",
       "devTierCol": "Rozet",
       "mergedPrs": "Birleştirilen PR'ler",
-      "devEmpty": "Henüz sıralı katkıcı yok."
+      "devEmpty": "Henüz sıralı katkıcı yok.",
+      "podiumLabel": "Top three",
+      "unclaimed": "Unclaimed",
+      "prestigeTitle": "Prestige {rank}"
     },
     "pledge": {
       "open": "Başvuru kabul ediliyor",

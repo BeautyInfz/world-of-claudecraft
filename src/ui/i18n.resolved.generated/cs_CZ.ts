@@ -1221,7 +1221,10 @@ export const cs_CZ: EnTranslations = {
       "devName": "Přispěvatel",
       "devTierCol": "Odznak",
       "mergedPrs": "Sloučené PR",
-      "devEmpty": "Zatím žádní hodnocení přispěvatelé."
+      "devEmpty": "Zatím žádní hodnocení přispěvatelé.",
+      "podiumLabel": "Top three",
+      "unclaimed": "Unclaimed",
+      "prestigeTitle": "Prestige {rank}"
     },
     "pledge": {
       "open": "Přijímá přihlášky",

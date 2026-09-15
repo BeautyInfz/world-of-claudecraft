@@ -1221,7 +1221,10 @@ export const zh_CN: EnTranslations = {
       "devName": "贡献者",
       "devTierCol": "徽章",
       "mergedPrs": "已合并 PR",
-      "devEmpty": "还没有上榜的贡献者。"
+      "devEmpty": "还没有上榜的贡献者。",
+      "podiumLabel": "前三名",
+      "unclaimed": "虚位以待",
+      "prestigeTitle": "声望 {rank}"
     },
     "pledge": {
       "open": "接受宣誓",
