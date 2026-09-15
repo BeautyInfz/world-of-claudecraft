@@ -1244,6 +1244,8 @@ export const fr_FR: EnTranslations = {
       "noteLabel": "Note du tableau",
       "notePlaceholder": "Dites aux futurs membres ce que votre guilde recherche",
       "save": "Enregistrer",
+      "newPlayerFriendlyLabel": "New player friendly",
+      "newPlayerFriendlyHint": "Shown on the recruits' board at the Proving Shore signpost.",
       "yourPledge": "Votre candidature : {guild}",
       "since": "Candidature envoyée le {date}",
       "withdraw": "Retirer la candidature"
@@ -2252,6 +2254,12 @@ export const fr_FR: EnTranslations = {
       "linkHint": "Maj-clic pour lier cet objet dans le canal de discussion."
     },
     "plurals": {
+      "guildBoardShown": {
+        "one": "{count} guild shown",
+        "few": "{count} guilds shown",
+        "many": "{count} guilds shown",
+        "other": "{count} guilds shown"
+      },
       "commissionMasterworks": {
         "one": "{count} chef-d’œuvre",
         "few": "{count} chefs-d’œuvre",
@@ -3039,6 +3047,7 @@ export const fr_FR: EnTranslations = {
       "elementalConvergencePrimed": "Votre prochain sort de l'autre école élémentaire accorde la Convergence élémentaire",
       "hunterFerocity": "{stacks} Férocité de meute : votre familier inflige {pct}% de dégâts en plus",
       "cooldownCap": "{used} sur {cap} s de réduction de temps de recharge utilisés dans cette fenêtre",
+      "bruinRushWindow": "La Forme de loup ne coûte aucun mana et cloue la cible de votre Ruée de Bruin, la ralentissant de {pct}% pendant {sec} s",
       "funeralHarvestLock": "Moisson funéraire ne peut pas encore créer un autre Fragment d'âme",
       "leadenHexLock": "Hex de plomb ne peut pas encore enraciner cette cible de nouveau",
       "forbiddenReflectionReady": "Votre prochain temps de recharge de Démoniste éligible peut être relancé",
@@ -3151,7 +3160,7 @@ export const fr_FR: EnTranslations = {
       "elementalTrance": "Dégâts subis réduits de {pct}%. {mana}% de tous les dégâts infligés sont convertis en mana",
       "stealth": "Camouflé ; vitesse de déplacement réduite de {pct}%",
       "formBear": "Forme de Bruin : points de vie et armure augmentés",
-      "formCat": "Forme de félin : dégâts de mêlée et énergie",
+      "wolfForm": "Wolf Form: melee damage and energy; movement speed increased by {pct}%",
       "formTravel": "Forme de Fleet : vitesse de déplacement augmentée de {pct}%",
       "formFireball": "Forme de braise : vitesse de déplacement augmentée de {pct} % ; les attaques et sorts sont désactivés",
       "formMoonkin": "Forme de sélénien : dégâts des sorts augmentés de {pct}% et armure augmentée de {armorPct}%",
@@ -3758,6 +3767,15 @@ export const fr_FR: EnTranslations = {
       "subtitle": "Guildes du royaume",
       "rosterTitle": "Voir l'effectif de {guild}",
       "back": "Retour",
+      "filters": "Board filters",
+      "newPlayerFriendly": "New player friendly",
+      "newPlayerFriendlyTitle": "This guild welcomes new players",
+      "filterNewPlayersTitle": "Show only guilds that welcome new players",
+      "filterEmpty": "No guild has opened its doors to new players yet.",
+      "showAll": "Show all guilds",
+      "officersOnline": "Officers online",
+      "officersOnlineLabel": "Officers online: {names}",
+      "officerEntry": "{name} ({rank})",
       "popupTitle": "Panneau de guilde",
       "close": "Fermer"
     },
@@ -4974,6 +4992,10 @@ export const fr_FR: EnTranslations = {
       "ownedTooltipStatus": "Cataloguée dans Le Reliquaire",
       "missingTooltipStatus": "Pas encore trouvée",
       "firstFindClears": "Trouvée pour la première fois à la conquête {count}",
+      "foundBy": "Found by {names}",
+      "finderWithDate": "{name} ({date})",
+      "sharedScopeNote": "Shared by every character on your account",
+      "sharedScopeHint": "A relic found by any character on your account fills the page here too.",
       "unlockToast": "Relique cataloguée : {name}",
       "illuminateBanner": "Page enluminée : {name}",
       "illuminateToast": "Toutes les reliques de {name} sont remplies.",
@@ -5107,6 +5129,10 @@ export const fr_FR: EnTranslations = {
       "progressAria": "Progression: {current} sur {target}",
       "renownChip": "{renown} de Renommée",
       "earnedDate": "Obtenu le {date}",
+      "earnedBy": "Earned by {names}",
+      "earnerWithDate": "{name} ({date})",
+      "accountScopeNote": "Shared by every character on your account",
+      "accountScopeHint": "A deed any character on your account accomplishes is earned here too, and the Book names who earned it.",
       "featRibbon": "Prouesse",
       "hiddenBadge": "Secret",
       "titleChip": "Titre à la clé",
@@ -6486,6 +6512,7 @@ export const fr_FR: EnTranslations = {
       "formsNote": "Un druide combat en changeant de forme. La plupart des capacités de druide appartiennent à une forme précise, si bien que la forme que vous portez détermine ce que vous pouvez lancer, et changer de forme coûte un peu de mana. Vous pouvez changer de forme en combat ou hors combat, aussi souvent que vous le souhaitez.",
       "formsAutoUnshift": "Un soin ou un sort de dégâts lancé sous forme vous en fait sortir tout seul. Quitter une forme ainsi est gratuit et ne consomme pas votre temps de recharge global, un sort instantané part donc à l'instant où vous appuyez. Reprendre la forme est une capacité ordinaire, qui coûte toujours du mana et votre temps de recharge global.",
       "formsMoonwing": "Un druide Équilibre gagne une forme supplémentaire, la Forme de sélénien, la forme de lanceur de sorts dans laquelle il combat. C'est la seule forme animale qui conserve vos sorts, et votre baguette ne fonctionne que dans cette forme ou dans votre forme de lanceur de sorts normale.",
+      "formsWolfEngage": "Un loup ouvre le combat avec Ruée de Bruin, passe aussitôt en Forme de loup pour clouer la cible, comble la distance avec Bond quand il n'est pas camouflé et immobilise un ennemi avec Mise à terre.",
       "formLine": {
         "form_bear": "La forme de tank : une peau épaisse, de la rage à la place du mana, et davantage de menace pour que les ennemis continuent de vous frapper.",
         "form_cat": "La forme de dégâts au corps à corps : de l'énergie et des points de combo, comme un voleur, et beaucoup moins de menace.",
@@ -7053,7 +7080,7 @@ export const fr_FR: EnTranslations = {
     "reliquaryPage": {
       "intro": "Le Reliquaire est le musée des butins uniques que vous avez catalogués : les pièces convoitées des donjons, les trophées de métier, les montures, les apparences d'arme et les titres. Il accompagne le Livre des hauts faits comme une salle des trophées accompagne un livre de succès.",
       "howHeading": "Comment fonctionne la collection",
-      "howBody": "Ouvrez Le Reliquaire en jeu (Maj+X par défaut). Chaque étagère abrite des pages de reliques uniques. Vous remplissez une silhouette lorsque vous obtenez cette pièce pour la première fois sur ce personnage, et vous enluminez une page lorsque toutes ses reliques sont remplies. Quelques pages portent la mention Retirée ou Personnelle : elles restent hors de la complétion et ne bloquent donc jamais une étagère ni le catalogue entier. Les trouvailles en direct déclenchent une notification et rafraîchissent la fenêtre ouverte ; la progression est propre au personnage, sauf les apparences d'arme, qui sont des cosmétiques de compte.",
+      "howBody": "Ouvrez Le Reliquaire en jeu (Maj+X par défaut). Chaque étagère contient des pages de reliques uniques. Une silhouette se remplit dès qu'un personnage de votre compte, quel qu'il soit, obtient cette pièce pour la première fois, et une page s'illumine lorsque chaque relique qu'elle contient est remplie. Quelques pages portent la mention Retirée ou Personnelle : elles restent hors de la complétion et ne bloquent donc jamais une étagère ni le catalogue entier. Les trouvailles en direct affichent une notification et rafraîchissent la fenêtre ouverte ; la progression est partagée par tous les personnages du compte, si bien qu'une relique trouvée par un personnage remplit la page pour tous.",
       "ranksHeading": "Rangs de Conservateur",
       "ranksBody": "Les rangs de Conservateur montent avec chaque relique unique cataloguée et n'accordent que des titres et des bordures cosmétiques. Ils ne donnent jamais de puissance de combat, de taux de butin ni de compensation de malchance. Les apparences d'arme de compte ne comptent pas pour le rang de Conservateur, afin que le prestige reste attaché au personnage, et les reliques des pages Retirées ou Personnelles n'y comptent pas non plus.",
       "retiredTag": "Retirée",
@@ -11921,7 +11948,7 @@ export const fr_FR: EnTranslations = {
       },
       "cat_form": {
         "name": "Forme de loup",
-        "description": "Vous transforme en loup : l'agilité monte avec votre niveau, puissance d'attaque +8 plus 2 par niveau, vos attaques utilisent de l'énergie et des points de combo, et vous générez 29% de menace en moins. Lancez de nouveau pour revenir en forme de lanceur de sorts."
+        "description": "Vous transforme en loup : l'agilité monte avec votre niveau, puissance d'attaque +8 plus 2 par niveau, vos attaques utilisent de l'énergie et des points de combo, et vous générez 29% de menace en moins. Passer sous une forme quelconque octroie Foulée bondissante : 60% de vitesse de déplacement pendant 3 s, une fois toutes les 20 s. Lancez de nouveau pour revenir en forme de lanceur de sorts."
       },
       "claw": {
         "name": "Griffe lacérante",
@@ -11986,7 +12013,15 @@ export const fr_FR: EnTranslations = {
       },
       "pounce": {
         "name": "Frappe furtive",
-        "description": "Ouverture furtive qui étourdit la cible pendant 2 s. Confère 1 point de combo. Forme de loup uniquement."
+        "description": "Ouverture furtive qui étourdit la cible pendant 2 s. Confère 1 point de combo. Forme de loup uniquement. Hors camouflage, ce bouton devient Bond."
+      },
+      "lunge": {
+        "name": "Bond",
+        "description": "Bondit sur un ennemi jusqu'à 12 m, inflige 60% des dégâts de l'arme et octroie 1 point de combo. Forme de loup uniquement."
+      },
+      "hamstring_bite": {
+        "name": "Mise à terre",
+        "description": "Technique de finition qui étourdit la cible pendant 1 s plus 1 s par point de combo (5 points de combo : 6 s). Forme de loup uniquement."
       },
       "insect_swarm": {
         "name": "Nuée cinglante",
@@ -12700,7 +12735,7 @@ export const fr_FR: EnTranslations = {
       },
       "bear_charge": {
         "name": "Ruée de Bruin",
-        "description": "Charge un ennemi, génère 9 points de rage et l'étourdit pendant 1 s. Portée de 8-25 m. Forme de Bruin uniquement."
+        "description": "Charge un ennemi, génère 9 points de rage et l'étourdit pendant 1 s. Pendant les 3 s qui suivent, la Forme de loup est gratuite et cloue la cible, la ralentissant de 50% pendant 4 s. Portée de 8-25 m. Forme de Bruin uniquement."
       },
       "demoralizing_roar": {
         "name": "Rugissement lâche",
@@ -12708,7 +12743,7 @@ export const fr_FR: EnTranslations = {
       },
       "prowl": {
         "name": "Traquer",
-        "description": "Passe en camouflage tant que vous êtes en forme de loup, avec une vitesse de déplacement réduite de 5%. Inutilisable en combat."
+        "description": "Passe en camouflage tant que vous êtes en forme de loup. Inutilisable en combat."
       },
       "rake": {
         "name": "Écorcher",

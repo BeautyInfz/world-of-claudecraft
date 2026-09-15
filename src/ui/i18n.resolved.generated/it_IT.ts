@@ -1244,6 +1244,8 @@ export const it_IT: EnTranslations = {
       "noteLabel": "Nota della bacheca",
       "notePlaceholder": "Racconta agli aspiranti membri cosa cerca la tua gilda",
       "save": "Salva",
+      "newPlayerFriendlyLabel": "New player friendly",
+      "newPlayerFriendlyHint": "Shown on the recruits' board at the Proving Shore signpost.",
       "yourPledge": "Il tuo giuramento: {guild}",
       "since": "Giurato il {date}",
       "withdraw": "Ritira il giuramento"
@@ -2252,6 +2254,12 @@ export const it_IT: EnTranslations = {
       "linkHint": "Shift-clic per collegare questo oggetto in chat."
     },
     "plurals": {
+      "guildBoardShown": {
+        "one": "{count} guild shown",
+        "few": "{count} guilds shown",
+        "many": "{count} guilds shown",
+        "other": "{count} guilds shown"
+      },
       "commissionMasterworks": {
         "one": "{count} capolavoro",
         "few": "{count} capolavori",
@@ -3039,6 +3047,7 @@ export const it_IT: EnTranslations = {
       "elementalConvergencePrimed": "Il prossimo incantesimo dall'altra scuola elementale concede Convergenza Elementale",
       "hunterFerocity": "{stacks} Ferocia del Branco: il tuo famiglio infligge il {pct}% di danni in più",
       "cooldownCap": "{used} di {cap} sec di riduzione del tempo di recupero usati in questa finestra",
+      "bruinRushWindow": "La Forma del Lupo non costa mana e blocca il bersaglio della vostra Carica di Bruin, rallentandolo del {pct}% per {sec} sec",
       "funeralHarvestLock": "Funeral Harvest non può ancora creare un altro Frammento d'Anima",
       "leadenHexLock": "Maleficio Plum beo non può ancora radicare di nuovo questo bersaglio",
       "forbiddenReflectionReady": "Il tuo prossimo tempo di recupero idoneo dello Stregone può essere lanciato di nuovo",
@@ -3151,7 +3160,7 @@ export const it_IT: EnTranslations = {
       "elementalTrance": "Danni subiti ridotti del {pct}%. Il {mana}% di tutti i danni che infliggi viene convertito in mana",
       "stealth": "Nascosto; velocità di movimento ridotta del {pct}%",
       "formBear": "Forma di Bruin: salute e armatura aumentate",
-      "formCat": "Forma felina: danni in mischia ed energia",
+      "wolfForm": "Wolf Form: melee damage and energy; movement speed increased by {pct}%",
       "formTravel": "Forma di Fleet: velocità di movimento aumentata del {pct}%",
       "formFireball": "Forma Brace: velocità di movimento aumentata del {pct}%; attacchi e incantesimi disabilitati",
       "formMoonkin": "Forma di Lunagufo: danni degli incantesimi aumentati del {pct}% e armatura aumentata del {armorPct}%",
@@ -3758,6 +3767,15 @@ export const it_IT: EnTranslations = {
       "subtitle": "Le gilde del reame",
       "rosterTitle": "Visualizza l'elenco membri di {guild}",
       "back": "Indietro",
+      "filters": "Board filters",
+      "newPlayerFriendly": "New player friendly",
+      "newPlayerFriendlyTitle": "This guild welcomes new players",
+      "filterNewPlayersTitle": "Show only guilds that welcome new players",
+      "filterEmpty": "No guild has opened its doors to new players yet.",
+      "showAll": "Show all guilds",
+      "officersOnline": "Officers online",
+      "officersOnlineLabel": "Officers online: {names}",
+      "officerEntry": "{name} ({rank})",
       "popupTitle": "Cartello della Gilda",
       "close": "Chiudi"
     },
@@ -4974,6 +4992,10 @@ export const it_IT: EnTranslations = {
       "ownedTooltipStatus": "Catalogata nel Reliquiario",
       "missingTooltipStatus": "Non ancora trovata",
       "firstFindClears": "Trovata per la prima volta alla conquista {count}",
+      "foundBy": "Found by {names}",
+      "finderWithDate": "{name} ({date})",
+      "sharedScopeNote": "Shared by every character on your account",
+      "sharedScopeHint": "A relic found by any character on your account fills the page here too.",
       "unlockToast": "Reliquia catalogata: {name}",
       "illuminateBanner": "Pagina miniata: {name}",
       "illuminateToast": "Ogni reliquia di {name} è riempita.",
@@ -5107,6 +5129,10 @@ export const it_IT: EnTranslations = {
       "progressAria": "Progresso: {current} su {target}",
       "renownChip": "{renown} Fama",
       "earnedDate": "Ottenuta il {date}",
+      "earnedBy": "Earned by {names}",
+      "earnerWithDate": "{name} ({date})",
+      "accountScopeNote": "Shared by every character on your account",
+      "accountScopeHint": "A deed any character on your account accomplishes is earned here too, and the Book names who earned it.",
       "featRibbon": "Prodezza",
       "hiddenBadge": "Nascosta",
       "titleChip": "Titolo in premio",
@@ -6486,6 +6512,7 @@ export const it_IT: EnTranslations = {
       "formsNote": "Un druido combatte cambiando forma. La maggior parte delle abilità del druido appartiene a una forma specifica, quindi la forma in cui ti trovi decide cosa puoi lanciare, e trasformarti costa un po' di mana. Puoi trasformarti dentro o fuori dal combattimento, tutte le volte che vuoi.",
       "formsAutoUnshift": "Una cura o un incantesimo di danno lanciato in forma ti fa uscire da solo. Lasciare una forma in questo modo è gratuito e non consuma il recupero globale, quindi un incantesimo istantaneo parte nel momento in cui lo premi. Rientrare in forma è un'abilità normale e costa comunque mana e il tuo recupero globale.",
       "formsMoonwing": "Un druido di Equilibrio ottiene una forma in più, la Forma di Lunagufo, la forma da incantatore in cui combatte questa specializzazione. È l'unica forma animale che conserva i tuoi incantesimi, e la tua bacchetta funziona solo con essa o con la tua normale forma da incantatore.",
+      "formsWolfEngage": "Un lupo apre lo scontro con Carica di Bruin, passa subito in Forma del Lupo per bloccare il bersaglio, chiude la distanza con Balzo quando non è in furtività e ferma un nemico con Atterramento.",
       "formLine": {
         "form_bear": "La forma da tank: una pelle spessa, rabbia al posto del mana, e minaccia extra così i nemici continuano ad attaccarti.",
         "form_cat": "La forma da danno in mischia: energia e punti combo, come un ladro, e molta meno minaccia.",
@@ -7053,7 +7080,7 @@ export const it_IT: EnTranslations = {
     "reliquaryPage": {
       "intro": "Il Reliquiario è il museo dei bottini unici che hai catalogato: i pezzi più ambiti dei dungeon, i trofei di professione, le cavalcature, gli aspetti delle armi e i titoli. Fa coppia con il Libro delle Imprese come una sala dei trofei fa coppia con un libro delle conquiste.",
       "howHeading": "Come funziona la collezione",
-      "howBody": "Apri Il Reliquiario in gioco (Maiusc+X di base). Ogni scaffale custodisce pagine di reliquie uniche. Riempi una sagoma quando ottieni quel pezzo per la prima volta con quel personaggio, e minia una pagina quando ogni sua reliquia è riempita. Alcune pagine portano l'etichetta Ritirata o Personale: restano fuori dal completamento, quindi non bloccano mai uno scaffale né l'intero catalogo. I ritrovamenti in tempo reale mostrano un avviso e aggiornano la finestra aperta; i progressi sono legati al personaggio, tranne gli aspetti delle armi, che sono cosmetici dell'account.",
+      "howBody": "Apri Il Reliquiario in gioco (Maiusc+X per impostazione predefinita). Ogni scaffale contiene pagine di reliquie uniche. Una sagoma si riempie quando un qualsiasi personaggio del tuo account ottiene quel pezzo per la prima volta, e una pagina si illumina quando ogni reliquia al suo interno è riempita. Alcune pagine sono contrassegnate come Ritirata o Personale: restano fuori dal completamento, quindi non bloccano mai uno scaffale o l'intero catalogo. I ritrovamenti dal vivo mostrano un avviso e aggiornano la finestra aperta; i progressi sono condivisi da tutti i personaggi dell'account, così una reliquia trovata da un personaggio riempie la pagina per tutti.",
       "ranksHeading": "Gradi di Curatore",
       "ranksBody": "I gradi di Curatore salgono con ogni reliquia unica catalogata e concedono soltanto titoli e bordi cosmetici. Non danno mai potenza in combattimento, probabilità di bottino o compensazione per la sfortuna. Gli aspetti delle armi legati all'account non contano per il grado di Curatore, così il prestigio resta legato al personaggio, e nemmeno le reliquie delle pagine Ritirate o Personali vi contribuiscono.",
       "retiredTag": "Ritirata",
@@ -11921,7 +11948,7 @@ export const it_IT: EnTranslations = {
       },
       "cat_form": {
         "name": "Forma del Lupo",
-        "description": "Vi trasforma in lupo: l'agilità sale con il vostro livello, potenza d'attacco +8 più 2 per livello, i vostri attacchi usano energia e punti combo, e generate il 29% di minaccia in meno. Lanciate di nuovo per tornare alla forma da incantatore."
+        "description": "Vi trasforma in lupo: l'agilità sale con il vostro livello, potenza d'attacco +8 più 2 per livello, i vostri attacchi usano energia e punti combo, e generate il 29% di minaccia in meno. Passare a qualsiasi forma concede Passo leggero: il 60% di velocità di movimento per 3 sec, una volta ogni 20 sec. Lanciate di nuovo per tornare alla forma da incantatore."
       },
       "claw": {
         "name": "Artiglio Lacerante",
@@ -11986,7 +12013,15 @@ export const it_IT: EnTranslations = {
       },
       "pounce": {
         "name": "Colpo Strisciante",
-        "description": "Apertura furtiva che stordisce il bersaglio per 2 sec. Conferisce 1 punto combo. Solo Forma del Lupo."
+        "description": "Apertura furtiva che stordisce il bersaglio per 2 sec. Conferisce 1 punto combo. Solo Forma del Lupo. Fuori dalla furtività questo pulsante è Balzo."
+      },
+      "lunge": {
+        "name": "Balzo",
+        "description": "Balza su un nemico fino a 12 metri di distanza, infliggendo il 60% del danno dell'arma e conferendo 1 punto combo. Solo in Forma del Lupo."
+      },
+      "hamstring_bite": {
+        "name": "Atterramento",
+        "description": "Mossa finale che stordisce il bersaglio per 1 sec più 1 sec per punto combo (5 punti combo: 6 sec). Solo in Forma del Lupo."
       },
       "insect_swarm": {
         "name": "Sciame Pungente",
@@ -12700,7 +12735,7 @@ export const it_IT: EnTranslations = {
       },
       "bear_charge": {
         "name": "Carica di Bruin",
-        "description": "Carica un nemico, generando 9 punti rabbia e stordendolo per 1 sec. Gittata di 7-23 metri. Solo in Forma di Bruin."
+        "description": "Carica un nemico, generando 9 punti rabbia e stordendolo per 1 sec. Per i 3 sec successivi, la Forma del Lupo è gratuita e blocca il bersaglio, rallentandolo del 50% per 4 sec. Gittata di 7-23 metri. Solo in Forma di Bruin."
       },
       "demoralizing_roar": {
         "name": "Ruggito Codardo",
@@ -12708,7 +12743,7 @@ export const it_IT: EnTranslations = {
       },
       "prowl": {
         "name": "Appostamento",
-        "description": "Entra in furtività mentre sei in Forma del Lupo, muovendoti il 5% più lentamente. Non utilizzabile in combattimento."
+        "description": "Entra in furtività mentre sei in Forma del Lupo. Non utilizzabile in combattimento."
       },
       "rake": {
         "name": "Scarnificare",

@@ -1244,6 +1244,8 @@ export const pt_BR: EnTranslations = {
       "noteLabel": "Nota do quadro",
       "notePlaceholder": "Diga aos aspirantes o que sua guilda está procurando",
       "save": "Salvar",
+      "newPlayerFriendlyLabel": "New player friendly",
+      "newPlayerFriendlyHint": "Shown on the recruits' board at the Proving Shore signpost.",
       "yourPledge": "Sua candidatura: {guild}",
       "since": "Candidatou-se em {date}",
       "withdraw": "Retirar candidatura"
@@ -2252,6 +2254,12 @@ export const pt_BR: EnTranslations = {
       "linkHint": "Shift-clique para vincular este item no chat."
     },
     "plurals": {
+      "guildBoardShown": {
+        "one": "{count} guild shown",
+        "few": "{count} guilds shown",
+        "many": "{count} guilds shown",
+        "other": "{count} guilds shown"
+      },
       "commissionMasterworks": {
         "one": "{count} obra-prima",
         "few": "{count} obras-primas",
@@ -3039,6 +3047,7 @@ export const pt_BR: EnTranslations = {
       "elementalConvergencePrimed": "Seu próximo feitiço da outra escola elemental concede Convergência Elemental",
       "hunterFerocity": "{stacks} de Ferocidade da Matilha: seu companheiro causa {pct}% mais dano",
       "cooldownCap": "{used} de {cap} s de redução de recarga usados nesta janela",
+      "bruinRushWindow": "A Forma de Lobo não custa mana e fixa o alvo da vossa Investida de Bruin, reduzindo sua velocidade em {pct}% por {sec} s",
       "funeralHarvestLock": "Funeral Harvest ainda não pode criar outro Fragmento de Alma",
       "leadenHexLock": "Maldição Chúmbea ainda não pode enraizar este alvo novamente",
       "forbiddenReflectionReady": "Sua próxima recarga elegível de Bruxo pode ser conjurada novamente",
@@ -3151,7 +3160,7 @@ export const pt_BR: EnTranslations = {
       "elementalTrance": "Dano sofrido reduzido em {pct}%. {mana}% de todo o dano que você causa é convertido em mana",
       "stealth": "Oculto; velocidad de movimiento reducida un {pct}%",
       "formBear": "Forma de Bruin: vida e armadura aumentadas",
-      "formCat": "Forma felina: daño cuerpo a cuerpo y energía",
+      "wolfForm": "Wolf Form: melee damage and energy; movement speed increased by {pct}%",
       "formTravel": "Forma de Fleet: velocidade de movimento aumentada em {pct}%",
       "formFireball": "Forma de Brasa: velocidade de movimento aumentada em {pct}%; ataques e feitiços desativados",
       "formMoonkin": "Forma de Luniscante: dano de feitiço aumentado em {pct}% e armadura aumentada em {armorPct}%",
@@ -3758,6 +3767,15 @@ export const pt_BR: EnTranslations = {
       "subtitle": "Guildas do reino",
       "rosterTitle": "Ver a lista de membros de {guild}",
       "back": "Voltar",
+      "filters": "Board filters",
+      "newPlayerFriendly": "New player friendly",
+      "newPlayerFriendlyTitle": "This guild welcomes new players",
+      "filterNewPlayersTitle": "Show only guilds that welcome new players",
+      "filterEmpty": "No guild has opened its doors to new players yet.",
+      "showAll": "Show all guilds",
+      "officersOnline": "Officers online",
+      "officersOnlineLabel": "Officers online: {names}",
+      "officerEntry": "{name} ({rank})",
       "popupTitle": "Placa da Guilda",
       "close": "Fechar"
     },
@@ -4974,6 +4992,10 @@ export const pt_BR: EnTranslations = {
       "ownedTooltipStatus": "Catalogada n'O Relicário",
       "missingTooltipStatus": "Ainda não encontrada",
       "firstFindClears": "Encontrada pela primeira vez na conquista {count}",
+      "foundBy": "Found by {names}",
+      "finderWithDate": "{name} ({date})",
+      "sharedScopeNote": "Shared by every character on your account",
+      "sharedScopeHint": "A relic found by any character on your account fills the page here too.",
       "unlockToast": "Relíquia catalogada: {name}",
       "illuminateBanner": "Página iluminada: {name}",
       "illuminateToast": "Todas as relíquias de {name} estão preenchidas.",
@@ -5107,6 +5129,10 @@ export const pt_BR: EnTranslations = {
       "progressAria": "Progresso: {current} de {target}",
       "renownChip": "{renown} de Renome",
       "earnedDate": "Conquistado em {date}",
+      "earnedBy": "Earned by {names}",
+      "earnerWithDate": "{name} ({date})",
+      "accountScopeNote": "Shared by every character on your account",
+      "accountScopeHint": "A deed any character on your account accomplishes is earned here too, and the Book names who earned it.",
       "featRibbon": "Proeza",
       "hiddenBadge": "Oculto",
       "titleChip": "Recompensa de título",
@@ -6486,6 +6512,7 @@ export const pt_BR: EnTranslations = {
       "formsNote": "Um druida luta mudando de forma. A maioria das habilidades de druida pertence a uma forma específica, então a forma em que você está decide o que pode conjurar, e mudar de forma custa um pouco de mana. Você pode mudar de forma dentro ou fora de combate, quantas vezes quiser.",
       "formsAutoUnshift": "Uma cura ou um feitiço de dano conjurado em forma tira você dela sozinho. Sair de uma forma assim é de graça e não gasta sua recarga global, então um feitiço instantâneo dispara no momento em que você aperta. Voltar para a forma é uma habilidade comum e ainda custa mana e sua recarga global.",
       "formsMoonwing": "Um druida Equilíbrio ganha mais uma forma, a Forma de Luniscante, a forma de conjurador em que um druida Equilíbrio luta. É a única forma animal que mantém suas magias, e sua varinha só funciona nela ou na sua forma normal de conjurador.",
+      "formsWolfEngage": "Um lobo abre a luta com Investida de Bruin, muda logo para a Forma de Lobo para fixar o alvo, fecha a distância com Bote quando não está furtivo e prende um inimigo com Derrubada.",
       "formLine": {
         "form_bear": "A forma de tanque: uma pele grossa, raiva em vez de mana, e ameaça extra para que os inimigos continuem batendo em você.",
         "form_cat": "A forma de dano corpo a corpo: energia e pontos de combo, como um ladino, e muito menos ameaça.",
@@ -7053,7 +7080,7 @@ export const pt_BR: EnTranslations = {
     "reliquaryPage": {
       "intro": "O Relicário é o museu dos espólios únicos que você catalogou: as peças mais cobiçadas das masmorras, troféus de profissão, montarias, visuais de arma e títulos. Ele acompanha o Livro dos Feitos como um salão de troféus acompanha um livro de conquistas.",
       "howHeading": "Como funciona a coleção",
-      "howBody": "Abra O Relicário no jogo (Shift+X por padrão). Cada estante guarda páginas de relíquias únicas. Você preenche uma silhueta quando obtém aquela peça pela primeira vez no personagem, e ilumina uma página quando todas as relíquias dela estão preenchidas. Algumas páginas trazem a marca Retirada ou Pessoal: ficam fora da conclusão, então nunca travam uma estante nem o catálogo inteiro. Os achados ao vivo mostram um aviso e atualizam a janela aberta; o progresso é por personagem, exceto os visuais de arma, que são cosméticos da conta.",
+      "howBody": "Abra O Relicário no jogo (padrão Shift+X). Cada estante contém páginas de relíquias únicas. Uma silhueta é preenchida quando qualquer personagem da sua conta obtém aquela peça pela primeira vez, e uma página é iluminada quando todas as relíquias nela estão preenchidas. Algumas páginas são marcadas como Aposentada ou Pessoal: ficam fora da conclusão, então nunca travam uma estante nem o catálogo inteiro. Os achados ao vivo mostram um aviso e atualizam a janela aberta; o progresso é compartilhado por todos os personagens da conta, então uma relíquia que um personagem encontra preenche a página para todos.",
       "ranksHeading": "Graus de Curador",
       "ranksBody": "Os graus de Curador sobem a cada relíquia única catalogada e concedem apenas títulos e molduras cosméticos. Eles nunca dão poder de combate, chance de espólio nem compensação por azar. Visuais de arma da conta não pontuam para o grau de Curador, de modo que o prestígio continua preso ao personagem, e relíquias em páginas Retiradas ou Pessoais também não pontuam para ele.",
       "retiredTag": "Retirada",
@@ -11921,7 +11948,7 @@ export const pt_BR: EnTranslations = {
       },
       "cat_form": {
         "name": "Forma de Lobo",
-        "description": "Transforma-vos em lobo: a agilidade sobe com vosso nível, poder de ataque +8 mais 2 por nível, vossos ataques usam energia e pontos de combo, e gerais 29% menos ameaça. Conjurai novamente para voltar à forma de conjurador."
+        "description": "Transforma-vos em lobo: a agilidade sobe com vosso nível, poder de ataque +8 mais 2 por nível, vossos ataques usam energia e pontos de combo, e gerais 29% menos ameaça. Mudar para qualquer forma concede Passo ligeiro: 60% de velocidade de movimento por 3 s, uma vez a cada 20 s. Conjurai novamente para voltar à forma de conjurador."
       },
       "claw": {
         "name": "Garra Dilacerante",
@@ -11986,7 +12013,15 @@ export const pt_BR: EnTranslations = {
       },
       "pounce": {
         "name": "Bote Furtivo",
-        "description": "Abertura furtiva que atordoa o alvo por 2 s. Concede 1 ponto de combo. Apenas Forma de Lobo."
+        "description": "Abertura furtiva que atordoa o alvo por 2 s. Concede 1 ponto de combo. Apenas Forma de Lobo. Fora da furtividade, este botão é Bote."
+      },
+      "lunge": {
+        "name": "Bote",
+        "description": "Dá um bote em um inimigo a até 12 m, causando 60% do dano da arma e concedendo 1 ponto de combo. Apenas Forma de Lobo."
+      },
+      "hamstring_bite": {
+        "name": "Derrubada",
+        "description": "Movimento finalizador que atordoa o alvo por 1 s mais 1 s por ponto de combo (5 pontos de combo: 6 s). Apenas Forma de Lobo."
       },
       "insect_swarm": {
         "name": "Enxame Ferroante",
@@ -12700,7 +12735,7 @@ export const pt_BR: EnTranslations = {
       },
       "bear_charge": {
         "name": "Investida de Bruin",
-        "description": "Investe contra um inimigo, gera 9 de raiva e o atordoa por 1 s. Alcance de 8 a 25 m. Apenas Forma de Bruin."
+        "description": "Investe contra um inimigo, gera 9 de raiva e o atordoa por 1 s. Durante os 3 s seguintes, a Forma de Lobo é gratuita e fixa o alvo, reduzindo sua velocidade em 50% por 4 s. Alcance de 8 a 25 m. Apenas Forma de Bruin."
       },
       "demoralizing_roar": {
         "name": "Rugido Covarde",
@@ -12708,7 +12743,7 @@ export const pt_BR: EnTranslations = {
       },
       "prowl": {
         "name": "Espreitar",
-        "description": "Entra em furtividade enquanto na Forma de Lobo, movendo-se 5% mais devagar. Não pode ser usado em combate."
+        "description": "Entra em furtividade enquanto na Forma de Lobo. Não pode ser usado em combate."
       },
       "rake": {
         "name": "Esfolar",

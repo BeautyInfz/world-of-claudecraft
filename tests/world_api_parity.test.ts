@@ -94,6 +94,7 @@ export const IWORLD_MEMBERS = [
   // --- core world / player roster + economy reads (data) ---
   { name: 'cfg', kind: 'data' },
   { name: 'entities', kind: 'data' },
+  { name: 'entityRosterVersion', kind: 'data' },
   { name: 'playerId', kind: 'data' },
   { name: 'player', kind: 'data' },
   { name: 'moveInput', kind: 'data' },
@@ -489,6 +490,7 @@ export const IWORLD_MEMBERS = [
   // --- the Book of Deeds (IWorldDeeds): earned/stats/renown/title/border
   // reads + the two cosmetic selection commands ---
   { name: 'deedsEarned', kind: 'data' },
+  { name: 'accountDeeds', kind: 'data' },
   { name: 'deedStats', kind: 'data' },
   { name: 'renown', kind: 'data' },
   { name: 'activeTitle', kind: 'data' },
@@ -504,6 +506,7 @@ export const IWORLD_MEMBERS = [
   { name: 'reliquaryMarks', kind: 'data' },
   { name: 'reliquaryRecent', kind: 'data' },
   { name: 'reliquaryObtainCounts', kind: 'data' },
+  { name: 'reliquaryAccountFinds', kind: 'data' },
   { name: 'reliquaryPageCompletion', kind: 'method' },
   { name: 'reliquaryCatalogCompletion', kind: 'method' },
   { name: 'reliquaryCuratorRank', kind: 'method' },
@@ -855,8 +858,13 @@ describe('IWORLD_MEMBERS is the pinned IWorld contract (anti-loosening)', () => 
     // tests/world_api_parity.test.ts` before merge lands to confirm the
     // facet-file exhaustiveness checks (AssertNever) also pass on the fully
     // resolved production tree.
-    expect(IWORLD_MEMBERS.length).toBe(371);
-    expect(DATA_MEMBERS.length).toBe(103);
+    // The CPU-hygiene lot adds entityRosterVersion (IWorldEntityRoster, data)
+    // and the account-wide Book of Deeds and Reliquary add the account ledger's
+    // two read halves: accountDeeds (IWorldDeeds, data) and
+    // reliquaryAccountFinds (IWorldReliquary, data), leaving 374 with the
+    // data half at 106. Set from a suite run, never by arithmetic in the diff.
+    expect(IWORLD_MEMBERS.length).toBe(374);
+    expect(DATA_MEMBERS.length).toBe(106);
     expect(METHOD_MEMBERS.length).toBe(268);
   });
   it('has no duplicate member names', () => {
@@ -875,6 +883,7 @@ describe('IWORLD_MEMBERS is the pinned IWorld contract (anti-loosening)', () => 
       'acceptQuest',
       'accountAdmin',
       'accountCosmetics',
+      'accountDeeds',
       'accountFlair',
       'activeBorder',
       'activeConsecrations',
@@ -997,6 +1006,7 @@ describe('IWORLD_MEMBERS is the pinned IWorld contract (anti-loosening)', () => 
       'enterDelve',
       'enterDungeon',
       'entities',
+      'entityRosterVersion',
       'equipBag',
       'equipItem',
       'equipItemToSlot',
@@ -1140,6 +1150,7 @@ describe('IWORLD_MEMBERS is the pinned IWorld contract (anti-loosening)', () => 
       'recipeList',
       'releaseEmpoweredAbility',
       'releaseSpirit',
+      'reliquaryAccountFinds',
       'reliquaryCatalogCompletion',
       'reliquaryCuratorRank',
       'reliquaryFirstFind',
@@ -1246,6 +1257,7 @@ describe('IWORLD_MEMBERS is the pinned IWorld contract (anti-loosening)', () => 
     expect(DATA_MEMBERS.map((m) => m.name).sort()).toEqual([
       'accountAdmin',
       'accountCosmetics',
+      'accountDeeds',
       'activeBorder',
       'activeConsecrations',
       'activeFrostRings',
@@ -1289,6 +1301,7 @@ describe('IWORLD_MEMBERS is the pinned IWorld contract (anti-loosening)', () => 
       'dungeonFinderBoard',
       'dungeonFinderInfo',
       'entities',
+      'entityRosterVersion',
       'equipment',
       'equipmentInstances',
       'farmPatches',
@@ -1326,6 +1339,7 @@ describe('IWORLD_MEMBERS is the pinned IWorld contract (anti-loosening)', () => 
       'questsDone',
       'realm',
       'recipeList',
+      'reliquaryAccountFinds',
       'reliquaryFirstFind',
       'reliquaryMarks',
       'reliquaryObtainCounts',
@@ -1704,6 +1718,7 @@ type AssertNever<T extends never> = T;
 const FACET_ENTITY_ROSTER = [
   'cfg',
   'entities',
+  'entityRosterVersion',
   'playerId',
   'player',
   'moveInput',
@@ -2185,6 +2200,7 @@ type _ExhaustProfessions = AssertNever<
 
 const FACET_DEEDS = [
   'deedsEarned',
+  'accountDeeds',
   'deedStats',
   'renown',
   'activeTitle',
@@ -2202,6 +2218,7 @@ const FACET_RELIQUARY = [
   'reliquaryMarks',
   'reliquaryRecent',
   'reliquaryObtainCounts',
+  'reliquaryAccountFinds',
   'reliquaryPageCompletion',
   'reliquaryCatalogCompletion',
   'reliquaryCuratorRank',
@@ -2367,8 +2384,8 @@ describe('W1: aggregate IWorld member set equals the disjoint union of the facet
     // tests/world_api_parity.test.ts` before merge lands to confirm the
     // facet arrays actually reconstruct IWORLD_MEMBERS with no gaps or
     // collisions; this pin and the one above must always agree.
-    expect(union.length, 'union size before dedup (catches a duplicated member)').toBe(371);
-    expect(new Set(union).size, 'union size after dedup (catches a duplicated member)').toBe(371);
+    expect(union.length, 'union size before dedup (catches a duplicated member)').toBe(374);
+    expect(new Set(union).size, 'union size after dedup (catches a duplicated member)').toBe(374);
     const sortedUnion = [...union].sort();
     const pinned = IWORLD_MEMBERS.map((m) => m.name).sort();
     expect(sortedUnion).toEqual(pinned);

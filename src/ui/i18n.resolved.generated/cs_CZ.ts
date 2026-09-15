@@ -1244,6 +1244,8 @@ export const cs_CZ: EnTranslations = {
       "noteLabel": "Poznámka na nástěnce",
       "notePlaceholder": "Napiš budoucím členům, koho tvůj cech hledá",
       "save": "Uložit",
+      "newPlayerFriendlyLabel": "New player friendly",
+      "newPlayerFriendlyHint": "Shown on the recruits' board at the Proving Shore signpost.",
       "yourPledge": "Tvoje přihláška: {guild}",
       "since": "Přihlášeno {date}",
       "withdraw": "Zrušit přihlášku"
@@ -2252,6 +2254,12 @@ export const cs_CZ: EnTranslations = {
       "linkHint": "Shift + kliknutí vloží odkaz na tento předmět do chatu."
     },
     "plurals": {
+      "guildBoardShown": {
+        "one": "{count} guild shown",
+        "few": "{count} guilds shown",
+        "many": "{count} guilds shown",
+        "other": "{count} guilds shown"
+      },
       "commissionMasterworks": {
         "one": "{count} mistrovsky kovaný předmět",
         "few": "{count} mistrovsky kované předměty",
@@ -3039,6 +3047,7 @@ export const cs_CZ: EnTranslations = {
       "elementalConvergencePrimed": "Tvoje příští kouzlo z jiné živlové školy udělí Živlovou konvergenci",
       "hunterFerocity": "{stacks} Zuřivosti smečky: tvůj společník způsobuje o {pct}% větší poškození",
       "cooldownCap": "Využito {used} z {cap} s snížení doby obnovy v tomto okně",
+      "bruinRushWindow": "Vlčí podoba nestojí manu a přišpendlí cíl tvého Medvědího výpadu, čímž ho zpomalí o {pct} % na {sec} s",
       "funeralHarvestLock": "Funeral Harvest zatím nemůže vytvořit další Úlomek duše",
       "leadenHexLock": "Olověná kletba tento cíl zatím nemůže znovu zakořenit",
       "forbiddenReflectionReady": "Tvou příští způsobilou schopnost černokněžníka lze seslat znovu i mimo dobu obnovy",
@@ -3151,7 +3160,7 @@ export const cs_CZ: EnTranslations = {
       "elementalTrance": "Utrpěné poškození sníženo o {pct} %. {mana} % veškerého způsobeného poškození se mění v manu",
       "stealth": "Skrytí; rychlost pohybu snížena o {pct} %",
       "formBear": "Medvědí podoba: zvýšené zdraví a brnění",
-      "formCat": "Vlčí podoba: poškození na blízko a energie",
+      "wolfForm": "Wolf Form: melee damage and energy; movement speed increased by {pct}%",
       "formTravel": "Cestovní podoba: rychlost pohybu zvýšena o {pct} %",
       "formFireball": "Žárová podoba: rychlost pohybu zvýšena o {pct} %; útoky a kouzla jsou zakázány",
       "formMoonkin": "Podoba měsíčního křídla: poškození kouzel zvýšeno o {pct} % a brnění zvýšeno o {armorPct} %",
@@ -3758,6 +3767,15 @@ export const cs_CZ: EnTranslations = {
       "subtitle": "Cechy říše",
       "rosterTitle": "Zobrazit seznam členů cechu {guild}",
       "back": "Zpět",
+      "filters": "Board filters",
+      "newPlayerFriendly": "New player friendly",
+      "newPlayerFriendlyTitle": "This guild welcomes new players",
+      "filterNewPlayersTitle": "Show only guilds that welcome new players",
+      "filterEmpty": "No guild has opened its doors to new players yet.",
+      "showAll": "Show all guilds",
+      "officersOnline": "Officers online",
+      "officersOnlineLabel": "Officers online: {names}",
+      "officerEntry": "{name} ({rank})",
       "popupTitle": "Cechovní vývěska",
       "close": "Zavřít"
     },
@@ -4974,6 +4992,10 @@ export const cs_CZ: EnTranslations = {
       "ownedTooltipStatus": "Zkatalogizováno v Relikviáři",
       "missingTooltipStatus": "Dosud nenalezeno",
       "firstFindClears": "Poprvé nalezeno při průchodu {count}",
+      "foundBy": "Found by {names}",
+      "finderWithDate": "{name} ({date})",
+      "sharedScopeNote": "Shared by every character on your account",
+      "sharedScopeHint": "A relic found by any character on your account fills the page here too.",
       "unlockToast": "Relikvie zkatalogizována: {name}",
       "illuminateBanner": "Stránka iluminována: {name}",
       "illuminateToast": "Všechny relikvie na stránce {name} jsou vyplněné.",
@@ -5107,6 +5129,10 @@ export const cs_CZ: EnTranslations = {
       "progressAria": "Postup: {current} z {target}",
       "renownChip": "Věhlas: {renown}",
       "earnedDate": "Vykonáno {date}",
+      "earnedBy": "Earned by {names}",
+      "earnerWithDate": "{name} ({date})",
+      "accountScopeNote": "Shared by every character on your account",
+      "accountScopeHint": "A deed any character on your account accomplishes is earned here too, and the Book names who earned it.",
       "featRibbon": "Počin",
       "hiddenBadge": "Skrytý",
       "titleChip": "Odměna: titul",
@@ -6486,6 +6512,7 @@ export const cs_CZ: EnTranslations = {
       "formsNote": "Druid bojuje měněním podoby. Většina druidských schopností patří k jedné podobě, takže to, v jaké jsi právě podobě, rozhoduje, co můžeš seslat, a přeměna stojí trochu many. Měnit podobu můžeš v boji i mimo něj, tak často, jak chceš.",
       "formsAutoUnshift": "Léčení nebo útočné kouzlo seslané v podobě tě z ní samo vyvede. Opuštění podoby tímto způsobem je zdarma a nespotřebuje globální dobu obnovy, takže okamžité kouzlo vyletí hned, jak ho stiskneš. Návrat do podoby je běžná schopnost a stále stojí manu i globální dobu obnovy.",
       "formsMoonwing": "Druid Měsíčního háje získá ještě jednu podobu, Podobu měsíčního křídla, v níž bojuje jako sesilatel. Je to jediná zvířecí podoba, která si ponechá tvá kouzla, a hůlka funguje jen v ní nebo v tvé běžné sesilatelské podobě.",
+      "formsWolfEngage": "Vlk zahajuje boj Medvědím výpadem, hned se přemění do Vlčí podoby, aby cíl přišpendlil, mimo plížení se přiblíží Výpadem a nepřítele zastaví Sražením.",
       "formLine": {
         "form_bear": "Tankovací podoba: silná kůže, vztek místo many a navíc hrozba, aby po tobě nepřátelé dál sekali.",
         "form_cat": "Podoba pro poškození na blízko: energie a combo body jako u tuláka a mnohem menší hrozba.",
@@ -7053,7 +7080,7 @@ export const cs_CZ: EnTranslations = {
     "reliquaryPage": {
       "intro": "Relikviář je muzeum jedinečné kořisti, kterou jsi zkatalogizoval: vytoužené kousky z dungeonů, profesní trofeje, jezdecká zvířata, vzhledy zbraní a tituly. Ke Knize skutků patří tak, jako patří síň trofejí k knize úspěchů.",
       "howHeading": "Jak sbírka funguje",
-      "howBody": "Otevři Relikviář ve hře (výchozí Shift+X). Každá police nese stránky jedinečných relikvií. Siluetu vyplníš, jakmile daný kus poprvé získáš na této postavě, a stránku iluminuješ, jakmile jsou vyplněné všechny její relikvie. Několik stránek nese označení Vyřazená nebo Osobní: stojí mimo dokončení, takže nikdy neblokují polici ani celý katalog. Živé nálezy se ohlásí a obnoví otevřené okno; postup je vázaný na postavu, s výjimkou vzhledů zbraní, které jsou kosmetikou účtu.",
+      "howBody": "Otevři Relikviář ve hře (výchozí Shift+X). Každá police obsahuje stránky jedinečných relikvií. Silueta se vyplní, jakmile kterákoli postava na tvém účtu ten kus poprvé získá, a stránka se rozsvítí, když jsou vyplněny všechny relikvie na ní. Několik stránek je označeno Vyřazené nebo Osobní: stojí mimo dokončení, takže nikdy neblokují polici ani celý katalog. Živé nálezy se ohlásí a obnoví otevřené okno; postup sdílejí všechny postavy na účtu, takže relikvie, kterou najde jedna postava, vyplní stránku všem.",
       "ranksHeading": "Hodnosti Kurátora",
       "ranksBody": "Hodnosti Kurátora rostou s každou zkatalogizovanou jedinečnou relikvií a udělují výhradně kosmetické tituly a rámečky. Nikdy nedávají bojovou sílu, šanci na kořist ani vyrovnání smůly. Vzhledy zbraní vázané na účet se do hodnosti Kurátora nezapočítávají, aby prestiž zůstala vázaná na postavu, a relikvie z Vyřazených či Osobních stránek se do ní nezapočítávají také.",
       "retiredTag": "Vyřazená",
@@ -11921,7 +11948,7 @@ export const cs_CZ: EnTranslations = {
       },
       "cat_form": {
         "name": "Vlčí podoba",
-        "description": "Promění tě ve vlka: obratnost roste s tvou úrovní, útočná síla +8 plus 2 za úroveň, tvé útoky používají energii a combo body a vytváříš o 29 % nižší hrozbu. Sešli znovu, aby ses vrátil do sesilatelské podoby."
+        "description": "Promění tě ve vlka: obratnost roste s tvou úrovní, útočná síla +8 plus 2 za úroveň, tvé útoky používají energii a combo body a vytváříš o 29 % nižší hrozbu. Přeměna do jakékoli podoby udělí Dlouhý krok: 60 % rychlosti pohybu na 3 s, jednou za 20 s. Sešli znovu, aby ses vrátil do sesilatelské podoby."
       },
       "claw": {
         "name": "Rvoucí dráp",
@@ -11986,7 +12013,15 @@ export const cs_CZ: EnTranslations = {
       },
       "pounce": {
         "name": "Plíživý úder",
-        "description": "Zahajovací útok z plížení, který omráčí cíl na 2 s. Udělí 1 combo bod. Pouze ve vlčí podobě."
+        "description": "Zahajovací útok z plížení, který omráčí cíl na 2 s. Udělí 1 combo bod. Pouze ve vlčí podobě. Bez plížení je toto tlačítko Výpad."
+      },
+      "lunge": {
+        "name": "Výpad",
+        "description": "Vrhni se na nepřítele až 12 yardů daleko, způsob 60 % poškození zbraní a získej 1 combo bod. Pouze ve vlčí podobě."
+      },
+      "hamstring_bite": {
+        "name": "Sražení",
+        "description": "Dokončovací útok, který omráčí cíl na 1 s plus 1 s za combo bod (5 combo bodů: 6 s). Pouze ve vlčí podobě."
       },
       "insect_swarm": {
         "name": "Bodavý roj",
@@ -12700,7 +12735,7 @@ export const cs_CZ: EnTranslations = {
       },
       "bear_charge": {
         "name": "Medvědí výpad",
-        "description": "Vyrazí k nepříteli, vygeneruje 9 vzteku a omráčí ho na 1 s. Dosah 8-25 yardů. Pouze v medvědí podobě."
+        "description": "Vyrazí k nepříteli, vygeneruje 9 vzteku a omráčí ho na 1 s. Po dobu 3 s poté je Vlčí podoba zdarma a přišpendlí cíl, čímž ho zpomalí o 50 % na 4 s. Dosah 8-25 yardů. Pouze v medvědí podobě."
       },
       "demoralizing_roar": {
         "name": "Zbabělý řev",
@@ -12708,7 +12743,7 @@ export const cs_CZ: EnTranslations = {
       },
       "prowl": {
         "name": "Plížení",
-        "description": "Vstoupíš do plížení ve vlčí podobě a pohybuješ se o 5 % pomaleji. Nelze použít v boji."
+        "description": "Vstoupíš do plížení ve vlčí podobě. Nelze použít v boji."
       },
       "rake": {
         "name": "Stažení z kůže",

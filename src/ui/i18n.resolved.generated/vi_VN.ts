@@ -1244,6 +1244,8 @@ export const vi_VN: EnTranslations = {
       "noteLabel": "Ghi chú bảng tin",
       "notePlaceholder": "Cho các thành viên tương lai biết bang hội của bạn đang tìm kiếm điều gì",
       "save": "Lưu",
+      "newPlayerFriendlyLabel": "New player friendly",
+      "newPlayerFriendlyHint": "Shown on the recruits' board at the Proving Shore signpost.",
       "yourPledge": "Cam kết của bạn: {guild}",
       "since": "Đã cam kết {date}",
       "withdraw": "Rút cam kết"
@@ -2252,6 +2254,12 @@ export const vi_VN: EnTranslations = {
       "linkHint": "Shift-click để chia sẻ vật phẩm này trong khung chat."
     },
     "plurals": {
+      "guildBoardShown": {
+        "one": "{count} guild shown",
+        "few": "{count} guilds shown",
+        "many": "{count} guilds shown",
+        "other": "{count} guilds shown"
+      },
       "commissionMasterworks": {
         "one": "{count} kiệt tác",
         "few": "{count} kiệt tác",
@@ -3039,6 +3047,7 @@ export const vi_VN: EnTranslations = {
       "elementalConvergencePrimed": "Phép tiếp theo của bạn từ trường nguyên tố khác sẽ ban Hội Tụ Nguyên Tố",
       "hunterFerocity": "{stacks} Hung Tính Bầy Đàn: thú nuôi của bạn gây thêm {pct}% sát thương",
       "cooldownCap": "{used} trên {cap} giây giảm thời gian hồi chiêu đã dùng trong khung này",
+      "bruinRushWindow": "Hình Sói không tốn mana và ghim mục tiêu Cú Lao Bruin của bạn, làm chậm nó {pct}% trong {sec} giây",
       "funeralHarvestLock": "Thu Hoạch Tang Lễ chưa thể tạo thêm Mảnh Linh Hồn",
       "leadenHexLock": "Bùa Trì Trệ chưa thể trói mục tiêu này lại",
       "forbiddenReflectionReady": "Kỹ năng hồi chiêu Thuật Sĩ Hắc Ám hợp lệ tiếp theo của bạn có thể được thi triển lại",
@@ -3151,7 +3160,7 @@ export const vi_VN: EnTranslations = {
       "elementalTrance": "Sát thương phải nhận giảm {pct}%. {mana}% toàn bộ sát thương bạn gây ra được chuyển thành mana",
       "stealth": "Oculto; velocidad de movimiento reducida un {pct}%",
       "formBear": "Bruin Form: tăng máu và giáp.",
-      "formCat": "Forma felina: daño cuerpo a cuerpo y energía",
+      "wolfForm": "Wolf Form: melee damage and energy; movement speed increased by {pct}%",
       "formTravel": "Fleet Form: tốc độ di chuyển tăng {pct}%.",
       "formFireball": "Ember Form: tốc độ di chuyển tăng {pct}%; tấn công và thi triển phép bị vô hiệu hóa",
       "formMoonkin": "Dạng Cú Mặt Trăng: sát thương phép tăng {pct}% và giáp tăng {armorPct}%",
@@ -3758,6 +3767,15 @@ export const vi_VN: EnTranslations = {
       "subtitle": "Các bang hội trong vương quốc",
       "rosterTitle": "Xem danh sách thành viên của {guild}",
       "back": "Quay Lại",
+      "filters": "Board filters",
+      "newPlayerFriendly": "New player friendly",
+      "newPlayerFriendlyTitle": "This guild welcomes new players",
+      "filterNewPlayersTitle": "Show only guilds that welcome new players",
+      "filterEmpty": "No guild has opened its doors to new players yet.",
+      "showAll": "Show all guilds",
+      "officersOnline": "Officers online",
+      "officersOnlineLabel": "Officers online: {names}",
+      "officerEntry": "{name} ({rank})",
       "popupTitle": "Bảng Thông Báo Bang Hội",
       "close": "Đóng"
     },
@@ -4974,6 +4992,10 @@ export const vi_VN: EnTranslations = {
       "ownedTooltipStatus": "Đã biên mục trong Kỳ Trân Các",
       "missingTooltipStatus": "Chưa tìm thấy",
       "firstFindClears": "Lần đầu tìm thấy ở lượt hoàn thành thứ {count}",
+      "foundBy": "Found by {names}",
+      "finderWithDate": "{name} ({date})",
+      "sharedScopeNote": "Shared by every character on your account",
+      "sharedScopeHint": "A relic found by any character on your account fills the page here too.",
       "unlockToast": "Đã biên mục kỳ trân: {name}",
       "illuminateBanner": "Trang đã rực sáng: {name}",
       "illuminateToast": "Mọi kỳ trân trên trang {name} đã được lấp đầy.",
@@ -5107,6 +5129,10 @@ export const vi_VN: EnTranslations = {
       "progressAria": "Tiến độ: {current} trên {target}",
       "renownChip": "{renown} Danh Vọng",
       "earnedDate": "Lập ngày {date}",
+      "earnedBy": "Earned by {names}",
+      "earnerWithDate": "{name} ({date})",
+      "accountScopeNote": "Shared by every character on your account",
+      "accountScopeHint": "A deed any character on your account accomplishes is earned here too, and the Book names who earned it.",
       "featRibbon": "Kỳ Tích",
       "hiddenBadge": "Ẩn",
       "titleChip": "Thưởng Danh Hiệu",
@@ -6486,6 +6512,7 @@ export const vi_VN: EnTranslations = {
       "formsNote": "Druid chiến đấu bằng cách đổi hình dạng. Hầu hết kỹ năng của Druid thuộc về một hình dạng riêng, nên hình bạn đang mang quyết định bạn có thể thi triển gì, và việc đổi hình tốn một chút mana. Bạn có thể đổi hình trong hoặc ngoài chiến đấu, bao nhiêu lần tùy thích.",
       "formsAutoUnshift": "Một phép hồi máu hoặc phép gây sát thương thi triển khi đang ở dạng thú sẽ tự đưa bạn ra khỏi dạng đó. Rời dạng theo cách này miễn phí và không tốn hồi chiêu toàn cục, nên phép tức thời phát ra ngay khi bạn bấm. Vào lại dạng là một kỹ năng bình thường, vẫn tốn mana và hồi chiêu toàn cục.",
       "formsMoonwing": "Một Druid Moongrove có thêm một hình dạng nữa, Dạng Cú Mặt Trăng, hình dạng pháp thuật mà một Druid Cân Bằng chiến đấu trong đó. Đây là hình thú duy nhất giữ lại các phép của bạn, và đũa phép của bạn chỉ dùng được trong hình đó hoặc trong hình pháp sư bình thường.",
+      "formsWolfEngage": "Sói mở màn trận đấu bằng Cú Lao Bruin, lập tức chuyển sang Hình Sói để ghim mục tiêu, thu hẹp khoảng cách bằng Lao Vồ khi không ẩn thân, và giữ chân kẻ địch bằng Quật Ngã.",
       "formLine": {
         "form_bear": "Dạng gánh chịu đòn: một lớp da dày, dùng Nộ Khí thay vì Mana, và tạo thêm đe dọa để kẻ địch luôn nhắm vào bạn.",
         "form_cat": "Dạng sát thương cận chiến: dùng Năng Lượng và điểm tổ hợp giống Đạo Tặc, và tạo ra ít đe dọa hơn nhiều.",
@@ -7053,7 +7080,7 @@ export const vi_VN: EnTranslations = {
     "reliquaryPage": {
       "intro": "Kỳ Trân Các là bảo tàng những chiến lợi phẩm độc nhất mà bạn đã biên mục: các món săn lùng trong hầm ngục, cúp nghề, thú cưỡi, ngoại hình vũ khí và danh hiệu. Nó đi cùng Sách Kỳ Công như một sảnh cúp đi cùng một cuốn sổ thành tích.",
       "howHeading": "Bộ sưu tập vận hành ra sao",
-      "howBody": "Mở Kỳ Trân Các trong trò chơi (mặc định Shift+X). Mỗi kệ chứa những trang kỳ trân độc nhất. Bạn lấp đầy một bóng hình khi lần đầu sở hữu món đó trên nhân vật này, và làm rực sáng một trang khi mọi kỳ trân trên trang ấy đã được lấp đầy. Một vài trang mang nhãn Đã ngừng hoặc Riêng: chúng nằm ngoài phần hoàn tất, nên không bao giờ chặn một kệ hay cả mục lục. Vật phẩm tìm được sẽ hiện thông báo ngay và làm mới cửa sổ đang mở; tiến trình gắn với từng nhân vật, trừ ngoại hình vũ khí vốn là đồ trang trí của tài khoản.",
+      "howBody": "Mở Thánh Tích Quán trong game (mặc định Shift+X). Mỗi kệ chứa các trang thánh tích độc nhất. Một bóng hình được lấp đầy khi bất kỳ nhân vật nào trong tài khoản của bạn nhận được món đó lần đầu, và một trang được thắp sáng khi mọi thánh tích trên đó đã đầy. Vài trang được gắn nhãn Đã ngừng hoặc Cá nhân: chúng nằm ngoài phần hoàn thành nên không bao giờ chặn một kệ hay toàn bộ danh mục. Vật tìm được sẽ hiện thông báo ngay và làm mới cửa sổ đang mở; tiến trình được chia sẻ cho mọi nhân vật trong tài khoản, nên thánh tích một nhân vật tìm được sẽ lấp đầy trang cho tất cả.",
       "ranksHeading": "Cấp Quản Thủ",
       "ranksBody": "Cấp Quản Thủ tăng theo từng kỳ trân độc nhất được biên mục và chỉ trao danh hiệu cùng viền trang trí. Chúng không bao giờ trao sức mạnh chiến đấu, tỉ lệ rơi đồ hay bù trừ vận rủi. Ngoại hình vũ khí thuộc tài khoản không tính điểm cấp Quản Thủ, nhờ vậy danh vọng vẫn gắn chặt với nhân vật, và kỳ trân trên các trang Đã ngừng hoặc Riêng cũng không tính điểm cho cấp ấy.",
       "retiredTag": "Đã ngừng",
@@ -11921,7 +11948,7 @@ export const vi_VN: EnTranslations = {
       },
       "cat_form": {
         "name": "Hình Sói",
-        "description": "Biến bạn thành sói: nhanh nhẹn tăng theo cấp của bạn, sức tấn công +8 cộng 2 mỗi cấp, các đòn của bạn dùng năng lượng và điểm combo, và bạn tạo ra ít hơn 29% mối đe dọa. Niệm lại để trở về hình dạng pháp sư."
+        "description": "Biến bạn thành sói: nhanh nhẹn tăng theo cấp của bạn, sức tấn công +8 cộng 2 mỗi cấp, các đòn của bạn dùng năng lượng và điểm combo, và bạn tạo ra ít hơn 29% mối đe dọa. Biến thành bất kỳ hình dạng nào sẽ ban Sải bước: 60% tốc độ di chuyển trong 3 giây, mỗi 20 giây một lần. Niệm lại để trở về hình dạng pháp sư."
       },
       "claw": {
         "name": "Vuốt Xé",
@@ -11986,7 +12013,15 @@ export const vi_VN: EnTranslations = {
       },
       "pounce": {
         "name": "Đòn Lẻn Vồ",
-        "description": "Một đòn mở màn từ trạng thái ẩn thân làm choáng mục tiêu trong 2 giây. Tặng 1 điểm liên hoàn. Chỉ dùng được ở Hình Sói."
+        "description": "Một đòn mở màn từ trạng thái ẩn thân làm choáng mục tiêu trong 2 giây. Tặng 1 điểm liên hoàn. Chỉ dùng được ở Hình Sói. Khi không ẩn thân, nút này là Lao Vồ."
+      },
+      "lunge": {
+        "name": "Lao Vồ",
+        "description": "Lao vào kẻ địch cách xa tới 12 thước, gây 60% sát thương vũ khí và nhận 1 điểm combo. Chỉ dùng được ở Hình Sói."
+      },
+      "hamstring_bite": {
+        "name": "Quật Ngã",
+        "description": "Chiêu kết liễu làm choáng mục tiêu trong 1 giây cộng thêm 1 giây mỗi điểm liên hoàn (5 điểm liên hoàn: 6 giây). Chỉ dùng được ở Hình Sói."
       },
       "insect_swarm": {
         "name": "Bầy Đốt Chích",
@@ -12700,7 +12735,7 @@ export const vi_VN: EnTranslations = {
       },
       "bear_charge": {
         "name": "Cú Lao Bruin",
-        "description": "Lao vào kẻ địch, tạo 9 nộ khí và làm choáng nó trong 1 giây. Tầm 8-25 thước. Chỉ dùng được ở Bruin Form."
+        "description": "Lao vào kẻ địch, tạo 9 nộ khí và làm choáng nó trong 1 giây. Trong 3 giây sau đó, Hình Sói miễn phí và ghim mục tiêu, làm chậm nó 50% trong 4 giây. Tầm 8-25 thước. Chỉ dùng được ở Bruin Form."
       },
       "demoralizing_roar": {
         "name": "Tiếng Gầm Khiếp Đảm",
@@ -12708,7 +12743,7 @@ export const vi_VN: EnTranslations = {
       },
       "prowl": {
         "name": "Rình Rập",
-        "description": "Vào trạng thái ẩn thân khi ở Hình Sói, di chuyển chậm hơn 5%. Không thể dùng trong chiến đấu."
+        "description": "Vào trạng thái ẩn thân khi ở Hình Sói. Không thể dùng trong chiến đấu."
       },
       "rake": {
         "name": "Lóc Xé",
