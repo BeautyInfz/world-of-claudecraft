@@ -220,7 +220,6 @@ import {
   MOBS,
   QUESTS,
   RIFT_SLOT_COUNT,
-  riftInstanceOrigin,
   SPIRIT_HEALER_NPC_ID,
   zoneAt,
 } from './data';
@@ -741,7 +740,7 @@ import {
   socketRiftGem as socketRiftGemImpl,
   upgradeRiftItem as upgradeRiftItemImpl,
 } from './rift/progression';
-import { generateRiftFloor } from './rift/rift_gen';
+import { buildRiftFloorView } from './rift/rift_floor_view';
 import {
   riftLockpickAbort as riftLockpickAbortImpl,
   riftLockpickAction as riftLockpickActionImpl,
@@ -1914,6 +1913,7 @@ export class Sim {
   time = 0;
   tickCount = 0;
   entities = new Map<number, Entity>();
+  entityRosterVersion = 0;
   // The shared SimContext seam (S0b): a live view of rng/time/tickCount/entities +
   // emit, plus the cross-system callbacks the extracted game-system slices route
   // through instead of reaching into Sim. Built once in the ctor (buildSimContext);
@@ -5080,6 +5080,12 @@ export class Sim {
       },
       get entities() {
         return sim.entities;
+      },
+      get entityRosterVersion() {
+        return sim.entityRosterVersion;
+      },
+      set entityRosterVersion(v) {
+        sim.entityRosterVersion = v;
       },
       get players() {
         return sim.players;
@@ -11447,40 +11453,12 @@ export class Sim {
     // and re-searching riftEvents on every read.
     if (this.riftFloorViewTick === this.tickCount) return this.riftFloorView;
     this.riftFloorViewTick = this.tickCount;
-    this.riftFloorView = this.buildRiftFloorView();
+    this.riftFloorView = buildRiftFloorView(this.ctx);
     return this.riftFloorView;
   }
 
   private riftFloorViewTick = -1;
   private riftFloorView: import('../world_api/dungeons').RiftFloorView | null = null;
-
-  private buildRiftFloorView(): import('../world_api/dungeons').RiftFloorView | null {
-    const p = this.entities.get(this.primaryId);
-    if (!p) return null;
-    const inst = riftInstanceAtPos(this.ctx, p.pos);
-    if (!inst || inst.partyKey === null) return null;
-    const floor = generateRiftFloor(inst.seed, inst.baseLevel, inst.floorIndex, inst.upgrade);
-    const event =
-      inst.eventId === null
-        ? null
-        : (this.riftEvents.find((candidate) => candidate.eventId === inst.eventId) ?? null);
-    const contentId = event?.contentId ?? `procedural-v1:${inst.seed}:${inst.baseLevel}`;
-    return {
-      eventId: inst.eventId,
-      instanceId: inst.instanceId,
-      seed: inst.seed,
-      baseLevel: inst.baseLevel,
-      floorIndex: inst.floorIndex,
-      floorCount: inst.floorCount,
-      origin: riftInstanceOrigin(inst.slot, inst.floorIndex),
-      contentId,
-      contentHash: event?.contentHash ?? contentId,
-      upgrade: inst.upgrade,
-      name: floor.name,
-      themeName: floor.themeName,
-      tier: inst.tier,
-    };
-  }
 
   riftBossDeathZones(): import('../world_api/dungeons').RiftBossDeathZoneView[] {
     const p = this.entities.get(this.primaryId);

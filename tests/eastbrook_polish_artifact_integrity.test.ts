@@ -1388,10 +1388,18 @@ const ACCEPTED_POLISH_V2_METADATA_PATH = path.join(REPO_ROOT, POLISH_SEAL_PATH);
 // modules as explicit provenance leaves. No capture was retaken.
 // Re-minted for the v0.43 release repair after the merged renderer sampling
 // imports and frame-cap probe cleanup moved renderer.ts. No capture was retaken.
+// Re-minted for the CPU-hygiene lot (renderer.ts consumer edits and the
+// view-candidate scan extraction): the composite first, then this metadata
+// seal from the swept file. No capture was retaken.
+// Re-minted again for the lot's review round (the shared liveViewCandidate
+// check moved the renderer leaf once more). No capture was retaken.
+// Re-minted for the release-side CPU-hygiene lot over the current v0.43 batch:
+// the merged renderer leaf includes rider anchors, ground sampling, rift
+// ambience and shared view-candidate scans. No capture was retaken.
 const ACCEPTED_POLISH_V2_METADATA_SHA256 =
-  'f4508386cf9af9bcb4514d146248485012874243dcda92fa65e1731a01944050';
+  'f12823f6a56408c8766cbc93e21a52f84f57b8fe5d7603b86364047d677ad5f9';
 const ACCEPTED_POLISH_V2_COMPOSITE_PROVENANCE =
-  'fd9a7c26624531cfcf3ce1fc9a5694b82a4ff269f6fa0795ac9e0e2603b9d720';
+  'a92d7eb0dfec48dec8baa595edfee596191c033c4ef9148438b88e6237bc7534';
 const ACCEPTED_POLISH_V2_METADATA = readJsonFile<CaptureMetadata>(ACCEPTED_POLISH_V2_METADATA_PATH);
 const ACCEPTED_POLISH_V2_PROVENANCE = ACCEPTED_POLISH_V2_METADATA.polishProvenance;
 const ACCEPTED_POLISH_V2_TOWN_CONTRACT = ACCEPTED_POLISH_V2_METADATA.records[0]?.townContract;
@@ -2768,7 +2776,13 @@ describe('Eastbrook polish performance and contact evidence', () => {
       // v0.43 release repair after the merged renderer sampling imports and
       // frame-cap probe cleanup: recomputed LAST over the swept evidence. No
       // capture was retaken.
-    ).toBe('6e2542bf9279f8478c7931444e5d4e402a44c89547697c361af76463818657ab');
+      // Re-minted for the CPU-hygiene lot: the composite first, then this
+      // second-order seal over the swept evidence bytes. No capture was retaken.
+      // Review round of the same lot: recomputed LAST again over the re-swept
+      // evidence. No capture was retaken.
+      // v0.43 batch plus CPU-hygiene lot: recomputed LAST over the swept
+      // evidence. No capture was retaken.
+    ).toBe('b7eab2cedfb63cfe391d1b1a54eb5205c320d5ac05c98a065d0ee58a9002c431');
   });
 
   it('binds every historical after record to its accepted source and asset provenance', () => {

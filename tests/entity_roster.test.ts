@@ -88,6 +88,7 @@ function makeCtx() {
     get entities() {
       return entities;
     },
+    entityRosterVersion: 0,
     primaryId: -1,
     tradeInvites: new Map(),
     duelInvites: new Map(),

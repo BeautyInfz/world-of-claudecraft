@@ -694,8 +694,18 @@ interface AttributionTargetFixture {
 // modules as explicit provenance leaves. No capture was retaken.
 // Re-minted for the v0.43 release repair after the merged renderer sampling
 // imports and frame-cap probe cleanup moved renderer.ts. No capture was retaken.
+// Re-minted for the CPU-hygiene lot: the view-candidate scan and the drop
+// half of the view policy moved out of renderer.ts, and the rift ambience,
+// fishing bobber and Nythraxis painter consumers changed there, so the
+// runtimeRender.renderer leaf moved. No capture was retaken.
+// Re-minted again for its review round: the ranked and required view
+// candidates now share the scan module's liveViewCandidate check, so the
+// same leaf moved once more. No capture was retaken.
+// Re-minted for the release-side CPU-hygiene lot over the current v0.43 batch:
+// the merged renderer leaf includes rider anchors, ground sampling, rift
+// ambience and shared view-candidate scans. No capture was retaken.
 const PINNED_POLISH_COMPOSITE_FINGERPRINT =
-  'fd9a7c26624531cfcf3ce1fc9a5694b82a4ff269f6fa0795ac9e0e2603b9d720';
+  'a92d7eb0dfec48dec8baa595edfee596191c033c4ef9148438b88e6237bc7534';
 
 function validPolishAttributionTargets(): AttributionTargetFixture[] {
   return [

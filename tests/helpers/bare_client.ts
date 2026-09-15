@@ -53,6 +53,7 @@ export function bareClient(pid: number, overrides: BareClientOverrides = {}): Cl
   const c: any = Object.create(ClientWorld.prototype);
   c.cfg = { seed: 20061, playerClass };
   c.entities = new Map();
+  c.entityRosterVersion = 0;
   c.playerId = pid;
   c.ownPlayerId = pid;
   c.ownPlayerClass = playerClass;

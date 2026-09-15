@@ -119,6 +119,9 @@ export interface SimContextPrimitives {
   readonly time: number;
   readonly tickCount: number;
   readonly entities: Map<number, Entity>;
+  // Read-write: entity_roster.ts bumps it on every add/drop; it is the
+  // IWorld.entityRosterVersion the offline world exposes.
+  entityRosterVersion: number;
   // Live player roster (keyed by entity id). Stays a Sim field; exposed here so the
   // moved party machine (A1) resolves member names/metas through the seam.
   readonly players: Map<number, PlayerMeta>;
@@ -1220,6 +1223,12 @@ export function createSimContext(host: SimContextHost): SimContext {
     },
     get entities() {
       return host.entities;
+    },
+    get entityRosterVersion() {
+      return host.entityRosterVersion;
+    },
+    set entityRosterVersion(v) {
+      host.entityRosterVersion = v;
     },
     get players() {
       return host.players;

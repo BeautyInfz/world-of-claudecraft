@@ -94,6 +94,7 @@ export const IWORLD_MEMBERS = [
   // --- core world / player roster + economy reads (data) ---
   { name: 'cfg', kind: 'data' },
   { name: 'entities', kind: 'data' },
+  { name: 'entityRosterVersion', kind: 'data' },
   { name: 'playerId', kind: 'data' },
   { name: 'player', kind: 'data' },
   { name: 'moveInput', kind: 'data' },
@@ -859,10 +860,11 @@ describe('IWORLD_MEMBERS is the pinned IWorld contract (anti-loosening)', () => 
     // tests/world_api_parity.test.ts` before merge lands to confirm the
     // facet-file exhaustiveness checks (AssertNever) also pass on the fully
     // resolved production tree. The Market Sweep adds marketSweepQuote and
-    // marketSweep (IWorldMarket, both methods), while the Who tab adds
-    // whoInfo (data) and whoRequest (method), leaving 375 (104 data + 271).
-    expect(IWORLD_MEMBERS.length).toBe(375);
-    expect(DATA_MEMBERS.length).toBe(104);
+    // marketSweep (IWorldMarket, both methods), the Who tab adds whoInfo
+    // (data) and whoRequest (method), and the CPU-hygiene lot adds
+    // entityRosterVersion (data), leaving 376 (105 data + 271 method).
+    expect(IWORLD_MEMBERS.length).toBe(376);
+    expect(DATA_MEMBERS.length).toBe(105);
     expect(METHOD_MEMBERS.length).toBe(271);
   });
   it('has no duplicate member names', () => {
@@ -1003,6 +1005,7 @@ describe('IWORLD_MEMBERS is the pinned IWorld contract (anti-loosening)', () => 
       'enterDelve',
       'enterDungeon',
       'entities',
+      'entityRosterVersion',
       'equipBag',
       'equipItem',
       'equipItemToSlot',
@@ -1299,6 +1302,7 @@ describe('IWORLD_MEMBERS is the pinned IWorld contract (anti-loosening)', () => 
       'dungeonFinderBoard',
       'dungeonFinderInfo',
       'entities',
+      'entityRosterVersion',
       'equipment',
       'equipmentInstances',
       'farmPatches',
@@ -1718,6 +1722,7 @@ type AssertNever<T extends never> = T;
 const FACET_ENTITY_ROSTER = [
   'cfg',
   'entities',
+  'entityRosterVersion',
   'playerId',
   'player',
   'moveInput',
@@ -2377,10 +2382,11 @@ describe('W1: aggregate IWorld member set equals the disjoint union of the facet
   it('the facet union equals the pinned IWORLD_MEMBERS set', () => {
     const union = Object.values(FACET_MEMBER_ARRAYS).flatMap((arr) => [...arr]);
     // Mirrors the IWORLD_MEMBERS.length pin above. The composed tree carries
-    // the Who tab's two social-graph members plus Market Sweep's two market
-    // methods, so this pin and the one above must agree at 375.
-    expect(union.length, 'union size before dedup (catches a duplicated member)').toBe(375);
-    expect(new Set(union).size, 'union size after dedup (catches a duplicated member)').toBe(375);
+    // the Who tab's two social-graph members, Market Sweep's two market
+    // methods, and the CPU-hygiene entityRosterVersion data member, so this
+    // pin and the one above must agree at 376.
+    expect(union.length, 'union size before dedup (catches a duplicated member)').toBe(376);
+    expect(new Set(union).size, 'union size after dedup (catches a duplicated member)').toBe(376);
     const sortedUnion = [...union].sort();
     const pinned = IWORLD_MEMBERS.map((m) => m.name).sort();
     expect(sortedUnion).toEqual(pinned);

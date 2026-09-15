@@ -911,7 +911,11 @@ const MONOLITHS: MonolithRow[] = [
     // body no longer samples the terrain on every frame or every interval.
     // Reviewer cadence fix kept that extraction and the current resolved tree
     // measures 12798 lines. Exact merged count, zero slack.
-    ceiling: 12798,
+    // CPU-hygiene review: the ranked and required view candidates share the
+    // scan module's liveViewCandidate check (present, view-less, admitted),
+    // which drops the coordinator's own admission call. Resolved with the
+    // rider-anchor and ground-sample extractions at 12797 lines. Exact count.
+    ceiling: 12797,
     seam: 'a new src/render/<thing>.ts module the renderer calls (src/render/CLAUDE.md)',
   },
   {
@@ -1096,7 +1100,12 @@ const MONOLITHS: MonolithRow[] = [
     // Market Sweep also moved the flee-eligibility predicate and delve
     // companion predicate to siblings, paying for the two market sweep
     // delegates. The composed tree measures 11863. Exact count, zero slack.
-    ceiling: 11863,
+    // Down 11879 -> 11857 at the CPU-hygiene lot: the rift floor descriptor
+    // builder moved to src/sim/rift/rift_floor_view.ts, and the lot's own
+    // addition (the entityRosterVersion field plus its SimContext binding)
+    // landed under the old count. Resolved with the current batch's sim
+    // extractions at 11841 lines. Exact count, zero slack.
+    ceiling: 11841,
     seam: 'a sim system module behind SimContext (src/sim/CLAUDE.md)',
   },
   {
@@ -1693,7 +1702,11 @@ const MONOLITHS: MonolithRow[] = [
     // Market Sweep also moved anchorFields to src/net/anchor_fields.ts, paying
     // for the two market sweep sends. The composed tree measures 5495. Exact
     // count, zero slack.
-    ceiling: 5495,
+    // Down 5540 -> 5523 at the CPU-hygiene lot: the interest-boundary despawn
+    // grace moved to src/net/despawn_grace.ts, and the lot's entityRosterVersion
+    // field and bumps landed under the old count. Resolved with the current
+    // batch's net extractions at 5478 lines. Exact count, zero slack.
+    ceiling: 5478,
     seam: 'a src/net sibling module (the refactor/net-online split is the template)',
   },
   {

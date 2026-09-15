@@ -860,6 +860,18 @@ dungeon-aware wrapper (flat floor past `DUNGEON_X_THRESHOLD`); plain
 collision/movement.
 
 ## Performance discipline: this runs at frame rate
+- **A per-frame roster walk runs on CHANGE, never on the frame.** The missing-view
+  candidate scan lives in `view_candidate_scan_core.ts`: `viewCandidateScanDue` walks
+  the roster at once when `IWorld.entityRosterVersion` (bumped by both worlds on every
+  entity add or drop) or the view count changed, when the player, their target or the
+  create range changed, when the center jumped past `VIEW_CANDIDATE_RESCAN_MOVE_YD`
+  (a teleport), and otherwise every `VIEW_CANDIDATE_RESCAN_FRAMES` frames for an entity
+  crossing the draw-range edge; in between the renderer consumes the last ranked list
+  (the drop pass stays per frame). A new input the list depends on (a quest-log flip, a
+  phase change) is a new trigger there, never a return to the per-frame walk. The same
+  version keys the meters' party set and the rift ambience; a raid readout walks the
+  instance slots (`src/sim/instance_entities.ts`); the tree occluder fade walks a grid
+  (`tree_hide_index_core.ts`); the fishing bobbers take their anglers from the view loop.
 - Three.js is **version-pinned in `package.json`**; the post chain lives in
   `post.ts` (its header comment documents the pass order and the N8AO
   subtleties) plus the `n8ao` package (SSAO). The `postprocessing` dep in
