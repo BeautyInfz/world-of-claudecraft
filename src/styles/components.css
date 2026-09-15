@@ -16234,6 +16234,9 @@
   .aura-sound-hint {
     margin: 6px 0 2px;
   }
+  .aura-channel-hint {
+    margin: 2px 0 8px;
+  }
   .aura-sound-preview {
     width: 100%;
     min-height: 40px;

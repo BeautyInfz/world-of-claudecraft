@@ -36,6 +36,7 @@ describe('OptionsWindow Auras view', () => {
           watchOptions: () => [],
           setWatched: vi.fn(),
           previewCue: vi.fn(),
+          readyGlowAvailable: () => true,
           setAll: vi.fn(),
           beginPlacement: vi.fn(),
           endPlacement: vi.fn(),

@@ -22,7 +22,6 @@ import { playAuraHaptic } from '../game/haptics';
 import type { PlayerClass } from '../sim/types';
 import { AuraOverlayController, type AuraOverlayControllerDeps } from './aura_overlay_controller';
 import type { AuraOverlayHooks } from './aura_overlay_settings';
-import type { ReticleTicksState } from './reticle_ticks_core';
 import { ReticleTicksPainter } from './reticle_ticks_painter';
 
 /** What the Hud alone can supply. The channels this module owns are omitted. */
@@ -47,25 +46,38 @@ export function createAuraOverlayController(
   return new AuraOverlayController({
     ...deps,
     playHaptic: (shape) => playAuraHaptic(shape),
-    paintReticleTicks: (state) => reticleTicks.paint(state as unknown as ReticleTicksState),
+    paintReticleTicks: (state) => reticleTicks.paint(state),
   });
+}
+
+/**
+ * Whether the desktop action bar is the live bar. It is the only bar that paints
+ * a proc glow: under the mobile layout the Hud skips it and paints the action ring
+ * instead, and neither the ring nor the cross hotbar reads procGlow. Same body
+ * class the Hud's own isMobileLayout reads.
+ */
+function desktopActionBarLive(): boolean {
+  return !document.body.classList.contains('mobile-touch');
 }
 
 /**
  * The Options > Auras surface over one controller. `playerClass` and
  * `previewCue` stay injected because the class comes from the live world and the
- * audition sink is the Hud's shared sfx engine.
+ * audition sink is the Hud's shared sfx engine; `readyGlowAvailable` defaults to
+ * the live-bar test above and is injectable for a host that knows better.
  */
 export function auraOverlaySettingsHooks(
   controller: AuraOverlayController,
   deps: {
     playerClass: () => PlayerClass;
     previewCue: (cueId: string, volume: number) => void;
+    readyGlowAvailable?: () => boolean;
   },
 ): AuraOverlayHooks {
   return {
     playerClass: deps.playerClass,
     previewCue: deps.previewCue,
+    readyGlowAvailable: deps.readyGlowAvailable ?? desktopActionBarLive,
     defs: () => controller.defs(),
     get: (id) => controller.get(id),
     patch: (id, patch) => controller.patch(id, patch),

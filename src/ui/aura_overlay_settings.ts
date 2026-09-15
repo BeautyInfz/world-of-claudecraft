@@ -1,5 +1,5 @@
 import { AURA_CUE_NONE, AURA_CUES } from '../game/aura_cue_catalog';
-import { HAPTIC_SHAPES } from '../game/haptic_pulse_core';
+import { HAPTIC_SHAPES, type HapticShape, isHapticShape } from '../game/haptic_pulse_core';
 import { ABILITIES } from '../sim/content/classes';
 import type { PlayerClass } from '../sim/types';
 import { abilityDisplayName } from './ability_display_name';
@@ -16,6 +16,7 @@ import { classDisplayName } from './entity_i18n';
 import type { FocusTrapHandle } from './focus_manager';
 import { restoreFirstEnabled } from './focus_restore';
 import { formatNumber, t } from './i18n';
+import type { TranslationKey } from './i18n.catalog';
 import { iconDataUrl } from './icons';
 import { colorControl, settingsCard, sliderControl, toggleControl } from './settings_controls';
 import { tTalent } from './talent_i18n';
@@ -34,6 +35,10 @@ export interface AuraOverlayHooks {
   /** Audition one cue at the volume the proc is configured for, so the player can
    *  choose by ear instead of by name. */
   previewCue(cueId: string, volume: number): void;
+  /** Whether the Hotbar Glow channel can reach a button on this host: only the
+   *  desktop action bar paints a proc glow, and the HUD does not paint that bar
+   *  under the mobile layout, so there the row is not offered at all. */
+  readyGlowAvailable(): boolean;
   reset(id: AuraOverlayProcId): void;
   nudge(id: AuraOverlayProcId, part: AuraOverlayPart, deltaX: number, deltaY: number): void;
   setAll(enabled: boolean): void;
@@ -51,6 +56,15 @@ export interface AuraOverlaySettingsHost {
   click(): void;
   openFocusTrap(root: () => HTMLElement, returnFocusTo: HTMLElement): FocusTrapHandle;
 }
+
+// A static table rather than a template key: a template compiles against ANY
+// string, so a renamed key would only fail at runtime in Options, and the key
+// scanner cannot see it either. Each shape names its own typed TranslationKey.
+const HAPTIC_SHAPE_LABEL_KEYS: Readonly<Record<HapticShape, TranslationKey>> = {
+  tap: 'hudChrome.auraOverlay.haptics.tap',
+  double: 'hudChrome.auraOverlay.haptics.double',
+  long: 'hudChrome.auraOverlay.haptics.long',
+};
 
 const percent = (value: number): string =>
   formatNumber(value, { style: 'percent', maximumFractionDigits: 0 });
@@ -378,15 +392,21 @@ export class AuraOverlaySettingsPanel {
    */
   private buildChannelControls(card: HTMLElement, def: AuraOverlayProcDef): void {
     const hooks = this.host.auras;
-    toggleControl({
-      parent: card,
-      label: t('hudChrome.auraOverlay.readyGlow'),
-      get: () => hooks.get(def.id).showReadyGlow,
-      set: (showReadyGlow) => hooks.patch(def.id, { showReadyGlow }),
-      onLabel: t('hud.options.on'),
-      offLabel: t('hud.options.off'),
-      onActivate: () => this.host.click(),
-    });
+    // Only the desktop action bar paints a proc glow (the mobile ring and the
+    // cross hotbar own their own views and never read it), so where that bar is
+    // not the live one the row would be a dead toggle and is left out.
+    if (hooks.readyGlowAvailable()) {
+      toggleControl({
+        parent: card,
+        label: t('hudChrome.auraOverlay.readyGlow'),
+        get: () => hooks.get(def.id).showReadyGlow,
+        set: (showReadyGlow) => hooks.patch(def.id, { showReadyGlow }),
+        onLabel: t('hud.options.on'),
+        offLabel: t('hud.options.off'),
+        onActivate: () => this.host.click(),
+      });
+      this.channelHint(card, t('hudChrome.auraOverlay.readyGlowHint'));
+    }
     toggleControl({
       parent: card,
       label: t('hudChrome.auraOverlay.reticleTick'),
@@ -396,6 +416,7 @@ export class AuraOverlaySettingsPanel {
       offLabel: t('hud.options.off'),
       onActivate: () => this.host.click(),
     });
+    this.channelHint(card, t('hudChrome.auraOverlay.reticleTickHint'));
     const row = document.createElement('div');
     row.className = 'set-row aura-haptic-row';
     const name = document.createElement('span');
@@ -411,16 +432,28 @@ export class AuraOverlaySettingsPanel {
     for (const shape of HAPTIC_SHAPES) {
       const option = document.createElement('option');
       option.value = shape;
-      option.textContent = t(`hudChrome.auraOverlay.haptics.${shape}` as never);
+      option.textContent = t(HAPTIC_SHAPE_LABEL_KEYS[shape]);
       select.appendChild(option);
     }
     select.value = hooks.get(def.id).haptic;
     select.addEventListener('change', () => {
       this.host.click();
-      hooks.patch(def.id, { haptic: select.value as 'none' });
+      const { value } = select;
+      hooks.patch(def.id, { haptic: isHapticShape(value) ? value : 'none' });
     });
     row.append(name, select);
     card.appendChild(row);
+    this.channelHint(card, t('hudChrome.auraOverlay.hapticHint'));
+  }
+
+  /** The one-line explanation under a channel row, the same set-note the sound
+   *  picker carries: the row labels alone do not say what a reticle tick is, or
+   *  what Tap, Double and Long feel like. */
+  private channelHint(card: HTMLElement, text: string): void {
+    const hint = document.createElement('div');
+    hint.className = 'set-note aura-channel-hint';
+    hint.textContent = text;
+    card.appendChild(hint);
   }
 
   /**
