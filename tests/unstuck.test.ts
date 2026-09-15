@@ -1255,6 +1255,35 @@ describe('unstuck area identity', () => {
     expect(sim.bgMatchFor(pid)).toBe(match);
   });
 
+  it('cancels a battleground wall-press ESC attempt that reaches clear footing', () => {
+    const { sim, match, pid } = activeBattleground();
+    const player = forceBattlegroundWallContact(sim, match, pid);
+    const meta = required(sim.meta(pid), 'battleground player metadata');
+    const origin = battlegroundOrigin(match.slot);
+    const spawn = BG_BASES[0].spawns[0];
+
+    expect(sim.unstuck(pid)).toBe(true);
+    sim.drainEvents();
+    meta.moveInput.forward = false;
+    placeOnGround(sim, pid, origin.x + spawn.x, origin.z + spawn.z);
+
+    const resolved = resolvePosition(sim.cfg.seed, player.pos.x, player.pos.z, PLAYER_BODY_RADIUS);
+    expect(Math.hypot(resolved.x - player.pos.x, resolved.z - player.pos.z)).toBeLessThanOrEqual(
+      1e-6,
+    );
+    expect(eventsOf(sim.tick())).toContainEqual(
+      expect.objectContaining({
+        type: 'unstuck',
+        phase: 'cancelled',
+        reason: 'moved',
+        pid,
+      }),
+    );
+    expect(meta.pendingUnstuck).toBeNull();
+    expect(sim.bgMatchFor(pid)).toBe(match);
+    expect(isBgPos(player.pos.x)).toBe(true);
+  });
+
   it('expires the battleground wall-press ESC grace instead of creating a delayed shortcut', () => {
     const { sim, match, pid } = activeBattleground();
     forceBattlegroundWallContact(sim, match, pid);

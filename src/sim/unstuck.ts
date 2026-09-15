@@ -512,15 +512,17 @@ function cancelReason(
   p: Entity,
   pending: PendingUnstuck,
 ): UnstuckCancelReason | null {
+  const bgGeometryTrap = battlegroundGeometryTrap(ctx, meta, p);
+  const movedFromOrigin =
+    Math.hypot(p.pos.x - pending.origin.x, p.pos.z - pending.origin.z) > CANCEL_MOVE_DISTANCE ||
+    Math.abs(p.pos.y - pending.origin.y) > CANCEL_VERTICAL_DISTANCE;
   if (meta.counters.damageTaken > pending.damageTaken) return 'damaged';
   if (p.inCombat || p.combatTimer < 5) return 'combat';
   if (p.castingAbility !== null || isConsuming(p) || p.sitting) return 'busy';
   if (pending.area.kind === 'battleground' && bgCarryingFlag(ctx, p.id)) return 'state_changed';
   if (
-    (hasMoveInput(meta) && !battlegroundGeometryTrap(ctx, meta, p)) ||
-    (pending.area.kind !== 'battleground' &&
-      (Math.hypot(p.pos.x - pending.origin.x, p.pos.z - pending.origin.z) > CANCEL_MOVE_DISTANCE ||
-        Math.abs(p.pos.y - pending.origin.y) > CANCEL_VERTICAL_DISTANCE))
+    (hasMoveInput(meta) && !bgGeometryTrap) ||
+    (movedFromOrigin && (pending.area.kind !== 'battleground' || !bgGeometryTrap))
   )
     return 'moved';
   // Crossing the life/death line either way invalidates the attempt: a living player who
