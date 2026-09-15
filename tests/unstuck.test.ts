@@ -34,7 +34,13 @@ import {
   nearestOverworldGraveyard,
   RES_HEALER_HP_FRACTION,
 } from '../src/sim/spirit';
-import { type BlockerDef, MAX_LEVEL, type SimEvent, type WorldContent } from '../src/sim/types';
+import {
+  type BlockerDef,
+  emptyMoveInput,
+  MAX_LEVEL,
+  type SimEvent,
+  type WorldContent,
+} from '../src/sim/types';
 import {
   UNSTUCK_COOLDOWN_ID,
   UNSTUCK_COUNTDOWN_SECONDS,
@@ -248,6 +254,51 @@ function forceBattlegroundWallContact(
   p.combatTimer = 999;
   const meta = required(sim.meta(pid), 'battleground player metadata');
   meta.moveInput.forward = true;
+  sim.ctx.rebucket(p);
+  const resolved = resolvePosition(sim.cfg.seed, p.pos.x, p.pos.z, PLAYER_BODY_RADIUS);
+  expect(Math.hypot(resolved.x - p.pos.x, resolved.z - p.pos.z)).toBe(0);
+  return p;
+}
+
+function forceExactBattlegroundWallContact(
+  sim: Sim,
+  match: NonNullable<ReturnType<Sim['bgMatchFor']>>,
+  pid: number,
+): Sim['player'] {
+  const origin = battlegroundOrigin(match.slot);
+  const p = required(sim.entities.get(pid), 'exact-contact battleground player');
+  let contact: { x: number; z: number } | null = null;
+  for (const wall of battlegroundColliders()) {
+    if (wall.type !== 'obb' || wall.moveTopY !== undefined || wall.hw < 1 || wall.hd < 1) continue;
+    const axes = [
+      { x: Math.cos(wall.rot), z: -Math.sin(wall.rot), d: wall.hw },
+      { x: -Math.cos(wall.rot), z: Math.sin(wall.rot), d: wall.hw },
+      { x: Math.sin(wall.rot), z: Math.cos(wall.rot), d: wall.hd },
+      { x: -Math.sin(wall.rot), z: -Math.cos(wall.rot), d: wall.hd },
+    ];
+    for (const axis of axes) {
+      const x = origin.x + wall.x + axis.x * (axis.d + PLAYER_BODY_RADIUS);
+      const z = origin.z + wall.z + axis.z * (axis.d + PLAYER_BODY_RADIUS);
+      const resolved = resolvePosition(sim.cfg.seed, x, z, PLAYER_BODY_RADIUS);
+      if (Math.hypot(resolved.x - x, resolved.z - z) <= 1e-6) {
+        contact = { x, z };
+        break;
+      }
+    }
+    if (contact) break;
+  }
+  contact = required(contact, 'exact battleground wall-contact point');
+  p.pos = sim.groundPos(contact.x, contact.z);
+  p.prevPos = { ...p.pos };
+  p.vx = 0;
+  p.vy = 0;
+  p.vz = 0;
+  p.onGround = true;
+  p.jumping = false;
+  p.inCombat = false;
+  p.combatTimer = 999;
+  const meta = required(sim.meta(pid), 'battleground player metadata');
+  meta.moveInput = emptyMoveInput();
   sim.ctx.rebucket(p);
   const resolved = resolvePosition(sim.cfg.seed, p.pos.x, p.pos.z, PLAYER_BODY_RADIUS);
   expect(Math.hypot(resolved.x - p.pos.x, resolved.z - p.pos.z)).toBe(0);
@@ -1049,6 +1100,22 @@ describe('unstuck area identity', () => {
     const plot = BG_GRAVEYARDS[0];
     expect(Math.abs(player.pos.x - (origin.x + plot.x))).toBeLessThanOrEqual(plot.hw);
     expect(Math.abs(player.pos.z - (origin.z + plot.z))).toBeLessThanOrEqual(plot.hd);
+  });
+
+  it('rejects exact battleground wall contact without wall pressure as a shortcut', () => {
+    const { sim, match, pid } = activeBattleground();
+    forceExactBattlegroundWallContact(sim, match, pid);
+
+    expect(sim.unstuck(pid)).toBe(false);
+    expect(eventsOf(sim.drainEvents())).toContainEqual(
+      expect.objectContaining({
+        type: 'unstuck',
+        phase: 'blocked',
+        reason: 'competitive',
+        pid,
+      }),
+    );
+    expect(required(sim.meta(pid), 'battleground player metadata').pendingUnstuck).toBeNull();
   });
 
   it('completes a battleground wall-press ESC attempt while movement input is still held', () => {

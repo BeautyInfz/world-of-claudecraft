@@ -300,11 +300,39 @@ function isFrozenCorpse(p: Entity): boolean {
   return p.dead && !p.ghost;
 }
 
+function overlapsBattlegroundWall(match: BgMatch, pos: Vec3): boolean {
+  const location = battlegroundLocation(match, pos);
+  if (!location) return false;
+  for (const collider of battlegroundColliders()) {
+    if (collider.standable) continue;
+    if (collider.type === 'circle') {
+      const distance = Math.hypot(
+        location.point.localX - collider.x,
+        location.point.localZ - collider.z,
+      );
+      if (distance < collider.r + PLAYER_BODY_RADIUS - POSITION_EPS) {
+        return true;
+      }
+      continue;
+    }
+    const dx = location.point.localX - collider.x;
+    const dz = location.point.localZ - collider.z;
+    const cos = Math.cos(collider.rot);
+    const sin = Math.sin(collider.rot);
+    const localX = dx * cos - dz * sin;
+    const localZ = dx * sin + dz * cos;
+    const beyondX = Math.max(Math.abs(localX) - collider.hw, 0);
+    const beyondZ = Math.max(Math.abs(localZ) - collider.hd, 0);
+    if (Math.hypot(beyondX, beyondZ) < PLAYER_BODY_RADIUS - POSITION_EPS) return true;
+  }
+  return false;
+}
+
 function battlegroundWallTrap(ctx: SimContext, p: Entity): boolean {
   if (!ctx.bgMatches.has(p.id) || !isBgPos(p.pos.x)) return false;
   const match = ctx.bgMatches.get(p.id);
   if (!match) return false;
-  if (!battlegroundLocation(match, p.pos)) return false;
+  if (overlapsBattlegroundWall(match, p.pos)) return true;
   const resolved = resolvePosition(
     ctx.cfg.seed,
     p.pos.x,
