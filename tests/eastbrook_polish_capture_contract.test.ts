@@ -668,8 +668,17 @@ interface AttributionTargetFixture {
 // v0.42.0 dependency-floor bump (sharp, js-yaml, vitest): the lockfile is a
 // fingerprint input, so every shipping GLB was size-preserving re-minted and this
 // seal follows the swept evidence. No capture was retaken.
+// Re-minted for the CPU-hygiene lot: the view-candidate scan and the drop
+// half of the view policy moved out of renderer.ts, and the rift ambience,
+// fishing bobber and Nythraxis painter consumers changed there, so the
+// runtimeRender.renderer leaf moved. No capture was retaken.
+// Re-minted again for its review round: the ranked and required view
+// candidates now share the scan module's liveViewCandidate check, so the
+// same leaf moved once more. No capture was retaken.
+// Re-minted for the druid Cat Form merge with release/v0.43.0: the merged
+// runtimeRender.renderer leaf matches neither parent. No capture was retaken.
 const PINNED_POLISH_COMPOSITE_FINGERPRINT =
-  'b7bbf098e4930656fcc8870704f9bf5764c621c56fad6078bb7ae63ea5257504';
+  'c2d9fc0d9936681c4ece986481496ff334e2e2e7e2cf0ac271aaac88620d991f';
 
 function validPolishAttributionTargets(): AttributionTargetFixture[] {
   return [

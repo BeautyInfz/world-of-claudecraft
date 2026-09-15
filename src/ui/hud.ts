@@ -193,7 +193,7 @@ import { CardDuelWindow } from './card_duel_window';
 import { CastBarPainter, type CastBarPaintInput } from './cast_bar_painter';
 import { castDisplayName, targetCastDisplayLabel } from './cast_display_name';
 import { charBagsPaired } from './char_bags_pairing_core';
-import { charSheetRefreshSig } from './char_sheet_sig_core';
+import { charSheetRefreshSigFor } from './char_sheet_sig_core';
 import { type CharSkinPainterHost, paintCharSkinPicker } from './char_skin_window';
 import { archetypeTitleText, CharWindow, craftNameText } from './char_window';
 import { activeCharacterAppearancePreview } from './character_appearance';
@@ -211,7 +211,7 @@ import { wireChromeFocus } from './chrome_focus_wiring';
 import { ClaudiumLauncherBalance } from './claudium_launcher_balance_core';
 import { createClaudiumPurchaseFacet } from './claudium_purchase_bridge';
 import { type ClaudiumRail, type ClaudiumSnapshot, ClaudiumWindow } from './claudium_window';
-import { formatClockTime } from './clock';
+import { formatClockTimeMemo } from './clock';
 import { CombatAnnouncer } from './combat_announcer';
 import {
   auraApplyCue,
@@ -5804,6 +5804,7 @@ export class Hud {
     ...this.windowFocus('#guild-board-window'),
     onVisibilityChange: () => this.syncAnyWindowOpenState(),
     maskPlayerText: (text) => this.maskChat(text),
+    attachTooltip: (el, html) => this.attachTooltip(el, html),
   });
   // The Rift Forge (src/ui/hud/rift_forge/): opened by the Riftwright's
   // interaction event, never a menu button; the forge lives in the world.
@@ -10455,7 +10456,7 @@ export class Hud {
   // the DOM write whenever it is unchanged.
   private updateClock(): void {
     if (!this.clockEl) return;
-    const text = formatClockTime(new Date(), this.clock24);
+    const text = formatClockTimeMemo(Date.now(), this.clock24);
     if (text !== this.lastClockText) {
       this.lastClockText = text;
       this.clockEl.textContent = text;
@@ -12335,10 +12336,9 @@ export class Hud {
           } else {
             // A board with no authored listings IS the guild board: the
             // signpost opens the realm's ranked pledge surface
-            // (src/ui/hud/guild_board/). Offline the window renders its
-            // localized nothing-posted state, so the interaction never
-            // looks inert on any host.
-            this.openGuildBoard();
+            // (src/ui/hud/guild_board/) on the view its board id selects.
+            // Offline the window renders its localized nothing-posted state.
+            this.openGuildBoard(ev.boardId);
           }
           break;
         case 'realmBuilder':
@@ -16424,14 +16424,7 @@ export class Hud {
   // synchronous; online the atitle/aborder echo and the snapshot's ownership
   // fields land well inside one band), and render() rebuilds every row fresh.
   private refreshCharSheetIfChanged(): void {
-    const sig = charSheetRefreshSig({
-      activeTitle: this.sim.activeTitle,
-      activeBorder: this.sim.activeBorder,
-      deedsEarned: this.sim.deedsEarned.size,
-      itemsDiscovered: this.sim.deedStats.itemsDiscovered.size,
-      marks: this.sim.reliquaryMarks.size,
-      mounts: this.sim.ownedMounts().length,
-    });
+    const sig = charSheetRefreshSigFor(this.sim);
     if (sig === this.lastCharSheetSig) return;
     this.lastCharSheetSig = sig;
     this.charWindow.renderIfOpen();
@@ -17020,10 +17013,10 @@ export class Hud {
     this.leaderboardWindow.toggle();
   }
 
-  /** The signpost guild board: opened by the world's noticeboard interaction
-   *  (and the E2E capture rigs); there is no menu launcher on purpose. */
-  openGuildBoard(): void {
-    this.guildBoardWindow.open();
+  /** The signpost guild board, opened by the noticeboard interaction (and the
+   *  E2E rigs), never a menu launcher; the board id picks the default view. */
+  openGuildBoard(boardId?: string): void {
+    this.guildBoardWindow.open(boardId);
   }
 
   /** The Rift Forge: opened by the Riftwright interaction (and the capture rigs). */

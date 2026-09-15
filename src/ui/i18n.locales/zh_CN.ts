@@ -258,6 +258,8 @@ export const zh_CN: Partial<Record<TranslationKey, string>> = {
   'hudChrome.pledge.noteLabel': '榜单留言',
   'hudChrome.pledge.notePlaceholder': '告诉有意加入的玩家你的公会在寻找什么',
   'hudChrome.pledge.save': '保存',
+  'hudChrome.pledge.newPlayerFriendlyLabel': '新手友好',
+  'hudChrome.pledge.newPlayerFriendlyHint': '显示在试炼之滨告示牌的新人看板上。',
   'hudChrome.pledge.yourPledge': '你的宣誓：{guild}',
   'hudChrome.pledge.since': '宣誓于{date}',
   'hudChrome.pledge.withdraw': '撤回宣誓',
@@ -3624,7 +3626,7 @@ export const zh_CN: Partial<Record<TranslationKey, string>> = {
     '对目标低吼：你的威胁值提高到其最仇恨敌人的水平，并强迫其攻击你 3 秒。仅限巨熊形态。',
   'entities.abilities.cat_form.name': '狼形态',
   'entities.abilities.cat_form.description':
-    '将你化为一头狼：敏捷随你的等级提升，攻击强度 +8 外加每级 2 点，你的攻击消耗能量与连击点，并且你产生的威胁降低 29%。再次施放即可变回施法形态。',
+    '将你化为一头狼：敏捷随你的等级提升，攻击强度 +8 外加每级 2 点，你的攻击消耗能量与连击点，并且你产生的威胁降低 29%。变为任意形态都会获得疾跃步伐：移动速度提高 60%，持续 3 秒，每 20 秒一次。再次施放即可变回施法形态。',
   'entities.abilities.claw.name': '裂爪',
   'entities.abilities.claw.description':
     '用利爪攻击敌人，造成武器伤害加 {damage}。奖励 1 个连击点。仅限狼形态。',
@@ -3661,8 +3663,14 @@ export const zh_CN: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.dash.name': '急奔',
   'entities.abilities.dash.description': '向前冲刺，使移动速度提高 50%，持续 15 秒。仅限狼形态。',
   'entities.abilities.pounce.name': '匿袭',
+  'entities.abilities.lunge.description':
+    '扑向最远12码外的敌人，造成60%武器伤害并获得1个连击点。仅限狼形态使用。',
+  'entities.abilities.lunge.name': '扑击',
+  'entities.abilities.hamstring_bite.description':
+    '终结技，昏迷目标 1 秒外加每点连击点 1 秒（5 点连击点：6 秒）。仅限狼形态使用。',
+  'entities.abilities.hamstring_bite.name': '扑倒',
   'entities.abilities.pounce.description':
-    '一个潜行开场技，昏迷目标 2 秒。奖励 1 个连击点。仅限狼形态。',
+    '一个潜行开场技，昏迷目标 2 秒。奖励 1 个连击点。仅限狼形态。 未潜行时，此按钮为扑击。',
   'entities.abilities.insect_swarm.name': '蜇刺虫群',
   'entities.abilities.insect_swarm.description':
     '敌人被虫群侵袭，在 12 秒内受到 {damage} 点自然伤害。',
@@ -3709,13 +3717,12 @@ export const zh_CN: Partial<Record<TranslationKey, string>> = {
     '将一只亡魂裔束缚于你的意志之下，这是一种精英恶魔，会从远处倾泻沉重的暗影伤害。漫长的冷却时间限制了它的毁灭性威力。召唤新的恶魔会驱散你当前的恶魔。你同时只能拥有一只恶魔。',
   'entities.abilities.bear_charge.name': '巨熊冲锋',
   'entities.abilities.bear_charge.description':
-    '冲向一名敌人，生成9点怒气并将其昏迷1秒。射程8-25码。仅限巨熊形态使用。',
+    '冲向一名敌人，生成9点怒气并将其昏迷1秒。之后3秒内，狼形态无需消耗并钉制目标，使其减速50%，持续4秒。射程8-25码。仅限巨熊形态使用。',
   'entities.abilities.demoralizing_roar.name': '怯懦咆哮',
   'entities.abilities.demoralizing_roar.description':
     '震慑附近的敌人，使其攻击强度降低 20 点，持续 20 秒。仅限巨熊形态使用。',
   'entities.abilities.prowl.name': '潜行',
-  'entities.abilities.prowl.description':
-    '在狼形态下进入潜行状态，移动速度降低 5%。无法在战斗中使用。',
+  'entities.abilities.prowl.description': '在狼形态下进入潜行状态。无法在战斗中使用。',
   'entities.abilities.rake.name': '剐削',
   'entities.abilities.rake.description':
     '撕裂敌人，造成武器伤害外加 {damage} 点，并造成持续 18 秒的流血伤害。给予 1 点连击点。仅限狼形态。',
@@ -6425,7 +6432,7 @@ export const zh_CN: Partial<Record<TranslationKey, string>> = {
     '壮举自成一类：它们是传承与世界首创的记录，是那些与逝去纪元相关、或只会发生一次的功绩。它们不带来任何名望，也不计入完成度，将作为对往昔功业的纪念被永久保存。',
   'guide.deedsPage.featsHeading': '壮举',
   'guide.deedsPage.howBody':
-    '功绩以单个角色为单位逐一赢得并留存，因此你所扮演的每一位英雄都会各自积累自己的功绩之书；只有王国的排行榜才会汇总你所扮演的所有角色的名望，且每个功绩只计一次。每个功绩都在游戏内的功绩之书中清楚写明它的要求，让你始终知道该追求什么；你还可以对心仪的功绩设置追踪，让它们在你游玩时时刻不离视线。少数功绩会保持隐秘，只有在你赢得它们之后才会揭晓。这本书还讲求诚实：凡是你过往的记录足以证明的，它都会当场记上，因此老玩家绝不会翻开一页空白；只有计数类的功绩才从零开始累计。',
+    '功业由每个角色各自完成，但功业之书由账号内所有角色共享：任一角色完成的功业对所有角色都算达成，书中会记下是谁在何时完成的，它奖励的称号或边框也可由你的任何角色佩戴。领域排行榜以同样的方式汇总你的声望，每项功业只计一次。每项功业都在游戏内的功业之书中清楚写明要求，让你始终知道该追求什么，还可以把想要的功业加入关注，在游玩时随时留意。少数功业保持隐秘，只有在你达成后才会显现。这本书也会保持诚实：凡是你过去的记录能够证明的，都会当场记入，因此老玩家翻开时绝不会是空白一页；只有计数类功业会重新开始计数。',
   'guide.deedsPage.howHeading': '功绩如何运作',
   'guide.deedsPage.intro':
     '功绩之书记录着你在这个世界所做的一切，从走出新手山谷的第一步，到王国所能提供的最艰难的战斗。一边游玩一边赢得功绩，佩戴它们授予的头衔，看着你的名望不断攀升。',
@@ -6486,7 +6493,7 @@ export const zh_CN: Partial<Record<TranslationKey, string>> = {
     '圣物库是你已收录的独特战利品博物馆：地下城追逐装备、专业奖杯、坐骑、武器外观与头衔。它与功绩之书的关系，就像奖杯厅与成就簿的关系。',
   'guide.reliquaryPage.howHeading': '收藏如何运作',
   'guide.reliquaryPage.howBody':
-    '在游戏中打开圣物库（默认 Shift+X）。每个架上有多页独特圣物。角色首次获得该件时填满剪影；一页上的圣物全部填满时点亮该页。少数页面标注“绝版”或“专属”：它们不计入达成，不会阻碍书架或全库的完成。实时发现会弹出提示并刷新已打开的窗口；进度按角色计算，武器外观除外（账号外观）。',
+    '在游戏中打开圣物库（默认 Shift+X）。每个架上有多页独特圣物。账号内任一角色首次获得该件时填满剪影；一页上的圣物全部填满时点亮该页。少数页面标注“绝版”或“专属”：它们不计入达成，不会阻碍书架或全库的完成。实时发现会弹出提示并刷新已打开的窗口；进度由账号内所有角色共享，一个角色找到的圣物会为所有角色填满该页。',
   'guide.reliquaryPage.ranksHeading': '策展人等级',
   'guide.reliquaryPage.ranksBody':
     '策展人等级随已收录的独特圣物上升，仅授予装饰性头衔与边框。不会提供战斗强度、掉落率或保底。账号武器外观不计策展人等级，因此声望保持角色持久。绝版与专属页面上的圣物同样不计入等级。',
@@ -8292,7 +8299,7 @@ export const zh_CN: Partial<Record<TranslationKey, string>> = {
   'hudChrome.auraEffect.imbueRange': '武器已附魔：裁决时附加 {min} 到 {max} 点额外伤害',
   'hudChrome.auraEffect.stealth': '已隐匿；移动速度降低 {pct}%',
   'hudChrome.auraEffect.formBear': '巨熊形态：生命值和护甲提高',
-  'hudChrome.auraEffect.formCat': '猫形态：近战伤害与能量',
+  'hudChrome.auraEffect.wolfForm': '狼形态：近战伤害与能量；移动速度提高 {pct}%',
   'hudChrome.auraEffect.formTravel': '迅捷形态：移动速度提高 {pct}%',
   'hudChrome.auraEffect.defensiveStance': '戒备姿态：受到的伤害降低，威胁值提高',
   'hudChrome.auraEffect.righteousFury': '炽燃誓约：神圣伤害产生的威胁值大幅提高',
@@ -9433,6 +9440,18 @@ export const zh_CN: Partial<Record<TranslationKey, string>> = {
   'hudChrome.noticeboard.subtitle': '本服务器的公会',
   'hudChrome.noticeboard.rosterTitle': '查看{guild}的成员名单',
   'hudChrome.noticeboard.back': '返回',
+  'hudChrome.noticeboard.filters': '看板筛选',
+  'hudChrome.noticeboard.newPlayerFriendly': '新手友好',
+  'hudChrome.noticeboard.newPlayerFriendlyTitle': '这个公会欢迎新玩家',
+  'hudChrome.noticeboard.filterNewPlayersTitle': '只显示欢迎新玩家的公会',
+  'hudChrome.noticeboard.filterEmpty': '还没有公会向新玩家敞开大门。',
+  'hudChrome.noticeboard.showAll': '显示全部公会',
+  'hudChrome.noticeboard.officersOnline': '官员在线',
+  'hudChrome.noticeboard.officersOnlineLabel': '在线官员：{names}',
+  'hudChrome.plurals.guildBoardShown.one': '显示 {count} 个公会',
+  'hudChrome.plurals.guildBoardShown.few': '显示 {count} 个公会',
+  'hudChrome.plurals.guildBoardShown.many': '显示 {count} 个公会',
+  'hudChrome.plurals.guildBoardShown.other': '显示 {count} 个公会',
   'hudChrome.noticeboard.popupTitle': '公会告示柱',
   'hudChrome.noticeboard.close': '关闭',
   'hudChrome.mailbox.subtitle': '渡鸦邮驿',
@@ -10853,6 +10872,11 @@ export const zh_CN: Partial<Record<TranslationKey, string>> = {
   'hudChrome.deeds.progressAria': '进度：{current}/{target}',
   'hudChrome.deeds.renownChip': '{renown} 名望',
   'hudChrome.deeds.earnedDate': '获得于 {date}',
+  'hudChrome.deeds.earnedBy': '由 {names} 获得',
+  'hudChrome.deeds.earnerWithDate': '{name}（{date}）',
+  'hudChrome.deeds.accountScopeNote': '账号下所有角色共享',
+  'hudChrome.deeds.accountScopeHint':
+    '账号内任一角色完成的功业在此同样算达成，且书中会记下是谁完成的。',
   'hudChrome.deeds.hiddenBadge': '隐藏',
   'hudChrome.deeds.titleChip': '头衔奖励',
   'hudChrome.deeds.borderChip': '边框奖励',
@@ -12038,6 +12062,10 @@ export const zh_CN: Partial<Record<TranslationKey, string>> = {
   'hudChrome.reliquary.ownedTooltipStatus': '已收录于圣物库',
   'hudChrome.reliquary.missingTooltipStatus': '尚未获得',
   'hudChrome.reliquary.firstFindClears': '首次获得于第 {count} 次通关',
+  'hudChrome.reliquary.foundBy': '由 {names} 发现',
+  'hudChrome.reliquary.finderWithDate': '{name}（{date}）',
+  'hudChrome.reliquary.sharedScopeNote': '账号下所有角色共享',
+  'hudChrome.reliquary.sharedScopeHint': '账号内任一角色找到的圣物也会在此填满该页。',
   'hudChrome.reliquary.unlockToast': '圣物已收录：{name}',
   'hudChrome.reliquary.illuminateBanner': '页面已点亮：{name}',
   'hudChrome.reliquary.illuminateToast': '{name} 上的每一件圣物均已填满。',
@@ -13778,6 +13806,8 @@ export const zh_CN: Partial<Record<TranslationKey, string>> = {
   'guide.classPage.formsHeading': '变形',
   'guide.classPage.formsMoonwing':
     '平衡系德鲁伊还会多得到一种形态：枭兽形态，也就是平衡德鲁伊作战时所用的施法形态。它是唯一保留法术的野兽形态，而你的魔杖也只在这个形态或你普通的施法形态下才能使用。',
+  'guide.classPage.formsWolfEngage':
+    '狼以巨熊冲锋开战，随即变为狼形态钉制目标，未潜行时用扑击拉近距离，再用扑倒把敌人钉在原地。',
   'guide.classPage.formsAutoUnshift':
     '变身时施放治疗或伤害法术会自动为你解除变身。以这种方式离开形态不消耗法力，也不占用公共冷却时间，因此瞬发法术会在你按下的那一刻释放。重新变身是普通技能，依然消耗法力并占用公共冷却时间。',
   'guide.classPage.formsNote':
@@ -14574,6 +14604,8 @@ export const zh_CN: Partial<Record<TranslationKey, string>> = {
   'hudChrome.auraEffect.castShield': '施法不会因受到伤害而中断或延迟',
   'hudChrome.auraEffect.cauterizeFatigue': '灸灼无法再次阻止致命伤害',
   'hudChrome.auraEffect.cooldownCap': '此时间窗已使用 {used}/{cap} 秒冷却缩减',
+  'hudChrome.auraEffect.bruinRushWindow':
+    '狼形态无需法力，并钉制你的巨熊冲锋目标，使其减速 {pct}%，持续 {sec} 秒',
   'hudChrome.auraEffect.dawnsWrath': '制裁之锤：无生命限制 · +1次 · 冷却0 · 伤害+{pct}%',
   'hudChrome.auraEffect.desolation':
     '剩余 {charges} 层：下一次混乱箭施法加快 {castPct}%，或下一次火焰之雨立即落下',

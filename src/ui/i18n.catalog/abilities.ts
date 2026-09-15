@@ -1178,7 +1178,7 @@ const classAbilityNamesEn = {
       [
         'bear_form',
         'Bruin Form',
-        'Shapeshift into a bear: armor +110%, maximum health +30%, greatly increased attack power, your attacks build rage and generate 30% more threat. Cast again to return to caster form.',
+        'Shapeshift into a bear: armor +110%, maximum health +30%, greatly increased attack power, your attacks build rage and generate 30% more threat. Shifting into any form grants Loping Stride, a short burst of movement speed. Cast again to return to caster form.',
       ],
       [
         'maul',
@@ -1202,7 +1202,7 @@ const classAbilityNamesEn = {
       [
         'cat_form',
         'Cat Form',
-        'Shapeshift into a cat: agility rises with your level, attack power +8 plus 2 per level, your attacks use energy and combo points, and you generate 29% less threat. Cast again to return to caster form.',
+        'Shapeshift into a cat: agility rises with your level, attack power +8 plus 2 per level, your attacks use energy and combo points, you move 15% faster, and you generate 29% less threat. Shifting into any form grants Loping Stride, a short burst of movement speed. Cast again to return to caster form.',
       ],
       [
         'claw',
@@ -1255,7 +1255,7 @@ const classAbilityNamesEn = {
       [
         'travel_form',
         'Fleet Form',
-        'Instantly shift into a swift fleet form, increasing movement speed by 40%. You cannot use other abilities while shifted, but can shift in or out of combat, ideal for escaping.',
+        'Instantly shift into a swift fleet form, increasing movement speed by 40% and removing breakable roots and slows. You cannot use other abilities while shifted, but can shift in or out of combat, ideal for escaping. Shifting into any form grants Loping Stride, a short burst of movement speed.',
       ],
       ['enrage', 'Stoke', 'Generates 20 rage instantly. Bruin Form only.'],
       ['bash', 'Concuss', 'Stuns the target for 2 sec. Bruin Form only.'],
@@ -1273,7 +1273,17 @@ const classAbilityNamesEn = {
       [
         'pounce',
         'Slinkstrike',
-        'A stealth opener that stuns the target for 2 sec. Awards 1 combo point. Cat Form only.',
+        'A stealth opener that stuns the target for 2 sec. Awards 1 combo point. Cat Form only. Out of stealth this button is Lunge.',
+      ],
+      [
+        'lunge',
+        'Lunge',
+        'Lunge at an enemy up to 12 yd away. On arrival, deals 60% weapon damage and awards 1 combo point; a lunge cut short refunds its cooldown. Cat Form only.',
+      ],
+      [
+        'hamstring_bite',
+        'Takedown',
+        'Finishing move that stuns the target for 1 sec plus 1 sec per combo point (5 combo points: 6 sec). Cat Form only.',
       ],
       [
         'insect_swarm',
@@ -1534,7 +1544,7 @@ const classAbilityNamesEn = {
       [
         'moonkin_form',
         'Moonwing Form',
-        'Shapeshift into a fearsome Moonkin, increasing your spell damage by 20% and your armor by 50%. Lasts until you shift out. Cast again to return to caster form. (Balance signature)',
+        'Shapeshift into a fearsome Moonkin, increasing your spell damage by 20% and your armor by 50%. Lasts until you shift out. Shifting into any form grants Loping Stride, a short burst of movement speed. Cast again to return to caster form. (Balance signature)',
       ],
       [
         'feral_charge',

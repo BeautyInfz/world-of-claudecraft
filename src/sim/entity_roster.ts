@@ -152,6 +152,7 @@ function copyPos(
 
 export function addEntityToRoster(ctx: SimContext, e: Entity): void {
   ctx.entities.set(e.id, e);
+  ctx.entityRosterVersion++;
   ctx.grid.insert(e);
   if (e.kind === 'player') ctx.playerGrid.insert(e);
   if (e.templateId === 'dungeon_door' && ctx.dungeonDoorIds) ctx.dungeonDoorIds.push(e.id);
@@ -162,6 +163,7 @@ export function dropEntityFromRoster(ctx: SimContext, id: number): void {
   ctx.clearEntityMarker(id); // a despawned entity keeps no raid marker
   const e = ctx.entities.get(id);
   if (!e) return;
+  ctx.entityRosterVersion++;
   // A corpse about to disappear for good must not leave a live harvester
   // reserving a body that no longer exists (Intentional Gathering, PR3); a
   // no-op for every entity that never carried a reservation.

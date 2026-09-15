@@ -22,7 +22,14 @@ import {
   ECHO_GROUP_CONVERT_AOE,
   ECHO_GROUP_CONVERT_SINGLE,
 } from '../sim/combat/chronomancy';
-import { MOONTIDE_STAGES, OLD_BLOOD_STAGES, VERDANCE_STAGES } from '../sim/combat/druid_engines';
+import {
+  BRUIN_RUSH_WINDOW_ID,
+  MOONTIDE_STAGES,
+  OLD_BLOOD_STAGES,
+  PIN_DURATION,
+  PIN_SLOW_MULT,
+  VERDANCE_STAGES,
+} from '../sim/combat/druid_engines';
 import {
   COLDSIGHT_READ_AURA_ID,
   COLDSIGHT_READ_FELL_SHOT_MULT,
@@ -99,6 +106,7 @@ import {
   FAERIE_FIRE_ARMOR_PCT,
   RECKLESSNESS_RAGE_GEN,
   SUNDER_ARMOR_PCT_PER_STACK,
+  WOLF_FORM_MOVE_MULT,
 } from '../sim/types';
 import { VARKHUL_ASSEMBLY_BURDEN_TICK_SECONDS } from '../sim/varkhul_assembly';
 import {
@@ -415,6 +423,12 @@ export function auraEffectDescriptor(a: AuraEffectInput): AuraEffectDescriptor |
     };
   }
   if (a.kind === 'internal_cd') {
+    if (a.id === BRUIN_RUSH_WINDOW_ID) {
+      return {
+        key: `${KEY}.bruinRushWindow`,
+        nums: { pct: pctFromMult(PIN_SLOW_MULT), sec: PIN_DURATION },
+      };
+    }
     if (a.id === 'colossal_might_cap' || a.id === 'overflowing_power_cap') {
       return { key: `${KEY}.cooldownCap`, nums: { used: round(a.value), cap: 10 } };
     }
@@ -650,7 +664,9 @@ export function auraEffectDescriptor(a: AuraEffectInput): AuraEffectDescriptor |
     case 'form_bear':
       return { key: `${KEY}.formBear` };
     case 'form_cat':
-      return { key: `${KEY}.formCat` };
+      // The aura value is the threat multiplier; the speed is the constant
+      // moveSpeedMult reads, so the buff line resolves it the same way.
+      return { key: `${KEY}.wolfForm`, nums: { pct: pctFromMult(WOLF_FORM_MOVE_MULT) } };
     case 'form_travel':
       return { key: `${KEY}.formTravel`, nums: { pct: pctFromMult(a.value) } };
     case 'battle_stance':

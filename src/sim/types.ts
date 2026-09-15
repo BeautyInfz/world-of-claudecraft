@@ -3642,12 +3642,17 @@ export interface AbilityRank {
 }
 
 // One transform-in-place rule: while the actor wears at least minStacks of the
-// aura kind, the base action resolves as abilityId (see combat/action_replacement.ts).
+// aura kind (auraKind), and/or wears NO aura of absentAuraKind, the base action
+// resolves as abilityId (see combat/action_replacement.ts). A presence rule is
+// a payoff over the base and shares its clock; an absence-only rule is a MODE
+// of the same button (Slinkstrike stealthed, Lunge unstealthed) and keeps the
+// replacement's own cooldown key.
 export interface ActionReplacementRule {
   abilityId: string;
-  auraKind: AuraKind;
+  auraKind?: AuraKind;
   minStacks?: number;
   actorAuraKind?: AuraKind;
+  absentAuraKind?: AuraKind;
 }
 
 export interface AbilityDef {
@@ -6266,6 +6271,14 @@ export type SimEvent = { pid?: number } & (
   // ID only, never English text; `retro` marks the on-join back-credit pass so
   // the client can batch those into one summary line instead of banner spam.
   | { type: 'deedUnlocked'; deedId: string; retro?: boolean }
+  // Account ledger relic record (always personal: emitted with pid). Fired
+  // when the acting character is appended as a finder of a catalogued relic
+  // (an item, an authored mark, or a mount) on its account ledger
+  // (src/sim/account_ledger.ts). `key` is the accountRelicKey. Never English;
+  // NOT presentation: the client ignores it (the heavy `acct` self key is the
+  // membership authority), the server persists the row and fans the entry out
+  // to the account's other live sessions. `retro` marks the on-join seed pass.
+  | { type: 'relicRecorded'; key: string; retro?: boolean }
   // Reliquary first fill (always personal: emitted with pid). Id-only: exactly
   // one of itemId / markId is set for a catalogued relic or authored mark.
   // pageIds list pages that list the relic; illuminatedPageId is set when a
@@ -6474,10 +6487,14 @@ export type SimEvent = { pid?: number } & (
       current: RealmBuilderHonour;
       past: readonly RealmBuilderHonour[];
     }
-  | { type: 'noticeboard'; noticeboardId: string; state: 'empty' }
+  // `boardId` is the authored NoticeboardDef id (every board shares one
+  // templateId), so the client can tell the Proving Shore's recruits' signpost
+  // from a town board and open the guild board on its default view.
+  | { type: 'noticeboard'; noticeboardId: string; boardId: string; state: 'empty' }
   | {
       type: 'noticeboard';
       noticeboardId: string;
+      boardId: string;
       state: 'listings';
       listings: readonly NoticeboardListing[];
     }
@@ -7171,8 +7188,6 @@ export type SimEvent = { pid?: number } & (
         // Enchanting skill.
         | 'not_perfected'
         | 'insufficient_skill'
-        // A Riftbound band: forge-only gear (professions/enchanting.ts).
-        | 'rift_gear'
         | 'busy';
     }
   // Outcome of applying a loadout's saved gear set. TEXT-FREE on purpose: the sim
@@ -8823,6 +8838,11 @@ export const SHIELD_BLOCK_BASE = 0.05;
 export const ENRAGE_DMG_DONE = 0.07;
 export const ENRAGE_HASTE_PCT = 0.25;
 export const ENRAGE_MOVE_MULT = 1.1;
+// Druid Wolf Form: +15% passive move speed. The form_cat aura's VALUE is the
+// threat multiplier (0.71), so moveSpeedMult reads this constant, never
+// a.value. Sits under Loping Stride (1.6), Dash (1.5), and every mount, and
+// rides the same non-stacking Math.max path as those speed auras.
+export const WOLF_FORM_MOVE_MULT = 1.15;
 // Avatar's colossus body-size multiplier while the buff_avatar aura is worn.
 export const AVATAR_SCALE = 1.15;
 export const REVENGE_FREE_CHANCE = 0.3;

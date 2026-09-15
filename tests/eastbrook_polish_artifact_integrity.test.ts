@@ -1362,10 +1362,17 @@ const ACCEPTED_POLISH_V2_METADATA_PATH = path.join(REPO_ROOT, POLISH_SEAL_PATH);
 // v0.42.0 dependency-floor bump (sharp, js-yaml, vitest): the lockfile is a
 // fingerprint input, so every shipping GLB was size-preserving re-minted and this
 // seal follows the swept evidence. No capture was retaken.
+// Re-minted for the CPU-hygiene lot (renderer.ts consumer edits and the
+// view-candidate scan extraction): the composite first, then this metadata
+// seal from the swept file. No capture was retaken.
+// Re-minted again for the lot's review round (the shared liveViewCandidate
+// check moved the renderer leaf once more). No capture was retaken.
+// Re-minted for the druid Cat Form merge with release/v0.43.0: the merged
+// runtimeRender.renderer leaf matches neither parent. No capture was retaken.
 const ACCEPTED_POLISH_V2_METADATA_SHA256 =
-  '8b2aac6048eff8aa077551f62487149cf944bcfdd7ddfd55b07213063f7e90dc';
+  'f0ad8123b0101b6f348fc4cd57d3357b4082ca7c694fa6234a6eef4a5cb6fd9e';
 const ACCEPTED_POLISH_V2_COMPOSITE_PROVENANCE =
-  'b7bbf098e4930656fcc8870704f9bf5764c621c56fad6078bb7ae63ea5257504';
+  'c2d9fc0d9936681c4ece986481496ff334e2e2e7e2cf0ac271aaac88620d991f';
 const ACCEPTED_POLISH_V2_METADATA = readJsonFile<CaptureMetadata>(ACCEPTED_POLISH_V2_METADATA_PATH);
 const ACCEPTED_POLISH_V2_PROVENANCE = ACCEPTED_POLISH_V2_METADATA.polishProvenance;
 const ACCEPTED_POLISH_V2_TOWN_CONTRACT = ACCEPTED_POLISH_V2_METADATA.records[0]?.townContract;
@@ -2724,7 +2731,13 @@ describe('Eastbrook polish performance and contact evidence', () => {
       // canonical re-sealed evidence files. Capture pixels and scores did not change.
       // v0.42.0 dependency-floor bump: recomputed LAST over the swept evidence
       // after the lockfile-driven GLB re-mint. No capture was retaken.
-    ).toBe('d7e9a792cf9f5f55c8fb6de92f82013fbdb2a82bf6d23adb4fb80baaeb73734c');
+      // Re-minted for the CPU-hygiene lot: the composite first, then this
+      // second-order seal over the swept evidence bytes. No capture was retaken.
+      // Review round of the same lot: recomputed LAST again over the re-swept
+      // evidence. No capture was retaken.
+      // Druid Cat Form merge with release/v0.43.0: recomputed LAST again over
+      // the re-swept evidence. No capture was retaken.
+    ).toBe('8606f2c34d84a83c24d9b8f734f0fe5fa4e1ab43b04a8b119322c78fb2a30ff5');
   });
 
   it('binds every historical after record to its accepted source and asset provenance', () => {

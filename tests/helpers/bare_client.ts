@@ -11,6 +11,7 @@ import { ActionBarLayoutUploader } from '../../src/net/action_bar_upload';
 import { EMPTY_MST_CRAFTS } from '../../src/net/crafting_wire';
 import { GuildBankLogMirror } from '../../src/net/guild_bank_log_mirror';
 import { ClientWorld } from '../../src/net/online';
+import { freshAccountLedger } from '../../src/sim/account_ledger';
 import { FARM_PATCHES } from '../../src/sim/content/farm_patches';
 import { emptyAllocation, emptyModifiers } from '../../src/sim/content/talents';
 import { ALL_RECIPES } from '../../src/sim/data';
@@ -53,6 +54,7 @@ export function bareClient(pid: number, overrides: BareClientOverrides = {}): Cl
   const c: any = Object.create(ClientWorld.prototype);
   c.cfg = { seed: 20061, playerClass };
   c.entities = new Map();
+  c.entityRosterVersion = 0;
   c.playerId = pid;
   c.ownPlayerId = pid;
   c.ownPlayerClass = playerClass;
@@ -126,6 +128,7 @@ export function bareClient(pid: number, overrides: BareClientOverrides = {}): Cl
   c.reliquaryMarks = new Set();
   c.reliquaryRecent = [];
   c.reliquaryObtainCounts = {};
+  c.accountLedger = freshAccountLedger();
   c.renown = 0;
   c.activeTitle = null;
   c.activeBorder = null;
