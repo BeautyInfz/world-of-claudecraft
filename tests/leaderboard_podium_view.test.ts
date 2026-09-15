@@ -1,15 +1,23 @@
-// The shared top-three podium core (src/ui/leaderboard_podium_view.ts): the
-// page split both ranked windows use, the place-ordered discs, and the
-// viewer standing decisions the leaderboard tabs make without a server read.
+// The leaderboard podium core (src/ui/leaderboard_podium_view.ts): the page
+// split every leaderboard tab uses, the place order and the disc medal per
+// place, and the viewer standing decisions the tabs make without a server read.
+// The disc art itself lives in the stylesheet, so this file also pins that the
+// three medal files ship and that each place maps to its own medal url.
+import { existsSync, readFileSync } from 'node:fs';
+import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 import {
   guildStandingRow,
-  LEADERBOARD_MEDAL_ART_DIR,
-  leaderboardMedalArt,
+  isViewerGuild,
+  PODIUM_PLACE_MEDAL,
+  PODIUM_PLACE_ORDER,
   playersStandingBar,
   podiumSplit,
   viewerRowOnPage,
 } from '../src/ui/leaderboard_podium_view';
+
+const repoRoot = fileURLToPath(new URL('..', import.meta.url));
 
 interface Row {
   rank: number;
@@ -26,31 +34,22 @@ function rows(count: number, meRank = 0): Row[] {
 }
 
 describe('podiumSplit', () => {
-  it('stands ranks 1 to 3 silver, gold, bronze and lists rank 4 onward on the first page', () => {
+  it('stands ranks 1 to 3 in place order and lists rank 4 onward on the first page', () => {
     const split = podiumSplit(0, rows(6), (r) => r.rank);
     expect(split.podium.map((s) => [s.place, s.rankText, s.entry?.name])).toEqual([
-      [2, '2', 'Hero2'],
       [1, '1', 'Hero1'],
+      [2, '2', 'Hero2'],
       [3, '3', 'Hero3'],
     ]);
     expect(split.listed.map((r) => r.rank)).toEqual([4, 5, 6]);
-  });
-
-  it('colors the discs by place, whatever the rows hold', () => {
-    const split = podiumSplit(0, rows(3), (r) => r.rank);
-    expect(split.podium.map((s) => s.placeArt)).toEqual([
-      `${LEADERBOARD_MEDAL_ART_DIR}/medal_silver.webp`,
-      `${LEADERBOARD_MEDAL_ART_DIR}/medal_gold.webp`,
-      `${LEADERBOARD_MEDAL_ART_DIR}/medal_bronze.webp`,
-    ]);
-    expect(leaderboardMedalArt('gold')).toBe('ui/leaderboard/medal_gold.webp');
+    expect(PODIUM_PLACE_ORDER).toEqual([1, 2, 3]);
   });
 
   it('leaves an unheld place standing empty', () => {
     const split = podiumSplit(0, rows(1), (r) => r.rank);
     expect(split.podium.map((s) => [s.place, s.entry])).toEqual([
-      [2, null],
       [1, rows(1)[0]],
+      [2, null],
       [3, null],
     ]);
     expect(split.listed).toEqual([]);
@@ -65,6 +64,33 @@ describe('podiumSplit', () => {
 
   it('has no podium for an empty page', () => {
     expect(podiumSplit(0, [] as Row[], (r) => r.rank)).toEqual({ podium: [], listed: [] });
+  });
+});
+
+describe('podium disc art', () => {
+  it('maps each place to its own medal, gold first', () => {
+    expect(PODIUM_PLACE_MEDAL).toEqual({ 1: 'gold', 2: 'silver', 3: 'bronze' });
+  });
+
+  it('ships the three medal files the stylesheet reads', () => {
+    for (const medal of ['gold', 'silver', 'bronze']) {
+      const file = join(repoRoot, 'public', 'ui', 'leaderboard', `medal_${medal}.webp`);
+      expect(existsSync(file), `missing ${file}`).toBe(true);
+      // A WebP container: RIFF....WEBP.
+      const head = readFileSync(file).subarray(0, 12).toString('latin1');
+      expect(head.startsWith('RIFF') && head.endsWith('WEBP'), `${medal} is not a WebP`).toBe(true);
+    }
+  });
+
+  it('declares each place medal as an absolute /ui/ url on its slot class', () => {
+    const css = readFileSync(join(repoRoot, 'src', 'styles', 'components.css'), 'utf8');
+    for (const place of PODIUM_PLACE_ORDER) {
+      const medal = PODIUM_PLACE_MEDAL[place];
+      const rule = new RegExp(
+        `#leaderboard-window \\.lbp-slot-${place} \\{[^}]*--lbp-medal: url\\("/ui/leaderboard/medal_${medal}\\.webp"\\)`,
+      );
+      expect(css, `.lbp-slot-${place} must carry medal_${medal}`).toMatch(rule);
+    }
   });
 });
 
@@ -108,5 +134,13 @@ describe('standing decisions', () => {
     expect(guildStandingRow(guilds, 'Thornveil')).toBeNull();
     expect(guildStandingRow(guilds, null)).toBeNull();
     expect(guildStandingRow(guilds, '')).toBeNull();
+  });
+
+  it('guilds: the viewer guild match is exact and needs a guild', () => {
+    expect(isViewerGuild('Moonwardens', 'Moonwardens')).toBe(true);
+    expect(isViewerGuild('Moonwardens', 'moonwardens')).toBe(false);
+    expect(isViewerGuild('Moonwardens', '')).toBe(false);
+    expect(isViewerGuild('Moonwardens', null)).toBe(false);
+    expect(isViewerGuild('Moonwardens', undefined)).toBe(false);
   });
 });

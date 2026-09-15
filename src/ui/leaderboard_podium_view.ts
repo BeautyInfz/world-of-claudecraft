@@ -1,29 +1,24 @@
-// Pure view core for the top-three podium every ranked board shares: each tab
-// of the leaderboard window, and any later ranked window that wants the same top three.
+// Pure view core for the top-three podium each leaderboard tab stands on its
+// first page.
 //
 // It splits one resolved page into the podium (ranks 1 to 3, first page only)
 // and the rows listed under it, and fixes the podium's own rules in one place:
-// display order silver, gold, bronze (the tallest step in the middle), the
-// disc art ALWAYS by place and never by anything a row earned, and an
-// unclaimed place still standing as an empty plinth. It also decides the
-// viewer's standing bar for the boards whose page can answer it without a
+// the slots come in place order 1, 2, 3 (the stylesheet stands them silver
+// left, gold centre, bronze right, so a screen reader still reads first place
+// first), the disc is ALWAYS the medal of the place and never anything a row
+// earned (the stylesheet maps .lbp-slot-1/2/3 to the gold, silver and bronze
+// art), and an unheld place still stands as an empty plinth. It also decides
+// the viewer's standing bar for the boards whose page can answer it without a
 // server round trip. DOM-free; leaderboard_podium_html.ts paints the slots.
 import { formatNumber } from './i18n';
 
 export type PodiumPlace = 1 | 2 | 3;
 export type PodiumMedal = 'gold' | 'silver' | 'bronze';
 
-/** Where the medal art lives (public/, served verbatim). A missing file
- *  degrades to the stylesheet's gradient, so a podium never breaks on art. */
-export const LEADERBOARD_MEDAL_ART_DIR = 'ui/leaderboard';
+/** Reading and DOM order: first place first. */
+export const PODIUM_PLACE_ORDER: readonly PodiumPlace[] = [1, 2, 3];
 
-export function leaderboardMedalArt(medal: PodiumMedal): string {
-  return `${LEADERBOARD_MEDAL_ART_DIR}/medal_${medal}.webp`;
-}
-
-/** Silver left, gold centre, bronze right. */
-export const PODIUM_DISPLAY_ORDER: readonly PodiumPlace[] = [2, 1, 3];
-
+/** The medal each place's disc shows (the stylesheet carries the art path). */
 export const PODIUM_PLACE_MEDAL: Readonly<Record<PodiumPlace, PodiumMedal>> = {
   1: 'gold',
   2: 'silver',
@@ -33,14 +28,12 @@ export const PODIUM_PLACE_MEDAL: Readonly<Record<PodiumPlace, PodiumMedal>> = {
 export interface PodiumSlot<T> {
   place: PodiumPlace;
   rankText: string;
-  /** The disc: gold, silver, bronze by place. */
-  placeArt: string;
   /** The row holding the place, or null for an unclaimed plinth. */
   entry: T | null;
 }
 
 export interface PodiumSplit<T> {
-  /** Display order; empty off the first page or on an empty page. */
+  /** Place order 1, 2, 3; empty off the first page or on an empty page. */
   podium: PodiumSlot<T>[];
   /** The rows under the podium: rank 4 on the first page, every row after. */
   listed: T[];
@@ -53,10 +46,9 @@ export function podiumSplit<T>(
   rankOf: (entry: T) => number,
 ): PodiumSplit<T> {
   if (pageIndex !== 0 || entries.length === 0) return { podium: [], listed: [...entries] };
-  const podium = PODIUM_DISPLAY_ORDER.map((place) => ({
+  const podium = PODIUM_PLACE_ORDER.map((place) => ({
     place,
     rankText: formatNumber(place, { maximumFractionDigits: 0 }),
-    placeArt: leaderboardMedalArt(PODIUM_PLACE_MEDAL[place]),
     entry: entries.find((entry) => rankOf(entry) === place) ?? null,
   }));
   return { podium, listed: entries.filter((entry) => rankOf(entry) > 3) };
@@ -87,4 +79,10 @@ export function guildStandingRow<G extends { name: string }>(
 ): G | null {
   if (!viewerGuild) return null;
   return rows.find((row) => row.name === viewerGuild) ?? null;
+}
+
+/** Whether a ranked guild is the viewer's own (the same exact-name match the
+ *  standing bar uses), so its podium card carries the viewer highlight too. */
+export function isViewerGuild(name: string, viewerGuild: string | null | undefined): boolean {
+  return !!viewerGuild && name === viewerGuild;
 }

@@ -1,10 +1,13 @@
 // What each leaderboard tab's podium card says. The leaderboard window
 // (leaderboard_window.ts) splits every ranked page through
-// leaderboard_podium_view.ts and paints the top three with the shared podium
-// markup (leaderboard_podium_html.ts); this module turns one tab's row into
-// that card: the name with the tab's own tags (prestige star and guild tag,
-// guild colour tier, realm, dev badge), the ranked number, and one detail
-// line of labelled stats. Every player-authored value passes through esc().
+// leaderboard_podium_view.ts and paints the top three with the podium markup
+// (leaderboard_podium_html.ts); this module turns one tab's row into that
+// card: the name with the tab's own tags (prestige star and guild tag, guild
+// colour tier, dev badge), the ranked number, and one detail line carrying
+// everything the tab's ladder row shows for that place (level, virtual level
+// and Book of Deeds title; members and top level; realm and title; badge
+// tier; score), so standing on the podium never hides information. Every
+// player-authored value passes through esc().
 import type { DailyRewardLeaderboardEntry } from '../world_api';
 import type { DeedsLeaderboardRow } from './deeds_leaderboard_view';
 import type { DevLeaderboardRow } from './dev_leaderboard_view';
@@ -15,9 +18,12 @@ import type { GuildLeaderboardRow } from './guild_leaderboard_view';
 import { guildTagHtml } from './guild_tag';
 import { formatNumber, t } from './i18n';
 import type { PodiumSlotHtml } from './leaderboard_podium_html';
-import type { PodiumSlot } from './leaderboard_podium_view';
+import { isViewerGuild, type PodiumSlot } from './leaderboard_podium_view';
 import type { LeaderboardRow } from './leaderboard_view';
 import { formatXp } from './xp_bar';
+
+/** Localizes a Book of Deeds title id; '' for an unknown or stale id. */
+export type DeedTitleText = (deedId: string) => string;
 
 function whole(value: number): string {
   return formatNumber(value, { maximumFractionDigits: 0 });
@@ -36,7 +42,7 @@ function card<T>(
   slot: PodiumSlot<T>,
   fill: (entry: T) => Pick<PodiumSlotHtml, 'me' | 'nameHtml' | 'metricHtml' | 'detailHtml'>,
 ): PodiumSlotHtml {
-  const base = { place: slot.place, rankText: slot.rankText, placeArt: slot.placeArt };
+  const base = { place: slot.place, rankText: slot.rankText };
   if (!slot.entry) {
     return {
       ...base,
@@ -50,13 +56,18 @@ function card<T>(
   return { ...base, filled: true, ...fill(slot.entry) };
 }
 
-export function playersPodiumSlot(slot: PodiumSlot<LeaderboardRow>): PodiumSlotHtml {
+export function playersPodiumSlot(
+  slot: PodiumSlot<LeaderboardRow>,
+  titleText: DeedTitleText,
+): PodiumSlotHtml {
   return card(slot, (row) => {
+    // The ladder row's prestige treatment: the star keeps its rank tooltip.
     const star =
       row.prestigeRank > 0
-        ? `<span class="lb-prestige">&starf;${whole(row.prestigeRank)}</span> `
+        ? `<span class="lb-prestige" title="${esc(`${t('game.prestige.rank')} ${whole(row.prestigeRank)}`)}">&starf;${whole(row.prestigeRank)}</span> `
         : '';
     const title = row.knownClass ? ` title="${esc(classDisplayName(row.cls))}"` : '';
+    const deedTitle = row.title ? titleText(row.title) : '';
     return {
       me: row.me,
       // "(You)" stays beside the name; the guild tag follows it, on its own line on the card.
@@ -64,14 +75,18 @@ export function playersPodiumSlot(slot: PodiumSlot<LeaderboardRow>): PodiumSlotH
       metricHtml: esc(formatXp(row.lifetimeXp)),
       detailHtml:
         statHtml(t('game.leaderboard.level'), whole(row.level)) +
-        statHtml(t('game.leaderboard.vlevel'), whole(row.virtualLevel)),
+        statHtml(t('game.leaderboard.vlevel'), whole(row.virtualLevel)) +
+        (deedTitle ? ` <span class="lb-deed-title">${esc(deedTitle)}</span>` : ''),
     };
   });
 }
 
-export function guildPodiumSlot(slot: PodiumSlot<GuildLeaderboardRow>): PodiumSlotHtml {
+export function guildPodiumSlot(
+  slot: PodiumSlot<GuildLeaderboardRow>,
+  viewerGuild: string | null | undefined,
+): PodiumSlotHtml {
   return card(slot, (row) => ({
-    me: false,
+    me: isViewerGuild(row.name, viewerGuild),
     nameHtml: `<span class="guild-tier-${row.tier}">${esc(row.name)}</span>`,
     metricHtml: esc(formatXp(row.totalLifetimeXp)),
     detailHtml:
@@ -82,7 +97,7 @@ export function guildPodiumSlot(slot: PodiumSlot<GuildLeaderboardRow>): PodiumSl
 
 export function deedsPodiumSlot(
   slot: PodiumSlot<DeedsLeaderboardRow>,
-  titleText: (deedId: string) => string,
+  titleText: DeedTitleText,
 ): PodiumSlotHtml {
   return card(slot, (row) => {
     const cls = row.knownClass ? ` title="${esc(classDisplayName(row.cls))}"` : '';

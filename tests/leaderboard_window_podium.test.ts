@@ -73,16 +73,15 @@ function places(el: HTMLElement): (string | null)[] {
 }
 
 describe('leaderboard window podium', () => {
-  it('players: podium silver, gold, bronze with place discs, rows from rank 4, ranked standing', async () => {
+  it('players: podium in place order with styled discs, rows from rank 4, ranked standing', async () => {
     const { el, lb } = rig({ leaderboard: () => paged(players(8, 'Ari')) });
     await openOn(el, lb);
-    expect(places(el)).toEqual(['2', '1', '3']);
-    const discs = Array.from(el.querySelectorAll('.lbp-slot-medal')).map((d) =>
-      d.getAttribute('style'),
-    );
-    expect(discs[0]).toContain('medal_silver.webp');
-    expect(discs[1]).toContain('medal_gold.webp');
-    expect(discs[2]).toContain('medal_bronze.webp');
+    expect(places(el)).toEqual(['1', '2', '3']);
+    expect(el.querySelector('.lbp-podium')?.getAttribute('role')).toBe('list');
+    // The disc art is the stylesheet's (.lbp-slot-1/2/3), never an inline style.
+    const discs = Array.from(el.querySelectorAll('.lbp-slot-medal'));
+    expect(discs).toHaveLength(3);
+    expect(discs.every((d) => !d.hasAttribute('style'))).toBe(true);
     expect(el.querySelector('.lbp-slot-1 .lbp-slot-name')?.textContent).toContain('Hero1');
     const listed = Array.from(el.querySelectorAll('.lb-row-players:not(.lb-head) .lb-rank'))
       .filter((cell) => !cell.closest('.lb-standing'))
@@ -104,9 +103,33 @@ describe('leaderboard window podium', () => {
   it('keeps unclaimed places standing when fewer than three are ranked', async () => {
     const { el, lb } = rig({ leaderboard: () => paged(players(1)) });
     await openOn(el, lb);
-    expect(places(el)).toEqual(['2', '1', '3']);
+    expect(places(el)).toEqual(['1', '2', '3']);
     expect(el.querySelectorAll('.lbp-slot-empty')).toHaveLength(2);
     expect(el.querySelector('.lbp-slot-2 .lbp-slot-name')?.textContent).toBe('Unclaimed');
+  });
+
+  it('offline shape: the single local player takes gold and the other two places stand unclaimed', async () => {
+    const local = [{ ...players(1)[0], name: 'Ari', level: 12, lifetimeXp: 1234 }];
+    const { el, lb } = rig({ leaderboard: () => paged(local) });
+    await openOn(el, lb);
+    expect(el.querySelector('.lbp-slot-1')?.classList.contains('lbp-mine')).toBe(true);
+    expect(el.querySelector('.lbp-slot-1 .lbp-slot-name')?.textContent).toContain('Ari');
+    expect(el.querySelector('.lbp-slot-2 .lbp-slot-name')?.textContent).toBe('Unclaimed');
+    expect(el.querySelector('.lbp-slot-3 .lbp-slot-name')?.textContent).toBe('Unclaimed');
+    // Nothing is listed under the podium, and the pill still names the viewer at rank 1.
+    expect(el.querySelectorAll('.lb-row-players:not(.lb-head)').length).toBe(1);
+    expect(el.querySelector('.lb-standing .lb-rank')?.textContent).toBe('1');
+  });
+
+  it('players: a viewer in the top three is flagged on the podium and pinned in the pill', async () => {
+    const top = players(6).map((p) => (p.rank === 2 ? { ...p, name: 'Ari' } : p));
+    const { el, lb } = rig({ leaderboard: () => paged(top) });
+    await openOn(el, lb);
+    const second = el.querySelector('.lbp-slot-2');
+    expect(second?.classList.contains('lbp-mine')).toBe(true);
+    expect(second?.querySelector('.lb-you')).not.toBeNull();
+    expect(el.querySelectorAll('.lbp-mine')).toHaveLength(1);
+    expect(el.querySelector('.lb-standing .lb-rank')?.textContent).toBe('2');
   });
 
   it('drops the podium on a later page', async () => {
@@ -129,8 +152,24 @@ describe('leaderboard window podium', () => {
     }));
     const { el, lb } = rig({ guildLeaderboard: () => paged(guilds) });
     await openOn(el, lb, 'guilds');
-    expect(places(el)).toEqual(['2', '1', '3']);
+    expect(places(el)).toEqual(['1', '2', '3']);
     expect(el.querySelector('.lb-standing .lb-name')?.textContent).toBe('Moonwardens');
+    // Moonwardens ranks 4th, so no podium card is the viewer's.
+    expect(el.querySelectorAll('.lbp-mine')).toHaveLength(0);
+  });
+
+  it("guilds: the viewer's own guild on the podium carries the viewer highlight", async () => {
+    const guilds = ['Ironvow', 'Moonwardens', 'Gale Riders'].map((name, i) => ({
+      rank: i + 1,
+      name,
+      memberCount: 30 - i,
+      totalLifetimeXp: 9_000_000 - i * 100_000,
+      topLevel: 20,
+    }));
+    const { el, lb } = rig({ guildLeaderboard: () => paged(guilds) });
+    await openOn(el, lb, 'guilds');
+    expect(el.querySelector('.lbp-slot-2')?.classList.contains('lbp-mine')).toBe(true);
+    expect(el.querySelectorAll('.lbp-mine')).toHaveLength(1);
   });
 
   it('guilds: no bar when the viewer guild is not ranked on the page', async () => {
@@ -154,7 +193,7 @@ describe('leaderboard window podium', () => {
       deedsLeaderboard: () => paged(deeds, { self: { rank: 4, topPercent: 9, renown: 4996 } }),
     });
     await openOn(el, lb, 'deeds');
-    expect(places(el)).toEqual(['2', '1', '3']);
+    expect(places(el)).toEqual(['1', '2', '3']);
     expect(el.querySelector('.lb-self.lb-standing')?.textContent).toMatch(/4,996/);
   });
 
@@ -174,7 +213,7 @@ describe('leaderboard window podium', () => {
     expect(el.querySelector('.lb-standing .lb-name')?.textContent).toContain('@ari-dev');
     (el.querySelector('[data-leaderboard-tab="daily"]') as HTMLButtonElement).click();
     await flush();
-    expect(places(el)).toEqual(['2', '1', '3']);
+    expect(places(el)).toEqual(['1', '2', '3']);
     expect(el.querySelector('.lb-standing')).toBeNull();
   });
 });

@@ -7766,7 +7766,9 @@
     justify-content: flex-start;
     overflow-x: auto;
     overscroll-behavior-x: contain;
-    padding-bottom: 2px;
+    /* Room for the 2px focus ring and its 2px offset: an overflow strip clips
+       anything drawn outside its padding box. */
+    padding: 5px;
   }
   body.mobile-touch #leaderboard-window .lb-tab.ui-tab {
     flex: 0 0 auto;
@@ -7793,8 +7795,8 @@
     grid-template-columns: 36px minmax(0, 1fr) 96px;
   }
   /* A phone gets the whole sheet: the board takes every pixel under the tabs
-     (not the desktop 56vh cap), and the podium shrinks and drops its detail line
-     so the list and the standing pill keep room under the top three. */
+     (not the desktop 56vh cap), and the podium shrinks, keeping its detail line
+     as one compact ellipsized row so no top-three stat is hidden on touch. */
   body.mobile-touch #leaderboard-window {
     height: calc(var(--app-vh) / var(--ui-scale, 1) - 20px);
   }
@@ -7805,7 +7807,12 @@
     margin-top: 6px;
   }
   body.mobile-touch #leaderboard-window .lbp-slot-detail {
-    display: none;
+    font-size: 10px;
+    line-height: 1.2;
+  }
+  body.mobile-touch #leaderboard-window .lbp-stat {
+    gap: 2px;
+    margin: 0 3px;
   }
   body.mobile-touch #leaderboard-window .lbp-podium {
     max-width: 520px;
