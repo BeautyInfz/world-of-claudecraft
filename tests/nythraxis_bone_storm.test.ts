@@ -19,7 +19,9 @@ import {
   nythraxisBoneStormChargeIndex,
   nythraxisBoneStormChargeTarget,
   nythraxisBoneStormDone,
+  nythraxisBoneStormOpeningSlamMaxHp,
   nythraxisBoneStormReached,
+  nythraxisBoneStormSlamMaxHp,
   nythraxisBoneStormWhirlTickMaxHp,
   pointInNythraxisBoneStorm,
 } from '../src/sim/nythraxis_bone_storm';
@@ -48,6 +50,21 @@ describe('Nythraxis Bone Storm', () => {
     expect([
       nythraxisBoneSlamDamageMaxHp('normal'),
       nythraxisBoneSlamDamageMaxHp('heroic'),
+    ]).toEqual([0.35, 0.55]);
+    // The storm's first slam lands on a raid that has not spread yet: about a
+    // third softer than the full slam. Every later window slams for the full
+    // fraction.
+    expect([
+      nythraxisBoneStormOpeningSlamMaxHp('normal'),
+      nythraxisBoneStormOpeningSlamMaxHp('heroic'),
+    ]).toEqual([0.23, 0.37]);
+    expect([
+      nythraxisBoneStormSlamMaxHp('normal', true),
+      nythraxisBoneStormSlamMaxHp('heroic', true),
+    ]).toEqual([0.23, 0.37]);
+    expect([
+      nythraxisBoneStormSlamMaxHp('normal', false),
+      nythraxisBoneStormSlamMaxHp('heroic', false),
     ]).toEqual([0.35, 0.55]);
     expect(NYTHRAXIS_BONE_STORM_ARRIVE_DIST).toBe(3);
     expect(NYTHRAXIS_BONE_STORM_GRAVEBREAKER_REARM_SECONDS).toBe(3);
@@ -109,6 +126,7 @@ describe('Nythraxis Bone Storm', () => {
       chargeIndex: 0,
       chargeTargetId: null,
       slammed: false,
+      openingSlamSpent: false,
       whirlTickTimer: 1,
       chargedIds: [],
     });

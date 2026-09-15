@@ -6,7 +6,7 @@
 
 import { describe, expect, it } from 'vitest';
 import * as nythraxis from '../src/sim/encounters/nythraxis';
-import { NYTHRAXIS_BONE_SPIKE_EVERY_NORMAL } from '../src/sim/nythraxis_bone_spike';
+import { nythraxisBoneSpikeCadence } from '../src/sim/nythraxis_bone_spike';
 import {
   beginNythraxisBoneStorm,
   NYTHRAXIS_BONE_SLAM_CAST_ID,
@@ -203,7 +203,7 @@ describe('Nythraxis Bone Storm', () => {
     expect(charged[0].pid).toBe(st.boneStorm!.chargeTargetId);
   });
 
-  it('slams on arrival, lights a Gravefire down the charge, and whirls 10% (heroic 20%) inside 9 yd', () => {
+  it('opens with a softened slam on arrival, lights a Gravefire down the charge, and whirls 10% (heroic 20%) inside 9 yd', () => {
     for (const difficulty of ['normal', 'heroic'] as const) {
       const { sim, ctx, boss, st, tank, raiders, damageBy } = setup({ difficulty });
       // A storm already running with the tank as its charge, 3 yd away (reached
@@ -223,14 +223,15 @@ describe('Nythraxis Bone Storm', () => {
       const tankHp = tank.hp;
       const outsideHp = raiders[0].hp;
       nythraxis.updateNythraxisEncounter(ctx, boss);
-      // Bone Slam on arrival, at the difficulty's fraction, on everyone in 9 yd.
+      // Bone Slam on arrival on everyone in 9 yd. This is the storm's opening
+      // window, so it lands at the softened opening fraction.
       const slams = damageBy(NYTHRAXIS_BONE_SLAM_CAST_ID) as { targetId: number; amount: number }[];
       expect(
         slams.map((e) => e.targetId),
         difficulty,
       ).toEqual([tank.id]);
       expect(slams[0].amount, difficulty).toBe(
-        Math.ceil(tank.maxHp * (difficulty === 'heroic' ? 0.55 : 0.35)),
+        Math.ceil(tank.maxHp * (difficulty === 'heroic' ? 0.37 : 0.23)),
       );
       expect(storm.slammed, difficulty).toBe(true);
       // The line runs on in the charge direction (+x here).
@@ -262,6 +263,44 @@ describe('Nythraxis Bone Storm', () => {
     }
   });
 
+  it('softens only the first landed slam of a storm, whichever window lands it', () => {
+    for (const difficulty of ['normal', 'heroic'] as const) {
+      const { sim, ctx, boss, st, tank, damageBy } = setup({ difficulty });
+      teleport(sim, tank, boss.pos.x + 3, boss.pos.z, boss.pos.y);
+      // The second window opens with no slam landed yet (the first charge never
+      // reached anyone): its slam is still the storm's first, so it is softened.
+      const storm = beginNythraxisBoneStorm(7);
+      storm.chargeIndex = 1;
+      storm.elapsed = 3;
+      storm.chargeTargetId = tank.id;
+      storm.chargedIds.push(tank.id);
+      st.boneStorm = storm;
+      nythraxis.updateNythraxisEncounter(ctx, boss);
+      const slams = () =>
+        damageBy(NYTHRAXIS_BONE_SLAM_CAST_ID) as { targetId: number; amount: number }[];
+      expect(
+        slams().map((e) => e.targetId),
+        difficulty,
+      ).toEqual([tank.id]);
+      expect(slams()[0].amount, difficulty).toBe(
+        Math.ceil(tank.maxHp * (difficulty === 'heroic' ? 0.37 : 0.23)),
+      );
+      expect(storm.openingSlamSpent, difficulty).toBe(true);
+      // The next landing of the same storm hits for the full fraction (the
+      // tank is topped up so the second slam lands on a living target).
+      tank.hp = tank.maxHp;
+      storm.chargeIndex = 2;
+      storm.elapsed = 6;
+      storm.slammed = false;
+      storm.chargeTargetId = tank.id;
+      nythraxis.updateNythraxisEncounter(ctx, boss);
+      expect(slams().length, difficulty).toBe(2);
+      expect(slams()[1].amount, difficulty).toBe(
+        Math.ceil(tank.maxHp * (difficulty === 'heroic' ? 0.55 : 0.35)),
+      );
+    }
+  });
+
   it('charges four different raiders, spikes nobody while storming, then hands him back to the top tank', () => {
     const { ctx, boss, st, tank, raiders, callouts, aura, damageBy } = setup();
     st.boneStormTimer = DT / 2;
@@ -276,7 +315,9 @@ describe('Nythraxis Bone Storm', () => {
     // (The mid-storm cast pinned raiders inside the whirl and was retired.)
     expect((st.boneSpikes ?? []).length).toBe(0);
     expect(
-      raiders.some((r) => r.auras.some((a: { id: string }) => a.id === 'nythraxis_impaled')),
+      [tank, ...raiders].some((r) =>
+        r.auras.some((a: { id: string }) => a.id === 'nythraxis_impaled'),
+      ),
     ).toBe(false);
     // New casts hold while he runs, and the Curse never lands off a charge.
     expect(st.eruptionPoints!.length).toBe(0);
@@ -307,38 +348,51 @@ describe('Nythraxis Bone Storm', () => {
   });
 
   it('freezes the regular Bone Spike cadence while storming and resumes it after the pickup', () => {
-    const { ctx, boss, st, raiders } = setup();
-    // The cadence is 2 s from landing when the storm begins. The storm-start
-    // tick still counts it down once (the cast block runs before the storm
-    // cast that tick); from then on the storm owns the boss and the timer
-    // must not move.
-    st.boneSpikeTimer = 2;
-    st.boneStormTimer = DT / 2;
-    nythraxis.updateNythraxisEncounter(ctx, boss);
-    expect(st.boneStorm).not.toBeNull();
-    expect(st.boneSpikeTimer).toBeCloseTo(2 - DT, 9);
-    tickDriver(ctx, boss, 11.9);
-    expect(st.boneStorm).not.toBeNull();
-    expect(st.boneSpikeTimer).toBeCloseTo(2 - DT, 9);
-    expect((st.boneSpikes ?? []).length).toBe(0);
-    expect(
-      raiders.some((r) => r.auras.some((a: { id: string }) => a.id === 'nythraxis_impaled')),
-    ).toBe(false);
-    // The storm ends; the cadence resumes counting but has not landed yet.
-    tickDriver(ctx, boss, 0.2);
-    expect(st.boneStorm).toBeNull();
-    expect(st.boneSpikeTimer).toBeLessThan(2 - DT);
-    expect(st.boneSpikeTimer).toBeGreaterThan(0);
-    expect((st.boneSpikes ?? []).length).toBe(0);
-    // The resumed cadence lands its wave after the pickup (how many raiders it
-    // reaches depends on where the charges left him; at least one is pinned).
-    tickDriver(ctx, boss, 2);
-    expect(st.boneSpikes!.length).toBeGreaterThan(0);
-    expect(
-      raiders.some((r) => r.auras.some((a: { id: string }) => a.id === 'nythraxis_impaled')),
-    ).toBe(true);
-    // Re-armed to the full normal cadence, minus the ticks since it landed.
-    expect(st.boneSpikeTimer).toBeGreaterThan(NYTHRAXIS_BONE_SPIKE_EVERY_NORMAL - 2);
+    for (const difficulty of ['normal', 'heroic'] as const) {
+      const { sim, ctx, boss, st, tank, raiders } = setup({ difficulty });
+      const impaled = () =>
+        [tank, ...raiders].some((r) =>
+          r.auras.some((a: { id: string }) => a.id === 'nythraxis_impaled'),
+        );
+      // The cadence is 2 s from landing when the storm begins. The storm-start
+      // tick still counts it down once (the cast block runs before the storm
+      // cast that tick); from then on the storm owns the boss and the timer
+      // must not move.
+      st.boneSpikeTimer = 2;
+      st.boneStormTimer = DT / 2;
+      nythraxis.updateNythraxisEncounter(ctx, boss);
+      expect(st.boneStorm, difficulty).not.toBeNull();
+      expect(st.boneSpikeTimer, difficulty).toBeCloseTo(2 - DT, 9);
+      tickDriver(ctx, boss, 11.9);
+      expect(st.boneStorm, difficulty).not.toBeNull();
+      expect(st.boneSpikeTimer, difficulty).toBeCloseTo(2 - DT, 9);
+      expect((st.boneSpikes ?? []).length, difficulty).toBe(0);
+      expect(impaled(), difficulty).toBe(false);
+      // The storm ends; the cadence resumes counting but has not landed yet.
+      tickDriver(ctx, boss, 0.2);
+      expect(st.boneStorm, difficulty).toBeNull();
+      expect(st.boneSpikeTimer, difficulty).toBeLessThan(2 - DT);
+      expect(st.boneSpikeTimer, difficulty).toBeGreaterThan(0);
+      expect((st.boneSpikes ?? []).length, difficulty).toBe(0);
+      // The raid has run clear of the slam lines by now (heroic fire covers the
+      // charge lanes and a raider standing in fire is never spiked).
+      raiders.forEach((e, i) => {
+        teleport(sim, e, boss.spawnPos.x + (i - 4) * 8, boss.spawnPos.z + 40, boss.pos.y);
+      });
+      // The resumed cadence lands its wave after the pickup (how many raiders
+      // it reaches depends on where the charges left him; at least one is
+      // pinned).
+      tickDriver(ctx, boss, 2);
+      expect(st.boneSpikes!.length, difficulty).toBeGreaterThan(0);
+      expect(impaled(), difficulty).toBe(true);
+      // Re-armed to the tier's full cadence, minus the ticks since it landed.
+      expect(st.boneSpikeTimer, difficulty).toBeGreaterThan(
+        nythraxisBoneSpikeCadence(difficulty) - 2,
+      );
+      expect(st.boneSpikeTimer, difficulty).toBeLessThanOrEqual(
+        nythraxisBoneSpikeCadence(difficulty),
+      );
+    }
   });
 
   it('never charges an impaled raider or a wardstone channeler', () => {

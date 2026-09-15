@@ -98,12 +98,12 @@ import {
   NYTHRAXIS_BONE_STORM_GRAVEBREAKER_REARM_SECONDS,
   NYTHRAXIS_BONE_STORM_SPEED_MULT,
   NYTHRAXIS_BONE_STORM_WHIRL_TICK_SECONDS,
-  nythraxisBoneSlamDamageMaxHp,
   nythraxisBoneStormCadence,
   nythraxisBoneStormChargeIndex,
   nythraxisBoneStormChargeTarget,
   nythraxisBoneStormDone,
   nythraxisBoneStormReached,
+  nythraxisBoneStormSlamMaxHp,
   nythraxisBoneStormWhirlTickMaxHp,
   pointInNythraxisBoneStorm,
 } from '../nythraxis_bone_storm';
@@ -2107,7 +2107,10 @@ function slamNythraxisBoneStorm(
   const storm = ms.boneStorm;
   if (!storm) return;
   storm.slammed = true;
-  const slam = nythraxisBoneSlamDamageMaxHp(nythraxisDifficulty(ctx, boss));
+  // The storm's first slam lands on a raid that has not spread yet: softer.
+  const opening = !storm.openingSlamSpent;
+  storm.openingSlamSpent = true;
+  const slam = nythraxisBoneStormSlamMaxHp(nythraxisDifficulty(ctx, boss), opening);
   for (const p of room) {
     if (p.dead || !pointInNythraxisBoneStorm(boss.pos, p.pos)) continue;
     ctx.dealDamage(

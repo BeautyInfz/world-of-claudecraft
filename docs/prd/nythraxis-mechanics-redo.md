@@ -166,7 +166,8 @@ phase: for 12 s Nythraxis ignores threat and taunts, cannot be knocked back, and
 whirls, dealing 10% max hp per second to anyone within 9 yd. He charges four
 random living, non-impaled players in sequence (3 s each) at 2.2x move speed;
 on reaching one, Bone Slam: 35% max hp (heroic 55%) physical to everyone within
-9 yd, plus a Gravefire line down the charge direction. No Bone Spike lands
+9 yd, plus a Gravefire line down the charge direction; the storm's first
+landed slam is softer (section 16), since the raid has not spread yet. No Bone Spike lands
 of the storm's own: it casts none and the regular spike cadence is frozen
 while he storms (the mid-storm cast was retired on 2026-09-16, section 15).
 When it ends the threat table is
@@ -560,3 +561,18 @@ because nobody is impaled mid-storm any more, the hash-ranked charge targets
 after the 6 s mark can differ from before. A spike cast shortly before a storm
 can still leave its victims pinned into it: a storm-lead hold on the regular
 cadence is a separate knob, not taken here.
+
+## 16. Opening Bone Slam softened (2026-09-16)
+
+Same parse read as section 15. Bone Slam was 7.5% of heroic wipe killing blows
+and 17% of the damage in the pre-death windows, and its first landing is the
+one that hits a raid that has not spread yet: the storm opens with a charge at
+2.2x move speed, so the first slam arrives 1 to 2 s after the callout, on the
+charged raider and everyone still stacked within 9 yd, with the arrival whirl
+tick on top (heroic 55% + 20% = 75% of max HP in one landing). The storm's
+first landed slam, whichever charge window lands it, now deals 23% of max HP
+on normal and 37% on heroic, about a third less than the full slam; every
+later slam keeps 35% / 55%, so not spreading later still costs the same.
+`nythraxisBoneStormSlamMaxHp` (`src/sim/nythraxis_bone_storm.ts`) owns the
+fraction, the `openingSlamSpent` storm flag marks the first landing, and the
+raid boss guide row states both numbers.

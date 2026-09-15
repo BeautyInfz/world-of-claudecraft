@@ -4,7 +4,8 @@
 // max-hp tick every second to anyone within NYTHRAXIS_BONE_STORM_RADIUS, and
 // charges living, non-impaled raiders in sequence: one target per charge
 // window, at NYTHRAXIS_BONE_STORM_SPEED_MULT times his move speed. When he
-// reaches a target (or the window runs out) he Bone Slams everyone around him
+// reaches a target he Bone Slams everyone around him (the storm's first slam
+// lands softer, since the raid has not spread yet)
 // and a Gravefire line runs on down the charge direction, then he whirls in
 // place until the next window opens. The storm casts no spike of its own and
 // the regular Bone Spike cadence is frozen while he storms (the mid-storm
@@ -39,6 +40,8 @@ export interface NythraxisBoneStorm {
   chargeTargetId: number | null;
   /** this window's Bone Slam has landed; he whirls in place until the next window */
   slammed: boolean;
+  /** the storm's first slam has landed; every later slam hits for the full fraction */
+  openingSlamSpent: boolean;
   /** seconds until the next whirl tick */
   whirlTickTimer: number;
   /** raiders already charged this storm, so no one is charged twice while others remain */
@@ -64,6 +67,12 @@ export const NYTHRAXIS_BONE_STORM_WHIRL_TICK_MAX_HP_NORMAL = 0.1;
 export const NYTHRAXIS_BONE_STORM_WHIRL_TICK_MAX_HP_HEROIC = 0.2;
 export const NYTHRAXIS_BONE_SLAM_MAX_HP_NORMAL = 0.35;
 export const NYTHRAXIS_BONE_SLAM_MAX_HP_HEROIC = 0.55;
+/**
+ * The storm's first slam, whichever window lands it, hits a raid that has
+ * not spread yet, so it is about a third softer than the full slam.
+ */
+export const NYTHRAXIS_BONE_STORM_OPENING_SLAM_MAX_HP_NORMAL = 0.23;
+export const NYTHRAXIS_BONE_STORM_OPENING_SLAM_MAX_HP_HEROIC = 0.37;
 /** He has reached his charge target inside this distance. */
 export const NYTHRAXIS_BONE_STORM_ARRIVE_DIST = 3;
 /** Seconds after the storm ends before Gravebreaker is charged again. */
@@ -81,10 +90,34 @@ export function nythraxisBoneStormWhirlTickMaxHp(difficulty: DungeonDifficulty):
     : NYTHRAXIS_BONE_STORM_WHIRL_TICK_MAX_HP_NORMAL;
 }
 
+/**
+ * The full slam fraction. The driver goes through nythraxisBoneStormSlamMaxHp,
+ * which knows the storm's first slam is softer.
+ */
 export function nythraxisBoneSlamDamageMaxHp(difficulty: DungeonDifficulty): number {
   return difficulty === 'heroic'
     ? NYTHRAXIS_BONE_SLAM_MAX_HP_HEROIC
     : NYTHRAXIS_BONE_SLAM_MAX_HP_NORMAL;
+}
+
+/** The softened fraction of the storm's first slam. */
+export function nythraxisBoneStormOpeningSlamMaxHp(difficulty: DungeonDifficulty): number {
+  return difficulty === 'heroic'
+    ? NYTHRAXIS_BONE_STORM_OPENING_SLAM_MAX_HP_HEROIC
+    : NYTHRAXIS_BONE_STORM_OPENING_SLAM_MAX_HP_NORMAL;
+}
+
+/**
+ * The max-hp fraction a slam deals: the storm's first slam (`opening`) is
+ * softened, every later one is the full slam.
+ */
+export function nythraxisBoneStormSlamMaxHp(
+  difficulty: DungeonDifficulty,
+  opening: boolean,
+): number {
+  return opening
+    ? nythraxisBoneStormOpeningSlamMaxHp(difficulty)
+    : nythraxisBoneSlamDamageMaxHp(difficulty);
 }
 
 /** The charge window open at `elapsed` seconds into the storm. */
@@ -149,6 +182,7 @@ export function beginNythraxisBoneStorm(castKey: number): NythraxisBoneStorm {
     chargeIndex: 0,
     chargeTargetId: null,
     slammed: false,
+    openingSlamSpent: false,
     whirlTickTimer: NYTHRAXIS_BONE_STORM_WHIRL_TICK_SECONDS,
     chargedIds: [],
   };
