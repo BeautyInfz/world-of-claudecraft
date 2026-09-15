@@ -120,7 +120,7 @@ describe('druid spell pack — level gating', () => {
     // The choice-row unlock guard moved travel_form (11), bash (8), and rip (14)
     // earlier so the rows that modify them are live at unlock, the feral
     // enablement pass moved pounce to 8 so Stalk has an early payoff, and the
-    // Wolf Form mobility pass moved dash to 12 (docs/design/druid-wolf-mobility.md);
+    // Cat Form mobility pass moved dash to 12 (docs/design/druid-cat-mobility.md);
     // the rest of the pack still lands 16 to 20.
     const known15 = abilitiesKnownAt('druid', 15).map((k) => k.def.id);
     const stillLate = NEW_DRUID.filter(
@@ -404,8 +404,8 @@ describe('druid spell pack — casting applies effects', () => {
     sim.tick();
     expect(e.auras.some((a) => a.id === 'prowl' && a.kind === 'stealth')).toBe(true);
     // Stalk moves at full speed (kit pass 2: stealth value 1.0) on top of the
-    // Wolf Form passive (+15%, WOLF_FORM_MOVE_MULT): 1.0 x 1.15. The tooltip's
-    // speed claim is relative to Wolf Form, the form Stalk requires.
+    // Cat Form passive (+15%, CAT_FORM_MOVE_MULT): 1.0 x 1.15. The tooltip's
+    // speed claim is relative to Cat Form, the form Stalk requires.
     expect((sim as any).moveSpeedMult(e)).toBeCloseTo(1.15);
     advanceTicks(sim, 40);
 

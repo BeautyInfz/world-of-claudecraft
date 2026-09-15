@@ -3930,7 +3930,7 @@ const mergeExtraEn = {
     [
       'bear_charge',
       'Bruin Rush',
-      'Rush an enemy, generating 9 rage and stunning it for 1 sec. For 3 sec afterwards, or until you leave combat, Wolf Form is free and Pins that target (the one you Rushed), slowing it by 50% for 4 sec. 8-25 yd range. Bruin Form only.',
+      'Rush an enemy, generating 9 rage and stunning it for 1 sec. For 3 sec afterwards, or until you leave combat, Cat Form is free and Pins that target (the one you Rushed), slowing it by 50% for 4 sec. 8-25 yd range. Bruin Form only.',
     ],
     [
       'demoralizing_roar',

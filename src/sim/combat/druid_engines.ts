@@ -100,8 +100,8 @@ export function longstrideMetrics(): LongstrideMetrics {
   return longstrideCache;
 }
 
-// Pin, the Bruin Rush to Wolf Form rider (Wildfang kit pass 2). Landing Bruin
-// Rush opens a short window in which Wolf Form costs nothing and Pins the
+// Pin, the Bruin Rush to Cat Form rider (Wildfang kit pass 2). Landing Bruin
+// Rush opens a short window in which Cat Form costs nothing and Pins the
 // Rush target: a 50% slow for 4 sec. The window is an AURA on the druid
 // rather than a new Entity field, the Colossal Might cap precedent: it rides
 // the ordinary aura wire so the online client's resolvedAbility (the shared
@@ -116,7 +116,7 @@ export const PIN_SLOW_MULT = 0.5;
 export const PIN_DURATION = 4;
 // The window is opened by this ability and consumed by this shift.
 const BRUIN_RUSH_ID = 'bear_charge';
-const WOLF_FORM_ID = 'cat_form';
+const CAT_FORM_ID = 'cat_form';
 
 // The Rush target's entity id while the window is live, else null. Reads the
 // aura list only, so both the Sim and the online client mirror can ask.
@@ -127,12 +127,12 @@ export function bruinRushWindowTargetId(actor: Pick<Entity, 'auras'>): number | 
   return null;
 }
 
-// The cost tail's question: is Wolf Form free for this actor right now?
-export function bruinRushMakesWolfFormFree(
+// The cost tail's question: is Cat Form free for this actor right now?
+export function bruinRushMakesCatFormFree(
   actor: Pick<Entity, 'auras'>,
   abilityId: string,
 ): boolean {
-  return abilityId === WOLF_FORM_ID && bruinRushWindowTargetId(actor) !== null;
+  return abilityId === CAT_FORM_ID && bruinRushWindowTargetId(actor) !== null;
 }
 
 const ENGINE_AURA_IDS = new Set([MOONTIDE_ID, OLD_BLOOD_ID, VERDANCE_ID, BRUIN_RUSH_WINDOW_ID]);
@@ -281,7 +281,7 @@ export function druidEngineOnCast(
 
   if (FORM_ABILITY_IDS.has(abilityId)) {
     // Fleet Form breaks control on its own (the classic travel-form escape:
-    // 30 mana, no cooldown, and no abilities while shifted). Wolf, Bruin, and
+    // 30 mana, no cooldown, and no abilities while shifted). Cat, Bruin, and
     // Moonwing keep the Wildshift gate, which is what makes the row 5 pick
     // the in-combat option: break the root without leaving your damage form.
     if (abilityId === 'travel_form' || selectedRow(ctx, player, DRUID_TALENT_IDS.wildshift)) {
@@ -308,7 +308,7 @@ export function druidEngineOnCast(
     }
   }
 
-  // Bruin Rush opens the Pin window on its target; a Wolf Form shift inside
+  // Bruin Rush opens the Pin window on its target; a Cat Form shift inside
   // the window Pins that target (never the current target) and closes it.
   // Both arms are talent-free and draw no rng.
   if (abilityId === BRUIN_RUSH_ID && target && !target.dead && ctx.isHostileTo(player, target)) {
@@ -323,7 +323,7 @@ export function druidEngineOnCast(
       sourceId: player.id,
       school: 'physical',
     });
-  } else if (abilityId === WOLF_FORM_ID) {
+  } else if (abilityId === CAT_FORM_ID) {
     const pinTargetId = bruinRushWindowTargetId(player);
     if (pinTargetId !== null) {
       removeOwnedAura(ctx, player, BRUIN_RUSH_WINDOW_ID);

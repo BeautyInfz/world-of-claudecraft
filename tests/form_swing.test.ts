@@ -140,7 +140,7 @@ describe('Cat Form swing speed', () => {
     sim.tick();
     const staffSpeed = sim.entities.get(a)!.weapon.speed;
     giveForm(sim, a, 'form_cat', 'Cat Form');
-    const wolf = firstWhiteHit(sim, a);
+    const cat = firstWhiteHit(sim, a);
 
     // The control druid on the same staff in BEAR form: a melee shapeshift that
     // keeps the weapon cadence, so its AP is normalized by the slow staff. (It
@@ -156,14 +156,12 @@ describe('Cat Form swing speed', () => {
 
     // Cat Form's per-swing AP uses the fixed cat cadence (1.0) and the feral
     // form damage multiplier; the bear druid's uses the staff, no multiplier.
-    expect(wolf.amount).toBe(
-      expectAt(wolf.ap, CAT_FORM_SWING_SPEED, wolf.dr, CAT_FORM_DAMAGE_MULT),
-    );
+    expect(cat.amount).toBe(expectAt(cat.ap, CAT_FORM_SWING_SPEED, cat.dr, CAT_FORM_DAMAGE_MULT));
     expect(staff.amount).toBe(expectAt(staff.ap, staffSpeed, staff.dr));
     // The bug would have been Cat Form normalizing by the slow staff instead: prove
     // the fixed cadence value is genuinely smaller, so a faster swing hits softer.
     expect(staffSpeed).toBeGreaterThan(CAT_FORM_SWING_SPEED);
-    expect(wolf.amount).toBeLessThan(expectAt(wolf.ap, staffSpeed, wolf.dr, CAT_FORM_DAMAGE_MULT));
+    expect(cat.amount).toBeLessThan(expectAt(cat.ap, staffSpeed, cat.dr, CAT_FORM_DAMAGE_MULT));
   });
 
   it('Cat Form auto weapon rolls are normalized to authored DPS: two speeds, one result', () => {
@@ -252,12 +250,12 @@ describe('Cat Form swing speed', () => {
     const a = sim.addPlayer('druid', 'Vav');
     sim.setPlayerLevel(20, a);
     sim.tick();
-    const wolf = firstRequitalHit(sim, a, 'form_cat', 'Cat Form');
+    const cat = firstRequitalHit(sim, a, 'form_cat', 'Cat Form');
     // The ratio denominator is the FROZEN legacy cadence, deliberately not the
     // rogue content lookup, so a rogue starting-weapon retune can never move a
     // druid's Requital damage.
     expect(CAT_FORM_LEGACY_SWING_SPEED).toBe(1.8);
-    expect(wolf).toBe(Math.round(22 * (CAT_FORM_SWING_SPEED / CAT_FORM_LEGACY_SWING_SPEED)));
+    expect(cat).toBe(Math.round(22 * (CAT_FORM_SWING_SPEED / CAT_FORM_LEGACY_SWING_SPEED)));
 
     const sim2 = makeWorld();
     const b = sim2.addPlayer('druid', 'Zayin');

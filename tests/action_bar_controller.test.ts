@@ -330,10 +330,10 @@ describe('ActionBarController form persistence', () => {
     expect(controller.actions).toEqual(bar());
   });
 
-  it('keeps Druid caster, Wolf, and stealthed Wolf pages independently editable', () => {
+  it('keeps Druid caster, Cat, and stealthed Cat pages independently editable', () => {
     const caster = bar('wrath', 'moonfire', 'cat_form');
-    const wolf = bar('claw', 'rip', 'prowl', 'cat_form');
-    const stealthedWolf = bar('pounce', 'rake', 'prowl', 'cat_form');
+    const cat = bar('claw', 'rip', 'prowl', 'cat_form');
+    const stealthedCat = bar('pounce', 'rake', 'prowl', 'cat_form');
     const { controller, state } = makeHarness(
       'druid',
       ['wrath', 'moonfire', 'cat_form', 'claw', 'rip', 'prowl', 'rake', 'pounce'],
@@ -343,33 +343,33 @@ describe('ActionBarController form persistence', () => {
     state.auras = ['form_cat'];
     controller.syncActiveForm();
     expect(controller.activeForm).toBe('cat');
-    controller.replaceActions(wolf);
+    controller.replaceActions(cat);
     controller.saveActions();
 
     state.auras = ['form_cat', 'stealth'];
     controller.syncActiveForm();
     expect(controller.activeForm).toBe('cat_stealth');
     expect(controller.actions).toEqual(bar());
-    controller.replaceActions(stealthedWolf);
+    controller.replaceActions(stealthedCat);
     controller.saveActions();
 
     state.auras = ['form_cat'];
     controller.syncActiveForm();
-    expect(controller.actions).toEqual(wolf);
+    expect(controller.actions).toEqual(cat);
     state.auras = [];
     controller.syncActiveForm();
     expect(controller.actions).toEqual(caster);
     state.auras = ['form_cat', 'stealth'];
     controller.syncActiveForm();
-    expect(controller.actions).toEqual(stealthedWolf);
+    expect(controller.actions).toEqual(stealthedCat);
   });
 
-  it('migrates a legacy Wolf clone to blank', () => {
-    const wolf = bar('claw', 'prowl', 'cat_form');
-    const harness = makeHarness('druid', ['cat_form', 'claw', 'prowl', 'rake'], wolf);
-    harness.storage.setItem('woc_hotbar_druid_ActionbarTester_cat', JSON.stringify(wolf));
+  it('migrates a legacy Cat clone to blank', () => {
+    const cat = bar('claw', 'prowl', 'cat_form');
+    const harness = makeHarness('druid', ['cat_form', 'claw', 'prowl', 'rake'], cat);
+    harness.storage.setItem('woc_hotbar_druid_ActionbarTester_cat', JSON.stringify(cat));
     harness.storage.setItem('woc_hotbar_druid_ActionbarTester_cat_seeded', '1');
-    harness.storage.setItem('woc_hotbar_druid_ActionbarTester_cat_stealth', JSON.stringify(wolf));
+    harness.storage.setItem('woc_hotbar_druid_ActionbarTester_cat_stealth', JSON.stringify(cat));
     harness.state.auras = ['form_cat'];
     harness.controller.syncActiveForm();
     harness.state.auras = ['form_cat', 'stealth'];

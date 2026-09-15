@@ -233,7 +233,7 @@ describe('phase 03 naming-audit display literals stay renamed', () => {
 });
 
 describe('Wildfang kit pass 2 display literals (naming check in docs/design/druid-wildfang-kit-2.md)', () => {
-  it('pins the Wolf control finisher past its Hamstring Bite first cut', () => {
+  it('pins the Cat control finisher past its Hamstring Bite first cut', () => {
     // The id is frozen; only the display literal moved (a hamstring reads as a
     // snare, the word the warrior snare already shed for Hobbling Cut).
     expect(ABILITIES.hamstring_bite.name).toBe('Takedown');

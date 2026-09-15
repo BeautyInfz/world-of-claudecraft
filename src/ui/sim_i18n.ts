@@ -14004,7 +14004,7 @@ const AURA_NAME_KEY: Record<string, SimMessageKey> = {
   'Loping Stride': 'aura.lopingStride',
   'Coldsight Read': 'aura.coldsightRead',
   Marrowbreak: 'aura.marrowbreak',
-  // Pin, the Bruin Rush to Wolf Form rider's slow (combat/druid_engines.ts).
+  // Pin, the Bruin Rush to Cat Form rider's slow (combat/druid_engines.ts).
   Pin: 'aura.pin',
   // Bladed Gyre's armed echo buff (whirlwind's selfBuff auraName in
   // src/sim/content/classes.ts); shown on the buff bar and combat log.

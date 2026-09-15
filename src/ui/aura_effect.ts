@@ -100,13 +100,13 @@ import {
 import { NYTHRAXIS_KINGS_WRATH_AURA_ID } from '../sim/nythraxis_kings_wrath';
 import type { AuraKind } from '../sim/types';
 import {
+  CAT_FORM_MOVE_MULT,
   ENRAGE_DMG_DONE,
   ENRAGE_HASTE_PCT,
   ENRAGE_MOVE_MULT,
   FAERIE_FIRE_ARMOR_PCT,
   RECKLESSNESS_RAGE_GEN,
   SUNDER_ARMOR_PCT_PER_STACK,
-  WOLF_FORM_MOVE_MULT,
 } from '../sim/types';
 import { VARKHUL_ASSEMBLY_BURDEN_TICK_SECONDS } from '../sim/varkhul_assembly';
 import {
@@ -666,7 +666,7 @@ export function auraEffectDescriptor(a: AuraEffectInput): AuraEffectDescriptor |
     case 'form_cat':
       // The aura value is the threat multiplier; the speed is the constant
       // moveSpeedMult reads, so the buff line resolves it the same way.
-      return { key: `${KEY}.wolfForm`, nums: { pct: pctFromMult(WOLF_FORM_MOVE_MULT) } };
+      return { key: `${KEY}.wolfForm`, nums: { pct: pctFromMult(CAT_FORM_MOVE_MULT) } };
     case 'form_travel':
       return { key: `${KEY}.formTravel`, nums: { pct: pctFromMult(a.value) } };
     case 'battle_stance':

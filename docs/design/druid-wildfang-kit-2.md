@@ -1,10 +1,10 @@
 # Druid Wildfang kit pass 2: engage, control, opener
 
-Companion to `druid-v029-class-design.md` (the Wildfang engine) and the Wolf Form
-mobility pass (a separate branch). This pass gives Wolf Form an in-combat engage, an
-out-of-stealth opener, and in-combat control. Before it, the only Wolf stun
+Companion to `druid-v029-class-design.md` (the Wildfang engine) and the Cat Form
+mobility pass (a separate branch). This pass gives Cat Form an in-combat engage, an
+out-of-stealth opener, and in-combat control. Before it, the only Cat stun
 (Slinkstrike) was gated on stealth and Bruin Rush's 1 sec stun expired before a Bruin
-to Wolf shift could land.
+to Cat shift could land.
 
 ## The five changes
 
@@ -15,7 +15,7 @@ to Wolf shift could land.
    numbers from the row option's `metrics`, so the talent tooltip and the sim share one
    source. Pinned by `tests/druid_wildfang_kit.test.ts` and
    `tests/talent_tooltip_accuracy.test.ts`.
-2. **Pin.** Landing Bruin Rush opens a 3 sec window: Wolf Form costs 0 mana and Pins the
+2. **Pin.** Landing Bruin Rush opens a 3 sec window: Cat Form costs 0 mana and Pins the
    Rush target (a 50% slow for 4 sec on the target that was Rushed, never the current
    target). The window is an aura on the druid (`bruin_rush_window`, kind `internal_cd`,
    value = the target id), the Colossal Might cap precedent, rather than a new Entity
@@ -42,7 +42,7 @@ to Wolf shift could land.
    hands the 12 sec cooldown back. The energy is spent at cast either way, the bill a
    dodged strike pays. `LUNGE_WEAPON_MULT` in `combat/druid_lunge.ts` owns the 60.
    Lunge is never learned as a second action and does not bank Old Blood.
-5. **Takedown** (id `hamstring_bite`), the Wolf control finisher (learn 12, 30 energy,
+5. **Takedown** (id `hamstring_bite`), the Cat control finisher (learn 12, 30 energy,
    20 sec cooldown): `finisherStun` 1 sec plus 1 sec per combo point (2 sec at 1 up to
    6 sec at 5), the Low Blow numbers exactly. The first cut shipped 0.5 + 0.5 per point
    (3 sec at 5); retuned on review (Furyogen, 2026-09-13): a 3 sec cap was one GCD of
@@ -52,7 +52,7 @@ to Wolf shift could land.
    ladder with both Slinkstrike and Concuss; the finisher it is modelled on (Low Blow)
    decided.
 
-The form tooltips (Wolf, Bruin, Fleet, Moonwing) all carry one sentence pointing at the
+The form tooltips (Cat, Bruin, Fleet, Moonwing) all carry one sentence pointing at the
 baseline sprint and no numbers: the numbers scale with Longstride, and a static "3 sec,
 once every 20 sec" was stale for every druid who took the row. The Loping Stride buff
 line and the Longstride talent tooltip carry the live numbers.
@@ -68,7 +68,7 @@ searches on 2026-09-15 against the usual game wikis:
   Brave Souls skill), shared vocabulary rather than a coin.
 - **Pin**: GENERIC. A plain English verb for a hold; used across many unrelated games.
 - **Lunge**: GENERIC. A plain English verb; a common generic skill name across genres.
-- **Takedown**: GENERIC. A plain English word (the wrestling hold, and what a wolf does
+- **Takedown**: GENERIC. A plain English word (the wrestling hold, and what a cat does
   to prey). No distinctive ability of that name in the same role on the WoW, GW2, FFXIV,
   ESO, RuneScape, Diablo, or PoE wikis; the WoW analogues of this finisher are Maim and
   Mighty Bash, neither of which is reused. Chosen over the first cut, **Hamstring
@@ -92,7 +92,7 @@ searches on 2026-09-15 against the usual game wikis:
 - **VFX:** `src/render/druid_vfx_specs.ts` carries clearly labelled placeholder specs
   for Lunge, Takedown, and Pin, registered through `ability_vfx_registry.ts`
   (never the generated gallery tables). The VFX retune replaces them.
-- **Default bars:** the Wolf default bar is full (12 slots), so Takedown is
+- **Default bars:** the Cat default bar is full (12 slots), so Takedown is
   dragged from the spellbook.
 
 ## Balance

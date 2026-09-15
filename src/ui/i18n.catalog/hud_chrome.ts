@@ -4164,7 +4164,7 @@ export const hudChromeStrings = {
     cooldownCap: '{used} of {cap} sec of cooldown reduction used in this window',
     // wordy (M16): filled in the five non-Latin locales in this change.
     bruinRushWindow:
-      'Wolf Form costs no mana and Pins your Bruin Rush target, slowing it by {pct}% for {sec} sec',
+      'Cat Form costs no mana and Pins your Bruin Rush target, slowing it by {pct}% for {sec} sec',
     funeralHarvestLock: 'Funeral Harvest cannot create another Soul Fragment yet',
     leadenHexLock: 'Leaden Hex cannot root this target again yet',
     forbiddenReflectionReady: 'Your next eligible Warlock cooldown can be cast again',
@@ -4309,7 +4309,7 @@ export const hudChromeStrings = {
       'Damage taken reduced by {pct}%. {mana}% of all damage you deal is converted to mana',
     stealth: 'Concealed; movement speed reduced by {pct}%',
     formBear: 'Bruin Form: increased health and armor',
-    // wolfForm replaced formCat when the Wolf Form mobility pass added the
+    // wolfForm replaced formCat when the Cat Form mobility pass added the
     // resolved {pct} (a reword is a new key: the old rows were retired). The
     // key name predates the Cat Form rename; the English follows the rename
     // and the overlays are on the release-time fill list.

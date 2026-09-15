@@ -6409,7 +6409,7 @@ export const ABILITIES: Record<string, AbilityDef> = {
     requiresForm: 'bear',
     effects: [{ type: 'charge' }, { type: 'stun', duration: 1 }],
     description:
-      'Rush an enemy, generating 9 rage and stunning it for 1 sec. For 3 sec afterwards, or until you leave combat, Wolf Form is free and Pins that target (the one you Rushed), slowing it by 50% for 4 sec. 8-25 yd range. Bruin Form only.',
+      'Rush an enemy, generating 9 rage and stunning it for 1 sec. For 3 sec afterwards, or until you leave combat, Cat Form is free and Pins that target (the one you Rushed), slowing it by 50% for 4 sec. 8-25 yd range. Bruin Form only.',
   },
   maul: {
     id: 'maul',
@@ -6818,7 +6818,7 @@ export const ABILITIES: Record<string, AbilityDef> = {
     tooltipOmitEffectLines: true,
     name: 'Dash',
     class: 'druid',
-    // Learned at 12 (was 18): Wolf Form is 4 and Fleet Form 11, and a sprint
+    // Learned at 12 (was 18): Cat Form is 4 and Fleet Form 11, and a sprint
     // two levels before the cap arrived after most of the leveling PvP.
     learnLevel: 12,
     cost: 0,

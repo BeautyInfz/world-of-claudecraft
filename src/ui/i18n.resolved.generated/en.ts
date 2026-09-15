@@ -3046,7 +3046,7 @@ export const en: EnTranslations = {
       "elementalConvergencePrimed": "Your next spell from the other elemental school grants Elemental Convergence",
       "hunterFerocity": "{stacks} Pack Ferocity: your pet deals {pct}% more damage",
       "cooldownCap": "{used} of {cap} sec of cooldown reduction used in this window",
-      "bruinRushWindow": "Wolf Form costs no mana and Pins your Bruin Rush target, slowing it by {pct}% for {sec} sec",
+      "bruinRushWindow": "Cat Form costs no mana and Pins your Bruin Rush target, slowing it by {pct}% for {sec} sec",
       "funeralHarvestLock": "Funeral Harvest cannot create another Soul Fragment yet",
       "leadenHexLock": "Leaden Hex cannot root this target again yet",
       "forbiddenReflectionReady": "Your next eligible Warlock cooldown can be cast again",
@@ -6511,7 +6511,7 @@ export const en: EnTranslations = {
       "formsNote": "A druid fights by changing shape. Most druid abilities belong to one shape, so the form you are in decides what you can cast, and shifting costs a little mana. You can shift in or out of combat, as often as you like.",
       "formsAutoUnshift": "A heal or a damaging spell cast while shifted shifts you out for you. Leaving a shape that way is free and does not spend your global cooldown, so an instant spell goes off the moment you press it. Shifting back in is an ordinary ability, and still costs mana and your global cooldown.",
       "formsMoonwing": "A Moongrove druid gains one more shape, Moonwing Form, the caster shape a Balance druid fights in. It is the one animal shape that keeps your spells, and your wand only works in it or in your normal caster form.",
-      "formsWolfEngage": "A Wolf opens a fight with Bruin Rush, shifts straight into Wolf Form to Pin the target, closes the gap with Lunge when it is not stalking, and holds an enemy still with Takedown.",
+      "formsWolfEngage": "A Cat opens a fight with Bruin Rush, shifts straight into Cat Form to Pin the target, closes the gap with Lunge when it is not stalking, and holds an enemy still with Takedown.",
       "formLine": {
         "form_bear": "The tanking shape: a heavy hide, rage instead of mana, and extra threat so enemies keep swinging at you.",
         "form_cat": "The melee damage shape: energy and combo points, like a rogue, and much less threat.",
@@ -12734,7 +12734,7 @@ export const en: EnTranslations = {
       },
       "bear_charge": {
         "name": "Bruin Rush",
-        "description": "Rush an enemy, generating 9 rage and stunning it for 1 sec. For 3 sec afterwards, or until you leave combat, Wolf Form is free and Pins that target (the one you Rushed), slowing it by 50% for 4 sec. 8-25 yd range. Bruin Form only."
+        "description": "Rush an enemy, generating 9 rage and stunning it for 1 sec. For 3 sec afterwards, or until you leave combat, Cat Form is free and Pins that target (the one you Rushed), slowing it by 50% for 4 sec. 8-25 yd range. Bruin Form only."
       },
       "demoralizing_roar": {
         "name": "Craven Roar",

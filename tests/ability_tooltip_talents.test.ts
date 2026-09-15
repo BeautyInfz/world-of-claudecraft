@@ -96,7 +96,7 @@ describe('ability tooltip data reflects selected talents', () => {
   });
 });
 
-describe('druid Wolf Form mobility pass (tooltip data)', () => {
+describe('druid Cat Form mobility pass (tooltip data)', () => {
   const known = (level: number) =>
     abilitiesKnownAt('druid', level, emptyModifiers()).map((k) => k.def.id);
 
@@ -112,7 +112,7 @@ describe('druid Wolf Form mobility pass (tooltip data)', () => {
     ]);
   });
 
-  it('Wolf Form and Fleet Form tooltips state the baseline mobility rules', () => {
+  it('Cat Form and Fleet Form tooltips state the baseline mobility rules', () => {
     expect(ABILITIES.cat_form.learnLevel).toBe(4);
     expect(ABILITIES.cat_form.description).toContain('you move 15% faster');
     expect(ABILITIES.travel_form.learnLevel).toBe(11);
