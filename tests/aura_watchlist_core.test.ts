@@ -91,6 +91,23 @@ describe('abilitySelfAuraSignature', () => {
     ).toEqual({ auraKind: 'imbue', auraId: 'rockbiter' });
   });
 
+  it('lets an explicit auraId on an absorb win, the id the sim applies it under', () => {
+    // Both ids come from src/sim/combat/aura_ids.ts (selfBuffAuraId, absorbAuraId),
+    // which the dispatcher calls too, so an authored auraId IS what the live aura
+    // carries and the picker cannot drift from it.
+    expect(
+      abilitySelfAuraSignature(
+        def('ward', [{ type: 'absorb', amount: 100, duration: 8, auraId: 'ward_shell' }]),
+      ),
+    ).toEqual({ auraKind: 'absorb', auraId: 'ward_shell' });
+    // Hallowed Wall ships exactly such an absorb (holy_shield_absorb) behind its
+    // block self-buff; the self-buff still reports first, as the primary aura.
+    expect(abilitySelfAuraSignature(ABILITIES.holy_shield)).toEqual({
+      auraKind: 'buff_block',
+      auraId: 'holy_shield',
+    });
+  });
+
   it('reports nothing for a TOGGLE, whose 3600s duration is scaffolding not a countdown', () => {
     // The overlay prints a countdown from the aura's remaining time. A stance or a
     // form is backed by a 3600s duration the buff bar deliberately never shows, so

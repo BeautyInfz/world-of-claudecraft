@@ -17,6 +17,7 @@
 // owns persistence and the panel owns the picker.
 
 import { isToggleAura } from '../sim/aura_classify';
+import { absorbAuraId, selfBuffAuraId } from '../sim/combat/aura_ids';
 import type { AbilityDef, PlayerClass } from '../sim/types';
 import type { AuraOverlayProcDef, AuraOverlayProcId } from './aura_overlay_view';
 
@@ -52,13 +53,18 @@ export type WatchableAbilityDef = Pick<AbilityDef, 'id' | 'effects'>;
 /**
  * The aura an ability applies to the player, or null when it applies none.
  *
- * The id/kind rules MIRROR the sim's own apply sites in
+ * The id/kind rules are the sim's own apply rules in
  * `src/sim/combat/effect_dispatch.ts` (that is the contract this core has to
- * hold, or the overlay would watch an aura the sim never creates):
+ * hold, or the overlay would watch an aura the sim never creates). The self-buff
+ * and absorb ids come from `src/sim/combat/aura_ids.ts`, the ONE place those
+ * rules live (the dispatcher and the aura-track catalog call the same helpers),
+ * so a rule change there cannot leave this core watching an id the sim stopped
+ * creating:
  * - `selfBuff`: the PRIMARY self-buff (the first `selfBuff` on the def) keeps the
  *   bare ability id; an explicit `auraId` on the effect always wins.
- * - `absorb`: the shield rides the ability id, unless the ability ALSO carries a
- *   `stasis` self-buff (Ice Block), where the shield is suffixed `_absorb`.
+ * - `absorb`: an explicit `auraId` wins; otherwise the shield rides the ability
+ *   id, unless the ability ALSO carries a `stasis` self-buff (Ice Block), where
+ *   it is suffixed `_absorb`.
  * - `imbue`: the weapon imbue rides the ability id.
  *
  * Only the first matching family is reported: an ability that both buffs and
@@ -80,12 +86,11 @@ export type WatchableAbilityDef = Pick<AbilityDef, 'id' | 'effects'>;
 export function abilitySelfAuraSignature(def: WatchableAbilityDef): AuraWatchSignature | null {
   for (const effect of def.effects) {
     if (effect.type === 'selfBuff') {
-      const auraId = effect.auraId ?? def.id;
+      const auraId = selfBuffAuraId(def, effect);
       return isToggleAura(effect.kind, auraId) ? null : { auraKind: effect.kind, auraId };
     }
     if (effect.type === 'absorb') {
-      const stasis = def.effects.some((e) => e.type === 'selfBuff' && e.kind === 'stasis');
-      return { auraKind: 'absorb', auraId: stasis ? `${def.id}_absorb` : def.id };
+      return { auraKind: 'absorb', auraId: absorbAuraId(def, effect) };
     }
     if (effect.type === 'imbue') {
       return { auraKind: 'imbue', auraId: def.id };
