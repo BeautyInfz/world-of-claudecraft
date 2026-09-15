@@ -456,14 +456,6 @@ export function desiredBaseState(
   return 'idle';
 }
 
-/** Optional clip-rate ceilings for authored gaits with different cycle lengths. */
-export interface LocomotionRateLimits {
-  walkMax?: number;
-  prowlMax?: number;
-  runMax?: number;
-  wadeMax?: number;
-}
-
 export function locomotionTimeScale(
   baseState: BaseState,
   s: Pick<AnimState, 'speed' | 'backwards' | 'reverseBackpedal'>,
@@ -472,8 +464,6 @@ export function locomotionTimeScale(
   prowlRef = walkRef,
   walkBackRef = walkRef,
   runTimeScaleMin = 0.6,
-  wadeRef = DEFAULT_WADE_REF,
-  limits?: LocomotionRateLimits,
 ): number | null {
   if (baseState === 'swim' || baseState === 'swimSurface') {
     // Stroke rate follows swim speed: the slow opening strokes of a dive read as
@@ -486,23 +476,19 @@ export function locomotionTimeScale(
   if (baseState === 'swimIdle') return null;
   let timeScale: number;
   if (baseState === 'prowlWalk') {
-    const stalkScale = clamp(s.speed / prowlRef, 0.6, limits?.prowlMax ?? 1.8);
+    const stalkScale = clamp(s.speed / prowlRef, 0.6, 1.8);
     return s.backwards ? -stalkScale : stalkScale;
   }
   if (baseState === 'walk' || baseState === 'walkBack') {
-    timeScale = clamp(
-      s.speed / (baseState === 'walkBack' ? walkBackRef : walkRef),
-      0.6,
-      limits?.walkMax ?? 1.8,
-    );
+    timeScale = clamp(s.speed / (baseState === 'walkBack' ? walkBackRef : walkRef), 0.6, 1.8);
   } else if (baseState === 'wade') {
     // One cycle covers the whole wade band, and the band is slow by
     // construction (the sim drags the body down to ~0.7 run), so the clip is
     // timed against a wading pace, not a dry one, and clamped tighter: a stride
     // through water reads wrong the moment it starts to sprint.
-    timeScale = clamp(s.speed / wadeRef, 0.65, limits?.wadeMax ?? 1.45);
+    timeScale = clamp(s.speed / DEFAULT_WADE_REF, 0.65, 1.45);
   } else if (baseState === 'run') {
-    timeScale = clamp(s.speed / runRef, runTimeScaleMin, limits?.runMax ?? 1.6);
+    timeScale = clamp(s.speed / runRef, runTimeScaleMin, 1.6);
   } else {
     return null;
   }

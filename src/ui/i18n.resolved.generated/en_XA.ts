@@ -10271,7 +10271,7 @@ export const en_XA: EnTranslations = {
       "requiresForm": "[Ýóú ɱúšţ ƀé íñ {form} Ƒóŕɱ.]",
       "cantInForm": "[Ýóú çáñ'ţ ðó ţĥáţ íñ {form} Ƒóŕɱ.]",
       "bear": "[Ɓŕúíñ]",
-      "cat": "[Ŵóļƒ]",
+      "cat": "[Çáţ]",
       "travel": "[Ƒļééţ]",
       "shapeshifted": "[Ýóú çáññóţ ðó ţĥáţ ŵĥíļé šĥáþéšĥíƒţéð.]",
       "stealthed": "[Ýóú ɱúšţ ƀé šţéáļţĥéð.]",
@@ -10602,8 +10602,8 @@ export const en_XA: EnTranslations = {
       "devotion": "[Ðéʋóţíóñ]"
     },
     "forms": {
-      "bear": "[Ɓéáŕ]",
-      "cat": "[Ŵóļƒ]"
+      "bear": "[Ɓŕúíñ]",
+      "cat": "[Çáţ]"
     },
     "cast": {
       "fishing": "[Ƒíšĥíñĝ]",

@@ -1106,8 +1106,6 @@ export class CharacterVisual {
           this.def.prowlRef,
           this.def.walkBackRef,
           this.def.runTimeScaleMin,
-          this.def.wadeRef,
-          this.def.locomotionRateLimits,
         );
         if (timeScale !== null) {
           if (timeScale < 0 && this.current.time <= 1e-3)

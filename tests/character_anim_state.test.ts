@@ -464,7 +464,7 @@ describe('tread blend', () => {
 });
 
 describe('shouldPlayLanding', () => {
-  // (wasAirborne, airborne, dead, hasLandClip)
+  // (wasAirborne, airborne, dead, hasLandClip, swimming = false)
   it('fires exactly on the airborne -> grounded edge', () => {
     expect(shouldPlayLanding(true, false, false, true)).toBe(true);
   });
@@ -484,6 +484,13 @@ describe('shouldPlayLanding', () => {
 
   it('yields to death: a body killed mid-air collapses, it does not stick a landing', () => {
     expect(shouldPlayLanding(true, false, true, true)).toBe(false);
+  });
+
+  it('yields to water: a jump that ends in a lake enters the swim, not a landing', () => {
+    // The grounded edge fires as the feet pass the swim latch too; the water
+    // entry owns that frame (advanceSwimBlend), so no touchdown one-shot plays.
+    expect(shouldPlayLanding(true, false, false, true, true)).toBe(false);
+    expect(shouldPlayLanding(true, false, false, true, false)).toBe(true);
   });
 });
 

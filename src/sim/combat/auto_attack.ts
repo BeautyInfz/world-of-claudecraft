@@ -601,7 +601,7 @@ export function meleeSwing(
     opts.normalizedInstant && opts.autoAttackHand === undefined
       ? normalizedInstantSpeed(weapon)
       : undefined;
-  // The cat mainhand auto is the one REAL auto attack that normalizes: Wolf
+  // The cat mainhand auto is the one REAL auto attack that normalizes: Cat
   // Form swings its claws at the fixed cat cadence, so the carried weapon's
   // roll is rescaled to that cadence (catAutoWeaponRollMult, the same shape as
   // the instant rescale above) and white DPS equals the weapon's authored dps

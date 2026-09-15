@@ -241,3 +241,19 @@ describe('char-select roster wiring (source pins)', () => {
     expect(main).toContain('trackComposedChipRow(row, chipHtml, () => hydratePortraits(row));');
   });
 });
+
+describe('quadruped swim head and gait wiring (source pins)', () => {
+  // Both arguments default silently (CharacterVisual falls back to the humanoid
+  // head fraction and updateLocomotionInto to the global thresholds), so
+  // reverting either keeps every unit test green while a form_cat swims with
+  // its head under the waterline or breaks into a run at the biped speed.
+  it("latches the surface off the rig's own swimming head height, scaled with the body", () => {
+    expect(renderer).toContain('active.swimHeadHeight * e.scale,');
+  });
+
+  it("feeds the rig's own gait thresholds into the displayed-motion locomotion track", () => {
+    expect(renderer).toContain(
+      'updateLocomotionInto(v.locoState, v.loco, vx, vz, facing, dt, active.gait);',
+    );
+  });
+});

@@ -35,26 +35,6 @@ const facts = (over: Partial<AnimOverrideFacts> = {}): AnimOverrideFacts => ({
 });
 
 describe('applyEntityAnimOverrides: battle-stance engagement', () => {
-  it('braces an auto-attacking player with a selected target, including id zero', () => {
-    for (const targetId of [0, 7]) {
-      const st = state();
-      applyEntityAnimOverrides(st, facts({ kind: 'player', autoAttack: true, targetId }), false);
-      expect(st.combat).toBe(true);
-    }
-  });
-
-  it('does not treat selection alone, a stopped attack, or a corpse as engagement', () => {
-    for (const [autoAttack, targetId, dead] of [
-      [false, 7, false],
-      [true, null, false],
-      [true, 7, true],
-    ] as const) {
-      const st = state();
-      applyEntityAnimOverrides(st, facts({ kind: 'player', autoAttack, targetId }), dead);
-      expect(st.combat).toBe(false);
-    }
-  });
-
   it('copies and clears the already folded stealth input every frame', () => {
     const st = state();
     applyEntityAnimOverrides(st, facts(), false, 0, true);

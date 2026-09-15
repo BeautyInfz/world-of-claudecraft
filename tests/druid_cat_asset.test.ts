@@ -166,7 +166,14 @@ describe('druid cat shipping animation asset', () => {
     expect(root.listExtensionsUsed().map((e) => e.extensionName)).toContain(
       'EXT_meshopt_compression',
     );
-    expect(readFileSync(FILE).byteLength).toBeLessThan(3 * 1024 * 1024);
+    // The atlas is ETC1S on purpose, a deliberate exception to the Tripo
+    // baseColor rule in scripts/assets/compress_glb_textures.mjs (the cat's
+    // material is tripo_mat_..., so a resweep through that script would route it
+    // back to UASTC: 1.19 MB for the atlas alone). The owning encode step is
+    // scripts/assets/druid_cat/encode_ktx2.mjs, and this 1 MB ceiling is the pin
+    // that catches the re-route: the shipped file is 888 KB, a UASTC re-encode
+    // lands near 1.9 MB.
+    expect(readFileSync(FILE).byteLength).toBeLessThan(1024 * 1024);
   });
 
   it('deforms the actual skin into grounded seated and collapsed poses', () => {

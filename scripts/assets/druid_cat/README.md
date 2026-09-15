@@ -18,9 +18,10 @@ action. Choose an action in the Action Editor to preview it. Reset only animator
 controls: Rigify's `MCH-front_foot_parent` bones contain generated heel corrections
 that must remain intact. Clearing mechanism transforms bends the neutral legs.
 These static corrections are also keyed in every action because Blender's glTF
-exporter resets unkeyed pose transforms during sampling. The reviewed v2 export
-is the shipped asset; the local asset and playback references are kept together
-for verification.
+exporter resets unkeyed pose transforms during sampling. The shipped asset is
+the v15 compact export (the v14 animation revision with nine clips retired, see
+below); the local asset and playback references are kept together for
+verification.
 
 The generated `DruidCat_Rig` has animal front/rear paw IK, shoulder, torso,
 head, ear, jaw and tail controls. Select it and use the Action Editor to select
@@ -31,7 +32,8 @@ All source vertices have at most four normalized skin influences. IK stretching
 is disabled. Deformation bones use linear skinning so the Blender preview
 matches glTF; the controls remain editable.
 
-The 26 game actions are:
+The 26 authored game actions are (the shipped GLB carries the 17 of the
+compact set below):
 
 | Group | Actions |
 | --- | --- |
@@ -97,11 +99,15 @@ compressor: the shared script's Tripo rule picks UASTC, which costs 1.19 MB at
 888 KB. Never ship the intermediate webp-textured GLB or simplify this skinned
 mesh.
 
-At normalized height 1.92 (a fifth above the world wolves; measured at 1.1 and scaled by 1.92/1.1), planted-paw measurements give Walk 2.78992,
-WalkBack 4.82101, Run 9.13075, ProwlWalk 5.47846 and Wade 4.82105 game units/second.
-Preview cycles are Walk 0.9 seconds, Run 0.6 seconds, and backward/prowl/wade
-1 second. Per-cat maximum playback rates preserve foot matching through the
-normal walk, prowl, Dash and water bands without changing other creatures.
+At normalized height 1.92 (a fifth above the world wolves; measured at 1.1 and
+scaled by 1.92/1.1), planted-paw measurements give Walk 2.78992, WalkBack
+4.82101, Run 9.13075 and ProwlWalk 5.47846 game units/second. Wade is not in the
+compact set, so it carries no reference: a fording cat walks at the dry refs.
+Preview cycles are Walk 0.9 seconds, Run 0.6 seconds, and backward/prowl
+1 second. The cat clamps against the shared rate ceilings with no per-rig
+overrides: every shipped gait sits under them except Dash over a stalk
+(7 x 0.95 x 1.5 = 9.975 units/second on the 5.47846 prowl ref is 1.82 against
+the 1.8 prowl ceiling), a clip of about 1% that is not worth its own knob.
 At 3 units/second Walk cycles about 1.19 times/second; Run at 7 cycles about 1.28.
 The asset tests measure these
 contacts from the compressed GLB and pin the runtime manifest to them. They
@@ -113,9 +119,9 @@ loop closure, original standing leg positions, neutral resets and attack chest
 travel. `validate.validate_cat(raw_path, report_path)` also rejects an exporter
 that alters the source neutral stance before comparing the imported skin.
 
-The gameplay content still calls this ability Wolf Form. The visual replacement
-does not rename gameplay content. Shaman Shadewolf retains `wolf_basic.glb`
-through its separate `form_ghost_wolf` visual key.
+The ability is Cat Form across gameplay content, tooltips, errors and the guide
+(the ids stay `cat_form` and `form_cat`). Shaman Shadewolf retains
+`wolf_basic.glb` through its separate `form_ghost_wolf` visual key.
 
 Before accepting a new export, re-import it in Blender and compare representative
 poses, then run `GAME_URL=http://127.0.0.1:5187 node scripts/druid_cat_game_check.mjs`

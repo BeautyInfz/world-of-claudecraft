@@ -65,8 +65,8 @@ const abilityStringsEn = {
       devotion: 'Devotion',
     },
     forms: {
-      bear: 'Bear',
-      cat: 'Wolf',
+      bear: 'Bruin',
+      cat: 'Cat',
     },
   },
 };

@@ -258,7 +258,7 @@ describe('druid cat production animation runtime', () => {
     expect(Math.abs(peek(visual).current.timeScale) * reference).toBeCloseTo(speed, 4);
   });
 
-  it('preserves the existing rate ceilings for visuals without overrides', () => {
+  it('clamps every gait against the shared rate ceilings (the cat sets none of its own)', () => {
     for (const [base, ceiling] of [
       ['walk', 1.8],
       ['walkBack', 1.8],

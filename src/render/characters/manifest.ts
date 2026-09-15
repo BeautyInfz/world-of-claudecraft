@@ -36,7 +36,6 @@ import { ITEM_WEAPON_VARIANTS } from '../../ui/weapon_variants';
 import type { OverheadEmoteId } from '../../world_api';
 import type { LocoGaitThresholds } from '../locomotion';
 import { VARKHUL_FORGING_STRIKE_TIMESCALE } from '../varkhul_forge_hammer';
-import type { LocomotionRateLimits } from './anim_state';
 import { NPC_PROP_SET_IDS, type NpcPropSet } from './npc_looks';
 
 export interface EmoteClipSpec {
@@ -219,8 +218,6 @@ export interface VisualDef {
   walkBackRef?: number;
   runRef?: number;
   prowlRef?: number;
-  wadeRef?: number;
-  locomotionRateLimits?: LocomotionRateLimits;
   /** Opt-in gait coverage for short quadrupeds; other rigs keep global thresholds. */
   gait?: LocoGaitThresholds;
   runTimeScaleMin?: number;
@@ -2060,9 +2057,6 @@ export const VISUALS: Record<string, VisualDef> = {
     walkBackRef: 4.82101,
     runRef: 9.13075,
     prowlRef: 5.47846,
-    wadeRef: 4.82105,
-    // Longer walk cycles stay slower than Run while matching actual movement speed.
-    locomotionRateLimits: { walkMax: 2, prowlMax: 2.2, runMax: 2.05, wadeMax: 1.6 },
     gait: { runEnter: 3.2, runExit: 2.6 },
     // Scaled with the body: a 1.92 cat at the slowed-run band (3.2 yd/s over a
     // 9.13 ref) sits at .35, so the floor drops to .3 to keep the feet matched.
