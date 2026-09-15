@@ -3,7 +3,7 @@ import {
   createHapticGate,
   HAPTIC_SHAPES,
   hapticPulse,
-  sanitizeHapticShape,
+  isHapticShape,
 } from '../src/game/haptic_pulse_core';
 import { createReadyGlowPlan, readyGlowAbilityIds } from '../src/ui/proc_ready_glow_core';
 import {
@@ -116,11 +116,16 @@ describe('haptic pulses', () => {
     }
   });
 
-  it('degrades an unknown stored shape to the gentle default', () => {
-    expect(sanitizeHapticShape('long')).toBe('long');
-    expect(sanitizeHapticShape('earthquake')).toBe('tap');
-    expect(sanitizeHapticShape(undefined)).toBe('tap');
-    expect(sanitizeHapticShape(7)).toBe('tap');
+  it('recognizes only the three shapes, so off and junk both read back as off', () => {
+    expect(isHapticShape('tap')).toBe(true);
+    expect(isHapticShape('double')).toBe(true);
+    expect(isHapticShape('long')).toBe(true);
+    // 'none' is the stored OFF state and deliberately not a shape: a config
+    // reader that treated it as one would rumble for a player who never asked.
+    expect(isHapticShape('none')).toBe(false);
+    expect(isHapticShape('earthquake')).toBe(false);
+    expect(isHapticShape(undefined)).toBe(false);
+    expect(isHapticShape(7)).toBe(false);
   });
 
   it('refuses a second pulse inside the gap, so two procs cannot merge into a buzz', () => {

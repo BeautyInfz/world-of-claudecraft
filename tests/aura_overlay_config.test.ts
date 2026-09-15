@@ -310,6 +310,67 @@ describe('AuraOverlayConfigStore watchlist', () => {
   });
 });
 
+describe('aura overlay notification channel config', () => {
+  it('defaults every channel off: no sound, no glow, no tick, no rumble', () => {
+    expect(defaultAuraOverlayConfig('revenge_free')).toMatchObject({
+      soundId: 'none',
+      soundVolume: 0.7,
+      showReadyGlow: false,
+      showReticleTick: false,
+      haptic: 'none',
+    });
+  });
+
+  it('keeps a stored rumble shape, and reads the off state back as off', () => {
+    expect(sanitizeAuraOverlayConfig('revenge_free', { haptic: 'long' }).haptic).toBe('long');
+    expect(sanitizeAuraOverlayConfig('revenge_free', { haptic: 'tap' }).haptic).toBe('tap');
+    expect(sanitizeAuraOverlayConfig('revenge_free', { haptic: 'none' }).haptic).toBe('none');
+    expect(sanitizeAuraOverlayConfig('revenge_free', {}).haptic).toBe('none');
+  });
+
+  it('reads junk or a retired rumble shape back as OFF, never as a default shape', () => {
+    // Rumble is opt-in per proc. A sanitizer that degraded unknown to 'tap' would
+    // switch it ON for a player whose storage merely held a shape that no longer
+    // exists, against the rule soundId already holds for a retired cue.
+    const haptic = (raw: unknown) => sanitizeAuraOverlayConfig('revenge_free', { haptic: raw });
+    expect(haptic('earthquake').haptic).toBe('none');
+    expect(haptic(7).haptic).toBe('none');
+    expect(haptic(null).haptic).toBe('none');
+    expect(haptic(true).haptic).toBe('none');
+  });
+
+  it('clamps the sound volume, silences an unknown cue, and defaults junk toggles off', () => {
+    expect(
+      sanitizeAuraOverlayConfig('revenge_free', {
+        soundId: 'ui_click',
+        soundVolume: 5,
+        showReadyGlow: 'yes',
+        showReticleTick: 1,
+      }),
+    ).toMatchObject({
+      soundId: 'none',
+      soundVolume: 1,
+      showReadyGlow: false,
+      showReticleTick: false,
+    });
+    expect(sanitizeAuraOverlayConfig('revenge_free', { soundVolume: 0 }).soundVolume).toBe(0.1);
+    expect(sanitizeAuraOverlayConfig('revenge_free', { soundVolume: 'x' }).soundVolume).toBe(0.7);
+    expect(
+      sanitizeAuraOverlayConfig('revenge_free', {
+        soundId: 'ui_aura_owl_hoot',
+        soundVolume: 0.35,
+        showReadyGlow: true,
+        showReticleTick: true,
+      }),
+    ).toMatchObject({
+      soundId: 'ui_aura_owl_hoot',
+      soundVolume: 0.35,
+      showReadyGlow: true,
+      showReticleTick: true,
+    });
+  });
+});
+
 describe('genericPaletteColor', () => {
   it('walks the class palette so consecutive watched spells differ', () => {
     const shaman = [0, 1, 2, 3].map((slot) => genericPaletteColor('shaman', slot));

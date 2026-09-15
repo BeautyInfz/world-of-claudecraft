@@ -43,11 +43,12 @@ export function hapticPulse(shape: HapticShape): HapticPulse {
   return PULSES[shape] ?? PULSES.tap;
 }
 
-/** Read a stored shape back; anything unknown degrades to the gentle default. */
-export function sanitizeHapticShape(raw: unknown): HapticShape {
-  return typeof raw === 'string' && (HAPTIC_SHAPES as readonly string[]).includes(raw)
-    ? (raw as HapticShape)
-    : 'tap';
+/** Whether a value names a real shape. The stored OFF state ('none') and anything
+ *  unknown (junk in storage, a shape retired later) are both NOT shapes, and a
+ *  caller reads them back as off rather than as a default shape: nobody gets a
+ *  new rumble without asking for it. */
+export function isHapticShape(raw: unknown): raw is HapticShape {
+  return typeof raw === 'string' && (HAPTIC_SHAPES as readonly string[]).includes(raw);
 }
 
 /**

@@ -1,5 +1,5 @@
 import { AURA_CUE_NONE, sanitizeAuraCueId } from '../game/aura_cue_catalog';
-import { type HapticShape, sanitizeHapticShape } from '../game/haptic_pulse_core';
+import { type HapticShape, isHapticShape } from '../game/haptic_pulse_core';
 import type { AuraOverlayProcId, MageProcId, WarriorProcId } from './aura_overlay_view';
 import { auraOverlayDefaultMeta } from './aura_overlay_view';
 import { sanitizeWatchedIds } from './aura_watchlist_core';
@@ -251,12 +251,10 @@ export function sanitizeAuraOverlayConfig(id: AuraOverlayProcId, raw: unknown): 
     soundVolume: numberIn(value.soundVolume, 0.1, 1, fallback.soundVolume),
     showReadyGlow: boolOr(value.showReadyGlow, fallback.showReadyGlow),
     showReticleTick: boolOr(value.showReticleTick, fallback.showReticleTick),
-    // 'none' is the stored off state and is NOT a shape, so it has to survive the
-    // shape sanitizer rather than being coerced to the default tap.
-    haptic:
-      value.haptic === 'none' || value.haptic === undefined
-        ? 'none'
-        : sanitizeHapticShape(value.haptic),
+    // 'none' is the stored off state and is NOT a shape. Anything else that is not
+    // a real shape (junk, a shape retired later) reads back as OFF, the same rule
+    // soundId holds: nobody gets a new rumble without asking for it.
+    haptic: isHapticShape(value.haptic) ? value.haptic : 'none',
   };
 }
 
