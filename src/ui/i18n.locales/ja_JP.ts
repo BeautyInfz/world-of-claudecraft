@@ -3788,7 +3788,7 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
     '対象に唸ります。あなたの脅威が対象の最も憎む敵と同じ値まで上がり、3秒間あなたを攻撃させます。ブルーインフォーム専用。',
   'entities.abilities.cat_form.name': 'ウルフフォーム',
   'entities.abilities.cat_form.description':
-    '狼へ変身します。敏捷性がレベルとともに上がり、攻撃力は+8にレベルごとの2を加え、攻撃はエネルギーとコンボポイントを使い、生む脅威度が29%減ります。もう一度使えば術者の姿に戻ります。',
+    '狼へ変身します。敏捷性がレベルとともに上がり、攻撃力は+8にレベルごとの2を加え、攻撃はエネルギーとコンボポイントを使い、生む脅威度が29%減ります。いずれかの姿に変身すると疾駆の歩みを得ます。3秒間移動速度が60%上昇し、20秒に1回まで発動します。もう一度使えば術者の姿に戻ります。',
   'entities.abilities.claw.name': '裂爪',
   'entities.abilities.claw.description':
     '敵を引っかき、武器ダメージに {damage} を加えたダメージを与えます。コンボポイントを1獲得します。ウルフフォーム専用。',
@@ -3829,8 +3829,14 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.dash.description':
     '前方へ駆け出し、移動速度を15秒間50%上昇させます。ウルフフォーム専用。',
   'entities.abilities.pounce.name': '忍び強襲',
+  'entities.abilities.lunge.description':
+    '最大12メートル先の敵に飛びかかり、武器ダメージの60%を与えてコンボポイントを1獲得する。ウルフフォーム時のみ使用可能。',
+  'entities.abilities.lunge.name': 'ランジ',
+  'entities.abilities.hamstring_bite.description':
+    '対象を1秒に加えコンボポイント1つにつき1秒スタンさせるフィニッシュ技（コンボポイント5：6秒）。ウルフフォーム時のみ使用可能。',
+  'entities.abilities.hamstring_bite.name': 'テイクダウン',
   'entities.abilities.pounce.description':
-    '隠密状態から放つ先制攻撃で、対象を2秒間スタンさせます。コンボポイントを1獲得します。ウルフフォーム専用。',
+    '隠密状態から放つ先制攻撃で、対象を2秒間スタンさせます。コンボポイントを1獲得します。ウルフフォーム専用。 ステルス状態でない場合、このボタンはランジになる。',
   'entities.abilities.insect_swarm.name': '刺す虫の群れ',
   'entities.abilities.insect_swarm.description':
     '敵が虫の群れに襲われ、12秒かけて{damage}の自然ダメージを受けます。',
@@ -3878,13 +3884,13 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
     'レイスボーンを意のままに束縛します。遠方から強力なシャドウダメージを降らせるエリート悪魔です。長い再使用時間がその破壊的な力を制限します。新たな悪魔を召喚すると現在の悪魔は解放されます。悪魔は一度に1体しか従えられません。',
   'entities.abilities.bear_charge.name': 'ブルーインラッシュ',
   'entities.abilities.bear_charge.description':
-    '敵に突進して激怒を9獲得し、1秒間スタンさせる。射程7～23メートル。ブルーインフォーム時のみ使用可能。',
+    '敵に突進して激怒を9獲得し、1秒間スタンさせる。その後3秒間、ウルフフォームは無料になり、対象を押さえ込んで4秒間移動速度を50%低下させる。射程7～23メートル。ブルーインフォーム時のみ使用可能。',
   'entities.abilities.demoralizing_roar.name': '臆病の咆哮',
   'entities.abilities.demoralizing_roar.description':
     '周囲の敵を萎縮させ、20秒間その攻撃力を20低下させる。ブルーインフォーム時のみ使用可能。',
   'entities.abilities.prowl.name': 'つけ狙い',
   'entities.abilities.prowl.description':
-    'ウルフフォーム中にステルス状態に入り、移動速度が5%低下する。戦闘中は使用できない。',
+    'ウルフフォーム中にステルス状態に入る。戦闘中は使用できない。',
   'entities.abilities.rake.name': '皮剥ぎ',
   'entities.abilities.rake.description':
     '敵を切り裂いて武器ダメージに{damage}を加え、18秒間の出血ダメージを与えます。コンボポイントを1与えます。狼の姿専用。',
@@ -6673,7 +6679,7 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
     '偉業は別格の棚です。それは伝承と世界初の記録であり、過ぎ去った時代に結びついた功績や、二度と起こらない一瞬の功績です。名声はなく、達成率にも数えられず、成し遂げられたことの記憶として永遠に残されます。',
   'guide.deedsPage.featsHeading': '偉業',
   'guide.deedsPage.howBody':
-    '功績は一人のキャラクターごとに獲得し、そのまま保たれます。ですから、あなたが遊ぶどの英雄も、それぞれ自分だけの功績の書を築いていきます。あなたのすべてのキャラクターにまたがって名声をまとめるのはレルムのリーダーボードだけで、そこでは各功績が一度だけ数えられます。それぞれの功績が何を求めているかは、ゲーム内の功績の書にはっきりと記されているので、次に何を追うべきかはいつでも分かります。狙っている功績には追跡を設定して、遊んでいる間もずっと視界に入れておけます。ごく一部の功績は秘密のままで、獲得して初めて姿を現します。功績の書はまた、自らに正直であり続けます。あなたの過去の記録で証明できるものはその場で認められるので、歴戦の者が開いたページが白紙ということはありません。数を刻む功績だけが、その集計を新たに始めます。',
+    '功績はキャラクターごとに達成しますが、功績の書はアカウント内の全キャラクターで共有されます。どのキャラクターが成し遂げた功績も全員のものとして記録され、書は誰がいつ達成したかを記し、その報酬の称号や縁飾りはどのキャラクターでも身に着けられます。レルムのランキングも同じ方法で名声を集め、各功績を一度だけ数えます。各功績は求められることをゲーム内の功績の書に明記しているので、追うべきものが常に分かり、狙っている功績を監視に登録して遊びながら視界に置いておけます。ごく一部は秘密のままで、達成したときにのみ姿を見せます。書は自らの誠実さも保ちます。過去の記録が証明できるものはその場で認められるので、ベテランが白紙のページを開くことはなく、数を数える功績だけが新たに集計を始めます。',
   'guide.deedsPage.howHeading': '功績の仕組み',
   'guide.deedsPage.intro':
     '功績の書は、始まりの谷を出る最初の一歩から、この王国が用意する最も過酷な戦いまで、あなたが成し遂げたすべてを世界が記録する場所です。遊びながら功績を獲得し、授かった称号を身にまとい、名声が高まっていくのを見届けましょう。',
@@ -6734,7 +6740,7 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
     '聖遺物庫は、カタログに載せたユニークな戦利品の博物館です。ダンジョンの追撃装備、職業のトロフィー、マウント、武器スキン、称号。功績の書に対して、トロフィー室と実績帳のような関係です。',
   'guide.reliquaryPage.howHeading': 'コレクションの仕組み',
   'guide.reliquaryPage.howBody':
-    'ゲーム内で聖遺物庫を開きます（既定は Shift+X）。各棚にユニークな聖遺物のページがあります。キャラクターが初めてその品を得るとシルエットが埋まり、ページ上のすべてが埋まると点灯します。「絶版」や「専用」と表示される一部のページは達成の対象外で、棚や全体の完成を妨げることはありません。ライブの発見はトーストと開いているウィンドウの更新になります。進捗はキャラクター単位で、武器スキンだけはアカウントの見た目です。',
+    'ゲーム内で聖遺物庫を開きます（既定は Shift+X）。各棚にユニークな聖遺物のページがあります。アカウント内のいずれかのキャラクターが初めてその品を得るとシルエットが埋まり、ページ上のすべてが埋まると点灯します。「絶版」や「専用」と表示される一部のページは達成の対象外で、棚や全体の完成を妨げることはありません。ライブの発見はトーストと開いているウィンドウの更新になります。進捗はアカウント内の全キャラクターで共有され、あるキャラクターが見つけた聖遺物は全員のページを埋めます。',
   'guide.reliquaryPage.ranksHeading': 'キュレーターランク',
   'guide.reliquaryPage.ranksBody':
     'キュレーターランクはカタログに載せたユニーク埋めで上がり、装飾の称号と枠だけを与えます。戦闘力、ドロップ率、天井はありません。アカウントの武器スキンはキュレーターランクに数えず、名声はキャラクターに残ります。絶版や専用ページの聖遺物も同様にランクへは数えません。',
@@ -8631,7 +8637,7 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'hudChrome.auraEffect.imbueRange': '武器付与: ヴァーディクトで{min}から{max}の追加ダメージ',
   'hudChrome.auraEffect.stealth': '隠密状態。移動速度が{pct}%低下する',
   'hudChrome.auraEffect.formBear': 'ブルーインフォーム: 体力と防御力が上昇',
-  'hudChrome.auraEffect.formCat': 'キャットフォーム: 近接ダメージとエネルギー',
+  'hudChrome.auraEffect.wolfForm': 'ウルフフォーム: 近接ダメージとエネルギー、移動速度が{pct}%上昇',
   'hudChrome.auraEffect.formTravel': 'フリートフォーム: 移動速度が{pct}%上昇',
   'hudChrome.auraEffect.defensiveStance':
     'ガーデッドスタンス: 受けるダメージが減少し、脅威度が上昇',
@@ -11426,6 +11432,11 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'hudChrome.deeds.progressAria': '進行度: {current}/{target}',
   'hudChrome.deeds.renownChip': '名声 {renown}',
   'hudChrome.deeds.earnedDate': '{date} に獲得',
+  'hudChrome.deeds.earnedBy': '{names} が獲得',
+  'hudChrome.deeds.earnerWithDate': '{name}（{date}）',
+  'hudChrome.deeds.accountScopeNote': 'アカウント内の全キャラクターで共有',
+  'hudChrome.deeds.accountScopeHint':
+    'アカウント内のどのキャラクターが成し遂げた功績もここで達成扱いになり、書は誰が達成したかを記します。',
   'hudChrome.deeds.hiddenBadge': '隠し',
   'hudChrome.deeds.titleChip': '称号報酬',
   'hudChrome.deeds.borderChip': '枠飾り報酬',
@@ -12677,6 +12688,11 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'hudChrome.reliquary.ownedTooltipStatus': '聖遺物庫に収蔵済み',
   'hudChrome.reliquary.missingTooltipStatus': 'まだ見つかっていません',
   'hudChrome.reliquary.firstFindClears': '初回入手：クリア {count} 回目',
+  'hudChrome.reliquary.foundBy': '{names} が発見',
+  'hudChrome.reliquary.finderWithDate': '{name}（{date}）',
+  'hudChrome.reliquary.sharedScopeNote': 'アカウント内の全キャラクターで共有',
+  'hudChrome.reliquary.sharedScopeHint':
+    'アカウント内のどのキャラクターが見つけた聖遺物も、ここでページを埋めます。',
   'hudChrome.reliquary.unlockToast': '聖遺物を収蔵：{name}',
   'hudChrome.reliquary.illuminateBanner': 'ページが照耀されました：{name}',
   'hudChrome.reliquary.illuminateToast': '{name} の聖遺物がすべて埋まりました。',
@@ -14471,6 +14487,8 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'guide.classPage.formsHeading': '変身',
   'guide.classPage.formsMoonwing':
     '均衡（ムーングローブ）のドルイドは、もう一つの姿、ムーンウィングフォームを得ます。均衡型のドルイドが戦うための術者の姿です。獣の姿でありながら呪文を保てる唯一の形であり、ワンドもこの姿か、通常の術者の姿でしか使えません。',
+  'guide.classPage.formsWolfEngage':
+    '狼はブルーインラッシュで戦いを開き、すぐにウルフフォームへ変身して対象を押さえ込み、ステルスでないときはランジで距離を詰め、テイクダウンで敵を足止めする。',
   'guide.classPage.formsAutoUnshift':
     '変身中に回復や攻撃の呪文を唱えると、姿はひとりでに解けます。こうして姿を解くのはマナもかからず、グローバルクールダウンも使いません。ですから即時発動の呪文は押した瞬間に飛びます。もう一度変身するのは普通のアビリティなので、マナもグローバルクールダウンもかかります。',
   'guide.classPage.formsNote':
@@ -15319,6 +15337,8 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'hudChrome.auraEffect.castShield': 'ダメージで詠唱が中断または遅延しない',
   'hudChrome.auraEffect.cauterizeFatigue': 'コーテライズは次の致死ダメージを防げない',
   'hudChrome.auraEffect.cooldownCap': 'この時間枠でクールダウン短縮を{used}/{cap}秒使用済み',
+  'hudChrome.auraEffect.bruinRushWindow':
+    'ウルフフォームのマナ消費がなくなり、ブルーインラッシュの対象を押さえ込んで{sec}秒間移動速度を{pct}%低下させる',
   'hudChrome.auraEffect.dawnsWrath': '制裁の鎚: HP不問 · +1回 · CD0 · ダメージ+{pct}%',
   'hudChrome.auraEffect.desolation':
     '残り{charges}チャージ：次のカオス・ボルトの詠唱が{castPct}%短縮、または次のレイン・オブ・ファイアが即着弾する',

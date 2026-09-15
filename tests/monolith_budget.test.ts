@@ -455,7 +455,11 @@ const MONOLITHS: MonolithRow[] = [
     // LOWERED 18352 -> 18350 in the review-fix round: the prompt countdown bar
     // moved to createPromptTimeoutBar in src/ui/prompt_dialog.ts alongside the
     // PROMPT_TIMEOUT_MS the sheet's --prompt-timeout-dur mirrors.
-    ceiling: 18350,
+    // Re-measured at the second release/v0.43.0 sync of the account-wide Book
+    // of Deeds / Reliquary change: the release's interface-redesign merge and
+    // this branch's charSheetRefreshSigFor extraction compose to 18343 by
+    // wc -l, below both parent pins (18455 / 18350). Exact count, zero slack.
+    ceiling: 18343,
     seam: 'pure view core + thin painter on PainterHost (src/ui/CLAUDE.md)',
   },
   {
@@ -1027,11 +1031,14 @@ const MONOLITHS: MonolithRow[] = [
     // measures 11923, below both arms, so the ceiling follows it down. Exact
     // merged count, zero slack: any further growth reds again.
     // Main hotfix integration: combined extractions, exact merged count.
-    // Down 11879 -> 11857 at the CPU-hygiene lot: the rift floor descriptor
-    // builder moved to src/sim/rift/rift_floor_view.ts, and the lot's own
-    // addition (the entityRosterVersion field plus its SimContext binding)
-    // landed under the old count. Exact count, zero slack.
-    ceiling: 11857,
+    // Down 11879 -> 11843: the CPU-hygiene lot moved the rift floor descriptor
+    // builder to src/sim/rift/rift_floor_view.ts, the Wildfang kit pass 2 moved
+    // the charge route constants to combat/charge_route.ts (11856 together), and
+    // the account-wide Book of Deeds / Reliquary change moved the deeds restore
+    // and join-retro passes into src/sim/deeds_restore.ts and the ownership
+    // union into accountReliquaryOwnershipOpts (src/sim/reliquary.ts). Exact
+    // count, zero slack.
+    ceiling: 11843,
     seam: 'a sim system module behind SimContext (src/sim/CLAUDE.md)',
   },
   {
@@ -1445,9 +1452,13 @@ const MONOLITHS: MonolithRow[] = [
     // below both parent pins. Exact merged count, zero slack.
     // Mount skins: bank the coordinator extraction at its measured size.
     // Main hotfix integration: combined extractions, exact merged count.
+    // LOWERED 10095 -> 10082 at the account-wide Book of Deeds / Reliquary change:
+    // the Book heavy keys moved into server/deeds_wire.ts and the Curator
+    // standing stamp into server/curator_standing.ts.
     // Guild board categories: the guild_pledge_settings dispatch arm's field
-    // validation moved to server/guild_pledge_settings_cmd.ts. Exact count.
-    ceiling: 10089,
+    // validation moved to server/guild_pledge_settings_cmd.ts. Merged with the
+    // account-wide books extraction above; exact merged count, zero slack.
+    ceiling: 10076,
     seam: 'a sibling server module; see the hot-path seams in server/CLAUDE.md',
   },
   {
@@ -1590,14 +1601,14 @@ const MONOLITHS: MonolithRow[] = [
     // OSSBrain integration: entity flair decoding moved to net/entity_flair_wire.ts.
     // Measured after formatting; lower the ratchet with the extraction.
     // Main hotfix integration: combined extractions, exact merged count.
-    // Down 5540 -> 5523 at the CPU-hygiene lot: the interest-boundary despawn
-    // grace moved to src/net/despawn_grace.ts, and the lot's entityRosterVersion
-    // field and bumps landed under the old count. Exact count, zero slack.
-    // Down 5523 -> 5515 with guild board categories: the board path builder,
-    // the page decode and the pledge-settings frame decode moved to
-    // src/net/guild_board_wire.ts. Measured on the release/v0.43.0-merged
-    // tree. Exact count, zero slack.
-    ceiling: 5515,
+    // Down 5540 -> 5506: the CPU-hygiene lot moved the interest-boundary despawn
+    // grace to src/net/despawn_grace.ts (5523), and the account-wide Book of Deeds /
+    // Reliquary change moved the deeds / Reliquary / account-ledger self-decode
+    // into src/net/book_wire.ts. Exact count, zero slack.
+    // Guild board categories: the board path builder, the page decode and the
+    // pledge-settings frame decode moved to src/net/guild_board_wire.ts. Merged
+    // with the book_wire extraction above; exact merged count, zero slack.
+    ceiling: 5498,
     seam: 'a src/net sibling module (the refactor/net-online split is the template)',
   },
   {
@@ -1746,10 +1757,15 @@ const MONOLITHS: MonolithRow[] = [
     // reach it directly), unlike createCharacterCapped's pure re-export.
     // Exact count, zero slack.
     // Mount skins: bank the coordinator extraction at its measured size.
-    // LOWERED 4744 -> 4670 with guild board categories: topGuilds and its
-    // GuildLeaderRow moved whole to server/guild_board_db.ts beside the new
-    // officer-roster read. Exact count, zero slack.
-    ceiling: 4670,
+    // LOWERED 4744 -> 4715 at the account-wide Book of Deeds / Reliquary change:
+    // the character_deeds DDL moved into DEEDS_SCHEMA (server/deeds_db.ts) and
+    // the new account_relic_finds DDL landed as ACCOUNT_LEDGER_SCHEMA
+    // (server/account_ledger_db.ts), both applied by ensureSchema.
+    // Guild board categories: topGuilds and its GuildLeaderRow moved whole to
+    // server/guild_board_db.ts beside the new officer-roster read. Merged with
+    // the DEEDS_SCHEMA / ACCOUNT_LEDGER_SCHEMA move above; exact merged count,
+    // zero slack.
+    ceiling: 4641,
     seam: 'a domain <domain>_db.ts module with its own *_SCHEMA (server/CLAUDE.md)',
   },
   {

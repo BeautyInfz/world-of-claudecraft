@@ -47,6 +47,8 @@ import type {
   GuildLeaderboardPage,
   LeaderboardEntry,
 } from '../src/world_api';
+import type { AccountLedgerKeys } from './account_ledger_db';
+import { accountLedgerKeysFor } from './account_ledger_keys_cache';
 import { characterSheet, SHEET_RECENT_DEEDS, type SheetRank } from './character_sheet';
 import {
   type ArenaLeaderRow,
@@ -538,6 +540,9 @@ interface PublicSheetDb {
   guildNameForCharacter(characterId: number): Promise<string | null>;
   lifetimeXpRankForCharacter(characterId: number): Promise<{ rank: number; total: number } | null>;
   recentDeedsForCharacter(characterId: number, limit: number): Promise<RecentDeedRow[]>;
+  /** The account ledger behind the sheet's account-wide Reliquary pair;
+   *  optional so a fake bundle without it reads the character's own fills. */
+  loadAccountLedgerKeys?(accountId: number): Promise<AccountLedgerKeys>;
 }
 
 /** The non-DB inputs the public sheet needs (realm, share origin, rank shaper). */
@@ -562,10 +567,12 @@ export async function readPublicSheet(
   if (!target) return { status: 404, body: { error: 'character not found' } };
   const row = await db.getCharacterById(target.characterId);
   if (!row) return { status: 404, body: { error: 'character not found' } };
-  const [guild, rank, deedsRecent] = await Promise.all([
+  const [guild, rank, deedsRecent, accountLedger] = await Promise.all([
     db.guildNameForCharacter(row.id),
     db.lifetimeXpRankForCharacter(row.id),
     db.recentDeedsForCharacter(row.id, SHEET_RECENT_DEEDS),
+    // Cosmetic aggregate: a failed ledger read degrades to the character's own fills.
+    db.loadAccountLedgerKeys?.(row.account_id).catch(() => undefined),
   ]);
   return {
     status: 200,
@@ -577,6 +584,7 @@ export async function readPublicSheet(
       guild,
       rank: deps.toSheetRank(rank),
       deedsRecent,
+      accountLedger,
     }),
   };
 }
@@ -597,6 +605,7 @@ const REAL_DB_READS = {
   guildNameForCharacter,
   lifetimeXpRankForCharacter,
   recentDeedsForCharacter,
+  loadAccountLedgerKeys: accountLedgerKeysFor,
 };
 let dbReads = REAL_DB_READS;
 

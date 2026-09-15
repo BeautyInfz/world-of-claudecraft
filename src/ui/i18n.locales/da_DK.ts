@@ -947,6 +947,8 @@ export const da_DK: Partial<Record<TranslationKey, string>> = {
   'guide.classPage.formsHeading': 'Formskifte',
   'guide.classPage.formsMoonwing':
     'En Månelund-druide får endnu en form, Månekinform, den kasterform en Månelund-druide kæmper i. Det er den ene dyreform, der beholder dine besværgelser, og din tryllestav virker kun i den eller i din normale kasterform.',
+  'guide.classPage.formsWolfEngage':
+    'En ulv åbner kampen med Bruin-storm, skifter straks til Ulveform for at fastholde målet, lukker afstanden med Spring, når den ikke sniger, og holder en fjende fast med Nedlæggelse.',
   'guide.classPage.formsNote':
     'En druide kæmper ved at skifte form. De fleste druideevner hører til én form, så den form, du er i, afgør, hvad du kan kaste, og at skifte koster lidt mana. Du kan skifte form både i og uden for kamp, så tit du vil.',
   'guide.classPage.mageEleHeading': 'Vandelementar',
@@ -5152,7 +5154,7 @@ export const da_DK: Partial<Record<TranslationKey, string>> = {
     'Et råb, der øger angrebskraften hos alle gruppemedlemmer med {buff}% i 30 min.',
   'entities.abilities.battle_shout.name': 'Jernbrøl',
   'entities.abilities.bear_charge.description':
-    'Storm mod en fjende, generér 9 raseri og bedøv den i 1 sek. 8-25 m rækkevidde. Kun i Bruin-form.',
+    'Storm mod en fjende, generér 9 raseri og bedøv den i 1 sek. I 3 sek. derefter er Ulveform gratis og fastholder målet, hvilket nedsætter dets hastighed med 50% i 4 sek. 8-25 m rækkevidde. Kun i Bruin-form.',
   'entities.abilities.bear_charge.name': 'Bruin-storm',
   'entities.abilities.bear_form.description':
     'Forvandl dig til en bjørn: rustning +110%, maksimalt helbred +30%, stærkt øget angrebskraft, dine angreb opbygger raseri og genererer 30% mere trussel. Kast igen for at vende tilbage til besværgerform.',
@@ -5172,7 +5174,7 @@ export const da_DK: Partial<Record<TranslationKey, string>> = {
     'Angrib øjeblikkeligt i et blodraseri for 60% våbenskade plus {damage}. (Furie-signatur)',
   'entities.abilities.bloodthirst.name': 'Åreladning',
   'entities.abilities.cat_form.description':
-    'Forvandler jer til en ulv: smidigheden stiger med jeres niveau, angrebsstyrke +8 plus 2 per niveau, jeres angreb bruger energi og kombopoint, og I skaber 29% mindre trussel. Kast den igen for at vende tilbage til besværgerskikkelsen.',
+    'Forvandler jer til en ulv: smidigheden stiger med jeres niveau, angrebsstyrke +8 plus 2 per niveau, jeres angreb bruger energi og kombopoint, og I skaber 29% mindre trussel. Skift til enhver skikkelse giver Langstrakt gang: 60% bevægelseshastighed i 3 sek., én gang hvert 20. sek. Kast den igen for at vende tilbage til besværgerskikkelsen.',
   'entities.abilities.cat_form.name': 'Ulveform',
   'entities.abilities.charge.description':
     'Storm mod en fjende, generér 9 raseri og bedøv den i 1 sek. 8-25 m rækkevidde.',
@@ -5387,8 +5389,14 @@ export const da_DK: Partial<Record<TranslationKey, string>> = {
     'Forvandler fjenden til en tudse i op til {duration} sek. Tudsen vandrer omkring og helbredes hurtigt. Enhver skade bryder effekten. Kun bæster og humanoider.',
   'entities.abilities.polymorph.name': 'Forheks',
   'entities.abilities.pounce.description':
-    'En snigeåbner der bedøver målet i 2 sek. Giver 1 kombopoint. Kun i Ulveform.',
+    'En snigeåbner der bedøver målet i 2 sek. Giver 1 kombopoint. Kun i Ulveform. Uden sneg-tilstand er denne knap Spring.',
   'entities.abilities.pounce.name': 'Luskeslag',
+  'entities.abilities.lunge.description':
+    'Spring mod en fjende op til 12 m væk, påfør 60% våbenskade og giv 1 kombopoint. Kun i Ulveform.',
+  'entities.abilities.lunge.name': 'Spring',
+  'entities.abilities.hamstring_bite.description':
+    'Afsluttende manøvre, der bedøver målet i 1 sek. plus 1 sek. pr. combopoint (5 combopoint: 6 sek.). Kun i Ulveform.',
+  'entities.abilities.hamstring_bite.name': 'Nedlæggelse',
   'entities.abilities.power_word_fortitude.description':
     'Øger hvert gruppemedlems Udholdenhed med {buff}% i 30 min.',
   'entities.abilities.power_word_fortitude.name': 'Beslutsomhedens Litani',
@@ -5396,7 +5404,7 @@ export const da_DK: Partial<Record<TranslationKey, string>> = {
     'Skjolder et venligt mål og absorberer {damage} skade i 30 sek. Disciplin forbinder desuden målet med jeres Hellige skade i 30 sek.',
   'entities.abilities.power_word_shield.name': 'Værnets Salme',
   'entities.abilities.prowl.description':
-    'Gå i sneg-tilstand mens du er i Ulveform, og bevæg dig 5 % langsommere. Kan ikke bruges i kamp.',
+    'Gå i sneg-tilstand mens du er i Ulveform. Kan ikke bruges i kamp.',
   'entities.abilities.prowl.name': 'Snig',
   'entities.abilities.pyroblast.description':
     'Slynger en enorm flammende kampesten, der volder {damage} ildskade plus yderligere skade over tid.',
@@ -9909,7 +9917,6 @@ export const da_DK: Partial<Record<TranslationKey, string>> = {
   'hudChrome.auraEffect.imbueRange': 'Våben gennemsyret: {min} til {max} bonusskade ved Dom',
   'hudChrome.auraEffect.stealth': 'Verborgen; Bewegungstempo um {pct}% verringert',
   'hudChrome.auraEffect.formBear': 'Bruin-form: øget helbred og rustning',
-  'hudChrome.auraEffect.formCat': 'Katzengestalt: Nahkampfschaden und Energie',
   'hudChrome.auraEffect.formTravel': 'Fleet-form: bevægelseshastighed øget med {pct}%',
   'hudChrome.auraEffect.defensiveStance': 'Værgende Stilling: mindre modtaget skade, mere trussel',
   'hudChrome.auraEffect.righteousFury': 'Brændende Ed: stærkt øget trussel fra Hellig skade',
@@ -13881,6 +13888,8 @@ export const da_DK: Partial<Record<TranslationKey, string>> = {
     'Kauterisering kan ikke forhindre endnu et dræbende slag',
   'hudChrome.auraEffect.cooldownCap':
     '{used} af {cap} sek. nedkølingsreduktion brugt i dette vindue',
+  'hudChrome.auraEffect.bruinRushWindow':
+    'Ulveform koster ingen mana og fastholder målet for jeres Bruin-storm, hvilket nedsætter dets hastighed med {pct}% i {sec} sek.',
   'hudChrome.auraEffect.desolation':
     '{charges} ladninger: dit næste Undergangslyn kastes {castPct}% hurtigere, eller din næste Ildregn lander øjeblikkeligt',
   'hudChrome.auraEffect.duskfireClaim': 'Død giver {value} Wrack',
@@ -13970,7 +13979,7 @@ export const da_DK: Partial<Record<TranslationKey, string>> = {
     'Hver skrevet side i Relikvariet og navnene på de relikvier, den rummer. Listen indeholder kun navne uden spoilere: åbn Relikvariet inde i spillet for at se dine egne fremskridt, dine gennemførsler og silhuetterne.',
   'guide.reliquaryPage.catalogHeading': 'Katalog over sider',
   'guide.reliquaryPage.howBody':
-    'Åbn Relikvariet inde i spillet (Skift+X som standard). Hver hylde rummer sider med enestående relikvier. Du udfylder en silhuet, når du første gang får den genstand på den pågældende figur, og du illuminerer en side, når hver relikvie på den er udfyldt. Nogle få sider er mærket Udgået eller Personlig: de står uden for fuldførelsen og spærrer derfor aldrig en hylde eller hele kataloget. Fund giver straks en besked og opdaterer det åbne vindue; fremskridt hører til figuren, undtagen våbenudseender, der er kontokosmetik.',
+    'Åbn Relikviegemmet i spillet (standard Shift+X). Hver hylde rummer sider med unikke relikvier. En silhuet fyldes, når en hvilken som helst figur på din konto får den genstand for første gang, og en side oplyses, når hvert relikvie på den er fyldt. Nogle få sider er mærket Udgået eller Personlig: de står uden for fuldførelsen og spærrer derfor aldrig en hylde eller hele kataloget. Fund giver straks en besked og opdaterer det åbne vindue; fremskridt deles af alle figurer på kontoen, så et relikvie, som én figur finder, fylder siden for dem alle.',
   'guide.reliquaryPage.howHeading': 'Sådan fungerer samlingen',
   'guide.reliquaryPage.intro':
     'Relikvariet er museet over det enestående bytte, du har katalogiseret: eftertragtede fund fra fangekældre, erhvervstrofæer, ridedyr, våbenudseender og titler. Det hører sammen med Bedrifternes Bog, som en trofæsal hører sammen med en bedriftsbog.',
