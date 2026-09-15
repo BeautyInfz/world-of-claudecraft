@@ -103,6 +103,9 @@ describe('Book of Deeds view core over the account ledger', () => {
     const title = model.entries.find((e) => e.id === 'cmb_title')!;
     expect(title.earned).toBe(true);
     expect(title.earnedDay).toBe('2026-09-01');
+    // Not this character's own earn: the painter prints no bare "Earned"
+    // date line for it, only the earners line.
+    expect(title.earnedByMe).toBe(false);
     expect(title.earners).toEqual([ALT]);
     // Watch stays keyed on own progress: alt-earned is still watchable here.
     expect(title.watchable).toBe(true);
@@ -118,6 +121,7 @@ describe('Book of Deeds view core over the account ledger', () => {
     const model = view({ own: new Map([['cmb_title', '2026-09-08']]), account });
     const title = model.entries.find((e) => e.id === 'cmb_title')!;
     expect(title.earnedDay).toBe('2026-09-08');
+    expect(title.earnedByMe).toBe(true);
     expect(title.earners).toEqual([ALT, SELF]);
     expect(model.entries.find((e) => e.id === 'cmb_counter')?.earners).toEqual([]);
   });
@@ -259,6 +263,13 @@ describe('painter source pins', () => {
     expect(painter).toContain("t('hudChrome.deeds.earnerWithDate', {");
     expect(painter).toContain("t('hudChrome.deeds.accountScopeNote')");
     expect(painter).toContain('accountDigest: accountDeedsDigest(world.accountDeeds)');
+    // The bare "Earned <date>" line is this character's own earn only, and
+    // the earners line is skipped when this character is the only earner.
+    expect(painter).toContain('if (entry.earnedDay !== null && entry.earnedByMe) {');
+    expect(painter).toContain('const ownOnly = entry.earnedByMe && entry.earners.length === 1;');
+    expect(painter).toContain('if (entry.earners.length > 0 && !ownOnly) {');
+    // The scope chip composes the library chip (its focus ring rides along).
+    expect(painter).toContain('class="ui-chip deeds-scope-note"');
   });
 
   it('the relic tooltip lists finders through the two catalog keys, on both tooltip arms', () => {
@@ -266,6 +277,7 @@ describe('painter source pins', () => {
     expect(painter).toContain("t('hudChrome.reliquary.foundBy', { names: formatList(names) })");
     expect(painter).toContain("t('hudChrome.reliquary.finderWithDate', {");
     expect(painter).toContain("t('hudChrome.reliquary.sharedScopeNote')");
+    expect(painter).toContain('class="ui-chip reliquary-scope-note"');
     expect(painter.match(/this\.foundByLineHtml\(cell\)/g)).toHaveLength(2);
   });
 });

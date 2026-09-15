@@ -72,5 +72,5 @@ export function runBookOfDeedsJoinRetro(ctx: SimContext, meta: PlayerMeta, playe
   evaluateDeedsFor(ctx, meta, player, true);
   ctx.deedDirtyPids.delete(player.id);
   ctx.deedDirtyKeys.delete(player.id);
-  seedAccountLedgerSelf(ctx, meta);
+  seedAccountLedgerSelf(meta);
 }

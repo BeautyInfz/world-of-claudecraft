@@ -270,9 +270,12 @@ describe('account ledger over the wire', () => {
     });
     joinAt(server, fw, 7, 42, 'Hilda', state);
     await settle();
+    // UNDATED: the blob keeps no per-relic day, so the backfilled row carries
+    // no found_at instead of the login day (the live drain above is dated).
     expect(insertMock).toHaveBeenCalledWith(
       { realm: REALM, characterId: 42, accountId: 7, name: 'Hilda', cls: 'warrior' },
       [`item:${CATALOGUE_RELIC}`],
+      { undated: true },
     );
   });
 

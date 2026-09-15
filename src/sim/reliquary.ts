@@ -20,10 +20,12 @@ import {
   accountDeedLookup,
   accountRelicKey,
   accountRelicLookup,
+  isKnownAccountDeedId,
   isKnownAccountRelicKey,
   recordAccountDeed,
   recordAccountRelic,
   selfEarner,
+  stampAccountDeedDay,
 } from './account_ledger';
 import {
   isCataloguedRelicItem,
@@ -639,7 +641,15 @@ export function noteRelicObtain(meta: PlayerMeta, itemId: string, copies = 1): v
  * skill power, drop rate, or pity. No saveCharacter on pure mark fill.
  * @returns true when a new mark was written.
  */
-export function noteReliquaryMark(ctx: SimContext, meta: PlayerMeta, markId: string): boolean {
+export function noteReliquaryMark(
+  ctx: SimContext,
+  meta: PlayerMeta,
+  markId: string,
+  /** Threaded to the ledger record like the item path's, so a join-time or
+   *  catch-up mark fill can never fan out as a live find. Every caller today
+   *  is a live event site and passes nothing. */
+  opts?: Readonly<{ retro?: boolean }>,
+): boolean {
   if (!RELIQUARY_MARK_IDS.has(markId)) return false;
   if (meta.reliquary.marks.has(markId)) return false;
   // One snapshot for the chain (see onItemDiscovered). The EVALUATION POINTS
@@ -658,7 +668,7 @@ export function noteReliquaryMark(ctx: SimContext, meta: PlayerMeta, markId: str
   meta.reliquary.marks.add(markId);
   pushRecent(meta.reliquary, markId);
   bumpReliquaryWireRev(meta.reliquary);
-  recordRelic(ctx, meta, 'mark', markId);
+  recordRelic(ctx, meta, 'mark', markId, opts);
   const newOwned =
     relicFillScoresForRank('mark', markId) && !alreadyOnAccount ? previousOwned + 1 : previousOwned;
   const previousRank = curatorRankFromOwned(previousOwned);
@@ -1451,11 +1461,27 @@ export function selfRelicKeys(meta: PlayerMeta): string[] {
  * already lists for this character (with its real recorded day) is left
  * alone. Returns how many entries landed.
  */
-export function seedAccountLedgerSelf(ctx: SimContext, meta: PlayerMeta): number {
-  const earner = selfEarner(meta, ctx.utcDay);
+export function seedAccountLedgerSelf(meta: PlayerMeta): number {
+  // No calendar on the relic half: the blob keeps no per-relic day, so a
+  // historic find is undated rather than stamped with the join day (the live
+  // fill path, recordRelic, records the true day). The deed half carries the
+  // blob's own utcDay stamp per deed.
+  const earner = selfEarner(meta, '');
   let added = 0;
-  for (const [deedId, day] of meta.deedsEarned) {
+  // Sorted walk: deedsEarned restores from a jsonb object whose key order
+  // Postgres rewrites (the vault walk in deeds.ts sorts for the same reason),
+  // so the ledger's key order, and with it the acct wire bytes, would
+  // otherwise differ between a server-loaded and an offline character.
+  const ownDeeds = [...meta.deedsEarned].sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0));
+  for (const [deedId, day] of ownDeeds) {
+    // Catalog-bounded like the relic half (selfRelicKeys) and the wire
+    // decode, so a retired id in an old blob never reaches the ledger on
+    // one host but not the other.
+    if (!isKnownAccountDeedId(deedId)) continue;
     if (recordAccountDeed(meta.accountLedger, deedId, { ...earner, day })) added++;
+    // Already listed from the server's rows: the blob's own stamp beats the
+    // row clock (which is when the row landed, not when the deed was earned).
+    else stampAccountDeedDay(meta.accountLedger, deedId, earner.characterId, day);
   }
   for (const key of selfRelicKeys(meta)) {
     if (recordAccountRelic(meta.accountLedger, key, earner)) added++;

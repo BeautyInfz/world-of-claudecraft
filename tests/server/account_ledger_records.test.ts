@@ -61,9 +61,11 @@ describe('recordRelicFinds', () => {
     recordRelicFinds(WHO, ['item:cryptbone_helm', 'mark:gather_event:pristine_vein']);
     await settle();
     expect(insertMock).toHaveBeenCalledTimes(1);
-    const [who, keys] = insertMock.mock.calls[0];
+    const [who, keys, opts] = insertMock.mock.calls[0];
     expect(who).toEqual({ realm: REALM, ...WHO });
     expect([...keys]).toEqual(['item:cryptbone_helm', 'mark:gather_event:pristine_vein']);
+    // Live finds are dated: the row default stamps the find moment.
+    expect(opts).toBeUndefined();
   });
 
   it('an empty slice never touches the tail', async () => {
@@ -95,6 +97,10 @@ describe('recordRelicFinds', () => {
     await settle();
     expect(insertMock).toHaveBeenCalledTimes(2);
     expect([...insertMock.mock.calls[1][1]]).toEqual(['item:cryptbone_helm']);
+    // The reconcile's rows are UNDATED: the blob keeps no per-relic day and
+    // the replay moment is not the find, so a veteran's historic finds never
+    // show the first post-rollout login as their date.
+    expect(insertMock.mock.calls[1][2]).toEqual({ undated: true });
     await accountLedgerKeysFor(7);
     expect(reads()).toBe(2);
   });

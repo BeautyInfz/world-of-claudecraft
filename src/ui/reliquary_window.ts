@@ -975,7 +975,7 @@ export class ReliquaryWindow {
       `<div class="reliquary-summary${sealClass}"${sealAttr}>` +
       `<span class="reliquary-count">${esc(t('hudChrome.reliquary.countLabel', { owned, total }))}</span>` +
       // The scope disclosure: the count and rank are account-wide.
-      `<span class="reliquary-scope-note" data-scope-note tabindex="0">${esc(t('hudChrome.reliquary.sharedScopeNote'))}</span>` +
+      `<span class="ui-chip reliquary-scope-note" data-scope-note tabindex="0">${esc(t('hudChrome.reliquary.sharedScopeNote'))}</span>` +
       `<span class="reliquary-rank" data-rank="${p.curatorRank}">` +
       `<span class="reliquary-rank-seal" aria-hidden="true"></span>` +
       `${esc(rankLabel)}</span>` +

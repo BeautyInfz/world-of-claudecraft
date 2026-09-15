@@ -16,12 +16,12 @@ import {
   freshAccountLedger,
   isKnownAccountDeedId,
   isKnownAccountRelicKey,
-  mergeAccountLedger,
   recordAccountDeed,
   recordAccountRelic,
   restoreAccountLedger,
   selfEarner,
   serializeAccountLedger,
+  stampAccountDeedDay,
 } from '../src/sim/account_ledger';
 
 const ALICE: AccountEarner = { characterId: 1, name: 'Alice', cls: 'warrior', day: '2026-09-01' };
@@ -72,25 +72,21 @@ describe('recording', () => {
     expect(selfEarner({ characterId: 42, name: 'Hilda', cls: 'warrior' }, '').characterId).toBe(42);
   });
 
-  it('merge folds every entry, dedupes per character, keeps existing earners first, and bumps once', () => {
-    const into = freshAccountLedger();
-    recordAccountDeed(into, 'd1', ALICE);
-    recordAccountRelic(into, 'item:x', ALICE);
-    const from = freshAccountLedger();
-    recordAccountDeed(from, 'd1', BOB);
-    recordAccountDeed(from, 'd1', ALICE); // duplicate
-    recordAccountDeed(from, 'd2', BOB);
-    recordAccountRelic(from, 'mark:m', BOB);
-    const before = accountLedgerRev(into);
-    mergeAccountLedger(into, from);
-    expect(into.deeds.get('d1')).toEqual([ALICE, BOB]);
-    expect(into.deeds.get('d2')).toEqual([BOB]);
-    expect(into.relics.get('item:x')).toEqual([ALICE]);
-    expect(into.relics.get('mark:m')).toEqual([BOB]);
-    expect(accountLedgerRev(into)).toBe(before + 1);
-    // Nothing new: no bump.
-    mergeAccountLedger(into, from);
-    expect(accountLedgerRev(into)).toBe(before + 1);
+  it('stampAccountDeedDay re-stamps only an existing entry of that character, with a real day, and bumps once', () => {
+    const ledger = freshAccountLedger();
+    recordAccountDeed(ledger, 'd1', { ...ALICE, day: '2026-09-14' }); // the row clock
+    recordAccountDeed(ledger, 'd1', BOB);
+    const before = accountLedgerRev(ledger);
+    // The blob's own stamp wins over the loaded row day; Bob is untouched.
+    expect(stampAccountDeedDay(ledger, 'd1', ALICE.characterId, '2026-08-01')).toBe(true);
+    expect(ledger.deeds.get('d1')).toEqual([{ ...ALICE, day: '2026-08-01' }, BOB]);
+    expect(accountLedgerRev(ledger)).toBe(before + 1);
+    // No-ops: same day, empty day, a character not on the entry, a missing deed.
+    expect(stampAccountDeedDay(ledger, 'd1', ALICE.characterId, '2026-08-01')).toBe(false);
+    expect(stampAccountDeedDay(ledger, 'd1', ALICE.characterId, '')).toBe(false);
+    expect(stampAccountDeedDay(ledger, 'd1', 77, '2026-08-01')).toBe(false);
+    expect(stampAccountDeedDay(ledger, 'd9', ALICE.characterId, '2026-08-01')).toBe(false);
+    expect(accountLedgerRev(ledger)).toBe(before + 1);
   });
 });
 
@@ -150,11 +146,19 @@ describe('wire', () => {
           'garbage',
         ],
         soc_meet_bursar: [['x']],
+        // A day that is not a calendar day is bounded to the "no calendar"
+        // value (the painters would otherwise hand an Invalid Date to
+        // formatDateTime, which throws mid-build).
+        prog_veteran: [
+          [2, 'Bob', 'mage', 'garbage'],
+          [4, 'Cara', 'rogue', '2026-09-01T10:00:00Z'],
+        ],
       },
       r: Object.create({ inherited: [[9, 'Ghost', 'mage', '']] }),
     });
     expect(restored.deeds.get('prog_first_steps')).toEqual([ALICE]);
     expect(restored.deeds.has('soc_meet_bursar')).toBe(false);
+    expect(restored.deeds.get('prog_veteran')?.map((e) => e.day)).toEqual(['', '']);
     expect(restored.relics.has('inherited')).toBe(false);
   });
 

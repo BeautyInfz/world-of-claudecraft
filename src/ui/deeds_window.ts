@@ -483,7 +483,7 @@ export class DeedsWindow {
       `<span class="deeds-pct">${esc(pctText)}</span>` +
       // The scope disclosure the ranked-surface rule asks of a re-scoped count
       // (docs/design/deeds.md): Renown and the earned pair are account-wide.
-      `<span class="deeds-scope-note" data-scope-note tabindex="0">${esc(t('hudChrome.deeds.accountScopeNote'))}</span>`;
+      `<span class="ui-chip deeds-scope-note" data-scope-note tabindex="0">${esc(t('hudChrome.deeds.accountScopeNote'))}</span>`;
     if (s.recent.length > 0) {
       const crests = s.recent
         .map(
@@ -633,7 +633,10 @@ export class DeedsWindow {
       )}</div>`;
     }
     let foot = '';
-    if (entry.earnedDay !== null) {
+    // The bare date is this character's OWN earn only: for a deed an alt
+    // earned, the ledger line below is the whole fact, and printing the alt's
+    // day as "Earned ..." would read as this character's accomplishment.
+    if (entry.earnedDay !== null && entry.earnedByMe) {
       const date = formatDateTime(new Date(`${entry.earnedDay}T00:00:00Z`), {
         dateStyle: 'medium',
         timeZone: 'UTC',
@@ -642,9 +645,12 @@ export class DeedsWindow {
     }
     // The account ledger's earners: every character on the account that
     // accomplished this deed, each with its own date where one is recorded.
-    // Always listed when known (the Book is account-wide, so the reader may
-    // not be the earner); the same muted-fact role as the date beside it.
-    if (entry.earners.length > 0) {
+    // Listed whenever anyone else is on it (the Book is account-wide, so the
+    // reader may not be the earner); the same muted-fact role as the date
+    // beside it. Skipped when the only earner is this character: the date
+    // line above already says it, and the name would repeat the date.
+    const ownOnly = entry.earnedByMe && entry.earners.length === 1;
+    if (entry.earners.length > 0 && !ownOnly) {
       const names = entry.earners.map((earner) =>
         earner.day === ''
           ? earner.name

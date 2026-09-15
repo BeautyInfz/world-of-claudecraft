@@ -23,7 +23,11 @@
 // from the character_deeds and account_relic_finds tables at join
 // (server/account_ledger_db.ts) and hands it to Sim.addPlayer; the sim appends
 // the acting character's own grants as they happen so both hosts read the
-// same union within the same tick. It is never serialized into CharacterState
+// same union within the same tick. Identity: the server hands EVERY session
+// its own ledger object (one loadAccountLedger per join) and its fan-out
+// copies entries between them (server/account_ledger_service.ts); nothing
+// here assumes two characters share one object, and the offline host always
+// starts from a fresh one. It is never serialized into CharacterState
 // (it is account state, not character state), and it never carries text a
 // player sees beyond character names.
 //
@@ -134,18 +138,25 @@ export function recordAccountRelic(
   return true;
 }
 
-/** Fold every entry of `from` into `into` (dedupe per character, order kept:
- *  existing earners stay ahead of merged ones). Used at join to fold the
- *  retro pass's own-character appends over the rows the server loaded. */
-export function mergeAccountLedger(into: AccountLedger, from: AccountLedger): void {
-  let changed = false;
-  for (const [id, earners] of from.deeds) {
-    for (const earner of earners) if (appendEarner(into.deeds, id, earner)) changed = true;
-  }
-  for (const [key, earners] of from.relics) {
-    for (const earner of earners) if (appendEarner(into.relics, key, earner)) changed = true;
-  }
-  if (changed) bumpRev(into);
+/** Re-stamp the day on a character's EXISTING deed entry with its own earned
+ *  day. The join seed uses it so the blob's utcDay stamp (the earn itself)
+ *  beats the row clock the server loaded first: character_deeds.earned_at is
+ *  when the row LANDED, which for a reconciled row can be long after the
+ *  earn. A missing entry, an empty day, or an unchanged day is a no-op.
+ *  @returns true when the day moved. */
+export function stampAccountDeedDay(
+  ledger: AccountLedger,
+  deedId: string,
+  characterId: number,
+  day: string,
+): boolean {
+  if (day === '') return false;
+  const list = ledger.deeds.get(deedId);
+  const index = list?.findIndex((e) => e.characterId === characterId) ?? -1;
+  if (list === undefined || index < 0 || list[index].day === day) return false;
+  list[index] = { ...list[index], day };
+  bumpRev(ledger);
+  return true;
 }
 
 // ---------------------------------------------------------------------------
@@ -184,6 +195,15 @@ export function accountLedgerWireJson(ledger: AccountLedger): string {
   return json;
 }
 
+const CALENDAR_DAY = /^\d{4}-\d{2}-\d{2}$/;
+
+/** The day is bounded like the keys: anything but a calendar day becomes the
+ *  "no calendar" value, so a malformed stamp can never reach formatDateTime
+ *  (an Invalid Date throws from inside the card build). */
+function boundedDay(day: string): string {
+  return CALENDAR_DAY.test(day) ? day : '';
+}
+
 function restoreEarners(raw: unknown): AccountEarner[] {
   const out: AccountEarner[] = [];
   if (!Array.isArray(raw)) return out;
@@ -193,7 +213,7 @@ function restoreEarners(raw: unknown): AccountEarner[] {
     if (typeof cid !== 'number' || !Number.isFinite(cid)) continue;
     if (typeof name !== 'string' || typeof cls !== 'string' || typeof day !== 'string') continue;
     if (out.some((e) => e.characterId === cid)) continue;
-    out.push({ characterId: cid, name, cls: cls as PlayerClass, day });
+    out.push({ characterId: cid, name, cls: cls as PlayerClass, day: boundedDay(day) });
   }
   return out;
 }

@@ -34,18 +34,35 @@ export interface RelicFindWho {
 /** Record a character's relic finds in ONE conflict-swallowing statement.
  *  Idempotent per (character, relic_key), so the live observer, the on-join
  *  seed replay, and a crash-replay all collapse into no-ops. Empty input is a
- *  caller-side no-op (never reaches SQL); keys bind as one text[]. */
+ *  caller-side no-op (never reaches SQL); keys bind as one text[].
+ *
+ *  `undated` is the login reconcile's arm: a find the blob proves but never
+ *  dated (the blob keeps no per-relic day) lands with a NULL found_at, the
+ *  ledger's "no calendar" value, instead of the day it was replayed. The live
+ *  observer omits the column and takes the row default (the find moment). */
 export async function insertAccountRelicFinds(
   who: RelicFindWho,
   relicKeys: readonly string[],
+  opts?: Readonly<{ undated?: boolean }>,
 ): Promise<void> {
   if (relicKeys.length === 0) return;
+  const params = [who.realm, who.characterId, who.accountId, [...relicKeys], who.name, who.cls];
+  if (opts?.undated) {
+    await pool.query(
+      `INSERT INTO account_relic_finds
+         (realm, character_id, account_id, relic_key, character_name, character_class, found_at)
+       SELECT $1, $2, $3, unnest($4::text[]), $5, $6, NULL
+       ON CONFLICT (character_id, relic_key) DO NOTHING`,
+      params,
+    );
+    return;
+  }
   await pool.query(
     `INSERT INTO account_relic_finds
        (realm, character_id, account_id, relic_key, character_name, character_class)
      SELECT $1, $2, $3, unnest($4::text[]), $5, $6
      ON CONFLICT (character_id, relic_key) DO NOTHING`,
-    [who.realm, who.characterId, who.accountId, [...relicKeys], who.name, who.cls],
+    params,
   );
 }
 
@@ -181,6 +198,11 @@ export const ACCOUNT_LEDGER_SCHEMA = `
 -- blob's proven finds idempotently. UNIQUE (character_id, relic_key) is the
 -- idempotence backbone; the account index serves the per-join ledger load
 -- (loadAccountLedger, server/account_ledger_db.ts), which is the one reader.
+-- Keep-forever, bounded: at most one row per (character, catalogued relic),
+-- and because a character's deletion never removes its rows (the no-FK
+-- choice above), the bound is the catalog (a few hundred keys) times the
+-- characters an account has EVER created, each row a few dozen bytes. No
+-- retention sweep: the rows ARE the account's Reliquary history.
 CREATE TABLE IF NOT EXISTS account_relic_finds (
   id BIGSERIAL PRIMARY KEY,
   realm TEXT NOT NULL,
@@ -189,8 +211,15 @@ CREATE TABLE IF NOT EXISTS account_relic_finds (
   relic_key TEXT NOT NULL,
   character_name TEXT NOT NULL,
   character_class TEXT NOT NULL,
-  found_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  -- NULL is the ledger's "no calendar" value: the login reconcile backfills a
+  -- find the blob proves but never dated (the blob keeps no per-relic day), so
+  -- a historic find shows no date rather than the day it was replayed. The
+  -- live observer takes the default, the find moment.
+  found_at TIMESTAMPTZ DEFAULT now(),
   UNIQUE (character_id, relic_key)
 );
+-- A database that booted the first cut of this table has found_at NOT NULL;
+-- idempotent (a no-op once dropped), additive (nothing reads the constraint).
+ALTER TABLE account_relic_finds ALTER COLUMN found_at DROP NOT NULL;
 CREATE INDEX IF NOT EXISTS account_relic_finds_account ON account_relic_finds(account_id);
 `;

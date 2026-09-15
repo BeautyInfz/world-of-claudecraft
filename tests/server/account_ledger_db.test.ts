@@ -54,6 +54,23 @@ describe('insertAccountRelicFinds', () => {
     ]);
   });
 
+  it('the undated arm (the login reconcile) writes found_at NULL explicitly, same params, same idempotence', async () => {
+    await insertAccountRelicFinds(
+      { realm: REALM, characterId: 42, accountId: 7, name: 'Hilda', cls: 'warrior' },
+      ['item:cryptbone_helm'],
+      { undated: true },
+    );
+    expect(dbMock.query).toHaveBeenCalledTimes(1);
+    const [sql, params] = dbMock.query.mock.calls[0];
+    expect(sql).toContain(
+      '(realm, character_id, account_id, relic_key, character_name, character_class, found_at)',
+    );
+    expect(sql).toContain('unnest($4::text[]), $5, $6, NULL');
+    expect(sql).toContain('ON CONFLICT (character_id, relic_key) DO NOTHING');
+    expect(sql).not.toContain('$7');
+    expect(params).toEqual([REALM, 42, 7, ['item:cryptbone_helm'], 'Hilda', 'warrior']);
+  });
+
   it('an empty key set never reaches SQL', async () => {
     await insertAccountRelicFinds(
       { realm: REALM, characterId: 42, accountId: 7, name: 'Hilda', cls: 'warrior' },
@@ -154,6 +171,16 @@ describe('loadAccountLedger', () => {
       { characterId: 1, name: 'A', cls: 'warrior', day: '2026-09-01' },
     ]);
   });
+
+  it('an undated row (found_at NULL, the reconcile backfill) folds as the "no calendar" day', () => {
+    const ledger = accountLedgerFromRows(
+      [],
+      [{ key: 'item:cryptbone_helm', character_id: 1, name: 'A', class: 'warrior', at: null }],
+    );
+    expect(ledger.relics.get('item:cryptbone_helm')).toEqual([
+      { characterId: 1, name: 'A', cls: 'warrior', day: '' },
+    ]);
+  });
 });
 
 describe('account_relic_finds DDL', () => {
@@ -176,7 +203,14 @@ describe('account_relic_finds DDL', () => {
     expect(block).toContain('character_class TEXT NOT NULL');
     expect(block).toContain('account_id INT NOT NULL REFERENCES accounts(id) ON DELETE CASCADE');
     expect(block).toContain('relic_key TEXT NOT NULL');
-    expect(block).toContain('found_at TIMESTAMPTZ NOT NULL DEFAULT now()');
+    // Nullable: NULL is the reconcile backfill's "no calendar" value; the
+    // live observer still takes the default. The DROP NOT NULL reconciles a
+    // database that booted the first cut (idempotent).
+    expect(block).toContain('found_at TIMESTAMPTZ DEFAULT now()');
+    expect(block).not.toContain('found_at TIMESTAMPTZ NOT NULL');
+    expect(ACCOUNT_LEDGER_SCHEMA).toContain(
+      'ALTER TABLE account_relic_finds ALTER COLUMN found_at DROP NOT NULL;',
+    );
     expect(block).toContain('UNIQUE (character_id, relic_key)');
     expect(ACCOUNT_LEDGER_SCHEMA).toContain(
       'CREATE INDEX IF NOT EXISTS account_relic_finds_account ON account_relic_finds(account_id);',

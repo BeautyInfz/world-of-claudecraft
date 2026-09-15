@@ -372,8 +372,22 @@ describe('join seed', () => {
   it('a restored blob lists the character for its own deeds (own day kept) and relics, folded over the loaded ledger', () => {
     const ledger = freshAccountLedger();
     recordAccountDeed(ledger, 'soc_meet_bursar', ALT);
+    // The server's rows already list this character for col_glimmerfin, with
+    // the ROW clock (when the reconcile landed the row), not the earn day.
+    recordAccountDeed(ledger, 'col_glimmerfin', {
+      characterId: 42,
+      name: 'Second',
+      cls: 'warrior',
+      day: '2026-09-14',
+    });
     const state = fullState({
-      deeds: { soc_meet_bursar: '2026-08-01', col_glimmerfin: '2026-08-02' },
+      // A retired id in an old blob never reaches the ledger (the catalog
+      // bound the wire decode and the relic half already apply).
+      deeds: {
+        soc_meet_bursar: '2026-08-01',
+        col_glimmerfin: '2026-08-02',
+        retired_deed: '2026-08-03',
+      },
       deedStats: { itemsDiscovered: [CATALOGUE_RELIC] },
     });
     const { meta } = makeSim({ state, ledger });
@@ -385,13 +399,30 @@ describe('join seed', () => {
       [99, '2026-09-01'],
       [42, '2026-08-01'],
     ]);
-    expect(meta.accountLedger.deeds.get('col_glimmerfin')?.[0]).toMatchObject({
-      characterId: 42,
-      day: '2026-08-02',
-    });
-    expect(meta.accountLedger.relics.get(`item:${CATALOGUE_RELIC}`)?.[0].characterId).toBe(42);
+    // The blob's own stamp beats the row clock on the existing self entry.
+    expect(meta.accountLedger.deeds.get('col_glimmerfin')).toEqual([
+      { characterId: 42, name: 'Second', cls: 'warrior', day: '2026-08-02' },
+    ]);
+    expect(meta.accountLedger.deeds.has('retired_deed')).toBe(false);
+    // A historic relic find is UNDATED: the blob keeps no per-relic day, so
+    // the seed never invents one (the join day would move every session).
+    expect(meta.accountLedger.relics.get(`item:${CATALOGUE_RELIC}`)).toEqual([
+      { characterId: 42, name: 'Second', cls: 'warrior', day: '' },
+    ]);
     // Re-seeding is a no-op.
-    const { sim } = makeSim();
-    expect(seedAccountLedgerSelf(sim.ctx, meta)).toBe(0);
+    expect(seedAccountLedgerSelf(meta)).toBe(0);
+  });
+
+  it('the seed walks the blob deeds in sorted order, so the ledger key order does not follow jsonb key order', () => {
+    // Postgres rewrites jsonb object key order, so a server-loaded blob and
+    // an offline one would otherwise seed the same deeds in different orders
+    // and ship different acct bytes.
+    const state = fullState({
+      deeds: { soc_meet_bursar: '2026-08-01', col_glimmerfin: '2026-08-02' },
+    });
+    const { meta } = makeSim({ state, ledger: freshAccountLedger() });
+    const keys = [...meta.accountLedger.deeds.keys()];
+    expect(keys.indexOf('col_glimmerfin')).toBeGreaterThanOrEqual(0);
+    expect(keys.indexOf('col_glimmerfin')).toBeLessThan(keys.indexOf('soc_meet_bursar'));
   });
 });

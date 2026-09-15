@@ -303,6 +303,9 @@ export interface DeedEntryModel {
   // no calendar ('' on the wire), which hides the date line entirely. For a
   // deed only an alt earned this is the first account earner's day.
   earnedDay: string | null;
+  // THIS character earned it itself. The bare "Earned <date>" line is only
+  // ever its own: for a deed an alt earned the earners line is the whole fact.
+  earnedByMe: boolean;
   // Every character on the account that earned this deed, first earner first
   // (the account ledger); empty when the host has no ledger or none earned.
   earners: readonly AccountEarner[];
@@ -405,6 +408,7 @@ export function buildDeedsView(input: DeedsViewInput): DeedsViewModel {
       id,
       earned,
       earnedDay: earned && day !== '' ? day : null,
+      earnedByMe: input.deedsEarned.has(id),
       earners: input.accountDeeds?.get(id) ?? [],
       renown: def.renown,
       progress,
@@ -620,9 +624,11 @@ export function makeDeedTrackerView(): DeedTrackerView {
 export function buildDeedTrackerViewInto(
   out: DeedTrackerView,
   watched: ReadonlySet<string>,
-  // Any earned lookup: the per-character map, or the account-wide union the
-  // HUD hands in (accountDeedLookup) so an alt's earn drops the row too.
-  deedsEarned: { has(id: string): boolean },
+  // THIS character's own earns, on purpose: a deed an alt earned reads as
+  // earned in the Book but stays watchable and tracked here, because this
+  // character can still earn it and be listed as an earner (deeds.md, "The
+  // account ledger"; pinned in tests/deeds_window.test.ts). Never the union.
+  deedsEarned: ReadonlyMap<string, string>,
   stats: Readonly<DeedStats>,
   deeds: Readonly<Record<string, DeedDef>>,
   collapsed: boolean,
