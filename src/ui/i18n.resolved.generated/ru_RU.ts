@@ -1399,6 +1399,7 @@ export const ru_RU: EnTranslations = {
       "targetPrev": "Цикл целей назад",
       "discord": "Discord",
       "bgFlag": "Действие с флагом",
+      "friendlyNameplates": "Таблички дружественных",
       "sheathe": "Убрать/обнажить оружие",
       "dive": "Нырнуть",
       "categoryPet": "Питомец",

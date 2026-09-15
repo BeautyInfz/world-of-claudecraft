@@ -1399,6 +1399,7 @@ export const pt_BR: EnTranslations = {
       "targetPrev": "Alternar alvo para trás",
       "discord": "Discord",
       "bgFlag": "Ação da Bandeira do Campo de Batalha",
+      "friendlyNameplates": "Toggle Friendly Nameplates",
       "sheathe": "Embainhar/Desembainhar Arma",
       "dive": "Nadar para Baixo",
       "categoryPet": "Mascote",

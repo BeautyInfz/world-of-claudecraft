@@ -1399,6 +1399,7 @@ export const cs_CZ: EnTranslations = {
       "targetPrev": "Přepínat cíl zpět",
       "discord": "Discord",
       "bgFlag": "Akce s vlajkou na bojišti",
+      "friendlyNameplates": "Toggle Friendly Nameplates",
       "sheathe": "Zasunout/Vytasit zbraň",
       "dive": "Potopit se",
       "categoryPet": "Mazlíček",
