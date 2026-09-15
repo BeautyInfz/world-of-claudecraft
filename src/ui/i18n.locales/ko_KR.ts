@@ -3755,7 +3755,7 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
     '대상에게 으르렁거립니다. 자신의 위협 수준이 대상이 가장 증오하는 적과 같아지며, 3초 동안 자신을 공격하게 만듭니다. 큰곰 변신 전용.',
   'entities.abilities.cat_form.name': '늑대 변신',
   'entities.abilities.cat_form.description':
-    '당신을 늑대로 바꿉니다. 민첩성이 레벨에 따라 오르고, 전투력은 +8에 레벨당 2가 더해지며, 공격은 기력과 연계 점수를 쓰고, 당신이 만드는 위협 수준이 29% 줄어듭니다. 다시 시전하면 시전자 모습으로 돌아옵니다.',
+    '당신을 늑대로 바꿉니다. 민첩성이 레벨에 따라 오르고, 전투력은 +8에 레벨당 2가 더해지며, 공격은 기력과 연계 점수를 쓰고, 당신이 만드는 위협 수준이 29% 줄어듭니다. 어떤 모습으로든 변신하면 질주 보폭을 얻습니다. 3초 동안 이동 속도가 60% 증가하며, 20초에 한 번만 발동합니다. 다시 시전하면 시전자 모습으로 돌아옵니다.',
   'entities.abilities.claw.name': '찢는 발톱',
   'entities.abilities.claw.description':
     '적을 할퀴어 무기 피해에 {damage}를 더한 피해를 입힙니다. 연계 점수 1점을 얻습니다. 늑대 변신 전용.',
@@ -3796,8 +3796,14 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.dash.description':
     '앞으로 돌진하여 이동 속도를 15초 동안 50% 증가시킵니다. 늑대 변신 전용.',
   'entities.abilities.pounce.name': '살금 기습',
+  'entities.abilities.lunge.description':
+    '최대 12yd 떨어진 적에게 달려들어 무기 공격력의 60%만큼 피해를 입히고 연계 점수 1을 얻습니다. 늑대 변신 상태에서만 사용 가능.',
+  'entities.abilities.lunge.name': '도약 습격',
+  'entities.abilities.hamstring_bite.description':
+    '대상을 1초에 더해 연계 점수 하나당 1초 기절시키는 마무리 기술입니다 (연계 점수 5: 6초). 늑대 변신 상태에서만 사용 가능.',
+  'entities.abilities.hamstring_bite.name': '쓰러뜨리기',
   'entities.abilities.pounce.description':
-    '은신 상태에서 사용하는 시작 공격으로 대상을 2초 동안 기절시킵니다. 연계 점수 1점을 얻습니다. 늑대 변신 전용.',
+    '은신 상태에서 사용하는 시작 공격으로 대상을 2초 동안 기절시킵니다. 연계 점수 1점을 얻습니다. 늑대 변신 전용. 은신 상태가 아니면 이 버튼은 도약 습격이 됩니다.',
   'entities.abilities.insect_swarm.name': '쏘는 벌레 떼',
   'entities.abilities.insect_swarm.description':
     '적이 곤충 떼에 휩싸여 12초에 걸쳐 {damage}의 자연 피해를 입습니다.',
@@ -3845,13 +3851,13 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
     '망령태생을 당신의 의지에 결속합니다. 망령태생은 멀리서 강력한 암흑 피해를 퍼붓는 정예 악마입니다. 긴 재사용 대기시간이 그 파괴적인 힘을 제한합니다. 새로운 악마를 소환하면 현재 악마는 사라집니다. 한 번에 하나의 악마만 부릴 수 있습니다.',
   'entities.abilities.bear_charge.name': '큰곰 돌진',
   'entities.abilities.bear_charge.description':
-    '적에게 돌진하여 분노 9를 생성하고 1초 동안 기절시킵니다. 사거리 8-25yd. 큰곰 변신 상태에서만 사용 가능.',
+    '적에게 돌진하여 분노 9를 생성하고 1초 동안 기절시킵니다. 이후 3초 동안 늑대 변신은 무료이며 대상을 고정하여 4초 동안 이동 속도를 50% 감소시킵니다. 사거리 8-25yd. 큰곰 변신 상태에서만 사용 가능.',
   'entities.abilities.demoralizing_roar.name': '비겁한 포효',
   'entities.abilities.demoralizing_roar.description':
     '주변의 적들을 위축시켜 20초 동안 그들의 전투력을 20만큼 감소시킵니다. 큰곰 변신 상태에서만 사용 가능.',
   'entities.abilities.prowl.name': '몰래 접근',
   'entities.abilities.prowl.description':
-    '늑대 변신 상태에서 은신하고 이동 속도가 5% 감소합니다. 전투 중에는 사용할 수 없습니다.',
+    '늑대 변신 상태에서 은신합니다. 전투 중에는 사용할 수 없습니다.',
   'entities.abilities.rake.name': '저미기',
   'entities.abilities.rake.description':
     '적을 찢어 무기 피해에 {damage}를 더하고 18초 동안 출혈 피해를 입힙니다. 연계 점수를 1 줍니다. 늑대 형상 전용.',
@@ -8622,7 +8628,7 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.auraEffect.imbueRange': '무기 부여: 선고 시 {min}에서 {max}의 추가 피해',
   'hudChrome.auraEffect.stealth': '은폐 상태, 이동 속도가 {pct}% 감소합니다',
   'hudChrome.auraEffect.formBear': '큰곰 변신: 생명력과 방어도 증가',
-  'hudChrome.auraEffect.formCat': '표범 변신: 근접 피해와 기력',
+  'hudChrome.auraEffect.wolfForm': '늑대 변신: 근접 피해와 기력, 이동 속도가 {pct}% 증가합니다',
   'hudChrome.auraEffect.formTravel': '쾌속 형태: 이동 속도가 {pct}% 증가합니다',
   'hudChrome.auraEffect.defensiveStance': '방어 태세: 받는 피해 감소, 위협 수준 증가',
   'hudChrome.auraEffect.righteousFury': '불타는 맹세: 신성 피해로 인한 위협 수준이 크게 증가합니다',
@@ -14445,6 +14451,8 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
   'guide.classPage.formsHeading': '변신',
   'guide.classPage.formsMoonwing':
     '조화 전문화 드루이드는 형태를 하나 더 얻습니다. 조화 드루이드가 싸울 때 쓰는 시전자 형태인 달빛야수 변신입니다. 주문을 그대로 쓸 수 있는 유일한 동물 형태이며, 마법봉은 이 형태나 평범한 시전자 모습에서만 쓸 수 있습니다.',
+  'guide.classPage.formsWolfEngage':
+    '늑대는 큰곰 돌진으로 싸움을 열고, 곧바로 늑대 변신으로 바꿔 대상을 고정하며, 은신하지 않을 때는 도약 습격으로 거리를 좁히고, 쓰러뜨리기로 적을 붙잡아 둡니다.',
   'guide.classPage.formsAutoUnshift':
     '변신한 채로 치유 주문이나 공격 주문을 시전하면 형태가 알아서 풀립니다. 이렇게 형태를 벗는 데에는 마나가 들지 않고 공용 재사용 대기시간도 쓰지 않으므로, 즉시 시전 주문은 누른 그 순간에 나갑니다. 다시 변신하는 것은 평범한 능력이라 여전히 마나와 공용 재사용 대기시간이 듭니다.',
   'guide.classPage.formsNote':
@@ -15285,6 +15293,8 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.auraEffect.cauterizeFatigue': '소작이 다음 치명타를 막을 수 없습니다',
   'hudChrome.auraEffect.cooldownCap':
     '이 구간에서 재사용 대기시간 감소 {used}/{cap}초를 사용했습니다',
+  'hudChrome.auraEffect.bruinRushWindow':
+    '늑대 변신이 마나를 소모하지 않으며 큰곰 돌진 대상을 고정하여 {sec}초 동안 이동 속도를 {pct}% 감소시킵니다',
   'hudChrome.auraEffect.dawnsWrath': '천벌: 체력 무관 · +1회 · 재사용 0 · 피해 +{pct}%',
   'hudChrome.auraEffect.desolation':
     '충전 {charges}회 남음: 다음 혼돈의 화살 시전이 {castPct}% 빨라지거나 불의 비가 즉시 떨어집니다',

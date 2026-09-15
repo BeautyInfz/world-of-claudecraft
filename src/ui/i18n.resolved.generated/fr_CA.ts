@@ -3038,6 +3038,7 @@ export const fr_CA: EnTranslations = {
       "elementalConvergencePrimed": "Votre prochain sort de l'autre école élémentaire accorde la Convergence élémentaire",
       "hunterFerocity": "{stacks} Férocité de meute : votre familier inflige {pct}% de dégâts en plus",
       "cooldownCap": "{used} sur {cap} s de réduction de temps de recharge utilisés dans cette fenêtre",
+      "bruinRushWindow": "La Forme de loup ne coûte aucun mana et cloue la cible de votre Ruée de Bruin, la ralentissant de {pct}% pendant {sec} s",
       "funeralHarvestLock": "Moisson funéraire ne peut pas encore créer un autre Fragment d'âme",
       "leadenHexLock": "Hex de plomb ne peut pas encore enraciner cette cible de nouveau",
       "forbiddenReflectionReady": "Votre prochain temps de recharge de Démoniste éligible peut être relancé",
@@ -3150,7 +3151,7 @@ export const fr_CA: EnTranslations = {
       "elementalTrance": "Dégâts subis réduits de {pct}%. {mana}% de tous les dégâts infligés sont convertis en mana",
       "stealth": "Dissimulé ; vitesse de déplacement réduite de {pct}%",
       "formBear": "Forme de Bruin : points de vie et armure accrus",
-      "formCat": "Forme féline : dégâts de mêlée et énergie",
+      "wolfForm": "Wolf Form: melee damage and energy; movement speed increased by {pct}%",
       "formTravel": "Forme de Fleet : vitesse de déplacement accrue de {pct}%",
       "formFireball": "Forme de braise : vitesse de déplacement augmentée de {pct} % ; les attaques et sorts sont désactivés",
       "formMoonkin": "Forme de sélénien : dégâts des sorts augmentés de {pct}% et armure augmentée de {armorPct}%",
@@ -6493,6 +6494,7 @@ export const fr_CA: EnTranslations = {
       "formsNote": "Un druide combat en changeant de forme. La plupart des capacités de druide appartiennent à une forme précise, si bien que la forme que vous portez détermine ce que vous pouvez lancer, et changer de forme coûte un peu de mana. Vous pouvez changer de forme en combat ou hors combat, aussi souvent que vous le souhaitez.",
       "formsAutoUnshift": "Un soin ou un sort de dégâts lancé sous forme vous en fait sortir tout seul. Quitter une forme ainsi est gratuit et ne consomme pas votre temps de recharge global, un sort instantané part donc à l'instant où vous appuyez. Reprendre la forme est une capacité ordinaire, qui coûte toujours du mana et votre temps de recharge global.",
       "formsMoonwing": "Un druide Équilibre gagne une forme supplémentaire, la Forme de sélénien, la forme de lanceur de sorts dans laquelle il combat. C'est la seule forme animale qui conserve vos sorts, et votre baguette ne fonctionne que dans cette forme ou dans votre forme de lanceur de sorts normale.",
+      "formsWolfEngage": "Un loup ouvre le combat avec Ruée de Bruin, passe aussitôt en Forme de loup pour clouer la cible, comble la distance avec Bond quand il n'est pas camouflé et immobilise un ennemi avec Mise à terre.",
       "formLine": {
         "form_bear": "La forme de tank : une peau épaisse, de la rage à la place du mana, et davantage de menace pour que les ennemis continuent de vous frapper.",
         "form_cat": "La forme de dégâts au corps à corps : de l'énergie et des points de combo, comme un voleur, et beaucoup moins de menace.",
@@ -11928,7 +11930,7 @@ export const fr_CA: EnTranslations = {
       },
       "cat_form": {
         "name": "Forme de loup",
-        "description": "Vous transforme en loup : l'agilité monte avec votre niveau, puissance d'attaque +8 plus 2 par niveau, vos attaques utilisent de l'énergie et des points de combo, et vous générez 29% de menace en moins. Lancez de nouveau pour revenir en forme de lanceur de sorts."
+        "description": "Vous transforme en loup : l'agilité monte avec votre niveau, puissance d'attaque +8 plus 2 par niveau, vos attaques utilisent de l'énergie et des points de combo, et vous générez 29% de menace en moins. Passer sous une forme quelconque octroie Foulée bondissante : 60% de vitesse de déplacement pendant 3 s, une fois toutes les 20 s. Lancez de nouveau pour revenir en forme de lanceur de sorts."
       },
       "claw": {
         "name": "Griffe lacérante",
@@ -11993,7 +11995,15 @@ export const fr_CA: EnTranslations = {
       },
       "pounce": {
         "name": "Frappe furtive",
-        "description": "Ouverture furtive qui étourdit la cible pendant 2 s. Confère 1 point de combo. Forme de loup uniquement."
+        "description": "Ouverture furtive qui étourdit la cible pendant 2 s. Confère 1 point de combo. Forme de loup uniquement. Hors camouflage, ce bouton devient Bond."
+      },
+      "lunge": {
+        "name": "Bond",
+        "description": "Bondit sur un ennemi jusqu'à 12 m, inflige 60% des dégâts de l'arme et octroie 1 point de combo. Forme de loup uniquement."
+      },
+      "hamstring_bite": {
+        "name": "Mise à terre",
+        "description": "Technique de finition qui étourdit la cible pendant 1 s plus 1 s par point de combo (5 points de combo : 6 s). Forme de loup uniquement."
       },
       "insect_swarm": {
         "name": "Nuée cinglante",
@@ -12707,7 +12717,7 @@ export const fr_CA: EnTranslations = {
       },
       "bear_charge": {
         "name": "Ruée de Bruin",
-        "description": "Charge un ennemi, génère 9 points de rage et l'étourdit pendant 1 s. Portée de 8-25 m. Forme de Bruin uniquement."
+        "description": "Charge un ennemi, génère 9 points de rage et l'étourdit pendant 1 s. Pendant les 3 s qui suivent, la Forme de loup est gratuite et cloue la cible, la ralentissant de 50% pendant 4 s. Portée de 8-25 m. Forme de Bruin uniquement."
       },
       "demoralizing_roar": {
         "name": "Rugissement lâche",
@@ -12715,7 +12725,7 @@ export const fr_CA: EnTranslations = {
       },
       "prowl": {
         "name": "Traquer",
-        "description": "Passe en camouflage tant que vous êtes en forme de loup, avec une vitesse de déplacement réduite de 5%. Inutilisable en combat."
+        "description": "Passe en camouflage tant que vous êtes en forme de loup. Inutilisable en combat."
       },
       "rake": {
         "name": "Écorcher",

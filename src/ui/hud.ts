@@ -211,7 +211,7 @@ import { wireChromeFocus } from './chrome_focus_wiring';
 import { ClaudiumLauncherBalance } from './claudium_launcher_balance_core';
 import { createClaudiumPurchaseFacet } from './claudium_purchase_bridge';
 import { type ClaudiumRail, type ClaudiumSnapshot, ClaudiumWindow } from './claudium_window';
-import { formatClockTime } from './clock';
+import { formatClockTimeMemo } from './clock';
 import { CombatAnnouncer } from './combat_announcer';
 import {
   auraApplyCue,
@@ -10455,7 +10455,7 @@ export class Hud {
   // the DOM write whenever it is unchanged.
   private updateClock(): void {
     if (!this.clockEl) return;
-    const text = formatClockTime(new Date(), this.clock24);
+    const text = formatClockTimeMemo(Date.now(), this.clock24);
     if (text !== this.lastClockText) {
       this.lastClockText = text;
       this.clockEl.textContent = text;

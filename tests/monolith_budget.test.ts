@@ -855,7 +855,10 @@ const MONOLITHS: MonolithRow[] = [
     // Measured after formatting; lower the ratchet with the extraction.
     // Mount skins: bank the coordinator extraction at its measured size.
     // Restored per-ability resurrection school lookup removes one line.
-    ceiling: 12851,
+    // CPU-hygiene review: the ranked and required view candidates share the
+    // scan module's liveViewCandidate check (present, view-less, admitted),
+    // which drops the coordinator's own admission call. Exact count.
+    ceiling: 12850,
     seam: 'a new src/render/<thing>.ts module the renderer calls (src/render/CLAUDE.md)',
   },
   {
@@ -1028,11 +1031,14 @@ const MONOLITHS: MonolithRow[] = [
     // measures 11923, below both arms, so the ceiling follows it down. Exact
     // merged count, zero slack: any further growth reds again.
     // Main hotfix integration: combined extractions, exact merged count.
-    // LOWERED 11879 -> 11867 at the account-wide Book of Deeds / Reliquary change:
-    // the deeds restore and join-retro passes moved whole into
-    // src/sim/deeds_restore.ts and the ownership union into
-    // accountReliquaryOwnershipOpts (src/sim/reliquary.ts).
-    ceiling: 11867,
+    // Down 11879 -> 11843: the CPU-hygiene lot moved the rift floor descriptor
+    // builder to src/sim/rift/rift_floor_view.ts, the Wildfang kit pass 2 moved
+    // the charge route constants to combat/charge_route.ts (11856 together), and
+    // the account-wide Book of Deeds / Reliquary change moved the deeds restore
+    // and join-retro passes into src/sim/deeds_restore.ts and the ownership
+    // union into accountReliquaryOwnershipOpts (src/sim/reliquary.ts). Exact
+    // count, zero slack.
+    ceiling: 11843,
     seam: 'a sim system module behind SimContext (src/sim/CLAUDE.md)',
   },
   {
@@ -1592,10 +1598,11 @@ const MONOLITHS: MonolithRow[] = [
     // OSSBrain integration: entity flair decoding moved to net/entity_flair_wire.ts.
     // Measured after formatting; lower the ratchet with the extraction.
     // Main hotfix integration: combined extractions, exact merged count.
-    // LOWERED 5540 -> 5524 at the account-wide Book of Deeds / Reliquary change:
-    // the deeds / Reliquary / account-ledger self-decode moved whole into
-    // src/net/book_wire.ts (the applyMaterialInventoryWire precedent).
-    ceiling: 5524,
+    // Down 5540 -> 5506: the CPU-hygiene lot moved the interest-boundary despawn
+    // grace to src/net/despawn_grace.ts (5523), and the account-wide Book of Deeds /
+    // Reliquary change moved the deeds / Reliquary / account-ledger self-decode
+    // into src/net/book_wire.ts. Exact count, zero slack.
+    ceiling: 5506,
     seam: 'a src/net sibling module (the refactor/net-online split is the template)',
   },
   {

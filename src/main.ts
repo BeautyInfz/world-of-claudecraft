@@ -5036,7 +5036,7 @@ async function startGame(
         loadPhaseEnd('settle-cover');
         loadPhaseStart('curtain-fade');
         renderer.markGpuHitchReveal();
-        finishShaderWarmup(renderer.webgl);
+        finishShaderWarmup(renderer.webgl, { queue: renderer.backgroundGpuWork });
         hideLoadingScreen();
         // Start the intro clock as the loading screen begins to fade: the camera
         // holds the opening pose until now, so the fade doubles as the cut in.

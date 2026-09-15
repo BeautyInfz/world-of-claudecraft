@@ -7382,8 +7382,8 @@
       "tick": 135,
       "time": 6.75,
       "nextId": 1020,
-      "state": "00bf75bd",
-      "events": "034160e5",
+      "state": "4824b9b6",
+      "events": "f27bcd0d",
       "rng": {
         "draws": 894,
         "digest": "56ec9ce1"
@@ -8302,6 +8302,16 @@
           "attackPower": 116,
           "auras": [
             {
+              "duration": 3,
+              "id": "loping_stride",
+              "kind": "buff_speed",
+              "name": "Loping Stride",
+              "remaining": 3,
+              "school": "nature",
+              "sourceId": 1010,
+              "value": 1.6
+            },
+            {
               "duration": 3600,
               "id": "cat_form",
               "kind": "form_cat",
@@ -8337,6 +8347,12 @@
             "z": -45
           },
           "potionCooldownUntil": -1,
+          "procState": {
+            "counters": {},
+            "icds": {
+              "dru_loping_stride": 20
+            }
+          },
           "resource": 100,
           "resourceType": "energy",
           "savedMana": 1043,
@@ -8814,7 +8830,7 @@
       "tick": 135,
       "time": 6.75,
       "nextId": 1020,
-      "state": "51e46f13",
+      "state": "b0c0127a",
       "events": "96e5d864",
       "rng": {
         "draws": 894,
@@ -9734,6 +9750,16 @@
           "attackPower": 68,
           "auras": [
             {
+              "duration": 3,
+              "id": "loping_stride",
+              "kind": "buff_speed",
+              "name": "Loping Stride",
+              "remaining": 3,
+              "school": "nature",
+              "sourceId": 1010,
+              "value": 1.6
+            },
+            {
               "duration": 12,
               "id": "rejuvenation",
               "kind": "hot",
@@ -9771,6 +9797,12 @@
             "z": -45
           },
           "potionCooldownUntil": -1,
+          "procState": {
+            "counters": {},
+            "icds": {
+              "dru_loping_stride": 20
+            }
+          },
           "resource": 963,
           "resourceType": "mana",
           "savedMana": 1043,
@@ -10248,7 +10280,7 @@
       "tick": 135,
       "time": 6.75,
       "nextId": 1020,
-      "state": "51e46f13",
+      "state": "b0c0127a",
       "events": "741638a5",
       "rng": {
         "draws": 894,
@@ -11168,6 +11200,16 @@
           "attackPower": 68,
           "auras": [
             {
+              "duration": 3,
+              "id": "loping_stride",
+              "kind": "buff_speed",
+              "name": "Loping Stride",
+              "remaining": 3,
+              "school": "nature",
+              "sourceId": 1010,
+              "value": 1.6
+            },
+            {
               "duration": 12,
               "id": "rejuvenation",
               "kind": "hot",
@@ -11205,6 +11247,12 @@
             "z": -45
           },
           "potionCooldownUntil": -1,
+          "procState": {
+            "counters": {},
+            "icds": {
+              "dru_loping_stride": 20
+            }
+          },
           "resource": 963,
           "resourceType": "mana",
           "savedMana": 1043,

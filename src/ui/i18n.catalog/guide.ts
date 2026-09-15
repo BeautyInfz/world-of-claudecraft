@@ -1338,6 +1338,10 @@ export const guideStrings = {
       'A heal or a damaging spell cast while shifted shifts you out for you. Leaving a shape that way is free and does not spend your global cooldown, so an instant spell goes off the moment you press it. Shifting back in is an ordinary ability, and still costs mana and your global cooldown.',
     formsMoonwing:
       'A Moongrove druid gains one more shape, Moonwing Form, the caster shape a Balance druid fights in. It is the one animal shape that keeps your spells, and your wand only works in it or in your normal caster form.',
+    // The Wolf engage loop (Wildfang kit pass 2): names the abilities, never
+    // their numbers, so the sentence stays spoiler-safe.
+    formsWolfEngage:
+      'A Wolf opens a fight with Bruin Rush, shifts straight into Wolf Form to Pin the target, closes the gap with Lunge when it is not stalking, and holds an enemy still with Takedown.',
     formLine: {
       form_bear:
         'The tanking shape: a heavy hide, rage instead of mana, and extra threat so enemies keep swinging at you.',
