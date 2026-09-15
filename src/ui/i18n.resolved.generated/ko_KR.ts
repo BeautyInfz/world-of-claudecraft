@@ -1221,7 +1221,9 @@ export const ko_KR: EnTranslations = {
       "devName": "기여자",
       "devTierCol": "배지",
       "mergedPrs": "병합된 PR",
-      "devEmpty": "아직 순위에 오른 기여자가 없습니다."
+      "devEmpty": "아직 순위에 오른 기여자가 없습니다.",
+      "podiumLabel": "상위 3명",
+      "unclaimed": "비어 있음"
     },
     "pledge": {
       "open": "서약 받는 중",

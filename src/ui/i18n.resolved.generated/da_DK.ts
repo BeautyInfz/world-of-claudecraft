@@ -1221,7 +1221,9 @@ export const da_DK: EnTranslations = {
       "devName": "Bidragyder",
       "devTierCol": "Mærke",
       "mergedPrs": "Flettede PR'er",
-      "devEmpty": "Ingen rangerede bidragydere endnu."
+      "devEmpty": "Ingen rangerede bidragydere endnu.",
+      "podiumLabel": "Top three",
+      "unclaimed": "Unclaimed"
     },
     "pledge": {
       "open": "Accepterer løfter",

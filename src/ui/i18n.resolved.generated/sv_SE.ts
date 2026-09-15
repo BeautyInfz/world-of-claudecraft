@@ -1221,7 +1221,9 @@ export const sv_SE: EnTranslations = {
       "devName": "Bidragsgivare",
       "devTierCol": "Märke",
       "mergedPrs": "Sammanslagna PR:er",
-      "devEmpty": "Inga rankade bidragsgivare ännu."
+      "devEmpty": "Inga rankade bidragsgivare ännu.",
+      "podiumLabel": "Top three",
+      "unclaimed": "Unclaimed"
     },
     "pledge": {
       "open": "Tar emot löften",

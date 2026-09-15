@@ -1221,7 +1221,9 @@ export const vi_VN: EnTranslations = {
       "devName": "Người đóng góp",
       "devTierCol": "Huy hiệu",
       "mergedPrs": "PR đã hợp nhất",
-      "devEmpty": "Chưa có người đóng góp nào được xếp hạng."
+      "devEmpty": "Chưa có người đóng góp nào được xếp hạng.",
+      "podiumLabel": "Top three",
+      "unclaimed": "Unclaimed"
     },
     "pledge": {
       "open": "Đang Nhận Cam Kết",

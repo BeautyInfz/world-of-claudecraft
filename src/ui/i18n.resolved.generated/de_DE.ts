@@ -1221,7 +1221,9 @@ export const de_DE: EnTranslations = {
       "devName": "Mitwirkender",
       "devTierCol": "Abzeichen",
       "mergedPrs": "Zusammengeführte PRs",
-      "devEmpty": "Noch keine platzierten Mitwirkenden."
+      "devEmpty": "Noch keine platzierten Mitwirkenden.",
+      "podiumLabel": "Top three",
+      "unclaimed": "Unclaimed"
     },
     "pledge": {
       "open": "Nimmt Gelöbnisse an",

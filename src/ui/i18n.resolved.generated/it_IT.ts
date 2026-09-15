@@ -1221,7 +1221,9 @@ export const it_IT: EnTranslations = {
       "devName": "Contributore",
       "devTierCol": "Distintivo",
       "mergedPrs": "PR integrate",
-      "devEmpty": "Ancora nessun contributore in classifica."
+      "devEmpty": "Ancora nessun contributore in classifica.",
+      "podiumLabel": "Top three",
+      "unclaimed": "Unclaimed"
     },
     "pledge": {
       "open": "Accetta giuramenti",

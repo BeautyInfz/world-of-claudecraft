@@ -1221,7 +1221,9 @@ export const nl_NL: EnTranslations = {
       "devName": "Bijdrager",
       "devTierCol": "Insigne",
       "mergedPrs": "Samengevoegde PR's",
-      "devEmpty": "Nog geen gerangschikte bijdragers."
+      "devEmpty": "Nog geen gerangschikte bijdragers.",
+      "podiumLabel": "Top three",
+      "unclaimed": "Unclaimed"
     },
     "pledge": {
       "open": "Accepteert geloften",

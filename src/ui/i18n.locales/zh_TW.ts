@@ -6156,6 +6156,8 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'hudChrome.leaderboard.devTierCol': '徽章',
   'hudChrome.leaderboard.mergedPrs': '已合併 PR',
   'hudChrome.leaderboard.devEmpty': '還沒有上榜的貢獻者。',
+  'hudChrome.leaderboard.podiumLabel': '前三名',
+  'hudChrome.leaderboard.unclaimed': '虛位以待',
   'hudChrome.widgets.worldCoordinates': '世界座標',
   'hudChrome.plurals.guildMembers.one': '你是{rank}，{count}名成員',
   'hudChrome.plurals.guildMembers.few': '你是{rank}，{count}名成員',

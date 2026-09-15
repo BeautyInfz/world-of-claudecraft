@@ -1221,7 +1221,9 @@ export const fr_CA: EnTranslations = {
       "devName": "Contributeur",
       "devTierCol": "Badge",
       "mergedPrs": "PR fusionnées",
-      "devEmpty": "Aucun contributeur classé pour l'instant."
+      "devEmpty": "Aucun contributeur classé pour l'instant.",
+      "podiumLabel": "Top three",
+      "unclaimed": "Unclaimed"
     },
     "pledge": {
       "open": "Candidatures ouvertes",

@@ -1221,7 +1221,9 @@ export const ja_JP: EnTranslations = {
       "devName": "コントリビューター",
       "devTierCol": "バッジ",
       "mergedPrs": "マージ済みPR",
-      "devEmpty": "ランク入りのコントリビューターはまだいません。"
+      "devEmpty": "ランク入りのコントリビューターはまだいません。",
+      "podiumLabel": "トップ3",
+      "unclaimed": "空席"
     },
     "pledge": {
       "open": "誓約受付中",

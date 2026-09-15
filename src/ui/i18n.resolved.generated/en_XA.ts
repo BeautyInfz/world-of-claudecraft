@@ -1221,7 +1221,9 @@ export const en_XA: EnTranslations = {
       "devName": "[Çóñţŕíƀúţóŕ]",
       "devTierCol": "[Ɓáðĝé]",
       "mergedPrs": "[Ɱéŕĝéð ÞŔš]",
-      "devEmpty": "[Ñó ŕáñķéð çóñţŕíƀúţóŕš ýéţ.]"
+      "devEmpty": "[Ñó ŕáñķéð çóñţŕíƀúţóŕš ýéţ.]",
+      "podiumLabel": "[Ţóþ ţĥŕéé]",
+      "unclaimed": "[Úñçļáíɱéð]"
     },
     "pledge": {
       "open": "[Áççéþţíñĝ þļéðĝéš]",
