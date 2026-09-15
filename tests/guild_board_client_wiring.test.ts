@@ -35,6 +35,33 @@ describe('ClientWorld guild board wiring', () => {
     ]);
   });
 
+  it('keeps the requested category on a refused or failed read, so the strip survives a 5xx', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async () => ({ ok: false, status: 503, json: async () => ({}) })),
+    );
+    const refused = bareClient(7);
+    expect(await refused.guildLeaderboard(0, 20, 'newPlayerFriendly')).toEqual({
+      leaders: [],
+      page: 0,
+      pageCount: 1,
+      total: 0,
+      pageSize: 20,
+      category: 'newPlayerFriendly',
+    });
+    expect('category' in (await refused.guildLeaderboard(0, 20, null))).toBe(false);
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async () => {
+        throw new Error('offline');
+      }),
+    );
+    const failed = bareClient(7);
+    expect((await failed.guildLeaderboard(0, 20, 'newPlayerFriendly')).category).toBe(
+      'newPlayerFriendly',
+    );
+  });
+
   it('sends the whole settings object on guild_pledge_settings, the category flag included', () => {
     const sent: Record<string, unknown>[] = [];
     const client = bareClient(7);

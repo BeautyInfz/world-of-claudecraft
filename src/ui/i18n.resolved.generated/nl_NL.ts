@@ -2253,6 +2253,12 @@ export const nl_NL: EnTranslations = {
       "linkHint": "Shift-klik om dit voorwerp in de chat te delen."
     },
     "plurals": {
+      "guildBoardShown": {
+        "one": "{count} guild shown",
+        "few": "{count} guilds shown",
+        "many": "{count} guilds shown",
+        "other": "{count} guilds shown"
+      },
       "commissionMasterworks": {
         "one": "{count} meesterwerk",
         "few": "{count} meesterwerken",
@@ -3768,7 +3774,6 @@ export const nl_NL: EnTranslations = {
       "officersOnline": "Officers online",
       "officersOnlineLabel": "Officers online: {names}",
       "officerEntry": "{name} ({rank})",
-      "filterCount": "{count} guilds shown",
       "popupTitle": "Gildebord",
       "close": "Sluiten"
     },

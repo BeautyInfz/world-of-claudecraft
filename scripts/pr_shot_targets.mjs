@@ -1642,7 +1642,6 @@ export const TARGETS = [
             tier: 1,
           },
         };
-        game.sim.socialDirty = true;
         game.hud.toggleSocial();
         return { ok: true };
       });

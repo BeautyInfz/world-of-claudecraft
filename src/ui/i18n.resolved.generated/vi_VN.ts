@@ -2253,6 +2253,12 @@ export const vi_VN: EnTranslations = {
       "linkHint": "Shift-click để chia sẻ vật phẩm này trong khung chat."
     },
     "plurals": {
+      "guildBoardShown": {
+        "one": "{count} guild shown",
+        "few": "{count} guilds shown",
+        "many": "{count} guilds shown",
+        "other": "{count} guilds shown"
+      },
       "commissionMasterworks": {
         "one": "{count} kiệt tác",
         "few": "{count} kiệt tác",
@@ -3768,7 +3774,6 @@ export const vi_VN: EnTranslations = {
       "officersOnline": "Officers online",
       "officersOnlineLabel": "Officers online: {names}",
       "officerEntry": "{name} ({rank})",
-      "filterCount": "{count} guilds shown",
       "popupTitle": "Bảng Thông Báo Bang Hội",
       "close": "Đóng"
     },

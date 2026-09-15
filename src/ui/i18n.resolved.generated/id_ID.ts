@@ -2253,6 +2253,12 @@ export const id_ID: EnTranslations = {
       "linkHint": "Shift-klik untuk menautkan item ini di obrolan."
     },
     "plurals": {
+      "guildBoardShown": {
+        "one": "{count} guild shown",
+        "few": "{count} guilds shown",
+        "many": "{count} guilds shown",
+        "other": "{count} guilds shown"
+      },
       "commissionMasterworks": {
         "one": "{count} mahakarya",
         "few": "{count} mahakarya",
@@ -3768,7 +3774,6 @@ export const id_ID: EnTranslations = {
       "officersOnline": "Officers online",
       "officersOnlineLabel": "Officers online: {names}",
       "officerEntry": "{name} ({rank})",
-      "filterCount": "{count} guilds shown",
       "popupTitle": "Papan Petunjuk Guild",
       "close": "Tutup"
     },

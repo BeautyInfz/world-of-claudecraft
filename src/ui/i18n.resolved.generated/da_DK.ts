@@ -2253,6 +2253,12 @@ export const da_DK: EnTranslations = {
       "linkHint": "Shift-klik for at linke denne genstand i chatten."
     },
     "plurals": {
+      "guildBoardShown": {
+        "one": "{count} guild shown",
+        "few": "{count} guilds shown",
+        "many": "{count} guilds shown",
+        "other": "{count} guilds shown"
+      },
       "commissionMasterworks": {
         "one": "{count} mesterværk",
         "few": "{count} mesterværker",
@@ -3768,7 +3774,6 @@ export const da_DK: EnTranslations = {
       "officersOnline": "Officers online",
       "officersOnlineLabel": "Officers online: {names}",
       "officerEntry": "{name} ({rank})",
-      "filterCount": "{count} guilds shown",
       "popupTitle": "Laugsskilt",
       "close": "Luk"
     },

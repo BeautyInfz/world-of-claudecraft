@@ -2253,6 +2253,12 @@ export const de_DE: EnTranslations = {
       "linkHint": "Umschalt-Klick, um diesen Gegenstand im Chat zu verlinken."
     },
     "plurals": {
+      "guildBoardShown": {
+        "one": "{count} guild shown",
+        "few": "{count} guilds shown",
+        "many": "{count} guilds shown",
+        "other": "{count} guilds shown"
+      },
       "commissionMasterworks": {
         "one": "{count} Meisterwerk",
         "few": "{count} Meisterwerke",
@@ -3768,7 +3774,6 @@ export const de_DE: EnTranslations = {
       "officersOnline": "Officers online",
       "officersOnlineLabel": "Officers online: {names}",
       "officerEntry": "{name} ({rank})",
-      "filterCount": "{count} guilds shown",
       "popupTitle": "Gilden-Wegweiser",
       "close": "Schließen"
     },

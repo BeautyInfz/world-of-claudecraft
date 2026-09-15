@@ -5299,10 +5299,10 @@ export class ClientWorld extends ReconWireState implements IWorld {
   ): Promise<GuildLeaderboardPage> {
     try {
       const res = await fetch(apiUrl(guildBoardPath(page, pageSize, category), this.base));
-      if (!res.ok) return emptyGuildBoardPage(pageSize);
+      if (!res.ok) return emptyGuildBoardPage(pageSize, category);
       return decodeGuildBoardPage(await res.json(), page, pageSize);
     } catch {
-      return emptyGuildBoardPage(pageSize);
+      return emptyGuildBoardPage(pageSize, category);
     }
   }
   // The signpost guild board's roster drill-in (REST GET, no wire command):

@@ -2253,6 +2253,12 @@ export const sv_SE: EnTranslations = {
       "linkHint": "Skift-klicka för att länka det här föremålet i chatten."
     },
     "plurals": {
+      "guildBoardShown": {
+        "one": "{count} guild shown",
+        "few": "{count} guilds shown",
+        "many": "{count} guilds shown",
+        "other": "{count} guilds shown"
+      },
       "commissionMasterworks": {
         "one": "{count} mästerverk",
         "few": "{count} mästerverk",
@@ -3768,7 +3774,6 @@ export const sv_SE: EnTranslations = {
       "officersOnline": "Officers online",
       "officersOnlineLabel": "Officers online: {names}",
       "officerEntry": "{name} ({rank})",
-      "filterCount": "{count} guilds shown",
       "popupTitle": "Gillesskylt",
       "close": "Stäng"
     },

@@ -2577,8 +2577,7 @@
     border: 0;
   }
   #guild-board-window .gb-filter-icon,
-  #guild-board-window .gb-tag-icon,
-  #guild-board-window .soc-pledge-category-icon {
+  #guild-board-window .gb-tag-icon {
     display: inline-flex;
     width: 14px;
     height: 14px;
@@ -2638,6 +2637,22 @@
   #guild-board-window .gb-presence:focus-visible {
     outline: 2px solid var(--color-border-focus);
     outline-offset: 1px;
+  }
+  /* DESIGN.md 10.1: new chrome takes a 36px desktop hit target, via padding
+     where the visual is smaller. The dot keeps its 24px box in the row and
+     reaches 36px through an invisible ::after (the Reliquary eye idiom); the
+     6px reach exactly meets the name cell's 6px gap, never the roster link.
+     Touch widens the reach to the 40px floor (hud.mobile.css). */
+  #guild-board-window .gb-presence::after {
+    content: "";
+    position: absolute;
+    inset: -6px;
+  }
+  /* The scrolling body clips at its edge, so the LAST row's dot keeps its
+     6px reach below the row (hud.mobile.css widens the reach and this
+     padding to 8px on touch). */
+  #guild-board-window .gb-body {
+    padding-bottom: 6px;
   }
   #guild-board-window .gb-presence .gb-presence-dot {
     animation: gb-presence-pulse calc(2s * var(--motion-scale, 1)) ease-in-out infinite;

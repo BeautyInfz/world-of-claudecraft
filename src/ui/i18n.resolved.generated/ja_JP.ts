@@ -2253,6 +2253,12 @@ export const ja_JP: EnTranslations = {
       "linkHint": "Shift + クリックでこのアイテムをチャットにリンクします。"
     },
     "plurals": {
+      "guildBoardShown": {
+        "one": "{count} 件のギルドを表示中",
+        "few": "{count} 件のギルドを表示中",
+        "many": "{count} 件のギルドを表示中",
+        "other": "{count} 件のギルドを表示中"
+      },
       "commissionMasterworks": {
         "one": "傑作{count}点",
         "few": "傑作{count}点",
@@ -3768,7 +3774,6 @@ export const ja_JP: EnTranslations = {
       "officersOnline": "幹部がオンライン",
       "officersOnlineLabel": "オンラインの幹部: {names}",
       "officerEntry": "{name} ({rank})",
-      "filterCount": "{count} 件のギルドを表示中",
       "popupTitle": "ギルドの掲示柱",
       "close": "閉じる"
     },

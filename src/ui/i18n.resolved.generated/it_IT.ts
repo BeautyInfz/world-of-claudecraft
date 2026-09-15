@@ -2253,6 +2253,12 @@ export const it_IT: EnTranslations = {
       "linkHint": "Shift-clic per collegare questo oggetto in chat."
     },
     "plurals": {
+      "guildBoardShown": {
+        "one": "{count} guild shown",
+        "few": "{count} guilds shown",
+        "many": "{count} guilds shown",
+        "other": "{count} guilds shown"
+      },
       "commissionMasterworks": {
         "one": "{count} capolavoro",
         "few": "{count} capolavori",
@@ -3768,7 +3774,6 @@ export const it_IT: EnTranslations = {
       "officersOnline": "Officers online",
       "officersOnlineLabel": "Officers online: {names}",
       "officerEntry": "{name} ({rank})",
-      "filterCount": "{count} guilds shown",
       "popupTitle": "Cartello della Gilda",
       "close": "Chiudi"
     },

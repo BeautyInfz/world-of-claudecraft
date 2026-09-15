@@ -31,9 +31,22 @@ export function guildBoardPath(
 }
 
 /** The empty page a failed or refused board read resolves to (the window's
- *  honest nothing-posted state, never a throw into render). */
-export function emptyGuildBoardPage(pageSize: number): GuildLeaderboardPage {
-  return { leaders: [], page: 0, pageCount: 1, total: 0, pageSize };
+ *  honest nothing-posted state, never a throw into render). It keeps the
+ *  category the read was asked under: an empty page WITHOUT one reads as
+ *  "the server did not honour the filter" and would clear the player's
+ *  tick box on a transient failure. */
+export function emptyGuildBoardPage(
+  pageSize: number,
+  category: GuildBoardCategory | null = null,
+): GuildLeaderboardPage {
+  return {
+    leaders: [],
+    page: 0,
+    pageCount: 1,
+    total: 0,
+    pageSize,
+    ...(category === null ? {} : { category }),
+  };
 }
 
 /** Decode one served board page. The entries pass through (the view core

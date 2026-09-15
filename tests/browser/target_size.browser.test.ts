@@ -578,14 +578,30 @@ describe('desktop target-size: dense list controls clear the >=24px SC 2.5.8 flo
     expectAtLeastDesktopFloor(tab, '.soc-tab.ui-tab');
   });
 
-  it('the guild board presence dot clears the 24px floor around its 10px visual', () => {
+  it('the guild board presence dot: a 24px visual whose ::after lifts it to the 36px desktop floor', () => {
+    // DESIGN.md 10.1: new chrome takes a 36px desktop hit target via padding
+    // where the visual is smaller. The dot keeps a 24px box inline in the
+    // ranked row and reaches 36px through an invisible ::after of 6px each
+    // way (components.css), proven the Reliquary eye's way below: a live hit
+    // just inside the reach, a miss just beyond it, visual + 2x reach >= 36.
     const { presence, chip, showAll } = guildBoardControls();
-    const { w, h } = measure(presence);
-    expect(w, `.gb-presence width ${w} < ${DESKTOP_FLOOR}`).toBeGreaterThanOrEqual(
+    const r = presence.getBoundingClientRect();
+    expect(r.width, `.gb-presence width ${r.width} < ${DESKTOP_FLOOR}`).toBeGreaterThanOrEqual(
       DESKTOP_FLOOR - EPSILON,
     );
-    expect(h, `.gb-presence height ${h} < ${DESKTOP_FLOOR}`).toBeGreaterThanOrEqual(
+    expect(r.height, `.gb-presence height ${r.height} < ${DESKTOP_FLOOR}`).toBeGreaterThanOrEqual(
       DESKTOP_FLOOR - EPSILON,
+    );
+    const reach =
+      Math.abs(Number.parseFloat(getComputedStyle(presence, '::after').top)) -
+      Number.parseFloat(getComputedStyle(presence).borderTopWidth);
+    expect(reach, 'the ::after reach beyond the border edge').toBe(6);
+    expect(r.height + 2 * reach, 'visual + 2x reach').toBeGreaterThanOrEqual(36 - EPSILON);
+    const cx = r.left + r.width / 2;
+    expect(document.elementFromPoint(cx, r.top - (reach - 1)), 'above').toBe(presence);
+    expect(document.elementFromPoint(cx, r.bottom + (reach - 1)), 'below').toBe(presence);
+    expect(document.elementFromPoint(cx, r.top - (reach + 1)), 'beyond the reach, above').not.toBe(
+      presence,
     );
     expectAtLeastDesktopFloor(chip, '#guild-board-window .gb-filter-chip');
     expectAtLeastDesktopFloor(showAll, '#guild-board-window .gb-show-all');

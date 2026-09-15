@@ -2253,6 +2253,12 @@ export const fr_CA: EnTranslations = {
       "linkHint": "Maj-clic pour lier cet objet dans le canal de discussion."
     },
     "plurals": {
+      "guildBoardShown": {
+        "one": "{count} guild shown",
+        "few": "{count} guilds shown",
+        "many": "{count} guilds shown",
+        "other": "{count} guilds shown"
+      },
       "commissionMasterworks": {
         "one": "{count} chef-d’œuvre",
         "few": "{count} chefs-d’œuvre",
@@ -3768,7 +3774,6 @@ export const fr_CA: EnTranslations = {
       "officersOnline": "Officers online",
       "officersOnlineLabel": "Officers online: {names}",
       "officerEntry": "{name} ({rank})",
-      "filterCount": "{count} guilds shown",
       "popupTitle": "Panneau de guilde",
       "close": "Fermer"
     },

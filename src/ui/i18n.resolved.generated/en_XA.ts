@@ -2253,6 +2253,12 @@ export const en_XA: EnTranslations = {
       "linkHint": "[Šĥíƒţ-çļíçķ ţó ļíñķ ţĥíš íţéɱ íñ çĥáţ.]"
     },
     "plurals": {
+      "guildBoardShown": {
+        "one": "[{count} ĝúíļð šĥóŵñ]",
+        "few": "[{count} ĝúíļðš šĥóŵñ]",
+        "many": "[{count} ĝúíļðš šĥóŵñ]",
+        "other": "[{count} ĝúíļðš šĥóŵñ]"
+      },
       "commissionMasterworks": {
         "one": "[{count} ɱášţéŕŵóŕķ]",
         "few": "[{count} ɱášţéŕŵóŕķš]",
@@ -3768,7 +3774,6 @@ export const en_XA: EnTranslations = {
       "officersOnline": "[Óƒƒíçéŕš óñļíñé]",
       "officersOnlineLabel": "[Óƒƒíçéŕš óñļíñé: {names}]",
       "officerEntry": "[{name} ({rank})]",
-      "filterCount": "[{count} ĝúíļðš šĥóŵñ]",
       "popupTitle": "[Ĝúíļð Šíĝñþóšţ]",
       "close": "[Çļóšé]"
     },

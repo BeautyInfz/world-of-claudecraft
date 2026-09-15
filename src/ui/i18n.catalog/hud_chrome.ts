@@ -2915,6 +2915,14 @@ export const hudChromeStrings = {
   // carry the real distinct forms only in the locales that need them (ru_RU). The
   // count is auto-supplied as {count}. Keep all four categories present per base.
   plurals: {
+    // The signpost guild board's live count line ({count} pre-formatted): a
+    // screen reader hears how many guilds a read (or a filter flip) produced.
+    guildBoardShown: {
+      one: '{count} guild shown',
+      few: '{count} guilds shown',
+      many: '{count} guilds shown',
+      other: '{count} guilds shown',
+    },
     // The commission board's crafter's-record counts (Masterwrought phase
     // 14): lifetime masterworks crafted and legendaries forged, off the
     // accepter's deed stat counters.
@@ -5322,9 +5330,6 @@ export const hudChromeStrings = {
     officersOnlineLabel: 'Officers online: {names}',
     // One entry of that list: the officer's name and localized rank.
     officerEntry: '{name} ({rank})',
-    // The strip's live count line ({count} pre-formatted): a screen reader
-    // hears how many guilds a read (or a filter flip) produced.
-    filterCount: '{count} guilds shown',
     // The 'listings' arm of the noticeboard event opens the signpost popup
     // (src/ui/noticeboard_popup.ts). Guild names and notes are world data,
     // spliced verbatim like player names, never translated.

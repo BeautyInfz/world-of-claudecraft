@@ -2253,6 +2253,12 @@ export const cs_CZ: EnTranslations = {
       "linkHint": "Shift + kliknutí vloží odkaz na tento předmět do chatu."
     },
     "plurals": {
+      "guildBoardShown": {
+        "one": "{count} guild shown",
+        "few": "{count} guilds shown",
+        "many": "{count} guilds shown",
+        "other": "{count} guilds shown"
+      },
       "commissionMasterworks": {
         "one": "{count} mistrovsky kovaný předmět",
         "few": "{count} mistrovsky kované předměty",
@@ -3768,7 +3774,6 @@ export const cs_CZ: EnTranslations = {
       "officersOnline": "Officers online",
       "officersOnlineLabel": "Officers online: {names}",
       "officerEntry": "{name} ({rank})",
-      "filterCount": "{count} guilds shown",
       "popupTitle": "Cechovní vývěska",
       "close": "Zavřít"
     },

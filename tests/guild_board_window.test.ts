@@ -448,6 +448,80 @@ describe('GuildBoardWindow', () => {
     expect(win.isOpen).toBe(true);
   });
 
+  it('announces the count with the right plural, from a status node that outlives the body rebuild', async () => {
+    world = fakeWorld({ guildLeaderboard: async () => pageOf([STORMCALLERS]) } as never);
+    await openAndSettle();
+    const status = root.querySelector('.gb-filter-status') as HTMLElement;
+    expect(status.getAttribute('role')).toBe('status');
+    expect(status.textContent).toBe('1 guild shown');
+    // The node is part of the shell, not the rebuilt body: it exists (empty)
+    // before the read lands, which is what makes the change announceable.
+    expect(status.closest('.gb-body')).toBeNull();
+  });
+
+  it('drops a stale read that lands after a re-open changed the view', async () => {
+    // The first (Proving Shore, filtered) read is held open; a re-open on a
+    // town board reads and renders the whole ranking; the stale read then
+    // lands echoing its category and must not clobber the newer view.
+    const reads: (GuildBoardCategory | null | undefined)[] = [];
+    let releaseFirst: (page: GuildLeaderboardPage) => void = () => {};
+    world = fakeWorld({
+      guildLeaderboard: async (_p: number, _s: number, category?: GuildBoardCategory | null) => {
+        reads.push(category);
+        if (reads.length === 1) {
+          return new Promise<GuildLeaderboardPage>((resolve) => {
+            releaseFirst = resolve;
+          });
+        }
+        return PAGE;
+      },
+    } as never);
+    win.open(PROVING_SHORE_NOTICEBOARD_ID);
+    await vi.waitFor(() => {
+      if (reads.length !== 1) throw new Error('pending');
+    });
+    win.open('eastbrook_noticeboard');
+    await vi.waitFor(() => {
+      if (root.querySelectorAll('.lb-guild-entry').length !== 2) throw new Error('pending');
+    });
+    releaseFirst(pageOf([STORMCALLERS], 'newPlayerFriendly'));
+    await new Promise((resolve) => setTimeout(resolve, 0));
+
+    expect(reads).toEqual(['newPlayerFriendly', null]);
+    expect(win.activeCategory).toBeNull();
+    expect(root.querySelectorAll('.lb-guild-entry')).toHaveLength(2);
+    expect((root.querySelector('[data-board-filter]') as HTMLInputElement).checked).toBe(false);
+    expect(root.querySelector('.gb-filter-status')?.textContent).toBe('2 guilds shown');
+  });
+
+  it('returns focus to the close button when a Show-all read fails (no strip to land on)', async () => {
+    let fail = false;
+    world = fakeWorld({
+      guildLeaderboard: async (_p: number, _s: number, category?: GuildBoardCategory | null) => {
+        if (fail && !category) throw new Error('network down');
+        return category ? pageOf([], category) : PAGE;
+      },
+    } as never);
+    await openAndSettle('eastbrook_noticeboard');
+    const box = root.querySelector('[data-board-filter]') as HTMLInputElement;
+    box.checked = true;
+    box.dispatchEvent(new Event('change', { bubbles: true }));
+    await vi.waitFor(() => {
+      if (!root.querySelector('[data-board-show-all]')) throw new Error('pending');
+    });
+    fail = true;
+    (root.querySelector('[data-board-show-all]') as HTMLButtonElement).click();
+    await vi.waitFor(() => {
+      if (!root.querySelector('.lb-error')) throw new Error('pending');
+    });
+
+    // No strip on the unfiltered error state, so focus goes to the close
+    // button, never to body; the count line says nothing beside the alert.
+    expect(root.querySelector('[data-board-filter]')).toBeNull();
+    expect(document.activeElement).toBe(root.querySelector('[data-close]'));
+    expect(root.querySelector('.gb-filter-status')?.textContent).toBe('');
+  });
+
   // ---- officer presence: the dot and its tooltip ----
 
   it('shows the presence dot only where an officer is online, naming them for a reader', async () => {

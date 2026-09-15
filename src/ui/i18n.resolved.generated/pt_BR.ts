@@ -2253,6 +2253,12 @@ export const pt_BR: EnTranslations = {
       "linkHint": "Shift-clique para vincular este item no chat."
     },
     "plurals": {
+      "guildBoardShown": {
+        "one": "{count} guild shown",
+        "few": "{count} guilds shown",
+        "many": "{count} guilds shown",
+        "other": "{count} guilds shown"
+      },
       "commissionMasterworks": {
         "one": "{count} obra-prima",
         "few": "{count} obras-primas",
@@ -3768,7 +3774,6 @@ export const pt_BR: EnTranslations = {
       "officersOnline": "Officers online",
       "officersOnlineLabel": "Officers online: {names}",
       "officerEntry": "{name} ({rank})",
-      "filterCount": "{count} guilds shown",
       "popupTitle": "Placa da Guilda",
       "close": "Fechar"
     },

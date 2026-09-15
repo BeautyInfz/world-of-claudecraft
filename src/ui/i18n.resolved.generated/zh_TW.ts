@@ -2253,6 +2253,12 @@ export const zh_TW: EnTranslations = {
       "linkHint": "Shift + 點擊可在聊天中連結該物品。"
     },
     "plurals": {
+      "guildBoardShown": {
+        "one": "顯示 {count} 個公會",
+        "few": "顯示 {count} 個公會",
+        "many": "顯示 {count} 個公會",
+        "other": "顯示 {count} 個公會"
+      },
       "commissionMasterworks": {
         "one": "{count}件傑作",
         "few": "{count}件傑作",
@@ -3768,7 +3774,6 @@ export const zh_TW: EnTranslations = {
       "officersOnline": "幹部在線",
       "officersOnlineLabel": "在線幹部：{names}",
       "officerEntry": "{name} ({rank})",
-      "filterCount": "顯示 {count} 個公會",
       "popupTitle": "公會告示柱",
       "close": "關閉"
     },

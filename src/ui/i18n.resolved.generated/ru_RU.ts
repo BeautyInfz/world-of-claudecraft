@@ -2253,6 +2253,12 @@ export const ru_RU: EnTranslations = {
       "linkHint": "Shift + клик, чтобы вставить ссылку на этот предмет в чат."
     },
     "plurals": {
+      "guildBoardShown": {
+        "one": "Показана {count} гильдия",
+        "few": "Показано {count} гильдии",
+        "many": "Показано {count} гильдий",
+        "other": "Показано {count} гильдии"
+      },
       "commissionMasterworks": {
         "one": "{count} шедевр",
         "few": "{count} шедевра",
@@ -3768,7 +3774,6 @@ export const ru_RU: EnTranslations = {
       "officersOnline": "Офицеры в сети",
       "officersOnlineLabel": "Офицеры в сети: {names}",
       "officerEntry": "{name} ({rank})",
-      "filterCount": "Показано гильдий: {count}",
       "popupTitle": "Гильдейский столб",
       "close": "Закрыть"
     },

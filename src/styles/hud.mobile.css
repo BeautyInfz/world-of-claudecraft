@@ -5682,6 +5682,11 @@
     position: absolute;
     inset: -8px;
   }
+  /* The 8px reach must not overlap the roster link beside the dot (SC 2.5.8
+     target spacing), so the name cell's 6px gap widens to the reach on touch. */
+  body.mobile-touch #guild-board-window .gb-name-cell {
+    gap: 8px;
+  }
   /* The scrolling body clips at its edge, so the LAST row's dot keeps its
      8px reach below the row (the same reach every other row has). */
   body.mobile-touch #guild-board-window .gb-body {

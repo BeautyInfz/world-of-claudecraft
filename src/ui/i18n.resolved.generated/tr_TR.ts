@@ -2253,6 +2253,12 @@ export const tr_TR: EnTranslations = {
       "linkHint": "Bu eşyayı sohbete bağlamak için Shift+tıkla."
     },
     "plurals": {
+      "guildBoardShown": {
+        "one": "{count} guild shown",
+        "few": "{count} guilds shown",
+        "many": "{count} guilds shown",
+        "other": "{count} guilds shown"
+      },
       "commissionMasterworks": {
         "one": "{count} şaheser",
         "few": "{count} şaheser",
@@ -3768,7 +3774,6 @@ export const tr_TR: EnTranslations = {
       "officersOnline": "Officers online",
       "officersOnlineLabel": "Officers online: {names}",
       "officerEntry": "{name} ({rank})",
-      "filterCount": "{count} guilds shown",
       "popupTitle": "Lonca Tabelası",
       "close": "Kapat"
     },

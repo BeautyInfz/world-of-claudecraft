@@ -30,7 +30,7 @@ import {
   type GuildBoardViewer,
   type GuildLeaderboardRow,
 } from '../../guild_leaderboard_view';
-import { formatList, formatNumber, t } from '../../i18n';
+import { formatList, formatNumber, t, tPlural } from '../../i18n';
 import type { LeaderboardPager } from '../../leaderboard_view';
 import { svgIcon } from '../../ui_icons';
 import { formatXp } from '../../xp_bar';
@@ -154,7 +154,7 @@ export class GuildBoardWindow {
     const el = this.deps.root();
     const world = this.deps.world();
     markDialogRoot(el, { labelledBy: 'guild-board-title' });
-    el.innerHTML = this.titleHtml(world.realm) + this.loadingBodyHtml();
+    el.innerHTML = this.titleHtml(world.realm) + this.statusHtml() + this.loadingBodyHtml();
     el.querySelector('[data-close]')?.addEventListener('click', () => this.close());
     if (focus === 'open') (el.querySelector('[data-close]') as HTMLElement | null)?.focus();
     if (this.rosterOf !== null) {
@@ -206,12 +206,17 @@ export class GuildBoardWindow {
     );
     if (view.kind === 'error') {
       // A filtered read that fails keeps the strip, so the tick box (the way
-      // back to the whole board) is never lost behind the retry message.
+      // back to the whole board) is never lost behind the retry message. The
+      // count line says nothing: the alert is the outcome, not "0 guilds".
       body.innerHTML =
-        (category === null ? '' : this.filterBarHtml(category, 0)) +
+        (category === null ? '' : this.filterBarHtml(category)) +
         `<div class="lb-empty lb-error" role="alert">${esc(t('game.leaderboard.retry'))}</div>`;
-      this.wireFilterBar(body as HTMLElement, focus);
-      if (focus !== null && focus !== 'open' && focus !== 'filter') this.focusClose(el);
+      this.setStatus(el, null);
+      // Focus never lands on body: the tick box takes it back when the strip
+      // rendered, the close button otherwise (a Show-all click whose read
+      // failed has no strip left to return to).
+      const box = this.wireFilterBar(body as HTMLElement, focus);
+      if (focus !== null && focus !== 'open' && !(focus === 'filter' && box)) this.focusClose(el);
       return;
     }
     if (view.kind === 'empty') {
@@ -227,6 +232,7 @@ export class GuildBoardWindow {
         await this.renderBoard(el, world, focus, seq);
         return;
       }
+      this.setStatus(el, 0);
       if (view.category === null) {
         // The offline sandbox and a fresh realm both land here: the signpost
         // honestly has nothing posted.
@@ -237,7 +243,7 @@ export class GuildBoardWindow {
       // A category no guild wears yet: keep the filter strip (the way back)
       // and say so, with the whole ranking one click away.
       body.innerHTML =
-        this.filterBarHtml(view.category, 0) +
+        this.filterBarHtml(view.category) +
         `<div class="lb-empty gb-filter-empty">` +
         `<span class="gb-filter-empty-text">${esc(t('hudChrome.noticeboard.filterEmpty'))}</span>` +
         `<button type="button" class="btn gb-show-all" data-board-show-all>${esc(t('hudChrome.noticeboard.showAll'))}</button>` +
@@ -247,8 +253,9 @@ export class GuildBoardWindow {
     }
     if (view.kind !== 'ranked') return;
     this.page = view.page;
+    this.setStatus(el, result?.total ?? view.rows.length);
     body.innerHTML =
-      this.filterBarHtml(view.category, result?.total ?? view.rows.length) +
+      this.filterBarHtml(view.category) +
       this.boardHeaderHtml() +
       view.rows.map((r) => this.boardRowHtml(r)).join('') +
       this.pagerHtml(view.pager);
@@ -276,14 +283,32 @@ export class GuildBoardWindow {
     (el.querySelector('[data-close]') as HTMLElement | null)?.focus();
   }
 
+  // The live count line: minted ONCE per render in the shell that survives
+  // the body rebuild, and filled after the read, so assistive tech sees a
+  // region whose text CHANGES (a region inserted with its text already set
+  // is typically not announced). Visually clipped (components.css).
+  private statusHtml(): string {
+    return `<span class="gb-filter-status" role="status"></span>`;
+  }
+
+  /** Announce how many guilds the read produced; null says nothing (the
+   *  error branch, where the retry alert is the outcome). */
+  private setStatus(el: HTMLElement, shown: number | null): void {
+    const status = el.querySelector('.gb-filter-status');
+    if (!status) return;
+    status.textContent =
+      shown === null
+        ? ''
+        : tPlural('hudChrome.plurals.guildBoardShown', shown, {
+            count: formatNumber(shown, { maximumFractionDigits: 0 }),
+          });
+  }
+
   // The filter strip: one tick box per category (the tag chip's glyph and
   // wording, so the filter and the row chip read as the same thing), plus the
   // presence legend so the green dot explains itself without a hover.
-  private filterBarHtml(category: GuildBoardCategory | null, shown: number): string {
+  private filterBarHtml(category: GuildBoardCategory | null): string {
     const checked = category === FILTER_CATEGORY ? ' checked' : '';
-    // The count line is a live region the async re-read fills, so a screen
-    // reader hears the outcome of a filter flip without re-reading the board.
-    const count = formatNumber(shown, { maximumFractionDigits: 0 });
     return (
       `<div class="gb-filters" role="group" aria-label="${esc(t('hudChrome.noticeboard.filters'))}">` +
       `<label class="gb-filter-chip${checked ? ' active' : ''}" title="${esc(t('hudChrome.noticeboard.filterNewPlayersTitle'))}">` +
@@ -291,13 +316,13 @@ export class GuildBoardWindow {
       `<span class="gb-filter-icon" aria-hidden="true">${svgIcon('sprout')}</span>` +
       `<span class="gb-filter-label">${esc(t('hudChrome.noticeboard.newPlayerFriendly'))}</span>` +
       `</label>` +
-      `<span class="gb-filter-status" role="status">${esc(t('hudChrome.noticeboard.filterCount', { count }))}</span>` +
       `<span class="gb-legend"><span class="soc-dot online gb-presence-dot" aria-hidden="true"></span>${esc(t('hudChrome.noticeboard.officersOnline'))}</span>` +
       `</div>`
     );
   }
 
-  private wireFilterBar(body: HTMLElement, focus: Focus): void {
+  /** Wire the strip; returns the tick box (null when no strip rendered). */
+  private wireFilterBar(body: HTMLElement, focus: Focus): HTMLInputElement | null {
     const box = body.querySelector<HTMLInputElement>('[data-board-filter]');
     box?.addEventListener('change', () => {
       this.setCategory(box.checked ? FILTER_CATEGORY : null);
@@ -308,6 +333,7 @@ export class GuildBoardWindow {
     // Keyboard focus-return after the async re-read: the tick box survives
     // the rebuild, so the keyboard user stays on the control they flipped.
     if (focus === 'filter') box?.focus();
+    return box;
   }
 
   private setCategory(category: GuildBoardCategory | null): void {

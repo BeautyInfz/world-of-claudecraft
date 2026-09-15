@@ -2253,6 +2253,12 @@ export const ko_KR: EnTranslations = {
       "linkHint": "Shift + 클릭하면 이 아이템을 채팅에 연결합니다."
     },
     "plurals": {
+      "guildBoardShown": {
+        "one": "길드 {count}개 표시 중",
+        "few": "길드 {count}개 표시 중",
+        "many": "길드 {count}개 표시 중",
+        "other": "길드 {count}개 표시 중"
+      },
       "commissionMasterworks": {
         "one": "걸작 {count}점",
         "few": "걸작 {count}점",
@@ -3768,7 +3774,6 @@ export const ko_KR: EnTranslations = {
       "officersOnline": "임원 접속 중",
       "officersOnlineLabel": "접속 중인 임원: {names}",
       "officerEntry": "{name} ({rank})",
-      "filterCount": "길드 {count}개 표시 중",
       "popupTitle": "길드 게시 기둥",
       "close": "닫기"
     },

@@ -2253,6 +2253,12 @@ export const es: EnTranslations = {
       "linkHint": "Mayús+clic para enlazar este objeto en el chat."
     },
     "plurals": {
+      "guildBoardShown": {
+        "one": "{count} guild shown",
+        "few": "{count} guilds shown",
+        "many": "{count} guilds shown",
+        "other": "{count} guilds shown"
+      },
       "commissionMasterworks": {
         "one": "{count} obra maestra",
         "few": "{count} obras maestras",
@@ -3768,7 +3774,6 @@ export const es: EnTranslations = {
       "officersOnline": "Officers online",
       "officersOnlineLabel": "Officers online: {names}",
       "officerEntry": "{name} ({rank})",
-      "filterCount": "{count} guilds shown",
       "popupTitle": "Cartel de la hermandad",
       "close": "Cerrar"
     },

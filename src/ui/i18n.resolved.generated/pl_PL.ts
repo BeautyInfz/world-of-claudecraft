@@ -2253,6 +2253,12 @@ export const pl_PL: EnTranslations = {
       "linkHint": "Kliknij z Shift, aby wstawić link do tego przedmiotu na czacie."
     },
     "plurals": {
+      "guildBoardShown": {
+        "one": "{count} guild shown",
+        "few": "{count} guilds shown",
+        "many": "{count} guilds shown",
+        "other": "{count} guilds shown"
+      },
       "commissionMasterworks": {
         "one": "{count} mistrzowsko kuty przedmiot",
         "few": "{count} mistrzowsko kute przedmioty",
@@ -3768,7 +3774,6 @@ export const pl_PL: EnTranslations = {
       "officersOnline": "Officers online",
       "officersOnlineLabel": "Officers online: {names}",
       "officerEntry": "{name} ({rank})",
-      "filterCount": "{count} guilds shown",
       "popupTitle": "Tablica gildii",
       "close": "Zamknij"
     },

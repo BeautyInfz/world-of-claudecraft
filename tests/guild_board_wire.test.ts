@@ -48,6 +48,20 @@ describe('decodeGuildBoardPage', () => {
     expect(decodeGuildBoardPage(null, 1, 20)).toEqual({ ...emptyGuildBoardPage(20), page: 1 });
     expect(emptyGuildBoardPage(20).page).toBe(0);
   });
+
+  it('keeps the requested category on the empty page a refused read resolves to', () => {
+    // An empty page WITHOUT the category reads as "the server did not honour
+    // the filter" and would clear the player's tick box on a transient 5xx.
+    expect(emptyGuildBoardPage(20, 'newPlayerFriendly')).toEqual({
+      leaders: [],
+      page: 0,
+      pageCount: 1,
+      total: 0,
+      pageSize: 20,
+      category: 'newPlayerFriendly',
+    });
+    expect('category' in emptyGuildBoardPage(20, null)).toBe(false);
+  });
 });
 
 describe('decodeGuildPledgeSettings', () => {
