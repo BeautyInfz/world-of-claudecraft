@@ -1110,6 +1110,28 @@ describe('AuraOverlayController alert cues', () => {
     controller.paint(revengeUp);
     expect(played).toEqual([['ui_aura_temple_gong', 0.25]]);
   });
+
+  it('forgets a proc edge when the spell is unwatched, so re-picking a live aura stays silent', () => {
+    const { controller, played } = setup();
+    const up = [{ id: 'recklessness', kind: 'buff_reckless' } as never];
+    controller.setWatched('watch:recklessness', true);
+    controller.patch('watch:recklessness', { soundId: 'ui_aura_wolf_howl' });
+    controller.paint([]);
+    controller.setWatched('watch:recklessness', false);
+    // The aura rises while the spell is not watched: nobody is listening.
+    controller.paint(up);
+    expect(played).toEqual([]);
+    // Re-picking a spell whose aura is ALREADY up is not a proc. Without the
+    // edge being forgotten on unwatch, the stale "was down" from before would
+    // fire the cue here.
+    controller.setWatched('watch:recklessness', true);
+    controller.paint(up);
+    expect(played).toEqual([]);
+    // The next genuine rise still announces itself.
+    controller.paint([]);
+    controller.paint(up);
+    expect(played).toEqual([['ui_aura_wolf_howl', 0.7]]);
+  });
 });
 
 describe('AuraOverlayController proc signal channels', () => {

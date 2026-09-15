@@ -180,6 +180,13 @@ export class AuraOverlayController {
     ];
     this.refreshGroundOrder();
     const activeIds = new Set(this.currentDefs.map((def) => def.id));
+    // A proc that leaves the loadout forgets its cue edge too. If it comes back
+    // (a re-pick, a relearn) its first frame only RECORDS again, so picking a
+    // spell whose aura is already up cannot announce itself off a stale "was
+    // down" remembered from before it was unwatched.
+    for (const id of this.cueActive.keys()) {
+      if (!activeIds.has(id)) this.cueActive.delete(id);
+    }
     for (const target of this.targets) {
       target.el.classList.toggle('loadout-hidden', !activeIds.has(target.def.id));
     }
