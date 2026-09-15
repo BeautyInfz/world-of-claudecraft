@@ -1222,8 +1222,8 @@ export const es_ES: EnTranslations = {
       "devTierCol": "Insignia",
       "mergedPrs": "PR fusionadas",
       "devEmpty": "Aún no hay colaboradores clasificados.",
-      "podiumLabel": "Los tres mejores",
-      "unclaimed": "Sin reclamar"
+      "podiumLabel": "Top three",
+      "unclaimed": "Unclaimed"
     },
     "pledge": {
       "open": "Acepta compromisos",

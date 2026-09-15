@@ -4898,8 +4898,6 @@ export const es: Partial<Record<TranslationKey, string>> = {
   'hudChrome.itemTooltip.requiresLevel': 'Requiere nivel {level}',
   'hudChrome.keybinds.discord': 'Discord',
   'hudChrome.leaderboard.devEmpty': 'Aún no hay colaboradores clasificados.',
-  'hudChrome.leaderboard.podiumLabel': 'Los tres mejores',
-  'hudChrome.leaderboard.unclaimed': 'Sin reclamar',
   'hudChrome.leaderboard.devName': 'Colaborador',
   'hudChrome.leaderboard.devTierCol': 'Insignia',
   'hudChrome.leaderboard.mergedPrs': 'PR fusionadas',
