@@ -12,39 +12,87 @@ export const pending: Record<string, readonly string[]> = {
   "es": [
     "hud.errors.cannotCastWhileMoving",
     "hudChrome.auraEffect.wolfForm",
+    "hudChrome.deeds.accountScopeHint",
+    "hudChrome.deeds.accountScopeNote",
+    "hudChrome.deeds.earnedBy",
+    "hudChrome.deeds.earnerWithDate",
     "hudChrome.finder.lootHeroicChance",
-    "hudChrome.finder.lootHeroicMaybe"
+    "hudChrome.finder.lootHeroicMaybe",
+    "hudChrome.reliquary.finderWithDate",
+    "hudChrome.reliquary.foundBy",
+    "hudChrome.reliquary.sharedScopeHint",
+    "hudChrome.reliquary.sharedScopeNote"
   ],
   "es_ES": [
     "hud.errors.cannotCastWhileMoving",
     "hudChrome.auraEffect.wolfForm",
+    "hudChrome.deeds.accountScopeHint",
+    "hudChrome.deeds.accountScopeNote",
+    "hudChrome.deeds.earnedBy",
+    "hudChrome.deeds.earnerWithDate",
     "hudChrome.finder.lootHeroicChance",
-    "hudChrome.finder.lootHeroicMaybe"
+    "hudChrome.finder.lootHeroicMaybe",
+    "hudChrome.reliquary.finderWithDate",
+    "hudChrome.reliquary.foundBy",
+    "hudChrome.reliquary.sharedScopeHint",
+    "hudChrome.reliquary.sharedScopeNote"
   ],
   "fr_FR": [
     "hud.errors.cannotCastWhileMoving",
     "hudChrome.auraEffect.wolfForm",
+    "hudChrome.deeds.accountScopeHint",
+    "hudChrome.deeds.accountScopeNote",
+    "hudChrome.deeds.earnedBy",
+    "hudChrome.deeds.earnerWithDate",
     "hudChrome.finder.lootHeroicChance",
-    "hudChrome.finder.lootHeroicMaybe"
+    "hudChrome.finder.lootHeroicMaybe",
+    "hudChrome.reliquary.finderWithDate",
+    "hudChrome.reliquary.foundBy",
+    "hudChrome.reliquary.sharedScopeHint",
+    "hudChrome.reliquary.sharedScopeNote"
   ],
   "fr_CA": [
     "hud.errors.cannotCastWhileMoving",
     "hudChrome.auraEffect.wolfForm",
+    "hudChrome.deeds.accountScopeHint",
+    "hudChrome.deeds.accountScopeNote",
+    "hudChrome.deeds.earnedBy",
+    "hudChrome.deeds.earnerWithDate",
     "hudChrome.finder.lootHeroicChance",
-    "hudChrome.finder.lootHeroicMaybe"
+    "hudChrome.finder.lootHeroicMaybe",
+    "hudChrome.reliquary.finderWithDate",
+    "hudChrome.reliquary.foundBy",
+    "hudChrome.reliquary.sharedScopeHint",
+    "hudChrome.reliquary.sharedScopeNote"
   ],
   "en_CA": [],
   "it_IT": [
     "hud.errors.cannotCastWhileMoving",
     "hudChrome.auraEffect.wolfForm",
+    "hudChrome.deeds.accountScopeHint",
+    "hudChrome.deeds.accountScopeNote",
+    "hudChrome.deeds.earnedBy",
+    "hudChrome.deeds.earnerWithDate",
     "hudChrome.finder.lootHeroicChance",
-    "hudChrome.finder.lootHeroicMaybe"
+    "hudChrome.finder.lootHeroicMaybe",
+    "hudChrome.reliquary.finderWithDate",
+    "hudChrome.reliquary.foundBy",
+    "hudChrome.reliquary.sharedScopeHint",
+    "hudChrome.reliquary.sharedScopeNote"
   ],
   "de_DE": [
     "hud.errors.cannotCastWhileMoving",
     "hudChrome.auraEffect.wolfForm",
+    "hudChrome.deeds.accountScopeHint",
+    "hudChrome.deeds.accountScopeNote",
+    "hudChrome.deeds.earnedBy",
+    "hudChrome.deeds.earnerWithDate",
     "hudChrome.finder.lootHeroicChance",
-    "hudChrome.finder.lootHeroicMaybe"
+    "hudChrome.finder.lootHeroicMaybe",
+    "hudChrome.reliquary.finderWithDate",
+    "hudChrome.reliquary.foundBy",
+    "hudChrome.reliquary.sharedScopeHint",
+    "hudChrome.reliquary.sharedScopeNote"
   ],
   "zh_CN": [],
   "zh_TW": [],
@@ -53,56 +101,128 @@ export const pending: Record<string, readonly string[]> = {
   "pt_BR": [
     "hud.errors.cannotCastWhileMoving",
     "hudChrome.auraEffect.wolfForm",
+    "hudChrome.deeds.accountScopeHint",
+    "hudChrome.deeds.accountScopeNote",
+    "hudChrome.deeds.earnedBy",
+    "hudChrome.deeds.earnerWithDate",
     "hudChrome.finder.lootHeroicChance",
-    "hudChrome.finder.lootHeroicMaybe"
+    "hudChrome.finder.lootHeroicMaybe",
+    "hudChrome.reliquary.finderWithDate",
+    "hudChrome.reliquary.foundBy",
+    "hudChrome.reliquary.sharedScopeHint",
+    "hudChrome.reliquary.sharedScopeNote"
   ],
   "ru_RU": [],
   "cs_CZ": [
     "hud.errors.cannotCastWhileMoving",
     "hudChrome.auraEffect.wolfForm",
+    "hudChrome.deeds.accountScopeHint",
+    "hudChrome.deeds.accountScopeNote",
+    "hudChrome.deeds.earnedBy",
+    "hudChrome.deeds.earnerWithDate",
     "hudChrome.finder.lootHeroicChance",
-    "hudChrome.finder.lootHeroicMaybe"
+    "hudChrome.finder.lootHeroicMaybe",
+    "hudChrome.reliquary.finderWithDate",
+    "hudChrome.reliquary.foundBy",
+    "hudChrome.reliquary.sharedScopeHint",
+    "hudChrome.reliquary.sharedScopeNote"
   ],
   "nl_NL": [
     "hud.errors.cannotCastWhileMoving",
     "hudChrome.auraEffect.wolfForm",
+    "hudChrome.deeds.accountScopeHint",
+    "hudChrome.deeds.accountScopeNote",
+    "hudChrome.deeds.earnedBy",
+    "hudChrome.deeds.earnerWithDate",
     "hudChrome.finder.lootHeroicChance",
-    "hudChrome.finder.lootHeroicMaybe"
+    "hudChrome.finder.lootHeroicMaybe",
+    "hudChrome.reliquary.finderWithDate",
+    "hudChrome.reliquary.foundBy",
+    "hudChrome.reliquary.sharedScopeHint",
+    "hudChrome.reliquary.sharedScopeNote"
   ],
   "pl_PL": [
     "hud.errors.cannotCastWhileMoving",
     "hudChrome.auraEffect.wolfForm",
+    "hudChrome.deeds.accountScopeHint",
+    "hudChrome.deeds.accountScopeNote",
+    "hudChrome.deeds.earnedBy",
+    "hudChrome.deeds.earnerWithDate",
     "hudChrome.finder.lootHeroicChance",
-    "hudChrome.finder.lootHeroicMaybe"
+    "hudChrome.finder.lootHeroicMaybe",
+    "hudChrome.reliquary.finderWithDate",
+    "hudChrome.reliquary.foundBy",
+    "hudChrome.reliquary.sharedScopeHint",
+    "hudChrome.reliquary.sharedScopeNote"
   ],
   "id_ID": [
     "hud.errors.cannotCastWhileMoving",
     "hudChrome.auraEffect.wolfForm",
+    "hudChrome.deeds.accountScopeHint",
+    "hudChrome.deeds.accountScopeNote",
+    "hudChrome.deeds.earnedBy",
+    "hudChrome.deeds.earnerWithDate",
     "hudChrome.finder.lootHeroicChance",
-    "hudChrome.finder.lootHeroicMaybe"
+    "hudChrome.finder.lootHeroicMaybe",
+    "hudChrome.reliquary.finderWithDate",
+    "hudChrome.reliquary.foundBy",
+    "hudChrome.reliquary.sharedScopeHint",
+    "hudChrome.reliquary.sharedScopeNote"
   ],
   "tr_TR": [
     "hud.errors.cannotCastWhileMoving",
     "hudChrome.auraEffect.wolfForm",
+    "hudChrome.deeds.accountScopeHint",
+    "hudChrome.deeds.accountScopeNote",
+    "hudChrome.deeds.earnedBy",
+    "hudChrome.deeds.earnerWithDate",
     "hudChrome.finder.lootHeroicChance",
-    "hudChrome.finder.lootHeroicMaybe"
+    "hudChrome.finder.lootHeroicMaybe",
+    "hudChrome.reliquary.finderWithDate",
+    "hudChrome.reliquary.foundBy",
+    "hudChrome.reliquary.sharedScopeHint",
+    "hudChrome.reliquary.sharedScopeNote"
   ],
   "sv_SE": [
     "hud.errors.cannotCastWhileMoving",
     "hudChrome.auraEffect.wolfForm",
+    "hudChrome.deeds.accountScopeHint",
+    "hudChrome.deeds.accountScopeNote",
+    "hudChrome.deeds.earnedBy",
+    "hudChrome.deeds.earnerWithDate",
     "hudChrome.finder.lootHeroicChance",
-    "hudChrome.finder.lootHeroicMaybe"
+    "hudChrome.finder.lootHeroicMaybe",
+    "hudChrome.reliquary.finderWithDate",
+    "hudChrome.reliquary.foundBy",
+    "hudChrome.reliquary.sharedScopeHint",
+    "hudChrome.reliquary.sharedScopeNote"
   ],
   "vi_VN": [
     "hud.errors.cannotCastWhileMoving",
     "hudChrome.auraEffect.wolfForm",
+    "hudChrome.deeds.accountScopeHint",
+    "hudChrome.deeds.accountScopeNote",
+    "hudChrome.deeds.earnedBy",
+    "hudChrome.deeds.earnerWithDate",
     "hudChrome.finder.lootHeroicChance",
-    "hudChrome.finder.lootHeroicMaybe"
+    "hudChrome.finder.lootHeroicMaybe",
+    "hudChrome.reliquary.finderWithDate",
+    "hudChrome.reliquary.foundBy",
+    "hudChrome.reliquary.sharedScopeHint",
+    "hudChrome.reliquary.sharedScopeNote"
   ],
   "da_DK": [
     "hud.errors.cannotCastWhileMoving",
     "hudChrome.auraEffect.wolfForm",
+    "hudChrome.deeds.accountScopeHint",
+    "hudChrome.deeds.accountScopeNote",
+    "hudChrome.deeds.earnedBy",
+    "hudChrome.deeds.earnerWithDate",
     "hudChrome.finder.lootHeroicChance",
-    "hudChrome.finder.lootHeroicMaybe"
+    "hudChrome.finder.lootHeroicMaybe",
+    "hudChrome.reliquary.finderWithDate",
+    "hudChrome.reliquary.foundBy",
+    "hudChrome.reliquary.sharedScopeHint",
+    "hudChrome.reliquary.sharedScopeNote"
   ]
 };

@@ -494,6 +494,7 @@ export const IWORLD_MEMBERS = [
   // --- the Book of Deeds (IWorldDeeds): earned/stats/renown/title/border
   // reads + the two cosmetic selection commands ---
   { name: 'deedsEarned', kind: 'data' },
+  { name: 'accountDeeds', kind: 'data' },
   { name: 'deedStats', kind: 'data' },
   { name: 'renown', kind: 'data' },
   { name: 'activeTitle', kind: 'data' },
@@ -509,6 +510,7 @@ export const IWORLD_MEMBERS = [
   { name: 'reliquaryMarks', kind: 'data' },
   { name: 'reliquaryRecent', kind: 'data' },
   { name: 'reliquaryObtainCounts', kind: 'data' },
+  { name: 'reliquaryAccountFinds', kind: 'data' },
   { name: 'reliquaryPageCompletion', kind: 'method' },
   { name: 'reliquaryCatalogCompletion', kind: 'method' },
   { name: 'reliquaryCuratorRank', kind: 'method' },
@@ -859,12 +861,12 @@ describe('IWORLD_MEMBERS is the pinned IWorld contract (anti-loosening)', () => 
     // reconciled by arithmetic in the diff. Run `npx vitest run
     // tests/world_api_parity.test.ts` before merge lands to confirm the
     // facet-file exhaustiveness checks (AssertNever) also pass on the fully
-    // resolved production tree. The Market Sweep adds marketSweepQuote and
-    // marketSweep (IWorldMarket, both methods), the Who tab adds whoInfo
-    // (data) and whoRequest (method), and the CPU-hygiene lot adds
-    // entityRosterVersion (data), leaving 376 (105 data + 271 method).
-    expect(IWORLD_MEMBERS.length).toBe(376);
-    expect(DATA_MEMBERS.length).toBe(105);
+    // resolved production tree. The merged tree carries the Market Sweep
+    // methods, the Who tab data and method, CPU-hygiene entityRosterVersion,
+    // and the account-wide Book of Deeds / Reliquary read halves. Counted
+    // directly off the resolved IWORLD_MEMBERS literal.
+    expect(IWORLD_MEMBERS.length).toBe(378);
+    expect(DATA_MEMBERS.length).toBe(107);
     expect(METHOD_MEMBERS.length).toBe(271);
   });
   it('has no duplicate member names', () => {
@@ -883,6 +885,7 @@ describe('IWORLD_MEMBERS is the pinned IWorld contract (anti-loosening)', () => 
       'acceptQuest',
       'accountAdmin',
       'accountCosmetics',
+      'accountDeeds',
       'accountFlair',
       'activeBorder',
       'activeConsecrations',
@@ -1151,6 +1154,7 @@ describe('IWORLD_MEMBERS is the pinned IWorld contract (anti-loosening)', () => 
       'recipeList',
       'releaseEmpoweredAbility',
       'releaseSpirit',
+      'reliquaryAccountFinds',
       'reliquaryCatalogCompletion',
       'reliquaryCuratorRank',
       'reliquaryFirstFind',
@@ -1259,6 +1263,7 @@ describe('IWORLD_MEMBERS is the pinned IWorld contract (anti-loosening)', () => 
     expect(DATA_MEMBERS.map((m) => m.name).sort()).toEqual([
       'accountAdmin',
       'accountCosmetics',
+      'accountDeeds',
       'activeBorder',
       'activeConsecrations',
       'activeFrostRings',
@@ -1340,6 +1345,7 @@ describe('IWORLD_MEMBERS is the pinned IWorld contract (anti-loosening)', () => 
       'questsDone',
       'realm',
       'recipeList',
+      'reliquaryAccountFinds',
       'reliquaryFirstFind',
       'reliquaryMarks',
       'reliquaryObtainCounts',
@@ -2208,6 +2214,7 @@ type _ExhaustProfessions = AssertNever<
 
 const FACET_DEEDS = [
   'deedsEarned',
+  'accountDeeds',
   'deedStats',
   'renown',
   'activeTitle',
@@ -2225,6 +2232,7 @@ const FACET_RELIQUARY = [
   'reliquaryMarks',
   'reliquaryRecent',
   'reliquaryObtainCounts',
+  'reliquaryAccountFinds',
   'reliquaryPageCompletion',
   'reliquaryCatalogCompletion',
   'reliquaryCuratorRank',
@@ -2381,12 +2389,10 @@ describe('W1: aggregate IWorld member set equals the disjoint union of the facet
 
   it('the facet union equals the pinned IWORLD_MEMBERS set', () => {
     const union = Object.values(FACET_MEMBER_ARRAYS).flatMap((arr) => [...arr]);
-    // Mirrors the IWORLD_MEMBERS.length pin above. The composed tree carries
-    // the Who tab's two social-graph members, Market Sweep's two market
-    // methods, and the CPU-hygiene entityRosterVersion data member, so this
-    // pin and the one above must agree at 376.
-    expect(union.length, 'union size before dedup (catches a duplicated member)').toBe(376);
-    expect(new Set(union).size, 'union size after dedup (catches a duplicated member)').toBe(376);
+    // Mirrors the IWORLD_MEMBERS.length pin above; this pin and the one above
+    // must always agree.
+    expect(union.length, 'union size before dedup (catches a duplicated member)').toBe(378);
+    expect(new Set(union).size, 'union size after dedup (catches a duplicated member)').toBe(378);
     const sortedUnion = [...union].sort();
     const pinned = IWORLD_MEMBERS.map((m) => m.name).sort();
     expect(sortedUnion).toEqual(pinned);

@@ -458,42 +458,11 @@ const MONOLITHS: MonolithRow[] = [
     // LOWERED 18352 -> 18350 in the review-fix round: the prompt countdown bar
     // moved to createPromptTimeoutBar in src/ui/prompt_dialog.ts alongside the
     // PROMPT_TIMEOUT_MS the sheet's --prompt-timeout-dur mirrors.
-    // Re-measured at the PR #3900 recipe-pin merge into the v0.43 candidate:
-    // the tracker-header extraction pays for most of the recipe tracker wiring,
-    // while the current-release gathering goal and Perfecting arms remain.
-    // `wc -l < src/ui/hud.ts` on the resolved tree is 18351. Exact merged
-    // count, zero slack.
-    // Re-measured at the target-frame raid-marker merge into this release
-    // candidate: the descriptor extraction pays for most of the marker wiring,
-    // while this branch's health-text mode override and current HUD surfaces
-    // remain. `wc -l < src/ui/hud.ts` on the resolved tree is 18324. Exact
-    // merged count, zero slack.
-    // LOWERED 18324 -> 18317 for the touch-peek jitter-tolerance fix: the whole
-    // long-press-to-peek touch gesture (the timer arm/clear plus the new
-    // move-tolerance stand-down) moved into src/ui/touch_peek.ts's
-    // bindTooltipTouchPeek, leaving attachTooltip a thin caller passing it
-    // isMobile/press/hide/showAt. Exact count, zero slack.
-    // Re-measured after the v0.43 ready-check and raid-warning integration:
-    // `wc -l < src/ui/hud.ts` is 18356. Exact count, zero slack.
-    // LOWERED again by the mount-skin preview (feature/store-mount-preview):
-    // the two tracker headers' compact-touch chip test moved to
-    // src/ui/mobile_hud_layout.ts isCompactTouchHud and touchBagsShown, paying
-    // for the Cosmetics window's store seam line and the store window's
-    // relocalize arm. The resolved v0.43 batch plus this extraction measures
-    // `wc -l < src/ui/hud.ts` at 18348. Exact merged count, zero slack.
-    // LOWERED again to 18346 with the Who tab merge: the private questNumber
-    // wrapper was the bank family's formatCount (src/ui/count_format.ts), so
-    // the coordinator consumes that leaf and pays the one-line openWhoTab dep.
-    // Exact resolved count, zero slack.
-    // LOWERED again 18346 -> 18339 with the instance-plan zoom-out: the
-    // world-map "grab the paper" pan math moved to mapDragPanCenter in
-    // map_pan_core.ts. `wc -l < src/ui/hud.ts` on the resolved v0.43 batch
-    // tree is 18339. Exact merged count, zero slack.
-    // Re-measured resolving PR #4035 into the current v0.43 merge probe:
-    // the sell-confirm policy extraction and the later release candidate
-    // extractions compose below both parent pins. `wc -l < src/ui/hud.ts`
-    // on the resolved tree is 18325. Exact merged count, zero slack.
-    ceiling: 18325,
+    // Re-measured resolving PR #3978 into the current v0.43 batch head: the
+    // batch's screenshot and HUD extractions compose with the account-wide Book
+    // of Deeds / Reliquary work below both parent pins. `wc -l <
+    // src/ui/hud.ts` on the resolved tree is 18318. Exact count, zero slack.
+    ceiling: 18318,
     seam: 'pure view core + thin painter on PainterHost (src/ui/CLAUDE.md)',
   },
   {
@@ -1088,27 +1057,11 @@ const MONOLITHS: MonolithRow[] = [
     // measures 11923, below both arms, so the ceiling follows it down. Exact
     // merged count, zero slack: any further growth reds again.
     // Main hotfix integration: combined extractions, exact merged count.
-    // Re-measured after wiring the Eastbrook healing-training spawner into
-    // Sim: `wc -l < src/sim/sim.ts` is 11908. Exact count, zero slack.
-    // Incoming arm lowered 11879 -> 11849: the saved-position instance-exit
-    // rule moved to src/sim/saved_pos_exit.ts (shared with the server character
-    // list). Resolved together on the release/v0.43 line: both changes compose,
-    // and the merged tree measures 11878. Exact count, zero slack.
-    // LOWERED again to 11871 with the Who tab: abilityNeedsLineOfSight moved
-    // to src/sim/ability_line_of_sight.ts (a pure rule), paying the two-line
-    // inert whoInfo / whoRequest offline arm. Exact resolved count, zero slack.
-    // Market Sweep also moved the flee-eligibility predicate and delve
-    // companion predicate to siblings, paying for the two market sweep
-    // delegates. The composed tree measures 11863. Exact count, zero slack.
-    // Down 11879 -> 11857 at the CPU-hygiene lot: the rift floor descriptor
-    // builder moved to src/sim/rift/rift_floor_view.ts, and the lot's own
-    // addition (the entityRosterVersion field plus its SimContext binding)
-    // landed under the old count. Then one more at the Wildfang kit pass 2:
-    // the charge route's speed and arrive-range constants moved to
-    // combat/charge_route.ts beside the settle hook (finishChargeArrival)
-    // that Lunge and Bloodhook share. Resolved with the current batch's sim
-    // extractions at 11840 lines. Exact count, zero slack.
-    ceiling: 11840,
+    // Re-measured resolving PR #3978 into the current v0.43 batch head: the
+    // CPU-hygiene, Wildfang, Market Sweep, Who tab, and account-wide Book of
+    // Deeds / Reliquary extractions compose below both parent pins. `wc -l <
+    // src/sim/sim.ts` is 11827. Exact count, zero slack.
+    ceiling: 11827,
     seam: 'a sim system module behind SimContext (src/sim/CLAUDE.md)',
   },
   {
@@ -1545,16 +1498,11 @@ const MONOLITHS: MonolithRow[] = [
     // below both parent pins. Exact merged count, zero slack.
     // Mount skins: bank the coordinator extraction at its measured size.
     // Main hotfix integration: combined extractions, exact merged count.
-    // Guild bank gold notices: kept the current branch's already-lowered pin;
-    // the extracted dispatch pays for the notice transport without loosening
-    // this ratchet.
-    // LOWERED again to 10042 with the Who tab: the /who visibility rule, the
-    // filter and both projections moved to server/who_roster.ts, paying the
-    // new `who` dispatch case. Exact resolved count, zero slack.
-    // Market Sweep then moved the World Market command bodies to
-    // server/market_commands.ts while the labels stayed here for the scanner.
-    // The composed tree measures 10015. Exact count, zero slack.
-    ceiling: 10015,
+    // Re-measured resolving PR #3978 into the current v0.43 batch head: the
+    // Who tab and Market Sweep server extractions compose with the account-wide
+    // Book of Deeds / Reliquary server split. `wc -l < server/game.ts` is
+    // 10002. Exact count, zero slack.
+    ceiling: 10002,
     seam: 'a sibling server module; see the hot-path seams in server/CLAUDE.md',
   },
   {
@@ -1697,19 +1645,11 @@ const MONOLITHS: MonolithRow[] = [
     // OSSBrain integration: entity flair decoding moved to net/entity_flair_wire.ts.
     // Measured after formatting; lower the ratchet with the extraction.
     // Main hotfix integration: combined extractions, exact merged count.
-    // Lowered 5540 -> 5509: the CharacterSummary wire type moved to
-    // src/net/character_summary.ts (re-exported here); exact count, zero headroom.
-    // LOWERED again to 5496 with the Who tab: the social frame's version-skew
-    // normalization moved to net/social_frame_wire.ts, paying the who mirror.
-    // Exact resolved count, zero headroom.
-    // Market Sweep also moved anchorFields to src/net/anchor_fields.ts, paying
-    // for the two market sweep sends. The composed tree measures 5495. Exact
-    // count, zero slack.
-    // Down 5540 -> 5523 at the CPU-hygiene lot: the interest-boundary despawn
-    // grace moved to src/net/despawn_grace.ts, and the lot's entityRosterVersion
-    // field and bumps landed under the old count. Resolved with the current
-    // batch's net extractions at 5478 lines. Exact count, zero slack.
-    ceiling: 5478,
+    // Re-measured resolving PR #3978 into the current v0.43 batch head: the
+    // Who tab, Market Sweep, CPU-hygiene, and account-wide book-wire
+    // extractions compose below both parent pins. `wc -l < src/net/online.ts`
+    // is 5461. Exact count, zero slack.
+    ceiling: 5461,
     seam: 'a src/net sibling module (the refactor/net-online split is the template)',
   },
   {
@@ -1858,12 +1798,10 @@ const MONOLITHS: MonolithRow[] = [
     // reach it directly), unlike createCharacterCapped's pure re-export.
     // Exact count, zero slack.
     // Mount skins: bank the coordinator extraction at its measured size.
-    // LOWERED 4744 -> 4598 at the perf-report fidelity change: the
-    // client_perf_reports insert and retention prune moved whole to
-    // server/client_perf_reports_db.ts (pure re-export kept in db.ts, the
-    // createCharacterCapped shape) after the desktop_shell column's four
-    // lines tripped the zero-slack pin. Exact count, zero slack.
-    ceiling: 4598,
+    // Re-measured resolving PR #3978 into the current v0.43 batch head: the
+    // perf-report DB extraction composes with the Deeds and account-ledger DDL
+    // splits. `wc -l < server/db.ts` is 4569. Exact count, zero slack.
+    ceiling: 4569,
     seam: 'a domain <domain>_db.ts module with its own *_SCHEMA (server/CLAUDE.md)',
   },
   {

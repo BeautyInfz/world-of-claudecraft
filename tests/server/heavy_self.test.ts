@@ -109,6 +109,7 @@ const EXPECTED_EVENTS = [
   'questDone',
   'questProgress',
   'questReady',
+  'relicRecorded',
   'reliquaryUnlock',
   'skinEvent',
   'skinSelect',
