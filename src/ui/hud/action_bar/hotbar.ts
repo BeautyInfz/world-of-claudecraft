@@ -366,9 +366,6 @@ function normalizeLoadoutBarSlots(
   // Some release-head loadouts were captured with index 0 reserved for the fixed
   // Attack button. The saved payload is capped at the configurable-slot count,
   // so that shape has a null first entry and no representable final slot.
-  // Only shift if an ability that belonged to row 1 was shifted past it to index 11
-  // (e.g. fireball_form in the legacy release-head test).
-  if (bar[11] !== 'fireball_form') return bar;
   const shifted = bar.slice(1);
   if (!shifted.some((id) => typeof id === 'string' && abilityExists(id))) return bar;
   return shifted;

@@ -7299,7 +7299,7 @@ export class Hud {
 
   private syncActiveHotbarForm(): void {
     const profileSwitched = this.actionBarController.syncProfile();
-    const specSwitched = this.actionBarController.syncSpec?.() ?? false;
+    const specSwitched = this.actionBarController.syncSpec();
     if (profileSwitched || specSwitched) this.spellbookWindow.refreshHotbarControls();
     if (!profileSwitched && !specSwitched && !this.actionBarController.syncActiveForm()) return;
     this.dragAction = null;

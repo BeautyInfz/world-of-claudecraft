@@ -67,6 +67,10 @@ export const ACTION_BAR_LAYOUT_MAX_FORM_KEYS = 16;
 // The same ceiling for profile keys in a v2 document.
 export const ACTION_BAR_LAYOUT_MAX_PROFILE_KEYS = 8;
 export const ACTION_BAR_LAYOUT_MAX_SPEC_KEYS = 8;
+// A spec key is a talent spec id (arms, fire, beast_mastery): a leading letter, then
+// at most 31 lower-case word characters. The charset guard also keeps a hostile key
+// such as __proto__ from ever being assigned onto the clean specs object.
+export const ACTION_BAR_LAYOUT_SPEC_KEY_RE = /^[a-z][a-z0-9_]{0,31}$/;
 
 export type ActionBarSlotAction = { type: 'ability' | 'item'; id: string };
 
@@ -197,7 +201,7 @@ export function sanitizeActionBarLayout(value: unknown): ActionBarLayout | null 
     if (specKeys.length > ACTION_BAR_LAYOUT_MAX_SPEC_KEYS) return null;
     const specs: Partial<Record<string, ActionBarFormLayout>> = {};
     for (const specKey of specKeys) {
-      if (typeof specKey !== 'string' || specKey.length === 0 || specKey.length > 32) continue;
+      if (!ACTION_BAR_LAYOUT_SPEC_KEY_RE.test(specKey)) continue;
       const specLayout = sanitizeFormLayout(rawSpecs[specKey]);
       if (specLayout === null) return null;
       specs[specKey] = specLayout;

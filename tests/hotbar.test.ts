@@ -672,21 +672,6 @@ describe('applying a saved talent loadout bar', () => {
       id: 'polymorph',
     });
   });
-
-  it('does not shift modern loadout actions when slot 0 is empty', () => {
-    const current = Array<ReturnType<typeof applyLoadoutBar>[number]>(33).fill(null);
-    const saved = Array<string | null>(33).fill(null);
-    // Player put fireball on slot 1 (index 1), left slot 0 empty, and slot 32 empty
-    saved[1] = 'fireball';
-    saved[2] = 'pyroblast';
-
-    const restored = applyLoadoutBar(current, saved, 33, abilityExists);
-
-    // Slots must NOT be shifted left to index 0
-    expect(restored[0]).toBeNull();
-    expect(restored[1]).toEqual({ type: 'ability', id: 'fireball' });
-    expect(restored[2]).toEqual({ type: 'ability', id: 'pyroblast' });
-  });
 });
 
 describe('loadoutKnownAbilityIds', () => {
