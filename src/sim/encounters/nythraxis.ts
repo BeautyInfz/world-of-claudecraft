@@ -104,7 +104,6 @@ import {
   nythraxisBoneStormChargeTarget,
   nythraxisBoneStormDone,
   nythraxisBoneStormReached,
-  nythraxisBoneStormSpikeDue,
   nythraxisBoneStormWhirlTickMaxHp,
   pointInNythraxisBoneStorm,
 } from '../nythraxis_bone_storm';
@@ -651,7 +650,8 @@ export function updateNythraxisEncounter(ctx: SimContext, boss: Entity): void {
     startNythraxisKingsWrath(ctx, boss, st);
   }
   // Bone Storm owns the boss's body (he runs): like the Rage cast, no new cast
-  // starts until it ends, except the mid-storm spike the storm casts itself.
+  // starts until it ends, the regular Bone Spike cadence included (its timer
+  // is frozen below this return); the storm casts no spike of its own.
   if (storming) return;
 
   if (st.deathlessStunRemaining > 0) {
@@ -2021,8 +2021,8 @@ export function startNythraxisBoneStorm(
 
 /**
  * Drive the live storm: the whirl tick, the charge windows (one hash-ranked
- * target each, the boss runs at it and Bone Slams on arrival), the mid-storm
- * spike, and the pickup when it ends. Returns true while a storm is live.
+ * target each, the boss runs at it and Bone Slams on arrival), and the pickup
+ * when it ends. Returns true while a storm is live.
  */
 export function updateNythraxisBoneStorm(
   ctx: SimContext,
@@ -2090,11 +2090,6 @@ export function updateNythraxisBoneStorm(
         slamNythraxisBoneStorm(ctx, boss, st, room, target.pos);
       }
     }
-  }
-  // One Bone Spike lands mid-storm on both difficulties.
-  if (!storm.spikeCast && nythraxisBoneStormSpikeDue(storm.elapsed)) {
-    storm.spikeCast = true;
-    castNythraxisBoneSpike(ctx, boss, st, room, nythraxisDifficulty(ctx, boss));
   }
   if (nythraxisBoneStormDone(storm.elapsed)) endNythraxisBoneStorm(ctx, boss, st);
   return true;

@@ -1,11 +1,12 @@
 // Phase 3 against a real Sim: The King's Wrath at 30% (gated on no major in
 // flight), the tightened floor cadences, Bone Storm (the whirl, the charges,
-// the slams, the mid-storm spike, the pickup), and The Crown Endures clock.
+// the slams, the frozen spike cadence, the pickup), and The Crown Endures clock.
 // The driver functions in src/sim/encounters/nythraxis.ts run on a live
 // SimContext with a ten-player attuned raid, the way the slice 2 suite does.
 
 import { describe, expect, it } from 'vitest';
 import * as nythraxis from '../src/sim/encounters/nythraxis';
+import { NYTHRAXIS_BONE_SPIKE_EVERY_NORMAL } from '../src/sim/nythraxis_bone_spike';
 import {
   beginNythraxisBoneStorm,
   NYTHRAXIS_BONE_SLAM_CAST_ID,
@@ -261,7 +262,7 @@ describe('Nythraxis Bone Storm', () => {
     }
   });
 
-  it('charges four different raiders, spikes mid-storm, then hands him back to the top tank', () => {
+  it('charges four different raiders, spikes nobody while storming, then hands him back to the top tank', () => {
     const { ctx, boss, st, tank, raiders, callouts, aura, damageBy } = setup();
     st.boneStormTimer = DT / 2;
     nythraxis.updateNythraxisEncounter(ctx, boss);
@@ -271,9 +272,12 @@ describe('Nythraxis Bone Storm', () => {
     st.dreadCurseTimer = DT / 2;
     st.eruptionTimer = DT / 2;
     tickDriver(ctx, boss, 6.1);
-    // The mid-storm Bone Spike landed at 6 s.
-    expect(storm.spikeCast).toBe(true);
-    expect(st.boneSpikes!.length).toBe(2);
+    // No Bone Spike lands while he storms: the storm is a pure movement check.
+    // (The mid-storm cast pinned raiders inside the whirl and was retired.)
+    expect((st.boneSpikes ?? []).length).toBe(0);
+    expect(
+      raiders.some((r) => r.auras.some((a: { id: string }) => a.id === 'nythraxis_impaled')),
+    ).toBe(false);
     // New casts hold while he runs, and the Curse never lands off a charge.
     expect(st.eruptionPoints!.length).toBe(0);
     expect(
@@ -300,6 +304,41 @@ describe('Nythraxis Bone Storm', () => {
     // The held eruption fired as soon as the storm was over.
     expect(st.eruptionPoints!.length).toBeGreaterThan(0);
     expect(damageBy(NYTHRAXIS_BONE_SLAM_CAST_ID).length).toBeGreaterThanOrEqual(4);
+  });
+
+  it('freezes the regular Bone Spike cadence while storming and resumes it after the pickup', () => {
+    const { ctx, boss, st, raiders } = setup();
+    // The cadence is 2 s from landing when the storm begins. The storm-start
+    // tick still counts it down once (the cast block runs before the storm
+    // cast that tick); from then on the storm owns the boss and the timer
+    // must not move.
+    st.boneSpikeTimer = 2;
+    st.boneStormTimer = DT / 2;
+    nythraxis.updateNythraxisEncounter(ctx, boss);
+    expect(st.boneStorm).not.toBeNull();
+    expect(st.boneSpikeTimer).toBeCloseTo(2 - DT, 9);
+    tickDriver(ctx, boss, 11.9);
+    expect(st.boneStorm).not.toBeNull();
+    expect(st.boneSpikeTimer).toBeCloseTo(2 - DT, 9);
+    expect((st.boneSpikes ?? []).length).toBe(0);
+    expect(
+      raiders.some((r) => r.auras.some((a: { id: string }) => a.id === 'nythraxis_impaled')),
+    ).toBe(false);
+    // The storm ends; the cadence resumes counting but has not landed yet.
+    tickDriver(ctx, boss, 0.2);
+    expect(st.boneStorm).toBeNull();
+    expect(st.boneSpikeTimer).toBeLessThan(2 - DT);
+    expect(st.boneSpikeTimer).toBeGreaterThan(0);
+    expect((st.boneSpikes ?? []).length).toBe(0);
+    // The resumed cadence lands its wave after the pickup (how many raiders it
+    // reaches depends on where the charges left him; at least one is pinned).
+    tickDriver(ctx, boss, 2);
+    expect(st.boneSpikes!.length).toBeGreaterThan(0);
+    expect(
+      raiders.some((r) => r.auras.some((a: { id: string }) => a.id === 'nythraxis_impaled')),
+    ).toBe(true);
+    // Re-armed to the full normal cadence, minus the ticks since it landed.
+    expect(st.boneSpikeTimer).toBeGreaterThan(NYTHRAXIS_BONE_SPIKE_EVERY_NORMAL - 2);
   });
 
   it('never charges an impaled raider or a wardstone channeler', () => {

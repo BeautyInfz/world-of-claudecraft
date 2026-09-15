@@ -5788,7 +5788,6 @@ export interface NythraxisEncounterState {
     chargeTargetId: number | null;
     slammed: boolean;
     whirlTickTimer: number;
-    spikeCast: boolean;
     chargedIds: number[];
   } | null;
   wardChannels: NythraxisWardChannel[];

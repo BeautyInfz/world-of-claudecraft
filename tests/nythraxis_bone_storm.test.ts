@@ -13,7 +13,6 @@ import {
   NYTHRAXIS_BONE_STORM_RADIUS,
   NYTHRAXIS_BONE_STORM_SECONDS,
   NYTHRAXIS_BONE_STORM_SPEED_MULT,
-  NYTHRAXIS_BONE_STORM_SPIKE_AT_SECONDS,
   NYTHRAXIS_BONE_STORM_WHIRL_TICK_SECONDS,
   nythraxisBoneSlamDamageMaxHp,
   nythraxisBoneStormCadence,
@@ -21,7 +20,6 @@ import {
   nythraxisBoneStormChargeTarget,
   nythraxisBoneStormDone,
   nythraxisBoneStormReached,
-  nythraxisBoneStormSpikeDue,
   nythraxisBoneStormWhirlTickMaxHp,
   pointInNythraxisBoneStorm,
 } from '../src/sim/nythraxis_bone_storm';
@@ -52,7 +50,6 @@ describe('Nythraxis Bone Storm', () => {
       nythraxisBoneSlamDamageMaxHp('heroic'),
     ]).toEqual([0.35, 0.55]);
     expect(NYTHRAXIS_BONE_STORM_ARRIVE_DIST).toBe(3);
-    expect(NYTHRAXIS_BONE_STORM_SPIKE_AT_SECONDS).toBe(6);
     expect(NYTHRAXIS_BONE_STORM_GRAVEBREAKER_REARM_SECONDS).toBe(3);
   });
 
@@ -67,8 +64,6 @@ describe('Nythraxis Bone Storm', () => {
     expect(nythraxisBoneStormChargeIndex(-1)).toBe(0);
     expect(nythraxisBoneStormDone(11.95)).toBe(false);
     expect(nythraxisBoneStormDone(12)).toBe(true);
-    expect(nythraxisBoneStormSpikeDue(5.95)).toBe(false);
-    expect(nythraxisBoneStormSpikeDue(6)).toBe(true);
   });
 
   it('ranks charge targets by hash, deterministically, never repeating while others remain', () => {
@@ -115,7 +110,6 @@ describe('Nythraxis Bone Storm', () => {
       chargeTargetId: null,
       slammed: false,
       whirlTickTimer: 1,
-      spikeCast: false,
       chargedIds: [],
     });
   });

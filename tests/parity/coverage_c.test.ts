@@ -330,8 +330,8 @@ describe('coverage: each scenario fires its subsystem', { timeout: 90_000 }, () 
     // Soul Rend marks pick (the rng.int callout) + Deathless Rage interrupt self-stun.
     expect(chats.some((e) => e.text === 'Your spirit belongs to me')).toBe(true);
     expect(auras.some((e) => e.name === 'Deathless Rage Interrupted')).toBe(true);
-    // Phase 3: The King's Wrath, a Bone Storm (its whirl, a Bone Slam, the
-    // mid-storm spike), and The Crown Endures enrage.
+    // Phase 3: The King's Wrath, a Bone Storm (its whirl and a Bone Slam; no
+    // spike lands while he storms), and The Crown Endures enrage.
     expect(auras.some((e) => e.name === "King's Wrath")).toBe(true);
     expect(auras.some((e) => e.name === 'Bone Storm')).toBe(true);
     expect(auras.some((e) => e.name === 'The Crown Endures')).toBe(true);
@@ -339,8 +339,8 @@ describe('coverage: each scenario fires its subsystem', { timeout: 90_000 }, () 
     // impaled and freed when their spikes died, and the eruption burst then burned.
     expect(n.spikeIds.length).toBe(2);
     expect(auras.some((e) => e.name === 'Dread Curse')).toBe(true);
-    // Two from the forced slice 1 cast, two more from the mid-storm spike.
-    expect(auras.filter((e) => e.name === 'Impaled').length).toBe(4);
+    // Two from the forced slice 1 cast; the storm spikes nobody.
+    expect(auras.filter((e) => e.name === 'Impaled').length).toBe(2);
     const callouts = ev.filter((e) => e.type === 'nythraxisCallout') as Array<{ call: string }>;
     expect(callouts.some((e) => e.call === 'youAreImpaled')).toBe(true);
     expect(callouts.some((e) => e.call === 'spikeBroken')).toBe(true);
