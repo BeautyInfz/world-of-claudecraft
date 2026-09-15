@@ -163,6 +163,16 @@
     --panel-edge: #08080d;
     --color-text-error: #ff8f85;
     --color-text-success: #7fdc4f;
+    /* The signpost guild board's category family (the sprout chip and the
+       filter strip, src/ui/hud/guild_board/): one soft green read at four
+       strengths through color-mix, its icon tint, its two text weights, and
+       the filter chip's resting text. Softer than --color-text-success on
+       purpose: a tag, not a status. */
+    --color-category: #6fbf7a;
+    --color-category-icon: #8fe09a;
+    --color-category-text: #bfeec6;
+    --color-category-text-active: #d6f5da;
+    --color-filter-chip-text: #e6dcc0;
     /* Raid boss journal palette. These tokens keep its forged-fire treatment in one
        themeable source while the component sheets own only layout and composition. */
     --color-rbg-frame-border-base: #2e180d;
