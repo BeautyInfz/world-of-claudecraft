@@ -1030,8 +1030,11 @@ const MONOLITHS: MonolithRow[] = [
     // Down 11879 -> 11857 at the CPU-hygiene lot: the rift floor descriptor
     // builder moved to src/sim/rift/rift_floor_view.ts, and the lot's own
     // addition (the entityRosterVersion field plus its SimContext binding)
-    // landed under the old count. Exact count, zero slack.
-    ceiling: 11857,
+    // landed under the old count. Then one more at the Wildfang kit pass 2:
+    // the charge route's speed and arrive-range constants moved to
+    // combat/charge_route.ts beside the settle hook (finishChargeArrival)
+    // that Lunge and Bloodhook share. Exact count, zero slack.
+    ceiling: 11856,
     seam: 'a sim system module behind SimContext (src/sim/CLAUDE.md)',
   },
   {

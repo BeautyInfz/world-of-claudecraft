@@ -1425,6 +1425,9 @@ describe('delta snapshots', () => {
 
     druidServer.sim.castAbility('travel_form', druid.pid);
     druidServer.sim.tick();
+    // Every shift now grants the baseline Loping Stride burst (60% for 3 sec,
+    // combat/druid_engines.ts); this row reads the FORM's own speed, so shed it.
+    player.auras = player.auras.filter((aura) => aura.id !== 'loping_stride');
 
     const row = druidServer.liveSessions().find((p) => p.characterId === 10)!;
     expect(row.moveSpeedMultiplier).toBeCloseTo(1.4);

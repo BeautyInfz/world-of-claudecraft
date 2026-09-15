@@ -3642,12 +3642,17 @@ export interface AbilityRank {
 }
 
 // One transform-in-place rule: while the actor wears at least minStacks of the
-// aura kind, the base action resolves as abilityId (see combat/action_replacement.ts).
+// aura kind (auraKind), and/or wears NO aura of absentAuraKind, the base action
+// resolves as abilityId (see combat/action_replacement.ts). A presence rule is
+// a payoff over the base and shares its clock; an absence-only rule is a MODE
+// of the same button (Slinkstrike stealthed, Lunge unstealthed) and keeps the
+// replacement's own cooldown key.
 export interface ActionReplacementRule {
   abilityId: string;
-  auraKind: AuraKind;
+  auraKind?: AuraKind;
   minStacks?: number;
   actorAuraKind?: AuraKind;
+  absentAuraKind?: AuraKind;
 }
 
 export interface AbilityDef {
@@ -8823,6 +8828,11 @@ export const SHIELD_BLOCK_BASE = 0.05;
 export const ENRAGE_DMG_DONE = 0.07;
 export const ENRAGE_HASTE_PCT = 0.25;
 export const ENRAGE_MOVE_MULT = 1.1;
+// Druid Wolf Form: +15% passive move speed. The form_cat aura's VALUE is the
+// threat multiplier (0.71), so moveSpeedMult reads this constant, never
+// a.value. Sits under Loping Stride (1.6), Dash (1.5), and every mount, and
+// rides the same non-stacking Math.max path as those speed auras.
+export const WOLF_FORM_MOVE_MULT = 1.15;
 // Avatar's colossus body-size multiplier while the buff_avatar aura is worn.
 export const AVATAR_SCALE = 1.15;
 export const REVENGE_FREE_CHANCE = 0.3;
