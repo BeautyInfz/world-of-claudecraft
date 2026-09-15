@@ -324,7 +324,8 @@ function battlegroundBlockedWallPress(ctx: SimContext, meta: PlayerMeta, p: Enti
   return battlegroundBlockedProbe(ctx, p, wish);
 }
 
-function battlegroundBlockedVelocityPress(ctx: SimContext, p: Entity): boolean {
+function battlegroundBlockedVelocityPress(ctx: SimContext, meta: PlayerMeta, p: Entity): boolean {
+  if (hasAnyMovementInput(meta)) return false;
   if (!activeBattlegroundAt(ctx, p)) return false;
   const speed = Math.hypot(p.vx, p.vz);
   if (speed <= POSITION_EPS) return false;
@@ -386,7 +387,7 @@ function battlegroundGeometryTrap(ctx: SimContext, meta: PlayerMeta, p: Entity):
   return (
     battlegroundWallTrap(ctx, p) ||
     battlegroundBlockedWallPress(ctx, meta, p) ||
-    battlegroundBlockedVelocityPress(ctx, p) ||
+    battlegroundBlockedVelocityPress(ctx, meta, p) ||
     (!hasAnyMovementInput(meta) && activeBattlegroundAt(ctx, p) && wallPressUntil >= ctx.time)
   );
 }
