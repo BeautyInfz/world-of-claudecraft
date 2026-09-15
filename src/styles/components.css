@@ -2538,8 +2538,8 @@
     padding: 0 12px 0 8px;
     border: 1px solid var(--color-border-showcase);
     border-radius: 999px;
-    background: #ffffff08;
-    color: #e6dcc0;
+    background: color-mix(in srgb, var(--color-text-light) 3%, transparent);
+    color: var(--color-filter-chip-text);
     font-size: 12px;
     cursor: var(--cursor-point);
     transition:
@@ -2549,12 +2549,12 @@
   }
   #guild-board-window .gb-filter-chip:hover {
     border-color: var(--color-accent);
-    color: #fff;
+    color: var(--color-text-light);
   }
   #guild-board-window .gb-filter-chip.active {
-    border-color: #6fbf7a;
-    background: #6fbf7a1f;
-    color: #d6f5da;
+    border-color: var(--color-category);
+    background: color-mix(in srgb, var(--color-category) 12%, transparent);
+    color: var(--color-category-text-active);
   }
   #guild-board-window .gb-filter-chip:focus-within {
     outline: 2px solid var(--color-border-focus);
@@ -2581,7 +2581,7 @@
     display: inline-flex;
     width: 14px;
     height: 14px;
-    color: #8fe09a;
+    color: var(--color-category-icon);
   }
   #guild-board-window .gb-filter-icon svg,
   #guild-board-window .gb-tag-icon svg {
@@ -2686,10 +2686,10 @@
     align-items: center;
     gap: 5px;
     padding: 1px 8px 1px 6px;
-    border: 1px solid #6fbf7a66;
+    border: 1px solid color-mix(in srgb, var(--color-category) 40%, transparent);
     border-radius: 999px;
-    background: #6fbf7a14;
-    color: #bfeec6;
+    background: color-mix(in srgb, var(--color-category) 8%, transparent);
+    color: var(--color-category-text);
     font-size: 11px;
     letter-spacing: 0.2px;
     white-space: nowrap;
@@ -12371,7 +12371,7 @@
     display: inline-flex;
     width: 14px;
     height: 14px;
-    color: #8fe09a;
+    color: var(--color-category-icon);
   }
   .soc-pledge-category-icon svg {
     width: 100%;
