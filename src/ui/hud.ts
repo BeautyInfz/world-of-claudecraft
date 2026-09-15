@@ -7299,8 +7299,9 @@ export class Hud {
 
   private syncActiveHotbarForm(): void {
     const profileSwitched = this.actionBarController.syncProfile();
-    if (profileSwitched) this.spellbookWindow.refreshHotbarControls();
-    if (!profileSwitched && !this.actionBarController.syncActiveForm()) return;
+    const specSwitched = this.actionBarController.syncSpec?.() ?? false;
+    if (profileSwitched || specSwitched) this.spellbookWindow.refreshHotbarControls();
+    if (!profileSwitched && !specSwitched && !this.actionBarController.syncActiveForm()) return;
     this.dragAction = null;
     this.mobileActionPage = this.currentMobileActionPage();
   }

@@ -266,6 +266,15 @@ describe('the per-profile localStorage key scheme', () => {
     );
   });
 
+  it('suffixes the specialization when provided for normal form', () => {
+    expect(actionBarSlotMapKey(CLS, NAME, 'desktop', 'normal', 'arms')).toBe(
+      'woc_hotbar_warrior_LayoutTester_arms',
+    );
+    expect(actionBarSlotMapKey(CLS, NAME, 'touch', 'normal', 'fury')).toBe(
+      'woc_hotbar_warrior_LayoutTester_touch_fury',
+    );
+  });
+
   it('resolves the touch interface to the touch profile and everything else to desktop', () => {
     expect(actionBarLayoutProfileForSurface(true)).toBe('touch');
     expect(actionBarLayoutProfileForSurface(false)).toBe('desktop');
@@ -365,6 +374,22 @@ describe('capture/apply round trip', () => {
     const captured = captureActionBarLayout(storage, CLS, NAME, 'touch');
     expect(captured.forms.normal?.bar).toEqual(layout.forms.normal?.bar);
     expect(captured.forms.stealth?.bar).toEqual(layout.forms.stealth?.bar);
+  });
+
+  it('captures and applies spec-specific action bar layouts', () => {
+    const storage = new MemoryStorage();
+    const layout: ActionBarLayout = {
+      v: 1,
+      forms: { normal: { bar: [{ type: 'ability', id: 'mortal_strike' }] } },
+      specs: {
+        arms: { bar: [{ type: 'ability', id: 'mortal_strike' }] },
+        fury: { bar: [{ type: 'ability', id: 'bloodthirst' }] },
+      },
+    };
+    applyActionBarLayout(storage, CLS, NAME, 'desktop', layout);
+    const captured = captureActionBarLayout(storage, CLS, NAME, 'desktop');
+    expect(captured.specs?.arms?.bar).toEqual(layout.specs?.arms?.bar);
+    expect(captured.specs?.fury?.bar).toEqual(layout.specs?.fury?.bar);
   });
 
   it('leaves an absent form untouched on the device (version-tolerant)', () => {

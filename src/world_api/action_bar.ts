@@ -66,6 +66,7 @@ export const ACTION_BAR_LAYOUT_MAX_ID_LEN = 64;
 export const ACTION_BAR_LAYOUT_MAX_FORM_KEYS = 16;
 // The same ceiling for profile keys in a v2 document.
 export const ACTION_BAR_LAYOUT_MAX_PROFILE_KEYS = 8;
+export const ACTION_BAR_LAYOUT_MAX_SPEC_KEYS = 8;
 
 export type ActionBarSlotAction = { type: 'ability' | 'item'; id: string };
 
@@ -82,6 +83,8 @@ export interface ActionBarLayout {
   // PARTIAL by design: an absent form means "leave the device's state for that
   // form alone" on apply (version-tolerant, mirroring the hotbar tail rule).
   forms: Partial<Record<ActionBarLayoutForm, ActionBarFormLayout>>;
+  // Optional specialization-specific layouts for the normal action bar.
+  specs?: Partial<Record<string, ActionBarFormLayout>>;
 }
 
 // The stored per-character document: one v1 layout per input-surface profile.
@@ -187,7 +190,23 @@ export function sanitizeActionBarLayout(value: unknown): ActionBarLayout | null 
     if (form === null) return null; // an oversized/garbage form rejects the payload
     forms[key as ActionBarLayoutForm] = form;
   }
-  return { v: ACTION_BAR_LAYOUT_VERSION, forms };
+  const result: ActionBarLayout = { v: ACTION_BAR_LAYOUT_VERSION, forms };
+  const rawSpecs = value.specs;
+  if (isPlainObject(rawSpecs)) {
+    const specKeys = Object.keys(rawSpecs);
+    if (specKeys.length > ACTION_BAR_LAYOUT_MAX_SPEC_KEYS) return null;
+    const specs: Partial<Record<string, ActionBarFormLayout>> = {};
+    for (const specKey of specKeys) {
+      if (typeof specKey !== 'string' || specKey.length === 0 || specKey.length > 32) continue;
+      const specLayout = sanitizeFormLayout(rawSpecs[specKey]);
+      if (specLayout === null) return null;
+      specs[specKey] = specLayout;
+    }
+    if (Object.keys(specs).length > 0) {
+      result.specs = specs;
+    }
+  }
+  return result;
 }
 
 /** The profile name of an untrusted save, or null for anything but a known one. */
@@ -267,7 +286,9 @@ export function actionBarLayoutWire(doc: ActionBarLayoutProfiles): ActionBarLayo
   };
 }
 
-/** True when a layout carries no form data (nothing worth persisting/seeding). */
+/** True when a layout carries no form or spec data (nothing worth persisting/seeding). */
 export function actionBarLayoutIsEmpty(layout: ActionBarLayout): boolean {
-  return Object.keys(layout.forms).length === 0;
+  const hasForms = Object.keys(layout.forms).length > 0;
+  const hasSpecs = layout.specs !== undefined && Object.keys(layout.specs).length > 0;
+  return !hasForms && !hasSpecs;
 }
