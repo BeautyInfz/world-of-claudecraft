@@ -111,6 +111,50 @@ describe('sampled GameAudio facade', () => {
     expect(sfxMock.playUi).toHaveBeenCalledTimes(1);
   });
 
+  it('plays a player-chosen aura cue at its own gain, and never an id outside the palette', () => {
+    const audio = new GameAudio();
+
+    audio.auraCue('ui_aura_hard_bell', 0.4);
+    expect(sfxMock.playUi).toHaveBeenLastCalledWith('ui_aura_hard_bell', {
+      jitter: false,
+      cooldown: 1,
+      gain: 0.4,
+    });
+    expect(sfxMock.playUi).toHaveBeenCalledTimes(1);
+
+    // The key is chosen by the PLAYER at runtime, so anything outside the palette
+    // (a retired cue, another UI cue, the silence sentinel) is a silent no-op
+    // rather than a fetch for a clip that does not exist.
+    audio.auraCue('ui_aura_retired', 0.5);
+    audio.auraCue('ui_click', 0.5);
+    audio.auraCue('none', 0.5);
+    expect(sfxMock.playUi).toHaveBeenCalledTimes(1);
+  });
+
+  it('clamps an aura cue gain into 0..1 and skips a silent one entirely', () => {
+    const audio = new GameAudio();
+
+    audio.auraCue('ui_aura_cat_meow', 7);
+    expect(sfxMock.playUi).toHaveBeenLastCalledWith('ui_aura_cat_meow', {
+      jitter: false,
+      cooldown: 1,
+      gain: 1,
+    });
+    audio.auraCue('ui_aura_cat_meow', 0);
+    audio.auraCue('ui_aura_cat_meow', -1);
+    expect(sfxMock.playUi).toHaveBeenCalledTimes(1);
+  });
+
+  it('keeps aura cues playing with the interface feedback sounds switched off', () => {
+    // The cue is opt-in per proc and the player asked for it by name, so the
+    // general feedback toggle does not silence it: it routes through play, not
+    // playFeedback.
+    const audio = new GameAudio();
+    audio.setFeedbackEnabled(false);
+    audio.auraCue('ui_aura_wolf_howl', 0.7);
+    expect(sfxMock.playUi).toHaveBeenCalledTimes(1);
+  });
+
   it('gates the feedback cues on setFeedbackEnabled but leaves timing/affordance cues alone', () => {
     const audio = new GameAudio();
     expect(audio.feedbackEnabled).toBe(true); // on by default (no change out of the box)
