@@ -9009,6 +9009,10 @@
     font-family: var(--title-font);
     font-size: 12px;
     color: var(--gold-dim);
+    /* The scope chip is a fifth flex: none item; a narrow landscape phone or
+       a longer locale wraps it under the readouts instead of overflowing
+       (the Reliquary summary wraps the same way). */
+    flex-wrap: wrap;
   }
   .deeds-summary b {
     color: var(--gold);
@@ -9983,6 +9987,25 @@
     font-family: var(--ui-font);
     font-size: 11px;
     font-weight: 400;
+    color: var(--color-text-muted);
+  }
+  /* The account-scope note beside the count (shared with the Book of Deeds):
+     a quiet readout, not a control, the tooltip carries the explanation.
+     Composed on .ui-chip (library.css), which supplies the chip semantics and
+     the token focus ring for its tabindex; the overrides below keep jgyy's
+     pin-chip look from PR #3933 (square radius per DESIGN.md 14, the muted
+     palette, no fill) in the window's family. */
+  .reliquary-scope-note,
+  .deeds-scope-note {
+    flex: none;
+    height: auto;
+    background: transparent;
+    font-family: var(--ui-font);
+    font-size: 11px;
+    font-weight: 400;
+    padding: 1px 8px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-border-default);
     color: var(--color-text-muted);
   }
   /* The HUD-tracker eye at the summary's right edge: a pressed toggle (the
