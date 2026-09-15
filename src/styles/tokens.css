@@ -1095,6 +1095,32 @@
     /* The Claudium store hero's cool wash over its coin artwork. */
     --color-woc-store-hero-hi: #030a10;
     --color-woc-store-hero-lo: #04111b;
+    /* The leaderboard window's ledger chrome (src/styles/components.css, the
+       leaderboard section, and the shared .lbp-* podium it paints). A fixed-dark
+       violet ground with gold rules, so every foreground below is a FIXED light
+       value, never a derived text token (DESIGN.md 4.1). Alpha steps compose these
+       through color-mix, never a second literal. */
+    --color-ledger-ground-hi: #1c1531;
+    --color-ledger-ground: #120c20;
+    --color-ledger-ground-lo: #0c0816;
+    --color-ledger-well: #150f26;
+    --color-ledger-plum: #2a1f47;
+    --color-ledger-plum-hi: #3a2b62;
+    --color-ledger-plum-lo: #1d1533;
+    --color-ledger-violet: #8b5cf6;
+    --color-ledger-violet-soft: #c4a6ff;
+    --color-ledger-violet-deep: #4c2f8a;
+    --color-ledger-glow: #6d3fd4;
+    --color-ledger-gilt: #8f6a2c;
+    --color-ledger-gilt-rule: #d4a955;
+    --color-ledger-gilt-text: #f2d998;
+    --color-ledger-text: #fbf6ff;
+    --color-ledger-text-soft: #c9bde4;
+    --color-ledger-text-muted: #a99bc8;
+    --color-ledger-silver: #c9ccd3;
+    --color-ledger-bronze: #c98a4b;
+    --color-ledger-shadow: #000000;
+    --color-ledger-highlight: #ffffff;
     /* target size */
     /* Stance socket on a coarse pointer: the same 40px box, kept as its own
        token so touch can diverge from the desktop row without a rule rewrite. */
