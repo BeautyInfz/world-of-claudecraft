@@ -148,7 +148,7 @@ const CEILINGS: Record<string, number> = {
   // (the harvest journal, the plant sheet, the perfecting window and the apex
   // treatment) arrive carrying literals the redesign has not migrated yet.
   // Re-counted on the merged sheet, never reconciled by arithmetic.
-  'components.css': 476,
+  'components.css': 471,
   'hud.css': 447,
   // New sheet from the release arm (the gathering goal tracker), tokenized as
   // authored: it joins the ratchet pinned at zero.

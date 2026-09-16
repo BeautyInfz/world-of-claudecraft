@@ -174,7 +174,6 @@ import {
   createAurasView,
   isToggleAuraKind,
 } from './auras_view';
-import { attachAvatarFallback } from './avatar_fallback';
 import { BagItemActionMenu, CTX_MENU_PICKER_CLASS } from './bag_item_action_menu';
 import { bagSlotsLineKey, bagsWindowShown } from './bags_view';
 import { BagsWindow, dismissBagPrompts } from './bags_window';
@@ -7300,8 +7299,9 @@ export class Hud {
 
   private syncActiveHotbarForm(): void {
     const profileSwitched = this.actionBarController.syncProfile();
-    if (profileSwitched) this.spellbookWindow.refreshHotbarControls();
-    if (!profileSwitched && !this.actionBarController.syncActiveForm()) return;
+    const specSwitched = this.actionBarController.syncSpec();
+    if (profileSwitched || specSwitched) this.spellbookWindow.refreshHotbarControls();
+    if (!profileSwitched && !specSwitched && !this.actionBarController.syncActiveForm()) return;
     this.dragAction = null;
     this.mobileActionPage = this.currentMobileActionPage();
   }

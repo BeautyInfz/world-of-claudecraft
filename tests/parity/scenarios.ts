@@ -3469,13 +3469,13 @@ function nythraxisFullPull(): Scenario {
       parkRedoCadences();
 
       // Bone Storm: hash-ranked charges (no shared rng), the whirl tick, a slam
-      // on arrival with its Gravefire line, the mid-storm Bone Spike (two rng.int
-      // victim picks), then the top-threat pickup when it ends.
+      // on arrival with its Gravefire line (no spike lands while he storms), then
+      // the top-threat pickup when it ends.
       nyx().boneStormTimer = DT;
       step(1); // startNythraxisBoneStorm -> boneStormBegins + boneStormCharge callouts
-      step(20 * 7); // charges, slams, the 6 s spike
+      step(20 * 8); // charges and slams, past the retired 6 s spike mark
       rec.snapshot('bone-storm');
-      step(20 * 6); // the storm ends: pickup, Gravebreaker re-arm, the major gap
+      step(20 * 5); // the storm ends: pickup, Gravebreaker re-arm, the major gap
       parkRedoCadences();
       nyx().boneStormTimer = 999;
 
