@@ -16149,6 +16149,20 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'hudChrome.perf.diagnostics.report.status.critical': 'критично',
   'hudChrome.perf.diagnostics.report.status.needsAttention': 'требует внимания',
   // The Proving Shore (tutorial island) + the spawn greeting dialog.
+  'hudChrome.tutorialGreeting.eastbrookGuidanceNote':
+    'Добро пожаловать в Истбрук! Маршал Редбрук ждёт вас с работой на городской площади. Включите золотые указатели, чтобы найти его и пройти задание «Волки у порога», или исследуйте всё самостоятельно. Позже это можно изменить в настройках: Интерфейс, Бой.',
+  'hudChrome.tutorialGreeting.guidanceOn': 'Включить указатели',
+  'hudChrome.tutorialGreeting.guidanceOff': 'Выключить указатели',
+  'hudChrome.tutorialGreeting.guidanceSetting': 'Золотые указатели Истбрука',
+  'hudChrome.professionTrainers.blacksmithing': 'Учитель кузнечного дела',
+  'hudChrome.professionTrainers.cooking': 'Учитель кулинарии',
+  'hudChrome.professionTrainers.tailoring': 'Учитель портняжного дела',
+  'hudChrome.professionTrainers.engineering': 'Учитель инженерного дела',
+  'hudChrome.professionTrainers.leatherworking': 'Учитель кожевничества',
+  'hudChrome.professionTrainers.alchemy': 'Учитель алхимии',
+  'hudChrome.professionTrainers.farming': 'Учитель земледелия',
+  'hudChrome.professionTrainers.mining': 'Учитель горного дела',
+  'hudChrome.professionTrainers.hobby': 'Учитель увлечений',
   'hudChrome.tutorialGreeting.bellHomeNote':
     'Уже вернулся с берега? Это был паромный колокол. Его близнец висит вон там, у почтового столба Вранопочты: позвони в любой момент, и переправа отнесет тебя обратно на Берег Испытаний. А если позвонил по ошибке - ничего страшного.',
   'hudChrome.tutorialGreeting.islandArrivalNote':

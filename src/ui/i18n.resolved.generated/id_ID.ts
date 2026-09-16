@@ -331,6 +331,18 @@ export const id_ID: EnTranslations = {
     }
   },
   "hudChrome": {
+    "professionTrainers": {
+      "blacksmithing": "Blacksmithing Trainer",
+      "cooking": "Cooking Trainer",
+      "tailoring": "Tailoring Trainer",
+      "engineering": "Engineering Trainer",
+      "leatherworking": "Leatherworking Trainer",
+      "alchemy": "Alchemy Trainer",
+      "farming": "Farming Trainer",
+      "mining": "Mining Trainer",
+      "hobby": "Hobby Trainer",
+      "nameplate": "<{title}>"
+    },
     "materialStackSelectionUnavailable": "Pilihan material itu tidak lagi tersedia.",
     "warlock": {
       "doomLabel": "Kecaman",
@@ -1065,6 +1077,10 @@ export const id_ID: EnTranslations = {
       "clearArmed": "Ketuk slot untuk mengosongkannya."
     },
     "tutorialGreeting": {
+      "eastbrookGuidanceNote": "Welcome to Eastbrook! Marshal Redbrook has work for you in the town square. Turn on golden guidance to find him and follow Wolves at the Door, or explore on your own. You can change this later in Options, Interface, Combat.",
+      "guidanceOn": "Turn guidance on",
+      "guidanceOff": "Turn guidance off",
+      "guidanceSetting": "Eastbrook golden guidance",
       "bellHomeNote": "Sudah kembali dari pesisir? Itu tadi lonceng feri yang kamu bunyikan. Kembarnya tergantung persis di sana, dekat kotak surat Pos Gagak: bunyikan kapan saja dan penyeberangan itu akan membawamu kembali ke Pesisir Pembuktian. Tak ada ruginya, bagaimanapun jadinya.",
       "islandArrivalNote": "Selamat datang di Pesisir Pembuktian. Penjaga Tam sedang menunggu tak jauh di sepanjang pantai: temuilah dia. Jika ingin pergi, bunyikan bel di samping dermagaku dan bel itu akan membawamu ke lembah kapan saja.",
       "noteClose": "Mengerti"

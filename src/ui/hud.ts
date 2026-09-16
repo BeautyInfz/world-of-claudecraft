@@ -308,6 +308,7 @@ import { esc } from './esc';
 import { blockFctAmountText } from './fct_core';
 import { fctSpawnShape } from './fct_event';
 import { FctPainter } from './fct_painter';
+import { ferryBellHomeNoteToOpen, writeEastbrookGuidanceChoice } from './ferry_bell_home_note';
 import { FocusManager, type FocusTrapHandle } from './focus_manager';
 import { captureFocusKey, restoreFirstEnabled } from './focus_restore';
 import {
@@ -889,11 +890,7 @@ import { wireTrackerHeader } from './tracker_header_wiring';
 import { installTrackerStackAnchor } from './tracker_stack_anchor';
 import { tradeOfferCeiling } from './trade_view';
 import { TutorialOverlay } from './tutorial';
-import {
-  buildFerryBellHomeNote,
-  buildFerryIslandArrivalNote,
-  type TutorialGreetingNote,
-} from './tutorial_greeting_view';
+import { buildFerryIslandArrivalNote, type TutorialGreetingNote } from './tutorial_greeting_view';
 import { renderTutorialGreetingNote } from './tutorial_greeting_window';
 import { svgIcon } from './ui_icons';
 import { getUiScale } from './ui_scale';
@@ -11920,19 +11917,14 @@ export class Hud {
           if (this.professionsWindow.isOpen) this.professionsWindow.render();
           break;
         }
-        case 'ferryBellHome':
-          // The island bell just set this player down in town: point out the
-          // town's twin bell ONCE per device (the ride may have been a
-          // misclick), the woc.tutorial.v1 presentation-only one-shot idiom.
-          try {
-            if (localStorage.getItem('woc.ferrybellhint.v1') !== 'seen') {
-              localStorage.setItem('woc.ferrybellhint.v1', 'seen');
-              this.openTutorialGreetingNote(buildFerryBellHomeNote());
-            }
-          } catch {
-            /* private mode: skip the hint rather than throw */
-          }
+        case 'ferryBellHome': {
+          // The island bell just set this player down in town: the guidance
+          // choice while the wolves are ahead, else the return-bell hint once
+          // per device (ferry_bell_home_note.ts owns the rule).
+          const note = ferryBellHomeNoteToOpen(this.sim);
+          if (note) this.openTutorialGreetingNote(note);
           break;
+        }
         case 'ferryIslandArrival':
           // Landing on the Proving Shore with the rail not yet started:
           // Ferryman Odo's welcome note teaches walking and talking and points
@@ -13770,16 +13762,15 @@ export class Hud {
   }
 
   // The #tutorial-greeting note dialog (the town bell homecoming, Ferryman
-  // Odo's island welcome): one speaker, one closing affordance, trapped and
-  // floored above the mobile sheet so a one-shot never opens buried. It is
-  // the only thing that mints this shell now, and the managed-close registry
-  // covers it unchanged: the two-choice greeting it grew out of went with the
-  // tutorialGreeting event at the Phase 18 dead-union sweep.
+  // Odo's island welcome): one speaker, with a guidance choice on homecoming.
+  // Keep focus trapped and the shell above the mobile sheet; both choice
+  // buttons and the managed-close registry use the same cleanup path.
   private openTutorialGreetingNote(note: TutorialGreetingNote): void {
     this.tutorialGreetingTrap?.release(false);
     this.tutorialGreetingTrap = null;
     const el = renderTutorialGreetingNote(note, {
       onClose: () => this.closeTutorialGreeting(),
+      onGuidanceChoice: (enabled) => writeEastbrookGuidanceChoice(this.optionsHooks, enabled),
     });
     this.bringWindowToFront(el);
     el.style.zIndex = String(Math.max(Number(el.style.zIndex) || 0, 96));

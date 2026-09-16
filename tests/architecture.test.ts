@@ -326,6 +326,9 @@ const UI_PURE_CORES = [
   'src/ui/hud/professions/enchant_apply_view.ts',
   'src/ui/hud/professions/enchanting_view.ts',
   'src/ui/entity_display_core.ts',
+  // npc id to localized Profession Trainer label; the nameplate painter and
+  // entity_display_core are its thin consumers.
+  'src/ui/profession_trainer_label_core.ts',
   'src/ui/hud/professions/disenchant_yield_view.ts',
   'src/ui/hud/professions/material_hint_view.ts',
   'src/ui/hud/professions/reagent_suffix_view.ts',
@@ -716,6 +719,7 @@ const RENDER_PURE_CORES = [
   'src/render/characters/portrait_capture_lane_core.ts',
   'src/render/quest_beacon_core.ts',
   'src/render/coach_trail_core.ts',
+  'src/render/eastbrook_wolves_guidance_core.ts',
   'src/render/island_isolation_core.ts',
   'src/render/characters/portrait_prewarm_core.ts',
   'src/render/characters/portrait_readback_core.ts',
@@ -2515,6 +2519,9 @@ const UI_DOM_MODULES = [
   'src/ui/epic_link.ts',
   'src/ui/focus_manager.ts',
   'src/ui/focus_restore.ts',
+  // The town-bell homecoming policy: the return-bell hint's per-device one-shot
+  // lives in localStorage; the note models stay in the pure tutorial_greeting_view.
+  'src/ui/ferry_bell_home_note.ts',
   'src/ui/form_draft.ts',
   'src/ui/gather_node_tooltip_controller.ts',
   'src/ui/gpu_notice_toast.ts',

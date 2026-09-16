@@ -331,6 +331,18 @@ export const de_DE: EnTranslations = {
     }
   },
   "hudChrome": {
+    "professionTrainers": {
+      "blacksmithing": "Blacksmithing Trainer",
+      "cooking": "Cooking Trainer",
+      "tailoring": "Tailoring Trainer",
+      "engineering": "Engineering Trainer",
+      "leatherworking": "Leatherworking Trainer",
+      "alchemy": "Alchemy Trainer",
+      "farming": "Farming Trainer",
+      "mining": "Mining Trainer",
+      "hobby": "Hobby Trainer",
+      "nameplate": "<{title}>"
+    },
     "materialStackSelectionUnavailable": "Diese Materialauswahl ist nicht mehr verfügbar.",
     "warlock": {
       "doomLabel": "Verdammnis",
@@ -1065,6 +1077,10 @@ export const de_DE: EnTranslations = {
       "clearArmed": "Tippe einen Platz an, um ihn zu leeren."
     },
     "tutorialGreeting": {
+      "eastbrookGuidanceNote": "Welcome to Eastbrook! Marshal Redbrook has work for you in the town square. Turn on golden guidance to find him and follow Wolves at the Door, or explore on your own. You can change this later in Options, Interface, Combat.",
+      "guidanceOn": "Turn guidance on",
+      "guidanceOff": "Turn guidance off",
+      "guidanceSetting": "Eastbrook golden guidance",
       "bellHomeNote": "Schon zurück von der Küste? Das war die Fährglocke, die du geläutet hast. Ihr Zwilling hängt gleich dort beim Briefkasten der Rabenpost: Läute sie jederzeit, und die Überfahrt bringt dich zurück zur Bewährungsküste. So oder so kein Schaden.",
       "islandArrivalNote": "Willkommen auf der Bewährungsküste. Wärter Tam wartet gleich den Strand hinauf: Geh zu ihm. Wenn du weiterziehen möchtest, läute jederzeit die Glocke neben meinem Steg; sie bringt dich ins Tal.",
       "noteClose": "Verstanden"

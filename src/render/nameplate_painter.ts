@@ -9,11 +9,8 @@ import { corpseIndicatorFor } from '../sim/corpse_loot_state';
 import { ABILITIES, MOBS, QUESTS } from '../sim/data';
 import { specialRoleColor } from '../sim/discord_roles';
 import { isQuestGatedEntityHidden } from '../sim/quest_gated_entity';
-import {
-  npcQuestMarkerKind,
-  type QuestMarkerKind,
-  strongerQuestMarker,
-} from '../sim/quests/quest_marker_kind';
+import { ambientNpcQuestMarkerKind } from '../sim/quests/ambient_quest_marker';
+import { type QuestMarkerKind, strongerQuestMarker } from '../sim/quests/quest_marker_kind';
 import { type Entity, GATHER_CAST_ID } from '../sim/types';
 import { abilityDisplayNameFromSource } from '../ui/ability_display_name';
 import { resolveHudAuraIconId } from '../ui/aura_icon_runtime';
@@ -31,6 +28,7 @@ import {
   proceduralIconDataUrl,
   raidMarkerDataUrl,
 } from '../ui/icons';
+import { professionTrainerNameplateLabel } from '../ui/profession_trainer_label_core';
 import { localizeSimAuraName } from '../ui/sim_i18n';
 import { type IWorld, OVERHEAD_EMOTES } from '../world_api';
 import { castBarState } from './cast_bar';
@@ -672,6 +670,7 @@ export class NameplatePainter {
           ? npcDisplayName(entity.templateId)
           : tEntity({ kind: 'mob', id: entity.templateId, field: 'name' });
       state.nameColor = FRIENDLY;
+      if (entity.kind === 'npc') state.title = professionTrainerNameplateLabel(entity.templateId);
       // The role line: what this NPC DOES, on the same line a player's
       // `<Guild>` uses (npc_role.ts owns the rule; the tag wrapper is the
       // catalog VALUE so a locale owns its brackets). Built here, never in the
@@ -746,7 +745,7 @@ export class NameplatePainter {
       if (!quest || !this.questMarkerCtx) continue;
       folded = strongerQuestMarker(
         folded,
-        npcQuestMarkerKind(
+        ambientNpcQuestMarkerKind(
           quest,
           entity.templateId,
           this.world.questState(questId),
