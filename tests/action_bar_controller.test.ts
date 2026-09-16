@@ -1298,3 +1298,132 @@ describe('isHotbarItemId: elixirs are placeable like potions', () => {
     expect(controller.isAssignableAction({ type: 'item', id: 'copper_ore' })).toBe(false);
   });
 });
+
+describe('ActionBarController per-spec action bar memory and talent choice swaps', () => {
+  it('switches between specs and remembers action bar layout per spec', () => {
+    const storage = new MemoryStorage();
+    const { controller, state } = makeHarness('mage', ['fireball', 'pyroblast'], bar(), storage);
+    state.spec = 'fire';
+    controller.init();
+
+    // Player arranges Fire Mage action bar
+    const fireBar = bar();
+    fireBar[2] = { type: 'ability', id: 'fireball' };
+    fireBar[5] = { type: 'ability', id: 'pyroblast' };
+    controller.replaceActions(fireBar);
+    controller.saveActions();
+
+    // Verify saved under fire key
+    expect(storage.getItem('woc_hotbar_mage_ActionbarTester_fire')).toBe(JSON.stringify(fireBar));
+
+    // Player switches to Frost Mage
+    state.spec = 'frost';
+    state.known = ['frostbolt', 'ice_barrier'];
+    const switchedToFrost = controller.syncSpec();
+    expect(switchedToFrost).toBe(true);
+
+    // Frost bar should start empty/default
+    expect(controller.actions[2]).toBeNull();
+    expect(controller.actions[5]).toBeNull();
+
+    // Player arranges Frost Mage action bar
+    const frostBar = bar();
+    frostBar[0] = { type: 'ability', id: 'frostbolt' };
+    frostBar[4] = { type: 'ability', id: 'ice_barrier' };
+    controller.replaceActions(frostBar);
+    controller.saveActions();
+
+    // Verify saved under frost key
+    expect(storage.getItem('woc_hotbar_mage_ActionbarTester_frost')).toBe(JSON.stringify(frostBar));
+
+    // Player switches back to Fire Mage
+    state.spec = 'fire';
+    state.known = ['fireball', 'pyroblast'];
+    const switchedToFire = controller.syncSpec();
+    expect(switchedToFire).toBe(true);
+
+    // Fire bar must be completely restored
+    expect(controller.actions[2]).toEqual({ type: 'ability', id: 'fireball' });
+    expect(controller.actions[5]).toEqual({ type: 'ability', id: 'pyroblast' });
+    expect(controller.actions[0]).toBeNull();
+    expect(controller.actions[4]).toBeNull();
+
+    // Switch back to Frost Mage again
+    state.spec = 'frost';
+    state.known = ['frostbolt', 'ice_barrier'];
+    controller.syncSpec();
+
+    // Frost bar must be completely restored
+    expect(controller.actions[0]).toEqual({ type: 'ability', id: 'frostbolt' });
+    expect(controller.actions[4]).toEqual({ type: 'ability', id: 'ice_barrier' });
+  });
+
+  it('replaces active talent choice ability in-place in syncKnownAbilities', () => {
+    const { controller, state } = makeHarness('mage', ['fireball', 'power_echo'], bar());
+    state.spec = 'arcane';
+    controller.init();
+
+    // Place power_echo on slot 5. Slot 1 is empty.
+    const initial = bar();
+    initial[0] = { type: 'ability', id: 'fireball' };
+    initial[4] = { type: 'ability', id: 'power_echo' };
+    controller.replaceActions(initial);
+    controller.saveActions();
+    controller.syncKnownAbilities();
+
+    // Switch talent from power_echo to overload (both are in Mage row 14)
+    state.known = ['fireball', 'overload'];
+    controller.syncKnownAbilities();
+
+    // overload must land in slot 4 (index 4), not index 1
+    expect(controller.actions[0]).toEqual({ type: 'ability', id: 'fireball' });
+    expect(controller.actions[1]).toBeNull();
+    expect(controller.actions[4]).toEqual({ type: 'ability', id: 'overload' });
+  });
+
+  it('seeds spec bar from legacy un-suffixed key on first spec load', () => {
+    const storage = new MemoryStorage();
+    const legacyBar = bar();
+    legacyBar[3] = { type: 'ability', id: 'fireball' };
+    storage.setItem('woc_hotbar_mage_ActionbarTester', JSON.stringify(legacyBar));
+
+    const { controller, state } = makeHarness('mage', ['fireball'], bar(), storage);
+    state.spec = 'fire';
+    controller.init();
+
+    // It should load the legacy bar and save it into the fire spec key
+    expect(controller.actions[3]).toEqual({ type: 'ability', id: 'fireball' });
+    expect(storage.getItem('woc_hotbar_mage_ActionbarTester_fire')).toBe(JSON.stringify(legacyBar));
+  });
+
+  it('persists attack slot per spec', () => {
+    const storage = new MemoryStorage();
+    const { controller, state } = makeHarness('mage', ['fireball', 'frostbolt'], bar(), storage);
+    state.showAttackButton = false;
+    state.spec = 'fire';
+    controller.init();
+
+    // Place fireball on attack slot for Fire
+    controller.replaceAttackAction({ type: 'ability', id: 'fireball' });
+    controller.saveAttackAction();
+
+    // Switch to frost
+    state.spec = 'frost';
+    controller.syncSpec();
+    expect(controller.attackAction).toBeNull();
+
+    // Place frostbolt on attack slot for Frost
+    controller.replaceAttackAction({ type: 'ability', id: 'frostbolt' });
+    controller.saveAttackAction();
+
+    // Switch back to fire
+    state.spec = 'fire';
+    controller.syncSpec();
+    expect(controller.attackAction).toEqual({ type: 'ability', id: 'fireball' });
+
+    // Switch back to frost
+    state.spec = 'frost';
+    controller.syncSpec();
+    expect(controller.attackAction).toEqual({ type: 'ability', id: 'frostbolt' });
+  });
+});
