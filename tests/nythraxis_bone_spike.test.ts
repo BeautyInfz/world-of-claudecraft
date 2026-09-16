@@ -5,6 +5,7 @@
 
 import { describe, expect, it } from 'vitest';
 import { dealDamage } from '../src/sim/combat/damage';
+import type { ProcDef } from '../src/sim/combat/talent_procs';
 import {
   HEROIC_DUNGEON_TUNING,
   NORMAL_DUNGEON_TUNING,
@@ -308,6 +309,93 @@ describe('Nythraxis Bone Spike', () => {
     expireRate();
     ctx.dealDamage(mage, boss, 100, false, 'fire', 'Fireball', 'hit');
     expect(charges()).toBe(2);
+  });
+
+  it('keeps a ward CRITICAL an original attack: a spell-crit proc still rolls and fires, an exact copy stays silent', () => {
+    // The ward rule resolves the hit like an exact copy so nothing moves the
+    // amount off one, but the crit EFFECTS a resolved copy must skip (Ignition
+    // banking, spell-crit talent procs) still belong to a ward hit: it is the
+    // player's own critical. The chance-gated spell-crit trigger is the one
+    // talent trigger that draws the shared stream (talent_procs.ts), so the
+    // draw count is the decisive pin: a ward critical draws it, a copy never.
+    const { ctx, boss, st, room, raiders, spikes } = setup();
+    const [victim] = nythraxis.castNythraxisBoneSpike(ctx, boss, st, room(), 'normal');
+    const spike = spikes()[0];
+    const mage = raiders.slice(2).find((r) => r.id !== victim.id)!;
+    const mageMeta = ctx.players.get(mage.id);
+    const proc: ProcDef = {
+      id: 'test_ward_crit_proc',
+      name: 'Test Ward Crit Proc',
+      trigger: { on: 'spellCrit', abilities: ['fireball'], chance: 1 },
+      responses: [
+        { kind: 'empowerNext', aura: 'next_cast_instant', abilities: ['fireball'], duration: 8 },
+      ],
+    };
+    // Given to this mage alone, through the player-mods seam the proc engine
+    // reads (procsFor), so no content changes and every other raider is as before.
+    const realMods = ctx.playerMods;
+    (ctx as { playerMods: SimContext['playerMods'] }).playerMods = (meta) => {
+      const mods = realMods(meta);
+      return meta === mageMeta ? { ...mods, procs: [...mods.procs, proc] } : mods;
+    };
+    let draws = 0;
+    ctx.rng.setObserver(() => {
+      draws += 1;
+    });
+    const procUp = () => mage.auras.some((a: { id: string }) => a.id === proc.id);
+    const pool = nythraxisBoneSpikeHits('normal');
+    // An exact copy of a critical (a Brand echo, resolvedHpLoss) lands its one
+    // point on the ward but neither rolls nor fires: the original already did.
+    expect(
+      dealDamage(
+        ctx,
+        mage,
+        spike,
+        300,
+        true,
+        'fire',
+        'Fireball',
+        'hit',
+        false,
+        undefined,
+        true,
+        false,
+        false,
+        'fireball',
+        false,
+        undefined,
+        true,
+      ),
+    ).toBe(1);
+    expect(spike.hp).toBe(pool - 1);
+    expect(procUp()).toBe(false);
+    const copyDraws = draws;
+    // The mage's own Fireball CRITICAL on the ward: one point off the pool,
+    // and the proc rolls its chance (exactly one more draw than the copy)
+    // and fires, as it would on any landed critical.
+    draws = 0;
+    expect(
+      dealDamage(
+        ctx,
+        mage,
+        spike,
+        300,
+        true,
+        'fire',
+        'Fireball',
+        'hit',
+        false,
+        undefined,
+        true,
+        false,
+        false,
+        'fireball',
+      ),
+    ).toBe(1);
+    expect(spike.hp).toBe(pool - 2);
+    expect(procUp()).toBe(true);
+    expect(draws).toBe(copyDraws + 1);
+    ctx.rng.setObserver(null);
   });
 
   it('counts every player or pet hit as one, whatever it deals, and shatters on the last', () => {

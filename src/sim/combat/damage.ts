@@ -217,6 +217,12 @@ export function dealDamage(
   // below is still the player's own attack. Captured before the ward rule
   // turns on the modifier bypass, so the two decisions stay separate.
   const copiedHit = alreadyFinal;
+  // The same split for the crit EFFECTS a resolved copy must not re-fire
+  // (Ignition banking, spell-crit talent procs): an exact copy of a critical
+  // (a Brand echo) already fired them on the original, so its copy is silent;
+  // a ward-normalized hit is the player's own critical and still fires them,
+  // rng draw included. Captured before the ward rule for the same reason.
+  const copiedResolvedHit = resolvedHpLoss;
   if (target.dead) return 0;
   if (target.damageImmune) return 0;
   // A Nythraxis Bone Spike is a ward (nythraxis_bone_spike.ts): any player or
@@ -573,7 +579,9 @@ export function dealDamage(
   // Ignition (fire mage mastery, combat/fire_mage.ts): a Fire-school ABILITY
   // crit banks a stacking burn of the RESOLVED amount. Guards inside; a burn
   // tick carries crit=false so it can never re-ignite itself. Draws no rng.
-  if (!resolvedHpLoss) igniteOnCrit(ctx, source, target, amount, crit, school, ability);
+  // An exact copy of a critical (copiedResolvedHit) banks nothing a second
+  // time; a ward-normalized original critical still banks its one point.
+  if (!copiedResolvedHit) igniteOnCrit(ctx, source, target, amount, crit, school, ability);
 
   // Debt of Light answers BEFORE the generic shields: it is a deliberately armed
   // single-hit answer, so it must be the thing that eats the blow the paladin
@@ -1167,8 +1175,12 @@ export function dealDamage(
     // Elemental Trance (shaman Warspirit signature): the trance returns a
     // fifth of all damage dealt as mana. Deterministic, no rng, no events.
     elementalTranceManaFromDamage(ctx, source, amount);
-    // Talent procs listening for spell crits (deterministic, no rng draw).
-    if (!resolvedHpLoss && crit && school !== 'physical' && ability) {
+    // Talent procs listening for spell crits (a chance trigger draws the
+    // shared stream, talent_procs.ts). An exact copy of a critical
+    // (copiedResolvedHit) fired them on the original and stays silent; a
+    // ward-normalized original critical still fires them, so the draw order
+    // matches any other landed critical.
+    if (!copiedResolvedHit && crit && school !== 'physical' && ability) {
       onSpellCrit(ctx, source, abilityId, target);
     }
     if (source.resourceType === 'rage' && !noRage && school === 'physical' && !ability) {
