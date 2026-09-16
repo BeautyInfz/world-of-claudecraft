@@ -16,8 +16,8 @@
     "Grave Eruption hash-placed warning + impact damage + Grave Flame residue tick",
     "class:warrior"
   ],
-  "draws": 11455,
-  "drawDigest": "e4daefb2",
+  "draws": 11477,
+  "drawDigest": "e787325a",
   "frames": [
     {
       "tick": 0,
@@ -14504,8 +14504,8 @@
       "tick": 1030,
       "time": 51.5,
       "nextId": 1019,
-      "state": "4b32350c",
-      "events": "1cb24baf",
+      "state": "9abbee2e",
+      "events": "81cc5c11",
       "rng": {
         "draws": 9007,
         "digest": "cb5fae0d"
@@ -14515,7 +14515,7 @@
       "tick": 1040,
       "time": 52,
       "nextId": 1019,
-      "state": "0b99a55b",
+      "state": "4277e15b",
       "events": "741638a5",
       "rng": {
         "draws": 9105,
@@ -14526,7 +14526,7 @@
       "tick": 1050,
       "time": 52.5,
       "nextId": 1019,
-      "state": "cd48a301",
+      "state": "a103c048",
       "events": "c605beee",
       "rng": {
         "draws": 9195,
@@ -14537,7 +14537,7 @@
       "tick": 1060,
       "time": 53,
       "nextId": 1019,
-      "state": "3ccf68bb",
+      "state": "665b6a9e",
       "events": "741638a5",
       "rng": {
         "draws": 9276,
@@ -14548,7 +14548,7 @@
       "tick": 1070,
       "time": 53.5,
       "nextId": 1019,
-      "state": "02b18428",
+      "state": "cf50c1c0",
       "events": "3ae8c219",
       "rng": {
         "draws": 9354,
@@ -14559,7 +14559,7 @@
       "tick": 1080,
       "time": 54,
       "nextId": 1019,
-      "state": "2bac2324",
+      "state": "0ccfa8e4",
       "events": "741638a5",
       "rng": {
         "draws": 9447,
@@ -14570,7 +14570,7 @@
       "tick": 1090,
       "time": 54.5,
       "nextId": 1019,
-      "state": "3b2b9355",
+      "state": "6610a36d",
       "events": "a9dab7da",
       "rng": {
         "draws": 9537,
@@ -14581,7 +14581,7 @@
       "tick": 1100,
       "time": 55,
       "nextId": 1019,
-      "state": "ac683117",
+      "state": "91134789",
       "events": "0b2155e3",
       "rng": {
         "draws": 9621,
@@ -14592,7 +14592,7 @@
       "tick": 1110,
       "time": 55.5,
       "nextId": 1019,
-      "state": "cdeeef07",
+      "state": "053835c7",
       "events": "14a934ec",
       "rng": {
         "draws": 9702,
@@ -14603,7 +14603,7 @@
       "tick": 1120,
       "time": 56,
       "nextId": 1019,
-      "state": "f31ead01",
+      "state": "99e80d21",
       "events": "057fa436",
       "rng": {
         "draws": 9792,
@@ -14611,14 +14611,36 @@
       }
     },
     {
-      "tick": 1126,
-      "time": 56.3,
+      "tick": 1130,
+      "time": 56.5,
       "nextId": 1019,
-      "state": "38a67671",
-      "events": "171bc845",
+      "state": "b0054c43",
+      "events": "e7c0c432",
       "rng": {
-        "draws": 9846,
-        "digest": "b22dca21"
+        "draws": 9892,
+        "digest": "b55c1eea"
+      }
+    },
+    {
+      "tick": 1140,
+      "time": 57,
+      "nextId": 1019,
+      "state": "cf774fab",
+      "events": "057fa436",
+      "rng": {
+        "draws": 9968,
+        "digest": "74fcc047"
+      }
+    },
+    {
+      "tick": 1146,
+      "time": 57.3,
+      "nextId": 1019,
+      "state": "2ba8d7f6",
+      "events": "741638a5",
+      "rng": {
+        "draws": 10014,
+        "digest": "7572d3cb"
       },
       "label": "bone-storm",
       "players": [
@@ -14768,7 +14790,7 @@
           "cls": "mage",
           "companionUpgrades": {},
           "counters": {
-            "damageTaken": 120000
+            "damageTaken": 119000
           },
           "craftDaily": {},
           "craftSkills": {},
@@ -14998,7 +15020,7 @@
           "cls": "mage",
           "companionUpgrades": {},
           "counters": {
-            "damageTaken": 120667
+            "damageTaken": 125667
           },
           "craftDaily": {},
           "craftSkills": {},
@@ -15216,19 +15238,19 @@
               "id": "battle_stance",
               "kind": "battle_stance",
               "name": "Battle Stance",
-              "remaining": 3543.7,
+              "remaining": 3542.7,
               "school": "physical",
               "sourceId": 1006
             }
           ],
           "blockChance": 0.05,
           "blockValue": 6,
-          "combatTimer": 15.9,
+          "combatTimer": 16.9,
           "comboUntil": -1,
           "critChance": 0.0695,
           "detonateTimer": "Infinity",
           "dodgeChance": 0.0695,
-          "fiveSecondRule": 155.3,
+          "fiveSecondRule": 156.3,
           "healPower": 5,
           "hp": 50000,
           "id": 1006,
@@ -15280,7 +15302,7 @@
           "critChance": 0.056,
           "detonateTimer": "Infinity",
           "dodgeChance": 0.056,
-          "fiveSecondRule": 155.3,
+          "fiveSecondRule": 156.3,
           "healPower": 41,
           "hp": 50000,
           "id": 1007,
@@ -15326,12 +15348,12 @@
           "aiState": "idle",
           "attackPower": 10,
           "channelTickTimer": -5.05,
-          "combatTimer": 32.35,
+          "combatTimer": 33.35,
           "comboUntil": -1,
           "critChance": 0.056,
           "detonateTimer": "Infinity",
           "dodgeChance": 0.056,
-          "fiveSecondRule": 155.3,
+          "fiveSecondRule": 156.3,
           "healPower": 41,
           "hp": 50000,
           "id": 1008,
@@ -15377,11 +15399,12 @@
           "aiState": "idle",
           "attackPower": 10,
           "channelTickTimer": -5.05,
+          "combatTimer": 0.75,
           "comboUntil": -1,
           "critChance": 0.056,
           "detonateTimer": "Infinity",
           "dodgeChance": 0.056,
-          "fiveSecondRule": 155.3,
+          "fiveSecondRule": 156.3,
           "healPower": 41,
           "hp": 50000,
           "id": 1009,
@@ -15426,12 +15449,12 @@
         {
           "aiState": "idle",
           "attackPower": 10,
-          "combatTimer": 19.35,
+          "combatTimer": 20.35,
           "comboUntil": -1,
           "critChance": 0.056,
           "detonateTimer": "Infinity",
           "dodgeChance": 0.056,
-          "fiveSecondRule": 155.3,
+          "fiveSecondRule": 156.3,
           "healPower": 41,
           "hp": 50000,
           "id": 1010,
@@ -15474,7 +15497,7 @@
           }
         },
         {
-          "aggroTargetId": 1009,
+          "aggroTargetId": 1008,
           "aiState": "attack",
           "auras": [
             {
@@ -15483,7 +15506,7 @@
               "id": "nythraxis_kings_wrath",
               "kind": "buff_dmg_done",
               "name": "King's Wrath",
-              "remaining": 592.9,
+              "remaining": 591.9,
               "school": "shadow",
               "sourceId": 1011,
               "value": 0.2
@@ -15494,18 +15517,19 @@
               "id": "nythraxis_bone_storm",
               "kind": "buff_speed",
               "name": "Bone Storm",
-              "remaining": 593.95,
+              "remaining": 592.95,
               "school": "physical",
               "sourceId": 1011,
               "value2": 0.1
             }
           ],
           "autoAttack": true,
+          "combatTimer": 0.75,
           "comboUntil": -1,
           "critChance": 0.05,
           "detonateTimer": "Infinity",
           "dodgeChance": 0.05,
-          "facing": 2.007685,
+          "facing": 1.236955,
           "fiveSecondRule": 99,
           "hostile": true,
           "hp": 34800,
@@ -15529,14 +15553,15 @@
             "boneSpikeTimer": 997.95,
             "boneStorm": {
               "castKey": 3187705395,
-              "chargeIndex": 1,
-              "chargeTargetId": 1009,
+              "chargeIndex": 2,
+              "chargeTargetId": 1008,
               "chargedIds": [
                 1007,
-                1009
+                1009,
+                1008
               ],
-              "elapsed": 6,
-              "slammed": true,
+              "elapsed": 7,
+              "openingSlamSpent": true,
               "whirlTickTimer": 1
             },
             "boneStormTimer": 50,
@@ -15545,7 +15570,7 @@
             "dialogueToken": 10,
             "dreadCurseHolderId": 1006,
             "dreadCurseTimer": 997.95,
-            "enrageElapsed": 55.3,
+            "enrageElapsed": 56.3,
             "eruptionCastKey": 3394067537,
             "eruptionTimer": 997.95,
             "graveFlameSeq": 7,
@@ -15557,7 +15582,7 @@
               {
                 "dirX": -0.856087,
                 "dirZ": -0.516832,
-                "elapsed": 4.8,
+                "elapsed": 5.8,
                 "seq": 2,
                 "tickTimer": 0.2,
                 "x": 103271.876856,
@@ -15566,7 +15591,7 @@
               {
                 "dirX": 0.906073,
                 "dirZ": -0.423122,
-                "elapsed": 1.75,
+                "elapsed": 2.75,
                 "seq": 3,
                 "tickTimer": 0.25,
                 "x": 103298.039701,
@@ -15602,8 +15627,8 @@
           "overpowerUntil": -1,
           "petMode": "defensive",
           "pos": {
-            "x": 103298.039701,
-            "z": -1187.08457
+            "x": 103319.864361,
+            "z": -1179.515274
           },
           "potionCooldownUntil": -1,
           "spawnPos": {
@@ -15815,146 +15840,124 @@
       ]
     },
     {
-      "tick": 1130,
-      "time": 56.5,
-      "nextId": 1021,
-      "state": "612a05fe",
-      "events": "fe8fa872",
-      "rng": {
-        "draws": 9894,
-        "digest": "1b561dfe"
-      }
-    },
-    {
-      "tick": 1140,
-      "time": 57,
-      "nextId": 1021,
-      "state": "c51f82be",
-      "events": "057fa436",
-      "rng": {
-        "draws": 9970,
-        "digest": "e8dd2249"
-      }
-    },
-    {
       "tick": 1150,
       "time": 57.5,
-      "nextId": 1021,
-      "state": "5ab977ad",
-      "events": "9c1cc641",
+      "nextId": 1019,
+      "state": "aa379bf9",
+      "events": "71425d74",
       "rng": {
-        "draws": 10069,
-        "digest": "2df39dce"
+        "draws": 10065,
+        "digest": "c0da47f4"
       }
     },
     {
       "tick": 1160,
       "time": 58,
-      "nextId": 1021,
-      "state": "ecc967fa",
+      "nextId": 1019,
+      "state": "f7309e2f",
       "events": "ad1c896f",
       "rng": {
-        "draws": 10159,
-        "digest": "dcf985da"
+        "draws": 10156,
+        "digest": "49e20eb6"
       }
     },
     {
       "tick": 1170,
       "time": 58.5,
-      "nextId": 1021,
-      "state": "ee89677b",
-      "events": "070253bd",
+      "nextId": 1019,
+      "state": "2db6026b",
+      "events": "c59669d2",
       "rng": {
-        "draws": 10258,
-        "digest": "f9257f92"
+        "draws": 10254,
+        "digest": "ce9efa47"
       }
     },
     {
       "tick": 1180,
       "time": 59,
-      "nextId": 1021,
-      "state": "d93ab136",
+      "nextId": 1019,
+      "state": "6606f281",
       "events": "3df9c11c",
       "rng": {
-        "draws": 10353,
-        "digest": "8617055c"
+        "draws": 10346,
+        "digest": "1a2d8858"
       }
     },
     {
       "tick": 1190,
       "time": 59.5,
-      "nextId": 1021,
-      "state": "bb11cc42",
-      "events": "dd151ed8",
+      "nextId": 1019,
+      "state": "bece17dc",
+      "events": "29a7dddd",
       "rng": {
-        "draws": 10443,
-        "digest": "cb847734"
+        "draws": 10442,
+        "digest": "2b62e332"
       }
     },
     {
       "tick": 1200,
       "time": 60,
-      "nextId": 1021,
-      "state": "b1c45851",
+      "nextId": 1019,
+      "state": "e53dfc86",
       "events": "3df9c11c",
       "rng": {
-        "draws": 10538,
-        "digest": "5257732b"
+        "draws": 10547,
+        "digest": "fe5ac1fb"
       }
     },
     {
       "tick": 1210,
       "time": 60.5,
-      "nextId": 1021,
-      "state": "2b804baf",
-      "events": "e9442939",
+      "nextId": 1019,
+      "state": "a01ab157",
+      "events": "d9c66d9f",
       "rng": {
-        "draws": 10613,
-        "digest": "44500bfc"
+        "draws": 10619,
+        "digest": "6822e388"
       }
     },
     {
       "tick": 1220,
       "time": 61,
-      "nextId": 1021,
-      "state": "628f688f",
+      "nextId": 1019,
+      "state": "683be381",
       "events": "3df9c11c",
       "rng": {
-        "draws": 10709,
-        "digest": "d7f3bca5"
+        "draws": 10727,
+        "digest": "5eda1636"
       }
     },
     {
       "tick": 1230,
       "time": 61.5,
-      "nextId": 1021,
-      "state": "df7f21ee",
-      "events": "e9442939",
+      "nextId": 1019,
+      "state": "dfe9f19f",
+      "events": "a8ff68be",
       "rng": {
-        "draws": 10795,
-        "digest": "787195b7"
+        "draws": 10797,
+        "digest": "27572730"
       }
     },
     {
       "tick": 1240,
       "time": 62,
-      "nextId": 1021,
-      "state": "d5e0cbe3",
+      "nextId": 1019,
+      "state": "9b213f37",
       "events": "54c907b9",
       "rng": {
-        "draws": 10876,
-        "digest": "0d231111"
+        "draws": 10877,
+        "digest": "206db065"
       }
     },
     {
       "tick": 1247,
       "time": 62.35,
-      "nextId": 1021,
-      "state": "cc5364b3",
-      "events": "a7db138d",
+      "nextId": 1019,
+      "state": "9809539e",
+      "events": "285aaa96",
       "rng": {
-        "draws": 10942,
-        "digest": "2375c311"
+        "draws": 10934,
+        "digest": "184d8efb"
       },
       "label": "crown-endures",
       "players": [
@@ -15982,7 +15985,7 @@
           "companionUpgrades": {},
           "counters": {
             "damageDealt": 2002,
-            "damageTaken": 77352,
+            "damageTaken": 53352,
             "kills": 2
           },
           "craftDaily": {},
@@ -16104,7 +16107,7 @@
           "cls": "mage",
           "companionUpgrades": {},
           "counters": {
-            "damageTaken": 130000
+            "damageTaken": 124000
           },
           "craftDaily": {},
           "craftSkills": {},
@@ -16219,7 +16222,7 @@
           "cls": "mage",
           "companionUpgrades": {},
           "counters": {
-            "damageTaken": 149167
+            "damageTaken": 101667
           },
           "craftDaily": {},
           "craftSkills": {},
@@ -16449,7 +16452,7 @@
           "cls": "mage",
           "companionUpgrades": {},
           "counters": {
-            "damageTaken": 268167
+            "damageTaken": 286667
           },
           "craftDaily": {},
           "craftSkills": {},
@@ -16555,22 +16558,11 @@
               "remaining": 3537.65,
               "school": "physical",
               "sourceId": 1006
-            },
-            {
-              "duration": 600,
-              "encounterOwned": true,
-              "id": "nythraxis_impaled",
-              "kind": "stun",
-              "name": "Impaled",
-              "remaining": 594,
-              "school": "shadow",
-              "sourceId": 1011,
-              "unbreakableControl": true,
-              "value2": 1020
             }
           ],
           "blockChance": 0.05,
           "blockValue": 6,
+          "combatTimer": 21.95,
           "comboUntil": -1,
           "critChance": 0.0695,
           "detonateTimer": "Infinity",
@@ -16673,6 +16665,7 @@
           "aiState": "idle",
           "attackPower": 10,
           "channelTickTimer": -5.05,
+          "combatTimer": 0.7,
           "comboUntil": -1,
           "critChance": 0.056,
           "detonateTimer": "Infinity",
@@ -16773,20 +16766,6 @@
         {
           "aiState": "idle",
           "attackPower": 10,
-          "auras": [
-            {
-              "duration": 600,
-              "encounterOwned": true,
-              "id": "nythraxis_impaled",
-              "kind": "stun",
-              "name": "Impaled",
-              "remaining": 594,
-              "school": "shadow",
-              "sourceId": 1011,
-              "unbreakableControl": true,
-              "value2": 1019
-            }
-          ],
           "comboUntil": -1,
           "critChance": 0.056,
           "detonateTimer": "Infinity",
@@ -16876,7 +16855,7 @@
           "critChance": 0.05,
           "detonateTimer": "Infinity",
           "dodgeChance": 0.05,
-          "facing": -1.047757,
+          "facing": -0.234473,
           "fiveSecondRule": 99,
           "hostile": true,
           "hp": 34800,
@@ -16898,22 +16877,10 @@
               1010
             ],
             "boneSpikeTimer": 998.95,
-            "boneSpikes": [
-              {
-                "playerId": 1010,
-                "spikeId": 1019,
-                "tickTimer": 1
-              },
-              {
-                "playerId": 1006,
-                "spikeId": 1020,
-                "tickTimer": 1
-              }
-            ],
             "boneStormTimer": 998.95,
             "deathlessTimer": 32.85,
             "dialogueBusyUntil": 64.95,
-            "dialogueToken": 12,
+            "dialogueToken": 11,
             "dreadCurseHolderId": 1006,
             "dreadCurseTimer": 998.95,
             "enrageElapsed": 360,
@@ -16945,13 +16912,13 @@
                 "z": -1176.86602
               },
               {
-                "dirX": 0.94479,
-                "dirZ": 0.327675,
-                "elapsed": 3,
+                "dirX": -0.993981,
+                "dirZ": 0.109555,
+                "elapsed": 2,
                 "seq": 5,
                 "tickTimer": 1,
-                "x": 103328.594225,
-                "z": -1176.487555
+                "x": 103303.39399,
+                "z": -1174.208753
               }
             ],
             "introSpoken": true,
@@ -16984,8 +16951,8 @@
           "overpowerUntil": -1,
           "petMode": "defensive",
           "pos": {
-            "x": 103327.912009,
-            "z": -1176.094187
+            "x": 103303.21103,
+            "z": -1173.442802
           },
           "potionCooldownUntil": -1,
           "spawnPos": {
@@ -16995,10 +16962,6 @@
           "stats": {
             "armor": 798
           },
-          "summonedIds": [
-            1019,
-            1020
-          ],
           "swingTimer": 1.9,
           "templateId": "nythraxis_scourge_of_thornpeak",
           "threat": [
@@ -17203,12 +17166,12 @@
     {
       "tick": 1248,
       "time": 62.4,
-      "nextId": 1021,
-      "state": "6336142e",
-      "events": "8135da7e",
+      "nextId": 1019,
+      "state": "a67b8634",
+      "events": "31bab0f6",
       "rng": {
-        "draws": 10956,
-        "digest": "29a6e190"
+        "draws": 10948,
+        "digest": "2a4f8172"
       },
       "label": "death",
       "players": [
@@ -17236,7 +17199,7 @@
           "companionUpgrades": {},
           "counters": {
             "damageDealt": 36802,
-            "damageTaken": 77352,
+            "damageTaken": 53352,
             "kills": 3,
             "xpGained": 83
           },
@@ -17344,11 +17307,11 @@
               "itemId": "baked_bread"
             },
             {
-              "count": 2,
+              "count": 1,
               "itemId": "wyrmfall_core",
               "materialSources": [
                 {
-                  "count": 2,
+                  "count": 1,
                   "source": {}
                 }
               ]
@@ -17414,7 +17377,7 @@
           "cls": "mage",
           "companionUpgrades": {},
           "counters": {
-            "damageTaken": 130000,
+            "damageTaken": 124000,
             "xpGained": 83
           },
           "craftDaily": {},
@@ -17519,11 +17482,11 @@
               "itemId": "spring_water"
             },
             {
-              "count": 2,
+              "count": 1,
               "itemId": "wyrmfall_core",
               "materialSources": [
                 {
-                  "count": 2,
+                  "count": 1,
                   "source": {}
                 }
               ]
@@ -17585,7 +17548,7 @@
           "cls": "mage",
           "companionUpgrades": {},
           "counters": {
-            "damageTaken": 149167,
+            "damageTaken": 101667,
             "xpGained": 83
           },
           "craftDaily": {},
@@ -17690,11 +17653,11 @@
               "itemId": "spring_water"
             },
             {
-              "count": 2,
+              "count": 1,
               "itemId": "wyrmfall_core",
               "materialSources": [
                 {
-                  "count": 2,
+                  "count": 1,
                   "source": {}
                 }
               ]
@@ -17861,11 +17824,11 @@
               "itemId": "spring_water"
             },
             {
-              "count": 2,
+              "count": 1,
               "itemId": "wyrmfall_core",
               "materialSources": [
                 {
-                  "count": 2,
+                  "count": 1,
                   "source": {}
                 }
               ]
@@ -17927,7 +17890,7 @@
           "cls": "mage",
           "companionUpgrades": {},
           "counters": {
-            "damageTaken": 268167,
+            "damageTaken": 286667,
             "xpGained": 83
           },
           "craftDaily": {},
@@ -18032,11 +17995,11 @@
               "itemId": "spring_water"
             },
             {
-              "count": 2,
+              "count": 1,
               "itemId": "wyrmfall_core",
               "materialSources": [
                 {
-                  "count": 2,
+                  "count": 1,
                   "source": {}
                 }
               ]
@@ -18196,7 +18159,7 @@
           "aiState": "idle",
           "attackPower": 10,
           "channelTickTimer": -5.05,
-          "combatTimer": 0.05,
+          "combatTimer": 0.75,
           "comboUntil": -1,
           "critChance": 0.056,
           "detonateTimer": "Infinity",
@@ -18363,27 +18326,35 @@
           "dead": true,
           "detonateTimer": "Infinity",
           "dodgeChance": 0.05,
-          "facing": -1.047757,
+          "facing": -0.234473,
           "fiveSecondRule": 99,
           "hostile": true,
           "id": 1011,
           "inCombat": true,
           "kind": "mob",
           "leashAnchor": {
-            "x": 103327.912009,
-            "z": -1176.094187
+            "x": 103303.21103,
+            "z": -1173.442802
           },
           "level": 20,
           "loot": {
-            "copper": 93926,
+            "copper": 193587,
             "items": [
               {
                 "count": 1,
-                "itemId": "gravecourt_hewer"
+                "itemId": "direfang_quiver"
               },
               {
                 "count": 1,
-                "itemId": "bramblehide_harness"
+                "itemId": "stormhymn_chain_treads"
+              },
+              {
+                "count": 1,
+                "itemId": "pattern_warhewn_signet"
+              },
+              {
+                "count": 1,
+                "itemId": "gilded_yam_seed"
               }
             ]
           },
@@ -18413,7 +18384,7 @@
             "deathSpoken": true,
             "deathlessTimer": 32.85,
             "dialogueBusyUntil": 67.6,
-            "dialogueToken": 13,
+            "dialogueToken": 12,
             "dreadCurseHolderId": 1006,
             "dreadCurseTimer": 998.95,
             "enrageElapsed": 360,
@@ -18454,8 +18425,8 @@
           "overpowerUntil": -1,
           "petMode": "defensive",
           "pos": {
-            "x": 103327.912009,
-            "z": -1176.094187
+            "x": 103303.21103,
+            "z": -1173.442802
           },
           "potionCooldownUntil": -1,
           "respawnTimer": 24.95,
@@ -18665,78 +18636,78 @@
     {
       "tick": 1250,
       "time": 62.5,
-      "nextId": 1021,
-      "state": "2370a341",
+      "nextId": 1019,
+      "state": "fa828d3b",
       "events": "741638a5",
       "rng": {
-        "draws": 10967,
-        "digest": "de84665c"
+        "draws": 10958,
+        "digest": "e3fa66cd"
       }
     },
     {
       "tick": 1260,
       "time": 63,
-      "nextId": 1021,
-      "state": "fdf112c0",
+      "nextId": 1019,
+      "state": "2ae23d45",
       "events": "741638a5",
       "rng": {
-        "draws": 11061,
-        "digest": "83ff17e8"
+        "draws": 11031,
+        "digest": "ce59696a"
       }
     },
     {
       "tick": 1270,
       "time": 63.5,
-      "nextId": 1021,
-      "state": "c8e89d6a",
+      "nextId": 1019,
+      "state": "f80d9192",
       "events": "741638a5",
       "rng": {
-        "draws": 11144,
-        "digest": "7046da5a"
+        "draws": 11124,
+        "digest": "106b4888"
       }
     },
     {
       "tick": 1280,
       "time": 64,
-      "nextId": 1021,
-      "state": "15200022",
+      "nextId": 1019,
+      "state": "5ef86b87",
       "events": "741638a5",
       "rng": {
-        "draws": 11228,
-        "digest": "81d3c97c"
+        "draws": 11224,
+        "digest": "090712af"
       }
     },
     {
       "tick": 1290,
       "time": 64.5,
-      "nextId": 1021,
-      "state": "7a881338",
+      "nextId": 1019,
+      "state": "37386fb2",
       "events": "741638a5",
       "rng": {
-        "draws": 11321,
-        "digest": "61424e32"
+        "draws": 11311,
+        "digest": "59a8b075"
       }
     },
     {
       "tick": 1300,
       "time": 65,
-      "nextId": 1021,
-      "state": "bf782938",
+      "nextId": 1019,
+      "state": "1d799fa9",
       "events": "741638a5",
       "rng": {
-        "draws": 11404,
-        "digest": "8c5720d9"
+        "draws": 11414,
+        "digest": "4cec107f"
       }
     },
     {
       "tick": 1308,
       "time": 65.4,
-      "nextId": 1021,
-      "state": "3c65b997",
+      "nextId": 1019,
+      "state": "1d3be31b",
       "events": "6e96776a",
       "rng": {
-        "draws": 11455,
-        "digest": "e4daefb2"
+        "draws": 11477,
+        "digest": "e787325a"
       },
       "label": "final",
       "players": [
@@ -18764,7 +18735,7 @@
           "companionUpgrades": {},
           "counters": {
             "damageDealt": 36802,
-            "damageTaken": 77352,
+            "damageTaken": 53352,
             "kills": 3,
             "xpGained": 83
           },
@@ -18872,11 +18843,11 @@
               "itemId": "baked_bread"
             },
             {
-              "count": 2,
+              "count": 1,
               "itemId": "wyrmfall_core",
               "materialSources": [
                 {
-                  "count": 2,
+                  "count": 1,
                   "source": {}
                 }
               ]
@@ -18942,7 +18913,7 @@
           "cls": "mage",
           "companionUpgrades": {},
           "counters": {
-            "damageTaken": 130000,
+            "damageTaken": 124000,
             "xpGained": 83
           },
           "craftDaily": {},
@@ -19047,11 +19018,11 @@
               "itemId": "spring_water"
             },
             {
-              "count": 2,
+              "count": 1,
               "itemId": "wyrmfall_core",
               "materialSources": [
                 {
-                  "count": 2,
+                  "count": 1,
                   "source": {}
                 }
               ]
@@ -19113,7 +19084,7 @@
           "cls": "mage",
           "companionUpgrades": {},
           "counters": {
-            "damageTaken": 149167,
+            "damageTaken": 101667,
             "xpGained": 83
           },
           "craftDaily": {},
@@ -19218,11 +19189,11 @@
               "itemId": "spring_water"
             },
             {
-              "count": 2,
+              "count": 1,
               "itemId": "wyrmfall_core",
               "materialSources": [
                 {
-                  "count": 2,
+                  "count": 1,
                   "source": {}
                 }
               ]
@@ -19389,11 +19360,11 @@
               "itemId": "spring_water"
             },
             {
-              "count": 2,
+              "count": 1,
               "itemId": "wyrmfall_core",
               "materialSources": [
                 {
-                  "count": 2,
+                  "count": 1,
                   "source": {}
                 }
               ]
@@ -19455,7 +19426,7 @@
           "cls": "mage",
           "companionUpgrades": {},
           "counters": {
-            "damageTaken": 268167,
+            "damageTaken": 286667,
             "xpGained": 83
           },
           "craftDaily": {},
@@ -19560,11 +19531,11 @@
               "itemId": "spring_water"
             },
             {
-              "count": 2,
+              "count": 1,
               "itemId": "wyrmfall_core",
               "materialSources": [
                 {
-                  "count": 2,
+                  "count": 1,
                   "source": {}
                 }
               ]
@@ -19723,7 +19694,7 @@
           "aiState": "idle",
           "attackPower": 10,
           "channelTickTimer": -5.05,
-          "combatTimer": 3.05,
+          "combatTimer": 3.75,
           "comboUntil": -1,
           "critChance": 0.056,
           "detonateTimer": "Infinity",
@@ -19890,27 +19861,35 @@
           "dead": true,
           "detonateTimer": "Infinity",
           "dodgeChance": 0.05,
-          "facing": -1.047757,
+          "facing": -0.234473,
           "fiveSecondRule": 99,
           "hostile": true,
           "id": 1011,
           "inCombat": true,
           "kind": "mob",
           "leashAnchor": {
-            "x": 103327.912009,
-            "z": -1176.094187
+            "x": 103303.21103,
+            "z": -1173.442802
           },
           "level": 20,
           "loot": {
-            "copper": 93926,
+            "copper": 193587,
             "items": [
               {
                 "count": 1,
-                "itemId": "gravecourt_hewer"
+                "itemId": "direfang_quiver"
               },
               {
                 "count": 1,
-                "itemId": "bramblehide_harness"
+                "itemId": "stormhymn_chain_treads"
+              },
+              {
+                "count": 1,
+                "itemId": "pattern_warhewn_signet"
+              },
+              {
+                "count": 1,
+                "itemId": "gilded_yam_seed"
               }
             ]
           },
@@ -19940,7 +19919,7 @@
             "deathSpoken": true,
             "deathlessTimer": 32.85,
             "dialogueBusyUntil": 67.6,
-            "dialogueToken": 13,
+            "dialogueToken": 12,
             "dreadCurseHolderId": 1006,
             "dreadCurseTimer": 998.95,
             "enrageElapsed": 360,
@@ -19981,8 +19960,8 @@
           "overpowerUntil": -1,
           "petMode": "defensive",
           "pos": {
-            "x": 103327.912009,
-            "z": -1176.094187
+            "x": 103303.21103,
+            "z": -1173.442802
           },
           "potionCooldownUntil": -1,
           "respawnTimer": 21.95,

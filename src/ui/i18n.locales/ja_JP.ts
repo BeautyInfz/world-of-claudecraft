@@ -6462,6 +6462,9 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'hudChrome.leaderboard.devTierCol': 'バッジ',
   'hudChrome.leaderboard.mergedPrs': 'マージ済みPR',
   'hudChrome.leaderboard.devEmpty': 'ランク入りのコントリビューターはまだいません。',
+  'hudChrome.leaderboard.podiumLabel': 'トップ3',
+  'hudChrome.leaderboard.prestigeTitle': '威信 {rank}',
+  'hudChrome.leaderboard.unclaimed': '空席',
   'hudChrome.widgets.worldCoordinates': 'ワールド座標',
   'hudChrome.plurals.guildMembers.one': 'あなたは{rank}、{count}人のメンバー',
   'hudChrome.plurals.guildMembers.few': 'あなたは{rank}、{count}人のメンバー',
@@ -8633,9 +8636,9 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
     '回避できないダメージには残っている防御クールダウンを使う。戦闘を終えるまで、それまでのメカニクスを引き続き丁寧に処理する。',
   'hudChrome.raidBossGuide.nythraxis.boneStormName': '骨の嵐',
   'hudChrome.raidBossGuide.nythraxis.boneStormSummary':
-    '王の怒りの開始から{first}秒後、以降{everyNormal}秒ごとに、ナイスラクシスは{duration}秒間骨の嵐を始める。彼はヘイトを無視し、通常の{speed}倍の速度で移動し、それぞれ{chargeSeconds}秒続く突進を{charges}回行う。彼の旋風は{radius}ヤード以内へ毎秒最大体力の{whirlNormal}を与える。各突進の終わりには同じ範囲内で骨の一撃が発生し、最大体力の{slamNormal}を与える。嵐が始まってから{spikeAt}秒後に骨の棘を詠唱し、嵐が終わってから{rearm}秒後にグレイブブレイカーが再び使用可能になる。',
+    '王の怒りの開始から{first}秒後、以降{everyNormal}秒ごとに、ナイスラクシスは{duration}秒間骨の嵐を始める。彼はヘイトを無視し、通常の{speed}倍の速度で移動し、それぞれ{chargeSeconds}秒続く突進を{charges}回行う。彼の旋風は{radius}ヤード以内へ毎秒最大体力の{whirlNormal}を与える。各突進の終わりには同じ範囲内で骨の一撃が発生し、最大体力の{slamNormal}を与える。各嵐の最初の一撃は代わりに{openingSlamNormal}を与える。嵐が終わってから{rearm}秒後にグレイブブレイカーが再び使用可能になる。',
   'hudChrome.raidBossGuide.nythraxis.boneStormHeroicSummary':
-    '王の怒りの開始から{first}秒後、以降{everyHeroic}秒ごとに、ナイスラクシスは{duration}秒間骨の嵐を始める。彼はヘイトを無視し、通常の{speed}倍の速度で移動し、それぞれ{chargeSeconds}秒続く突進を{charges}回行う。彼の旋風は{radius}ヤード以内へ毎秒最大体力の{whirlHeroic}を与える。各突進の終わりには同じ範囲内で骨の一撃が発生し、最大体力の{slamHeroic}を与える。嵐が始まってから{spikeAt}秒後に骨の棘を詠唱し、嵐が終わってから{rearm}秒後にグレイブブレイカーが再び使用可能になる。',
+    '王の怒りの開始から{first}秒後、以降{everyHeroic}秒ごとに、ナイスラクシスは{duration}秒間骨の嵐を始める。彼はヘイトを無視し、通常の{speed}倍の速度で移動し、それぞれ{chargeSeconds}秒続く突進を{charges}回行う。彼の旋風は{radius}ヤード以内へ毎秒最大体力の{whirlHeroic}を与える。各突進の終わりには同じ範囲内で骨の一撃が発生し、最大体力の{slamHeroic}を与える。各嵐の最初の一撃は代わりに{openingSlamHeroic}を与える。嵐が終わってから{rearm}秒後にグレイブブレイカーが再び使用可能になる。',
   'hudChrome.raidBossGuide.nythraxis.boneStormResponse':
     '散開し、ナイスラクシスから走って逃げ続ける。突進の対象になったレイドメンバーは走って逃げ、他の全員は突進経路の周囲に空間を空ける。嵐が終わったらタンクが確保する。',
   'hudChrome.raidBossGuide.nythraxis.crownEnduresName': '王冠不滅',
