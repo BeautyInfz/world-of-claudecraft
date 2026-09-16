@@ -305,6 +305,10 @@ export class GameAudio {
     this.play(UI_CUES.readyCheck);
   }
 
+  raidWarning(): void {
+    this.play(UI_CUES.readyCheck, { rate: 1.25, gain: 1.3 });
+  }
+
   weaponSheathe(): void {
     this.play(UI_CUES.weaponSheathe);
   }

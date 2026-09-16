@@ -150,12 +150,12 @@ function bagsAtBank(inventory: InvSlot[]): BagsHarness {
     clearActionDropTargets: noop,
     dragState: new ItemDragState(),
     isTouchHud: () => false,
-    confirmVendorSell: () => true,
     markEquipDropTargets: noop,
     dropOnEquipSlot: noop,
     dropOnActionSlot: noop,
     dropOnActionRingSlot: noop,
     openItemActionMenu: noop,
+    sellConfirmPolicy: () => ({ enabled: true, minQualityRank: 1 }),
     openMaterialSources: (options) => {
       opened.push(options);
     },

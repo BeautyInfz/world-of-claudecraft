@@ -9,11 +9,8 @@ import { corpseIndicatorFor } from '../sim/corpse_loot_state';
 import { ABILITIES, MOBS, QUESTS } from '../sim/data';
 import { specialRoleColor } from '../sim/discord_roles';
 import { isQuestGatedEntityHidden } from '../sim/quest_gated_entity';
-import {
-  npcQuestMarkerKind,
-  type QuestMarkerKind,
-  strongerQuestMarker,
-} from '../sim/quests/quest_marker_kind';
+import { ambientNpcQuestMarkerKind } from '../sim/quests/ambient_quest_marker';
+import { type QuestMarkerKind, strongerQuestMarker } from '../sim/quests/quest_marker_kind';
 import { type Entity, GATHER_CAST_ID } from '../sim/types';
 import { abilityDisplayNameFromSource } from '../ui/ability_display_name';
 import { resolveHudAuraIconId } from '../ui/aura_icon_runtime';
@@ -31,6 +28,7 @@ import {
   proceduralIconDataUrl,
   raidMarkerDataUrl,
 } from '../ui/icons';
+import { professionTrainerNameplateLabel } from '../ui/profession_trainer_label_core';
 import { localizeSimAuraName } from '../ui/sim_i18n';
 import { type IWorld, OVERHEAD_EMOTES } from '../world_api';
 import { castBarState } from './cast_bar';
@@ -60,6 +58,7 @@ import {
   isProjectedNameplateAnchorVisible,
 } from './nameplate_projection';
 import { type NameplatePlan, nameplatePlanInto, newNameplatePlan } from './nameplate_view';
+import { npcRoleLabel, npcRoleLineCarriesTrainerTitle } from './npc_role_label';
 import { FRIENDLY, isFriendlyPet, mobNameColor } from './reaction';
 import type { EntityView } from './renderer';
 
@@ -538,7 +537,7 @@ export class NameplatePainter {
     state.nameColor = '#fff';
     state.level = '';
     state.levelColor = '#fff';
-    state.guild = '';
+    state.guild = entity.kind === 'npc' ? (npcRoleLabel(entity.templateId) ?? '') : '';
     state.guildLabel = '';
     state.guildTier = 0;
     state.title = '';
@@ -671,6 +670,24 @@ export class NameplatePainter {
           ? npcDisplayName(entity.templateId)
           : tEntity({ kind: 'mob', id: entity.templateId, field: 'name' });
       state.nameColor = FRIENDLY;
+      // The role line: what this NPC DOES, on the same line a player's
+      // `<Guild>` uses (npc_role.ts owns the rule; the tag wrapper is the
+      // catalog VALUE so a locale owns its brackets). Built here, never in the
+      // per-frame draw path, the same cadence contract as guildLabel.
+      if (entity.kind === 'npc') {
+        const roleLabel = state.guild;
+        if (roleLabel) {
+          state.guildLabel = t('hudChrome.nameplate.npcRoleTag', { role: roleLabel });
+        }
+        // The profession-trainer service title beneath the name, unless the
+        // role line already says it (the resident master's trainer role, or
+        // the flavour fallback that resolves to the same service title). A
+        // trainer with a distinct service role, the hobby smith who also
+        // deals arms, keeps both lines.
+        if (!(roleLabel && npcRoleLineCarriesTrainerTitle(entity.templateId))) {
+          state.title = professionTrainerNameplateLabel(entity.templateId);
+        }
+      }
       const questMarker = this.questMarker(entity);
       state.marker = questMarker.marker;
       state.markerTone = questMarker.tone;
@@ -735,7 +752,7 @@ export class NameplatePainter {
       if (!quest || !this.questMarkerCtx) continue;
       folded = strongerQuestMarker(
         folded,
-        npcQuestMarkerKind(
+        ambientNpcQuestMarkerKind(
           quest,
           entity.templateId,
           this.world.questState(questId),

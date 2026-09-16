@@ -1276,6 +1276,29 @@ describe('isHotbarItemId: Field Kit (Intentional Gathering, use.type harvestPref
   });
 });
 
+describe('isHotbarItemId: elixirs are placeable like potions', () => {
+  // Elixirs ride the same IWorld.useItem dispatch a potion does
+  // (src/sim/items.ts kind 'elixir' -> applyAura) and the mobile consumables
+  // seat already lists them (consumable_bar_view CONSUMABLE_KIND_ORDER), but
+  // the desktop placement gate only admitted 'potion', so a bag drag never
+  // wrote a hotbar payload and the bar refused every elixir.
+  it('admits every kind:elixir item in the shipped content tables', () => {
+    const { controller } = makeHarness('warrior', [], []);
+    const elixirs = Object.keys(ITEMS).filter((id) => ITEMS[id]?.kind === 'elixir');
+    expect(elixirs.length).toBeGreaterThan(0);
+    for (const id of elixirs) {
+      expect(controller.isHotbarItemId(id), `${id} should be hotbar placeable`).toBe(true);
+    }
+  });
+
+  it('routes an elixir through the assignable-action path and keeps it in a stored layout', () => {
+    const { controller } = makeHarness('warrior', [], []);
+    expect(controller.isAssignableAction({ type: 'item', id: 'elixir_of_the_bear' })).toBe(true);
+    expect(controller.keepsStoredItemId('elixir_of_the_bear')).toBe(true);
+    expect(controller.isAssignableAction({ type: 'item', id: 'copper_ore' })).toBe(false);
+  });
+});
+
 describe('ActionBarController per-spec action bar memory and talent choice swaps', () => {
   it('switches between specs and remembers action bar layout per spec', () => {
     const storage = new MemoryStorage();
