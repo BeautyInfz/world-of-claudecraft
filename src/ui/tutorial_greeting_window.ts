@@ -4,6 +4,7 @@
 
 import { bindDialogKeyActivation } from './dialog_key_activation';
 import { markDialogRoot } from './dialog_root';
+import { npcDisplayTitle } from './entity_display_core';
 import { tEntity } from './entity_i18n';
 import { esc } from './esc';
 import { t } from './i18n';
@@ -25,7 +26,7 @@ export function renderTutorialGreetingNote(
   markDialogRoot(el, { labelledBy: TITLE_ID, modal: true });
 
   const speaker = tEntity({ kind: 'npc', id: note.speakerNpcId, field: 'name' });
-  const speakerTitle = tEntity({ kind: 'npc', id: note.speakerNpcId, field: 'title' });
+  const speakerTitle = npcDisplayTitle(note.speakerNpcId);
   const actions = note.guidanceChoice
     ? `<button type="button" class="ui-btn ui-btn--gold cd-ok" data-guidance="on">${esc(t('hudChrome.tutorialGreeting.guidanceOn'))}</button>` +
       `<button type="button" class="ui-btn" data-guidance="off">${esc(t('hudChrome.tutorialGreeting.guidanceOff'))}</button>`

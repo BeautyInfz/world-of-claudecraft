@@ -35,22 +35,22 @@ describe('Eastbrook wolves guidance across quest and client lifecycles', () => {
   it('marks Marshal before acceptance, guides after acceptance, and ends on hand-in', () => {
     const sim = atMarshal();
     expect(sim.questState(QUEST)).toBe('available');
-    expect(eastbrookWolvesGuide(sim, false).plan?.key).toBe('wolves:offer');
+    expect(eastbrookWolvesGuide(sim, () => false).plan?.key).toBe('wolves:offer');
 
     sim.acceptQuest(QUEST);
     expect(sim.questLog.get(QUEST)?.state).toBe('active');
-    expect(eastbrookWolvesGuide(sim, false).plan?.key).toBe('wolves:active');
+    expect(eastbrookWolvesGuide(sim, () => false).plan?.key).toBe('wolves:active');
 
     for (let i = 0; i < 7; i++) creditWolf(sim);
     expect(sim.questLog.get(QUEST)?.counts).toEqual([7]);
-    expect(eastbrookWolvesGuide(sim, false).plan?.key).toBe('wolves:active');
+    expect(eastbrookWolvesGuide(sim, () => false).plan?.key).toBe('wolves:active');
     creditWolf(sim);
     expect(sim.questLog.get(QUEST)?.state).toBe('ready');
-    expect(eastbrookWolvesGuide(sim, false).plan?.key).toBe('wolves:ready');
+    expect(eastbrookWolvesGuide(sim, () => false).plan?.key).toBe('wolves:ready');
 
     sim.turnInQuest(QUEST);
     expect(sim.questsDone.has(QUEST)).toBe(true);
-    expect(eastbrookWolvesGuide(sim, false).plan).toBeNull();
+    expect(eastbrookWolvesGuide(sim, () => false).plan).toBeNull();
   });
 
   it('returns to Marshal on abandonment and resumes wolves only after accepting again', () => {
@@ -59,12 +59,12 @@ describe('Eastbrook wolves guidance across quest and client lifecycles', () => {
     creditWolf(sim);
     sim.abandonQuest(QUEST);
     expect(sim.questState(QUEST)).toBe('available');
-    expect(eastbrookWolvesGuide(sim, false).plan?.key).toBe('wolves:offer');
-    expect(eastbrookWolvesGuide(sim, false).areaRing).toBeNull();
+    expect(eastbrookWolvesGuide(sim, () => false).plan?.key).toBe('wolves:offer');
+    expect(eastbrookWolvesGuide(sim, () => false).areaRing).toBeNull();
 
     sim.acceptQuest(QUEST);
     expect(sim.questLog.get(QUEST)?.counts).toEqual([0]);
-    expect(eastbrookWolvesGuide(sim, false).plan?.key).toBe('wolves:active');
+    expect(eastbrookWolvesGuide(sim, () => false).plan?.key).toBe('wolves:active');
   });
 
   it('keeps the return route during an online turn-in and clears it on the authoritative acknowledgement', () => {
@@ -89,9 +89,9 @@ describe('Eastbrook wolves guidance across quest and client lifecycles', () => {
 
     client.acceptQuest(QUEST);
     expect(client.questState(QUEST)).toBe('active');
-    expect(eastbrookWolvesGuide(client, false).plan).toBeNull();
+    expect(eastbrookWolvesGuide(client, () => false).plan).toBeNull();
     acknowledge([{ questId: QUEST, counts: [0], state: 'active' }]);
-    expect(eastbrookWolvesGuide(client, false).plan?.key).toBe('wolves:active');
+    expect(eastbrookWolvesGuide(client, () => false).plan?.key).toBe('wolves:active');
     acknowledge([{ questId: QUEST, counts: [8], state: 'ready' }]);
     client.turnInQuest(QUEST);
     expect(send).toHaveBeenLastCalledWith(
@@ -99,11 +99,11 @@ describe('Eastbrook wolves guidance across quest and client lifecycles', () => {
     );
     // Dialogue's optimistic state is active while the authoritative log is ready.
     expect(client.questState(QUEST)).toBe('active');
-    expect(eastbrookWolvesGuide(client, false).plan?.key).toBe('wolves:ready');
+    expect(eastbrookWolvesGuide(client, () => false).plan?.key).toBe('wolves:ready');
 
     acknowledge([], [QUEST]);
     expect(client.questState(QUEST)).toBe('done');
-    expect(eastbrookWolvesGuide(client, false).plan).toBeNull();
+    expect(eastbrookWolvesGuide(client, () => false).plan).toBeNull();
   });
 
   it('honors persisted untracking through reload, quest progress, and character switches', () => {
@@ -116,22 +116,28 @@ describe('Eastbrook wolves guidance across quest and client lifecycles', () => {
     };
     const tracking = new QuestTrackingState(storage);
     tracking.useCharacter('warrior', 'Eastbrook');
-    expect(eastbrookWolvesGuide(sim, !tracking.isTracked(QUEST)).plan?.key).toBe('wolves:active');
+    expect(eastbrookWolvesGuide(sim, () => !tracking.isTracked(QUEST)).plan?.key).toBe(
+      'wolves:active',
+    );
     tracking.setTracked(QUEST, false);
-    expect(eastbrookWolvesGuide(sim, !tracking.isTracked(QUEST)).plan).toBeNull();
+    expect(eastbrookWolvesGuide(sim, () => !tracking.isTracked(QUEST)).plan).toBeNull();
 
     const reloaded = new QuestTrackingState(storage);
     reloaded.useCharacter('warrior', 'Eastbrook');
-    expect(eastbrookWolvesGuide(sim, !reloaded.isTracked(QUEST)).plan).toBeNull();
+    expect(eastbrookWolvesGuide(sim, () => !reloaded.isTracked(QUEST)).plan).toBeNull();
     for (let i = 0; i < 8; i++) creditWolf(sim);
     expect(sim.questLog.get(QUEST)?.state).toBe('ready');
-    expect(eastbrookWolvesGuide(sim, !reloaded.isTracked(QUEST)).plan).toBeNull();
+    expect(eastbrookWolvesGuide(sim, () => !reloaded.isTracked(QUEST)).plan).toBeNull();
 
     reloaded.useCharacter('mage', 'Other character');
-    expect(eastbrookWolvesGuide(sim, !reloaded.isTracked(QUEST)).plan?.key).toBe('wolves:ready');
+    expect(eastbrookWolvesGuide(sim, () => !reloaded.isTracked(QUEST)).plan?.key).toBe(
+      'wolves:ready',
+    );
     reloaded.useCharacter('warrior', 'Eastbrook');
-    expect(eastbrookWolvesGuide(sim, !reloaded.isTracked(QUEST)).plan).toBeNull();
+    expect(eastbrookWolvesGuide(sim, () => !reloaded.isTracked(QUEST)).plan).toBeNull();
     reloaded.setTracked(QUEST, true);
-    expect(eastbrookWolvesGuide(sim, !reloaded.isTracked(QUEST)).plan?.key).toBe('wolves:ready');
+    expect(eastbrookWolvesGuide(sim, () => !reloaded.isTracked(QUEST)).plan?.key).toBe(
+      'wolves:ready',
+    );
   });
 });

@@ -29,15 +29,26 @@ describe('wolves guidance geometry and visibility', () => {
       questsDone: new Set(['q_wolves']),
       questState,
     };
-    expect(eastbrookWolvesGuide(done, false)).toBe(eastbrookWolvesGuide(done, true));
-    expect(eastbrookWolvesGuide(done, false).plan).toBeNull();
+    expect(eastbrookWolvesGuide(done, () => false)).toBe(eastbrookWolvesGuide(done, () => true));
+    expect(eastbrookWolvesGuide(done, () => false).plan).toBeNull();
     expect(questState).not.toHaveBeenCalled();
+  });
+
+  it('reads the dismissal thunk only after the free guards, never for a veteran or off-zone player', () => {
+    const isDismissed = vi.fn(() => false);
+    const done = { ...world(), questLog: new Map(), questsDone: new Set(['q_wolves']) };
+    eastbrookWolvesGuide(done, isDismissed);
+    const away = { ...world(), player: { pos: { x: 0, z: 300 } } };
+    eastbrookWolvesGuide(away, isDismissed);
+    expect(isDismissed).not.toHaveBeenCalled();
+    eastbrookWolvesGuide(world(), isDismissed);
+    expect(isDismissed).toHaveBeenCalledOnce();
   });
 
   it('never reads questState for a character outside Eastbrook Vale', () => {
     const questState = vi.fn(() => 'available' as const);
     const away = { ...world(), questLog: new Map(), player: { pos: { x: 0, z: 300 } }, questState };
-    expect(eastbrookWolvesGuide(away, false).plan).toBeNull();
+    expect(eastbrookWolvesGuide(away, () => false).plan).toBeNull();
     expect(questState).not.toHaveBeenCalled();
   });
 
@@ -61,16 +72,16 @@ describe('wolves guidance geometry and visibility', () => {
   });
   it('marks Marshal in gold before acceptance without showing a wolf objective', () => {
     const offered = { ...world(), questLog: new Map(), questState: () => 'available' as const };
-    const guide = eastbrookWolvesGuide(offered, false);
+    const guide = eastbrookWolvesGuide(offered, () => false);
     expect(guide.glowNpcId).toBe('marshal_redbrook');
     expect(guide.glowNpcPos).toEqual(EASTBROOK_NPC_PLACEMENTS_BY_ID.marshal_redbrook.position);
     expect(guide.areaRing).toBeNull();
     expect(guide.plan?.key).toBe('wolves:offer');
-    expect(eastbrookWolvesGuide(offered, true).plan).toBeNull();
+    expect(eastbrookWolvesGuide(offered, () => true).plan).toBeNull();
   });
   it('guides toward the full authored wolf area and reverses toward Marshal for hand-in', () => {
-    const outbound = eastbrookWolvesGuide(world(), false);
-    const home = eastbrookWolvesGuide(world('ready'), false);
+    const outbound = eastbrookWolvesGuide(world(), () => false);
+    const home = eastbrookWolvesGuide(world('ready'), () => false);
     if (!outbound.plan) throw new Error('Expected active wolves route');
     expect(WOLF_RUN_CAMP).toEqual({ x: -10, z: 6, radius: 28.5 });
     expect(outbound.plan?.points).toEqual(WOLVES_ROUTE);
@@ -106,6 +117,6 @@ describe('wolves guidance geometry and visibility', () => {
     { pos: { x: 10000, z: 0 } },
     { pos: { x: -300, z: -100 } },
   ])('hides away from a living Eastbrook character: %j', (player) => {
-    expect(eastbrookWolvesGuide({ ...world(), player }, false).plan).toBeNull();
+    expect(eastbrookWolvesGuide({ ...world(), player }, () => false).plan).toBeNull();
   });
 });

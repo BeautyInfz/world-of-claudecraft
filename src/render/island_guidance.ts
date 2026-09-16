@@ -98,7 +98,7 @@ export class IslandGuidance {
         })
       : eastbrookWolvesGuide(
           world,
-          !this.isEastbrookGuidanceEnabled() || !this.isQuestTracked(WOLVES_QUEST_ID),
+          () => !this.isEastbrookGuidanceEnabled() || !this.isQuestTracked(WOLVES_QUEST_ID),
         );
   }
 

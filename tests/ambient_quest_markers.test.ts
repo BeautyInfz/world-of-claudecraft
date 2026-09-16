@@ -1,7 +1,10 @@
 import { describe, expect, it } from 'vitest';
 import { NPCS, QUESTS } from '../src/sim/data';
 import { questGiverNpcMarkers } from '../src/sim/quest_targets';
-import { ambientNpcQuestMarkerKind } from '../src/sim/quests/ambient_quest_marker';
+import {
+  ambientNpcQuestMarkerKind,
+  isProfessionQuest,
+} from '../src/sim/quests/ambient_quest_marker';
 import { npcQuestMarkerKind } from '../src/sim/quests/quest_marker_kind';
 import type { QuestState } from '../src/sim/types';
 import { createMinimapMarkers } from '../src/ui/minimap_markers';
@@ -10,6 +13,42 @@ import type { IWorld } from '../src/world_api';
 const professionQuests = Object.values(QUESTS).filter(
   (q) => q.id.startsWith('q_prof_') || q.id === 'q_farm_intro',
 );
+
+/** The exact set the ambient policy hides, pinned so a quest that later
+ *  grows a farm objective (or a renamed prefix) reddens this list instead of
+ *  silently losing its marker on the nameplate, minimap and map. */
+const HIDDEN_OFFER_QUEST_IDS = [
+  'q_farm_intro',
+  'q_prof_amends_apothecary',
+  'q_prof_amends_bombardier',
+  'q_prof_amends_outfitter',
+  'q_prof_amends_smith',
+  'q_prof_attune_apothecary',
+  'q_prof_attune_bombardier',
+  'q_prof_attune_outfitter',
+  'q_prof_attune_smith',
+  'q_prof_hobby_switch',
+  'q_prof_intro',
+  'q_prof_workorder_apothecary',
+  'q_prof_workorder_forge',
+  'q_prof_workorder_kitchens',
+  'q_prof_workorder_kitchens_rice',
+  'q_prof_workorder_kitchens_wheat',
+  'q_prof_workorder_loom',
+  'q_prof_workorder_tannery',
+  'q_prof_workorder_toolworks',
+];
+
+describe('the hidden-offer predicate over the merged catalog', () => {
+  it('hides exactly the profession onboarding quests and First Furrow', () => {
+    const hidden = Object.values(QUESTS)
+      .filter(isProfessionQuest)
+      .map((q) => q.id)
+      .sort();
+    expect(hidden).toEqual(HIDDEN_OFFER_QUEST_IDS);
+    expect(professionQuests.map((q) => q.id).sort()).toEqual(HIDDEN_OFFER_QUEST_IDS);
+  });
+});
 
 function minimapMarker(
   questIds: string[],

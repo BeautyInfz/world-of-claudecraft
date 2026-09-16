@@ -52,9 +52,15 @@ const READY: CoachGuides = WOLF_RUN_CAMP
     }
   : EMPTY;
 
-export function eastbrookWolvesGuide(world: WolvesGuideReader, dismissed: boolean): CoachGuides {
+/** `isDismissed` (the guidance setting and the quest's tracking flag) is a
+ *  thunk so it is read only once the free guards have passed: a veteran, a
+ *  ghost or a character outside Eastbrook never pays it. */
+export function eastbrookWolvesGuide(
+  world: WolvesGuideReader,
+  isDismissed: () => boolean,
+): CoachGuides {
   const p = world.player;
-  if (dismissed || !p || p.dead || p.ghost) return EMPTY;
+  if (!p || p.dead || p.ghost) return EMPTY;
   // Cheapest reads first. The confirmed log retains ready during an online
   // hand-in, while questState() temporarily reports active until the command
   // is acknowledged; a finished quest is a Set lookup and never reaches the
@@ -62,6 +68,7 @@ export function eastbrookWolvesGuide(world: WolvesGuideReader, dismissed: boolea
   const state = world.questLog.get(WOLVES_QUEST_ID)?.state;
   if (!state && world.questsDone?.has(WOLVES_QUEST_ID)) return EMPTY;
   if (zoneContaining(p.pos.x, p.pos.z)?.id !== 'eastbrook_vale') return EMPTY;
+  if (isDismissed()) return EMPTY;
   if (!state && world.questState?.(WOLVES_QUEST_ID) === 'available') return OFFER;
   return state === 'active' ? ACTIVE : state === 'ready' ? READY : EMPTY;
 }
