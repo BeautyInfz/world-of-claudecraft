@@ -1195,7 +1195,7 @@ describe('layout clearance and service anchors', () => {
     // Re-pinned for the first-quest handoff (docs/design/
     // eastbrook-handoff-experiment.md): the five starter givers now stand on
     // spaced civic-square stands so a character stepping off the ferry sees
-    // them, marshal_redbrook beside the noticeboard at (0, -92) and
+    // them, marshal_redbrook beside the noticeboard at (-1, -93) and
     // apothecary_lin, trader_wilkes, fisherman_brandt and foreman_odell around
     // the square (the harbour-market and quayside stands above are history).
     // The authored playerStart is the offline and editor spawn; a real new
@@ -1324,7 +1324,7 @@ describe('layout clearance and service anchors', () => {
         2.4805494847391065,
         'eastbrook_market_stall_world_market',
       ],
-      ['marshal_redbrook', 0, -92, -2.191045812777718, 'eastbrook_noticeboard'],
+      ['marshal_redbrook', -1, -93, -2.1763409903998667, 'eastbrook_noticeboard'],
       ['trader_wilkes', -25, -94, 2.1995926132103296, 'eastbrook_civic_square'],
       ['apothecary_lin', -11, -89, -2.9147938055359073, 'eastbrook_civic_square'],
       [

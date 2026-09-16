@@ -679,7 +679,7 @@ interface AttributionTargetFixture {
 // runtimeRender.renderer leaf matches neither parent. No capture was retaken.
 const PINNED_POLISH_COMPOSITE_FINGERPRINT =
   // Re-minted for the Eastbrook handoff merge with release/v0.43.0: the merged renderer leaf and the moved NPC layout match neither parent. No capture was retaken.
-  '9085842c298f0abd0ae869ed2ec189945bd6d04294f63e695a714d2c068e51f6';
+  'bf18f96c5fb175b9730fe1705f2fa3bd00eb7315d14699831327c95b8d511793';
 
 function validPolishAttributionTargets(): AttributionTargetFixture[] {
   return [

@@ -1189,11 +1189,12 @@ const SAUL_POSITION = { x: 10.2, z: -87.5 } as const;
 // the town's edge rather than in the churchyard approach.
 const FURY_POSITION = { x: 16, z: -78 } as const;
 
-// Marshal stands beside the noticeboard, outside the board's own
-// interactionRadius for both its body and its posting point (the layout
-// suite pins that clearance), facing the square that holds the other
-// combat givers.
-const MARSHAL_POSITION = { x: 0, z: -92 } as const;
+// Marshal stands beside the noticeboard, a full INTERACT_RANGE clear of
+// both the board's body and its posting point so a player posting a notice
+// is never handed his dialogue (tests/noticeboard_interaction.test.ts and
+// the layout suite pin that clearance), facing the square that holds the
+// other combat givers.
+const MARSHAL_POSITION = { x: -1, z: -93 } as const;
 
 const NPCS = [
   makeNpc('the_merchant', MERCHANT_POSITION, MARKET_STALLS[0].rotation, MARKET_STALLS[0].id),

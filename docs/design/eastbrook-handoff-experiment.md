@@ -14,7 +14,7 @@ The five starter givers occupy separate positions around the square:
 
 | NPC | Position (x, z) | Setting |
 | --- | --- | --- |
-| Marshal Redbrook | (0, -92) | Noticeboard side |
+| Marshal Redbrook | (-1, -93) | Noticeboard side |
 | Apothecary Lin | (-11, -89) | North green |
 | Trader Wilkes | (-25, -94) | Market edge |
 | Fisherman Brandt | (-25, -104) | West edge |
@@ -42,7 +42,7 @@ The choice shell is 480 pixels wide, clamped to the viewport on narrow windows.
 
 When enabled, a gold marker and trail point from the ferry to Marshal before accepting
 Wolves at the Door. Confirmed acceptance sends the trail around the graveyard to Wolf
-Run; ready state reverses it to Marshal. The rendered curve follows (0, -92),
+Run; ready state reverses it to Marshal. The rendered curve follows (-1, -93),
 (-14.5, -72.5), (-14.5, -53.5), (-10, 6). The authored camp ring remains 28.5 yards.
 Hand-in removes the guide; abandoning restores Marshal's offer marker. Untracking,
 switching guidance off, death/ghost state and leaving Eastbrook suppress it. Online
@@ -137,9 +137,11 @@ before the zone scan or any online `questState` read; the trainer label is a nam
 `*_core` pinned in the architecture sweep; the renderer factory requires the live
 `Settings`; the generic nameplate marker contract and the minimap/map cooldown
 agreement are pinned again on synthetic non-profession quests beside the new
-profession cases; the layout suite pins the marshal's noticeboard clearance and the
-five givers' road clearance; and the parity goldens are re-minted for the moved calm
-pads (state digests only, rng draws unchanged).
+profession cases; the marshal steps a yard further from the noticeboard so its posting
+point is a full interact range clear of him (the noticeboard interaction suite pins
+that) and the layout suite pins the five givers' road clearance; and the parity
+goldens are re-minted for the moved givers (the walked player's position only, rng
+draws unchanged).
 
 The selective merge gate (`node scripts/gate_select.mjs`) runs on the merged tip before
 the pull request leaves draft; its result is recorded on the pull request, which is the

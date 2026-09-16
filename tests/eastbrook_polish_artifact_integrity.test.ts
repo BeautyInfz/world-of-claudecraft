@@ -1373,10 +1373,10 @@ const ACCEPTED_POLISH_V2_METADATA_PATH = path.join(REPO_ROOT, POLISH_SEAL_PATH);
 // runtimeRender.renderer leaf matches neither parent. No capture was retaken.
 const ACCEPTED_POLISH_V2_METADATA_SHA256 =
   // Re-minted for the Eastbrook handoff merge with release/v0.43.0: the merged renderer leaf and the moved NPC layout match neither parent. No capture was retaken.
-  'e9ec0e691db5b45eedad1b329c3f908ec4d5da081746bbbd60993dc138ffe236';
+  'e0c52678540867675650654c2730fabb3ca6336e8d7fb0811390437a0c48adb9';
 const ACCEPTED_POLISH_V2_COMPOSITE_PROVENANCE =
   // Re-minted for the Eastbrook handoff merge with release/v0.43.0: the merged renderer leaf and the moved NPC layout match neither parent. No capture was retaken.
-  '9085842c298f0abd0ae869ed2ec189945bd6d04294f63e695a714d2c068e51f6';
+  'bf18f96c5fb175b9730fe1705f2fa3bd00eb7315d14699831327c95b8d511793';
 const ACCEPTED_POLISH_V2_METADATA = readJsonFile<CaptureMetadata>(ACCEPTED_POLISH_V2_METADATA_PATH);
 const ACCEPTED_POLISH_V2_PROVENANCE = ACCEPTED_POLISH_V2_METADATA.polishProvenance;
 const ACCEPTED_POLISH_V2_TOWN_CONTRACT = ACCEPTED_POLISH_V2_METADATA.records[0]?.townContract;
@@ -2742,7 +2742,7 @@ describe('Eastbrook polish performance and contact evidence', () => {
       // Druid Cat Form merge with release/v0.43.0: recomputed LAST again over
       // the re-swept evidence. No capture was retaken.
       // Re-minted for the Eastbrook handoff merge with release/v0.43.0: the merged renderer leaf and the moved NPC layout match neither parent. No capture was retaken.
-    ).toBe('2e515bd155157f14c2ae48d5784e307c7a012237102a2630f20ff440f9f0c4d4');
+    ).toBe('564186f2d0250588a7d89824a81bbb677e1e24e730a68e70e8f07d058528f6a7');
   });
 
   it('binds every historical after record to its accepted source and asset provenance', () => {
