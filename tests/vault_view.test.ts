@@ -115,7 +115,8 @@ describe('buildVaultView', () => {
         partialMax,
       })),
     ).toEqual([
-      { itemId: 'ashwood_log', canChooseQuantity: false, partialMax: null },
+      // A one-unit row offers the action too, so it reads alike on every row.
+      { itemId: 'ashwood_log', canChooseQuantity: true, partialMax: 1 },
       { itemId: 'copper_ore', canChooseQuantity: true, partialMax: 7 },
     ]);
   });
@@ -139,11 +140,14 @@ describe('buildVaultView', () => {
     const recipeRow = copper.find(
       (row) => row.kind === 'special' && row.craftedRecipeId === 'smelt_copper',
     );
+    // A signer is a mergeable payload (the bags already hold it as counted
+    // stacks), so the row splits like a plain one; only a charge-bearing or
+    // locked payload pins a row to whole moves (the sim's vaultRowMovesWhole).
     expect(signedRow).toMatchObject({
       kind: 'special',
       count: 2,
-      canChooseQuantity: false,
-      partialMax: null,
+      canChooseQuantity: true,
+      partialMax: 2,
       specialRef: { index: 1, instance: { signer: 'Ada' } },
     });
     expect(recipeRow).toMatchObject({

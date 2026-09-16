@@ -105,7 +105,15 @@ import {
   planVaultDraw,
   sameMaterialComposition,
 } from './vault_material_sources';
-import { loadVaultSpecialRow, planVaultDeposit, planVaultRowWithdraw } from './vault_slot_ops';
+import {
+  appliedVaultRowAdd,
+  coalesceVaultRows,
+  loadVaultSpecialRow,
+  planVaultDeposit,
+  planVaultRowAdd,
+  planVaultRowWithdraw,
+  vaultRowMovesWhole,
+} from './vault_slot_ops';
 
 /** Per-material ceiling the first (unlocking) rung grants. */
 export const VAULT_BASE_CAP = 40;
@@ -314,24 +322,29 @@ function applyVaultDeposit(
   );
   if (plan === null) return false;
   const itemId = inventory[slotIndex].itemId;
+  // The identity rows are packed at the VAULT's row size (vault_slot_ops.ts
+  // VAULT_ROW_STACK_SIZE), never the bag stack size: one material identity is
+  // one row however many units it holds. Both adds are decided on a copy
+  // before anything is written, so a refusal leaves the live store untouched;
+  // the packing core deep-clones every payload and composition it places, so
+  // the vault never aliases the removed carried row.
+  let rows: readonly InvSlot[] = vault.special;
+  if (plan.foldUnits > 0) {
+    const fold = planVaultRowAdd(rows, { itemId, count: plan.foldUnits }, vaultMaterialIds());
+    if (fold === null) return false;
+    rows = appliedVaultRowAdd(rows, fold);
+  }
+  if (plan.grant !== null) {
+    const grant = planVaultRowAdd(rows, plan.grant, vaultMaterialIds());
+    if (grant === null) return false;
+    rows = appliedVaultRowAdd(rows, grant);
+  }
   // A plain assignment is safe here (unlike the load path's fromEntries)
   // because the id passed the content-derived material set, which contains no
   // '__proto__'.
   if (plan.compactCount !== null) vault.stock[itemId] = plan.compactCount;
   if (plan.clearsCompact) delete vault.stock[itemId];
-  // addStacked owns compatible-payload merging and deep-clones every fresh
-  // payload and composition, so the vault never aliases the removed row.
-  if (plan.foldUnits > 0) addStacked(vault.special, itemId, plan.foldUnits);
-  if (plan.grant !== null) {
-    addStacked(
-      vault.special,
-      itemId,
-      plan.grant.count,
-      plan.grant.instance,
-      plan.grant.craftedRecipeId,
-      plan.grant.materialSources,
-    );
-  }
+  if (rows !== vault.special) vault.special = rows as InvSlot[];
   // The exact take builds a FRESH remainder rather than decrementing the live
   // slot: the surviving units carry their own buckets, which an in-place count
   // edit could not express. A caller holding the old reference sees the stack it
@@ -347,8 +360,9 @@ function applyVaultDeposit(
  *  `isVaultSpecialSlot` for the routing rule and `commitVaultDeposit` for what
  *  the commit guarantees). Recipe-only and source-bearing stacks may partially
  *  fill the remaining headroom, taking the buckets the shared spend order
- *  spends. An instanced stack moves whole or not at all, matching the bank's
- *  per-copy transfer rule. */
+ *  spends. A charge-bearing or locked stack moves whole or not at all
+ *  (vault_slot_ops.ts vaultRowMovesWhole); any other payload splits the way
+ *  the bags already split it. */
 export function vaultDeposit(
   ctx: SimContext,
   slotIndex: number,
@@ -405,11 +419,11 @@ export function vaultDeposit(
     return;
   const want = count === undefined ? slot.count : Math.floor(count);
   if (!(want > 0) || want > slot.count) return;
-  // One instance payload describes the whole counted stack. Splitting it would
-  // manufacture two independently mutable copies of that identity, so only the
-  // exact whole-stack request is valid. Recipe-only provenance is immutable and
-  // remains safely splittable.
-  if (slot.instance !== undefined && want !== slot.count) return;
+  // A charge-bearing or locked payload is one identity per unit, so only the
+  // exact whole-stack request is valid for it. Every other payload already
+  // rides counted stacks in the bags (a split clones it onto both halves), and
+  // recipe-only provenance is immutable, so both remain safely splittable.
+  if (vaultRowMovesWhole(slot.instance) && want !== slot.count) return;
   const vault = meta.vault;
   if (vault.upgrades <= 0) {
     ctx.error(meta.entityId, 'You have not unlocked the Materials Vault.');
@@ -427,7 +441,7 @@ export function vaultDeposit(
     ctx.error(meta.entityId, 'Your vault cannot hold any more of that material.');
     return;
   }
-  if ((slot.instance !== undefined || selection !== undefined) && headroom < want) {
+  if ((vaultRowMovesWhole(slot.instance) || selection !== undefined) && headroom < want) {
     ctx.error(meta.entityId, 'Your vault cannot hold any more of that material.');
     return;
   }
@@ -618,10 +632,10 @@ export function vaultWithdraw(
     const requested = count === undefined ? (selectedCount ?? held) : Math.floor(count);
     if (!(requested > 0)) return;
     const want = selectedCount === undefined ? Math.min(requested, held) : requested;
-    // An instance payload is one identity for the whole stack. Never split it
-    // into two independently mutable rows; recipe-only provenance is immutable
-    // and may withdraw partially.
-    if (slot.instance !== undefined && want !== held) return;
+    // A charge-bearing or locked payload is one identity per unit and moves
+    // whole; every other payload and recipe-only provenance may withdraw
+    // partially (vault_slot_ops.ts vaultRowMovesWhole).
+    if (vaultRowMovesWhole(slot.instance) && want !== held) return;
     // A MATERIAL row takes the source-aware path: the exact buckets ride out
     // with the units, the remainder keeps the rest, and the fit is modelled
     // against the stack that would really land. A row the taxonomy no longer
@@ -675,7 +689,7 @@ export function vaultWithdraw(
       slot.instance,
       slot.craftedRecipeId,
     );
-    if (moved <= 0 || (slot.instance !== undefined && moved !== want)) {
+    if (moved <= 0 || (vaultRowMovesWhole(slot.instance) && moved !== want)) {
       bagsFullError(ctx, meta.entityId);
       return;
     }
@@ -1152,7 +1166,10 @@ export function sanitizeVaultState(
     Math.min(VAULT_UPGRADE_PRICES.length, Math.floor(Number(r.upgrades)) || 0),
   );
   if (!droppedSink) warnDroppedInstanceKeys(owner ?? 'vault', localDrops);
-  return { stock, special, upgrades };
+  // Rows saved while an identity row was capped at the bag stack size fold
+  // back into one row per identity (vault_slot_ops.ts coalesceVaultRows): the
+  // total never changes, and a row the fold cannot read stays as loaded.
+  return { stock, special: coalesceVaultRows(special, vaultMaterialIds()) ?? special, upgrades };
 }
 
 /** The load-path install: sanitize `raw` and REPLACE `meta.vault` with the
