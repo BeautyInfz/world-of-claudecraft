@@ -326,6 +326,18 @@ export const ja_JP: EnTranslations = {
     }
   },
   "hudChrome": {
+    "professionTrainers": {
+      "blacksmithing": "鍛冶のトレーナー",
+      "cooking": "料理のトレーナー",
+      "tailoring": "裁縫のトレーナー",
+      "engineering": "工学のトレーナー",
+      "leatherworking": "革細工のトレーナー",
+      "alchemy": "錬金術のトレーナー",
+      "farming": "農業のトレーナー",
+      "mining": "採鉱のトレーナー",
+      "hobby": "趣味のトレーナー",
+      "nameplate": "<{title}>"
+    },
     "materialStackSelectionUnavailable": "この素材の選択は利用できなくなりました。",
     "warlock": {
       "doomLabel": "断罪",
@@ -1042,6 +1054,10 @@ export const ja_JP: EnTranslations = {
       "clearArmed": "スロットをタップするとクリアします。"
     },
     "tutorialGreeting": {
+      "eastbrookGuidanceNote": "イーストブルックへようこそ！町の広場でレッドブルック元帥が仕事を用意しています。金色のガイドをオンにして彼を見つけ、「戸口の狼」を進めることも、自分で探索することもできます。この設定は後からオプションのインターフェース、戦闘で変更できます。",
+      "guidanceOn": "ガイドをオンにする",
+      "guidanceOff": "ガイドをオフにする",
+      "guidanceSetting": "イーストブルックの金色ガイド",
       "bellHomeNote": "もう浜から戻ったのかい？さっき鳴らしたのが渡しの鐘だよ。その双子がすぐそこ、レイヴンポストの郵便柱のそばに掛かっている。いつでも鳴らせば、渡しが修練の浜へ運び直してくれる。間違って鳴らしたのなら、それはそれで構わないさ。",
       "islandArrivalNote": "渡ってきたばかりかい？ようこそ修練の浜へ。ウォーデン・タムが目の前の浜でガントレットを預かっている。名前が見えるところまで歩み寄って、Fを押すか、左クリックすれば、そのレーンが体の動かし方を全部教えてくれる。発つ支度ができたら、私の桟橋のそばに立つ鐘を鳴らしなさい。渡しがイーストブルックの家まで運んでくれる。",
       "noteClose": "わかった"
