@@ -120,6 +120,11 @@ const MONOLITHS: MonolithRow[] = [
     // Re-pinned from 19177 after the v0.38.0 sync merge: the release's map
     // overhaul extracted marker interaction out of the coordinator, so the
     // merged file landed SMALLER and the ratchet follows it down.
+    // Re-pinned DOWN from 18472 by the aura watchlist change: standing the
+    // feature up inline would have added 14 lines here, so the controller
+    // build and the Options > Auras projection both moved out to
+    // src/ui/aura_overlay_wiring.ts. The coordinator ends 9 lines SMALLER
+    // than it started, and the pin follows it down. Extract, then lower.
     file: 'src/ui/hud.ts',
     // Lowered from 19600 at the Phase 07 review round (craft-denial key
     // ternary out to craft_denial_line_view), then from 19500 at the Phase 07
@@ -459,7 +464,12 @@ const MONOLITHS: MonolithRow[] = [
     // of Deeds / Reliquary change: the release's interface-redesign merge and
     // this branch's charSheetRefreshSigFor extraction compose to 18343 by
     // wc -l, below both parent pins (18455 / 18350). Exact count, zero slack.
-    ceiling: 18343,
+    // Re-measured at the release/v0.43.0 sync of the aura Watched Spells
+    // change: the branch had already moved the overlay wiring out to
+    // src/ui/aura_overlay_wiring.ts (its own arm re-pinned 18472 -> 18463), and
+    // the release's extractions compose with it to 18334 by wc -l on the
+    // merged tree, below both parent pins (18463 / 18343). Exact count, zero slack.
+    ceiling: 18334,
     seam: 'pure view core + thin painter on PainterHost (src/ui/CLAUDE.md)',
   },
   {
