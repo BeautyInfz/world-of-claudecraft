@@ -61,23 +61,33 @@ export const MAIL_POSTAGE = 30; // copper per letter
 export const MAIL_MAX_ATTACHMENTS = 3; // item stacks a letter can carry
 export const MAIL_DELIVERY_SECONDS = 45; // player mail: the raven's flight
 const MAIL_NPC_DELIVERY_SECONDS = 90; // authored letters default delay
-// The emptied-letter clocks (a letter carrying NO coin and NO items): an
-// UNREAD letter lingers 30 sim-days from booking, a READ letter 3 sim-days
+// The emptied-letter clocks (a letter carrying no escrow, see mailHoldsEscrow):
+// an UNREAD letter lingers 30 sim-days from booking, a READ letter 3 sim-days
 // from the moment it was read (mailMarkRead, or the take that read it), and
-// an unread Exchange Broker letter (WOC_MARKET_LETTER_IDS) has no clock at all
-// until it is read. A letter with attachments aboard is NEVER auto-deleted:
+// an unread Exchange Broker letter (WOC_MARKET_LETTER_IDS) waits 90 sim-days
+// for its owner. The Exchange ceiling exists so an unread population is still
+// bounded: nothing in the book has a per-recipient cap on system mail
+// (book() enforces none, see takeDirtyMailPartitions), so an exemption with
+// no ceiling would let an absent seller's sold notices grow the book and the
+// per-second sweep forever. A letter with escrow aboard is NEVER auto-deleted:
 // see the sweep in PostOffice.update.
 export const MAIL_UNREAD_EXPIRY_SECONDS = 30 * 24 * 3600;
 export const MAIL_READ_EXPIRY_SECONDS = 3 * 24 * 3600;
+export const MAIL_EXCHANGE_UNREAD_EXPIRY_SECONDS = 90 * 24 * 3600;
 // The smallest coin attachment that counts as escrow (one silver): a letter
 // whose only attachment is less than this rides the emptied-letter clocks
 // above and is swept with the coin aboard, exactly like a bare note. Any
 // item stack counts as escrow at any count.
 export const MAIL_ESCROW_COPPER_MIN = 100;
 
-// The ONE escrow predicate every expiry decision reads (the sweep, the
+// The ONE escrow predicate every EXPIRY decision reads (the sweep, the
 // booking clock, the take and read flips, the purge, and loadMail): items at
-// any count, or coin of at least MAIL_ESCROW_COPPER_MIN.
+// any count, or coin of at least MAIL_ESCROW_COPPER_MIN. Deliberately NOT
+// read by mailDelete: the player's own delete verb keeps its strict
+// takeParcelsFirst guard on any coin at all, so a click can never destroy
+// even pocket change; the age sweep is the only thing that ever deletes a
+// letter with sub-silver coin aboard. The asymmetry is intended; do not
+// "fix" either side to match the other.
 export function mailHoldsEscrow(m: { copper: number; items: readonly unknown[] }): boolean {
   return m.items.length > 0 || m.copper >= MAIL_ESCROW_COPPER_MIN;
 }
@@ -332,20 +342,26 @@ export class PostOffice {
     m.deliverAt = now + MAIL_DELIVERY_SECONDS;
     // Home for good: the returned parcel is never auto-deleted while its
     // attachments remain (the same Infinity a system parcel holds). The
-    // sender's take empties it onto the ordinary read clock.
+    // sender's take empties it onto the ordinary read clock. Retention story:
+    // this is the sender's own property sitting in the sender's own box, so
+    // its only bound is that box (storedCountFor counts returned parcels
+    // against MAIL_MAX_PER_RECIPIENT, so an absent sender's box fills and
+    // refuses new player mail rather than the book destroying their goods).
+    // A product rule, deliberately: escrow is never destroyed by age.
     m.expiresAt = Infinity;
     this.index.track(m, now);
     this.bumpRev();
   }
 
-  // The clock of a letter carrying NO attachments: a read letter gets the
-  // short window from the moment it was read, an unread one the long window,
-  // and an unread Exchange Broker letter no clock at all (it waits for its
-  // owner to see it). Every emptied-letter expiresAt write goes through here
-  // (book, the read flip in mailTake/mailMarkRead, and loadMail's clamp).
+  // The clock of a letter carrying no escrow: a read letter gets the short
+  // window from the moment it was read, an unread one the long window, and an
+  // unread Exchange Broker letter the longer Exchange ceiling (it waits for
+  // its owner to see it, but not forever). Always finite. Every emptied-letter
+  // expiresAt write goes through here (book, the read flip in mailTake and
+  // mailMarkRead, and loadMail's cap).
   private emptiedExpiresAt(m: { read: boolean; letterId?: string }, now: number): number {
     if (m.read) return now + MAIL_READ_EXPIRY_SECONDS;
-    if (isWocMarketLetterId(m.letterId)) return Infinity;
+    if (isWocMarketLetterId(m.letterId)) return now + MAIL_EXCHANGE_UNREAD_EXPIRY_SECONDS;
     return now + MAIL_UNREAD_EXPIRY_SECONDS;
   }
 
@@ -1354,11 +1370,15 @@ export class PostOffice {
       //    keeps its finite window, or starts one at this load (the deploy
       //    clock for a save written before the window existed: never
       //    retroactively).
-      //  - nothing aboard (a bare note, an emptied letter, or a parcel the
-      //    soulbound strip above just emptied): the read/unread model's own
-      //    window caps the persisted countdown, so a read letter persisted
-      //    under a longer window collapses to the read clock at load, and an
-      //    unread Exchange notice persisted with a countdown loses it.
+      //  - no escrow aboard (a bare note, sub-silver coin, an emptied letter,
+      //    or a parcel the soulbound strip above just emptied): the
+      //    read/unread model's own window CAPS the persisted countdown and
+      //    never extends it (an extension would re-arm every boot, the #3561
+      //    class), so a read letter persisted under a longer window collapses
+      //    to the read clock at load, a never-sentinel row starts the model's
+      //    window here, and an unread Exchange notice persisted under the old
+      //    14-day model keeps that shorter countdown (a one-time deploy
+      //    artifact, no worse than the status quo it replaces).
       const modelExpiresAt = this.emptiedExpiresAt({ read, letterId }, this.ctx.time);
       const expiresAt = hasEscrow
         ? kind !== 'player' || returned
@@ -1366,9 +1386,7 @@ export class PostOffice {
           : Number.isFinite(persistedExpiresAt)
             ? persistedExpiresAt
             : this.ctx.time + MAIL_ATTACHMENT_EXPIRY_SECONDS
-        : Number.isFinite(modelExpiresAt)
-          ? Math.min(persistedExpiresAt, modelExpiresAt)
-          : Infinity;
+        : Math.min(persistedExpiresAt, modelExpiresAt);
       this.mail.push({
         id: m.id,
         recipientKey: m.recipientKey,

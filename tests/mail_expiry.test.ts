@@ -25,6 +25,7 @@ import {
   MAIL_ATTACHMENT_EXPIRY_SECONDS,
   MAIL_DELIVERY_SECONDS,
   MAIL_ESCROW_COPPER_MIN,
+  MAIL_EXCHANGE_UNREAD_EXPIRY_SECONDS,
   MAIL_READ_EXPIRY_SECONDS,
   MAIL_UNREAD_EXPIRY_SECONDS,
   mailHoldsEscrow,
@@ -100,6 +101,10 @@ describe('the attachment window at send', () => {
     sim.mailSend('Bob', 'Small change', 'x', MAIL_ESCROW_COPPER_MIN - 1, [], alice);
     const change = bookOf(sim).find((m) => m.subject === 'Small change');
     expect(change.copper).toBe(MAIL_ESCROW_COPPER_MIN - 1);
+    // The unread and attachment windows are both 30 days, so pin the ROUTING
+    // (not escrow) beside the value; the sub-silver suite covers the sweep.
+    expect(mailHoldsEscrow(change)).toBe(false);
+    expect(mailHoldsEscrow(coin)).toBe(true);
     expect(change.expiresAt).toBe(t1 + MAIL_UNREAD_EXPIRY_SECONDS);
     // A bare note is unread at booking: the unread window from booking.
     sim.mailSend('Bob', 'Note', 'x', 0, [], alice);
@@ -423,26 +428,72 @@ describe('sub-silver coin is not escrow', () => {
     expect(raw.expiresAt).toBe(readAt + MAIL_READ_EXPIRY_SECONDS);
   });
 
-  it('a system letter with sub-silver coin takes the unread window; the welcome letter itself is exempt only by its coin', () => {
+  it('a system letter with sub-silver coin takes the unread window; one with a silver holds Infinity', () => {
     const sim = makeWorld();
+    const bookedAt = sim.time;
     const pid = sim.addPlayer('warrior', 'Keeper');
     const meta = sim.meta(pid);
     if (!meta) throw new Error('no meta');
-    // The shipped welcome letter carries exactly 50 copper: pocket change, so
-    // it now ages out unread like any note (its coin goes with it).
+    // The shipped welcome letter carries 50 copper: pocket change, so it ages
+    // out unread on the exact note window (its coin goes with it).
+    expect(WELCOME_LETTER.copper).toBeGreaterThan(0);
     expect(WELCOME_LETTER.copper).toBeLessThan(MAIL_ESCROW_COPPER_MIN);
     const welcome = bookOf(sim).find((m) => m.letterId === WELCOME_LETTER.letterId);
-    expect(Number.isFinite(welcome.expiresAt)).toBe(true);
-    const t = sim.time;
+    expect(welcome.expiresAt).toBe(bookedAt + MAIL_UNREAD_EXPIRY_SECONDS);
+    // The same authored path with exactly one silver is escrow: no clock.
     sim.postOffice.sendLetter(
       sim.postOffice.mailKeyFor(meta),
       meta.name,
-      { ...MASTERY_RESET_LETTER, letterId: 'test_small_coin', copper: MAIL_ESCROW_COPPER_MIN },
+      { ...MASTERY_RESET_LETTER, letterId: 'test_one_silver', copper: MAIL_ESCROW_COPPER_MIN },
       'system',
     );
-    const silver = bookOf(sim).find((m) => m.letterId === 'test_small_coin');
+    const silver = bookOf(sim).find((m) => m.letterId === 'test_one_silver');
+    expect(silver.copper).toBe(MAIL_ESCROW_COPPER_MIN);
     expect(silver.expiresAt).toBe(Infinity);
-    expect(t).toBeLessThanOrEqual(silver.deliverAt);
+  });
+
+  it('the read flip and the emptying take both reach the persisted partition row', () => {
+    // The countdown must survive a restart: the read flip in mailMarkRead
+    // writes expiresAt AFTER index.markRead has dirtied the recipient row,
+    // and the take's tail write sits under the mutated markDirty. Pin it on
+    // the drained row itself rather than trusting the ordering (this module's
+    // own history is a missed dirty mark, see the #3561 comment in mailTake).
+    const { sim, bob, raw } = setupNote();
+    const bobMeta = sim.meta(bob);
+    if (!bobMeta) throw new Error('no meta');
+    const bobKey = sim.postOffice.mailKeyFor(bobMeta);
+    sim.takeDirtyMailPartitions(); // drain the booking and landing
+    sim.mailMarkRead(raw.id, bob);
+    const afterRead = sim
+      .takeDirtyMailPartitions()
+      .find((p) => p.recipientKey === bobKey)
+      ?.letters.find((m) => m.subject === 'Note');
+    expect(afterRead?.read).toBe(true);
+    expect(afterRead?.secondsLeft).toBe(MAIL_READ_EXPIRY_SECONDS);
+
+    // A small-change letter emptied by an already-read take: the coin leaves
+    // the row and the read countdown is what persists.
+    const alice = sim.addPlayer('warrior', 'Alicia');
+    const aliceMeta = sim.meta(alice);
+    if (!aliceMeta) throw new Error('no meta');
+    aliceMeta.copper = 10_000;
+    moveToMailbox(sim, alice);
+    sim.mailSend('Bob', 'Tip', 'x', 42, [], alice);
+    tickFor(sim, MAIL_DELIVERY_SECONDS + 2);
+    const tip = bookOf(sim).find((m) => m.subject === 'Tip');
+    moveToMailbox(sim, bob);
+    sim.mailMarkRead(tip.id, bob);
+    tickFor(sim, 10);
+    sim.takeDirtyMailPartitions();
+    sim.mailTake(tip.id, bob);
+    const afterTake = sim
+      .takeDirtyMailPartitions()
+      .find((p) => p.recipientKey === bobKey)
+      ?.letters.find((m) => m.subject === 'Tip');
+    expect(afterTake?.copper).toBe(0);
+    expect(afterTake?.read).toBe(true);
+    expect(afterTake?.secondsLeft).toBe(Math.round(tip.expiresAt - sim.time));
+    expect(afterTake?.secondsLeft).toBeLessThanOrEqual(MAIL_READ_EXPIRY_SECONDS);
   });
 
   it('at load, a persisted small-change row rides the emptied model, a one-silver row keeps escrow', () => {
@@ -476,32 +527,54 @@ describe('sub-silver coin is not escrow', () => {
 });
 
 describe('the Exchange Broker exemption', () => {
-  it('pins the exempt id set to the three broker letters', () => {
-    expect([...WOC_MARKET_LETTER_IDS].sort()).toEqual(
-      [
-        WOC_MARKET_DELIVERY_LETTER.letterId,
-        WOC_MARKET_RETURN_LETTER.letterId,
-        WOC_MARKET_SOLD_LETTER.letterId,
-      ].sort(),
-    );
+  it('pins the exempt id set to the three broker letters, as the persisted string literals', () => {
+    // Letter ids are persisted tokens: a booked row carries its letterId
+    // forever, so a coordinated rename of the defs AND the set would pass a
+    // def-based pin while every row already in a mailbox silently lost the
+    // exemption. Pin the strings themselves, and the defs against them.
+    expect([...WOC_MARKET_LETTER_IDS].sort()).toEqual([
+      'woc_market_delivery',
+      'woc_market_return',
+      'woc_market_sold',
+    ]);
+    expect(WOC_MARKET_DELIVERY_LETTER.letterId).toBe('woc_market_delivery');
+    expect(WOC_MARKET_RETURN_LETTER.letterId).toBe('woc_market_return');
+    expect(WOC_MARKET_SOLD_LETTER.letterId).toBe('woc_market_sold');
   });
 
-  it('an unread sold notice has no clock at all; reading it starts the 3-day read clock', () => {
+  it('an unread sold notice waits 90 days (the ceiling), and reading it starts the 3-day read clock', () => {
     const sim = makeWorld();
     const pid = sim.addPlayer('warrior', 'Seller');
+    const bookedAt = sim.time;
     const raw = bookExchangeLetter(sim, pid, WOC_MARKET_SOLD_LETTER);
     expect(raw.kind).toBe('system');
     expect(raw.items).toEqual([]);
     expect(raw.copper).toBe(0);
-    expect(raw.expiresAt).toBe(Infinity);
-    // Nothing to force past: with no clock the sweep never reaches it.
-    tickFor(sim, 5);
+    expect(MAIL_EXCHANGE_UNREAD_EXPIRY_SECONDS).toBe(90 * 24 * 3600);
+    expect(MAIL_EXCHANGE_UNREAD_EXPIRY_SECONDS).toBeGreaterThan(MAIL_UNREAD_EXPIRY_SECONDS);
+    expect(raw.expiresAt).toBe(bookedAt + MAIL_EXCHANGE_UNREAD_EXPIRY_SECONDS);
+    // Past the ordinary unread window it is still there ...
+    tickFor(sim, 1);
+    raw.expiresAt = sim.time + 1; // one sim-second short of the ceiling
+    tickFor(sim, 0.5);
     expect(bookOf(sim)).toContain(raw);
-    expect(raw.expiresAt).toBe(Infinity);
+    // ... and reading it moves it onto the read clock like any other letter.
     moveToMailbox(sim, pid);
     sim.mailMarkRead(raw.id, pid);
     expect(raw.read).toBe(true);
     expect(raw.expiresAt).toBe(sim.time + MAIL_READ_EXPIRY_SECONDS);
+  });
+
+  it('the ceiling is real: an unread sold notice nobody ever opens is swept at it', () => {
+    const sim = makeWorld();
+    const pid = sim.addPlayer('warrior', 'Seller');
+    const raw = bookExchangeLetter(sim, pid, WOC_MARKET_SOLD_LETTER);
+    tickFor(sim, 1);
+    const unread = sim.mailUnreadFor(pid);
+    raw.expiresAt = sim.time;
+    tickFor(sim, 2);
+    expect(bookOf(sim).some((m) => m.id === raw.id)).toBe(false);
+    expect(sim.mailUnreadFor(pid)).toBe(unread - 1);
   });
 
   it('a delivery parcel holds Infinity through the read flip and takes the read clock once emptied', () => {
@@ -703,7 +776,7 @@ describe('persistence', () => {
     expect(bookOf(sim4).find((m) => m.subject === 'Note').expiresAt).toBe(t4 + 600);
   });
 
-  it('an unread Exchange notice persists the never sentinel, and a legacy countdown on one is dropped at load', () => {
+  it('an unread Exchange notice persists its ceiling countdown, which load caps but never extends', () => {
     const sim = makeWorld();
     const pid = sim.addPlayer('warrior', 'Seller');
     bookExchangeLetter(sim, pid, WOC_MARKET_SOLD_LETTER);
@@ -712,29 +785,37 @@ describe('persistence', () => {
       (m: { letterId?: string }) => m.letterId === WOC_MARKET_SOLD_LETTER.letterId,
     );
     expect(row.read).toBe(false);
-    expect(row.secondsLeft).toBe(-1);
+    expect(row.secondsLeft).toBe(MAIL_EXCHANGE_UNREAD_EXPIRY_SECONDS);
 
+    // The live countdown round-trips verbatim.
     const sim2 = makeWorld();
+    const t2 = sim2.time;
     sim2.loadMail(save);
     const raw2 = bookOf(sim2).find((m) => m.letterId === WOC_MARKET_SOLD_LETTER.letterId);
-    expect(raw2.expiresAt).toBe(Infinity);
+    expect(raw2.expiresAt).toBe(t2 + MAIL_EXCHANGE_UNREAD_EXPIRY_SECONDS);
 
-    // Persisted under the old model with a live countdown: still unread, so
-    // the exemption applies at load and the countdown is dropped.
+    // Persisted under the old 14-day model with a shorter countdown: load
+    // caps, never extends (an extension would re-arm on every boot), so the
+    // shorter countdown is kept. A one-time deploy artifact, no worse than
+    // the status quo it replaces.
     row.secondsLeft = 1234;
     const sim3 = makeWorld();
+    const t3 = sim3.time;
     sim3.loadMail(save);
     const raw3 = bookOf(sim3).find((m) => m.letterId === WOC_MARKET_SOLD_LETTER.letterId);
-    expect(raw3.expiresAt).toBe(Infinity);
+    expect(raw3.expiresAt).toBe(t3 + 1234);
 
-    // Once read, it is an ordinary emptied letter: the read clock, capped.
-    row.read = true;
+    // A never-sentinel row (no countdown at all) starts the ceiling at load.
+    row.secondsLeft = -1;
     const sim4 = makeWorld();
     const t4 = sim4.time;
     sim4.loadMail(save);
     const raw4 = bookOf(sim4).find((m) => m.letterId === WOC_MARKET_SOLD_LETTER.letterId);
-    expect(raw4.expiresAt).toBe(t4 + 1234);
-    row.secondsLeft = -1;
+    expect(raw4.expiresAt).toBe(t4 + MAIL_EXCHANGE_UNREAD_EXPIRY_SECONDS);
+
+    // Once read, it is an ordinary emptied letter: the read clock, capped.
+    row.read = true;
+    row.secondsLeft = 20 * 24 * 3600;
     const sim5 = makeWorld();
     const t5 = sim5.time;
     sim5.loadMail(save);
