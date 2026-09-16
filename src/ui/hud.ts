@@ -308,6 +308,7 @@ import { esc } from './esc';
 import { blockFctAmountText } from './fct_core';
 import { fctSpawnShape } from './fct_event';
 import { FctPainter } from './fct_painter';
+import { ferryBellHomeNoteToOpen, writeEastbrookGuidanceChoice } from './ferry_bell_home_note';
 import { FocusManager, type FocusTrapHandle } from './focus_manager';
 import { captureFocusKey, restoreFirstEnabled } from './focus_restore';
 import {
@@ -883,11 +884,7 @@ import { renderTownFocusWindow } from './town_focus_window';
 import { installTrackerStackAnchor } from './tracker_stack_anchor';
 import { tradeOfferCeiling } from './trade_view';
 import { TutorialOverlay } from './tutorial';
-import {
-  buildFerryBellHomeNote,
-  buildFerryIslandArrivalNote,
-  type TutorialGreetingNote,
-} from './tutorial_greeting_view';
+import { buildFerryIslandArrivalNote, type TutorialGreetingNote } from './tutorial_greeting_view';
 import { renderTutorialGreetingNote } from './tutorial_greeting_window';
 import { svgIcon } from './ui_icons';
 import { getUiScale } from './ui_scale';
@@ -11985,11 +11982,14 @@ export class Hud {
           if (this.professionsWindow.isOpen) this.professionsWindow.render();
           break;
         }
-        case 'ferryBellHome':
-          // Every crossing offers the choice, including existing characters
-          // and browsers that cannot persist settings.
-          this.openTutorialGreetingNote(buildFerryBellHomeNote());
+        case 'ferryBellHome': {
+          // The island bell just set this player down in town: the guidance
+          // choice while the wolves are ahead, else the return-bell hint once
+          // per device (ferry_bell_home_note.ts owns the rule).
+          const note = ferryBellHomeNoteToOpen(this.sim);
+          if (note) this.openTutorialGreetingNote(note);
           break;
+        }
         case 'ferryIslandArrival':
           // Landing on the Proving Shore with the rail not yet started:
           // Ferryman Odo's welcome note teaches walking and talking and points
@@ -13815,7 +13815,7 @@ export class Hud {
     this.tutorialGreetingTrap = null;
     const el = renderTutorialGreetingNote(note, {
       onClose: () => this.closeTutorialGreeting(),
-      onGuidanceChoice: (enabled) => this.optionsHooks?.settings.set('eastbrookGuidance', enabled),
+      onGuidanceChoice: (enabled) => writeEastbrookGuidanceChoice(this.optionsHooks, enabled),
     });
     this.bringWindowToFront(el);
     el.style.zIndex = String(Math.max(Number(el.style.zIndex) || 0, 96));

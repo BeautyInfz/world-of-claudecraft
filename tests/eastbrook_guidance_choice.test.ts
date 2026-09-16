@@ -22,6 +22,12 @@ it('lets the ferry arrival choose guidance without changing quest tracking', () 
   });
   expect(el.getAttribute('role')).toBe('dialog');
   expect(el.getAttribute('aria-modal')).toBe('true');
+  // The guidance choice leads and the return-bell note follows, each its
+  // own paragraph, so a misclicked ride still learns where the twin bell is.
+  const paragraphs = [...el.querySelectorAll('.cd-para')].map((p) => p.textContent ?? '');
+  expect(paragraphs).toHaveLength(2);
+  expect(paragraphs[0]).toContain('Marshal Redbrook');
+  expect(paragraphs[1]).toContain('Ravenpost');
   const off = el.querySelector<HTMLButtonElement>('[data-guidance="off"]');
   expect(off).not.toBeNull();
   off?.click();

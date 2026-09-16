@@ -1,6 +1,11 @@
 // Ambient discovery policy, separate from quest availability and dialogue.
 // Profession offers remain in gossip; their first, repeat and cooldown '!'
-// markers are hidden in the world, minimap and map during the handoff test.
+// markers are hidden in the world, minimap and map. This is the standing
+// rule for every profession onboarding quest in every zone on all three
+// hosts (the trainers carry a subtitle instead, so a trade is discovered by
+// reading the trainer, not a marker); it is not scoped to Eastbrook or to a
+// rollout window. Reverting it is deleting the isProfessionQuest branch in
+// ambientNpcQuestMarkerKind; nothing else depends on it.
 // Resolve each quest before folding an NPC's markers so a hidden profession
 // offer never removes a combat offer or a ready hand-in on the same giver.
 

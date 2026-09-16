@@ -1,5 +1,5 @@
 import { CatmullRomCurve3, Vector3 } from 'three';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import {
   eastbrookWolvesGuide,
   WOLF_RUN_CAMP,
@@ -16,9 +16,34 @@ function world(state = 'active'): WolvesGuideReader {
 }
 
 describe('wolves guidance geometry and visibility', () => {
+  it('resolves the authored forest wolf camp (a content rename degrades to no route, never a throw)', () => {
+    expect(WOLF_RUN_CAMP).not.toBeNull();
+    expect(WOLVES_ROUTE.length).toBe(4);
+  });
+
+  it('answers a finished quest from questsDone before the zone scan or any questState read', () => {
+    const questState = vi.fn(() => 'available' as const);
+    const done = {
+      ...world(),
+      questLog: new Map(),
+      questsDone: new Set(['q_wolves']),
+      questState,
+    };
+    expect(eastbrookWolvesGuide(done, false)).toBe(eastbrookWolvesGuide(done, true));
+    expect(eastbrookWolvesGuide(done, false).plan).toBeNull();
+    expect(questState).not.toHaveBeenCalled();
+  });
+
+  it('never reads questState for a character outside Eastbrook Vale', () => {
+    const questState = vi.fn(() => 'available' as const);
+    const away = { ...world(), questLog: new Map(), player: { pos: { x: 0, z: 300 } }, questState };
+    expect(eastbrookWolvesGuide(away, false).plan).toBeNull();
+    expect(questState).not.toHaveBeenCalled();
+  });
+
   it('keeps the rendered curve clear of fences, deep water and steep terrain', () => {
     const curve = new CatmullRomCurve3(
-      WOLVES_ROUTE.map((p) => new Vector3(p.x, 0, p.z)),
+      [...WOLVES_ROUTE].map((p) => new Vector3(p.x, 0, p.z)),
       false,
       'centripetal',
     );

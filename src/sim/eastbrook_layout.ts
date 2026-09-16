@@ -1189,8 +1189,10 @@ const SAUL_POSITION = { x: 10.2, z: -87.5 } as const;
 // the town's edge rather than in the churchyard approach.
 const FURY_POSITION = { x: 16, z: -78 } as const;
 
-// Marshal stands beside the noticeboard, outside both its body and posting
-// interaction envelopes, facing the square that holds the other combat givers.
+// Marshal stands beside the noticeboard, outside the board's own
+// interactionRadius for both its body and its posting point (the layout
+// suite pins that clearance), facing the square that holds the other
+// combat givers.
 const MARSHAL_POSITION = { x: 0, z: -92 } as const;
 
 const NPCS = [

@@ -1059,7 +1059,6 @@ export const de_DE: EnTranslations = {
       "guidanceOff": "Turn guidance off",
       "guidanceSetting": "Eastbrook golden guidance",
       "bellHomeNote": "Schon zurück von der Küste? Das war die Fährglocke, die du geläutet hast. Ihr Zwilling hängt gleich dort beim Briefkasten der Rabenpost: Läute sie jederzeit, und die Überfahrt bringt dich zurück zur Bewährungsküste. So oder so kein Schaden.",
-      "eastbrookArrivalNote": "Welcome to Eastbrook! Marshal Redbrook is right in front of you. Speak with him for work in the vale. To revisit the Proving Shore, ring the ferry bell beside the Ravenpost mailbox in town.",
       "islandArrivalNote": "Willkommen auf der Bewährungsküste. Wärter Tam wartet gleich den Strand hinauf: Geh zu ihm. Wenn du weiterziehen möchtest, läute jederzeit die Glocke neben meinem Steg; sie bringt dich ins Tal.",
       "noteClose": "Verstanden"
     },

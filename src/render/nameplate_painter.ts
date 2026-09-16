@@ -27,7 +27,7 @@ import {
   proceduralIconDataUrl,
   raidMarkerDataUrl,
 } from '../ui/icons';
-import { professionTrainerNameplateLabel } from '../ui/profession_trainer_label';
+import { professionTrainerNameplateLabel } from '../ui/profession_trainer_label_core';
 import { localizeSimAuraName } from '../ui/sim_i18n';
 import { type IWorld, OVERHEAD_EMOTES } from '../world_api';
 import { castBarState } from './cast_bar';

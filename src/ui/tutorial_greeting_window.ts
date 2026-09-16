@@ -30,9 +30,12 @@ export function renderTutorialGreetingNote(
     ? `<button type="button" class="ui-btn ui-btn--gold cd-ok" data-guidance="on">${esc(t('hudChrome.tutorialGreeting.guidanceOn'))}</button>` +
       `<button type="button" class="ui-btn" data-guidance="off">${esc(t('hudChrome.tutorialGreeting.guidanceOff'))}</button>`
     : `<button type="button" class="btn cd-ok" data-close>${esc(t(note.closeKey))}</button>`;
+  const paragraphs = [note.bodyKey, ...(note.extraBodyKeys ?? [])]
+    .map((key) => `<p class="cd-para">${esc(t(key))}</p>`)
+    .join('');
   el.innerHTML =
     `<div class="panel-title"><span id="${TITLE_ID}">${esc(speaker)}<span class="quest-muted"> &lt;${esc(speakerTitle)}&gt;</span></span></div>` +
-    `<div class="cd-body"><p class="cd-para">${esc(t(note.bodyKey))}</p></div>` +
+    `<div class="cd-body">${paragraphs}</div>` +
     `<div class="cd-actions">${actions}</div>`;
 
   document.body.appendChild(el);

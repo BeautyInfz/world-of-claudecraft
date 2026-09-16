@@ -81,7 +81,7 @@ describe('game renderer composition', () => {
 
   it('validates with a render sync and rejects a lost WebGL context', () => {
     const { world, canvas, nameplates } = fixture();
-    const renderer = createGameRenderer(world, canvas, nameplates);
+    const renderer = createGameRenderer(world, canvas, nameplates, new Settings());
     expect(() => validateGameRenderer(renderer)).not.toThrow();
     expect(render.sync).toHaveBeenCalledWith(1, 0, null, 0, null);
 

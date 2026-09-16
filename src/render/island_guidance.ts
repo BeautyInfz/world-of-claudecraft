@@ -39,6 +39,9 @@ export interface GuideWorld extends CoachGuideReader {
       }
     | null
     | undefined;
+  /** Completed quest ids, read by the mainland wolves guide so a veteran
+   *  never pays the per-frame questState() read. */
+  questsDone?: ReadonlySet<string>;
   entities: ReadonlyMap<
     number,
     {

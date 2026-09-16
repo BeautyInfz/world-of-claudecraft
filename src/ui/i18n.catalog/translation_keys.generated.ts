@@ -12232,7 +12232,6 @@ export type TranslationKeyFlat =
   | 'hudChrome.tutorial.slayTargetHintTouch'
   | 'hudChrome.tutorial.talkBodyTouch'
   | 'hudChrome.tutorialGreeting.bellHomeNote'
-  | 'hudChrome.tutorialGreeting.eastbrookArrivalNote'
   | 'hudChrome.tutorialGreeting.eastbrookGuidanceNote'
   | 'hudChrome.tutorialGreeting.guidanceOff'
   | 'hudChrome.tutorialGreeting.guidanceOn'

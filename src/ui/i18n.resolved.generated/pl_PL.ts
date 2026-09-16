@@ -1059,7 +1059,6 @@ export const pl_PL: EnTranslations = {
       "guidanceOff": "Turn guidance off",
       "guidanceSetting": "Eastbrook golden guidance",
       "bellHomeNote": "Już z powrotem z wybrzeża? To był dzwon promowy, w który uderzyłeś. Jego bliźniak wisi właśnie tam, przy skrzynce Kruczej Poczty: uderz w niego, kiedy zechcesz, a przeprawa zaniesie cię z powrotem na Wybrzeże Prób. Tak czy inaczej, nic się nie stało.",
-      "eastbrookArrivalNote": "Welcome to Eastbrook! Marshal Redbrook is right in front of you. Speak with him for work in the vale. To revisit the Proving Shore, ring the ferry bell beside the Ravenpost mailbox in town.",
       "islandArrivalNote": "Witaj na Wybrzeżu Prób. Strażnik Tam czeka kawałek dalej na plaży: idź się z nim zobaczyć. Jeśli wolisz już wyruszyć, w każdej chwili zadzwoń dzwonem przy moim pomoście, a przeniesie cię do doliny.",
       "noteClose": "Zrozumiano"
     },

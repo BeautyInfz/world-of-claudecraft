@@ -1059,7 +1059,6 @@ export const nl_NL: EnTranslations = {
       "guidanceOff": "Turn guidance off",
       "guidanceSetting": "Eastbrook golden guidance",
       "bellHomeNote": "Alweer terug van de kust? Dat was de veerbel die je luidde. Zijn tweelingbroer hangt daar bij de brievenbus van de Ravenpost: luid hem wanneer je wilt en de overtocht brengt je terug naar de Beproevingskust. Geen kwaad geschied, hoe dan ook.",
-      "eastbrookArrivalNote": "Welcome to Eastbrook! Marshal Redbrook is right in front of you. Speak with him for work in the vale. To revisit the Proving Shore, ring the ferry bell beside the Ravenpost mailbox in town.",
       "islandArrivalNote": "Welkom op de Beproevingskust. Warden Tam wacht verderop op het strand: ga naar hem toe.",
       "noteClose": "Begrepen"
     },

@@ -1059,7 +1059,6 @@ export const en: EnTranslations = {
       "guidanceOff": "Turn guidance off",
       "guidanceSetting": "Eastbrook golden guidance",
       "bellHomeNote": "Back from the shore already? That was the ferry bell you rang. Its twin hangs just there by the Ravenpost mailbox: ring it any time and the crossing will carry you back to the Proving Shore. No harm done either way.",
-      "eastbrookArrivalNote": "Welcome to Eastbrook! Marshal Redbrook is right in front of you. Speak with him for work in the vale. To revisit the Proving Shore, ring the ferry bell beside the Ravenpost mailbox in town.",
       "islandArrivalNote": "Welcome to the Proving Shore. Warden Tam is waiting just up the strand: go and see him. When you would rather be off, ring the bell beside my pier and it will carry you across to the vale at any time.",
       "noteClose": "Understood"
     },

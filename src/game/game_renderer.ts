@@ -2,13 +2,13 @@
 import { Renderer, type RendererCreateOptions } from '../render/renderer';
 import { sharedQuestTracking } from '../ui/quest_tracking_core';
 import type { IWorld } from '../world_api';
-import { Settings } from './settings';
+import type { Settings } from './settings';
 
 export function createGameRenderer(
   world: IWorld,
   canvas: HTMLCanvasElement,
   nameplates: HTMLDivElement,
-  settings: Pick<Settings, 'get'> = new Settings(),
+  settings: Pick<Settings, 'get'>,
   options: RendererCreateOptions = {},
 ): Renderer {
   return new Renderer(world, canvas, nameplates, {

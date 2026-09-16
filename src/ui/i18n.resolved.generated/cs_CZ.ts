@@ -1059,7 +1059,6 @@ export const cs_CZ: EnTranslations = {
       "guidanceOff": "Turn guidance off",
       "guidanceSetting": "Eastbrook golden guidance",
       "bellHomeNote": "Už jsi zpátky z pobřeží? To zvonil trajektový zvon. Jeho dvojče visí hned tamhle u schránky Havraní pošty: zazvoň na něj, kdykoli budeš chtít, a přívoz tě donese zpátky na Zkušební pobřeží. Ať se rozhodneš tak či onak, nic se tím nezkazí.",
-      "eastbrookArrivalNote": "Welcome to Eastbrook! Marshal Redbrook is right in front of you. Speak with him for work in the vale. To revisit the Proving Shore, ring the ferry bell beside the Ravenpost mailbox in town.",
       "islandArrivalNote": "Vítej na Zkušebním pobřeží. Strážce Tam čeká kousek odsud na pláži: zajdi za ním. Pokud chceš raději odjet, kdykoli zazvoň na zvon vedle mého mola a přenese tě do údolí.",
       "noteClose": "Rozumím"
     },

@@ -7,7 +7,7 @@ import { getLanguage, setLanguage } from '../src/ui/i18n';
 import {
   professionTrainerLabel,
   professionTrainerNameplateLabel,
-} from '../src/ui/profession_trainer_label';
+} from '../src/ui/profession_trainer_label_core';
 
 const originalLanguage = getLanguage();
 afterEach(() => setLanguage(originalLanguage));

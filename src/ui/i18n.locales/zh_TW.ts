@@ -14977,7 +14977,7 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'hudChrome.perf.diagnostics.report.status.needsAttention': '需要注意',
   // The Proving Shore (tutorial island) + the spawn greeting dialog.
   'hudChrome.tutorialGreeting.eastbrookGuidanceNote':
-    '歡迎來到東溪鎮！雷德布魯克元帥在城鎮廣場有工作交給你。開啟金色引導，找到他並完成「門前群狼」，也可以自行探索。你可以稍後在選項、介面、戰鬥中更改此設定。',
+    '歡迎來到東溪鎮！雷德布魯克元帥在城鎮廣場有工作交給你。開啟金色引導，找到他並完成「狼臨門前」，也可以自行探索。你可以稍後在選項、介面、戰鬥中更改此設定。',
   'hudChrome.tutorialGreeting.guidanceOn': '開啟引導',
   'hudChrome.tutorialGreeting.guidanceOff': '關閉引導',
   'hudChrome.tutorialGreeting.guidanceSetting': '東溪金色引導',
@@ -14990,8 +14990,6 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'hudChrome.professionTrainers.farming': '耕作訓練師',
   'hudChrome.professionTrainers.mining': '採礦訓練師',
   'hudChrome.professionTrainers.hobby': '嗜好訓練師',
-  'hudChrome.tutorialGreeting.eastbrookArrivalNote':
-    '歡迎來到東溪鎮！雷德布魯克元帥就在你正前方。和他交談，看看谷地裡有什麼工作。想重返試煉之濱，就敲響鎮上鴉郵信箱旁的渡船鈴。',
   'hudChrome.tutorialGreeting.bellHomeNote':
     '這麼快就從海濱回來了？你剛才敲響的正是渡船鈴。它的孿生兄弟就掛在那邊鴉郵信箱旁：想回試煉之濱，隨時敲響它，渡航就會送你過去。敲錯了也不打緊。',
   'hudChrome.tutorialGreeting.islandArrivalNote':

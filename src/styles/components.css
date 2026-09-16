@@ -7563,17 +7563,13 @@
     justify-content: flex-end;
     margin-top: 4px;
   }
-  #tutorial-greeting .cd-actions {
-    gap: 8px;
-    flex-wrap: wrap;
-  }
   #tutorial-greeting .cd-actions .btn {
     min-height: 44px;
   }
   /* Guidance is a paired choice: shared forged-gold and dark button primitives,
      with balanced columns that naturally stack on narrow viewports. */
   #tutorial-greeting.guidance-choice {
-    width: 480px;
+    width: min(480px, calc(100% - var(--spacing-md)));
     --window-pad: var(--spacing-lg);
   }
   #tutorial-greeting.guidance-choice .cd-actions {

@@ -1059,7 +1059,6 @@ export const sv_SE: EnTranslations = {
       "guidanceOff": "Turn guidance off",
       "guidanceSetting": "Eastbrook golden guidance",
       "bellHomeNote": "Redan tillbaka från stranden? Det var färjeklockan du ringde i. Dess tvilling hänger där borta vid Korppostens brevlåda: ring i den när som helst, så bär överfarten dig tillbaka till Prövostranden. Ingen skada skedd, hur du än väljer.",
-      "eastbrookArrivalNote": "Welcome to Eastbrook! Marshal Redbrook is right in front of you. Speak with him for work in the vale. To revisit the Proving Shore, ring the ferry bell beside the Ravenpost mailbox in town.",
       "islandArrivalNote": "Välkommen till Prövostranden. Väktaren Tam väntar strax uppe på stranden: gå och hälsa på honom. Om du hellre vill ge dig av kan du när som helst ringa i klockan vid min brygga, så tar den dig över till dalen.",
       "noteClose": "Förstått"
     },

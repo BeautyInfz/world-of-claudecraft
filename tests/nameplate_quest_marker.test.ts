@@ -1,10 +1,16 @@
 // @vitest-environment happy-dom
 //
-// Exercise the real canvas painter: ambient profession offers are hidden,
-// while active/ready hand-ins and combat offers on mixed givers remain visible.
+// The overhead quest marker branch of the nameplate painter, driven by the
+// shared quest_marker_kind rule on the batched canvas surface. Two halves:
+// the generic painter contract (gold, blue and dimmed arms, the cross-quest
+// fold, the throttled-pass snapshot rules and a LIVE gold-to-blue repaint),
+// pinned against SYNTHETIC non-profession quests so the ambient policy can
+// never mask a painter regression; and the ambient policy itself (profession
+// offers hidden, active/ready hand-ins and combat offers on mixed givers
+// kept), pinned against the real profession content.
 
 import * as THREE from 'three';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { NameplateCanvasState, NameplateMarkerTone } from '../src/render/nameplate_canvas';
 import { NameplatePainter } from '../src/render/nameplate_painter';
 import type { EntityView } from '../src/render/renderer';
@@ -57,6 +63,28 @@ function requireWorkOrderQuest() {
   return quest;
 }
 const WORK_ORDER = requireWorkOrderQuest();
+
+/** Synthetic NON-profession copies of the real content (the quest_targets
+ *  idiom): a cadenced work order and a plain one-shot quest at the same
+ *  giver, so the generic painter arms below exercise the marker branch the
+ *  ambient policy would otherwise hide. Registered per test, never leaked. */
+const SYNTH_ORDER = 'q_test_marker_workorder';
+const SYNTH_PLAIN = 'q_test_marker_plain';
+function requirePlainSibling() {
+  const quest = Object.values(QUESTS).find(
+    (q) => !q.repeatable && q.giverNpcId === WORK_ORDER.giverNpcId,
+  );
+  if (!quest) throw new Error('expected a one-shot quest at the work-order giver');
+  return quest;
+}
+beforeEach(() => {
+  QUESTS[SYNTH_ORDER] = { ...WORK_ORDER, id: SYNTH_ORDER };
+  QUESTS[SYNTH_PLAIN] = { ...requirePlainSibling(), id: SYNTH_PLAIN };
+});
+afterEach(() => {
+  delete QUESTS[SYNTH_ORDER];
+  delete QUESTS[SYNTH_PLAIN];
+});
 
 function entity(over: Partial<Entity> & { id: number }): Entity {
   return {
@@ -124,20 +152,24 @@ function expectMarker(
 function harness(knobs: {
   state: QuestState;
   npcId?: string;
-  /** true = the work order's id; an array = explicit questsDone ids (so a
+  /** The order the boolean knobs below key on: the real profession work
+   *  order by default, the synthetic non-profession copy for the generic arms. */
+  orderId?: string;
+  /** true = the order's id; an array = explicit questsDone ids (so a
    *  NON-repeatable id can sit in the history for the negative arm). */
   done?: boolean | string[];
   cadenceBlocked?: boolean;
   questIds?: string[];
   questStates?: Record<string, QuestState>;
 }) {
+  const orderId = knobs.orderId ?? WORK_ORDER.id;
   const me = entity({ id: 1, name: 'Me', pos: { x: 0, y: 0, z: 3 } as Entity['pos'] });
   const npc = entity({
     id: 2,
     kind: 'npc',
     name: 'Master',
     templateId: knobs.npcId ?? WORK_ORDER.giverNpcId,
-    questIds: knobs.questIds ?? [WORK_ORDER.id],
+    questIds: knobs.questIds ?? [orderId],
   });
   const views = new Map<number, EntityView>();
   views.set(npc.id, view());
@@ -154,12 +186,12 @@ function harness(knobs: {
     markerFor: () => null,
     questState: (q: string) => knobs.questStates?.[q] ?? knobs.state,
     questsDone: new Set<string>(
-      Array.isArray(knobs.done) ? knobs.done : knobs.done ? [WORK_ORDER.id] : [],
+      Array.isArray(knobs.done) ? knobs.done : knobs.done ? [orderId] : [],
     ),
     craftingIdentity: {
       version: 1,
       synced: true,
-      cadenceBlockedQuests: knobs.cadenceBlocked ? [WORK_ORDER.id] : [],
+      cadenceBlockedQuests: knobs.cadenceBlocked ? [orderId] : [],
     },
   } as unknown as IWorld;
   const layer = document.createElement('div');
@@ -180,7 +212,158 @@ function harness(knobs: {
   return { painter, world };
 }
 
-describe('nameplate quest marker variants', () => {
+describe('nameplate quest marker painter contract (synthetic non-profession quests)', () => {
+  const order = { orderId: SYNTH_ORDER };
+
+  it("keeps the gold '!' for a never-completed offer, repeatable or not (Q30's first half)", () => {
+    const { painter } = harness({ ...order, state: 'available' });
+    painter.update(true);
+    expectMarker(painter, '!', 'quest');
+
+    // The other half of "repeatable or not": a NON-repeatable quest whose id
+    // IS in questsDone must stay gold at this surface too. The classifier
+    // owns the rule; this arm reddens a plate that branched on
+    // questsDone.has(id) directly instead of asking it.
+    const plain = harness({
+      ...order,
+      state: 'available',
+      done: [SYNTH_PLAIN],
+      questIds: [SYNTH_PLAIN],
+    });
+    plain.painter.update(true);
+    expectMarker(plain.painter, '!', 'quest');
+  });
+
+  it("keeps the gold '?' for a ready turn-in and the gray '?' for an active one", () => {
+    const ready = harness({ ...order, state: 'ready', done: true });
+    ready.painter.update(true);
+    expectMarker(ready.painter, '?', 'quest');
+
+    const active = harness({ ...order, state: 'active' });
+    active.painter.update(true);
+    expectMarker(active.painter, '?', 'active');
+  });
+
+  it("shows the blue '!' once the repeatable has been completed at least once", () => {
+    const { painter } = harness({ ...order, state: 'available', done: true });
+    painter.update(true);
+    expectMarker(painter, '!', 'repeat');
+  });
+
+  it("shows the dimmed '!' inside the cadence window, and nothing without the mirror", () => {
+    const blocked = harness({ ...order, state: 'unavailable', done: true, cadenceBlocked: true });
+    blocked.painter.update(true);
+    expectMarker(blocked.painter, '!', 'cooldown');
+
+    // An older server payload (no cadenceBlockedQuests) degrades to today's
+    // no-marker plate rather than guessing.
+    const bare = harness({ ...order, state: 'unavailable', done: true });
+    bare.painter.update(true);
+    expectMarker(bare.painter, '', 'none');
+  });
+
+  it("folds across an NPC's quests: a ready turn-in beats a completed repeatable", () => {
+    // The per-surface fold (accumulator plus the break on ready) runs over
+    // more than one quest, not just the classifier unit. BOTH orders: with
+    // the ready quest first, a fold degenerated to last-value-wins answers
+    // 'repeat' (the mutation round proved the ready-last order alone leaves
+    // exactly that mutant green).
+    for (const questIds of [
+      [SYNTH_PLAIN, SYNTH_ORDER],
+      [SYNTH_ORDER, SYNTH_PLAIN],
+    ]) {
+      const { painter } = harness({
+        ...order,
+        state: 'unavailable',
+        done: true,
+        questIds,
+        questStates: { [SYNTH_ORDER]: 'available', [SYNTH_PLAIN]: 'ready' },
+      });
+      painter.update(true);
+      expectMarker(painter, '?', 'quest', questIds.join(','));
+    }
+  });
+
+  it('renders the gray in-progress state over a cooldown mark: the documented divergence', () => {
+    // The nameplate is the ONE surface that renders 'active', and at its
+    // shared rank the gray '?' beats the dimmed '!' (an in-progress turn-in
+    // here is the more actionable signal). The minimap and map filter
+    // 'active' per quest instead and show the cooldown mark for the same
+    // state; tests/quest_marker_surface_agreement.test.ts pins their side.
+    const { painter } = harness({
+      ...order,
+      state: 'unavailable',
+      done: true,
+      cadenceBlocked: true,
+      questIds: [SYNTH_ORDER, SYNTH_PLAIN],
+      questStates: { [SYNTH_PLAIN]: 'active' },
+    });
+    painter.update(true);
+    expectMarker(painter, '?', 'active');
+  });
+
+  it('heals a REPLACED questsDone set immediately, even on a throttled pass', () => {
+    // Online, ClientWorld REPLACES the whole Set per qdone snapshot rather
+    // than mutating it in place (the offline shape). The snapshot's identity
+    // re-check must drop the cached context, so a completion flips the plate
+    // on the very next pass, full or throttled: the harness NPC sits inside
+    // NAMEPLATE_URGENT_RANGE, so update(false) reaches the content branch.
+    const { painter, world } = harness({ ...order, state: 'available' });
+    painter.update(true);
+    expectMarker(painter, '!', 'quest');
+    (world as unknown as { questsDone: Set<string> }).questsDone = new Set([SYNTH_ORDER]);
+    painter.update(false);
+    expectMarker(painter, '!', 'repeat');
+  });
+
+  it('reuses the snapshot for a cprof-only change until the next full pass: the bounded lag', () => {
+    // A fresh turn-in flips the quest state live, but the cadence mirror
+    // rides the cached snapshot (questsDone identity unchanged), so a
+    // throttled pass blanks the plate for one interval instead of dimming:
+    // the one-interval bound the field comment documents. Deleting the
+    // cache (resolving fresh every pass) would dim here and redden this
+    // arm; the next full pass re-resolves and dims.
+    const { painter, world } = harness({ ...order, state: 'available', done: true });
+    painter.update(true);
+    expectMarker(painter, '!', 'repeat');
+    (world as unknown as { questState: () => string }).questState = () => 'unavailable';
+    (world.craftingIdentity as unknown as { cadenceBlockedQuests: string[] }).cadenceBlockedQuests =
+      [SYNTH_ORDER];
+    painter.update(false);
+    expectMarker(painter, '', 'none');
+    painter.update(true);
+    expectMarker(painter, '!', 'cooldown');
+  });
+
+  it('repaints on a LIVE gold-to-blue transition: the marker rides every full pass', () => {
+    // The first completion of a work order happens while its giver's plate
+    // is on screen; resolveContent must recompute marker and markerTone on
+    // every full pass (the ai-tag lesson, applied to this branch), or the
+    // plate keeps the gold '!' until something else changes.
+    const { painter, world } = harness({ ...order, state: 'available' });
+    painter.update(true);
+    expectMarker(painter, '!', 'quest');
+    (world as unknown as { questsDone: Set<string> }).questsDone.add(SYNTH_ORDER);
+    painter.update(true);
+    expectMarker(painter, '!', 'repeat');
+
+    // The reverse transitions ride the same recompute (and the per-full-pass
+    // context refresh): a fresh turn-in arms the window (blue to dimmed),
+    // and expiry returns the blue offer.
+    (world as unknown as { questState: () => string }).questState = () => 'unavailable';
+    (world.craftingIdentity as unknown as { cadenceBlockedQuests: string[] }).cadenceBlockedQuests =
+      [SYNTH_ORDER];
+    painter.update(true);
+    expectMarker(painter, '!', 'cooldown');
+    (world as unknown as { questState: () => string }).questState = () => 'available';
+    (world.craftingIdentity as unknown as { cadenceBlockedQuests: string[] }).cadenceBlockedQuests =
+      [];
+    painter.update(true);
+    expectMarker(painter, '!', 'repeat');
+  });
+});
+
+describe('nameplate quest marker ambient policy (real profession content)', () => {
   it("hides Jessica's farming offer but keeps accepted and ready hand-ins", () => {
     for (const state of ['available', 'active', 'ready'] as const) {
       const { painter } = harness({

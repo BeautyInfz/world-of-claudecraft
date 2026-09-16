@@ -1059,7 +1059,6 @@ export const tr_TR: EnTranslations = {
       "guidanceOff": "Turn guidance off",
       "guidanceSetting": "Eastbrook golden guidance",
       "bellHomeNote": "Kıyıdan bu kadar çabuk mu döndün? Çaldığın o feribot çanıydı. Onun eşi tam şurada, Kuzgun Postası kutusunun yanında asılı: istediğin an çal, geçiş seni yeniden Sınav Kıyısı'na taşır. Hangi yöne gidersen git, bir sakıncası yok.",
-      "eastbrookArrivalNote": "Welcome to Eastbrook! Marshal Redbrook is right in front of you. Speak with him for work in the vale. To revisit the Proving Shore, ring the ferry bell beside the Ravenpost mailbox in town.",
       "islandArrivalNote": "Sınav Kıyısı'na hoş geldin. Muhafız Tam kıyı boyunca az ileride seni bekliyor: git ve onunla görüş. Ayrılmak istediğinde iskelemin yanındaki çanı çal; seni istediğin zaman vadiye götürür.",
       "noteClose": "Anladım"
     },

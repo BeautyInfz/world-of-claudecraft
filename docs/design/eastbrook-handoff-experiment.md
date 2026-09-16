@@ -25,15 +25,20 @@ road clearance. Crafting stations remain in their established positions. The cen
 monument can obscure some cross-square sightlines; the acceptance rule is accessible,
 spaced positions rather than a tightly packed group visible from one point.
 
-Every tutorial-island-to-town crossing opens the existing managed ferry dialog with
-**Turn guidance on** and **Turn guidance off** buttons. The choice persists on this
-device and can be changed under **Options → Interface → Combat → Eastbrook golden
-guidance**. Escape leaves the saved preference unchanged. Guidance starts enabled by
-default and remains independent of per-character quest tracking.
+Every tutorial-island-to-town crossing by a character who has not yet finished Wolves
+at the Door opens the existing managed ferry dialog with **Turn guidance on** and
+**Turn guidance off** buttons, followed by the return-bell note (the ride may have been
+a misclick). The choice persists on this device and can be changed under **Options,
+Interface, Combat, Eastbrook golden guidance**. Escape leaves the saved preference
+unchanged. Guidance starts enabled by default and remains independent of per-character
+quest tracking. Once the quest is done the guidance has nothing left to draw, so the
+crossing shows the plain return-bell note once per device instead (the one-shot that
+existed before this change), never the choice.
 
 The follow-up button polish uses the shared gold primary and dark secondary button
 primitives, with equal-width columns that stack on narrow windows. Both labels can
 wrap and both controls retain a 44-pixel minimum touch target and visible keyboard focus.
+The choice shell is 480 pixels wide, clamped to the viewport on narrow windows.
 
 When enabled, a gold marker and trail point from the ferry to Marshal before accepting
 Wolves at the Door. Confirmed acceptance sends the trail around the graveyard to Wolf
@@ -53,6 +58,12 @@ Profession discovery exclamation markers disappear from nameplates, minimap and 
 This covers `q_prof_*` and farm-objective quests: Jessica's **First Furrow** was the
 missed case because it is `q_farm_intro`. Quests remain available through dialogue,
 and active/ready hand-ins plus ordinary combat offers on mixed givers remain visible.
+This is a standing rule for every profession onboarding quest in every zone on all
+three hosts (the trainer subtitle is how a trade is discovered now), not a rollout
+flag; reverting it is deleting the `isProfessionQuest` branch in
+`src/sim/quests/ambient_quest_marker.ts`. The Renown deed that triggers on the smith's
+introduction quest is therefore found through the trainer's dialogue rather than a
+marker, which is intended.
 
 ## Visual and interaction evidence
 
@@ -114,12 +125,25 @@ untranslated locales use English fallback pending release fill. Generated i18n a
 wiki content were rebuilt. Read-only cross-platform review found no outstanding
 issues in ferry events, live preferences, confirmed quest state or trainer markers.
 
-**QA verdict: local playtest draft; NOT READY for merge.** The earlier
-`node scripts/gate_select.mjs` reached broad related tests and was stopped under heavy
-machine load (exit 143). Its exposed stale fixtures were corrected; the complete gate
-has not subsequently passed. Broad browser checks previously passed 411 tests with
-one timeout whose whole 11-test suite passed in isolation. Those are historical checks,
-not a claim of a fresh full gate on this revision. Finish the gate before merging.
+**Review round (16 September).** The branch was merged with the current
+`release/v0.43.0` tip and taken through the repository's reviewers (QA checklist,
+sim architecture, frontend seam, content obligations). Changes from that round: the
+guidance choice is gated on the character's own Wolves at the Door state (done means
+the plain return-bell one-shot, as before this change) and the return-bell text is
+back in the rendered body; the unused `eastbrookArrivalNote` key is gone and every
+pre-existing locale row this branch had re-worded is reverted (overlays change only
+for the new keys); the mainland guide answers a finished quest from `questsDone`
+before the zone scan or any online `questState` read; the trainer label is a named
+`*_core` pinned in the architecture sweep; the renderer factory requires the live
+`Settings`; the generic nameplate marker contract and the minimap/map cooldown
+agreement are pinned again on synthetic non-profession quests beside the new
+profession cases; the layout suite pins the marshal's noticeboard clearance and the
+five givers' road clearance; and the parity goldens are re-minted for the moved calm
+pads (state digests only, rng draws unchanged).
+
+The selective merge gate (`node scripts/gate_select.mjs`) runs on the merged tip before
+the pull request leaves draft; its result is recorded on the pull request, which is the
+record of truth for whether this revision passed.
 
 Native-device testing, human first-loop timing and simultaneous-arrival contention
 remain rollout checks. This work does not establish a retention improvement.
@@ -160,7 +184,9 @@ graduation auto-hand-in, rewards and difficulty tuning remain separate changes.
 ## Pre-change investigation
 
 The release baseline places Marshal at (-58, -102), approximately 54 yards from the
-ferry landing. The browser probe exercised fresh offline entry, ferry travel and
+ferry landing. The authored `playerStart` at (-94, -58) is the offline and editor spawn;
+a real new character arrives at the ferry landing, which is the walk this change
+shortens. The browser probe exercised fresh offline entry, ferry travel and
 manual wolves acceptance without page errors. Captures are under
 `docs/screenshots/eastbrook-vale-rebuild/handoff-experiment/`.
 

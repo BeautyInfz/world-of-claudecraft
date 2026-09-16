@@ -1059,7 +1059,6 @@ export const fr_CA: EnTranslations = {
       "guidanceOff": "Turn guidance off",
       "guidanceSetting": "Eastbrook golden guidance",
       "bellHomeNote": "Déjà de retour du rivage ? C'était la cloche du bac que vous avez sonnée. Sa jumelle est accrochée juste là, près de la boîte aux lettres de la Poste aux Corbeaux : sonnez-la à tout moment et la traversée vous ramènera au Rivage de l'Épreuve. Aucun mal, dans un sens comme dans l'autre.",
-      "eastbrookArrivalNote": "Welcome to Eastbrook! Marshal Redbrook is right in front of you. Speak with him for work in the vale. To revisit the Proving Shore, ring the ferry bell beside the Ravenpost mailbox in town.",
       "islandArrivalNote": "Bienvenue au Rivage de l'Épreuve. Le Gardien Tam vous attend un peu plus haut sur la grève : allez le voir.",
       "noteClose": "Compris"
     },
