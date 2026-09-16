@@ -9581,7 +9581,21 @@
     min-height: 44px;
   }
   body.mobile-touch .vault-row-partial {
+    /* On a phone row the full label wraps onto two lines inside the button
+       (shrinkable, unlike desktop) so the touch-only Sources button beside it
+       keeps its own word whole. */
+    flex: 0 1 auto;
     min-width: 44px;
+  }
+  body.mobile-touch .vault-row-partial-label {
+    white-space: normal;
+    text-align: center;
+  }
+  /* The touch-only Sources button in the same row keeps its word whole; the
+     row name and the wrapping quantity button are what give way. */
+  body.mobile-touch .vault-row-wrap .material-sources-action {
+    flex: none;
+    white-space: nowrap;
   }
   .vault-locked-intro {
     flex: none;
