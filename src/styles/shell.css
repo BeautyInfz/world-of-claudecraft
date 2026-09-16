@@ -681,6 +681,7 @@
     border-color: var(--gold-dim);
     outline: none;
   }
+  .wallet-mini:focus,
   .wallet-mini:focus-visible {
     color: var(--color-text-light);
     border-color: var(--gold);
