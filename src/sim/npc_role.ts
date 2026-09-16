@@ -73,6 +73,10 @@ const TRAINER_ROLE_BY_STATION: Readonly<Record<StationType, NpcRole>> = {
   apothecary: 'alchemyTrainer',
 };
 
+/** The trainer roles: the profession-trainer service title already names
+ *  these, so a nameplate carrying that title draws the role line alone. */
+export const TRAINER_ROLES: ReadonlySet<NpcRole> = new Set(Object.values(TRAINER_ROLE_BY_STATION));
+
 /** Resident profession masters by NPC id, derived once from STATIONS. */
 const TRAINER_ROLE_BY_NPC: ReadonlyMap<string, NpcRole> = new Map(
   STATIONS.map((station) => [station.masterNpcId, TRAINER_ROLE_BY_STATION[station.type]]),

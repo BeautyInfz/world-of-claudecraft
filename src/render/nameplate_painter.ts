@@ -58,7 +58,7 @@ import {
   isProjectedNameplateAnchorVisible,
 } from './nameplate_projection';
 import { type NameplatePlan, nameplatePlanInto, newNameplatePlan } from './nameplate_view';
-import { npcRoleLabel } from './npc_role_label';
+import { npcRoleLabel, npcRoleLineCarriesTrainerTitle } from './npc_role_label';
 import { FRIENDLY, isFriendlyPet, mobNameColor } from './reaction';
 import type { EntityView } from './renderer';
 
@@ -670,7 +670,6 @@ export class NameplatePainter {
           ? npcDisplayName(entity.templateId)
           : tEntity({ kind: 'mob', id: entity.templateId, field: 'name' });
       state.nameColor = FRIENDLY;
-      if (entity.kind === 'npc') state.title = professionTrainerNameplateLabel(entity.templateId);
       // The role line: what this NPC DOES, on the same line a player's
       // `<Guild>` uses (npc_role.ts owns the rule; the tag wrapper is the
       // catalog VALUE so a locale owns its brackets). Built here, never in the
@@ -679,6 +678,14 @@ export class NameplatePainter {
         const roleLabel = state.guild;
         if (roleLabel) {
           state.guildLabel = t('hudChrome.nameplate.npcRoleTag', { role: roleLabel });
+        }
+        // The profession-trainer service title beneath the name, unless the
+        // role line already says it (the resident master's trainer role, or
+        // the flavour fallback that resolves to the same service title). A
+        // trainer with a distinct service role, the hobby smith who also
+        // deals arms, keeps both lines.
+        if (!(roleLabel && npcRoleLineCarriesTrainerTitle(entity.templateId))) {
+          state.title = professionTrainerNameplateLabel(entity.templateId);
         }
       }
       const questMarker = this.questMarker(entity);

@@ -8,6 +8,8 @@
 //  - the line is prebuilt in resolveContent (guild + guildLabel together, the
 //    guildLabel cadence rule), at guild tier 0 (never a guild colour tier);
 //  - a friendly quest MOB (not an npc) draws no role line;
+//  - the profession-trainer service title (profession_trainer_label_core)
+//    draws on the title line only when the role line does not already say it;
 //  - every non-Latin locale the M16 rule names resolves a localized label.
 
 import { afterEach, describe, expect, it, vi } from 'vitest';
@@ -130,6 +132,25 @@ describe('nameplate NPC role line', () => {
     const unknown = resolve(entity({ id: 9, templateId: 'no_such_npc' }));
     expect(unknown.guild).toBe('');
     expect(unknown.guildLabel).toBe('');
+  });
+
+  it('draws the trainer service title once, on whichever line says it', async () => {
+    const { resolve } = await harness();
+    // A resident profession master: the role line IS the trainer service.
+    const master = resolve(entity({ id: 13, templateId: 'forgemistress_darva' }));
+    expect(master.guildLabel).toBe('<Blacksmithing Trainer>');
+    expect(master.title).toBe('');
+    // No functional role: the flavour fallback already resolves to the
+    // service title, so the title line stays empty too.
+    const foreman = resolve(entity({ id: 14, templateId: 'foreman_odell' }));
+    expect(foreman.guildLabel).toBe('<Mining Trainer>');
+    expect(foreman.title).toBe('');
+    // A trainer with a distinct service role keeps both lines.
+    const smith = resolve(entity({ id: 15, templateId: 'smith_haldren' }));
+    expect(smith.guildLabel).toBe('<Arms Dealer>');
+    expect(smith.title).toBe('<Hobby Trainer>');
+    // A non-trainer draws no title line at all.
+    expect(resolve(entity({ id: 16, templateId: 'bursar_wick' })).title).toBe('');
   });
 
   it('re-resolving the same state for a non-role entity clears the line', async () => {
