@@ -209,6 +209,9 @@ describe('live graphics profile architecture', () => {
 // import), so it is registered here even though it lives in src/game. Paths are
 // repo-relative for the failure messages.
 const UI_PURE_CORES = [
+  // The one clamp and disabled rule the source picker's row steppers and the
+  // bank quantity prompt share (quantity_stepper.ts is their DOM consumer).
+  'src/ui/quantity_step_core.ts',
   'src/ui/party_pids_core.ts',
   // The one face-button tone rule, shared by the interact prompt and the pad
   // hint strip so a printed glyph and its colour can never disagree.
@@ -2456,6 +2459,9 @@ const UI_PAINTER_HELPERS = [
 // the English catalog, it is a maintainer fix during the release locale fill:
 // contributors do not edit those files.
 const UI_DOM_MODULES = [
+  // Mints the shared unit and bag-stack step buttons around a number input and
+  // writes the input on a press; the rules are quantity_step_core.ts.
+  'src/ui/quantity_stepper.ts',
   'src/ui/mobile_frame_long_press.ts',
   'src/ui/account_portal_dom.ts',
   'src/ui/appearance_customizer.ts',

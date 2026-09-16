@@ -4230,6 +4230,124 @@ export const TARGETS = [
     },
   },
   {
+    key: 'vault-material-rows',
+    label:
+      'Materials Vault: one row per material, the chosen-quantity button, and the source picker',
+    when: [
+      'ui/vault_window',
+      'ui/vault_view',
+      'ui/material_sources_dialog',
+      'ui/bank_quantity_prompt',
+      'sim/vault_slot_ops',
+      'sim/materials_vault',
+    ],
+    // The rows shot clips to the bank window (the Vault tab is inside it);
+    // the picker shot stays full frame because the source dialog mounts in
+    // #prompt-stack, outside the bank window's box.
+    variants: [
+      { key: 'rows', beforeLoad: seedClassicOnLowPreset },
+      { key: 'picker', picker: true, beforeLoad: seedClassicOnLowPreset },
+      { key: 'rows-mobile', mobile: true, beforeLoad: seedClassicOnLowPreset },
+      { key: 'picker-mobile', picker: true, mobile: true, beforeLoad: seedClassicOnLowPreset },
+    ],
+    async capture(page, variant) {
+      await page.waitForFunction(() => window.__game?.sim?.player, { timeout: 90000 });
+      await dismissEntryOverlays(page);
+      await page.evaluate(() => {
+        const game = window.__game;
+        const sim = game?.sim;
+        try {
+          const meta = sim.players.get(sim.playerId);
+          // A rung-2 vault (an 80-unit ceiling) so four bag stacks of one herb
+          // fit, then four SOURCED stacks deposited one after another: the
+          // rows shot shows whether they pack as one row or four, and the
+          // per-unit gatherers give the picker honest source rows. A
+          // bind-on-trade stack (the disenchant secondary's payload) shows
+          // whether a payload row offers the chosen-quantity button.
+          meta.vault.upgrades = Math.max(2, meta.vault.upgrades);
+          const ana = { gatherer: { kind: 'character', id: 11, name: 'Ana' } };
+          const bru = { gatherer: { kind: 'character', id: 22, name: 'Bru' } };
+          meta.inventory.push(
+            { itemId: 'goldleaf_herb', count: 20, materialSources: [{ source: ana, count: 20 }] },
+            { itemId: 'goldleaf_herb', count: 20, materialSources: [{ source: bru, count: 20 }] },
+            {
+              itemId: 'goldleaf_herb',
+              count: 20,
+              materialSources: [
+                { source: ana, count: 10 },
+                { source: bru, count: 10 },
+              ],
+            },
+            { itemId: 'goldleaf_herb', count: 20, materialSources: [{ source: ana, count: 20 }] },
+            { itemId: 'arcane_essence', count: 3, instance: { bindOnTrade: true } },
+            { itemId: 'rough_hide', count: 11, materialSources: [{ source: bru, count: 11 }] },
+          );
+          // Stand beside the banker (the bank-chips idiom): every vault op and
+          // the proximity snapshot are nearBanker-gated.
+          for (const e of sim.entities.values()) {
+            if (e.kind === 'npc' && e.templateId === 'bursar_fernando') {
+              const p = sim.entities.get(sim.playerId);
+              p.pos = { ...e.pos };
+              p.prevPos = { ...p.pos };
+              sim.rebucket(p);
+              break;
+            }
+          }
+          // Deposit from the END so the earlier indices stay valid.
+          for (let i = meta.inventory.length - 1; i >= 0; i--) {
+            const slot = meta.inventory[i];
+            if (
+              slot.itemId === 'goldleaf_herb' ||
+              slot.itemId === 'arcane_essence' ||
+              slot.itemId === 'rough_hide'
+            ) {
+              sim.vaultDeposit(i);
+            }
+          }
+        } catch {}
+      });
+      // The banker stands in another zone than the spawn, so the teleport
+      // raises the zone streaming veil on the next frame. Let it start, then
+      // wait until the world is visible again before opening the window (the
+      // target-auras idiom); a shot under the veil is a clipped loading logo.
+      await wait(1000);
+      await page.waitForFunction(
+        () => !document.querySelector('#loading-screen')?.classList.contains('visible'),
+        { timeout: 300000, polling: 200 },
+      );
+      await page.evaluate(() => window.__game?.hud?.openBank?.());
+      if (!(await pollForSize(page, '#bank-window'))) throw new Error('bank window did not open');
+      await page.evaluate(() =>
+        document.querySelector('#bank-window .bank-tab[data-tab="vault"]')?.click(),
+      );
+      if (!(await pollForSize(page, '#bank-window .vault-row'))) {
+        throw new Error('vault rows did not mount');
+      }
+      // Loud failure over a partial shot: the staging above is try/catch
+      // swallowed, so assert the herb really landed in the vault.
+      const staged = await page.evaluate(() =>
+        Array.from(document.querySelectorAll('#bank-window .vault-row-name')).some((n) =>
+          /Goldleaf/i.test(n.textContent || ''),
+        ),
+      );
+      if (!staged) throw new Error('vault staging incomplete');
+      if (variant?.picker) {
+        // The herb row's chosen-quantity button opens the exact-source picker
+        // (or, before that change, the plain quantity prompt).
+        await page.evaluate(() => {
+          const wrap = Array.from(document.querySelectorAll('#bank-window .vault-row-wrap')).find(
+            (w) => /Goldleaf/i.test(w.querySelector('.vault-row-name')?.textContent || ''),
+          );
+          wrap?.querySelector('.vault-row-partial')?.click();
+        });
+        await wait(700);
+        return {};
+      }
+      await wait(500);
+      return { clip: '#bank-window' };
+    },
+  },
+  {
     key: 'bank-sockets',
     label: 'Bank bag sockets: filled, empty, priced next-unlock, and later locked cells',
     when: ['ui/bank_view', 'ui/bank_window', 'sim/bank_sockets', 'server/bank_wire'],

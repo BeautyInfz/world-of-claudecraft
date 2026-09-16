@@ -3607,7 +3607,11 @@ export const ko_KR: EnTranslations = {
       "unrecordedSigned": "채집자 기록 없음, {name} 서명",
       "quantityAria": "{source} 출처 수량, 최대 {count}개",
       "decreaseAria": "{source} 출처 수량 줄이기",
-      "increaseAria": "{source} 출처 수량 늘리기"
+      "increaseAria": "{source} 출처 수량 늘리기",
+      "decreaseByAria": "{source}의 개수를 {count} 줄이기",
+      "increaseByAria": "{source}의 개수를 {count} 늘리기",
+      "moveAll": "모든 개수 이동",
+      "fits": "지금은 최대 {units}개까지 들어갑니다"
     },
     "materialHint": {
       "fineGrade": "상급 등급입니다. 해당 재료보다 높은 등급의 도구로 만렙 채집지에서 캐낸 것이며, 일반 등급이 필요한 곳 어디에서나 대신 사용됩니다.",
@@ -3961,6 +3965,8 @@ export const ko_KR: EnTranslations = {
       "withdrawQuantityTitle": "{item} 꺼내기",
       "withdrawQuantityInput": "꺼낼 수량",
       "withdrawQuantityConfirm": "꺼내기",
+      "quantityStepDownAria": "수량을 {count} 줄이기",
+      "quantityStepUpAria": "수량을 {count} 늘리기",
       "vaultRowWithdrawName": "{item} 꺼내기",
       "priceChanged": "구매가 완료되기 전에 가격이 변경되었습니다. 갱신된 가격을 확인한 후 다시 승인해 주세요.",
       "withdrawQuantityAction": "{item} 꺼낼 수량 선택",

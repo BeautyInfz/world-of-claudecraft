@@ -3607,7 +3607,11 @@ export const ru_RU: EnTranslations = {
       "unrecordedSigned": "Сборщик не указан, подпись: {name}",
       "quantityAria": "Количество из источника {source}, не более {count}",
       "decreaseAria": "Уменьшить количество из источника {source}",
-      "increaseAria": "Увеличить количество из источника {source}"
+      "increaseAria": "Увеличить количество из источника {source}",
+      "decreaseByAria": "Уменьшить количество из {source} на {count}",
+      "increaseByAria": "Увеличить количество из {source} на {count}",
+      "moveAll": "Переместить все единицы",
+      "fits": "Сейчас поместится не более {units}"
     },
     "materialHint": {
       "fineGrade": "Отборный сорт. Добывается на жиле полного уровня инструментом выше самого материала и засчитывается вместо обычной версии везде, где она требуется.",
@@ -3961,6 +3965,8 @@ export const ru_RU: EnTranslations = {
       "withdrawQuantityTitle": "Забрать {item}",
       "withdrawQuantityInput": "Количество для получения",
       "withdrawQuantityConfirm": "Забрать",
+      "quantityStepDownAria": "Уменьшить количество на {count}",
+      "quantityStepUpAria": "Увеличить количество на {count}",
       "vaultRowWithdrawName": "Забрать {item}",
       "priceChanged": "Цена изменилась до завершения покупки. Проверьте обновлённую цену и подтвердите покупку ещё раз.",
       "withdrawQuantityAction": "Выбрать количество для получения: {item}",

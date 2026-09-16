@@ -3607,7 +3607,11 @@ export const ja_JP: EnTranslations = {
       "unrecordedSigned": "採集者の記録なし、{name}が署名",
       "quantityAria": "{source}からの個数、最大{count}個",
       "decreaseAria": "{source}からの個数を減らす",
-      "increaseAria": "{source}からの個数を増やす"
+      "increaseAria": "{source}からの個数を増やす",
+      "decreaseByAria": "{source}からの個数を{count}減らす",
+      "increaseByAria": "{source}からの個数を{count}増やす",
+      "moveAll": "すべての個数を移動",
+      "fits": "現在は最大{units}まで収納できます"
     },
     "materialHint": {
       "fineGrade": "上質な等級。素材より上位の道具で満位の採取地から採ったもので、通常版が求められる場所ではそのまま代用できます。",
@@ -3961,6 +3965,8 @@ export const ja_JP: EnTranslations = {
       "withdrawQuantityTitle": "{item}を引き出す",
       "withdrawQuantityInput": "引き出す数量",
       "withdrawQuantityConfirm": "引き出す",
+      "quantityStepDownAria": "数量を{count}減らす",
+      "quantityStepUpAria": "数量を{count}増やす",
       "vaultRowWithdrawName": "{item}を引き出す",
       "priceChanged": "購入が完了する前に価格が変更されました。更新後の価格を確認し、もう一度確定してください。",
       "withdrawQuantityAction": "{item}の引き出す数量を選択",

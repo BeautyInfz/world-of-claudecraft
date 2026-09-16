@@ -104,6 +104,8 @@ import {
   appendMaterialSourcesActionAfter,
   closeMaterialSourcesDialogForOwner,
   type MaterialSourcesSelectionFactory,
+  materialSourcesButtonShown,
+  openMaterialSourcesForRow,
 } from './material_sources_dialog';
 import { materialSourcesForDisplay } from './material_sources_view';
 import type { PainterHostPresentation } from './painter_host';
@@ -1231,6 +1233,25 @@ export class BagsWindow {
           }
           return;
         }
+        // At an open storage pane (bank, guild bank, vault) a sourced material
+        // stack's right-click opens the exact-source deposit picker: the same
+        // session the touch-only Sources button opens, captured now, so the
+        // stack pin is fixed the moment the gesture fires. A sourceless stack
+        // keeps the whole-stack deposit the classic action runs below.
+        const storageSources = materialSourcesForDisplay(s);
+        const storageSelection = this.storageSourceSelection(s);
+        if (storageSources && storageSelection && this.deps.openMaterialSources) {
+          ev.preventDefault();
+          this.deps.hideTooltip();
+          openMaterialSourcesForRow(
+            this.deps.openMaterialSources,
+            itemName,
+            storageSources,
+            row,
+            storageSelection,
+          );
+          return;
+        }
         ev.preventDefault();
         // The action menu opens, whose FIRST row is the classic left-click
         // action so that binding survives (right-click never destroys;
@@ -1341,7 +1362,16 @@ export class BagsWindow {
       this.attachRowTooltip(row, item, s);
       const displayedSources = materialSourcesForDisplay(s);
       const sourceSelection = this.storageSourceSelection(s);
-      if (displayedSources && sourceSelection && this.deps.openMaterialSources) {
+      // Touch only (materialSourcesButtonShown): the per-cell button doubled
+      // every material cell's height at an open storage pane. Desktop reaches
+      // the same exact-source deposit picker through the cell's right-click
+      // (the contextmenu arm above), so it grows no button.
+      if (
+        displayedSources &&
+        sourceSelection &&
+        this.deps.openMaterialSources &&
+        materialSourcesButtonShown()
+      ) {
         const wrapper = document.createElement('div');
         wrapper.className = 'material-source-item material-source-item-cell';
         wrapper.appendChild(row);
