@@ -3610,7 +3610,8 @@ export const sv_SE: EnTranslations = {
       "increaseAria": "Öka enheter från {source}",
       "decreaseByAria": "Decrease units from {source} by {count}",
       "increaseByAria": "Increase units from {source} by {count}",
-      "moveAll": "Move all units"
+      "moveAll": "Move all units",
+      "fits": "Up to {units} fit right now"
     },
     "materialHint": {
       "fineGrade": "Fin kvalitet. Bruten ur en åder av full nivå med ett verktyg som rankar över materialet, och räknas som den vanliga versionen varhelst en sådan krävs.",

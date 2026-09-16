@@ -3610,7 +3610,8 @@ export const id_ID: EnTranslations = {
       "increaseAria": "Tambah unit dari {source}",
       "decreaseByAria": "Decrease units from {source} by {count}",
       "increaseByAria": "Increase units from {source} by {count}",
-      "moveAll": "Move all units"
+      "moveAll": "Move all units",
+      "fits": "Up to {units} fit right now"
     },
     "materialHint": {
       "fineGrade": "Mutu halus. Dikumpulkan dari urat tingkat penuh dengan alat berperingkat di atas materialnya, dan dihitung sebagai versi biasa di mana pun versi biasa dibutuhkan.",

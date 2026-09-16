@@ -10734,6 +10734,7 @@ export type TranslationKeyFlat =
   | 'hudChrome.materialSources.decreaseAria'
   | 'hudChrome.materialSources.decreaseByAria'
   | 'hudChrome.materialSources.detailsTitle'
+  | 'hudChrome.materialSources.fits'
   | 'hudChrome.materialSources.gatherer'
   | 'hudChrome.materialSources.gathererSigned'
   | 'hudChrome.materialSources.increaseAria'

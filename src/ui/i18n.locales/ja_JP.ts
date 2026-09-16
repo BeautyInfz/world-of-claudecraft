@@ -16838,6 +16838,7 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'hudChrome.materialSources.decreaseByAria': '{source}からの個数を{count}減らす',
   'hudChrome.materialSources.increaseByAria': '{source}からの個数を{count}増やす',
   'hudChrome.materialSources.moveAll': 'すべての個数を移動',
+  'hudChrome.materialSources.fits': '現在は最大{units}まで収納できます',
   'hudChrome.itemMenu.viewSources': '入手元を見る',
   'hudChrome.itemMenu.separateByGatherer': '採集者別に分ける',
   'hudChrome.itemMenu.takeChosenQuantity': '指定数を取り出す',

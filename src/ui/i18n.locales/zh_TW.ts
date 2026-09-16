@@ -16002,6 +16002,7 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'hudChrome.materialSources.decreaseByAria': '將來自{source}的單位減少{count}',
   'hudChrome.materialSources.increaseByAria': '將來自{source}的單位增加{count}',
   'hudChrome.materialSources.moveAll': '移動全部單位',
+  'hudChrome.materialSources.fits': '目前最多可放入{units}個',
   'hudChrome.itemMenu.viewSources': '查看來源',
   'hudChrome.itemMenu.separateByGatherer': '依採集者拆分',
   'hudChrome.itemMenu.takeChosenQuantity': '取出指定數量',

@@ -342,10 +342,11 @@ export function predictVaultDepositAll(
       full = true;
       continue;
     }
-    // One instance payload describes the whole row. The authoritative sweep
-    // leaves it carried when the entire count cannot fit; predicting a partial
-    // move would claim items were stored when the sim moved none.
-    if (slot.instance !== undefined && headroom < slot.count) {
+    // A whole-move payload (the sim's vaultRowMovesWhole: charge-bearing or
+    // locked) is left carried by the authoritative sweep when the entire count
+    // cannot fit; predicting a partial move would claim items were stored when
+    // the sim moved none. Every other payload partially fills like plain stock.
+    if (vaultRowMovesWhole(slot.instance) && headroom < slot.count) {
       full = true;
       continue;
     }
@@ -421,11 +422,27 @@ export function vaultWithdrawFit(
   craftedRecipeId?: string,
 ): number {
   const fit = countFit(inventory, bagPools(bags), itemId, want, instance, craftedRecipeId);
-  return instance !== undefined && fit < want ? 0 : fit;
+  return vaultRowMovesWhole(instance) && fit < want ? 0 : fit;
 }
 
 function saneStoredCount(count: number): number {
   return Number.isSafeInteger(count) && count > 0 ? count : 0;
+}
+
+/** How many more units of `itemId` the vault can take right now, read off
+ *  the same wire snapshot the tab paints: the per-material ceiling less the
+ *  pooled and identity-row units already stored. Undefined while the vault is
+ *  away or locked (no ceiling to speak of). The picker caps a vault deposit
+ *  at this so an explicit selection never exceeds what the sim would refuse
+ *  (materials_vault.ts vaultDeposit refuses a selection past the headroom
+ *  rather than clipping it). */
+export function vaultMaterialHeadroom(info: VaultInfo | null, itemId: string): number | undefined {
+  if (!info || info.upgrades <= 0) return undefined;
+  let held = Object.hasOwn(info.stock, itemId) ? saneStoredCount(info.stock[itemId]) : 0;
+  for (const slot of info.special) {
+    if (slot.itemId === itemId) held += saneStoredCount(slot.count);
+  }
+  return Math.max(0, info.perMaterialCap - held);
 }
 
 /** Canonical JSON for deterministic special-row ordering across a JSONB wire

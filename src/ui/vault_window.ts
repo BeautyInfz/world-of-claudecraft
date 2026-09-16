@@ -38,7 +38,7 @@ import { depositAllNotableParams } from './deposit_all_status_text';
 import { itemDisplayName } from './entity_i18n';
 import { esc } from './esc';
 import { FOCUS_KEY_ATTR, findFocusKey, restoreFirstEnabled } from './focus_restore';
-import { formatMoney, formatNumber, type TranslationKey, t } from './i18n';
+import { formatMoney, type TranslationKey, t } from './i18n';
 import { QUALITY_COLOR } from './icons';
 import {
   cornerMarkHtml,
@@ -588,8 +588,6 @@ export class VaultTab {
         className: 'bank-quantity-prompt vault-quantity-prompt',
         step: {
           size: stepSize,
-          downText: formatNumber(-stepSize, { signDisplay: 'always', maximumFractionDigits: 0 }),
-          upText: formatNumber(stepSize, { signDisplay: 'always', maximumFractionDigits: 0 }),
           downAriaText: t('hudChrome.bank.quantityStepDownAria', { count: stepCount }),
           upAriaText: t('hudChrome.bank.quantityStepUpAria', { count: stepCount }),
           unitDownAriaText: t('hudChrome.bank.quantityStepDownAria', { count: formatCount(1) }),

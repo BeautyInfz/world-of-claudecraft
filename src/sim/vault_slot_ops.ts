@@ -69,11 +69,14 @@ export const VAULT_ROW_STACK_SIZE = Number.MAX_SAFE_INTEGER;
 
 /** Whether a row's payload pins it to whole moves. A charge-bearing or
  *  player-locked payload is one identity per unit (item_instance_merge.ts,
- *  the bags' own one-per-slot rule), so it deposits and withdraws whole. Every
- *  other payload (a signer, a bind-on-trade mark) already rides counted stacks
- *  in the bags, where a split simply clones it onto both halves, so the vault
- *  splits it the same way. The vault_view.ts row model reads this same rule
- *  for its chosen-quantity action. */
+ *  the bags' one-per-slot stacking rule), so it deposits and withdraws whole:
+ *  stricter than the bank's material arm (material_container_move.ts), which
+ *  splits any material stack, and stricter is the safe side. Every other
+ *  payload (a signer, a bind-on-trade mark) already rides counted stacks in
+ *  the bags, where a split simply clones it onto both halves, so the vault
+ *  splits it the same way. vaultDeposit, vaultDepositAll and the withdraw
+ *  planner all read this one predicate, and so does the vault_view.ts row
+ *  model for its chosen-quantity action and its deposit-all replay. */
 export function vaultRowMovesWhole(instance: ItemInstancePayload | undefined): boolean {
   return instance !== undefined && !isMergeableInstancePayload(instance);
 }
@@ -108,13 +111,28 @@ export function appliedVaultRowAdd(special: readonly InvSlot[], plan: MaterialAd
 
 /** Fold rows that share one identity into one row each: the load-path repack
  *  for saves written while a row was capped at the bag stack size (four rows
- *  of twenty read as one row of eighty). A row the shared model cannot read,
- *  a dormant non-material id, and a whole-move payload row all stay exactly as
- *  they are, in place and by reference. Null when nothing folded. */
+ *  of twenty read as one row of eighty). A row nothing folds into, a row the
+ *  shared model cannot read, a dormant non-material id, and a whole-move
+ *  payload row all stay exactly as they are, in place and by reference. A row
+ *  that DOES fold is rebuilt through the shared normalize, so two legacy
+ *  signer-payload rows come back as one row whose signer sits in a source
+ *  bucket with no payload: the shape the deposit path already stores. Null
+ *  when nothing folded, and a load with no two rows of one id never reads a
+ *  row at all (the steady state costs nothing). */
 export function coalesceVaultRows(
   special: readonly InvSlot[],
   materialIds: ReadonlySet<string>,
 ): InvSlot[] | null {
+  const ids = new Set<string>();
+  let shared = false;
+  for (const row of special) {
+    if (ids.has(row.itemId)) {
+      shared = true;
+      break;
+    }
+    ids.add(row.itemId);
+  }
+  if (!shared) return null;
   const out: InvSlot[] = [];
   let folded = false;
   for (const row of special) {
@@ -145,7 +163,9 @@ export function coalesceVaultRows(
 
 /**
  * Everything one deposit moves, decided before anything is written. The caller
- * applies it in this order: compact write, compact clear, fold, grant, carried.
+ * (materials_vault.ts applyVaultDeposit) plans the fold and the grant onto a
+ * COPY of the rows first (planVaultRowAdd), and only then commits: the compact
+ * write, the compact clear, the rows, the carried remainder.
  */
 export interface VaultDepositPlan {
   /** The compact row's new count, or null when this deposit does not pool. */

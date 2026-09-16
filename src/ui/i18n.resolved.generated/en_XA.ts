@@ -3610,7 +3610,8 @@ export const en_XA: EnTranslations = {
       "increaseAria": "[Íñçŕéášé úñíţš ƒŕóɱ {source}]",
       "decreaseByAria": "[Ðéçŕéášé úñíţš ƒŕóɱ {source} ƀý {count}]",
       "increaseByAria": "[Íñçŕéášé úñíţš ƒŕóɱ {source} ƀý {count}]",
-      "moveAll": "[Ɱóʋé áļļ úñíţš]"
+      "moveAll": "[Ɱóʋé áļļ úñíţš]",
+      "fits": "[Úþ ţó {units} ƒíţ ŕíĝĥţ ñóŵ]"
     },
     "materialHint": {
       "fineGrade": "[Ƒíñé ĝŕáðé. Ĝáţĥéŕéð ƒŕóɱ á ƒúļļ-ţíéŕ ʋéíñ ŵíţĥ á ţóóļ ŕáñķéð áƀóʋé ţĥé ɱáţéŕíáļ, áñð çóúñţš áš ţĥé óŕðíñáŕý ʋéŕšíóñ ŵĥéŕéʋéŕ óñé íš ŕéɋúíŕéð.]",

@@ -3610,7 +3610,8 @@ export const it_IT: EnTranslations = {
       "increaseAria": "Aumenta unità da {source}",
       "decreaseByAria": "Decrease units from {source} by {count}",
       "increaseByAria": "Increase units from {source} by {count}",
-      "moveAll": "Move all units"
+      "moveAll": "Move all units",
+      "fits": "Up to {units} fit right now"
     },
     "materialHint": {
       "fineGrade": "Grado pregiato. Raccolto da un filone di pieno livello con uno strumento di rango superiore al materiale, e vale come la versione ordinaria ovunque ne venga richiesta una.",

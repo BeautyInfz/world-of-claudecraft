@@ -3610,7 +3610,8 @@ export const pt_BR: EnTranslations = {
       "increaseAria": "Aumentar unidades de {source}",
       "decreaseByAria": "Decrease units from {source} by {count}",
       "increaseByAria": "Increase units from {source} by {count}",
-      "moveAll": "Move all units"
+      "moveAll": "Move all units",
+      "fits": "Up to {units} fit right now"
     },
     "materialHint": {
       "fineGrade": "Grau fino. Coletado de um veio de nível pleno com uma ferramenta de nível acima do material, e conta como a versão comum sempre que uma for exigida.",

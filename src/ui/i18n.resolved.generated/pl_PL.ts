@@ -3610,7 +3610,8 @@ export const pl_PL: EnTranslations = {
       "increaseAria": "Zwiększ liczbę sztuk ze źródła {source}",
       "decreaseByAria": "Decrease units from {source} by {count}",
       "increaseByAria": "Increase units from {source} by {count}",
-      "moveAll": "Move all units"
+      "moveAll": "Move all units",
+      "fits": "Up to {units} fit right now"
     },
     "materialHint": {
       "fineGrade": "Gatunek wyborny. Zebrany z żyły o pełnym poziomie narzędziem wyższej rangi niż sam materiał; liczy się jako zwykła wersja wszędzie tam, gdzie jest ona wymagana.",

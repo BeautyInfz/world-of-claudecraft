@@ -16,6 +16,7 @@ import {
   selectedMaterialComposition,
 } from './material_sources_view';
 import { installPromptDialog, type PromptDialogHandle } from './prompt_dialog';
+import { mountQuantityStepper, type QuantityStepper } from './quantity_stepper';
 import { svgIcon } from './ui_icons';
 
 export type MaterialSourcesDialogOpener = (options: MaterialSourcesDialogOptions) => void;
@@ -27,6 +28,14 @@ export interface MaterialSourcesSelectionSession {
   /** Other windows whose lifetime this selection depends on. The opener's
    * owning window is always captured separately by the dialog. */
   readonly associatedOwners?: readonly HTMLElement[];
+  /** The most units the destination can take right now (the vault's live
+   * per-material headroom), when it has such a ceiling: the picker caps the
+   * rows' total at it so a confirm can never exceed what fits. */
+  readonly limit?: number;
+  /** Units one press of the big step pair moves: the item's bag stack size,
+   * supplied by the factory that knows the item so the picker and the
+   * quantity prompt step by the same amount. */
+  readonly stepSize?: number;
 }
 
 export type MaterialSourcesSelectionFactory =
@@ -44,6 +53,10 @@ export interface MaterialSourcesDialogOptions {
   opener?: HTMLElement | null;
   /** Other windows whose lifetime this dialog depends on. */
   associatedOwners?: readonly HTMLElement[];
+  /** Ceiling on the selected total (see MaterialSourcesSelectionSession). */
+  limit?: number;
+  /** The big step pair's size; DEFAULT_STACK when the opener has no item. */
+  stepSize?: number;
 }
 
 /** Whether the visible per-row "Sources" button is shown at all. Touch layouts
@@ -79,6 +92,8 @@ export function openMaterialSourcesForRow(
     opener,
     ...(selection ? { onConfirm: selection.onConfirm } : {}),
     ...(selection?.associatedOwners ? { associatedOwners: selection.associatedOwners } : {}),
+    ...(selection?.limit === undefined ? {} : { limit: selection.limit }),
+    ...(selection?.stepSize === undefined ? {} : { stepSize: selection.stepSize }),
   });
 }
 
@@ -348,19 +363,53 @@ export class MaterialSourcesDialog {
       units: formatNumber(model.total, { maximumFractionDigits: 0 }),
     });
     root.appendChild(summary);
+    // A destination with a live ceiling below the stack (a near-cap vault)
+    // says so up front, and the rows below cannot select past it.
+    const limit = options.limit;
+    if (model.selectable && limit !== undefined && limit < model.total) {
+      const fits = document.createElement('div');
+      fits.className = 'material-sources-summary material-sources-fits';
+      fits.textContent = t('hudChrome.materialSources.fits', {
+        units: formatNumber(limit, { maximumFractionDigits: 0 }),
+      });
+      root.appendChild(fits);
+    }
 
     const list = document.createElement('div');
     list.className = 'material-sources-list';
     list.setAttribute('role', 'list');
     list.setAttribute('aria-label', t('hudChrome.materialSources.listAria'));
     const quantities = new Map<number, number>();
-    /** One filler per selectable row: sets that row to its whole count. */
-    const fillers: Array<() => void> = [];
+    const stepSize = options.stepSize ?? DEFAULT_STACK;
+    const stepLabel = formatNumber(stepSize, { maximumFractionDigits: 0 });
+    const steppers: QuantityStepper[] = [];
+    /** One filler per selectable row: sets the row to as much of its count as
+     *  `remaining` allows and returns what it took. */
+    const fillers: Array<(remaining: number) => number> = [];
     const submit = document.createElement('button');
     submit.type = 'button';
     submit.className = 'btn material-sources-confirm';
     submit.textContent = t('hudChrome.materialSources.confirm');
     submit.disabled = true;
+    const validQuantity = (value: number): boolean => Number.isSafeInteger(value) && value >= 0;
+    /** Units the OTHER rows already claim, for the shared ceiling. */
+    const claimedExcept = (sourceIndex: number): number => {
+      let total = 0;
+      for (const [index, value] of quantities) {
+        if (index !== sourceIndex && validQuantity(value)) total += value;
+      }
+      return total;
+    };
+    const remainingFor = (sourceIndex: number): number =>
+      limit === undefined
+        ? Number.MAX_SAFE_INTEGER
+        : Math.max(0, limit - claimedExcept(sourceIndex));
+    const syncSubmit = (): void => {
+      const selected = selectedMaterialComposition(model.choices, quantities);
+      submit.disabled = selected === null || (limit !== undefined && selected.count > limit);
+      // Every row's ceiling moves with the others' claims on a shared limit.
+      for (const stepper of steppers) stepper.sync();
+    };
 
     for (const [index, choice] of model.choices.entries()) {
       const row = document.createElement('div');
@@ -393,88 +442,60 @@ export class MaterialSourcesDialog {
         );
         const quantity = document.createElement('span');
         quantity.className = 'material-sources-quantity';
-        const decrease = document.createElement('button');
-        decrease.type = 'button';
-        decrease.className = 'btn material-sources-step';
-        decrease.dataset.materialSourceDecrease = String(choice.sourceIndex);
-        decrease.textContent = '−';
-        decrease.setAttribute(
-          'aria-label',
-          t('hudChrome.materialSources.decreaseAria', { source }),
-        );
-        const increase = document.createElement('button');
-        increase.type = 'button';
-        increase.className = 'btn material-sources-step';
-        increase.dataset.materialSourceIncrease = String(choice.sourceIndex);
-        increase.textContent = '+';
-        increase.setAttribute(
-          'aria-label',
-          t('hudChrome.materialSources.increaseAria', { source }),
-        );
-        // The bag-stack steps: one press moves a whole carried stack's worth
-        // (DEFAULT_STACK, the size every material stacks at in the bags), so a
-        // row of eighty needs four presses, not eighty. They clamp at the
-        // row's bounds rather than refusing, so the last press tops the row
-        // out (or empties it) instead of doing nothing.
-        const stepLabel = formatNumber(DEFAULT_STACK, { maximumFractionDigits: 0 });
-        const decreaseBig = document.createElement('button');
-        decreaseBig.type = 'button';
-        decreaseBig.className = 'btn material-sources-step material-sources-step-big';
-        decreaseBig.dataset.materialSourceDecreaseBy = String(choice.sourceIndex);
-        decreaseBig.textContent = formatNumber(-DEFAULT_STACK, {
-          signDisplay: 'always',
-          maximumFractionDigits: 0,
-        });
-        decreaseBig.setAttribute(
-          'aria-label',
-          t('hudChrome.materialSources.decreaseByAria', { source, count: stepLabel }),
-        );
-        const increaseBig = document.createElement('button');
-        increaseBig.type = 'button';
-        increaseBig.className = 'btn material-sources-step material-sources-step-big';
-        increaseBig.dataset.materialSourceIncreaseBy = String(choice.sourceIndex);
-        increaseBig.textContent = formatNumber(DEFAULT_STACK, {
-          signDisplay: 'always',
-          maximumFractionDigits: 0,
-        });
-        increaseBig.setAttribute(
-          'aria-label',
-          t('hudChrome.materialSources.increaseByAria', { source, count: stepLabel }),
-        );
         const syncQuantity = (): void => {
           const value = input.value.trim() === '' ? Number.NaN : Number(input.value);
           quantities.set(choice.sourceIndex, value);
-          const valid = Number.isSafeInteger(value) && value >= 0 && value <= choice.row.count;
-          decrease.disabled = !valid || value <= 0;
-          increase.disabled = !valid || value >= choice.row.count;
-          decreaseBig.disabled = decrease.disabled;
-          increaseBig.disabled = increase.disabled;
-          submit.disabled = selectedMaterialComposition(model.choices, quantities) === null;
+          syncSubmit();
         };
-        const stepQuantity = (delta: number): void => {
-          const value = input.value.trim() === '' ? Number.NaN : Number(input.value);
-          if (!Number.isSafeInteger(value) || value < 0 || value > choice.row.count) {
-            return;
-          }
-          const next = Math.min(choice.row.count, Math.max(0, value + delta));
-          if (next === value) return;
-          input.value = String(next);
+        // The shared stepper (quantity_stepper.ts): a unit pair inside a
+        // bag-stack pair, clamped so the last press lands on the row's bound.
+        // The bound is the row's own units less whatever the other rows
+        // already claim of a shared destination ceiling.
+        const stepper = mountQuantityStepper({
+          input,
+          bounds: () => ({
+            min: 0,
+            max: Math.min(choice.row.count, remainingFor(choice.sourceIndex)),
+          }),
+          size: stepSize,
+          labels: {
+            bigDown: t('hudChrome.materialSources.decreaseByAria', { source, count: stepLabel }),
+            unitDown: t('hudChrome.materialSources.decreaseAria', { source }),
+            unitUp: t('hudChrome.materialSources.increaseAria', { source }),
+            bigUp: t('hudChrome.materialSources.increaseByAria', { source, count: stepLabel }),
+          },
+          className: 'material-sources-step',
+          bigClassName: 'material-sources-step-big',
+          onChange: syncQuantity,
+          decorate: (button, kind) => {
+            const attr = {
+              bigDown: 'materialSourceDecreaseBy',
+              unitDown: 'materialSourceDecrease',
+              unitUp: 'materialSourceIncrease',
+              bigUp: 'materialSourceIncreaseBy',
+            }[kind];
+            button.dataset[attr] = String(choice.sourceIndex);
+          },
+        });
+        steppers.push(stepper);
+        fillers.push((remaining) => {
+          const take = Math.min(choice.row.count, remaining);
+          input.value = String(take);
           syncQuantity();
-        };
-        fillers.push(() => {
-          input.value = String(choice.row.count);
-          syncQuantity();
+          return take;
         });
         input.addEventListener('input', syncQuantity);
-        decrease.addEventListener('click', () => stepQuantity(-1));
-        increase.addEventListener('click', () => stepQuantity(1));
-        decreaseBig.addEventListener('click', () => stepQuantity(-DEFAULT_STACK));
-        increaseBig.addEventListener('click', () => stepQuantity(DEFAULT_STACK));
         syncQuantity();
         label.htmlFor = inputId;
         appendText(label, 'material-sources-row-label', sourceRowText(choice));
         row.appendChild(label);
-        quantity.append(decreaseBig, decrease, input, increase, increaseBig);
+        quantity.append(
+          stepper.buttons.bigDown,
+          stepper.buttons.unitDown,
+          input,
+          stepper.buttons.unitUp,
+          stepper.buttons.bigUp,
+        );
         row.appendChild(quantity);
       }
       list.appendChild(row);
@@ -493,16 +514,19 @@ export class MaterialSourcesDialog {
         callback(selected);
       };
       submit.addEventListener('click', confirmSelection);
-      // Move all: every row to its whole count, then the same confirm the
-      // Move selected button runs, so the whole stack moves in one press with
-      // its full composition (the classic whole-stack click, from inside the
-      // picker).
+      // Move all: every row to its whole count (or as much as the ceiling
+      // allows), then the same confirm the Move selected button runs, so the
+      // whole stack moves in one press with its full composition (the classic
+      // whole-stack click, from inside the picker).
       const moveAll = document.createElement('button');
       moveAll.type = 'button';
       moveAll.className = 'btn material-sources-move-all';
       moveAll.textContent = t('hudChrome.materialSources.moveAll');
       moveAll.addEventListener('click', () => {
-        for (const fill of fillers) fill();
+        // Rows fill in display order until the shared ceiling (if any) is
+        // spent, so Move all at a near-cap vault moves exactly what fits.
+        let remaining = limit ?? Number.MAX_SAFE_INTEGER;
+        for (const fill of fillers) remaining -= fill(remaining);
         confirmSelection();
       });
       footer.append(moveAll, submit);

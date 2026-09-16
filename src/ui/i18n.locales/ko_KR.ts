@@ -16798,6 +16798,7 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.materialSources.decreaseByAria': '{source}의 개수를 {count} 줄이기',
   'hudChrome.materialSources.increaseByAria': '{source}의 개수를 {count} 늘리기',
   'hudChrome.materialSources.moveAll': '모든 개수 이동',
+  'hudChrome.materialSources.fits': '지금은 최대 {units}개까지 들어갑니다',
   'hudChrome.itemMenu.viewSources': '출처 보기',
   'hudChrome.itemMenu.separateByGatherer': '채집자별 분리',
   'hudChrome.itemMenu.takeChosenQuantity': '지정 수량 꺼내기',

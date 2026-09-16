@@ -5058,6 +5058,9 @@ export const hudChromeStrings = {
     // The picker's one-press whole-stack move (every row to its full count,
     // then the same confirm as "Move selected units").
     moveAll: 'Move all units',
+    // Second summary line when the destination's live ceiling (the vault's
+    // per-material headroom) is below the stack; the rows cap their total at it.
+    fits: 'Up to {units} fit right now',
   },
   // Purpose hints for the eight enchanting materials
   // (src/ui/hud/professions/material_hint_view.ts), keyed by item id there. Each says what the

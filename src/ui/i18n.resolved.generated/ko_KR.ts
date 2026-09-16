@@ -3610,7 +3610,8 @@ export const ko_KR: EnTranslations = {
       "increaseAria": "{source} 출처 수량 늘리기",
       "decreaseByAria": "{source}의 개수를 {count} 줄이기",
       "increaseByAria": "{source}의 개수를 {count} 늘리기",
-      "moveAll": "모든 개수 이동"
+      "moveAll": "모든 개수 이동",
+      "fits": "지금은 최대 {units}개까지 들어갑니다"
     },
     "materialHint": {
       "fineGrade": "상급 등급입니다. 해당 재료보다 높은 등급의 도구로 만렙 채집지에서 캐낸 것이며, 일반 등급이 필요한 곳 어디에서나 대신 사용됩니다.",

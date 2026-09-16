@@ -3610,7 +3610,8 @@ export const zh_TW: EnTranslations = {
       "increaseAria": "增加來自{source}的單位",
       "decreaseByAria": "將來自{source}的單位減少{count}",
       "increaseByAria": "將來自{source}的單位增加{count}",
-      "moveAll": "移動全部單位"
+      "moveAll": "移動全部單位",
+      "fits": "目前最多可放入{units}個"
     },
     "materialHint": {
       "fineGrade": "優質品級。以等級高於該材料的工具在滿級礦脈採集所得，在任何需要普通版本的地方均可替代使用。",

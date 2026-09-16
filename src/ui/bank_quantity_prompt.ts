@@ -14,6 +14,8 @@
 // Registered in UI_DOM_MODULES (tests/architecture.test.ts): it mounts real
 // DOM. Cold-path chrome: built once per prompt open, no driver, no layout read.
 
+import { mountQuantityStepper } from './quantity_stepper';
+
 export interface QuantityPromptWiring {
   /** The owning window's WCAG prompt-dialog installer (role/aria-modal/Tab
    *  cycle/Escape/inert), so a shared prompt is indistinguishable from a
@@ -27,16 +29,14 @@ export interface QuantityPromptWiring {
   dismissSiblings(): void;
 }
 
-/** Optional step buttons flanking the number input: a unit pair (one press
- *  moves one unit; the same minus/plus glyphs the source picker's rows use)
- *  inside a big-step pair (one press moves `size` units, a whole carried stack
- *  for the vault). Every press clamps to the prompt's [1, maxCount] range so
- *  the last one lands on the bound. Every string arrives resolved, like the
- *  rest of the prompt's copy. */
+/** Optional step buttons flanking the number input: the shared stepper
+ *  (quantity_stepper.ts), a unit pair inside a big pair that moves `size`
+ *  units (a whole carried stack for the vault). Every press clamps to the
+ *  prompt's [1, maxCount] range so the last one lands on the bound, and both
+ *  pairs disable on their bound (a [1, 1] prompt disables all four). Every
+ *  string arrives resolved, like the rest of the prompt's copy. */
 export interface QuantityPromptStep {
   size: number;
-  downText: string;
-  upText: string;
   downAriaText: string;
   upAriaText: string;
   unitDownAriaText: string;
@@ -87,30 +87,30 @@ export function showQuantityPrompt(wiring: QuantityPromptWiring, opts: QuantityP
   cancel.className = 'btn ui-btn';
   cancel.textContent = opts.cancelText;
   if (opts.step) {
-    const { size, downText, upText, downAriaText, upAriaText } = opts.step;
-    const stepBy = (delta: number): void => {
-      const current = Math.floor(Number(input.value) || 0);
-      const next = Math.min(opts.maxCount, Math.max(1, current + delta));
-      input.value = String(next);
-    };
-    const stepButton = (text: string, ariaText: string, delta: number): HTMLButtonElement => {
-      const button = document.createElement('button');
-      button.type = 'button';
-      button.className = `btn prompt-step${Math.abs(delta) === 1 ? ' prompt-step-unit' : ''}`;
-      button.textContent = text;
-      button.setAttribute('aria-label', ariaText);
-      button.addEventListener('click', () => stepBy(delta));
-      return button;
-    };
-    prompt.append(
-      stepButton(downText, downAriaText, -size),
-      stepButton('\u2212', opts.step.unitDownAriaText, -1),
+    const { size, downAriaText, upAriaText, unitDownAriaText, unitUpAriaText } = opts.step;
+    const steps = document.createElement('div');
+    steps.className = 'prompt-steps';
+    const stepper = mountQuantityStepper({
       input,
-      stepButton('+', opts.step.unitUpAriaText, 1),
-      stepButton(upText, upAriaText, size),
-      confirm,
-      cancel,
+      bounds: () => ({ min: 1, max: opts.maxCount }),
+      size,
+      labels: {
+        bigDown: downAriaText,
+        unitDown: unitDownAriaText,
+        unitUp: unitUpAriaText,
+        bigUp: upAriaText,
+      },
+      className: 'prompt-step',
+      bigClassName: 'prompt-step-big',
+    });
+    steps.append(
+      stepper.buttons.bigDown,
+      stepper.buttons.unitDown,
+      input,
+      stepper.buttons.unitUp,
+      stepper.buttons.bigUp,
     );
+    prompt.append(steps, confirm, cancel);
   } else {
     prompt.append(input, confirm, cancel);
   }

@@ -3610,7 +3610,8 @@ export const da_DK: EnTranslations = {
       "increaseAria": "Øg enheder fra {source}",
       "decreaseByAria": "Decrease units from {source} by {count}",
       "increaseByAria": "Increase units from {source} by {count}",
-      "moveAll": "Move all units"
+      "moveAll": "Move all units",
+      "fits": "Up to {units} fit right now"
     },
     "materialHint": {
       "fineGrade": "Fin kvalitet. Indsamlet fra en åre på fuldt niveau med et værktøj, der rangerer over materialet, og tæller som den ordinære version, hvor end en sådan kræves.",

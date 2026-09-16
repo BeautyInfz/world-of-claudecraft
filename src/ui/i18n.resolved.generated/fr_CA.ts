@@ -3610,7 +3610,8 @@ export const fr_CA: EnTranslations = {
       "increaseAria": "Ajouter des unités de {source}",
       "decreaseByAria": "Decrease units from {source} by {count}",
       "increaseByAria": "Increase units from {source} by {count}",
-      "moveAll": "Move all units"
+      "moveAll": "Move all units",
+      "fits": "Up to {units} fit right now"
     },
     "materialHint": {
       "fineGrade": "Qualité fine. Récolté sur un filon de plein palier avec un outil de rang supérieur au matériau, et compte comme la version ordinaire partout où celle-ci est requise.",

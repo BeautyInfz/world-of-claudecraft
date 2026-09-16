@@ -3610,7 +3610,8 @@ export const cs_CZ: EnTranslations = {
       "increaseAria": "Zvýšit počet kusů ze zdroje {source}",
       "decreaseByAria": "Decrease units from {source} by {count}",
       "increaseByAria": "Increase units from {source} by {count}",
-      "moveAll": "Move all units"
+      "moveAll": "Move all units",
+      "fits": "Up to {units} fit right now"
     },
     "materialHint": {
       "fineGrade": "Jemná jakost. Sesbírána z naleziště plné úrovně nástrojem vyššího stupně, než je materiál, a počítá se jako běžná verze všude, kde je běžná verze potřeba.",

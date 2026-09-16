@@ -344,6 +344,10 @@ function applyVaultDeposit(
   // '__proto__'.
   if (plan.compactCount !== null) vault.stock[itemId] = plan.compactCount;
   if (plan.clearsCompact) delete vault.stock[itemId];
+  // The rows are committed as a NEW array (the copy decided above), so no
+  // caller may hold a reference to `vault.special` across a deposit; every
+  // reader today (vaultInfoFor, the ledgers, deeds, quest presence, rename)
+  // reads it at call time.
   if (rows !== vault.special) vault.special = rows as InvSlot[];
   // The exact take builds a FRESH remainder rather than decrementing the live
   // slot: the surviving units carry their own buckets, which an in-place count
@@ -549,9 +553,11 @@ export function vaultDepositAll(ctx: SimContext, pid?: number): void {
     // it blocks new deposits instead of losing anything.
     const headroom = Math.max(0, cap - held);
     if (headroom <= 0) continue;
-    // An instanced row cannot be split across two containers. If the whole
-    // stack does not fit, leave it carried and continue the sweep.
-    if (slot.instance !== undefined && headroom < slot.count) continue;
+    // The ONE whole-move rule the targeted op applies (vaultRowMovesWhole:
+    // a charge-bearing or locked payload). If such a stack does not fit
+    // whole, leave it carried and continue the sweep; every other payload
+    // partially fills exactly as vaultDeposit would.
+    if (vaultRowMovesWhole(slot.instance) && headroom < slot.count) continue;
     const moved = Math.min(slot.count, headroom);
     // hasOwn, not a plain index: vaultDeposit's own guard, for the same reason,
     // and read here rather than inside the shared commit body for the same

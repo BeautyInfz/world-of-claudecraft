@@ -4248,6 +4248,7 @@ export const TARGETS = [
       { key: 'rows', beforeLoad: seedClassicOnLowPreset },
       { key: 'picker', picker: true, beforeLoad: seedClassicOnLowPreset },
       { key: 'rows-mobile', mobile: true, beforeLoad: seedClassicOnLowPreset },
+      { key: 'picker-mobile', picker: true, mobile: true, beforeLoad: seedClassicOnLowPreset },
     ],
     async capture(page, variant) {
       await page.waitForFunction(() => window.__game?.sim?.player, { timeout: 90000 });

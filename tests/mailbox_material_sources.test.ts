@@ -80,6 +80,9 @@ function mount(
  *  are attached to): the per-row Sources button exists on touch layouts only
  *  (material_sources_row_entry.test.ts pins that split). */
 function rightClick(element: Element | null): void {
+  // A missing row must fail loudly: a silent return would let the relocalize
+  // case pass vacuously if .mail-parcel-name ever stopped rendering.
+  expect(element, 'no parcel row to right-click').not.toBeNull();
   if (!element) return;
   const event = new MouseEvent('contextmenu', { bubbles: true, cancelable: true });
   Object.defineProperty(event, 'pointerType', { value: 'mouse' });

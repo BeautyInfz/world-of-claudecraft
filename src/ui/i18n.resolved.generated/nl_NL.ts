@@ -3610,7 +3610,8 @@ export const nl_NL: EnTranslations = {
       "increaseAria": "Eenheden van {source} verhogen",
       "decreaseByAria": "Decrease units from {source} by {count}",
       "increaseByAria": "Increase units from {source} by {count}",
-      "moveAll": "Move all units"
+      "moveAll": "Move all units",
+      "fits": "Up to {units} fit right now"
     },
     "materialHint": {
       "fineGrade": "Fijne kwaliteit. Verzameld uit een grondstoffenpunt op volle rang met gereedschap boven de rang van het materiaal, en telt overal waar de gewone versie vereist is als die versie.",

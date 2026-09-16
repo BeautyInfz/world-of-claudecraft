@@ -16,7 +16,12 @@ import { describe, expect, it } from 'vitest';
 import { BUILTIN_WORLD } from '../src/sim/data';
 import { materialItemIds } from '../src/sim/material_ids';
 import type { MaterialComposition } from '../src/sim/material_sources';
-import { sanitizeVaultState } from '../src/sim/materials_vault';
+import {
+  sanitizeVaultState,
+  VAULT_BASE_CAP,
+  VAULT_UPGRADE_PRICES,
+  VAULT_UPGRADE_STEP,
+} from '../src/sim/materials_vault';
 import { Sim } from '../src/sim/sim';
 import type { Entity, InvSlot, WorldContent } from '../src/sim/types';
 import {
@@ -75,7 +80,10 @@ function bucket(composition: MaterialComposition | undefined, name: string): num
 
 describe('vault identity rows pack at the vault row size', () => {
   it('is bounded by the per-material ceiling, never the bag stack', () => {
-    expect(VAULT_ROW_STACK_SIZE).toBeGreaterThan(200);
+    // The highest ceiling the upgrade ladder can reach: a cap raise cannot
+    // outgrow the row size without moving this pin.
+    const topCap = VAULT_BASE_CAP + VAULT_UPGRADE_STEP * VAULT_UPGRADE_PRICES.length;
+    expect(VAULT_ROW_STACK_SIZE).toBeGreaterThanOrEqual(topCap);
   });
 
   it('tops up the one compatible row across four bag-stack deposits', () => {
@@ -105,6 +113,12 @@ describe('vault identity rows pack at the vault row size', () => {
     sim.vaultWithdraw(ORE, 20, { index: 0 });
     expect(meta.vault.special.map((slot) => slot.count)).toEqual([60]);
     expect(meta.inventory.map((slot) => slot.count)).toEqual([20]);
+    // The packed row is what the default spend order now reads, so pin the
+    // buckets on both sides: the first bucket (Ana) is spent first, whole.
+    expect(bucket(meta.inventory[0].materialSources, 'Ana')).toBe(20);
+    expect(bucket(meta.inventory[0].materialSources, 'Bru')).toBe(0);
+    expect(bucket(meta.vault.special[0].materialSources, 'Ana')).toBe(30);
+    expect(bucket(meta.vault.special[0].materialSources, 'Bru')).toBe(30);
     sim.vaultWithdraw(ORE, 60, { index: 0 });
     expect(meta.vault.special).toEqual([]);
     // The bags stack at THEIR size: four carried stacks of twenty.
@@ -145,6 +159,27 @@ describe('a save with bag-stack-capped rows folds on load', () => {
     // Rows nothing folded into are the loaded objects themselves.
     expect(folded?.[1]).toBe(recipe);
     expect(folded?.[2]).toBe(other);
+  });
+
+  it('folds two legacy signer-payload rows into one bucketed row with no payload', () => {
+    // The fold rebuilds through the shared normalize, which is the shape the
+    // deposit path already stores: the signer moves from the payload into a
+    // source bucket. A silent migration, pinned so it stays deliberate.
+    const state = sanitizeVaultState({
+      stock: {},
+      upgrades: 2,
+      special: [
+        { itemId: ORE, count: 20, instance: { signer: 'Ada' } },
+        { itemId: ORE, count: 20, instance: { signer: 'Ada' } },
+      ],
+    });
+    expect(state.special).toHaveLength(1);
+    expect(state.special[0].count).toBe(40);
+    expect(state.special[0].instance).toBeUndefined();
+    const signed = (state.special[0].materialSources ?? []).filter(
+      (entry) => entry.source.signer === 'Ada',
+    );
+    expect(signed.reduce((sum, entry) => sum + entry.count, 0)).toBe(40);
   });
 
   it('reports nothing to fold, and never splits a whole-move payload row', () => {
@@ -193,6 +228,22 @@ describe('which payloads split (vaultRowMovesWhole)', () => {
     expect(meta.inventory[0]).toMatchObject({ count: 3, instance: { bindOnTrade: true } });
     expect(meta.vault.special).toHaveLength(1);
     expect(meta.vault.special[0]).toMatchObject({ count: 2, instance: { bindOnTrade: true } });
+  });
+
+  it('refuses to deposit part of a locked stack, or the whole of one that does not fit', () => {
+    const sim = atBanker();
+    const meta = metaOf(sim);
+    const locked = (): InvSlot => ({ itemId: ORE, count: 3, instance: { locked: true } });
+    meta.inventory = [locked()];
+    sim.vaultDeposit(0, 1);
+    expect(meta.inventory).toEqual([locked()]);
+    expect(meta.vault.special).toEqual([]);
+    // Headroom 2 of the 80 cap: a locked stack of 3 moves whole or not at all.
+    meta.vault.stock = { [ORE]: 78 };
+    sim.vaultDeposit(0);
+    expect(meta.inventory).toEqual([locked()]);
+    expect(meta.vault.special).toEqual([]);
+    expect(meta.vault.stock).toEqual({ [ORE]: 78 });
   });
 
   it('still refuses to split a locked row', () => {

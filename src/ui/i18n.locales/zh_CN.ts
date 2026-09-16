@@ -15994,6 +15994,7 @@ export const zh_CN: Partial<Record<TranslationKey, string>> = {
   'hudChrome.materialSources.decreaseByAria': '将来自{source}的单位减少{count}',
   'hudChrome.materialSources.increaseByAria': '将来自{source}的单位增加{count}',
   'hudChrome.materialSources.moveAll': '移动全部单位',
+  'hudChrome.materialSources.fits': '当前最多可放入{units}个',
   'hudChrome.itemMenu.viewSources': '查看来源',
   'hudChrome.itemMenu.separateByGatherer': '按采集者拆分',
   'hudChrome.itemMenu.takeChosenQuantity': '取出指定数量',

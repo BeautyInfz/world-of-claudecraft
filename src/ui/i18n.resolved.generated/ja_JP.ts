@@ -3610,7 +3610,8 @@ export const ja_JP: EnTranslations = {
       "increaseAria": "{source}からの個数を増やす",
       "decreaseByAria": "{source}からの個数を{count}減らす",
       "increaseByAria": "{source}からの個数を{count}増やす",
-      "moveAll": "すべての個数を移動"
+      "moveAll": "すべての個数を移動",
+      "fits": "現在は最大{units}まで収納できます"
     },
     "materialHint": {
       "fineGrade": "上質な等級。素材より上位の道具で満位の採取地から採ったもので、通常版が求められる場所ではそのまま代用できます。",

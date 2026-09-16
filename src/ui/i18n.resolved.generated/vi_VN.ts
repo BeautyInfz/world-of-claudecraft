@@ -3610,7 +3610,8 @@ export const vi_VN: EnTranslations = {
       "increaseAria": "Tăng số đơn vị từ {source}",
       "decreaseByAria": "Decrease units from {source} by {count}",
       "increaseByAria": "Increase units from {source} by {count}",
-      "moveAll": "Move all units"
+      "moveAll": "Move all units",
+      "fits": "Up to {units} fit right now"
     },
     "materialHint": {
       "fineGrade": "Phẩm cấp hảo hạng. Thu được từ mạch đủ bậc bằng công cụ xếp trên nguyên liệu, và được tính như bản thường ở bất cứ đâu cần đến.",

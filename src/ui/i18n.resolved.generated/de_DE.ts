@@ -3610,7 +3610,8 @@ export const de_DE: EnTranslations = {
       "increaseAria": "Einheiten aus {source} erhöhen",
       "decreaseByAria": "Decrease units from {source} by {count}",
       "increaseByAria": "Increase units from {source} by {count}",
-      "moveAll": "Move all units"
+      "moveAll": "Move all units",
+      "fits": "Up to {units} fit right now"
     },
     "materialHint": {
       "fineGrade": "Feine Güte. An einer Ader voller Stufe mit einem Werkzeug über dem Rang des Materials gesammelt; zählt überall dort als die gewöhnliche Version, wo diese verlangt wird.",

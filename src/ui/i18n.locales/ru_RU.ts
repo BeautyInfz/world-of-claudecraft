@@ -17094,6 +17094,7 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'hudChrome.materialSources.decreaseByAria': 'Уменьшить количество из {source} на {count}',
   'hudChrome.materialSources.increaseByAria': 'Увеличить количество из {source} на {count}',
   'hudChrome.materialSources.moveAll': 'Переместить все единицы',
+  'hudChrome.materialSources.fits': 'Сейчас поместится не более {units}',
   'hudChrome.itemMenu.viewSources': 'Показать источники',
   'hudChrome.itemMenu.separateByGatherer': 'Разделить по сборщикам',
   'hudChrome.itemMenu.takeChosenQuantity': 'Взять выбранное количество',

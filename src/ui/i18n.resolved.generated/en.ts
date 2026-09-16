@@ -3610,7 +3610,8 @@ export const en: EnTranslations = {
       "increaseAria": "Increase units from {source}",
       "decreaseByAria": "Decrease units from {source} by {count}",
       "increaseByAria": "Increase units from {source} by {count}",
-      "moveAll": "Move all units"
+      "moveAll": "Move all units",
+      "fits": "Up to {units} fit right now"
     },
     "materialHint": {
       "fineGrade": "Fine grade. Gathered from a full-tier vein with a tool ranked above the material, and counts as the ordinary version wherever one is required.",
