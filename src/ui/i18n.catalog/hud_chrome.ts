@@ -4227,7 +4227,7 @@ export const hudChromeStrings = {
     cooldownCap: '{used} of {cap} sec of cooldown reduction used in this window',
     // wordy (M16): filled in the five non-Latin locales in this change.
     bruinRushWindow:
-      'Wolf Form costs no mana and Pins your Bruin Rush target, slowing it by {pct}% for {sec} sec',
+      'Cat Form costs no mana and Pins your Bruin Rush target, slowing it by {pct}% for {sec} sec',
     funeralHarvestLock: 'Funeral Harvest cannot create another Soul Fragment yet',
     leadenHexLock: 'Leaden Hex cannot root this target again yet',
     forbiddenReflectionReady: 'Your next eligible Warlock cooldown can be cast again',
@@ -4301,7 +4301,7 @@ export const hudChromeStrings = {
     moontide:
       'Moontide {stacks}/{max}. Wildbolt, Skyfall, and Moonseed casts in Moonwing Form each add 1. At {max}: Moonseed becomes Moonsurge and Skyfall becomes Sunwake, and using either spends all 3',
     oldBlood:
-      'Old Blood {stacks}/{max}. Landed hits from Rendclaw, Flense, Bloodrift, Gorebite, Sweeping Claws, and Bonecrush each add 1. At {max}: Gorebite becomes Redharvest in Wolf Form, Bonecrush becomes Marrowbreak in Bruin Form',
+      'Old Blood {stacks}/{max}. Landed hits from Rendclaw, Flense, Bloodrift, Gorebite, Sweeping Claws, and Bonecrush each add 1. At {max}: Gorebite becomes Redharvest in Cat Form, Bonecrush becomes Marrowbreak in Bruin Form',
     verdance:
       'Verdance {stacks}/{max}. Each NEW Wildbloom or Second Bloom you plant adds 1. At {max}, Fleetmend becomes Overbloom',
     freeExecute: 'Your next eligible execute ability costs nothing',
@@ -4372,9 +4372,11 @@ export const hudChromeStrings = {
       'Damage taken reduced by {pct}%. {mana}% of all damage you deal is converted to mana',
     stealth: 'Concealed; movement speed reduced by {pct}%',
     formBear: 'Bruin Form: increased health and armor',
-    // wolfForm replaced formCat when the Wolf Form mobility pass added the
-    // resolved {pct} (a reword is a new key: the old rows were retired).
-    wolfForm: 'Wolf Form: melee damage and energy; movement speed increased by {pct}%',
+    // wolfForm replaced formCat when the Cat Form mobility pass added the
+    // resolved {pct} (a reword is a new key: the old rows were retired). The
+    // key name predates the Cat Form rename; the English follows the rename
+    // and the overlays are on the release-time fill list.
+    wolfForm: 'Cat Form: melee damage and energy; movement speed increased by {pct}%',
     formTravel: 'Fleet Form: movement speed increased by {pct}%',
     formFireball: 'Ember Form: movement speed increased by {pct}%; attacks and spells are disabled',
     formMoonkin:
@@ -6449,7 +6451,7 @@ export const hudChromeStrings = {
   },
   enchantDescription: {
     enchant_weapon_lastflame_zeal:
-      "Your landed melee attacks can grant 50 Strength for 15 sec and heal you for 200 health. Healing modifiers apply. Each hit rolls 1% per 0.6 sec of the striking weapon's base speed. No internal cooldown. Each hand has its own buff; repeated triggers refresh that hand. Ranged attacks do not trigger this effect. Wolf Form uses its 1 sec base swing speed instead.",
+      "Your landed melee attacks can grant 50 Strength for 15 sec and heal you for 200 health. Healing modifiers apply. Each hit rolls 1% per 0.6 sec of the striking weapon's base speed. No internal cooldown. Each hand has its own buff; repeated triggers refresh that hand. Ranged attacks do not trigger this effect. Cat Form uses its 1 sec base swing speed instead.",
   },
   // Professions window (Professions 2.0): the read-only craft-wheel
   // window. Craft and pair NAMES resolve through craftName / archetypePair

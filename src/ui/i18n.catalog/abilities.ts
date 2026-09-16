@@ -65,8 +65,8 @@ const abilityStringsEn = {
       devotion: 'Devotion',
     },
     forms: {
-      bear: 'Bear',
-      cat: 'Wolf',
+      bear: 'Bruin',
+      cat: 'Cat',
     },
   },
 };
@@ -1201,19 +1201,19 @@ const classAbilityNamesEn = {
       ],
       [
         'cat_form',
-        'Wolf Form',
-        'Shapeshift into a wolf: agility rises with your level, attack power +8 plus 2 per level, your attacks use energy and combo points, you move 15% faster, and you generate 29% less threat. Shifting into any form grants Loping Stride, a short burst of movement speed. Cast again to return to caster form.',
+        'Cat Form',
+        'Shapeshift into a cat: agility rises with your level, attack power +8 plus 2 per level, your attacks use energy and combo points, you move 15% faster, and you generate 29% less threat. Shifting into any form grants Loping Stride, a short burst of movement speed. Cast again to return to caster form.',
       ],
       [
         'claw',
         'Rendclaw',
-        'Claw the enemy for weapon damage plus {damage}. Awards 1 combo point. Wolf Form only.',
+        'Claw the enemy for weapon damage plus {damage}. Awards 1 combo point. Cat Form only.',
         { feral: 'Each hit that lands adds 1 Old Blood (max 3).' },
       ],
       [
         'ferocious_bite',
         'Gorebite',
-        'Finishing move that causes {damage}. Wolf Form only.',
+        'Finishing move that causes {damage}. Cat Form only.',
         {
           feral:
             'Each hit that lands adds 1 Old Blood; at 3 Old Blood this button becomes Redharvest, which spends the Old Blood for a stronger strike that also instantly deals all the damage your Flense and Bloodrift would still have dealt, and restores energy.',
@@ -1268,22 +1268,22 @@ const classAbilityNamesEn = {
       [
         'dash',
         'Dash',
-        'Sprint forward, increasing movement speed by 50% for 15 sec. Wolf Form only.',
+        'Sprint forward, increasing movement speed by 50% for 15 sec. Cat Form only.',
       ],
       [
         'pounce',
         'Slinkstrike',
-        'A stealth opener that stuns the target for 2 sec. Awards 1 combo point. Wolf Form only. Out of stealth this button is Lunge.',
+        'A stealth opener that stuns the target for 2 sec. Awards 1 combo point. Cat Form only. Out of stealth this button is Lunge.',
       ],
       [
         'lunge',
         'Lunge',
-        'Lunge at an enemy up to 12 yd away. On arrival, deals 60% weapon damage and awards 1 combo point; a lunge cut short refunds its cooldown. Wolf Form only.',
+        'Lunge at an enemy up to 12 yd away. On arrival, deals 60% weapon damage and awards 1 combo point; a lunge cut short refunds its cooldown. Cat Form only.',
       ],
       [
         'hamstring_bite',
         'Takedown',
-        'Finishing move that stuns the target for 1 sec plus 1 sec per combo point (5 combo points: 6 sec). Wolf Form only.',
+        'Finishing move that stuns the target for 1 sec plus 1 sec per combo point (5 combo points: 6 sec). Cat Form only.',
       ],
       [
         'insect_swarm',
@@ -1292,13 +1292,13 @@ const classAbilityNamesEn = {
       ],
       [
         'tigers_fury',
-        'Wolfsblood',
-        'Surges {rage} energy and increases attack power by {buff} for {duration} sec. Wolf Form only.',
+        'Lynxblood',
+        'Surges {rage} energy and increases attack power by {buff} for {duration} sec. Cat Form only.',
       ],
       [
         'rip',
         'Bloodrift',
-        'Finishing move that makes the target bleed every 2 sec for 24 sec: 36 damage plus 24 per combo point spent (5 combo points: {damage} total). Wolf Form only.',
+        'Finishing move that makes the target bleed every 2 sec for 24 sec: 36 damage plus 24 per combo point spent (5 combo points: {damage} total). Cat Form only.',
         { feral: 'The landed hit adds 1 Old Blood (max 3).' },
       ],
       [
@@ -1549,7 +1549,7 @@ const classAbilityNamesEn = {
       [
         'feral_charge',
         'Primal Surge',
-        'Unleash a primal surge. In Wolf Form, Energy regeneration is increased by 100% for 10 sec. In Bruin Form, instantly generates 50 Rage. (Feral signature)',
+        'Unleash a primal surge. In Cat Form, Energy regeneration is increased by 100% for 10 sec. In Bruin Form, instantly generates 50 Rage. (Feral signature)',
       ],
       [
         'swiftmend',

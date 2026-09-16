@@ -675,8 +675,10 @@ interface AttributionTargetFixture {
 // Re-minted again for its review round: the ranked and required view
 // candidates now share the scan module's liveViewCandidate check, so the
 // same leaf moved once more. No capture was retaken.
+// Re-minted for the druid Cat Form merge with release/v0.43.0: the merged
+// runtimeRender.renderer leaf matches neither parent. No capture was retaken.
 const PINNED_POLISH_COMPOSITE_FINGERPRINT =
-  '07b43fcb404bb316c61f8efff90e4e54755fe3392de832f2aee8e09fbcaa8abf';
+  'c2d9fc0d9936681c4ece986481496ff334e2e2e7e2cf0ac271aaac88620d991f';
 
 function validPolishAttributionTargets(): AttributionTargetFixture[] {
   return [

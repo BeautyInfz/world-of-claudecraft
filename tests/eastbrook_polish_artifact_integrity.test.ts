@@ -1367,10 +1367,12 @@ const ACCEPTED_POLISH_V2_METADATA_PATH = path.join(REPO_ROOT, POLISH_SEAL_PATH);
 // seal from the swept file. No capture was retaken.
 // Re-minted again for the lot's review round (the shared liveViewCandidate
 // check moved the renderer leaf once more). No capture was retaken.
+// Re-minted for the druid Cat Form merge with release/v0.43.0: the merged
+// runtimeRender.renderer leaf matches neither parent. No capture was retaken.
 const ACCEPTED_POLISH_V2_METADATA_SHA256 =
-  'b08ec4d5faedd769c536a6c7aa1437861e7ff7906bf8d545a3a77106a458c099';
+  'f0ad8123b0101b6f348fc4cd57d3357b4082ca7c694fa6234a6eef4a5cb6fd9e';
 const ACCEPTED_POLISH_V2_COMPOSITE_PROVENANCE =
-  '07b43fcb404bb316c61f8efff90e4e54755fe3392de832f2aee8e09fbcaa8abf';
+  'c2d9fc0d9936681c4ece986481496ff334e2e2e7e2cf0ac271aaac88620d991f';
 const ACCEPTED_POLISH_V2_METADATA = readJsonFile<CaptureMetadata>(ACCEPTED_POLISH_V2_METADATA_PATH);
 const ACCEPTED_POLISH_V2_PROVENANCE = ACCEPTED_POLISH_V2_METADATA.polishProvenance;
 const ACCEPTED_POLISH_V2_TOWN_CONTRACT = ACCEPTED_POLISH_V2_METADATA.records[0]?.townContract;
@@ -2733,7 +2735,9 @@ describe('Eastbrook polish performance and contact evidence', () => {
       // second-order seal over the swept evidence bytes. No capture was retaken.
       // Review round of the same lot: recomputed LAST again over the re-swept
       // evidence. No capture was retaken.
-    ).toBe('8d2ecd6e9546a3bdb6361ab02b5f7052905f1aff45937b2338b49108f46c1ad4');
+      // Druid Cat Form merge with release/v0.43.0: recomputed LAST again over
+      // the re-swept evidence. No capture was retaken.
+    ).toBe('8606f2c34d84a83c24d9b8f734f0fe5fa4e1ab43b04a8b119322c78fb2a30ff5');
   });
 
   it('binds every historical after record to its accepted source and asset provenance', () => {

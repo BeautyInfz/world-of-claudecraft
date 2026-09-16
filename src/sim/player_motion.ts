@@ -41,6 +41,7 @@ import {
 } from './ride_height';
 import { GHOST_RUN_MULT } from './spirit';
 import {
+  CAT_FORM_MOVE_MULT,
   DT,
   ENRAGE_MOVE_MULT,
   type Entity,
@@ -48,7 +49,6 @@ import {
   normAngle,
   RUN_SPEED,
   TURN_SPEED,
-  WOLF_FORM_MOVE_MULT,
 } from './types';
 import {
   groundHeight,
@@ -235,9 +235,9 @@ export function moveSpeedMult(e: Entity, extraSpeedPct = 0): number {
     }
     // Fury Enrage: +10% move speed (non-stacking with other speed buffs).
     if (a.kind === 'enrage') speed = Math.max(speed, ENRAGE_MOVE_MULT);
-    // Druid Wolf Form: +15% passive move speed. form_cat's value is the threat
+    // Druid Cat Form: +15% passive move speed. form_cat's value is the threat
     // multiplier, not a speed, so the constant is what rides the max.
-    if (a.kind === 'form_cat') speed = Math.max(speed, WOLF_FORM_MOVE_MULT);
+    if (a.kind === 'form_cat') speed = Math.max(speed, CAT_FORM_MOVE_MULT);
   }
   // Mounted travel: the active ground mount rides the entity mirror (mountKey,
   // synced over the wire like skin), so the online self-extrapolator predicts

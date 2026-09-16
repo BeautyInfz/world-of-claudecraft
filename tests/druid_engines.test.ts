@@ -223,7 +223,7 @@ describe('Moongrove engine', () => {
 });
 
 describe('Wildfang engine', () => {
-  it('applies Wildfang AP tuning to the Wolf Form bonus', () => {
+  it('applies Wildfang AP tuning to the Cat Form bonus', () => {
     const { sim, player } = rig('feral');
     const meta = sim.meta(player.id);
     expect(meta).toBeDefined();
@@ -614,7 +614,7 @@ describe('Fleet Form control break (baseline) and the Wildshift gate', () => {
     expect(wears(player, 'root')).toBe(false);
   });
 
-  it('Wolf Form strips nothing without Wildshift', () => {
+  it('Cat Form strips nothing without Wildshift', () => {
     const { sim, player } = rig('feral');
     player.auras.push(
       control(player, 'root', 'entangling_roots'),
@@ -625,7 +625,7 @@ describe('Fleet Form control break (baseline) and the Wildshift gate', () => {
     expect(wears(player, 'slow')).toBe(true);
   });
 
-  it('Wolf Form strips both with Wildshift selected', () => {
+  it('Cat Form strips both with Wildshift selected', () => {
     const { sim, player } = rig('feral', { 5: 'dru_r5_improved_wrath' });
     player.auras.push(
       control(player, 'root', 'entangling_roots'),

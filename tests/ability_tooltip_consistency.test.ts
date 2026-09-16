@@ -73,7 +73,7 @@ const NUMBER_ALLOWLIST: Record<string, number[]> = {
   challenging_roar: [3, 10],
   // "attack power +8 plus 2 per level": the cat-form AP constants in
   // recalcPlayerStats (entity.ts), not effect fields. "you move 15% faster":
-  // WOLF_FORM_MOVE_MULT (types.ts), read by moveSpeedMult; the form_cat effect
+  // CAT_FORM_MOVE_MULT (types.ts), read by moveSpeedMult; the form_cat effect
   // value is the threat multiplier.
   cat_form: [8, 2, 15],
   // "for 30 sec": the sunder aura duration hardcoded in effect_dispatch.ts.

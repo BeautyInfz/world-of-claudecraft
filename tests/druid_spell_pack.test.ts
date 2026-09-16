@@ -120,7 +120,7 @@ describe('druid spell pack — level gating', () => {
     // The choice-row unlock guard moved travel_form (11), bash (8), and rip (14)
     // earlier so the rows that modify them are live at unlock, the feral
     // enablement pass moved pounce to 8 so Stalk has an early payoff, and the
-    // Wolf Form mobility pass moved dash to 12 (docs/design/druid-wolf-mobility.md);
+    // Cat Form mobility pass moved dash to 12 (docs/design/druid-cat-mobility.md);
     // the rest of the pack still lands 16 to 20.
     const known15 = abilitiesKnownAt('druid', 15).map((k) => k.def.id);
     const stillLate = NEW_DRUID.filter(
@@ -148,7 +148,7 @@ describe('druid spell pack — casting applies effects', () => {
     const a = sim.addPlayer('druid', 'Cat');
     const e = sim.entities.get(a)!;
     sim.setPlayerLevel(20, a);
-    giveForm(sim, a, 'form_cat', 'Wolf Form');
+    giveForm(sim, a, 'form_cat', 'Cat Form');
     // The giveForm shortcut leaves the pool mid-conversion (still mana), and
     // the next cast finishes the switch by refilling to max, which would mask
     // the surge. Settle the pool as energy FIRST, then the free cast plus 30
@@ -232,7 +232,7 @@ describe('druid spell pack — casting applies effects', () => {
     expect(travel / base).toBeCloseTo(1.4, 1);
   });
 
-  it('Prowl actually moves the druid at half speed in Wolf Form', () => {
+  it('Prowl actually moves the druid at half speed in Cat Form', () => {
     const distanceOver = (withProwl: boolean): number => {
       const sim = makeWorld();
       const pid = sim.addPlayer('druid', withProwl ? 'Prowler' : 'Runner');
@@ -404,8 +404,8 @@ describe('druid spell pack — casting applies effects', () => {
     sim.tick();
     expect(e.auras.some((a) => a.id === 'prowl' && a.kind === 'stealth')).toBe(true);
     // Stalk moves at full speed (kit pass 2: stealth value 1.0) on top of the
-    // Wolf Form passive (+15%, WOLF_FORM_MOVE_MULT): 1.0 x 1.15. The tooltip's
-    // speed claim is relative to Wolf Form, the form Stalk requires.
+    // Cat Form passive (+15%, CAT_FORM_MOVE_MULT): 1.0 x 1.15. The tooltip's
+    // speed claim is relative to Cat Form, the form Stalk requires.
     expect((sim as any).moveSpeedMult(e)).toBeCloseTo(1.15);
     advanceTicks(sim, 40);
 
@@ -424,7 +424,7 @@ describe('druid spell pack — casting applies effects', () => {
     const a = sim.addPlayer('druid', 'Dasher');
     const e = sim.entities.get(a)!;
     sim.setPlayerLevel(20, a);
-    giveForm(sim, a, 'form_cat', 'Wolf Form');
+    giveForm(sim, a, 'form_cat', 'Cat Form');
     e.resource = 100;
     sim.castAbility('dash', a);
     sim.tick();

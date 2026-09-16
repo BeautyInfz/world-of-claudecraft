@@ -25,7 +25,7 @@ export const PIN_VFX_SPEC = {
 } satisfies AbilityVfxSpec;
 
 // VFX retune pending: Lunge, the out-of-stealth Slinkstrike. Bruin Rush's
-// dash (no spectral bear, the wolf is its own body) into Slinkstrike's claw
+// dash (no spectral bear, the cat is its own body) into Slinkstrike's claw
 // strike at the landing.
 export const LUNGE_VFX_SPEC = {
   c: '#b4a8e0',
@@ -49,7 +49,7 @@ export const LUNGE_VFX_FULL_SPEC = {
   linger: 1,
 } satisfies AbilityVfxFullSpec;
 
-// VFX retune pending: Takedown (id hamstring_bite), the Wolf control finisher. Slinkstrike's
+// VFX retune pending: Takedown (id hamstring_bite), the Cat control finisher. Slinkstrike's
 // claw strike (stars on, the stun read Concuss and Low Blow share).
 export const HAMSTRING_BITE_VFX_SPEC = {
   c: '#d41f2e',

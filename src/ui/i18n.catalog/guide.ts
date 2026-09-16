@@ -649,7 +649,7 @@ export const guideStrings = {
     // tables, not on party membership).
     threatTitle: 'Who the enemy hits',
     threatBody:
-      "Every enemy keeps a private tally of who has annoyed it most. Damage adds to it, and so does healing: a heal puts threat on the enemies already fighting the person you healed, shared out between them, so the safest heal is one on someone the tank has already taken hold of. Tanks turn on a guarded stance or a protective form that multiplies everything they generate, while the druid's Wolf Form sheds threat instead, and a taunt lifts the caster straight to the top of the tally and pins the enemy on them for a few seconds. Enemies do not switch the instant somebody passes the tank: it takes a clear lead to pull one off, and a bigger lead at range than in melee, so a little patience at the start of a pull keeps the fight where it belongs.",
+      "Every enemy keeps a private tally of who has annoyed it most. Damage adds to it, and so does healing: a heal puts threat on the enemies already fighting the person you healed, shared out between them, so the safest heal is one on someone the tank has already taken hold of. Tanks turn on a guarded stance or a protective form that multiplies everything they generate, while the druid's Cat Form sheds threat instead, and a taunt lifts the caster straight to the top of the tally and pins the enemy on them for a few seconds. Enemies do not switch the instant somebody passes the tank: it takes a clear lead to pull one off, and a bigger lead at range than in melee, so a little patience at the start of a pull keeps the fight where it belongs.",
     // Environmental hazards. Both are number-free by design: breath drain and the
     // drown pulse live in src/sim/breath.ts, the open-sea clock in src/sim/fatigue.ts.
     hazardsTitle: 'The water can kill you',
@@ -1338,10 +1338,12 @@ export const guideStrings = {
       'A heal or a damaging spell cast while shifted shifts you out for you. Leaving a shape that way is free and does not spend your global cooldown, so an instant spell goes off the moment you press it. Shifting back in is an ordinary ability, and still costs mana and your global cooldown.',
     formsMoonwing:
       'A Moongrove druid gains one more shape, Moonwing Form, the caster shape a Balance druid fights in. It is the one animal shape that keeps your spells, and your wand only works in it or in your normal caster form.',
-    // The Wolf engage loop (Wildfang kit pass 2): names the abilities, never
-    // their numbers, so the sentence stays spoiler-safe.
+    // The Cat engage loop (Wildfang kit pass 2): names the abilities, never
+    // their numbers, so the sentence stays spoiler-safe. The key name predates
+    // the Cat Form rename; the English follows the rename and the overlays
+    // are on the release-time fill list.
     formsWolfEngage:
-      'A Wolf opens a fight with Bruin Rush, shifts straight into Wolf Form to Pin the target, closes the gap with Lunge when it is not stalking, and holds an enemy still with Takedown.',
+      'A Cat opens a fight with Bruin Rush, shifts straight into Cat Form to Pin the target, closes the gap with Lunge when it is not stalking, and holds an enemy still with Takedown.',
     formLine: {
       form_bear:
         'The tanking shape: a heavy hide, rage instead of mana, and extra threat so enemies keep swinging at you.',
@@ -1359,7 +1361,7 @@ export const guideStrings = {
     // gallery's labels so a reword over there cannot silently rename the forms.
     formName: {
       form_bear: 'Bruin Form',
-      form_cat: 'Wolf Form',
+      form_cat: 'Cat Form',
       form_travel: 'Fleet Form',
     },
   },
@@ -2462,7 +2464,7 @@ export const guideStrings = {
     // The in-game shapeshift names (bear_form/cat_form/travel_form in classes.ts).
     groupForms: 'Druid Forms',
     formBear: 'Bruin Form',
-    formCat: 'Wolf Form',
+    formCat: 'Cat Form',
     formTravel: 'Fleet Form',
     groupCreatures: 'Creatures',
     groupPets: 'Warlock Demons',

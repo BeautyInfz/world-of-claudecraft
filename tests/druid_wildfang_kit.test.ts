@@ -18,11 +18,11 @@ import { createMob } from '../src/sim/entity';
 import { moveSpeedMult } from '../src/sim/player_motion';
 import { Sim } from '../src/sim/sim';
 import { stunDrCategory } from '../src/sim/stun_dr';
-import { dist2d, type Entity, MELEE_RANGE, WOLF_FORM_MOVE_MULT } from '../src/sim/types';
+import { CAT_FORM_MOVE_MULT, dist2d, type Entity, MELEE_RANGE } from '../src/sim/types';
 import { localizeSimAuraName } from '../src/ui/sim_i18n';
 
 // Wildfang kit pass 2 (engage, control, opener): the baseline shift sprint and
-// its Longstride talent, the Bruin Rush to Wolf Form Pin rider, full-speed
+// its Longstride talent, the Bruin Rush to Cat Form Pin rider, full-speed
 // Stalk, the Lunge shape of Slinkstrike, and the Takedown finisher. Every
 // case drives the real cast path (Sim.castAbility plus ticks) so the cost gate,
 // the replacement resolver, and the aura funnels are the ones the game runs.
@@ -139,7 +139,7 @@ describe('Loping Stride is baseline and Longstride retunes it', () => {
   });
 });
 
-describe('Pin, the Bruin Rush to Wolf Form rider', () => {
+describe('Pin, the Bruin Rush to Cat Form rider', () => {
   function rushRig() {
     const { sim, player } = rig();
     const target = addTargetMob(sim, 12);
@@ -148,7 +148,7 @@ describe('Pin, the Bruin Rush to Wolf Form rider', () => {
     return { sim, player, target };
   }
 
-  it('makes Wolf Form free inside the 3 sec window and Pins the Rush target', () => {
+  it('makes Cat Form free inside the 3 sec window and Pins the Rush target', () => {
     const { sim, player, target } = rushRig();
     const parkedBefore = player.savedMana;
     cast(sim, 'bear_charge');
@@ -253,7 +253,7 @@ describe('Pin, the Bruin Rush to Wolf Form rider', () => {
 });
 
 describe('Stalk moves at full speed', () => {
-  it('stealths a Wolf at 1.0x while rogue Duskveil keeps its 0.5x crawl', () => {
+  it('stealths a Cat at 1.0x while rogue Duskveil keeps its 0.5x crawl', () => {
     const { sim, player } = rig();
     cast(sim, 'cat_form');
     expect(moveSpeedMult(player)).toBeCloseTo(1.6); // the shift's Loping Stride
@@ -261,9 +261,9 @@ describe('Stalk moves at full speed', () => {
     cast(sim, 'prowl');
     const stealth = player.auras.find((a) => a.kind === 'stealth');
     expect(stealth?.value).toBe(1);
-    // Full speed means the Wolf Form passive (+15%, the mobility pass) is
-    // untouched by stealth: 1.0 x WOLF_FORM_MOVE_MULT.
-    expect(moveSpeedMult(player)).toBeCloseTo(WOLF_FORM_MOVE_MULT);
+    // Full speed means the Cat Form passive (+15%, the mobility pass) is
+    // untouched by stealth: 1.0 x CAT_FORM_MOVE_MULT.
+    expect(moveSpeedMult(player)).toBeCloseTo(CAT_FORM_MOVE_MULT);
 
     const rogue = new Sim({ seed: 29, playerClass: 'rogue', autoEquip: true });
     rogue.setPlayerLevel(20);
@@ -401,7 +401,7 @@ describe('Lunge, the out-of-stealth shape of Slinkstrike', () => {
   });
 });
 
-describe('Takedown (id hamstring_bite), the Wolf control finisher', () => {
+describe('Takedown (id hamstring_bite), the Cat control finisher', () => {
   // The Low Blow numbers: 1 sec plus 1 sec per point, 6 sec at five.
   it.each([
     [1, 2],
@@ -448,7 +448,7 @@ describe('Takedown (id hamstring_bite), the Wolf control finisher', () => {
     expect(stunDrCategory('pounce')).toBe('openerStun');
   });
 
-  it('is learned at 12 as part of the Wolf kit', () => {
+  it('is learned at 12 as part of the Cat kit', () => {
     expect(CLASSES.druid.abilities).toContain('hamstring_bite');
     expect(abilitiesKnownAt('druid', 11).map((k) => k.def.id)).not.toContain('hamstring_bite');
     expect(abilitiesKnownAt('druid', 12).map((k) => k.def.id)).toContain('hamstring_bite');
