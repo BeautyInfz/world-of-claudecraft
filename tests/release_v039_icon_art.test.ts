@@ -4,7 +4,12 @@ import path from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { ABILITIES, ITEMS } from '../src/sim/data';
 import { ActionBarController } from '../src/ui/hud/action_bar/action_bar_controller';
-import { abilityImageUrl, ITEM_ART_PENDING, itemImageUrl } from '../src/ui/icons';
+import {
+  ABILITY_ART_PENDING,
+  abilityImageUrl,
+  ITEM_ART_PENDING,
+  itemImageUrl,
+} from '../src/ui/icons';
 
 interface AcceptedAsset {
   kind: 'ability' | 'aura';
@@ -449,10 +454,21 @@ describe('release v0.39 icon-art second-pass lineage', () => {
         hotbarItems: { live: number; painted: number };
       };
     };
-    const liveAbilityIds = Object.keys(ABILITIES);
+    // The ART-SUBJECT split, the same rule the hotbar items use below: an
+    // explicitly parked id (ABILITY_ART_PENDING, glyph-only until its art
+    // pass) is outside the painted census, and a parked id that ships art
+    // anyway is a stale entry.
+    const pendingAbilityIds = Object.keys(ABILITIES).filter((id) => ABILITY_ART_PENDING.has(id));
+    const liveAbilityIds = Object.keys(ABILITIES).filter((id) => !ABILITY_ART_PENDING.has(id));
     const paintedAbilityIds = new Set(
       liveAbilityIds.filter((id) => shippingImageExists(abilityImageUrl(id))),
     );
+    expect(
+      pendingAbilityIds.filter((id) =>
+        shippingImageExists(`/ui/skills/${ABILITIES[id].class}/${id}.webp`),
+      ),
+      'no parked ability ships committed art (a stale ABILITY_ART_PENDING entry)',
+    ).toEqual([]);
     const liveHotbarItemIds = Object.keys(ITEMS).filter((id) =>
       inventoryController.isHotbarItemId(id),
     );

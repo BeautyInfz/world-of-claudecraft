@@ -2013,7 +2013,7 @@ export const GUIDE_CLASSES: GuideClassInfo[] = [
       },
       {
         "id": "cat_form",
-        "name": "Wolf Form"
+        "name": "Cat Form"
       },
       {
         "id": "prowl",
@@ -2076,12 +2076,16 @@ export const GUIDE_CLASSES: GuideClassInfo[] = [
         "name": "Slinkstrike"
       },
       {
+        "id": "hamstring_bite",
+        "name": "Takedown"
+      },
+      {
         "id": "insect_swarm",
         "name": "Stinging Swarm"
       },
       {
         "id": "tigers_fury",
-        "name": "Wolfsblood"
+        "name": "Lynxblood"
       },
       {
         "id": "rip",
@@ -2557,9 +2561,7 @@ export const GUIDE_DRUID_FORMS: GuideDruidForm[] = [
   {
     "id": "form_cat",
     "model": "form_cat",
-    "tint": "#d08b45",
-    "tintStrength": 0.35,
-    "still": "/guide-stills/form_cat__d08b45__s35.webp"
+    "still": "/guide-stills/form_cat.webp"
   },
   {
     "id": "form_travel",
@@ -20256,10 +20258,9 @@ export const GUIDE_MODELS: Record<string, GuideModelSpec> = {
     "height": 2.35
   },
   "form_cat": {
-    "url": "models/creatures/wolf_basic.glb",
-    "idle": "Idle",
-    "height": 1.6,
-    "tintStrength": 0.35
+    "url": "models/creatures/druid_cat_form.glb",
+    "idle": "Idle_Look",
+    "height": 1.92
   },
   "form_travel": {
     "url": "models/creatures/chicken_cow.glb",

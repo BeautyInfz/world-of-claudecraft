@@ -37,6 +37,7 @@ import type { BiomeId, ZoneDef } from '../sim/types';
 import {
   ALL_CLASSES,
   type Entity,
+  FISHING_CAST_ID,
   IGNIVAR_BOSS_ID,
   isMechWearer,
   type SimEvent,
@@ -163,7 +164,7 @@ import {
 import {
   advanceSwimPitch,
   isFallingAtSpeed,
-  isSubmergedAtDepth,
+  isSubmergedAtHeadHeight,
   isSwimmingAtDepth,
   isWadingAtDepth,
   SWIM_ENTER_FEET_DEPTH,
@@ -271,12 +272,9 @@ import { buildEmberFeatures, type EmberFeaturesView } from './ember_features';
 import { buildEmberPools, type EmberPoolsView } from './ember_pools';
 import { applyCharacterFormVisibility } from './entity_gate_stand_in_core';
 import {
-  entityViewCandidatePriority,
   entityViewDistanceSq,
-  entityViewIsAdmitted,
   isDistanceCullExemptObject,
   isPersistentPortalObject,
-  entityViewShouldDrop as shouldDropView,
   viewBuildClass,
 } from './entity_view_policy_core';
 import { EntryDetailHorizonAdmission } from './entry_detail_horizon';
@@ -661,7 +659,7 @@ import { createRevealGate } from './reveal_gate';
 import type { RevealGateCore } from './reveal_gate_core';
 import { type RickshawMountViewState, updateRollingMountLoop } from './rickshaw_mount';
 import { FOOT_RUN_SPEED, updateRiddenMountAudio } from './ridden_mount_audio';
-import { collectRiftAmbientSources } from './rift_ambience';
+import { RiftAmbienceSources } from './rift_ambience';
 import { buildRiftRankBadge } from './rift_rank';
 import { syncRigMatrixFreeze, unfreezeRigMatrices } from './rig_visibility_freeze';
 import { RingOfFrostVisuals } from './ring_of_frost_visual';
@@ -763,12 +761,14 @@ import type { VehicleSuspensionRig } from './vehicle_suspension_fx';
 import { SCHOOL_COLORS, Vfx } from './vfx';
 import { createOffsetVfxAnchor, createVfxAnchor, type VfxAnchorPose } from './vfx_anchor';
 import { buildCastVfxBasicStandIns } from './vfx_basic_materials';
+import { sampleCreatedViewType, type ViewCandidate } from './view_candidate_pool_core';
 import {
-  finishViewCandidates,
-  sampleCreatedViewType,
-  type ViewCandidate,
-  writeViewCandidate,
-} from './view_candidate_pool_core';
+  collectDoomedViewsInto,
+  collectMissingViewCandidatesInto,
+  createViewCandidateScanState,
+  liveViewCandidate,
+  viewCandidateScanDue,
+} from './view_candidate_scan_core';
 import {
   runtimeViewCreateBudget,
   type ViewCreateBudgetInput,
@@ -1467,6 +1467,7 @@ export class Renderer {
   private tmpV = new THREE.Vector3();
   private viewCandidates: ViewCandidate[] = [];
   private viewCandidatePool: ViewCandidate[] = [];
+  private readonly viewCandidateScan = createViewCandidateScanState();
   private readonly characterLodPlan: CharacterLodBands = {
     shadowRangeSq: 0,
     lodRangeSq: 0,
@@ -1905,6 +1906,7 @@ export class Renderer {
   // updateCamera: avoids allocating two arrays plus an object per match every
   // frame regardless of whether a rift is nearby (review finding, PR #2687).
   private readonly riftAmbienceScratch: AmbientPointSource[] = [];
+  private readonly riftAmbience = new RiftAmbienceSources();
   private readonly ambientPointsMergedScratch: AmbientPointSource[] = [];
 
   // 2v2 Fiesta juice: trauma-based screen shake (decays each frame). The
@@ -4690,38 +4692,37 @@ export class Renderer {
     return runtimeViewCreateBudget(input, this.viewCreateBudgetState);
   }
 
+  // The walk runs when view_candidate_scan_core says so unless forced.
   private collectMissingViewCandidates(
     center: Entity,
     rangeSq: number,
     includeRequired: boolean,
+    force = false,
   ): void {
-    let count = 0;
-    const questLog = this.sim.questLog;
-    for (const e of this.sim.entities.values()) {
-      if (this.views.has(e.id)) continue;
-      if (!entityViewIsAdmitted(e, questLog, this.questObjectHidden)) continue;
-      const required = e.id === center.id || e.id === center.targetId;
-      if (required && !includeRequired) continue;
-      const d2 = entityViewDistanceSq(e, center);
-      if (!required && d2 > rangeSq && !isDistanceCullExemptObject(e)) continue;
-      writeViewCandidate(
-        this.viewCandidatePool,
-        this.viewCandidates,
-        count,
-        e.id,
-        d2,
-        entityViewCandidatePriority(e, center, d2),
-      );
-      count++;
-    }
-    finishViewCandidates(this.viewCandidates, count);
+    const scanDue = viewCandidateScanDue(
+      this.viewCandidateScan,
+      this.sim.entityRosterVersion,
+      this.views.size,
+      center,
+      rangeSq,
+      force,
+    );
+    if (!scanDue) return;
+    collectMissingViewCandidatesInto(this.viewCandidates, this.viewCandidatePool, {
+      entities: this.sim.entities,
+      views: this.views,
+      questLog: this.sim.questLog,
+      questObjectHidden: this.questObjectHidden,
+      center,
+      rangeSq,
+      includeRequired,
+    });
   }
 
   private createRequiredView(id: number | null, createdViewTypes: string[]): number {
     if (id === null) return 0;
-    const e = this.sim.entities.get(id);
-    if (!e || this.views.has(e.id)) return 0;
-    if (!entityViewIsAdmitted(e, this.sim.questLog, this.questObjectHidden)) return 0;
+    const e = liveViewCandidate(id, this.sim, this.views, this.questObjectHidden);
+    if (!e) return 0;
     if (!this.viewCreateRetry.canAttempt(e.id, 'view', performance.now())) return 0;
     this.createView(e);
     sampleCreatedViewType(createdViewTypes, e);
@@ -4820,8 +4821,8 @@ export class Renderer {
         trimmed = true;
         break;
       }
-      const e = this.sim.entities.get(candidate.id);
-      if (!e || this.views.has(e.id)) continue;
+      const e = liveViewCandidate(candidate.id, this.sim, this.views, this.questObjectHidden);
+      if (!e) continue;
       // a recent failed build (assets unavailable) sits out its cooldown so it
       // cannot burn a budget slot every frame
       if (!this.viewCreateRetry.canAttempt(e.id, 'view', performance.now())) continue;
@@ -6109,7 +6110,7 @@ export class Renderer {
         priority: 20,
         required: true,
         run: () => {
-          this.collectMissingViewCandidates(p, VIEW_PREWARM_RANGE_SQ, false);
+          this.collectMissingViewCandidates(p, VIEW_PREWARM_RANGE_SQ, false, true);
           candidateViews = this.viewCandidates.length;
           const result = this.createCandidateViews(
             nearbyPrewarmViewBudget(policy.maxViews, createdViews, policy.nearbyViewFloor),
@@ -9931,16 +9932,13 @@ export class Renderer {
       Infinity,
       true,
     ).created;
-    this.doomedIds.length = 0;
-    for (const id of this.views.keys()) {
-      const e = sim.entities.get(id);
-      // The pure policy also retires quest objects after turn-in or abandon.
-      if (
-        shouldDropView(e, p, sim.questLog, this.questObjectHidden, this.entityViewDestroyRangeSq)
-      ) {
-        this.doomedIds.push(id);
-      }
-    }
+    collectDoomedViewsInto(this.doomedIds, this.views.keys(), {
+      entities: sim.entities,
+      questLog: sim.questLog,
+      questObjectHidden: this.questObjectHidden,
+      center: p,
+      destroyRangeSq: this.entityViewDestroyRangeSq,
+    });
     for (const id of this.doomedIds) {
       this.removeView(id);
       removedViews++;
@@ -9994,6 +9992,7 @@ export class Renderer {
           this.entityViewDestroyRangeSq,
         );
       v.inDrawRange = inDrawRange;
+      if (e.castingAbility === FISHING_CAST_ID) this.fishingBobbers.noteAngler(e.id);
       if (!inDrawRange) {
         v.group.visible = false;
         continue;
@@ -10762,11 +10761,11 @@ export class Renderer {
       // sim owns the DEPTH (players dive with the dive key); this is the
       // presentation read of it, taken off the same displayed coordinates as
       // the swim latch so pose and splash can never disagree.
-      const submerged = isSubmergedAtDepth(
+      const submerged = isSubmergedAtHeadHeight(
         v.wasSubmerged,
         swimming,
         feetDepth,
-        active.height * e.scale,
+        active.swimHeadHeight * e.scale,
       );
       const vx = ax - v.lastX,
         vz = az - v.lastZ;
@@ -10781,7 +10780,7 @@ export class Renderer {
       v.lastZ = az;
       v.lastY = ay;
       v.swimPitch = advanceSwimPitch(v.swimPitch, vy, swimming && e.kind === 'player', dt);
-      const loco = updateLocomotionInto(v.locoState, v.loco, vx, vz, facing, dt);
+      const loco = updateLocomotionInto(v.locoState, v.loco, vx, vz, facing, dt, active.gait);
       const moving = loco.moving;
       v.fireballTravelVisual = syncFireballTravelVisual(
         v.fireballTravelVisual,
@@ -10964,7 +10963,7 @@ export class Renderer {
         (e.sitting || e.eating !== null || e.drinking !== null || riderMounted);
       // Facts about the ENTITY that override what its displayed motion implies
       // (battle-stance engagement, ice-slide suppression): anim_state_entity_core.
-      applyEntityAnimOverrides(st, e, visuallyDead, characterEffects);
+      applyEntityAnimOverrides(st, e, visuallyDead, characterEffects, hasStealth);
       // Reset and prewarm mount audio BEFORE this frame can dispatch movement
       // cues. A completed summon or live swap must not start the new idle/run
       // voice only to have the transition edge immediately tear it down below.
@@ -12510,7 +12509,7 @@ export class Renderer {
       // Only at the water's edge / in it, sampled at the player, so a loose
       // threshold made the loop bleed across the low marsh from far off.
       const nearWater = !inDungeon && groundHeight(px, pz, seed) < waterLevelAt(px, pz, seed) + 0.4;
-      collectRiftAmbientSources(this.sim.entities, this.riftAmbienceScratch);
+      this.riftAmbience.collect(this.sim, this.sim.player.pos.x, this.riftAmbienceScratch);
       // Early-out: no live rift ambience this frame, so skip building the
       // merged array entirely and hand the static set straight through.
       let points: readonly AmbientPointSource[] = this.ambientPointSources;

@@ -163,6 +163,16 @@
     --panel-edge: #08080d;
     --color-text-error: #ff8f85;
     --color-text-success: #7fdc4f;
+    /* The signpost guild board's category family (the sprout chip and the
+       filter strip, src/ui/hud/guild_board/): one soft green read at four
+       strengths through color-mix, its icon tint, its two text weights, and
+       the filter chip's resting text. Softer than --color-text-success on
+       purpose: a tag, not a status. */
+    --color-category: #6fbf7a;
+    --color-category-icon: #8fe09a;
+    --color-category-text: #bfeec6;
+    --color-category-text-active: #d6f5da;
+    --color-filter-chip-text: #e6dcc0;
     /* Raid boss journal palette. These tokens keep its forged-fire treatment in one
        themeable source while the component sheets own only layout and composition. */
     --color-rbg-frame-border-base: #2e180d;
@@ -1095,6 +1105,29 @@
     /* The Claudium store hero's cool wash over its coin artwork. */
     --color-woc-store-hero-hi: #030a10;
     --color-woc-store-hero-lo: #04111b;
+    /* The leaderboard window's ranking ledger (src/styles/components.css,
+       leaderboard section). A FIXED dark ground whose foregrounds are fixed
+       light values, so no preset re-emits any of these (DESIGN.md 4.1; pinned
+       with their contrast pairs by tests/leaderboard_ranking_tokens.test.ts).
+       Gold edges, rules and headings reuse the --color-gold-* ramp, shadows the
+       --color-keyline, highlights --color-white; alpha steps compose through
+       color-mix. The first podium place reads --color-gold-500. */
+    --color-ranking-ground-top: #1c1531;
+    --color-ranking-ground: #120c20;
+    --color-ranking-ground-deep: #0c0816;
+    --color-ranking-ground-glow: #6d3fd4;
+    --color-ranking-well: #150f26;
+    --color-ranking-control: #2a1f47;
+    --color-ranking-control-hover: #3a2b62;
+    --color-ranking-control-hover-deep: #1d1533;
+    --color-ranking-control-border: #4c2f8a;
+    --color-ranking-selected: #8b5cf6;
+    --color-ranking-emphasis: #c4a6ff;
+    --color-ranking-text: #fbf6ff;
+    --color-ranking-text-soft: #c9bde4;
+    --color-ranking-text-muted: #a99bc8;
+    --color-ranking-place-second: #c9ccd3;
+    --color-ranking-place-third: #c98a4b;
     /* target size */
     /* Stance socket on a coarse pointer: the same 40px box, kept as its own
        token so touch can diverge from the desktop row without a rule rewrite. */

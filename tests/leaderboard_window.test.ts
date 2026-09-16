@@ -395,7 +395,7 @@ describe('leaderboard_window: rank/level/virtual level/prestige render through f
       /&starf;\$\{formatNumber\(r\.prestigeRank, \{ maximumFractionDigits: 0 \}\)\}<\/span>/,
     );
     expect(code).toMatch(
-      /t\('game\.prestige\.rank'\)\} \$\{formatNumber\(r\.prestigeRank, \{ maximumFractionDigits: 0 \}\)\}/,
+      /t\('hudChrome\.leaderboard\.prestigeTitle', \{ rank: formatNumber\(r\.prestigeRank, \{ maximumFractionDigits: 0 \}\) \}\)/,
     );
     expect(code).not.toMatch(/&starf;\$\{r\.prestigeRank\}/);
   });

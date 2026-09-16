@@ -677,15 +677,24 @@ GPU work signs. Each rule names its seam and its guard.
   `?shaderwarmready=<ms>` lengthens the worker's ready deadline for a probe on a
   backend whose GPU process is busy at boot (Windows OpenGL).
   THE CHARACTER-SELECT CORPUS (`src/game/shader_cache_warmup.ts`, decisions in
-  `shader_warmup_core.ts`) is the other arm of the same cache, and the ONE producer
-  that is not a client of the scheduler, by construction rather than by exemption:
-  it replays the previous session's recorded program set on a hidden context while
-  the character-select screen is idle, before any `Renderer` (and so any
-  `background_gpu_queue`) exists, one program per animation frame, and every world
-  entry stops it as its first statement (`enterWorld` and `startOffline`, pinned by
-  the wiring block of `tests/shader_cache_warmup.test.ts`), so no live frame ever
-  shares the main thread with a submission; what the GPU process still resolves
-  after the click is the entry's own program set landing in the shared cache. It
+  `shader_warmup_core.ts`) is the other arm of the same cache. Its REPLAY half is
+  the ONE producer that is not a client of the scheduler, by construction rather
+  than by exemption: it replays the previous session's recorded program set on a
+  hidden context while the character-select screen is idle, before any `Renderer`
+  (and so any `background_gpu_queue`) exists, one program per animation frame, and
+  every world entry stops it as its first statement (`enterWorld` and
+  `startOffline`, pinned by the wiring block of `tests/shader_cache_warmup.test.ts`),
+  so no live frame ever shares the main thread with a submission; what the GPU
+  process still resolves after the click is the entry's own program set landing in
+  the shared cache. Its RECORD half runs in live frames 25 s after the reveal, so it
+  IS a client: `main.ts` hands it the renderer's queue
+  (`finishShaderWarmup(renderer.webgl, { queue: renderer.backgroundGpuWork })`) and
+  `src/game/shader_corpus_slices.ts` runs one BACKGROUND unit per BATCH of
+  program reads (`CORPUS_READ_BATCH`; a read is a synchronous driver round trip
+  that waits for the GPU frame in flight, paid once per batch), per chunk
+  encoded and per chunk fed to the gzip stream (the deflate runs on the main
+  thread inside the write, so the gzip unit holds its tail), under the `corpus-read`,
+  `corpus-encode` and `corpus-gzip` label kinds the budget prices separately. It
   reads the same stored option and the same pin as the worker (`readWarmupQuery`):
   Off silences it, `auto` and On keep it (the backend rule is the worker's: a
   second context linking DURING play; this arm was measured on the OpenGL desktops
@@ -805,6 +814,18 @@ dungeon-aware wrapper (flat floor past `DUNGEON_X_THRESHOLD`); plain
 collision/movement.
 
 ## Performance discipline: this runs at frame rate
+- **A per-frame roster walk runs on CHANGE, never on the frame.** The missing-view
+  candidate scan lives in `view_candidate_scan_core.ts`: `viewCandidateScanDue` walks
+  the roster at once when `IWorld.entityRosterVersion` (bumped by both worlds on every
+  entity add or drop) or the view count changed, when the player, their target or the
+  create range changed, when the center jumped past `VIEW_CANDIDATE_RESCAN_MOVE_YD`
+  (a teleport), and otherwise every `VIEW_CANDIDATE_RESCAN_FRAMES` frames for an entity
+  crossing the draw-range edge; in between the renderer consumes the last ranked list
+  (the drop pass stays per frame). A new input the list depends on (a quest-log flip, a
+  phase change) is a new trigger there, never a return to the per-frame walk. The same
+  version keys the meters' party set and the rift ambience; a raid readout walks the
+  instance slots (`src/sim/instance_entities.ts`); the tree occluder fade walks a grid
+  (`tree_hide_index_core.ts`); the fishing bobbers take their anglers from the view loop.
 - Three.js is **version-pinned in `package.json`**; the post chain lives in
   `post.ts` (its header comment documents the pass order and the N8AO
   subtleties) plus the `n8ao` package (SSAO). The `postprocessing` dep in

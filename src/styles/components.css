@@ -2349,21 +2349,511 @@
   #rift-forge-window {
     flex-direction: column;
   }
-  #leaderboard-window .lb-body.ui-card,
-  #leaderboard-window .lb-tab.ui-tab,
-  #leaderboard-window .lb-page-btn.ui-btn {
-    background: revert-layer;
-    border: revert-layer;
-    border-radius: revert-layer;
-    box-shadow: revert-layer;
-    color: revert-layer;
-    font-family: revert-layer;
+
+  /* The leaderboard window in the ranking ledger chrome: wider, tabs that never
+     clip their label, the .lbp-* podium on the first page of every tab,
+     striped rows, and the viewer's standing as a short sticky pill at the foot
+     of the board. .lb-body stays the scroller with its 56vh cap and the
+     .window-fill contract, so resizing still grows the board.
+     The ground is a FIXED dark surface (the --color-ranking-* tokens), so every
+     foreground on it is a fixed light value, never a theme-derived text token
+     (DESIGN.md 4.1: a derived foreground on a fixed surface reads dark on dark
+     under Parchment). The tab, card and pager primitives keep their library
+     focus and state hooks: selection keys on aria-selected, focus on
+     :focus-visible. */
+  #leaderboard-window {
+    width: min(1100px, calc(var(--app-vw, 100vw) / var(--window-scale) - 32px));
+    background:
+      radial-gradient(
+        ellipse 60% 40% at 50% 0%,
+        color-mix(in srgb, var(--color-ranking-ground-glow) 18%, transparent),
+        transparent 60%
+      ),
+      linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--color-ranking-ground-top) 96%, transparent),
+        color-mix(in srgb, var(--color-ranking-ground) 96%, transparent) 40%,
+        color-mix(in srgb, var(--color-ranking-ground-deep) 97%, transparent)
+      );
+    border-color: var(--color-gold-700);
+    container-type: inline-size;
+    padding: clamp(10px, 1.2cqw, 14px) clamp(12px, 1.6cqw, 22px);
+  }
+  #leaderboard-window #leaderboard-title {
+    font-size: clamp(18px, 2cqw, 28px);
+    letter-spacing: 0.03em;
+    color: var(--color-ranking-text);
+    text-shadow:
+      0 1px 0 var(--color-keyline),
+      0 0 18px color-mix(in srgb, var(--color-ranking-emphasis) 33%, transparent);
+  }
+  #leaderboard-window .lb-subtitle {
+    font-family: var(--font-serif);
+    font-size: clamp(12px, 1.1cqw, 16px);
+    letter-spacing: 0;
+    color: var(--color-ranking-emphasis);
+    text-shadow: none;
+  }
+  #leaderboard-window .lb-tabs {
+    flex: none;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: clamp(6px, 0.8cqw, 12px);
+  }
+  #leaderboard-window .lb-tab.ui-tab {
+    flex: 1 1 auto;
+    justify-content: center;
+    height: auto;
+    min-width: max-content;
+    white-space: nowrap;
+    padding: clamp(6px, 0.7cqw, 10px) clamp(12px, 1.4cqw, 22px);
+    font-family: var(--title-font);
+    font-size: clamp(12px, 1.15cqw, 16px);
+    letter-spacing: 0.02em;
+    text-shadow: none;
+    color: var(--color-ranking-text-soft);
+    background: linear-gradient(180deg, var(--color-ranking-control), var(--color-ranking-well));
+    border: 1px solid var(--color-ranking-control-border);
+    border-radius: 0;
+    box-shadow:
+      inset 0 1px 0 color-mix(in srgb, var(--color-white) 8%, transparent),
+      0 4px 10px color-mix(in srgb, var(--color-keyline) 53%, transparent);
+  }
+  #leaderboard-window .lb-tab.ui-tab:hover:where(:not(:disabled)) {
+    color: var(--color-white);
+    border-color: var(--color-ranking-emphasis);
+    background: linear-gradient(
+      180deg,
+      var(--color-ranking-control-hover),
+      var(--color-ranking-control-hover-deep)
+    );
+  }
+  #leaderboard-window .lb-tab.ui-tab[aria-selected="true"] {
+    color: var(--color-gold-300);
+    border-color: var(--color-ranking-selected);
+    background: linear-gradient(
+      180deg,
+      var(--color-ranking-control-hover),
+      var(--color-ranking-control-hover-deep)
+    );
+    box-shadow:
+      inset 0 0 0 1px color-mix(in srgb, var(--color-ranking-selected) 33%, transparent),
+      inset 0 -2px 0 var(--color-gold-500),
+      0 0 18px color-mix(in srgb, var(--color-ranking-selected) 40%, transparent);
   }
   #leaderboard-window .lb-tab.ui-tab:focus-visible,
   #leaderboard-window .lb-page-btn.ui-btn:focus-visible {
     outline: 2px solid var(--color-border-focus);
     outline-offset: 2px;
+  }
+  #leaderboard-window .lb-body.ui-card {
+    padding: 0 clamp(8px, 1cqw, 16px);
+    color: var(--color-ranking-text);
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--color-ranking-well) 90%, transparent),
+      color-mix(in srgb, var(--color-ranking-ground-deep) 94%, transparent)
+    );
+    border: 1px solid var(--color-gold-700);
+    border-radius: 0;
+    box-shadow:
+      inset 0 0 0 1px var(--color-keyline),
+      inset 0 0 0 2px color-mix(in srgb, var(--color-gold-500) 9%, transparent);
+    overscroll-behavior: contain;
+  }
+  /* The top-three podium (src/ui/leaderboard_podium_html.ts). The list is
+     place order 1, 2, 3 in the DOM (first place reads first); the grid stands
+     it silver left, gold centre, bronze right. Each place carries its own
+     medal art, an absolute /ui/ url like every other shipped UI asset, over a
+     tinted fallback. */
+  #leaderboard-window .lbp-podium {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: end;
+    gap: clamp(6px, 1cqw, 16px);
+    flex: none;
+    width: 100%;
+    max-width: 640px;
+    margin: clamp(8px, 1cqw, 14px) auto clamp(6px, 0.7cqw, 10px);
+    padding: 0;
+    list-style: none;
+  }
+  #leaderboard-window .lbp-slot {
+    --lbp-tint: var(--color-gold-500);
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 0;
+    text-align: center;
+  }
+  #leaderboard-window .lbp-slot-1 {
+    --lbp-medal: url("/ui/leaderboard/medal_gold.webp");
+    grid-column: 2;
+  }
+  #leaderboard-window .lbp-slot-2 {
+    --lbp-tint: var(--color-ranking-place-second);
+    --lbp-medal: url("/ui/leaderboard/medal_silver.webp");
+    grid-column: 1;
+  }
+  #leaderboard-window .lbp-slot-3 {
+    --lbp-tint: var(--color-ranking-place-third);
+    --lbp-medal: url("/ui/leaderboard/medal_bronze.webp");
+    grid-column: 3;
+  }
+  #leaderboard-window .lbp-slot-medal {
+    position: relative;
+    z-index: 1;
+    width: clamp(36px, 3.6cqw, 50px);
+    height: clamp(36px, 3.6cqw, 50px);
+    margin-bottom: calc(clamp(36px, 3.6cqw, 50px) / -2);
+    border-radius: 50%;
+    background-color: var(--color-ranking-ground);
+    background-image:
+      var(--lbp-medal, none),
+      radial-gradient(
+        circle at 35% 30%,
+        color-mix(in srgb, var(--color-white) 20%, transparent),
+        transparent 55%
+      ),
+      linear-gradient(160deg, var(--lbp-tint), var(--color-ranking-control));
+    background-position: center;
+    background-size: cover;
+    border: 2px solid var(--lbp-tint);
+    box-shadow:
+      0 0 0 2px var(--color-ranking-ground-deep),
+      0 6px 14px color-mix(in srgb, var(--color-keyline) 80%, transparent),
+      0 0 16px color-mix(in srgb, var(--color-keyline) 50%, transparent);
+  }
+  #leaderboard-window .lbp-slot-empty .lbp-slot-medal {
+    filter: grayscale(0.7) brightness(0.7);
+    opacity: 0.7;
+  }
+  /* The name card the medal disc overlaps; every place shares its height, so
+     the stepped plinth under it is what lifts gold above silver and bronze. */
+  #leaderboard-window .lbp-slot-card {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    padding: calc(clamp(36px, 3.6cqw, 50px) / 2 + 3px) 8px 5px;
+    box-sizing: border-box;
+    background:
+      linear-gradient(180deg, color-mix(in srgb, var(--lbp-tint) 22%, transparent), transparent 75%),
+      linear-gradient(180deg, var(--color-ranking-control), var(--color-ranking-well));
+    border: 1px solid var(--lbp-tint);
+    border-bottom: 0;
+    box-shadow: inset 0 1px 0 color-mix(in srgb, var(--color-white) 10%, transparent);
+    clip-path: polygon(10px 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%, 0 10px);
+  }
+  #leaderboard-window .lbp-plinth {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--lbp-tint) 34%, var(--color-ranking-well)),
+      var(--color-ranking-ground) 85%
+    );
+    border: 1px solid var(--lbp-tint);
+    border-bottom-width: 3px;
+    box-shadow:
+      inset 0 1px 0 color-mix(in srgb, var(--color-white) 15%, transparent),
+      0 8px 20px color-mix(in srgb, var(--color-keyline) 73%, transparent);
+  }
+  #leaderboard-window .lbp-plinth-1 {
+    height: clamp(40px, 4.2cqw, 58px);
+  }
+  #leaderboard-window .lbp-plinth-2 {
+    height: clamp(33px, 3.4cqw, 47px);
+  }
+  #leaderboard-window .lbp-plinth-3 {
+    height: clamp(27px, 2.7cqw, 38px);
+  }
+  #leaderboard-window .lbp-slot-name {
+    flex: none;
+    max-width: 100%;
+    line-height: 1.25;
+    font-family: var(--title-font);
+    font-size: clamp(12px, 1.2cqw, 17px);
+    color: var(--color-ranking-text);
+    text-shadow: 0 1px 0 var(--color-keyline);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  #leaderboard-window .lbp-slot-empty .lbp-slot-name {
+    font-family: var(--font-serif);
+    font-style: italic;
+    color: var(--color-ranking-text-muted);
+  }
+  #leaderboard-window .lbp-slot-metric {
+    font-size: clamp(13px, 1.3cqw, 19px);
+    font-weight: 700;
+    color: var(--lbp-tint);
+    text-shadow: 0 1px 0 var(--color-keyline);
+  }
+  #leaderboard-window .lbp-slot-detail {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: clamp(11px, 1cqw, 14px);
+    color: var(--color-ranking-text-soft);
+  }
+  #leaderboard-window .lbp-slot-metric,
+  #leaderboard-window .lbp-slot-detail {
+    flex: none;
+    line-height: 1.25;
+  }
+  #leaderboard-window .lbp-plinth-rank {
+    font-family: var(--title-font);
+    font-size: clamp(17px, 1.8cqw, 26px);
+    line-height: 1;
+    color: var(--lbp-tint);
+    opacity: 0.9;
+    text-shadow: 0 2px 0 var(--color-keyline);
+  }
+  #leaderboard-window .lbp-mine .lbp-slot-card {
+    box-shadow:
+      inset 0 1px 0 color-mix(in srgb, var(--color-white) 10%, transparent),
+      inset 0 0 18px color-mix(in srgb, var(--color-ranking-selected) 40%, transparent);
+  }
+  #leaderboard-window .lbp-stat {
+    display: inline-flex;
+    gap: 4px;
+    margin: 0 5px;
+  }
+  #leaderboard-window .lbp-stat-label {
+    color: var(--color-ranking-text-muted);
+  }
+  #leaderboard-window .lbp-stat-value {
+    color: var(--color-ranking-text);
+    font-weight: 700;
+  }
+  #leaderboard-window .lbp-slot-name .lb-dev-badge {
+    margin-right: 4px;
+  }
+  /* On a podium card a player's guild tag takes its own quieter line, so a long
+     name plus tag never ellipsizes inside the narrow card. */
+  #leaderboard-window .lbp-slot-name .lb-guild {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 0.72em;
+    line-height: 1.3;
+  }
+  #leaderboard-window .lb-total,
+  #leaderboard-window .lb-scope-note {
+    margin: clamp(6px, 0.8cqw, 10px) 0 0;
+    text-align: center;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: clamp(12px, 1.1cqw, 15px);
+    color: var(--color-ranking-text-soft);
+  }
+  #leaderboard-window .lb-loading,
+  #leaderboard-window .lb-empty,
+  #leaderboard-window .lb-error {
+    padding: clamp(24px, 4cqw, 56px) 12px;
+    font-family: var(--font-serif);
+    font-size: clamp(13px, 1.3cqw, 18px);
+    color: var(--color-ranking-text-soft);
+  }
+  #leaderboard-window .lb-error {
+    color: var(--color-danger);
+  }
+  #leaderboard-window .lb-row {
+    padding: 5px 10px;
+    font-size: clamp(12px, 1.15cqw, 16px);
+    color: var(--color-ranking-text);
+    border-radius: 0;
+  }
+  #leaderboard-window .lb-row-players {
+    grid-template-columns: 56px minmax(0, 1.9fr) 56px 64px minmax(96px, 150px) minmax(0, 1fr);
+  }
+  #leaderboard-window .lb-row-guild {
+    grid-template-columns: 56px minmax(0, 1fr) 96px 64px minmax(96px, 150px);
+  }
+  #leaderboard-window .lb-row-deeds {
+    grid-template-columns: 56px minmax(0, 1fr) 96px minmax(110px, 240px);
+  }
+  #leaderboard-window .lb-row-dev {
+    grid-template-columns: 56px minmax(0, 1fr) 170px 110px;
+  }
+  #leaderboard-window .lb-row.lb-daily {
+    grid-template-columns: 56px minmax(0, 1fr) 140px;
+  }
+  #leaderboard-window .lb-row:nth-child(odd) {
+    background: none;
+  }
+  #leaderboard-window .lb-row:nth-child(even) {
+    background: color-mix(in srgb, var(--color-white) 3%, transparent);
+  }
+  #leaderboard-window .lb-row.lb-head {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    font-size: clamp(11px, 1cqw, 14px);
+    color: var(--color-gold-300);
+    background: var(--color-ranking-well);
+    border-bottom: 1px solid color-mix(in srgb, var(--color-gold-500) 27%, transparent);
+  }
+  #leaderboard-window .lb-row.lb-mine {
+    outline: 0;
+    background: linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--color-ranking-selected) 20%, transparent),
+      color-mix(in srgb, var(--color-ranking-selected) 6%, transparent) 70%
+    );
+    box-shadow: inset 2px 0 0 var(--color-ranking-selected);
+  }
+  #leaderboard-window .lb-rank {
+    font-weight: 700;
+    color: var(--color-ranking-emphasis);
+  }
+  #leaderboard-window .lb-row.lb-head .lb-rank {
+    font-weight: 400;
+    color: inherit;
+  }
+  #leaderboard-window .lb-name {
+    color: var(--color-ranking-text);
+  }
+  #leaderboard-window .lb-lvl,
+  #leaderboard-window .lb-vlvl,
+  #leaderboard-window .lb-members,
+  #leaderboard-window .lb-dev-tier,
+  #leaderboard-window .lb-deed-title,
+  #leaderboard-window .lb-realm,
+  #leaderboard-window .lb-guild {
+    color: var(--color-ranking-text-muted);
+  }
+  #leaderboard-window .lb-xp,
+  #leaderboard-window .lb-renown,
+  #leaderboard-window .lb-commits {
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+    color: var(--color-gold-300);
+  }
+  #leaderboard-window .lb-row.lb-head :is(.lb-xp, .lb-renown, .lb-commits) {
+    font-weight: 400;
+  }
+  #leaderboard-window .lb-you {
+    color: var(--color-ranking-emphasis);
+  }
+  /* The standing bar: the players tab's off-page standing (or the viewer's
+     ranked row), the viewer's guild, contributor or daily row, and the Renown
+     tab's account line, all pinned at the foot of the scrolling board. */
+  #leaderboard-window .lb-standing {
+    position: sticky;
+    bottom: 0;
+    z-index: 2;
+    margin: clamp(6px, 0.8cqw, 10px) 0 0;
+    padding: 3px 4px;
+    border: 1px solid var(--color-gold-700);
+    background: linear-gradient(
+      180deg,
+      var(--color-ranking-control),
+      var(--color-ranking-ground-deep)
+    );
+    box-shadow: 0 -6px 14px color-mix(in srgb, var(--color-keyline) 67%, transparent);
+  }
+  #leaderboard-window .lb-standing .lb-row {
+    background: none;
+    box-shadow: inset 2px 0 0 var(--color-ranking-selected);
+  }
+  #leaderboard-window .lb-self.lb-standing {
+    padding: clamp(5px, 0.6cqw, 9px) 12px;
+    text-align: center;
+    font-size: clamp(12px, 1.15cqw, 16px);
+    color: var(--color-gold-300);
+  }
+  /* The pinned row reads as a short centred summary pill, never as a repeated
+     ladder row: a lead-in label, then only the rank, the name, and the board's
+     number. */
+  #leaderboard-window .lb-sticky.lb-standing {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px 16px;
+    width: fit-content;
+    max-width: 100%;
+    margin-inline: auto;
+    padding: clamp(5px, 0.6cqw, 9px) clamp(18px, 2.4cqw, 40px);
+    font-size: clamp(12px, 1.15cqw, 16px);
+    clip-path: polygon(
+      12px 0,
+      calc(100% - 12px) 0,
+      100% 50%,
+      calc(100% - 12px) 100%,
+      12px 100%,
+      0 50%
+    );
+  }
+  #leaderboard-window .lb-standing-label {
+    font-family: var(--title-font);
+    color: var(--color-gold-300);
+    white-space: nowrap;
+  }
+  #leaderboard-window .lb-sticky.lb-standing .lb-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+    padding: 0;
     box-shadow: none;
+  }
+  #leaderboard-window
+    .lb-sticky.lb-standing
+    .lb-row
+    > :not(.lb-rank, .lb-name, .lb-xp, .lb-commits) {
+    display: none;
+  }
+  #leaderboard-window .lb-sticky.lb-standing .lb-rank {
+    width: auto;
+    font-weight: 700;
+    color: var(--color-ranking-emphasis);
+  }
+  #leaderboard-window .lb-sticky.lb-standing .lb-name {
+    min-width: 0;
+  }
+  #leaderboard-window .lb-pager {
+    border-top-color: color-mix(in srgb, var(--color-gold-500) 27%, transparent);
+    padding-bottom: 8px;
+    color: var(--color-ranking-text-soft);
+  }
+  #leaderboard-window .lb-page-status {
+    color: var(--color-ranking-text-soft);
+  }
+  #leaderboard-window .lb-page-btn.ui-btn {
+    min-width: 72px;
+    height: auto;
+    min-height: 40px;
+    font-size: 10.5px;
+    color: var(--color-ranking-text);
+    background: linear-gradient(180deg, var(--color-ranking-control), var(--color-ranking-well));
+    border: 1px solid var(--color-ranking-control-border);
+    border-radius: 0;
+  }
+  #leaderboard-window .lb-page-btn.ui-btn:hover:where(:not(:disabled)) {
+    color: var(--color-white);
+    border-color: var(--color-ranking-emphasis);
+  }
+  /* Forced colors strip the backgrounds and glows that mark the viewer's own
+     row, their podium card and the selected tab, so each keeps a system-color
+     edge instead. */
+  @media (forced-colors: active) {
+    #leaderboard-window .lb-row.lb-mine,
+    #leaderboard-window .lbp-mine .lbp-slot-card {
+      outline: 2px solid Highlight;
+      outline-offset: -2px;
+    }
+    #leaderboard-window .lb-tab.ui-tab[aria-selected="true"] {
+      border: 2px solid Highlight;
+    }
   }
 
   /* ---------- rift forge ---------- */
@@ -2512,6 +3002,214 @@
     white-space: nowrap;
   }
   #guild-board-window .gb-rank-chip.gb-rank-leader {
+    color: var(--gold);
+  }
+  /* Guild board categories (src/sim/guild_board_category.ts). The filter
+     strip sits between the title and the column header: one tick-box chip per
+     category (the deed/reliquary filter-chip family's shape and `.active`
+     state, over a real checkbox inside a label so base.css's gold accent and
+     focus ring apply to the box and the chip carries a focus-within ring of
+     its own), an off-screen live count line, and, at the right edge, the
+     presence legend that explains the green dot without a hover. */
+  #guild-board-window .gb-filters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 10px;
+    margin: 0 0 6px;
+    padding: 6px 4px 8px;
+    border-bottom: 1px solid var(--color-border-showcase);
+  }
+  #guild-board-window .gb-filter-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    min-height: 30px;
+    padding: 0 12px 0 8px;
+    border: 1px solid var(--color-border-showcase);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--color-text-light) 3%, transparent);
+    color: var(--color-filter-chip-text);
+    font-size: 12px;
+    cursor: var(--cursor-point);
+    transition:
+      border-color 90ms ease-out,
+      background-color 90ms ease-out,
+      color 90ms ease-out;
+  }
+  #guild-board-window .gb-filter-chip:hover {
+    border-color: var(--color-accent);
+    color: var(--color-text-light);
+  }
+  #guild-board-window .gb-filter-chip.active {
+    border-color: var(--color-category);
+    background: color-mix(in srgb, var(--color-category) 12%, transparent);
+    color: var(--color-category-text-active);
+  }
+  #guild-board-window .gb-filter-chip:focus-within {
+    outline: 2px solid var(--color-border-focus);
+    outline-offset: 2px;
+  }
+  #guild-board-window .gb-filter-chip input {
+    margin: 0;
+  }
+  /* The live count line: read by assistive tech, never painted (the
+     .ta-own-marker clip idiom). */
+  #guild-board-window .gb-filter-status {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  #guild-board-window .gb-filter-icon,
+  #guild-board-window .gb-tag-icon {
+    display: inline-flex;
+    width: 14px;
+    height: 14px;
+    color: var(--color-category-icon);
+  }
+  #guild-board-window .gb-filter-icon svg,
+  #guild-board-window .gb-tag-icon svg {
+    width: 100%;
+    height: 100%;
+  }
+  #guild-board-window .gb-legend {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: auto;
+    font-size: 11px;
+    color: var(--color-text-muted);
+    white-space: nowrap;
+  }
+  /* The name cell becomes a flex pair (the roster link + the presence dot)
+     so a long guild name still ellipsizes and the dot never wraps away. The
+     cell itself must NOT clip (the .lb-name base does): the ellipsis moves to
+     the link, and the dot's touch hit extension reaches past the cell box. */
+  #guild-board-window .gb-name-cell {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+    overflow: visible;
+  }
+  #guild-board-window .gb-name-cell .gb-roster-link {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  /* The "officers online" dot: the social window's .soc-dot.online (one
+     green, one home: --color-text-success) inside a real button (keyboard
+     focus opens the shared tooltip) whose box clears the 24px SC 2.5.8
+     desktop floor around the 10px dot. The soft pulse rides the effects tier
+     and the reduced-motion kills below (DESIGN.md 4.6: at most twice a
+     second; here once every two). */
+  #guild-board-window .gb-presence {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: none;
+    cursor: var(--cursor-point);
+  }
+  #guild-board-window .gb-presence:focus-visible {
+    outline: 2px solid var(--color-border-focus);
+    outline-offset: 1px;
+  }
+  /* DESIGN.md 10.1: new chrome takes a 36px desktop hit target, via padding
+     where the visual is smaller. The dot keeps its 24px box in the row and
+     reaches 36px through an invisible ::after (the Reliquary eye idiom); the
+     6px reach exactly meets the name cell's 6px gap, never the roster link.
+     Touch widens the reach to the 40px floor (hud.mobile.css). */
+  #guild-board-window .gb-presence::after {
+    content: "";
+    position: absolute;
+    inset: -6px;
+  }
+  /* The scrolling body clips at its edge, so the LAST row's dot keeps its
+     6px reach below the row (hud.mobile.css widens the reach and this
+     padding to 8px on touch). */
+  #guild-board-window .gb-body {
+    padding-bottom: 6px;
+  }
+  #guild-board-window .gb-presence .gb-presence-dot {
+    animation: gb-presence-pulse calc(2s * var(--motion-scale, 1)) ease-in-out infinite;
+    animation-play-state: var(--fx-ambient-anim, running);
+  }
+  #guild-board-window .gb-presence:hover .gb-presence-dot,
+  #guild-board-window .gb-presence:focus-visible .gb-presence-dot {
+    box-shadow: 0 0 8px var(--color-text-success);
+  }
+  @keyframes gb-presence-pulse {
+    0%,
+    100% {
+      box-shadow: 0 0 4px color-mix(in srgb, var(--color-text-success) 53%, transparent);
+    }
+    50% {
+      box-shadow: 0 0 9px color-mix(in srgb, var(--color-text-success) 82%, transparent);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #guild-board-window .gb-presence .gb-presence-dot {
+      animation: none;
+    }
+  }
+  body.reduce-motion #guild-board-window .gb-presence .gb-presence-dot {
+    animation: none;
+  }
+  /* The category chip on the recruiting sub-line: the same green family as
+     the accepting status, read as a tag rather than a status. */
+  #guild-board-window .gb-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 1px 8px 1px 6px;
+    border: 1px solid color-mix(in srgb, var(--color-category) 40%, transparent);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--color-category) 8%, transparent);
+    color: var(--color-category-text);
+    font-size: 11px;
+    letter-spacing: 0.2px;
+    white-space: nowrap;
+  }
+  /* The filtered board's empty state: the message and the way back. */
+  #guild-board-window .gb-filter-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 22px 8px;
+  }
+  #guild-board-window .gb-show-all {
+    font-size: 11.5px;
+    padding: 6px 14px;
+  }
+  /* The presence tooltip's officer lines (rendered into the shared #tooltip). */
+  #tooltip .gb-presence-line {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 3px;
+    font-size: 12px;
+  }
+  #tooltip .gb-presence-line .gb-rank-chip {
+    min-width: 76px;
+    font-size: 10.5px;
+    color: var(--color-text-muted);
+  }
+  #tooltip .gb-presence-line .gb-rank-chip.gb-rank-leader {
     color: var(--gold);
   }
   #daily-rewards-window {
@@ -3558,25 +4256,6 @@
   .lb-tabs {
     display: flex;
     gap: 6px;
-  }
-  .lb-tab {
-    flex: 1;
-    padding: 5px 8px;
-    font-family: var(--title-font);
-    font-size: 12px;
-    color: #cabb8c;
-    background: #ffffff08;
-    border: 1px solid var(--color-border-showcase);
-    border-radius: 3px;
-    cursor: pointer;
-  }
-  .lb-tab:hover {
-    background: #ffffff12;
-  }
-  .lb-tab-active {
-    color: var(--gold);
-    background: #f5c84322;
-    border-color: #b8902a;
   }
   .lb-row:nth-child(odd) {
     background: #ffffff08;
@@ -9037,6 +9716,10 @@
     font-family: var(--title-font);
     font-size: 12px;
     color: var(--gold-dim);
+    /* The scope chip is a fifth flex: none item; a narrow landscape phone or
+       a longer locale wraps it under the readouts instead of overflowing
+       (the Reliquary summary wraps the same way). */
+    flex-wrap: wrap;
   }
   .deeds-summary b {
     color: var(--gold);
@@ -10011,6 +10694,25 @@
     font-family: var(--ui-font);
     font-size: 11px;
     font-weight: 400;
+    color: var(--color-text-muted);
+  }
+  /* The account-scope note beside the count (shared with the Book of Deeds):
+     a quiet readout, not a control, the tooltip carries the explanation.
+     Composed on .ui-chip (library.css), which supplies the chip semantics and
+     the token focus ring for its tabindex; the overrides below keep jgyy's
+     pin-chip look from PR #3933 (square radius per DESIGN.md 14, the muted
+     palette, no fill) in the window's family. */
+  .reliquary-scope-note,
+  .deeds-scope-note {
+    flex: none;
+    height: auto;
+    background: transparent;
+    font-family: var(--ui-font);
+    font-size: 11px;
+    font-weight: 400;
+    padding: 1px 8px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-border-default);
     color: var(--color-text-muted);
   }
   /* The HUD-tracker eye at the summary's right edge: a pressed toggle (the
@@ -12180,6 +12882,27 @@
   .soc-pledge-minlvl input {
     width: 52px;
     text-align: center;
+  }
+  /* The category opt-in row under the accepting toggle: the board's sprout
+     glyph beside the label, and the muted helper line under it. */
+  .soc-pledge-category {
+    display: flex;
+    margin-top: 4px;
+  }
+  .soc-pledge-category-icon {
+    display: inline-flex;
+    width: 14px;
+    height: 14px;
+    color: var(--color-category-icon);
+  }
+  .soc-pledge-category-icon svg {
+    width: 100%;
+    height: 100%;
+  }
+  .soc-pledge-hint {
+    margin: 0 0 4px 24px;
+    font-size: 11px;
+    color: var(--color-text-muted);
   }
   .soc-pledge-note-row {
     display: flex;
@@ -15830,6 +16553,95 @@
   .aura-bulk-actions .btn {
     flex: 1;
   }
+  /* Reticle tick ring: one mark per proc routed to the screen-centre channel.
+     Pointer-events none throughout, so it can never eat a click on the world. */
+  #reticle-ticks {
+    /* Distance from screen centre to the inner end of a tick. The sheet owns it;
+       the painter writes only each tick's angle, colour and state. */
+    --tick-radius: 96px;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+    z-index: 3;
+  }
+  .reticle-tick {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 3px;
+    height: 12px;
+    margin: 0 0 0 -1.5px;
+    border-radius: 2px;
+    background: var(--color-text-muted);
+    opacity: 0;
+    transform-origin: 50% var(--tick-radius);
+    rotate: var(--tick-angle, 0deg);
+    translate: 0 calc(-1 * var(--tick-radius));
+    transition:
+      opacity 120ms linear,
+      background-color 120ms linear;
+  }
+  .reticle-tick.present {
+    opacity: 0.42;
+  }
+  .reticle-tick.lit {
+    opacity: 1;
+    background: var(--tick-color, var(--color-aura-rpg-gold));
+    box-shadow: 0 0 8px var(--tick-color, var(--color-aura-rpg-gold));
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .reticle-tick {
+      transition: none;
+    }
+  }
+  /* Watchlist picker: pick any known self-buff spell to give it its own aura. */
+  .aura-watch-section {
+    margin-bottom: 14px;
+  }
+  .aura-watch-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
+    color: var(--color-text-light);
+  }
+  .aura-watch-count {
+    color: var(--color-text-muted);
+  }
+  .aura-watch-hint {
+    margin: 4px 0 8px;
+  }
+  .aura-watch-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .aura-watch-chip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 40px;
+    padding: 4px 10px 4px 4px;
+    text-align: left;
+  }
+  .aura-watch-chip img {
+    width: 32px;
+    height: 32px;
+    border: 1px solid currentColor;
+    border-radius: 5px;
+    opacity: 0.55;
+  }
+  .aura-watch-chip[aria-pressed="true"] {
+    border-color: var(--color-aura-rpg-gold);
+    color: var(--color-aura-rpg-gold);
+  }
+  .aura-watch-chip[aria-pressed="true"] img {
+    border-width: 2px;
+    opacity: 1;
+  }
   .aura-settings-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -15899,6 +16711,35 @@
   }
   .aura-settings-chip.aura-overlay-victory {
     --aura-color: var(--color-aura-rpg-gold);
+  }
+  .aura-haptic-row {
+    align-items: center;
+    gap: 8px;
+  }
+  .aura-haptic-select {
+    flex: 1;
+    min-width: 0;
+    min-height: 40px;
+  }
+  .aura-sound-row {
+    align-items: center;
+    gap: 8px;
+  }
+  .aura-sound-select {
+    flex: 1;
+    min-width: 0;
+    min-height: 40px;
+  }
+  .aura-sound-hint {
+    margin: 6px 0 2px;
+  }
+  .aura-channel-hint {
+    margin: 2px 0 8px;
+  }
+  .aura-sound-preview {
+    width: 100%;
+    min-height: 40px;
+    margin-top: 6px;
   }
   .aura-position-label {
     margin-top: 8px;

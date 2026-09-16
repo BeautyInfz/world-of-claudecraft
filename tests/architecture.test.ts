@@ -209,10 +209,14 @@ describe('live graphics profile architecture', () => {
 // import), so it is registered here even though it lives in src/game. Paths are
 // repo-relative for the failure messages.
 const UI_PURE_CORES = [
+  'src/ui/party_pids_core.ts',
   // The one face-button tone rule, shared by the interact prompt and the pad
   // hint strip so a printed glyph and its colour can never disagree.
   'src/ui/micro_menu_state_view.ts',
   'src/ui/ability_tooltip_lines.ts',
+  'src/ui/proc_ready_glow_core.ts',
+  'src/ui/reticle_ticks_core.ts',
+  'src/ui/aura_watchlist_core.ts',
   'src/ui/collection_actions_core.ts',
   'src/ui/hud/cosmetics/cosmetics_cards_view.ts',
   'src/ui/hud/cosmetics/cosmetics_view.ts',
@@ -536,6 +540,9 @@ const UI_PURE_CORES = [
   'src/ui/dev_command_view.ts',
   'src/ui/dev_item_picker_view.ts',
   'src/ui/deeds_leaderboard_view.ts',
+  'src/ui/leaderboard_podium_view.ts',
+  'src/ui/leaderboard_podium_html.ts',
+  'src/ui/leaderboard_board_html.ts',
   'src/ui/daily_rewards_view.ts',
   'src/ui/deed_border_view.ts',
   'src/ui/deed_heraldry_plaque_core.ts',
@@ -655,6 +662,8 @@ const DOM_GLOBAL_VALUE_ALLOWLIST = new Set([join(repoRoot, 'src/ui/safe_local_st
 // post_bloom_shader_core is the host-agnostic GLSL source patch for the
 // identity tint terms in UnrealBloom's composite shader.
 const RENDER_PURE_CORES = [
+  'src/render/tree_hide_index_core.ts',
+  'src/render/view_candidate_scan_core.ts',
   'src/render/arena_wall_occlusion_core.ts',
   'src/render/outdoor_light_rig_core.ts',
   'src/render/wall_backface_cull_core.ts',
@@ -926,6 +935,8 @@ const BARE_NAMED = [
   'src/ui/woc_market_activity_html.ts',
   'src/ui/woc_market_detail_html.ts',
   'src/ui/woc_market_sales_html.ts',
+  'src/ui/leaderboard_podium_html.ts',
+  'src/ui/leaderboard_board_html.ts',
   'src/ui/guild_tag.ts',
   'src/ui/wallet_bridge_reason_text.ts',
   'src/ui/terms_link.ts',
@@ -2049,6 +2060,8 @@ const EXPECTED_BARE_NAMED = [
   'src/ui/item_name_color.ts',
   'src/ui/item_slot_labels.ts',
   'src/ui/known_item.ts',
+  'src/ui/leaderboard_board_html.ts',
+  'src/ui/leaderboard_podium_html.ts',
   'src/ui/live_region_politeness.ts',
   'src/ui/log_event_route.ts',
   'src/ui/low_health.ts',
@@ -2414,6 +2427,11 @@ const UI_DOM_MODULES = [
   'src/ui/mobile_frame_long_press.ts',
   'src/ui/account_portal_dom.ts',
   'src/ui/appearance_customizer.ts',
+  // Owns browser state on purpose: it mints the reticle tick ring's root and
+  // mounts it, which is exactly the work it exists to keep out of hud.ts. The
+  // RULES it wires up are all in the pure cores (reticle_ticks_core,
+  // proc_ready_glow_core, haptic_pulse_core, aura_watchlist_core).
+  'src/ui/aura_overlay_wiring.ts',
   'src/ui/arena_window.ts',
   'src/ui/armory_inspect.ts',
   'src/ui/bag_item_action_menu.ts',

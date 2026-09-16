@@ -165,7 +165,8 @@ import {
 } from './aura_effect';
 import { auraGainLogKeyFor, findAuraForGainEvent } from './aura_gain_log';
 import { resolveHudAuraIconId, resolveHudAuraIconUrl } from './aura_icon_runtime';
-import { AuraOverlayController } from './aura_overlay_controller';
+import type { AuraOverlayController } from './aura_overlay_controller';
+import { auraOverlaySettingsHooks, createAuraOverlayController } from './aura_overlay_wiring';
 import { renderAuraTooltipBodyHtml } from './aura_tooltip';
 import { AurasPainter, type AurasPainterDeps } from './auras_painter';
 import {
@@ -174,7 +175,6 @@ import {
   createAurasView,
   isToggleAuraKind,
 } from './auras_view';
-import { attachAvatarFallback } from './avatar_fallback';
 import { BagItemActionMenu, CTX_MENU_PICKER_CLASS } from './bag_item_action_menu';
 import { bagSlotsLineKey, bagsWindowShown } from './bags_view';
 import { BagsWindow, dismissBagPrompts } from './bags_window';
@@ -193,7 +193,7 @@ import { CardDuelWindow } from './card_duel_window';
 import { CastBarPainter, type CastBarPaintInput } from './cast_bar_painter';
 import { castDisplayName, targetCastDisplayLabel } from './cast_display_name';
 import { charBagsPaired } from './char_bags_pairing_core';
-import { charSheetRefreshSig } from './char_sheet_sig_core';
+import { charSheetRefreshSigFor } from './char_sheet_sig_core';
 import { type CharSkinPainterHost, paintCharSkinPicker } from './char_skin_window';
 import { archetypeTitleText, CharWindow, craftNameText } from './char_window';
 import { activeCharacterAppearancePreview } from './character_appearance';
@@ -211,7 +211,7 @@ import { wireChromeFocus } from './chrome_focus_wiring';
 import { ClaudiumLauncherBalance } from './claudium_launcher_balance_core';
 import { createClaudiumPurchaseFacet } from './claudium_purchase_bridge';
 import { type ClaudiumRail, type ClaudiumSnapshot, ClaudiumWindow } from './claudium_window';
-import { formatClockTime } from './clock';
+import { formatClockTimeMemo } from './clock';
 import { CombatAnnouncer } from './combat_announcer';
 import {
   auraApplyCue,
@@ -2165,7 +2165,7 @@ export class Hud {
       clearMemo: () => this.mapMarkerTooltipContent.clearMemo(),
     });
     this.mapMarkerArt.preload();
-    this.auraOverlayController = new AuraOverlayController({
+    this.auraOverlayController = createAuraOverlayController({
       writers: this.writerFacet,
       playerClass: this.sim.cfg.playerClass,
       playerName: this.sim.player.name,
@@ -2173,6 +2173,7 @@ export class Hud {
       talents: () => this.sim.talents,
       iconUrl: (abilityId) => iconDataUrl('ability', abilityId),
       paintGroundRings: (rings) => this.renderer.setPlayerAuraRings(rings),
+      playCue: (cueId, volume) => audio.auraCue(cueId, volume),
     });
     this.farmPressAffordance = new FarmPressAffordanceController({
       root: $('#interact-affordance'),
@@ -5732,23 +5733,11 @@ export class Hud {
     root: () => $('#options-menu'),
     world: () => this.sim,
     options: () => this.optionsHooks,
-    auraOverlays: () => ({
-      playerClass: () => this.sim.cfg.playerClass,
-      defs: () => this.auraOverlayController.defs(),
-      get: (id) => this.auraOverlayController.get(id),
-      patch: (id, patch) => this.auraOverlayController.patch(id, patch),
-      getLayout: () => this.auraOverlayController.getLayout(),
-      patchLayout: (patch) => this.auraOverlayController.patchLayout(patch),
-      reset: (id) => this.auraOverlayController.reset(id),
-      nudge: (id, part, deltaX, deltaY) =>
-        this.auraOverlayController.nudge(id, part, deltaX, deltaY),
-      setAll: (enabled) => this.auraOverlayController.setAll(enabled),
-      beginPlacement: (id, part) => this.auraOverlayController.beginPlacement(id, part),
-      endPlacement: () => this.auraOverlayController.endPlacement(),
-      setPlacement: (on) => this.auraOverlayController.setPlacement(on),
-      onPositionChange: (listener) => this.auraOverlayController.onPositionChange(listener),
-      onPlacementChange: (listener) => this.auraOverlayController.onPlacementChange(listener),
-    }),
+    auraOverlays: () =>
+      auraOverlaySettingsHooks(this.auraOverlayController, {
+        playerClass: () => this.sim.cfg.playerClass,
+        previewCue: (cueId, volume) => audio.auraCue(cueId, volume),
+      }),
     bugReport: () => this.bugReportHooks,
     openWiki: () => this.openWiki(),
     keybinds: () => this.keybinds,
@@ -5804,6 +5793,7 @@ export class Hud {
     ...this.windowFocus('#guild-board-window'),
     onVisibilityChange: () => this.syncAnyWindowOpenState(),
     maskPlayerText: (text) => this.maskChat(text),
+    attachTooltip: (el, html) => this.attachTooltip(el, html),
   });
   // The Rift Forge (src/ui/hud/rift_forge/): opened by the Riftwright's
   // interaction event, never a menu button; the forge lives in the world.
@@ -7299,8 +7289,9 @@ export class Hud {
 
   private syncActiveHotbarForm(): void {
     const profileSwitched = this.actionBarController.syncProfile();
-    if (profileSwitched) this.spellbookWindow.refreshHotbarControls();
-    if (!profileSwitched && !this.actionBarController.syncActiveForm()) return;
+    const specSwitched = this.actionBarController.syncSpec();
+    if (profileSwitched || specSwitched) this.spellbookWindow.refreshHotbarControls();
+    if (!profileSwitched && !specSwitched && !this.actionBarController.syncActiveForm()) return;
     this.dragAction = null;
     this.mobileActionPage = this.currentMobileActionPage();
   }
@@ -8075,6 +8066,7 @@ export class Hud {
         itemName: itemDisplayName,
         slotLabel: (i) => formatAbilityNumber(i + 1),
         formatCount: (n) => formatNumber(n, { maximumFractionDigits: 0 }),
+        watchedGlowAbilityIds: () => this.auraOverlayController.readyGlowAbilityIds(),
       },
     );
     this.actionBarPainter = new ActionBarPainter(
@@ -10455,7 +10447,7 @@ export class Hud {
   // the DOM write whenever it is unchanged.
   private updateClock(): void {
     if (!this.clockEl) return;
-    const text = formatClockTime(new Date(), this.clock24);
+    const text = formatClockTimeMemo(Date.now(), this.clock24);
     if (text !== this.lastClockText) {
       this.lastClockText = text;
       this.clockEl.textContent = text;
@@ -12327,10 +12319,9 @@ export class Hud {
           } else {
             // A board with no authored listings IS the guild board: the
             // signpost opens the realm's ranked pledge surface
-            // (src/ui/hud/guild_board/). Offline the window renders its
-            // localized nothing-posted state, so the interaction never
-            // looks inert on any host.
-            this.openGuildBoard();
+            // (src/ui/hud/guild_board/) on the view its board id selects.
+            // Offline the window renders its localized nothing-posted state.
+            this.openGuildBoard(ev.boardId);
           }
           break;
         case 'realmBuilder':
@@ -16415,14 +16406,7 @@ export class Hud {
   // synchronous; online the atitle/aborder echo and the snapshot's ownership
   // fields land well inside one band), and render() rebuilds every row fresh.
   private refreshCharSheetIfChanged(): void {
-    const sig = charSheetRefreshSig({
-      activeTitle: this.sim.activeTitle,
-      activeBorder: this.sim.activeBorder,
-      deedsEarned: this.sim.deedsEarned.size,
-      itemsDiscovered: this.sim.deedStats.itemsDiscovered.size,
-      marks: this.sim.reliquaryMarks.size,
-      mounts: this.sim.ownedMounts().length,
-    });
+    const sig = charSheetRefreshSigFor(this.sim);
     if (sig === this.lastCharSheetSig) return;
     this.lastCharSheetSig = sig;
     this.charWindow.renderIfOpen();
@@ -17011,10 +16995,10 @@ export class Hud {
     this.leaderboardWindow.toggle();
   }
 
-  /** The signpost guild board: opened by the world's noticeboard interaction
-   *  (and the E2E capture rigs); there is no menu launcher on purpose. */
-  openGuildBoard(): void {
-    this.guildBoardWindow.open();
+  /** The signpost guild board, opened by the noticeboard interaction (and the
+   *  E2E rigs), never a menu launcher; the board id picks the default view. */
+  openGuildBoard(boardId?: string): void {
+    this.guildBoardWindow.open(boardId);
   }
 
   /** The Rift Forge: opened by the Riftwright interaction (and the capture rigs). */

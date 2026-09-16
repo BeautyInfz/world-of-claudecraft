@@ -1364,10 +1364,19 @@ const ACCEPTED_POLISH_V2_METADATA_PATH = path.join(REPO_ROOT, POLISH_SEAL_PATH);
 // seal follows the swept evidence. No capture was retaken.
 // Handoff experiment: canonical runtime-input reseal for the NPC layout and
 // renderer wiring. Historical pixels, performance values and capture identity stay frozen.
+// Re-minted for the CPU-hygiene lot (renderer.ts consumer edits and the
+// view-candidate scan extraction): the composite first, then this metadata
+// seal from the swept file. No capture was retaken.
+// Re-minted again for the lot's review round (the shared liveViewCandidate
+// check moved the renderer leaf once more). No capture was retaken.
+// Re-minted for the druid Cat Form merge with release/v0.43.0: the merged
+// runtimeRender.renderer leaf matches neither parent. No capture was retaken.
 const ACCEPTED_POLISH_V2_METADATA_SHA256 =
-  '1107d4ace544a31607d1a5ecfc74fe5bc9ce69d34a7b056897cb83ed285bfc4e';
+  // Re-minted for the Eastbrook handoff merge with release/v0.43.0: the merged renderer leaf and the moved NPC layout match neither parent. No capture was retaken.
+  'e9ec0e691db5b45eedad1b329c3f908ec4d5da081746bbbd60993dc138ffe236';
 const ACCEPTED_POLISH_V2_COMPOSITE_PROVENANCE =
-  '574ba93790391a09c5c2c7d7473a3c6a489aa52a418977965dec0db90f86e014';
+  // Re-minted for the Eastbrook handoff merge with release/v0.43.0: the merged renderer leaf and the moved NPC layout match neither parent. No capture was retaken.
+  '9085842c298f0abd0ae869ed2ec189945bd6d04294f63e695a714d2c068e51f6';
 const ACCEPTED_POLISH_V2_METADATA = readJsonFile<CaptureMetadata>(ACCEPTED_POLISH_V2_METADATA_PATH);
 const ACCEPTED_POLISH_V2_PROVENANCE = ACCEPTED_POLISH_V2_METADATA.polishProvenance;
 const ACCEPTED_POLISH_V2_TOWN_CONTRACT = ACCEPTED_POLISH_V2_METADATA.records[0]?.townContract;
@@ -2726,7 +2735,14 @@ describe('Eastbrook polish performance and contact evidence', () => {
       // canonical re-sealed evidence files. Capture pixels and scores did not change.
       // v0.42.0 dependency-floor bump: recomputed LAST over the swept evidence
       // after the lockfile-driven GLB re-mint. No capture was retaken.
-    ).toBe('cbcb2549c4ccffce446263ea88fbfa5a816ef97583e3a6455d8f52287d8865d0');
+      // Re-minted for the CPU-hygiene lot: the composite first, then this
+      // second-order seal over the swept evidence bytes. No capture was retaken.
+      // Review round of the same lot: recomputed LAST again over the re-swept
+      // evidence. No capture was retaken.
+      // Druid Cat Form merge with release/v0.43.0: recomputed LAST again over
+      // the re-swept evidence. No capture was retaken.
+      // Re-minted for the Eastbrook handoff merge with release/v0.43.0: the merged renderer leaf and the moved NPC layout match neither parent. No capture was retaken.
+    ).toBe('2e515bd155157f14c2ae48d5784e307c7a012237102a2630f20ff440f9f0c4d4');
   });
 
   it('binds every historical after record to its accepted source and asset provenance', () => {

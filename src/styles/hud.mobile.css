@@ -5666,8 +5666,31 @@
   body.mobile-touch .soc-pledge-open,
   body.mobile-touch .soc-my-pledge .btn,
   body.mobile-touch .soc-pledge-note-row .btn,
-  body.mobile-touch .lb-pledge-btn {
+  body.mobile-touch .lb-pledge-btn,
+  body.mobile-touch #guild-board-window .gb-filter-chip,
+  body.mobile-touch #guild-board-window .gb-show-all {
     min-height: 40px;
+  }
+  /* The guild board's presence dot sits inline in a 26px ranked row, where a
+     40px box would break the row rhythm, so its 24px visual keeps the row and
+     the 40px floor rides an invisible ::after hit extension (the compact
+     tracker chip idiom, tests/browser/target_size.browser.test.ts). The
+     legend stays visible on touch: the dot is actionable information and its
+     meaning must not depend on discovering a long-press. */
+  body.mobile-touch #guild-board-window .gb-presence::after {
+    content: "";
+    position: absolute;
+    inset: -8px;
+  }
+  /* The 8px reach must not overlap the roster link beside the dot (SC 2.5.8
+     target spacing), so the name cell's 6px gap widens to the reach on touch. */
+  body.mobile-touch #guild-board-window .gb-name-cell {
+    gap: 8px;
+  }
+  /* The scrolling body clips at its edge, so the LAST row's dot keeps its
+     8px reach below the row (the same reach every other row has). */
+  body.mobile-touch #guild-board-window .gb-body {
+    padding-bottom: 8px;
   }
   /* Three 16px digits did not fit the desktop 52px coin box: a five-digit gold
      value scrolled inside it. */
@@ -7758,6 +7781,91 @@
   body.mobile-touch #leaderboard-window .lb-tab {
     min-height: 40px;
     box-sizing: border-box;
+  }
+  /* The leaderboard on a phone: the tabs become one horizontally scrolling
+     strip that never wraps or clips, and the rows tighten. */
+  body.mobile-touch #leaderboard-window .lb-tabs {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    /* Room for the 2px focus ring and its 2px offset: an overflow strip clips
+       anything drawn outside its padding box. */
+    padding: 5px;
+  }
+  body.mobile-touch #leaderboard-window .lb-tab.ui-tab {
+    flex: 0 0 auto;
+    font-size: 12px;
+    padding: 4px 12px;
+  }
+  body.mobile-touch #leaderboard-window .lb-row {
+    padding: 3px 8px;
+    font-size: 12px;
+  }
+  body.mobile-touch #leaderboard-window .lb-row-players {
+    grid-template-columns: 36px minmax(0, 1.9fr) 36px 44px 88px minmax(0, 1fr);
+  }
+  body.mobile-touch #leaderboard-window .lb-row-guild {
+    grid-template-columns: 36px minmax(0, 1fr) 72px 44px 88px;
+  }
+  body.mobile-touch #leaderboard-window .lb-row-deeds {
+    grid-template-columns: 36px minmax(0, 1fr) 72px minmax(90px, 160px);
+  }
+  body.mobile-touch #leaderboard-window .lb-row-dev {
+    grid-template-columns: 36px minmax(0, 1fr) 120px 80px;
+  }
+  body.mobile-touch #leaderboard-window .lb-row.lb-daily {
+    grid-template-columns: 36px minmax(0, 1fr) 96px;
+  }
+  /* A phone gets the whole sheet: the board takes every pixel under the tabs
+     (not the desktop 56vh cap), and the podium shrinks, keeping its detail line
+     as one compact ellipsized row so no top-three stat is hidden on touch. */
+  body.mobile-touch #leaderboard-window {
+    height: calc(var(--app-vh) / var(--ui-scale, 1) - 20px);
+  }
+  body.mobile-touch #leaderboard-window .lb-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    max-height: none;
+    margin-top: 6px;
+  }
+  body.mobile-touch #leaderboard-window .lbp-slot-detail {
+    font-size: 10px;
+    line-height: 1.2;
+  }
+  body.mobile-touch #leaderboard-window .lbp-stat {
+    gap: 2px;
+    margin: 0 3px;
+  }
+  body.mobile-touch #leaderboard-window .lbp-podium {
+    max-width: 520px;
+    gap: 6px;
+    margin-bottom: 4px;
+  }
+  body.mobile-touch #leaderboard-window .lbp-slot-medal {
+    width: 26px;
+    height: 26px;
+    margin-bottom: -13px;
+    border-width: 1px;
+  }
+  body.mobile-touch #leaderboard-window .lbp-slot-card {
+    padding: 15px 4px 2px;
+  }
+  body.mobile-touch #leaderboard-window .lbp-slot-name,
+  body.mobile-touch #leaderboard-window .lbp-slot-metric {
+    font-size: 12px;
+  }
+  body.mobile-touch #leaderboard-window .lbp-plinth-rank {
+    font-size: 13px;
+  }
+  body.mobile-touch #leaderboard-window .lbp-plinth-1 {
+    height: 26px;
+  }
+  body.mobile-touch #leaderboard-window .lbp-plinth-2 {
+    height: 23px;
+  }
+  body.mobile-touch #leaderboard-window .lbp-plinth-3 {
+    height: 20px;
   }
   /* Loot Settings: the loot-mode / threshold selects (40px + 16px iOS no-zoom). */
   body.mobile-touch #loot-settings-window select {

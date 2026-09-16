@@ -50,6 +50,7 @@ import { MeterFrame } from './meters_frame';
 import { METER_FRAME_LIMITS } from './meters_frame_core';
 import { buildMeterTabMenu, type MeterMenuRow } from './meters_menu_view';
 import { buildMeterRows, type MeterPet, type MeterTab } from './meters_rows_view';
+import { PartyPidsCache } from './party_pids_core';
 import type { SimpleMenuItem } from './simple_context_menu';
 import { resolveThreatSubject, resolveThreatValues } from './threat_subject_core';
 
@@ -147,7 +148,7 @@ export class MeterData {
     pid: number,
     name: string,
     cls: string | null,
-    partyPids: Set<number>,
+    partyPids: ReadonlySet<number>,
   ): MemberTally {
     let t = enc.tallies.get(pid);
     if (t) return t;
@@ -185,7 +186,7 @@ export class MeterData {
    * OWNER (folding hunter/warlock/mage pet output into the player's row) and
    * keeps its own name for the breakdown; anything else reports itself.
    */
-  private attribute(world: IWorld, sourceId: number, partyPids: Set<number>): Attribution {
+  private attribute(world: IWorld, sourceId: number, partyPids: ReadonlySet<number>): Attribution {
     const src = world.entities.get(sourceId);
     const ownerId = src?.kind === 'mob' ? (src.ownerId ?? null) : null;
     const owned = ownerId !== null && partyPids.has(ownerId);
@@ -204,14 +205,14 @@ export class MeterData {
   private threatEntryBelongsToParty(
     world: IWorld,
     entityId: number,
-    partyPids: Set<number>,
+    partyPids: ReadonlySet<number>,
   ): boolean {
     if (partyPids.has(entityId)) return true;
     const entity = world.entities.get(entityId);
     return entity?.kind === 'mob' && entity.ownerId !== null && partyPids.has(entity.ownerId);
   }
 
-  private refreshThreatSnapshots(world: IWorld, partyPids: Set<number>): void {
+  private refreshThreatSnapshots(world: IWorld, partyPids: ReadonlySet<number>): void {
     if (!this.current) return;
     for (const entity of world.entities.values()) {
       if (entity.kind !== 'mob' || !entity.threat || entity.threat.size === 0) continue;
@@ -228,7 +229,7 @@ export class MeterData {
   }
 
   /** party membership check is supplied by the caller (self + party pids) */
-  onEvent(ev: SimEvent, world: IWorld, partyPids: Set<number>, now: number): void {
+  onEvent(ev: SimEvent, world: IWorld, partyPids: ReadonlySet<number>, now: number): void {
     if (ev.type !== 'damage' && ev.type !== 'heal2') return;
     // The HoT-application sound cue (Sim.applyAura, cueOnly:true) is audio-only
     // and must not open or keep alive an otherwise-idle encounter segment. Gated
@@ -299,7 +300,7 @@ export class MeterData {
   }
 
   /** advance clocks + close the encounter once combat has clearly ended */
-  update(world: IWorld, partyPids: Set<number>, now: number): void {
+  update(world: IWorld, partyPids: ReadonlySet<number>, now: number): void {
     if (!this.current) return;
     this.current.duration = Math.max(1, (now - this.current.startedAt) / 1000);
     if ((now - this.lastActivity) / 1000 < ENCOUNTER_END_SECONDS) return;
@@ -408,7 +409,7 @@ interface PanelHost {
   /** Live pets per owner, scanned once per render by the owner. */
   petsByOwner(): Map<number, Pet[]>;
   /** Self plus every party member, for deciding which mobs the group is on. */
-  partyPids(): Set<number>;
+  partyPids(): ReadonlySet<number>;
   attachTooltip(el: HTMLElement, html: () => string): void;
   /** Fired by a detached panel's close button. */
   onDock(tab: DetachableTab): void;
@@ -949,6 +950,7 @@ export class Meters {
   readonly data: MeterData;
   private readonly main: MetersPanel;
   private readonly detached = new Map<DetachableTab, MetersPanel>();
+  private readonly partyPidsCache = new PartyPidsCache();
   /** Detached windows hidden along with the tabbed one, to restore on reopen. */
   private reopenDetached: DetachableTab[] = [];
   /**
@@ -1209,13 +1211,10 @@ export class Meters {
     }
   }
 
-  private partyPids(): Set<number> {
-    const pids = new Set<number>([this.world.player.id]);
-    for (const m of this.world.partyInfo?.members ?? []) pids.add(m.pid);
-    for (const e of this.world.entities.values()) {
-      if (e.kind === 'mob' && e.ownerId !== null && pids.has(e.ownerId)) pids.add(e.id);
-    }
-    return pids;
+  /** Self, party members, and their pets: rebuilt by the cache only when the
+   *  viewer, the member list, or the entity roster changed (party_pids_core.ts). */
+  private partyPids(): ReadonlySet<number> {
+    return this.partyPidsCache.get(this.world);
   }
 
   /**

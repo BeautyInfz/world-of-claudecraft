@@ -120,6 +120,11 @@ const MONOLITHS: MonolithRow[] = [
     // Re-pinned from 19177 after the v0.38.0 sync merge: the release's map
     // overhaul extracted marker interaction out of the coordinator, so the
     // merged file landed SMALLER and the ratchet follows it down.
+    // Re-pinned DOWN from 18472 by the aura watchlist change: standing the
+    // feature up inline would have added 14 lines here, so the controller
+    // build and the Options > Auras projection both moved out to
+    // src/ui/aura_overlay_wiring.ts. The coordinator ends 9 lines SMALLER
+    // than it started, and the pin follows it down. Extract, then lower.
     file: 'src/ui/hud.ts',
     // Lowered from 19600 at the Phase 07 review round (craft-denial key
     // ternary out to craft_denial_line_view), then from 19500 at the Phase 07
@@ -455,7 +460,16 @@ const MONOLITHS: MonolithRow[] = [
     // LOWERED 18352 -> 18350 in the review-fix round: the prompt countdown bar
     // moved to createPromptTimeoutBar in src/ui/prompt_dialog.ts alongside the
     // PROMPT_TIMEOUT_MS the sheet's --prompt-timeout-dur mirrors.
-    ceiling: 18350,
+    // Re-measured at the second release/v0.43.0 sync of the account-wide Book
+    // of Deeds / Reliquary change: the release's interface-redesign merge and
+    // this branch's charSheetRefreshSigFor extraction compose to 18343 by
+    // wc -l, below both parent pins (18455 / 18350). Exact count, zero slack.
+    // Re-measured at the release/v0.43.0 sync of the aura Watched Spells
+    // change: the branch had already moved the overlay wiring out to
+    // src/ui/aura_overlay_wiring.ts (its own arm re-pinned 18472 -> 18463), and
+    // the release's extractions compose with it to 18334 by wc -l on the
+    // merged tree, below both parent pins (18463 / 18343). Exact count, zero slack.
+    ceiling: 18334,
     seam: 'pure view core + thin painter on PainterHost (src/ui/CLAUDE.md)',
   },
   {
@@ -851,7 +865,10 @@ const MONOLITHS: MonolithRow[] = [
     // Measured after formatting; lower the ratchet with the extraction.
     // Mount skins: bank the coordinator extraction at its measured size.
     // Restored per-ability resurrection school lookup removes one line.
-    ceiling: 12851,
+    // CPU-hygiene review: the ranked and required view candidates share the
+    // scan module's liveViewCandidate check (present, view-less, admitted),
+    // which drops the coordinator's own admission call. Exact count.
+    ceiling: 12850,
     seam: 'a new src/render/<thing>.ts module the renderer calls (src/render/CLAUDE.md)',
   },
   {
@@ -1024,7 +1041,14 @@ const MONOLITHS: MonolithRow[] = [
     // measures 11923, below both arms, so the ceiling follows it down. Exact
     // merged count, zero slack: any further growth reds again.
     // Main hotfix integration: combined extractions, exact merged count.
-    ceiling: 11879,
+    // Down 11879 -> 11843: the CPU-hygiene lot moved the rift floor descriptor
+    // builder to src/sim/rift/rift_floor_view.ts, the Wildfang kit pass 2 moved
+    // the charge route constants to combat/charge_route.ts (11856 together), and
+    // the account-wide Book of Deeds / Reliquary change moved the deeds restore
+    // and join-retro passes into src/sim/deeds_restore.ts and the ownership
+    // union into accountReliquaryOwnershipOpts (src/sim/reliquary.ts). Exact
+    // count, zero slack.
+    ceiling: 11843,
     seam: 'a sim system module behind SimContext (src/sim/CLAUDE.md)',
   },
   {
@@ -1439,7 +1463,13 @@ const MONOLITHS: MonolithRow[] = [
     // below both parent pins. Exact merged count, zero slack.
     // Mount skins: bank the coordinator extraction at its measured size.
     // Main hotfix integration: combined extractions, exact merged count.
-    ceiling: 10095,
+    // LOWERED 10095 -> 10082 at the account-wide Book of Deeds / Reliquary change:
+    // the Book heavy keys moved into server/deeds_wire.ts and the Curator
+    // standing stamp into server/curator_standing.ts.
+    // Guild board categories: the guild_pledge_settings dispatch arm's field
+    // validation moved to server/guild_pledge_settings_cmd.ts. Merged with the
+    // account-wide books extraction above; exact merged count, zero slack.
+    ceiling: 10076,
     seam: 'a sibling server module; see the hot-path seams in server/CLAUDE.md',
   },
   {
@@ -1582,7 +1612,14 @@ const MONOLITHS: MonolithRow[] = [
     // OSSBrain integration: entity flair decoding moved to net/entity_flair_wire.ts.
     // Measured after formatting; lower the ratchet with the extraction.
     // Main hotfix integration: combined extractions, exact merged count.
-    ceiling: 5540,
+    // Down 5540 -> 5506: the CPU-hygiene lot moved the interest-boundary despawn
+    // grace to src/net/despawn_grace.ts (5523), and the account-wide Book of Deeds /
+    // Reliquary change moved the deeds / Reliquary / account-ledger self-decode
+    // into src/net/book_wire.ts. Exact count, zero slack.
+    // Guild board categories: the board path builder, the page decode and the
+    // pledge-settings frame decode moved to src/net/guild_board_wire.ts. Merged
+    // with the book_wire extraction above; exact merged count, zero slack.
+    ceiling: 5498,
     seam: 'a src/net sibling module (the refactor/net-online split is the template)',
   },
   {
@@ -1731,7 +1768,15 @@ const MONOLITHS: MonolithRow[] = [
     // reach it directly), unlike createCharacterCapped's pure re-export.
     // Exact count, zero slack.
     // Mount skins: bank the coordinator extraction at its measured size.
-    ceiling: 4744,
+    // LOWERED 4744 -> 4715 at the account-wide Book of Deeds / Reliquary change:
+    // the character_deeds DDL moved into DEEDS_SCHEMA (server/deeds_db.ts) and
+    // the new account_relic_finds DDL landed as ACCOUNT_LEDGER_SCHEMA
+    // (server/account_ledger_db.ts), both applied by ensureSchema.
+    // Guild board categories: topGuilds and its GuildLeaderRow moved whole to
+    // server/guild_board_db.ts beside the new officer-roster read. Merged with
+    // the DEEDS_SCHEMA / ACCOUNT_LEDGER_SCHEMA move above; exact merged count,
+    // zero slack.
+    ceiling: 4641,
     seam: 'a domain <domain>_db.ts module with its own *_SCHEMA (server/CLAUDE.md)',
   },
   {
