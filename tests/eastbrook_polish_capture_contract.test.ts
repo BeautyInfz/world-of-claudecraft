@@ -668,32 +668,6 @@ interface AttributionTargetFixture {
 // v0.42.0 dependency-floor bump (sharp, js-yaml, vitest): the lockfile is a
 // fingerprint input, so every shipping GLB was size-preserving re-minted and this
 // seal follows the swept evidence. No capture was retaken.
-// PR fen-features-subcull: remint after merging release/v0.43.0 into the branch.
-// The renderer leaf differs from the release tree by the zone-feature sweep
-// extraction; captures, performance measurements and capture identity are unchanged.
-// Re-minted for the v0.43.0 merge of the gather coarse key after the
-// zone-feature sweep extraction: the merged runtimeRender.renderer leaf
-// matches neither parent. No capture was retaken.
-// Re-minted for the PR #4023 merge after the v0.43.0 batch: the existing
-// runtimeRender leaves and the monument impostor civicShader leaf combine in
-// one tree, so the composite matches neither parent. No capture was retaken.
-// Re-minted for the PR #4024 merge after PR #4023: the monument impostor
-// civicShader leaf and shader-prefix diagnostic remint evidence land in one
-// tree, so the composite matches neither parent. No capture was retaken.
-// Re-minted for the PR #4025 merge after PR #4024: the monument impostor
-// civicShader leaf, shader-prefix diagnostic evidence, Eastbrook monument
-// reveal roots and gated live-program renderer changes land in one tree. No
-// capture was retaken.
-// Re-minted for the v0.43 release repair after Ascension/mount ordering moved
-// renderer.ts. No capture was retaken.
-// Re-minted for the PR #4036 GPU timer probe merge after PR #4032 through
-// #4035: the renderer probe hooks, screenshot-readback extraction and current
-// release-side renderer leaves combine in one tree. No capture was retaken.
-// Re-minted after extracting the remote-body standing-surface sample and
-// terrain-lean stencil out of renderer.ts, and after adding both sampler
-// modules as explicit provenance leaves. No capture was retaken.
-// Re-minted for the v0.43 release repair after the merged renderer sampling
-// imports and frame-cap probe cleanup moved renderer.ts. No capture was retaken.
 // Re-minted for the CPU-hygiene lot: the view-candidate scan and the drop
 // half of the view policy moved out of renderer.ts, and the rift ambience,
 // fishing bobber and Nythraxis painter consumers changed there, so the
@@ -701,11 +675,11 @@ interface AttributionTargetFixture {
 // Re-minted again for its review round: the ranked and required view
 // candidates now share the scan module's liveViewCandidate check, so the
 // same leaf moved once more. No capture was retaken.
-// Re-minted for the release-side CPU-hygiene lot over the current v0.43 batch:
-// the merged renderer leaf includes rider anchors, ground sampling, rift
-// ambience and shared view-candidate scans. No capture was retaken.
+// Re-minted for reconciling the latest v0.43.0 base: the release-side
+// CPU-hygiene renderer leaf and the druid Cat Form renderer leaf compose in
+// one tree. No capture was retaken.
 const PINNED_POLISH_COMPOSITE_FINGERPRINT =
-  'a92d7eb0dfec48dec8baa595edfee596191c033c4ef9148438b88e6237bc7534';
+  '65060a2a6e3879d5bcd19a59dd90a14461286d1f414e17e881f2dd3c0ac4813a';
 
 function validPolishAttributionTargets(): AttributionTargetFixture[] {
   return [

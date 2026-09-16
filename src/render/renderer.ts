@@ -163,7 +163,7 @@ import {
 import {
   advanceSwimPitch,
   isFallingAtSpeed,
-  isSubmergedAtDepth,
+  isSubmergedAtHeadHeight,
   isSwimmingAtDepth,
   isWadingAtDepth,
   SWIM_ENTER_FEET_DEPTH,
@@ -10737,11 +10737,11 @@ export class Renderer {
       // sim owns the DEPTH (players dive with the dive key); this is the
       // presentation read of it, taken off the same displayed coordinates as
       // the swim latch so pose and splash can never disagree.
-      const submerged = isSubmergedAtDepth(
+      const submerged = isSubmergedAtHeadHeight(
         v.wasSubmerged,
         swimming,
         feetDepth,
-        active.height * e.scale,
+        active.swimHeadHeight * e.scale,
       );
       const vx = ax - v.lastX,
         vz = az - v.lastZ;
@@ -10756,7 +10756,7 @@ export class Renderer {
       v.lastZ = az;
       v.lastY = ay;
       v.swimPitch = advanceSwimPitch(v.swimPitch, vy, swimming && e.kind === 'player', dt);
-      const loco = updateLocomotionInto(v.locoState, v.loco, vx, vz, facing, dt);
+      const loco = updateLocomotionInto(v.locoState, v.loco, vx, vz, facing, dt, active.gait);
       const moving = loco.moving;
       v.fireballTravelVisual = syncFireballTravelVisual(
         v.fireballTravelVisual,
@@ -10917,7 +10917,7 @@ export class Renderer {
         (e.sitting || e.eating !== null || e.drinking !== null || riderMounted);
       // Facts about the ENTITY that override what its displayed motion implies
       // (battle-stance engagement, ice-slide suppression): anim_state_entity_core.
-      applyEntityAnimOverrides(st, e, visuallyDead, characterEffects);
+      applyEntityAnimOverrides(st, e, visuallyDead, characterEffects, hasStealth);
       // Reset and prewarm mount audio BEFORE this frame can dispatch movement
       // cues. A completed summon or live swap must not start the new idle/run
       // voice only to have the transition edge immediately tear it down below.

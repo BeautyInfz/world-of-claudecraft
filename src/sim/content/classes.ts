@@ -6437,7 +6437,7 @@ export const ABILITIES: Record<string, AbilityDef> = {
     requiresForm: 'bear',
     effects: [{ type: 'charge' }, { type: 'stun', duration: 1 }],
     description:
-      'Rush an enemy, generating 9 rage and stunning it for 1 sec. For 3 sec afterwards, or until you leave combat, Wolf Form is free and Pins that target (the one you Rushed), slowing it by 50% for 4 sec. 8-25 yd range. Bruin Form only.',
+      'Rush an enemy, generating 9 rage and stunning it for 1 sec. For 3 sec afterwards, or until you leave combat, Cat Form is free and Pins that target (the one you Rushed), slowing it by 50% for 4 sec. 8-25 yd range. Bruin Form only.',
   },
   maul: {
     id: 'maul',
@@ -6541,7 +6541,7 @@ export const ABILITIES: Record<string, AbilityDef> = {
   cat_form: {
     id: 'cat_form',
     tooltipOmitEffectLines: true,
-    name: 'Wolf Form',
+    name: 'Cat Form',
     class: 'druid',
     learnLevel: 4,
     cost: 30,
@@ -6552,7 +6552,7 @@ export const ABILITIES: Record<string, AbilityDef> = {
     requiresTarget: false,
     effects: [{ type: 'selfBuff', kind: 'form_cat', value: 0.71, duration: 3600 }],
     description:
-      'Shapeshift into a wolf: agility rises with your level, attack power +8 plus 2 per level, your attacks use energy and combo points, you move 15% faster, and you generate 29% less threat. Shifting into any form grants Loping Stride, a short burst of movement speed. Cast again to return to caster form.',
+      'Shapeshift into a cat: agility rises with your level, attack power +8 plus 2 per level, your attacks use energy and combo points, you move 15% faster, and you generate 29% less threat. Shifting into any form grants Loping Stride, a short burst of movement speed. Cast again to return to caster form.',
   },
   prowl: {
     id: 'prowl',
@@ -6572,7 +6572,7 @@ export const ABILITIES: Record<string, AbilityDef> = {
     // 0.95 near-full crawl before), the feral scouting identity. The rogue
     // Duskveil family deliberately keeps its slower 0.5 crawl.
     effects: [{ type: 'selfBuff', kind: 'stealth', value: 1.0, duration: 3600 }],
-    description: 'Enter stealth while in Wolf Form. Cannot be used in combat.',
+    description: 'Enter stealth while in Cat Form. Cannot be used in combat.',
   },
   rake: {
     id: 'rake',
@@ -6603,7 +6603,7 @@ export const ABILITIES: Record<string, AbilityDef> = {
       },
     ],
     description:
-      'Flense the enemy for weapon damage plus $d and cause bleeding damage over 18 sec. Awards 1 combo point. Wolf Form only.',
+      'Flense the enemy for weapon damage plus $d and cause bleeding damage over 18 sec. Awards 1 combo point. Cat Form only.',
     specNotes: {
       feral: 'Each hit that lands adds 1 Old Blood (max 3).',
     },
@@ -6623,7 +6623,7 @@ export const ABILITIES: Record<string, AbilityDef> = {
     requiresForm: 'cat',
     effects: [{ type: 'weaponStrike', bonus: 25 }],
     ranks: [{ rank: 2, level: 18, cost: 45, effects: [{ type: 'weaponStrike', bonus: 55 }] }],
-    description: 'Claw the enemy for weapon damage plus $d. Awards 1 combo point. Wolf Form only.',
+    description: 'Claw the enemy for weapon damage plus $d. Awards 1 combo point. Cat Form only.',
     specNotes: {
       feral: 'Each hit that lands adds 1 Old Blood (max 3).',
     },
@@ -6645,7 +6645,7 @@ export const ABILITIES: Record<string, AbilityDef> = {
     requiresForm: 'cat',
     effects: [{ type: 'finisherDamage', base: 45, perCombo: 39, variance: 8 }],
     actionReplacement: { abilityId: 'redharvest', auraKind: 'old_blood', minStacks: 3 },
-    description: 'Finishing move that causes $d. Wolf Form only.',
+    description: 'Finishing move that causes $d. Cat Form only.',
     specNotes: {
       feral:
         'Each hit that lands adds 1 Old Blood; at 3 Old Blood this button becomes Redharvest, which spends the Old Blood for a stronger strike that also instantly deals all the damage your Flense and Bloodrift would still have dealt, and restores energy.',
@@ -6716,7 +6716,7 @@ export const ABILITIES: Record<string, AbilityDef> = {
     school: 'nature',
     requiresTarget: false,
     offGcd: true,
-    // A tank cooldown, so it must fire mid-fight in Bruin Form (or Wolf Form)
+    // A tank cooldown, so it must fire mid-fight in Bruin Form (or Cat Form)
     // like Primal Reflexes/Primal Surge below, not just pre-cast in caster form.
     usableInForm: true,
     effects: [{ type: 'selfBuff', kind: 'buff_armor', value: 150, duration: 15 }],
@@ -6846,7 +6846,7 @@ export const ABILITIES: Record<string, AbilityDef> = {
     tooltipOmitEffectLines: true,
     name: 'Dash',
     class: 'druid',
-    // Learned at 12 (was 18): Wolf Form is 4 and Fleet Form 11, and a sprint
+    // Learned at 12 (was 18): Cat Form is 4 and Fleet Form 11, and a sprint
     // two levels before the cap arrived after most of the leveling PvP.
     learnLevel: 12,
     cost: 0,
@@ -6858,7 +6858,7 @@ export const ABILITIES: Record<string, AbilityDef> = {
     offGcd: true,
     requiresForm: 'cat',
     effects: [{ type: 'selfBuff', kind: 'buff_speed', value: 1.5, duration: 15 }],
-    description: 'Sprint forward, increasing movement speed by 50% for 15 sec. Wolf Form only.',
+    description: 'Sprint forward, increasing movement speed by 50% for 15 sec. Cat Form only.',
   },
   pounce: {
     id: 'pounce',
@@ -6882,7 +6882,7 @@ export const ABILITIES: Record<string, AbilityDef> = {
     // pounce id; Lunge is never learned as a second action.
     actionReplacement: { abilityId: 'lunge', absentAuraKind: 'stealth' },
     description:
-      'A stealth opener that stuns the target for 2 sec. Awards 1 combo point. Wolf Form only. Out of stealth this button is Lunge.',
+      'A stealth opener that stuns the target for 2 sec. Awards 1 combo point. Cat Form only. Out of stealth this button is Lunge.',
   },
   lunge: {
     id: 'lunge',
@@ -6906,7 +6906,7 @@ export const ABILITIES: Record<string, AbilityDef> = {
     // the cooldown back. LUNGE_WEAPON_MULT there owns the 60.
     effects: [{ type: 'charge' }],
     description:
-      'Lunge at an enemy up to 12 yd away. On arrival, deals 60% weapon damage and awards 1 combo point; a lunge cut short refunds its cooldown. Wolf Form only.',
+      'Lunge at an enemy up to 12 yd away. On arrival, deals 60% weapon damage and awards 1 combo point; a lunge cut short refunds its cooldown. Cat Form only.',
   },
   hamstring_bite: {
     id: 'hamstring_bite',
@@ -6927,7 +6927,7 @@ export const ABILITIES: Record<string, AbilityDef> = {
     // beside Concuss (stun_dr.ts).
     effects: [{ type: 'finisherStun', base: 1, perCombo: 1 }],
     description:
-      'Finishing move that stuns the target for 1 sec plus 1 sec per combo point (5 combo points: 6 sec). Wolf Form only.',
+      'Finishing move that stuns the target for 1 sec plus 1 sec per combo point (5 combo points: 6 sec). Cat Form only.',
   },
   insect_swarm: {
     id: 'insect_swarm',
@@ -6946,7 +6946,7 @@ export const ABILITIES: Record<string, AbilityDef> = {
   tigers_fury: {
     id: 'tigers_fury',
     tooltipOmitEffectLines: true,
-    name: 'Wolfsblood',
+    name: 'Lynxblood',
     class: 'druid',
     learnLevel: 20,
     // Free with a 30 energy surge: the classic-era fix for a cooldown top
@@ -6965,7 +6965,7 @@ export const ABILITIES: Record<string, AbilityDef> = {
       { type: 'selfBuff', kind: 'buff_ap', value: 40, duration: 6 },
       { type: 'gainResource', amount: 30 },
     ],
-    description: 'Surges 30 energy and increases attack power by $b for $t sec. Wolf Form only.',
+    description: 'Surges 30 energy and increases attack power by $b for $t sec. Cat Form only.',
   },
   rip: {
     id: 'rip',
@@ -6984,7 +6984,7 @@ export const ABILITIES: Record<string, AbilityDef> = {
       { type: 'dot', total: 156, duration: 24, interval: 2, baseTotal: 36, perComboTotal: 24 },
     ],
     description:
-      'Finishing move that makes the target bleed every 2 sec for 24 sec: 36 damage plus 24 per combo point spent (5 combo points: $d total). Wolf Form only.',
+      'Finishing move that makes the target bleed every 2 sec for 24 sec: 36 damage plus 24 per combo point spent (5 combo points: $d total). Cat Form only.',
     specNotes: {
       feral: 'The landed hit adds 1 Old Blood (max 3).',
     },
@@ -7869,7 +7869,7 @@ export const ABILITIES: Record<string, AbilityDef> = {
     usableInForm: true,
     effects: [{ type: 'feralCharge' }],
     description:
-      'Unleash a primal surge. In Wolf Form, Energy regeneration is increased by 100% for 10 sec. In Bruin Form, instantly generates 50 Rage. (Feral signature)',
+      'Unleash a primal surge. In Cat Form, Energy regeneration is increased by 100% for 10 sec. In Bruin Form, instantly generates 50 Rage. (Feral signature)',
   },
   swiftmend: {
     id: 'swiftmend',

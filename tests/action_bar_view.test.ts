@@ -1849,3 +1849,52 @@ describe('actionBarView: an auto-unshifting cast is affordable against parked ma
     ).toBe(false);
   });
 });
+
+describe('actionBarView: watched proc glow from the Auras panel', () => {
+  // The Auras panel's Hotbar Glow channel (src/ui/proc_ready_glow_core.ts) hands
+  // the bar a set of ability ids to light; the view ORs it in after every
+  // authored predicate, so it can only ever ADD a glow.
+  it('lights the button a watched proc names, and no other', () => {
+    const view = createActionBarView(
+      descriptor(
+        slot(0, { ability: ability('stormstrike') }),
+        slot(1, { ability: ability('earth_shock') }),
+      ),
+      { ...fakeDeps(), watchedGlowAbilityIds: () => new Set(['stormstrike']) },
+    );
+    const slots = view.tick(world()).slots;
+    expect(slots[0].procGlow).toBe(true);
+    expect(slots[1].procGlow).toBe(false);
+  });
+
+  it('is additive only: an authored glow survives an empty set, and no dep at all', () => {
+    // Divine Ascension at full devotion is an AUTHORED glow (the paladin
+    // predicate in the view), so it stays lit whether the Auras panel contributes
+    // nothing this frame or the host never wired the dep.
+    const ready = world({
+      paladinSpec: 'retribution',
+      paladinDevotion: { value: 20, ascensionCharges: 0, ascensionRemaining: 0 },
+    });
+    const withEmptySet = createActionBarView(
+      descriptor(slot(0, { ability: ability('divine_ascension') })),
+      { ...fakeDeps(), watchedGlowAbilityIds: () => new Set() },
+    );
+    expect(withEmptySet.tick(ready).slots[0].procGlow).toBe(true);
+    const withoutDep = createActionBarView(
+      descriptor(slot(0, { ability: ability('divine_ascension') })),
+      fakeDeps(),
+    );
+    expect(withoutDep.tick(ready).slots[0].procGlow).toBe(true);
+  });
+
+  it('follows the set frame by frame, so the glow drops when the aura does', () => {
+    let lit: ReadonlySet<string> = new Set(['stormstrike']);
+    const view = createActionBarView(descriptor(slot(0, { ability: ability('stormstrike') })), {
+      ...fakeDeps(),
+      watchedGlowAbilityIds: () => lit,
+    });
+    expect(view.tick(world()).slots[0].procGlow).toBe(true);
+    lit = new Set();
+    expect(view.tick(world()).slots[0].procGlow).toBe(false);
+  });
+});

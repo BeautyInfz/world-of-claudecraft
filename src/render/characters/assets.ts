@@ -2061,7 +2061,7 @@ export function tintedMaterial(
   // no GLB is shared across matte and non-matte defs today, and keying on
   // the derivation INPUTS keeps the key honest if the derivation changes.
   // authored partitions it too, and that one IS load-bearing on a shared GLB:
-  // mob_wolf (authoredAtlas) and the druid form_cat (never flagged) both load
+  // mob_wolf (authoredAtlas) and form_ghost_wolf (never flagged) both load
   // wolf_basic.glb and reach here with the same source uuid. Without the
   // suffix, whichever derived first would hand its Lambert clone to the
   // other, and the low-tier emissiveMap would land on a player form

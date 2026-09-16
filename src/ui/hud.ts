@@ -165,7 +165,8 @@ import {
 } from './aura_effect';
 import { auraGainLogKeyFor, findAuraForGainEvent } from './aura_gain_log';
 import { resolveHudAuraIconId, resolveHudAuraIconUrl } from './aura_icon_runtime';
-import { AuraOverlayController } from './aura_overlay_controller';
+import type { AuraOverlayController } from './aura_overlay_controller';
+import { auraOverlaySettingsHooks, createAuraOverlayController } from './aura_overlay_wiring';
 import { renderAuraTooltipBodyHtml } from './aura_tooltip';
 import { AurasPainter, type AurasPainterDeps } from './auras_painter';
 import {
@@ -2180,7 +2181,7 @@ export class Hud {
       clearMemo: () => this.mapMarkerTooltipContent.clearMemo(),
     });
     this.mapMarkerArt.preload();
-    this.auraOverlayController = new AuraOverlayController({
+    this.auraOverlayController = createAuraOverlayController({
       writers: this.writerFacet,
       playerClass: this.sim.cfg.playerClass,
       playerName: this.sim.player.name,
@@ -2188,6 +2189,7 @@ export class Hud {
       talents: () => this.sim.talents,
       iconUrl: (abilityId) => iconDataUrl('ability', abilityId),
       paintGroundRings: (rings) => this.renderer.setPlayerAuraRings(rings),
+      playCue: (cueId, volume) => audio.auraCue(cueId, volume),
     });
     this.farmPressAffordance = new FarmPressAffordanceController({
       root: $('#interact-affordance'),
@@ -5700,23 +5702,11 @@ export class Hud {
     root: () => $('#options-menu'),
     world: () => this.sim,
     options: () => this.optionsHooks,
-    auraOverlays: () => ({
-      playerClass: () => this.sim.cfg.playerClass,
-      defs: () => this.auraOverlayController.defs(),
-      get: (id) => this.auraOverlayController.get(id),
-      patch: (id, patch) => this.auraOverlayController.patch(id, patch),
-      getLayout: () => this.auraOverlayController.getLayout(),
-      patchLayout: (patch) => this.auraOverlayController.patchLayout(patch),
-      reset: (id) => this.auraOverlayController.reset(id),
-      nudge: (id, part, deltaX, deltaY) =>
-        this.auraOverlayController.nudge(id, part, deltaX, deltaY),
-      setAll: (enabled) => this.auraOverlayController.setAll(enabled),
-      beginPlacement: (id, part) => this.auraOverlayController.beginPlacement(id, part),
-      endPlacement: () => this.auraOverlayController.endPlacement(),
-      setPlacement: (on) => this.auraOverlayController.setPlacement(on),
-      onPositionChange: (listener) => this.auraOverlayController.onPositionChange(listener),
-      onPlacementChange: (listener) => this.auraOverlayController.onPlacementChange(listener),
-    }),
+    auraOverlays: () =>
+      auraOverlaySettingsHooks(this.auraOverlayController, {
+        playerClass: () => this.sim.cfg.playerClass,
+        previewCue: (cueId, volume) => audio.auraCue(cueId, volume),
+      }),
     bugReport: () => this.bugReportHooks,
     openWiki: () => this.openWiki(),
     keybinds: () => this.keybinds,
@@ -8044,6 +8034,7 @@ export class Hud {
         itemName: itemDisplayName,
         slotLabel: (i) => formatAbilityNumber(i + 1),
         formatCount: (n) => formatNumber(n, { maximumFractionDigits: 0 }),
+        watchedGlowAbilityIds: () => this.auraOverlayController.readyGlowAbilityIds(),
       },
     );
     this.actionBarPainter = new ActionBarPainter(

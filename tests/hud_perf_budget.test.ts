@@ -566,6 +566,16 @@ interface ScannedPainter {
 // the float animation on a recycled node.
 const HOT_PAINTERS: ReadonlyArray<ScannedPainter> = [
   { file: 'micro_menu_state_painter.ts', allow: {}, reflowAllow: {} },
+  // Both writes are build-time. The .className is the base class stamped on a tick
+  // as it is MINTED into the pool (the pool only grows to the high-water tick
+  // count), and the .setAttribute is the one aria-hidden on the ring root in
+  // buildRoot, which runs once at HUD construction. Every state write after that
+  // (angle, colour, lit, present) is facet-routed.
+  {
+    file: 'reticle_ticks_painter.ts',
+    allow: { '.className': 1, '.setAttribute': 1 },
+    reflowAllow: {},
+  },
   { file: 'xp_bar_painter.ts', allow: {}, reflowAllow: {} },
   { file: 'swing_timer_painter.ts', allow: {}, reflowAllow: {} },
   { file: 'proc_overlay_painter.ts', allow: {}, reflowAllow: {} },

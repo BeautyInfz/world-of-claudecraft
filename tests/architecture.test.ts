@@ -214,6 +214,9 @@ const UI_PURE_CORES = [
   // hint strip so a printed glyph and its colour can never disagree.
   'src/ui/micro_menu_state_view.ts',
   'src/ui/ability_tooltip_lines.ts',
+  'src/ui/proc_ready_glow_core.ts',
+  'src/ui/reticle_ticks_core.ts',
+  'src/ui/aura_watchlist_core.ts',
   'src/ui/collection_actions_core.ts',
   'src/ui/hud/cosmetics/cosmetics_cards_view.ts',
   'src/ui/hud/cosmetics/cosmetics_view.ts',
@@ -2445,6 +2448,11 @@ const UI_DOM_MODULES = [
   'src/ui/mobile_frame_long_press.ts',
   'src/ui/account_portal_dom.ts',
   'src/ui/appearance_customizer.ts',
+  // Owns browser state on purpose: it mints the reticle tick ring's root and
+  // mounts it, which is exactly the work it exists to keep out of hud.ts. The
+  // RULES it wires up are all in the pure cores (reticle_ticks_core,
+  // proc_ready_glow_core, haptic_pulse_core, aura_watchlist_core).
+  'src/ui/aura_overlay_wiring.ts',
   'src/ui/arena_window.ts',
   'src/ui/armory_inspect.ts',
   'src/ui/mount_inspect_controller.ts',
