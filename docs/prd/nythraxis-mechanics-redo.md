@@ -167,9 +167,9 @@ whirls, dealing 10% max hp per second to anyone within 9 yd. He charges four
 random living, non-impaled players in sequence (3 s each) at 2.2x move speed;
 on reaching one, Bone Slam: 35% max hp (heroic 55%) physical to everyone within
 9 yd, plus a Gravefire line down the charge direction; the storm's first
-landed slam is softer (section 16), since the raid has not spread yet. No Bone Spike lands
+landed slam is softer (section 18), since the raid has not spread yet. No Bone Spike lands
 of the storm's own: it casts none and the regular spike cadence is frozen
-while he storms (the mid-storm cast was retired on 2026-09-16, section 15).
+while he storms (the mid-storm cast was retired on 2026-09-16, section 17).
 When it ends the threat table is
 intact, the top-threat tank picks him up, and Gravebreaker re-arms in 3 s.
 Melee cannot attack safely; the raid spreads and runs.

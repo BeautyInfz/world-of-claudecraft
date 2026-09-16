@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { resolveNearbyInteractionCandidate } from '../src/game/nearby_interaction_core';
+import { ESCORTS } from '../src/sim/data';
 import { feastTemplateIds } from '../src/sim/professions/feast';
 import type { Entity, GatherNodeDef, QuestProgress } from '../src/sim/types';
 import type { FarmPatchDef } from '../src/world_api/farming';
@@ -96,6 +97,29 @@ describe('resolveNearbyInteractionCandidate', () => {
     expect(
       resolveNearbyInteractionCandidate(scan([], BED_PATCH).world, true, undefined, nodes),
     ).toMatchObject({ kind: 'node', id: 'ore_1' });
+    // An idle escortee at its post (quest active) beats the node beside it:
+    // escort start sits above the node arm. With the quest inactive the same
+    // escortee is no candidate at all, and the node beside it wins.
+    const escortDef = Object.values(ESCORTS)[0];
+    const post = escortDef.start;
+    const escortee = entity({
+      id: 7,
+      kind: 'mob',
+      templateId: escortDef.npcMobId,
+      name: 'Escortee',
+      pos: { x: post.x, y: 0, z: post.z },
+    });
+    const atPost = scan([escortee]);
+    atPost.world.player.pos = { x: post.x + 1, y: 0, z: post.z };
+    const postNode = { ...ORE_NODE, id: 'ore_post', pos: { x: post.x + 2, z: post.z } };
+    atPost.world.questLog.set(escortDef.questId, { state: 'active' } as unknown as QuestProgress);
+    expect(
+      resolveNearbyInteractionCandidate(atPost.world, true, undefined, [postNode]),
+    ).toMatchObject({ kind: 'escort', id: 7 });
+    atPost.world.questLog.clear();
+    expect(
+      resolveNearbyInteractionCandidate(atPost.world, true, undefined, [postNode]),
+    ).toMatchObject({ kind: 'node', id: 'ore_post' });
     // Nearest node wins among several in reach.
     const nearer = { ...ORE_NODE, id: 'ore_near', pos: { x: 0.5, z: 0 } };
     expect(
