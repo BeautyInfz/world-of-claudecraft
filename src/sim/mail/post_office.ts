@@ -69,6 +69,18 @@ const MAIL_NPC_DELIVERY_SECONDS = 90; // authored letters default delay
 // see the sweep in PostOffice.update.
 export const MAIL_UNREAD_EXPIRY_SECONDS = 30 * 24 * 3600;
 export const MAIL_READ_EXPIRY_SECONDS = 3 * 24 * 3600;
+// The smallest coin attachment that counts as escrow (one silver): a letter
+// whose only attachment is less than this rides the emptied-letter clocks
+// above and is swept with the coin aboard, exactly like a bare note. Any
+// item stack counts as escrow at any count.
+export const MAIL_ESCROW_COPPER_MIN = 100;
+
+// The ONE escrow predicate every expiry decision reads (the sweep, the
+// booking clock, the take and read flips, the purge, and loadMail): items at
+// any count, or coin of at least MAIL_ESCROW_COPPER_MIN.
+export function mailHoldsEscrow(m: { copper: number; items: readonly unknown[] }): boolean {
+  return m.items.length > 0 || m.copper >= MAIL_ESCROW_COPPER_MIN;
+}
 // Sim-seconds an unclaimed player parcel waits before it flies home to its
 // sender. The returned letter then holds Infinity while its attachments
 // remain (the never-auto-deleted rule), like a system parcel.
@@ -260,10 +272,10 @@ export class PostOffice {
           });
         }
       }
-      const hasEscrow = m.items.length > 0 || m.copper > 0;
+      const hasEscrow = mailHoldsEscrow(m);
       if (hasEscrow) {
-        // A letter with attachments aboard is NEVER auto-deleted (the book's
-        // hard invariant: no coin or item is destroyed by age). The one thing
+        // A letter with escrow aboard (any item, or at least a silver of
+        // coin) is NEVER auto-deleted (the book's hard invariant). The one thing
         // the sweep does to a parcel is the return flight, player mail ONLY
         // and once: a system/npc parcel and a returned parcel hold
         // expiresAt = Infinity, so neither can trip this arm; the kind and
@@ -274,7 +286,8 @@ export class PostOffice {
           continue;
         }
       } else if (now >= m.expiresAt) {
-        // An expired emptied letter leaves the buckets and, if
+        // An expired emptied letter (or one carrying only sub-silver coin,
+        // which goes with it) leaves the buckets and, if
         // delivered-and-unread, the unread count (untrack re-derives both
         // from the letter's state).
         this.index.untrack(m, now);
@@ -662,7 +675,9 @@ export class PostOffice {
       this.result(meta.entityId, 'letterGone');
       return;
     }
-    const hadAttachments = m.copper > 0 || m.items.length > 0;
+    // Escrow in the expiry sense (sub-silver coin alone does not count): the
+    // clock write at the tail keys on this, the coin grant below on any coin.
+    const hadAttachments = mailHoldsEscrow(m);
     // Bump only when something observable moved: the revision is realm-global,
     // so an unconditional bump would let a repeat-take on an already-emptied,
     // already-read letter force an inbox rebuild for every near-pillar viewer
@@ -800,7 +815,7 @@ export class PostOffice {
       // The read flip starts the short read clock on an emptied letter (a
       // parcel keeps its attachment clock until the take empties it). markRead
       // already dirtied the row, so the clock write persists with the flag.
-      if (m.items.length === 0 && m.copper <= 0) {
+      if (!mailHoldsEscrow(m)) {
         m.expiresAt = this.emptiedExpiresAt(m, this.ctx.time);
       }
       this.bumpRev();
@@ -946,11 +961,12 @@ export class PostOffice {
     delaySeconds: number;
     custodyRef?: string;
   }): void {
-    const hasAttachments = opts.copper > 0 || opts.items.length > 0;
+    const hasAttachments = mailHoldsEscrow(opts);
     // Player parcels ride the attachment window (one return flight, then
     // Infinity). System and npc parcels get NO clock at all while loaded: that
     // absence, plus the sweep's kind filter, IS their expiry exemption. A bare
-    // note starts the unread window (none at all for an Exchange notice).
+    // note, or one carrying only sub-silver coin, starts the unread window
+    // (none at all for an Exchange notice).
     const expiresAt = hasAttachments
       ? opts.kind === 'player'
         ? this.ctx.time + MAIL_ATTACHMENT_EXPIRY_SECONDS
@@ -1081,7 +1097,7 @@ export class PostOffice {
   // escrowed coin and goods, so the book's standing invariant still rules: an
   // unclaimed player parcel flies home through the ordinary return flight rather
   // than being destroyed, and only letters with nothing at stake are deleted:
-  //  - a bare note (no coin, no items), read or not;
+  //  - a bare note (no items, less than a silver of coin), read or not;
   //  - a system/npc parcel, whose attachments were minted by the world and have
   //    no live sender to fly home to (their senderKey is absent by construction);
   //  - a player parcel whose return flight has ALREADY run (the `returned`
@@ -1134,7 +1150,7 @@ export class PostOffice {
       }
       if (!owns(m.recipientKey)) continue;
       changed = true;
-      const escrowed = m.copper > 0 || m.items.length > 0;
+      const escrowed = mailHoldsEscrow(m);
       // returnToSender's own fallback: the stable sender id, or the display name
       // for a letter persisted before senderKey existed.
       const homeKey = m.senderKey ?? m.senderName;
@@ -1329,7 +1345,7 @@ export class PostOffice {
       const read = m.read === true;
       const returned = m.returned === true;
       const letterId = typeof m.letterId === 'string' ? m.letterId : undefined;
-      const hasEscrow = retainedItems.length > 0 || copper > 0;
+      const hasEscrow = mailHoldsEscrow({ copper, items: retainedItems });
       // The expiry model re-applied at load, so a row persisted under an older
       // model can never outlive (or, for attachments, undercut) the live one:
       //  - attachments aboard: system/npc and RETURNED parcels hold Infinity

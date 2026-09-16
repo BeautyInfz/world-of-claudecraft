@@ -24,8 +24,10 @@ import {
 import {
   MAIL_ATTACHMENT_EXPIRY_SECONDS,
   MAIL_DELIVERY_SECONDS,
+  MAIL_ESCROW_COPPER_MIN,
   MAIL_READ_EXPIRY_SECONDS,
   MAIL_UNREAD_EXPIRY_SECONDS,
+  mailHoldsEscrow,
 } from '../src/sim/mail/post_office';
 import { Sim } from '../src/sim/sim';
 import { DT, type SimEvent } from '../src/sim/types';
@@ -88,11 +90,17 @@ describe('the attachment window at send', () => {
     expect(MAIL_UNREAD_EXPIRY_SECONDS).toBe(30 * 24 * 3600);
     expect(MAIL_READ_EXPIRY_SECONDS).toBe(3 * 24 * 3600);
     expect(raw.expiresAt).toBe(sentAt + MAIL_ATTACHMENT_EXPIRY_SECONDS);
-    // Coin alone is an attachment too.
+    // Coin alone is an attachment too, from exactly one silver up.
     const t1 = sim.time;
-    sim.mailSend('Bob', 'Coin only', 'x', 100, [], alice);
+    expect(MAIL_ESCROW_COPPER_MIN).toBe(100);
+    sim.mailSend('Bob', 'Coin only', 'x', MAIL_ESCROW_COPPER_MIN, [], alice);
     const coin = bookOf(sim).find((m) => m.subject === 'Coin only');
     expect(coin.expiresAt).toBe(t1 + MAIL_ATTACHMENT_EXPIRY_SECONDS);
+    // Under a silver it is a note with pocket change: the unread window.
+    sim.mailSend('Bob', 'Small change', 'x', MAIL_ESCROW_COPPER_MIN - 1, [], alice);
+    const change = bookOf(sim).find((m) => m.subject === 'Small change');
+    expect(change.copper).toBe(MAIL_ESCROW_COPPER_MIN - 1);
+    expect(change.expiresAt).toBe(t1 + MAIL_UNREAD_EXPIRY_SECONDS);
     // A bare note is unread at booking: the unread window from booking.
     sim.mailSend('Bob', 'Note', 'x', 0, [], alice);
     const note = bookOf(sim).find((m) => m.subject === 'Note');
@@ -355,6 +363,118 @@ describe('the emptied-letter clocks: unread 30 days, read 3 days', () => {
   });
 });
 
+describe('sub-silver coin is not escrow', () => {
+  it('pins the predicate: any item counts, coin only from one silver', () => {
+    expect(mailHoldsEscrow({ copper: 0, items: [] })).toBe(false);
+    expect(mailHoldsEscrow({ copper: MAIL_ESCROW_COPPER_MIN - 1, items: [] })).toBe(false);
+    expect(mailHoldsEscrow({ copper: MAIL_ESCROW_COPPER_MIN, items: [] })).toBe(true);
+    expect(mailHoldsEscrow({ copper: 0, items: [{ itemId: 'roasted_boar', count: 1 }] })).toBe(
+      true,
+    );
+  });
+
+  it('an unread letter with 99 copper is swept at the unread window, coin and all, with no return flight', () => {
+    const sim = makeWorld();
+    const alice = sim.addPlayer('warrior', 'Alice');
+    const bob = sim.addPlayer('mage', 'Bob');
+    const aliceMeta = sim.meta(alice);
+    if (!aliceMeta) throw new Error('no meta');
+    aliceMeta.copper = 10_000;
+    moveToMailbox(sim, alice);
+    sim.mailSend('Bob', 'Tip', 'For the ale.', MAIL_ESCROW_COPPER_MIN - 1, [], alice);
+    const raw = bookOf(sim).find((m) => m.subject === 'Tip');
+    tickFor(sim, MAIL_DELIVERY_SECONDS + 2);
+    const unread = sim.mailUnreadFor(bob);
+    const unreadAlice = sim.mailUnreadFor(alice);
+    const aliceCoin = aliceMeta.copper;
+    raw.expiresAt = sim.time;
+    tickFor(sim, 2);
+    expect(bookOf(sim).some((m) => m.id === raw.id)).toBe(false);
+    expect(sim.mailUnreadFor(bob)).toBe(unread - 1);
+    // Gone with the letter: nothing bounced home to Alice (her own inbox,
+    // welcome letter included, is untouched).
+    expect(aliceMeta.copper).toBe(aliceCoin);
+    expect(sim.mailUnreadFor(alice)).toBe(unreadAlice);
+    expect(bookOf(sim).some((m) => m.subject === 'Tip')).toBe(false);
+  });
+
+  it('reading a small-change letter starts the read clock; the take still pays the coin', () => {
+    const sim = makeWorld();
+    const alice = sim.addPlayer('warrior', 'Alice');
+    const bob = sim.addPlayer('mage', 'Bob');
+    const aliceMeta = sim.meta(alice);
+    const bobMeta = sim.meta(bob);
+    if (!aliceMeta || !bobMeta) throw new Error('no meta');
+    aliceMeta.copper = 10_000;
+    moveToMailbox(sim, alice);
+    sim.mailSend('Bob', 'Tip', 'For the ale.', 42, [], alice);
+    const raw = bookOf(sim).find((m) => m.subject === 'Tip');
+    tickFor(sim, MAIL_DELIVERY_SECONDS + 2);
+    moveToMailbox(sim, bob);
+    sim.mailMarkRead(raw.id, bob);
+    const readAt = sim.time;
+    expect(raw.expiresAt).toBe(readAt + MAIL_READ_EXPIRY_SECONDS);
+    tickFor(sim, 100);
+    const before = bobMeta.copper;
+    sim.mailTake(raw.id, bob);
+    expect(bobMeta.copper).toBe(before + 42);
+    expect(raw.copper).toBe(0);
+    // Already read and never escrow: the take does not restart the clock.
+    expect(raw.expiresAt).toBe(readAt + MAIL_READ_EXPIRY_SECONDS);
+  });
+
+  it('a system letter with sub-silver coin takes the unread window; the welcome letter itself is exempt only by its coin', () => {
+    const sim = makeWorld();
+    const pid = sim.addPlayer('warrior', 'Keeper');
+    const meta = sim.meta(pid);
+    if (!meta) throw new Error('no meta');
+    // The shipped welcome letter carries exactly 50 copper: pocket change, so
+    // it now ages out unread like any note (its coin goes with it).
+    expect(WELCOME_LETTER.copper).toBeLessThan(MAIL_ESCROW_COPPER_MIN);
+    const welcome = bookOf(sim).find((m) => m.letterId === WELCOME_LETTER.letterId);
+    expect(Number.isFinite(welcome.expiresAt)).toBe(true);
+    const t = sim.time;
+    sim.postOffice.sendLetter(
+      sim.postOffice.mailKeyFor(meta),
+      meta.name,
+      { ...MASTERY_RESET_LETTER, letterId: 'test_small_coin', copper: MAIL_ESCROW_COPPER_MIN },
+      'system',
+    );
+    const silver = bookOf(sim).find((m) => m.letterId === 'test_small_coin');
+    expect(silver.expiresAt).toBe(Infinity);
+    expect(t).toBeLessThanOrEqual(silver.deliverAt);
+  });
+
+  it('at load, a persisted small-change row rides the emptied model, a one-silver row keeps escrow', () => {
+    const sim = makeWorld();
+    const alice = sim.addPlayer('warrior', 'Alice');
+    sim.addPlayer('mage', 'Bob');
+    const aliceMeta = sim.meta(alice);
+    if (!aliceMeta) throw new Error('no meta');
+    aliceMeta.copper = 10_000;
+    moveToMailbox(sim, alice);
+    sim.mailSend('Bob', 'Tip', 'x', MAIL_ESCROW_COPPER_MIN - 1, [], alice);
+    sim.mailSend('Bob', 'Silver', 'x', MAIL_ESCROW_COPPER_MIN, [], alice);
+    const save = JSON.parse(JSON.stringify(sim.serializeMail()));
+    const tip = save.mail.find((m: { subject: string }) => m.subject === 'Tip');
+    const silver = save.mail.find((m: { subject: string }) => m.subject === 'Silver');
+    // A read small-change row persisted under a long window collapses to the
+    // read clock; the silver row's never sentinel starts the attachment window.
+    tip.read = true;
+    tip.secondsLeft = 20 * 24 * 3600;
+    silver.secondsLeft = -1;
+    const sim2 = makeWorld();
+    const t2 = sim2.time;
+    sim2.loadMail(save);
+    expect(bookOf(sim2).find((m) => m.subject === 'Tip').expiresAt).toBe(
+      t2 + MAIL_READ_EXPIRY_SECONDS,
+    );
+    expect(bookOf(sim2).find((m) => m.subject === 'Silver').expiresAt).toBe(
+      t2 + MAIL_ATTACHMENT_EXPIRY_SECONDS,
+    );
+  });
+});
+
 describe('the Exchange Broker exemption', () => {
   it('pins the exempt id set to the three broker letters', () => {
     expect([...WOC_MARKET_LETTER_IDS].sort()).toEqual(
@@ -427,8 +547,12 @@ describe('the system and npc exemption', () => {
     const pid = sim.addPlayer('warrior', 'Keeper');
     const welcome = bookOf(sim).find((m) => m.letterId === WELCOME_LETTER.letterId);
     expect(welcome.kind).toBe('system');
+    // The welcome letter's courtesy coin is under a silver: pocket change, not
+    // escrow, so it rides the unread window like a note (see the sub-silver
+    // suite); the exemption below is for real parcels.
     expect(welcome.copper).toBeGreaterThan(0);
-    expect(Number.isFinite(welcome.expiresAt)).toBe(false);
+    expect(welcome.copper).toBeLessThan(MAIL_ESCROW_COPPER_MIN);
+    expect(Number.isFinite(welcome.expiresAt)).toBe(true);
     sim.postOffice.mailHeroicMarks(pid, HEROIC_MARK_ITEM_ID, 3);
     const marks = bookOf(sim).find((m) => m.letterId === HEROIC_MARK_LETTER.letterId);
     expect(Number.isFinite(marks.expiresAt)).toBe(false);
@@ -458,10 +582,9 @@ describe('the system and npc exemption', () => {
     // Untouched: not returned, not deleted, attachments intact.
     expect(marks.returned).toBeFalsy();
     expect(marks.items).toEqual([{ itemId: HEROIC_MARK_ITEM_ID, count: 3 }]);
-    expect(welcome.returned).toBeFalsy();
-    expect(welcome.copper).toBe(WELCOME_LETTER.copper);
     expect(bookOf(sim)).toContain(marks);
-    expect(bookOf(sim)).toContain(welcome);
+    // The welcome letter's sub-silver coin is no escrow: swept, coin and all.
+    expect(bookOf(sim)).not.toContain(welcome);
   });
 });
 
@@ -480,9 +603,11 @@ describe('persistence', () => {
     sim2.loadMail(save);
     const raw2 = bookOf(sim2).find((m) => m.subject === 'Parcel');
     expect(raw2.expiresAt).toBe(loadT + MAIL_ATTACHMENT_EXPIRY_SECONDS);
-    // The system welcome letters in the same save keep Infinity.
+    // The system welcome letters in the same save (sub-silver coin, so the
+    // emptied model) keep a finite countdown, never the attachment window.
     const wel2 = bookOf(sim2).find((m) => m.letterId === WELCOME_LETTER.letterId);
-    expect(Number.isFinite(wel2.expiresAt)).toBe(false);
+    expect(Number.isFinite(wel2.expiresAt)).toBe(true);
+    expect(wel2.expiresAt).toBeLessThanOrEqual(loadT + MAIL_UNREAD_EXPIRY_SECONDS);
 
     // A finite persisted window is honoured, not overwritten by the deploy clock.
     const save3 = JSON.parse(JSON.stringify(sim.serializeMail()));
