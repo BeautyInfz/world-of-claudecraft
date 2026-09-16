@@ -1427,6 +1427,7 @@ export const nl_NL: EnTranslations = {
       "targetPrev": "Achteruit Door Doelwitten Bladeren",
       "discord": "Discord",
       "bgFlag": "Slagveldvlag-actie",
+      "friendlyNameplates": "Toggle Friendly Nameplates",
       "sheathe": "Wapen Schede In/Uit",
       "hideInterface": "Interface verbergen",
       "dive": "Omlaag Zwemmen",

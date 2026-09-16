@@ -1427,6 +1427,7 @@ export const es: EnTranslations = {
       "targetPrev": "Objetivo anterior",
       "discord": "Discord",
       "bgFlag": "Acción de bandera de campo de batalla",
+      "friendlyNameplates": "Toggle Friendly Nameplates",
       "sheathe": "Envainar/Desenvainar arma",
       "hideInterface": "Ocultar interfaz",
       "dive": "Nadar hacia abajo",

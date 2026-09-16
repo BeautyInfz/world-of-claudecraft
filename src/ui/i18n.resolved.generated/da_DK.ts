@@ -1427,6 +1427,7 @@ export const da_DK: EnTranslations = {
       "targetPrev": "Skift mål baglæns",
       "discord": "Discord",
       "bgFlag": "Flaghandling på slagmarken",
+      "friendlyNameplates": "Toggle Friendly Nameplates",
       "sheathe": "Gem/fremvis våben",
       "hideInterface": "Skjul grænseflade",
       "dive": "Svøm ned",

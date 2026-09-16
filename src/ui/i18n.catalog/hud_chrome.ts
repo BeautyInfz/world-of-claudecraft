@@ -1649,6 +1649,10 @@ export const hudChromeStrings = {
     // Discord is a brand name; it stays identical across locales.
     discord: 'Discord',
     bgFlag: 'Battleground Flag Action',
+    // The friendly half of the `hud` catalog's existing `nameplates` row: that
+    // key (V) hides every mob nameplate, this one (Ctrl+V) hides only the
+    // friendly ones and leaves the enemies you are fighting alone.
+    friendlyNameplates: 'Toggle Friendly Nameplates',
     sheathe: 'Sheathe/Unsheathe Weapon',
     // Hides the whole HUD for a clean screenshot or video (Alt+Z by default).
     hideInterface: 'Hide Interface',

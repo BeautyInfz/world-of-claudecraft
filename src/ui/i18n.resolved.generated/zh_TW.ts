@@ -1427,6 +1427,7 @@ export const zh_TW: EnTranslations = {
       "targetPrev": "反向切換目標",
       "discord": "Discord",
       "bgFlag": "戰場奪旗動作",
+      "friendlyNameplates": "切換友方姓名板",
       "sheathe": "收起/拔出武器",
       "hideInterface": "隱藏介面",
       "dive": "下潛",

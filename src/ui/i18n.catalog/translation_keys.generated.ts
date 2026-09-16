@@ -10467,6 +10467,7 @@ export type TranslationKeyFlat =
   | 'hudChrome.keybinds.discord'
   | 'hudChrome.keybinds.dive'
   | 'hudChrome.keybinds.emoteWheel'
+  | 'hudChrome.keybinds.friendlyNameplates'
   | 'hudChrome.keybinds.hideInterface'
   | 'hudChrome.keybinds.mount'
   | 'hudChrome.keybinds.mouseHint'

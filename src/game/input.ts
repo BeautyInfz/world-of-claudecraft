@@ -17,6 +17,7 @@ import {
   partyTargetActionSlot,
 } from './keybinds';
 import { bindableMouseCodeForButton, isReservedMouseButton } from './mouse_binds';
+import { toggleFriendlyNameplates } from './nameplate_view_prefs';
 import {
   inForcedPointerLockCooldown,
   pointerLockNeedsSyncGesture,
@@ -697,6 +698,14 @@ export class Input {
     return this.autorun;
   }
 
+  // Friendly-nameplate toggle: where the Ctrl+V edge action lands, and what the
+  // pad calls directly (gamepad.ts, the way it calls toggleAutorun). The state is
+  // a local view preference in nameplate_view_prefs, so it never travels through
+  // main.ts; the nameplate painter reads it from there. Returns the new state.
+  toggleFriendlyNameplates(): boolean {
+    return toggleFriendlyNameplates();
+  }
+
   // Idempotent autorun latch for analog inputs that have a one-way "engage"
   // gesture, such as the mobile move joystick's top band.
   setAutorun(on: boolean): boolean {
@@ -1202,6 +1211,9 @@ export class Input {
       case 'autorun':
         this.autorun = !this.autorun;
         this.noteMovementIntent();
+        return;
+      case 'friendlyNameplates':
+        this.toggleFriendlyNameplates();
         return;
       case 'target':
         this.cb.onTab();

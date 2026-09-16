@@ -1427,6 +1427,7 @@ export const fr_FR: EnTranslations = {
       "targetPrev": "Revenir à la cible précédente",
       "discord": "Discord",
       "bgFlag": "Champ de bataille : drapeau",
+      "friendlyNameplates": "Toggle Friendly Nameplates",
       "sheathe": "Ranger/Dégainer l'arme",
       "hideInterface": "Masquer l'interface",
       "dive": "Nager vers le bas",

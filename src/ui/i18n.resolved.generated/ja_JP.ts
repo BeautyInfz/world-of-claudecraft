@@ -1427,6 +1427,7 @@ export const ja_JP: EnTranslations = {
       "targetPrev": "ターゲットを逆順に切り替え",
       "discord": "Discord",
       "bgFlag": "戦場フラッグアクション",
+      "friendlyNameplates": "友好ネームプレート切り替え",
       "sheathe": "武器を納刀/抜刀",
       "hideInterface": "インターフェースを隠す",
       "dive": "潜水",

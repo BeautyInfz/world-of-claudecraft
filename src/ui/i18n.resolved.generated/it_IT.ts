@@ -1427,6 +1427,7 @@ export const it_IT: EnTranslations = {
       "targetPrev": "Scorri i bersagli indietro",
       "discord": "Discord",
       "bgFlag": "Azione Bandiera del Campo di Battaglia",
+      "friendlyNameplates": "Toggle Friendly Nameplates",
       "sheathe": "Fodera/Sfodera Arma",
       "hideInterface": "Nascondi interfaccia",
       "dive": "Nuota Verso il Basso",

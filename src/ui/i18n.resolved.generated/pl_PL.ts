@@ -1427,6 +1427,7 @@ export const pl_PL: EnTranslations = {
       "targetPrev": "Przełączaj cel wstecz",
       "discord": "Discord",
       "bgFlag": "Akcja flagi pola bitwy",
+      "friendlyNameplates": "Toggle Friendly Nameplates",
       "sheathe": "Schowaj/Wyciągnij Broń",
       "hideInterface": "Ukryj interfejs",
       "dive": "Nurkowanie w dół",
