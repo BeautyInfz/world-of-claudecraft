@@ -669,7 +669,7 @@ interface AttributionTargetFixture {
 // fingerprint input, so every shipping GLB was size-preserving re-minted and this
 // seal follows the swept evidence. No capture was retaken.
 const PINNED_POLISH_COMPOSITE_FINGERPRINT =
-  '5ae21044dd1b636f9c293ec628a7d316f740bb92a5962f848c6e58c80218ebbc';
+  '574ba93790391a09c5c2c7d7473a3c6a489aa52a418977965dec0db90f86e014';
 
 function validPolishAttributionTargets(): AttributionTargetFixture[] {
   return [
@@ -1373,11 +1373,13 @@ describe('Eastbrook polish capture contract', () => {
     // row follows him (target on the authored stand, camera holding its former
     // 4.47 yd offset on his re-derived public-facing side). Lin and Saul did
     // not move this round.
+    // The handoff experiment moves Lin to (-11, -89); the live portrait
+    // follows her while the artifact suite keeps the historical framing frozen.
     const expectedViews = {
       'apothecary-lin': {
         subject: 'apothecary_lin',
-        camera: { x: -65, y: 6, z: -96 },
-        target: { x: -72, y: 2.5, z: -96 },
+        camera: { x: -12, y: 6, z: -94 },
+        target: { x: -11, y: 2.5, z: -89 },
       },
       'ravenpost-chronicler': {
         subject: 'chronicler_saul',
