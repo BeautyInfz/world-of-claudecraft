@@ -469,7 +469,11 @@ const MONOLITHS: MonolithRow[] = [
     // src/ui/aura_overlay_wiring.ts (its own arm re-pinned 18472 -> 18463), and
     // the release's extractions compose with it to 18334 by wc -l on the
     // merged tree, below both parent pins (18463 / 18343). Exact count, zero slack.
-    ceiling: 18334,
+    // Re-measured while reconciling the latest v0.43.0 base: the release-side
+    // screenshot and HUD extractions compose with aura overlay wiring and the
+    // account-wide Book of Deeds / Reliquary work to 18309 by wc -l on the
+    // merged tree. Exact count, zero slack.
+    ceiling: 18309,
     seam: 'pure view core + thin painter on PainterHost (src/ui/CLAUDE.md)',
   },
   {
