@@ -15758,6 +15758,20 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'hudChrome.perf.diagnostics.report.status.critical': '重大',
   'hudChrome.perf.diagnostics.report.status.needsAttention': '要確認',
   // The Proving Shore (tutorial island) + the spawn greeting dialog.
+  'hudChrome.tutorialGreeting.eastbrookGuidanceNote':
+    'イーストブルックへようこそ！町の広場でレッドブルック元帥が仕事を用意しています。金色のガイドをオンにして彼を見つけ、「戸口の狼」を進めることも、自分で探索することもできます。この設定は後からオプションのインターフェース、戦闘で変更できます。',
+  'hudChrome.tutorialGreeting.guidanceOn': 'ガイドをオンにする',
+  'hudChrome.tutorialGreeting.guidanceOff': 'ガイドをオフにする',
+  'hudChrome.tutorialGreeting.guidanceSetting': 'イーストブルックの金色ガイド',
+  'hudChrome.professionTrainers.blacksmithing': '鍛冶のトレーナー',
+  'hudChrome.professionTrainers.cooking': '料理のトレーナー',
+  'hudChrome.professionTrainers.tailoring': '裁縫のトレーナー',
+  'hudChrome.professionTrainers.engineering': '工学のトレーナー',
+  'hudChrome.professionTrainers.leatherworking': '革細工のトレーナー',
+  'hudChrome.professionTrainers.alchemy': '錬金術のトレーナー',
+  'hudChrome.professionTrainers.farming': '農業のトレーナー',
+  'hudChrome.professionTrainers.mining': '採鉱のトレーナー',
+  'hudChrome.professionTrainers.hobby': '趣味のトレーナー',
   'hudChrome.tutorialGreeting.bellHomeNote':
     'もう浜から戻ったのかい？さっき鳴らしたのが渡しの鐘だよ。その双子がすぐそこ、レイヴンポストの郵便柱のそばに掛かっている。いつでも鳴らせば、渡しが修練の浜へ運び直してくれる。間違って鳴らしたのなら、それはそれで構わないさ。',
   'hudChrome.tutorialGreeting.islandArrivalNote':
