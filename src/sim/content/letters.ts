@@ -138,6 +138,20 @@ export const WOC_MARKET_RETURN_LETTER: LetterDef = {
   delaySeconds: 0,
 };
 
+// The Exchange Broker's letter ids, the ONE list the post's expiry sweep reads:
+// an UNREAD Exchange letter never ages out (a sale or return notice waits
+// until its owner has seen it), where every other unread letter takes the
+// standard unread window. Keep in lockstep with the three defs above.
+export const WOC_MARKET_LETTER_IDS: ReadonlySet<string> = new Set([
+  'woc_market_delivery',
+  'woc_market_return',
+  'woc_market_sold',
+]);
+
+export function isWocMarketLetterId(letterId: string | undefined): boolean {
+  return letterId !== undefined && WOC_MARKET_LETTER_IDS.has(letterId);
+}
+
 export const WOC_MARKET_SOLD_LETTER: LetterDef = {
   letterId: 'woc_market_sold',
   senderName: 'The Exchange Broker',

@@ -1,14 +1,32 @@
-// Mail attachment expiry (src/sim/mail/post_office.ts): player parcels ride a
-// 30-day sim-time window, fly home to their sender exactly once when it lapses,
-// and only a RETURNED letter may ever be deleted with attachments aboard (the
-// phase's hard invariant). System/npc parcels are exempt by construction
-// (expiresAt stays Infinity) and the sweep filters on kind besides. Pure sim
-// tests: construct a Sim, advance fixed ticks, no rng drawn by the post.
+// Mail expiry (src/sim/mail/post_office.ts). Three rules:
+//  - a letter with attachments aboard (coin or items) is NEVER auto-deleted:
+//    an unclaimed player parcel rides a 30-day sim-time window, flies home to
+//    its sender exactly once when it lapses, and then holds Infinity like a
+//    system/npc parcel (exempt by construction, and the sweep filters on kind
+//    and the returned flag besides);
+//  - an emptied or bare letter that is UNREAD is deleted 30 sim-days after
+//    booking, except an Exchange Broker letter, which waits until read;
+//  - a READ emptied letter is deleted 3 sim-days after the read flip.
+// Pure sim tests: construct a Sim, advance fixed ticks, no rng drawn by the post.
 
 import { describe, expect, it } from 'vitest';
 import { HEROIC_MARK_ITEM_ID } from '../src/sim/content/dungeon_difficulty';
-import { HEROIC_MARK_LETTER, QUEST_LETTERS, WELCOME_LETTER } from '../src/sim/content/letters';
-import { MAIL_ATTACHMENT_EXPIRY_SECONDS, MAIL_DELIVERY_SECONDS } from '../src/sim/mail/post_office';
+import {
+  HEROIC_MARK_LETTER,
+  MASTERY_RESET_LETTER,
+  QUEST_LETTERS,
+  WELCOME_LETTER,
+  WOC_MARKET_DELIVERY_LETTER,
+  WOC_MARKET_LETTER_IDS,
+  WOC_MARKET_RETURN_LETTER,
+  WOC_MARKET_SOLD_LETTER,
+} from '../src/sim/content/letters';
+import {
+  MAIL_ATTACHMENT_EXPIRY_SECONDS,
+  MAIL_DELIVERY_SECONDS,
+  MAIL_READ_EXPIRY_SECONDS,
+  MAIL_UNREAD_EXPIRY_SECONDS,
+} from '../src/sim/mail/post_office';
 import { Sim } from '../src/sim/sim';
 import { DT, type SimEvent } from '../src/sim/types';
 import { EMPTY_TEST_WORLD } from './sim_shared';
@@ -64,19 +82,21 @@ function setupParcel(copper = 500) {
 }
 
 describe('the attachment window at send', () => {
-  it('gives a player parcel the 30-day clock; a bare note keeps the 14-day model', () => {
+  it('gives a player parcel the 30-day clock; a bare note takes the 30-day unread window', () => {
     const { sim, alice, sentAt, raw } = setupParcel();
     expect(MAIL_ATTACHMENT_EXPIRY_SECONDS).toBe(30 * 24 * 3600);
+    expect(MAIL_UNREAD_EXPIRY_SECONDS).toBe(30 * 24 * 3600);
+    expect(MAIL_READ_EXPIRY_SECONDS).toBe(3 * 24 * 3600);
     expect(raw.expiresAt).toBe(sentAt + MAIL_ATTACHMENT_EXPIRY_SECONDS);
     // Coin alone is an attachment too.
     const t1 = sim.time;
     sim.mailSend('Bob', 'Coin only', 'x', 100, [], alice);
     const coin = bookOf(sim).find((m) => m.subject === 'Coin only');
     expect(coin.expiresAt).toBe(t1 + MAIL_ATTACHMENT_EXPIRY_SECONDS);
-    // A bare note stays on the untouched emptied-letter model.
+    // A bare note is unread at booking: the unread window from booking.
     sim.mailSend('Bob', 'Note', 'x', 0, [], alice);
     const note = bookOf(sim).find((m) => m.subject === 'Note');
-    expect(note.expiresAt).toBe(t1 + 14 * 24 * 3600);
+    expect(note.expiresAt).toBe(t1 + MAIL_UNREAD_EXPIRY_SECONDS);
   });
 });
 
@@ -118,7 +138,9 @@ describe('the return flight', () => {
     expect(raw.read).toBe(false);
     expect(raw.announced).toBe(false);
     expect(raw.deliverAt).toBe(boundary + MAIL_DELIVERY_SECONDS);
-    expect(raw.expiresAt).toBe(boundary + MAIL_ATTACHMENT_EXPIRY_SECONDS);
+    // Home for good: no second window, the returned parcel is never
+    // auto-deleted while its attachments remain.
+    expect(raw.expiresAt).toBe(Infinity);
 
     // Still on the wing: Bob no longer owns it, Alice does not count it yet.
     expect(sim.mailUnreadFor(bob)).toBe(unreadBob - 1);
@@ -213,19 +235,189 @@ describe('the return flight', () => {
     expect(raw.senderName).toBe('Alice');
   });
 
-  it('deletes the returned letter with its attachments at the second expiry, and only then', () => {
-    const { sim, alice, raw } = setupParcel();
+  it('never deletes the returned letter: it holds Infinity, and a forced expiry leaves it be', () => {
+    const { sim, alice, aliceMeta, raw } = setupParcel();
     tickFor(sim, MAIL_DELIVERY_SECONDS + 2);
     const id = raw.id;
     raw.expiresAt = sim.time;
     tickFor(sim, 2); // the return cycle runs
     expect(raw.returned).toBe(true);
+    expect(raw.expiresAt).toBe(Infinity);
     tickFor(sim, MAIL_DELIVERY_SECONDS + 2); // lands unread at Alice's
     const unread = sim.mailUnreadFor(alice);
+    // Even a forced finite expiry is no deletion: attachments aboard, the
+    // sweep's only verb is the return flight, and that has already run, so
+    // the parcel neither bounces again nor leaves the book.
     raw.expiresAt = sim.time;
-    tickFor(sim, 2); // the one sanctioned destruction
-    expect(bookOf(sim).some((m) => m.id === id)).toBe(false);
-    expect(sim.mailUnreadFor(alice)).toBe(unread - 1);
+    tickFor(sim, 2);
+    expect(bookOf(sim).some((m) => m.id === id)).toBe(true);
+    expect(raw.returned).toBe(true);
+    expect(raw.recipientKey).toBe(sim.postOffice.mailKeyFor(aliceMeta));
+    expect(raw.items).toEqual([{ itemId: 'roasted_boar', count: 2 }]);
+    expect(raw.copper).toBe(500);
+    expect(sim.mailUnreadFor(alice)).toBe(unread);
+  });
+});
+
+// A bare note from Alice to Bob, landed and unread, with Bob at a raven pillar
+// so the read verbs resolve. Returns the live raw letter.
+function setupNote() {
+  const sim = makeWorld();
+  const alice = sim.addPlayer('warrior', 'Alice');
+  const bob = sim.addPlayer('mage', 'Bob');
+  const aliceMeta = sim.meta(alice);
+  if (!aliceMeta) throw new Error('no meta');
+  aliceMeta.copper = 10_000; // postage only
+  moveToMailbox(sim, alice);
+  const sentAt = sim.time;
+  sim.mailSend('Bob', 'Note', 'Words.', 0, [], alice);
+  const raw = bookOf(sim).find((m) => m.subject === 'Note');
+  if (!raw) throw new Error('note not booked');
+  tickFor(sim, MAIL_DELIVERY_SECONDS + 2);
+  moveToMailbox(sim, bob);
+  sim.drainEvents();
+  return { sim, alice, bob, sentAt, raw };
+}
+
+// Books an Exchange Broker letter to `pid` through the real custody path.
+function bookExchangeLetter(
+  sim: Sim,
+  pid: number,
+  letter: typeof WOC_MARKET_SOLD_LETTER,
+  items: { itemId: string; count: number }[] = [],
+) {
+  const meta = sim.meta(pid);
+  if (!meta) throw new Error('no meta');
+  sim.postOffice.mailSystemParcel(
+    { key: sim.postOffice.mailKeyFor(meta), name: meta.name },
+    letter,
+    items,
+  );
+  const raw = bookOf(sim).find((m) => m.letterId === letter.letterId);
+  if (!raw) throw new Error('exchange letter not booked');
+  return raw;
+}
+
+describe('the emptied-letter clocks: unread 30 days, read 3 days', () => {
+  it('an unread note rides the 30-day window from booking, and the sweep deletes it there', () => {
+    const { sim, bob, sentAt, raw } = setupNote();
+    expect(raw.read).toBe(false);
+    expect(raw.expiresAt).toBe(sentAt + MAIL_UNREAD_EXPIRY_SECONDS);
+    const unread = sim.mailUnreadFor(bob);
+    raw.expiresAt = sim.time;
+    tickFor(sim, 2);
+    expect(bookOf(sim).some((m) => m.id === raw.id)).toBe(false);
+    expect(sim.mailUnreadFor(bob)).toBe(unread - 1);
+  });
+
+  it('reading a note (mailMarkRead) moves it onto the 3-day read clock, once', () => {
+    const { sim, bob, raw } = setupNote();
+    tickFor(sim, 100);
+    sim.mailMarkRead(raw.id, bob);
+    expect(raw.read).toBe(true);
+    const readAt = sim.time;
+    expect(raw.expiresAt).toBe(readAt + MAIL_READ_EXPIRY_SECONDS);
+    // The flip fires once: a repeat read never extends the clock.
+    tickFor(sim, 100);
+    sim.mailMarkRead(raw.id, bob);
+    expect(raw.expiresAt).toBe(readAt + MAIL_READ_EXPIRY_SECONDS);
+    // And the sweep collects it from there.
+    raw.expiresAt = sim.time;
+    tickFor(sim, 2);
+    expect(bookOf(sim).some((m) => m.id === raw.id)).toBe(false);
+  });
+
+  it('the take that first reads a bare note starts the read clock; a repeat take never extends it', () => {
+    const { sim, bob, raw } = setupNote();
+    tickFor(sim, 100);
+    sim.mailTake(raw.id, bob);
+    expect(raw.read).toBe(true);
+    const readAt = sim.time;
+    expect(raw.expiresAt).toBe(readAt + MAIL_READ_EXPIRY_SECONDS);
+    tickFor(sim, 100);
+    sim.mailTake(raw.id, bob);
+    expect(raw.expiresAt).toBe(readAt + MAIL_READ_EXPIRY_SECONDS);
+  });
+
+  it('a read parcel keeps its attachment clock until the take empties it, then rides the read clock', () => {
+    const { sim, bob, sentAt, raw } = setupParcel();
+    tickFor(sim, MAIL_DELIVERY_SECONDS + 2);
+    moveToMailbox(sim, bob);
+    sim.mailMarkRead(raw.id, bob);
+    expect(raw.read).toBe(true);
+    // Attachments aboard: reading changes nothing about its clock.
+    expect(raw.expiresAt).toBe(sentAt + MAIL_ATTACHMENT_EXPIRY_SECONDS);
+    tickFor(sim, 100);
+    sim.mailTake(raw.id, bob);
+    expect(raw.items).toEqual([]);
+    expect(raw.copper).toBe(0);
+    expect(raw.expiresAt).toBe(sim.time + MAIL_READ_EXPIRY_SECONDS);
+  });
+});
+
+describe('the Exchange Broker exemption', () => {
+  it('pins the exempt id set to the three broker letters', () => {
+    expect([...WOC_MARKET_LETTER_IDS].sort()).toEqual(
+      [
+        WOC_MARKET_DELIVERY_LETTER.letterId,
+        WOC_MARKET_RETURN_LETTER.letterId,
+        WOC_MARKET_SOLD_LETTER.letterId,
+      ].sort(),
+    );
+  });
+
+  it('an unread sold notice has no clock at all; reading it starts the 3-day read clock', () => {
+    const sim = makeWorld();
+    const pid = sim.addPlayer('warrior', 'Seller');
+    const raw = bookExchangeLetter(sim, pid, WOC_MARKET_SOLD_LETTER);
+    expect(raw.kind).toBe('system');
+    expect(raw.items).toEqual([]);
+    expect(raw.copper).toBe(0);
+    expect(raw.expiresAt).toBe(Infinity);
+    // Nothing to force past: with no clock the sweep never reaches it.
+    tickFor(sim, 5);
+    expect(bookOf(sim)).toContain(raw);
+    expect(raw.expiresAt).toBe(Infinity);
+    moveToMailbox(sim, pid);
+    sim.mailMarkRead(raw.id, pid);
+    expect(raw.read).toBe(true);
+    expect(raw.expiresAt).toBe(sim.time + MAIL_READ_EXPIRY_SECONDS);
+  });
+
+  it('a delivery parcel holds Infinity through the read flip and takes the read clock once emptied', () => {
+    const sim = makeWorld();
+    const pid = sim.addPlayer('warrior', 'Buyer');
+    const raw = bookExchangeLetter(sim, pid, WOC_MARKET_DELIVERY_LETTER, [
+      { itemId: 'roasted_boar', count: 1 },
+    ]);
+    expect(raw.expiresAt).toBe(Infinity);
+    tickFor(sim, 1);
+    moveToMailbox(sim, pid);
+    sim.mailMarkRead(raw.id, pid);
+    expect(raw.read).toBe(true);
+    expect(raw.expiresAt).toBe(Infinity);
+    sim.mailTake(raw.id, pid);
+    expect(sim.countItem('roasted_boar', pid)).toBe(1);
+    expect(raw.items).toEqual([]);
+    expect(raw.expiresAt).toBe(sim.time + MAIL_READ_EXPIRY_SECONDS);
+  });
+
+  it('every other unread authored note takes the ordinary 30-day unread window', () => {
+    const sim = makeWorld();
+    const pid = sim.addPlayer('warrior', 'Crafter');
+    const meta = sim.meta(pid);
+    if (!meta) throw new Error('no meta');
+    const t = sim.time;
+    sim.postOffice.sendLetter(
+      sim.postOffice.mailKeyFor(meta),
+      meta.name,
+      MASTERY_RESET_LETTER,
+      'system',
+    );
+    const raw = bookOf(sim).find((m) => m.letterId === MASTERY_RESET_LETTER.letterId);
+    expect(raw.items).toEqual([]);
+    expect(raw.copper).toBe(0);
+    expect(raw.expiresAt).toBe(t + MAIL_UNREAD_EXPIRY_SECONDS);
   });
 });
 
@@ -314,7 +506,7 @@ describe('persistence', () => {
     expect(raw4.expiresAt).toBe(t4 + MAIL_ATTACHMENT_EXPIRY_SECONDS);
   });
 
-  it('round-trips the returned flag with its second window', () => {
+  it('round-trips the returned flag with the never sentinel, and lifts a legacy second window to Infinity', () => {
     const { sim, raw } = setupParcel();
     tickFor(sim, MAIL_DELIVERY_SECONDS + 2);
     raw.expiresAt = sim.time;
@@ -323,6 +515,7 @@ describe('persistence', () => {
     const save = JSON.parse(JSON.stringify(sim.serializeMail()));
     const row = save.mail.find((m: { subject: string }) => m.subject === 'Parcel');
     expect(row.returned).toBe(true);
+    expect(row.secondsLeft).toBe(-1);
     // An un-returned row serializes with no flag at all (additive save shape).
     const welcomeRow = save.mail.find(
       (m: { letterId?: string }) => m.letterId === WELCOME_LETTER.letterId,
@@ -330,13 +523,98 @@ describe('persistence', () => {
     expect(welcomeRow.returned).toBeUndefined();
 
     const sim2 = makeWorld();
-    const t2 = sim2.time;
     sim2.loadMail(save);
     const raw2 = bookOf(sim2).find((m) => m.subject === 'Parcel');
     expect(raw2.returned).toBe(true);
-    expect(raw2.expiresAt).toBe(t2 + row.secondsLeft);
+    expect(raw2.expiresAt).toBe(Infinity);
     const wel2 = bookOf(sim2).find((m) => m.letterId === WELCOME_LETTER.letterId);
     expect(wel2.returned).toBe(false);
+
+    // A returned row persisted under the old model carried a finite second
+    // window; at load it is lifted back to Infinity (attachments aboard are
+    // never auto-deleted, whatever the row on disk says).
+    const legacy = JSON.parse(JSON.stringify(save));
+    legacy.mail.find((m: { subject: string }) => m.subject === 'Parcel').secondsLeft = 1234;
+    const sim3 = makeWorld();
+    sim3.loadMail(legacy);
+    const raw3 = bookOf(sim3).find((m) => m.subject === 'Parcel');
+    expect(raw3.returned).toBe(true);
+    expect(raw3.items).toEqual([{ itemId: 'roasted_boar', count: 2 }]);
+    expect(raw3.expiresAt).toBe(Infinity);
+  });
+
+  it('caps an emptied row at load: a read letter under a longer persisted window collapses to the read clock', () => {
+    const { sim, raw } = setupNote();
+    const save = JSON.parse(JSON.stringify(sim.serializeMail()));
+    const row = save.mail.find((m: { subject: string }) => m.subject === 'Note');
+    expect(row.read).toBe(false);
+    expect(row.secondsLeft).toBeGreaterThan(0);
+    expect(row.secondsLeft).toBeLessThanOrEqual(MAIL_UNREAD_EXPIRY_SECONDS);
+    expect(raw.expiresAt).toBeGreaterThan(sim.time);
+
+    // An unread row keeps its (shorter) countdown verbatim.
+    row.secondsLeft = 1234;
+    const sim2 = makeWorld();
+    const t2 = sim2.time;
+    sim2.loadMail(save);
+    expect(bookOf(sim2).find((m) => m.subject === 'Note').expiresAt).toBe(t2 + 1234);
+
+    // A read row persisted with a countdown longer than the read window (the
+    // old 14-day model, say) collapses to the read clock from this load.
+    row.read = true;
+    row.secondsLeft = 10 * 24 * 3600;
+    const sim3 = makeWorld();
+    const t3 = sim3.time;
+    sim3.loadMail(save);
+    const raw3 = bookOf(sim3).find((m) => m.subject === 'Note');
+    expect(raw3.read).toBe(true);
+    expect(raw3.expiresAt).toBe(t3 + MAIL_READ_EXPIRY_SECONDS);
+
+    // A read row with a countdown already inside the read window keeps it.
+    row.secondsLeft = 600;
+    const sim4 = makeWorld();
+    const t4 = sim4.time;
+    sim4.loadMail(save);
+    expect(bookOf(sim4).find((m) => m.subject === 'Note').expiresAt).toBe(t4 + 600);
+  });
+
+  it('an unread Exchange notice persists the never sentinel, and a legacy countdown on one is dropped at load', () => {
+    const sim = makeWorld();
+    const pid = sim.addPlayer('warrior', 'Seller');
+    bookExchangeLetter(sim, pid, WOC_MARKET_SOLD_LETTER);
+    const save = JSON.parse(JSON.stringify(sim.serializeMail()));
+    const row = save.mail.find(
+      (m: { letterId?: string }) => m.letterId === WOC_MARKET_SOLD_LETTER.letterId,
+    );
+    expect(row.read).toBe(false);
+    expect(row.secondsLeft).toBe(-1);
+
+    const sim2 = makeWorld();
+    sim2.loadMail(save);
+    const raw2 = bookOf(sim2).find((m) => m.letterId === WOC_MARKET_SOLD_LETTER.letterId);
+    expect(raw2.expiresAt).toBe(Infinity);
+
+    // Persisted under the old model with a live countdown: still unread, so
+    // the exemption applies at load and the countdown is dropped.
+    row.secondsLeft = 1234;
+    const sim3 = makeWorld();
+    sim3.loadMail(save);
+    const raw3 = bookOf(sim3).find((m) => m.letterId === WOC_MARKET_SOLD_LETTER.letterId);
+    expect(raw3.expiresAt).toBe(Infinity);
+
+    // Once read, it is an ordinary emptied letter: the read clock, capped.
+    row.read = true;
+    const sim4 = makeWorld();
+    const t4 = sim4.time;
+    sim4.loadMail(save);
+    const raw4 = bookOf(sim4).find((m) => m.letterId === WOC_MARKET_SOLD_LETTER.letterId);
+    expect(raw4.expiresAt).toBe(t4 + 1234);
+    row.secondsLeft = -1;
+    const sim5 = makeWorld();
+    const t5 = sim5.time;
+    sim5.loadMail(save);
+    const raw5 = bookOf(sim5).find((m) => m.letterId === WOC_MARKET_SOLD_LETTER.letterId);
+    expect(raw5.expiresAt).toBe(t5 + MAIL_READ_EXPIRY_SECONDS);
   });
 });
 
@@ -425,9 +703,9 @@ describe('taking a returned letter', () => {
     expect(raw.items).toEqual([]);
     expect(raw.copper).toBe(0);
     expect(raw.read).toBe(true);
-    // Emptied: the letter leaves the attachment window for the standard 14-day
-    // emptied-letter clock, and the EMPTY prune arm collects it from there.
-    expect(raw.expiresAt).toBe(sim.time + 14 * 24 * 3600);
+    // Emptied and read: the letter leaves Infinity for the 3-day read clock,
+    // and the EMPTY prune arm collects it from there.
+    expect(raw.expiresAt).toBe(sim.time + MAIL_READ_EXPIRY_SECONDS);
     raw.expiresAt = sim.time;
     tickFor(sim, 2);
     expect(bookOf(sim).some((m) => m.id === raw.id)).toBe(false);
