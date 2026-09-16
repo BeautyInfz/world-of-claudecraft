@@ -3444,7 +3444,10 @@ export const da_DK: EnTranslations = {
       "unrecordedSigned": "Ingen samler registreret, signeret af {name}",
       "quantityAria": "Enheder fra {source}, op til {count}",
       "decreaseAria": "Mindsk enheder fra {source}",
-      "increaseAria": "Øg enheder fra {source}"
+      "increaseAria": "Øg enheder fra {source}",
+      "decreaseByAria": "Decrease units from {source} by {count}",
+      "increaseByAria": "Increase units from {source} by {count}",
+      "moveAll": "Move all units"
     },
     "materialHint": {
       "fineGrade": "Fin kvalitet. Indsamlet fra en åre på fuldt niveau med et værktøj, der rangerer over materialet, og tæller som den ordinære version, hvor end en sådan kræves.",
@@ -3788,6 +3791,8 @@ export const da_DK: EnTranslations = {
       "withdrawQuantityTitle": "Tag {item} ud",
       "withdrawQuantityInput": "Antal at tage ud",
       "withdrawQuantityConfirm": "Tag ud",
+      "quantityStepDownAria": "Decrease the quantity by {count}",
+      "quantityStepUpAria": "Increase the quantity by {count}",
       "vaultRowWithdrawName": "Tag {item} ud",
       "priceChanged": "Prisen ændrede sig, før købet blev gennemført. Gennemgå den opdaterede pris, og bekræft igen.",
       "withdrawQuantityAction": "Antal at tage ud: {item}",

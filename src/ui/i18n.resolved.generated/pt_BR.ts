@@ -3444,7 +3444,10 @@ export const pt_BR: EnTranslations = {
       "unrecordedSigned": "Coletor não registrado, assinado por {name}",
       "quantityAria": "Unidades de {source}, até {count}",
       "decreaseAria": "Diminuir unidades de {source}",
-      "increaseAria": "Aumentar unidades de {source}"
+      "increaseAria": "Aumentar unidades de {source}",
+      "decreaseByAria": "Decrease units from {source} by {count}",
+      "increaseByAria": "Increase units from {source} by {count}",
+      "moveAll": "Move all units"
     },
     "materialHint": {
       "fineGrade": "Grau fino. Coletado de um veio de nível pleno com uma ferramenta de nível acima do material, e conta como a versão comum sempre que uma for exigida.",
@@ -3788,6 +3791,8 @@ export const pt_BR: EnTranslations = {
       "withdrawQuantityTitle": "Retirar {item}",
       "withdrawQuantityInput": "Quantidade a retirar",
       "withdrawQuantityConfirm": "Retirar",
+      "quantityStepDownAria": "Decrease the quantity by {count}",
+      "quantityStepUpAria": "Increase the quantity by {count}",
       "vaultRowWithdrawName": "Retirar {item}",
       "priceChanged": "O preço mudou antes da compra ser concluída. Revise o preço atualizado e confirme novamente.",
       "withdrawQuantityAction": "Quantidade a retirar: {item}",

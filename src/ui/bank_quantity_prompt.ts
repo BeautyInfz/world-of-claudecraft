@@ -27,9 +27,26 @@ export interface QuantityPromptWiring {
   dismissSiblings(): void;
 }
 
+/** Optional step buttons flanking the number input: a unit pair (one press
+ *  moves one unit; the same minus/plus glyphs the source picker's rows use)
+ *  inside a big-step pair (one press moves `size` units, a whole carried stack
+ *  for the vault). Every press clamps to the prompt's [1, maxCount] range so
+ *  the last one lands on the bound. Every string arrives resolved, like the
+ *  rest of the prompt's copy. */
+export interface QuantityPromptStep {
+  size: number;
+  downText: string;
+  upText: string;
+  downAriaText: string;
+  upAriaText: string;
+  unitDownAriaText: string;
+  unitUpAriaText: string;
+}
+
 export interface QuantityPromptOpts {
   /** Extra classes after 'prompt panel' (the family's teardown selectors). */
   className: string;
+  step?: QuantityPromptStep;
   titleText: string;
   inputAriaText: string;
   confirmText: string;
@@ -69,7 +86,34 @@ export function showQuantityPrompt(wiring: QuantityPromptWiring, opts: QuantityP
   const cancel = document.createElement('button');
   cancel.className = 'btn';
   cancel.textContent = opts.cancelText;
-  prompt.append(input, confirm, cancel);
+  if (opts.step) {
+    const { size, downText, upText, downAriaText, upAriaText } = opts.step;
+    const stepBy = (delta: number): void => {
+      const current = Math.floor(Number(input.value) || 0);
+      const next = Math.min(opts.maxCount, Math.max(1, current + delta));
+      input.value = String(next);
+    };
+    const stepButton = (text: string, ariaText: string, delta: number): HTMLButtonElement => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = `btn prompt-step${Math.abs(delta) === 1 ? ' prompt-step-unit' : ''}`;
+      button.textContent = text;
+      button.setAttribute('aria-label', ariaText);
+      button.addEventListener('click', () => stepBy(delta));
+      return button;
+    };
+    prompt.append(
+      stepButton(downText, downAriaText, -size),
+      stepButton('\u2212', opts.step.unitDownAriaText, -1),
+      input,
+      stepButton('+', opts.step.unitUpAriaText, 1),
+      stepButton(upText, upAriaText, size),
+      confirm,
+      cancel,
+    );
+  } else {
+    prompt.append(input, confirm, cancel);
+  }
   const { dismiss, dismissAndReturn } = wiring.installPromptDialog(prompt, opener, () =>
     prompt.remove(),
   );

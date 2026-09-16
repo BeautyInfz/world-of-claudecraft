@@ -3444,7 +3444,10 @@ export const zh_CN: EnTranslations = {
       "unrecordedSigned": "未记录采集者，由{name}签名",
       "quantityAria": "来自{source}的单位，最多{count}个",
       "decreaseAria": "减少来自{source}的单位",
-      "increaseAria": "增加来自{source}的单位"
+      "increaseAria": "增加来自{source}的单位",
+      "decreaseByAria": "将来自{source}的单位减少{count}",
+      "increaseByAria": "将来自{source}的单位增加{count}",
+      "moveAll": "移动全部单位"
     },
     "materialHint": {
       "fineGrade": "优质品级。以等级高于该材料的工具在满级矿脉采集所得，在任何需要普通版本的地方均可替代使用。",
@@ -3788,6 +3791,8 @@ export const zh_CN: EnTranslations = {
       "withdrawQuantityTitle": "取出 {item}",
       "withdrawQuantityInput": "要取出的数量",
       "withdrawQuantityConfirm": "取出",
+      "quantityStepDownAria": "数量减少{count}",
+      "quantityStepUpAria": "数量增加{count}",
       "vaultRowWithdrawName": "取出 {item}",
       "priceChanged": "购买完成前价格已发生变化。请查看刷新后的价格并再次确认。",
       "withdrawQuantityAction": "选择 {item} 要取出的数量",

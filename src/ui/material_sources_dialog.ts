@@ -5,6 +5,7 @@
 // authoritative world command receives the same captured stack selection and
 // revalidates it itself.
 
+import { DEFAULT_STACK } from '../sim/bags';
 import type { MaterialComposition } from '../sim/material_sources';
 import { formatNumber, t } from './i18n';
 import {
@@ -59,8 +60,11 @@ export function materialSourcesButtonShown(): boolean {
  *  the moment the affordance fired, so nothing is re-resolved here), or the
  *  read-only details list otherwise. A factory that returns null means the
  *  row has left the live inventory, and the affordance REFUSES rather than
- *  falling back to a stale read-only view. */
-function openMaterialSourcesForRow(
+ *  falling back to a stale read-only view. Exported for the rows whose own
+ *  handler already owns the gesture (the bag cell's right-click at an open
+ *  storage pane, the vault row's chosen-quantity button): they open the same
+ *  session here instead of growing a second listener. */
+export function openMaterialSourcesForRow(
   open: MaterialSourcesDialogOpener,
   itemName: string,
   sources: MaterialComposition,
@@ -350,6 +354,8 @@ export class MaterialSourcesDialog {
     list.setAttribute('role', 'list');
     list.setAttribute('aria-label', t('hudChrome.materialSources.listAria'));
     const quantities = new Map<number, number>();
+    /** One filler per selectable row: sets that row to its whole count. */
+    const fillers: Array<() => void> = [];
     const submit = document.createElement('button');
     submit.type = 'button';
     submit.className = 'btn material-sources-confirm';
@@ -405,32 +411,70 @@ export class MaterialSourcesDialog {
           'aria-label',
           t('hudChrome.materialSources.increaseAria', { source }),
         );
+        // The bag-stack steps: one press moves a whole carried stack's worth
+        // (DEFAULT_STACK, the size every material stacks at in the bags), so a
+        // row of eighty needs four presses, not eighty. They clamp at the
+        // row's bounds rather than refusing, so the last press tops the row
+        // out (or empties it) instead of doing nothing.
+        const stepLabel = formatNumber(DEFAULT_STACK, { maximumFractionDigits: 0 });
+        const decreaseBig = document.createElement('button');
+        decreaseBig.type = 'button';
+        decreaseBig.className = 'btn material-sources-step material-sources-step-big';
+        decreaseBig.dataset.materialSourceDecreaseBy = String(choice.sourceIndex);
+        decreaseBig.textContent = formatNumber(-DEFAULT_STACK, {
+          signDisplay: 'always',
+          maximumFractionDigits: 0,
+        });
+        decreaseBig.setAttribute(
+          'aria-label',
+          t('hudChrome.materialSources.decreaseByAria', { source, count: stepLabel }),
+        );
+        const increaseBig = document.createElement('button');
+        increaseBig.type = 'button';
+        increaseBig.className = 'btn material-sources-step material-sources-step-big';
+        increaseBig.dataset.materialSourceIncreaseBy = String(choice.sourceIndex);
+        increaseBig.textContent = formatNumber(DEFAULT_STACK, {
+          signDisplay: 'always',
+          maximumFractionDigits: 0,
+        });
+        increaseBig.setAttribute(
+          'aria-label',
+          t('hudChrome.materialSources.increaseByAria', { source, count: stepLabel }),
+        );
         const syncQuantity = (): void => {
           const value = input.value.trim() === '' ? Number.NaN : Number(input.value);
           quantities.set(choice.sourceIndex, value);
           const valid = Number.isSafeInteger(value) && value >= 0 && value <= choice.row.count;
           decrease.disabled = !valid || value <= 0;
           increase.disabled = !valid || value >= choice.row.count;
+          decreaseBig.disabled = decrease.disabled;
+          increaseBig.disabled = increase.disabled;
           submit.disabled = selectedMaterialComposition(model.choices, quantities) === null;
         };
-        const stepQuantity = (delta: -1 | 1): void => {
+        const stepQuantity = (delta: number): void => {
           const value = input.value.trim() === '' ? Number.NaN : Number(input.value);
           if (!Number.isSafeInteger(value) || value < 0 || value > choice.row.count) {
             return;
           }
-          const next = value + delta;
-          if (next < 0 || next > choice.row.count) return;
+          const next = Math.min(choice.row.count, Math.max(0, value + delta));
+          if (next === value) return;
           input.value = String(next);
           syncQuantity();
         };
+        fillers.push(() => {
+          input.value = String(choice.row.count);
+          syncQuantity();
+        });
         input.addEventListener('input', syncQuantity);
         decrease.addEventListener('click', () => stepQuantity(-1));
         increase.addEventListener('click', () => stepQuantity(1));
+        decreaseBig.addEventListener('click', () => stepQuantity(-DEFAULT_STACK));
+        increaseBig.addEventListener('click', () => stepQuantity(DEFAULT_STACK));
         syncQuantity();
         label.htmlFor = inputId;
         appendText(label, 'material-sources-row-label', sourceRowText(choice));
         row.appendChild(label);
-        quantity.append(decrease, input, increase);
+        quantity.append(decreaseBig, decrease, input, increase, increaseBig);
         row.appendChild(quantity);
       }
       list.appendChild(row);
@@ -440,15 +484,28 @@ export class MaterialSourcesDialog {
     const footer = document.createElement('div');
     footer.className = 'material-sources-footer';
     if (model.selectable && options.onConfirm !== undefined) {
-      submit.addEventListener('click', () => {
+      const confirmSelection = (): void => {
         const selected = selectedMaterialComposition(model.choices, quantities);
         if (selected === null) return;
         const callback = this.options?.onConfirm;
         if (!callback) return;
         this.close();
         callback(selected);
+      };
+      submit.addEventListener('click', confirmSelection);
+      // Move all: every row to its whole count, then the same confirm the
+      // Move selected button runs, so the whole stack moves in one press with
+      // its full composition (the classic whole-stack click, from inside the
+      // picker).
+      const moveAll = document.createElement('button');
+      moveAll.type = 'button';
+      moveAll.className = 'btn material-sources-move-all';
+      moveAll.textContent = t('hudChrome.materialSources.moveAll');
+      moveAll.addEventListener('click', () => {
+        for (const fill of fillers) fill();
+        confirmSelection();
       });
-      footer.appendChild(submit);
+      footer.append(moveAll, submit);
     }
     const cancel = document.createElement('button');
     cancel.type = 'button';

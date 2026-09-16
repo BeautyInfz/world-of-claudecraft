@@ -9,25 +9,115 @@
 // Reproducibility is checked by tests/i18n_resolved_equivalence.test.ts.
 
 export const pending: Record<string, readonly string[]> = {
-  "es": [],
-  "es_ES": [],
-  "fr_FR": [],
-  "fr_CA": [],
+  "es": [
+    "hudChrome.bank.quantityStepDownAria",
+    "hudChrome.bank.quantityStepUpAria",
+    "hudChrome.materialSources.decreaseByAria",
+    "hudChrome.materialSources.increaseByAria",
+    "hudChrome.materialSources.moveAll"
+  ],
+  "es_ES": [
+    "hudChrome.bank.quantityStepDownAria",
+    "hudChrome.bank.quantityStepUpAria",
+    "hudChrome.materialSources.decreaseByAria",
+    "hudChrome.materialSources.increaseByAria",
+    "hudChrome.materialSources.moveAll"
+  ],
+  "fr_FR": [
+    "hudChrome.bank.quantityStepDownAria",
+    "hudChrome.bank.quantityStepUpAria",
+    "hudChrome.materialSources.decreaseByAria",
+    "hudChrome.materialSources.increaseByAria",
+    "hudChrome.materialSources.moveAll"
+  ],
+  "fr_CA": [
+    "hudChrome.bank.quantityStepDownAria",
+    "hudChrome.bank.quantityStepUpAria",
+    "hudChrome.materialSources.decreaseByAria",
+    "hudChrome.materialSources.increaseByAria",
+    "hudChrome.materialSources.moveAll"
+  ],
   "en_CA": [],
-  "it_IT": [],
-  "de_DE": [],
+  "it_IT": [
+    "hudChrome.bank.quantityStepDownAria",
+    "hudChrome.bank.quantityStepUpAria",
+    "hudChrome.materialSources.decreaseByAria",
+    "hudChrome.materialSources.increaseByAria",
+    "hudChrome.materialSources.moveAll"
+  ],
+  "de_DE": [
+    "hudChrome.bank.quantityStepDownAria",
+    "hudChrome.bank.quantityStepUpAria",
+    "hudChrome.materialSources.decreaseByAria",
+    "hudChrome.materialSources.increaseByAria",
+    "hudChrome.materialSources.moveAll"
+  ],
   "zh_CN": [],
   "zh_TW": [],
   "ko_KR": [],
   "ja_JP": [],
-  "pt_BR": [],
+  "pt_BR": [
+    "hudChrome.bank.quantityStepDownAria",
+    "hudChrome.bank.quantityStepUpAria",
+    "hudChrome.materialSources.decreaseByAria",
+    "hudChrome.materialSources.increaseByAria",
+    "hudChrome.materialSources.moveAll"
+  ],
   "ru_RU": [],
-  "cs_CZ": [],
-  "nl_NL": [],
-  "pl_PL": [],
-  "id_ID": [],
-  "tr_TR": [],
-  "sv_SE": [],
-  "vi_VN": [],
-  "da_DK": []
+  "cs_CZ": [
+    "hudChrome.bank.quantityStepDownAria",
+    "hudChrome.bank.quantityStepUpAria",
+    "hudChrome.materialSources.decreaseByAria",
+    "hudChrome.materialSources.increaseByAria",
+    "hudChrome.materialSources.moveAll"
+  ],
+  "nl_NL": [
+    "hudChrome.bank.quantityStepDownAria",
+    "hudChrome.bank.quantityStepUpAria",
+    "hudChrome.materialSources.decreaseByAria",
+    "hudChrome.materialSources.increaseByAria",
+    "hudChrome.materialSources.moveAll"
+  ],
+  "pl_PL": [
+    "hudChrome.bank.quantityStepDownAria",
+    "hudChrome.bank.quantityStepUpAria",
+    "hudChrome.materialSources.decreaseByAria",
+    "hudChrome.materialSources.increaseByAria",
+    "hudChrome.materialSources.moveAll"
+  ],
+  "id_ID": [
+    "hudChrome.bank.quantityStepDownAria",
+    "hudChrome.bank.quantityStepUpAria",
+    "hudChrome.materialSources.decreaseByAria",
+    "hudChrome.materialSources.increaseByAria",
+    "hudChrome.materialSources.moveAll"
+  ],
+  "tr_TR": [
+    "hudChrome.bank.quantityStepDownAria",
+    "hudChrome.bank.quantityStepUpAria",
+    "hudChrome.materialSources.decreaseByAria",
+    "hudChrome.materialSources.increaseByAria",
+    "hudChrome.materialSources.moveAll"
+  ],
+  "sv_SE": [
+    "hudChrome.bank.quantityStepDownAria",
+    "hudChrome.bank.quantityStepUpAria",
+    "hudChrome.materialSources.decreaseByAria",
+    "hudChrome.materialSources.increaseByAria",
+    "hudChrome.materialSources.moveAll"
+  ],
+  "vi_VN": [
+    "hudChrome.bank.quantityStepDownAria",
+    "hudChrome.bank.quantityStepUpAria",
+    "hudChrome.materialSources.decreaseByAria",
+    "hudChrome.materialSources.increaseByAria",
+    "hudChrome.materialSources.moveAll"
+  ],
+  "da_DK": [
+    "hudChrome.bank.quantityStepDownAria",
+    "hudChrome.bank.quantityStepUpAria",
+    "hudChrome.materialSources.decreaseByAria",
+    "hudChrome.materialSources.increaseByAria",
+    "hudChrome.materialSources.moveAll"
+  ]
 };

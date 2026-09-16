@@ -3444,7 +3444,10 @@ export const en_XA: EnTranslations = {
       "unrecordedSigned": "[Ñó ĝáţĥéŕéŕ ŕéçóŕðéð, šíĝñéð ƀý {name}]",
       "quantityAria": "[Úñíţš ƒŕóɱ {source}, úþ ţó {count}]",
       "decreaseAria": "[Ðéçŕéášé úñíţš ƒŕóɱ {source}]",
-      "increaseAria": "[Íñçŕéášé úñíţš ƒŕóɱ {source}]"
+      "increaseAria": "[Íñçŕéášé úñíţš ƒŕóɱ {source}]",
+      "decreaseByAria": "[Ðéçŕéášé úñíţš ƒŕóɱ {source} ƀý {count}]",
+      "increaseByAria": "[Íñçŕéášé úñíţš ƒŕóɱ {source} ƀý {count}]",
+      "moveAll": "[Ɱóʋé áļļ úñíţš]"
     },
     "materialHint": {
       "fineGrade": "[Ƒíñé ĝŕáðé. Ĝáţĥéŕéð ƒŕóɱ á ƒúļļ-ţíéŕ ʋéíñ ŵíţĥ á ţóóļ ŕáñķéð áƀóʋé ţĥé ɱáţéŕíáļ, áñð çóúñţš áš ţĥé óŕðíñáŕý ʋéŕšíóñ ŵĥéŕéʋéŕ óñé íš ŕéɋúíŕéð.]",
@@ -3788,6 +3791,8 @@ export const en_XA: EnTranslations = {
       "withdrawQuantityTitle": "[Ŵíţĥðŕáŵ {item}]",
       "withdrawQuantityInput": "[Ɋúáñţíţý ţó ŵíţĥðŕáŵ]",
       "withdrawQuantityConfirm": "[Ŵíţĥðŕáŵ]",
+      "quantityStepDownAria": "[Ðéçŕéášé ţĥé ɋúáñţíţý ƀý {count}]",
+      "quantityStepUpAria": "[Íñçŕéášé ţĥé ɋúáñţíţý ƀý {count}]",
       "vaultRowWithdrawName": "[Ŵíţĥðŕáŵ {item}]",
       "priceChanged": "[Ţĥé þŕíçé çĥáñĝéð ƀéƒóŕé ţĥé þúŕçĥášé çóɱþļéţéð. Ŕéʋíéŵ ţĥé ŕéƒŕéšĥéð þŕíçé áñð çóñƒíŕɱ áĝáíñ.]",
       "withdrawQuantityAction": "[Ɋúáñţíţý ţó ŵíţĥðŕáŵ: {item}]",

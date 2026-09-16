@@ -3444,7 +3444,10 @@ export const en: EnTranslations = {
       "unrecordedSigned": "No gatherer recorded, signed by {name}",
       "quantityAria": "Units from {source}, up to {count}",
       "decreaseAria": "Decrease units from {source}",
-      "increaseAria": "Increase units from {source}"
+      "increaseAria": "Increase units from {source}",
+      "decreaseByAria": "Decrease units from {source} by {count}",
+      "increaseByAria": "Increase units from {source} by {count}",
+      "moveAll": "Move all units"
     },
     "materialHint": {
       "fineGrade": "Fine grade. Gathered from a full-tier vein with a tool ranked above the material, and counts as the ordinary version wherever one is required.",
@@ -3788,6 +3791,8 @@ export const en: EnTranslations = {
       "withdrawQuantityTitle": "Withdraw {item}",
       "withdrawQuantityInput": "Quantity to withdraw",
       "withdrawQuantityConfirm": "Withdraw",
+      "quantityStepDownAria": "Decrease the quantity by {count}",
+      "quantityStepUpAria": "Increase the quantity by {count}",
       "vaultRowWithdrawName": "Withdraw {item}",
       "priceChanged": "The price changed before the purchase completed. Review the refreshed price and confirm again.",
       "withdrawQuantityAction": "Quantity to withdraw: {item}",

@@ -3444,7 +3444,10 @@ export const nl_NL: EnTranslations = {
       "unrecordedSigned": "Geen verzamelaar geregistreerd, gesigneerd door {name}",
       "quantityAria": "Eenheden van {source}, maximaal {count}",
       "decreaseAria": "Eenheden van {source} verminderen",
-      "increaseAria": "Eenheden van {source} verhogen"
+      "increaseAria": "Eenheden van {source} verhogen",
+      "decreaseByAria": "Decrease units from {source} by {count}",
+      "increaseByAria": "Increase units from {source} by {count}",
+      "moveAll": "Move all units"
     },
     "materialHint": {
       "fineGrade": "Fijne kwaliteit. Verzameld uit een grondstoffenpunt op volle rang met gereedschap boven de rang van het materiaal, en telt overal waar de gewone versie vereist is als die versie.",
@@ -3788,6 +3791,8 @@ export const nl_NL: EnTranslations = {
       "withdrawQuantityTitle": "{item} opnemen",
       "withdrawQuantityInput": "Aantal om op te nemen",
       "withdrawQuantityConfirm": "Opnemen",
+      "quantityStepDownAria": "Decrease the quantity by {count}",
+      "quantityStepUpAria": "Increase the quantity by {count}",
       "vaultRowWithdrawName": "{item} opnemen",
       "priceChanged": "De prijs is veranderd voordat de aankoop werd voltooid. Bekijk de vernieuwde prijs en bevestig opnieuw.",
       "withdrawQuantityAction": "Aantal om op te nemen: {item}",

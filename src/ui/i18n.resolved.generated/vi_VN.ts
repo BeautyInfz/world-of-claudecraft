@@ -3444,7 +3444,10 @@ export const vi_VN: EnTranslations = {
       "unrecordedSigned": "Không ghi nhận người thu thập, có chữ ký của {name}",
       "quantityAria": "Đơn vị từ {source}, tối đa {count}",
       "decreaseAria": "Giảm số đơn vị từ {source}",
-      "increaseAria": "Tăng số đơn vị từ {source}"
+      "increaseAria": "Tăng số đơn vị từ {source}",
+      "decreaseByAria": "Decrease units from {source} by {count}",
+      "increaseByAria": "Increase units from {source} by {count}",
+      "moveAll": "Move all units"
     },
     "materialHint": {
       "fineGrade": "Phẩm cấp hảo hạng. Thu được từ mạch đủ bậc bằng công cụ xếp trên nguyên liệu, và được tính như bản thường ở bất cứ đâu cần đến.",
@@ -3788,6 +3791,8 @@ export const vi_VN: EnTranslations = {
       "withdrawQuantityTitle": "Rút {item}",
       "withdrawQuantityInput": "Số lượng cần rút",
       "withdrawQuantityConfirm": "Rút Ra",
+      "quantityStepDownAria": "Decrease the quantity by {count}",
+      "quantityStepUpAria": "Increase the quantity by {count}",
       "vaultRowWithdrawName": "Rút {item}",
       "priceChanged": "Giá đã thay đổi trước khi giao dịch mua hoàn tất. Hãy xem lại giá mới và xác nhận lại.",
       "withdrawQuantityAction": "Số lượng cần rút: {item}",

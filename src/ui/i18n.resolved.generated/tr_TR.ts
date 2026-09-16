@@ -3444,7 +3444,10 @@ export const tr_TR: EnTranslations = {
       "unrecordedSigned": "Toplayıcı kaydedilmedi, {name} imzalı",
       "quantityAria": "{source} kaynağındaki birimler, en fazla {count}",
       "decreaseAria": "{source} kaynağındaki birimleri azalt",
-      "increaseAria": "{source} kaynağındaki birimleri artır"
+      "increaseAria": "{source} kaynağındaki birimleri artır",
+      "decreaseByAria": "Decrease units from {source} by {count}",
+      "increaseByAria": "Increase units from {source} by {count}",
+      "moveAll": "Move all units"
     },
     "materialHint": {
       "fineGrade": "Kaliteli derece. Malzemenin üstünde kademelenmiş bir aletle tam kademeli bir damardan toplanır ve sıradan sürümün gerektiği her yerde onun yerine sayılır.",
@@ -3788,6 +3791,8 @@ export const tr_TR: EnTranslations = {
       "withdrawQuantityTitle": "{item} çek",
       "withdrawQuantityInput": "Çekilecek miktar",
       "withdrawQuantityConfirm": "Çek",
+      "quantityStepDownAria": "Decrease the quantity by {count}",
+      "quantityStepUpAria": "Increase the quantity by {count}",
       "vaultRowWithdrawName": "{item} Çek",
       "priceChanged": "Satın alma tamamlanmadan önce fiyat değişti. Yenilenen fiyatı gözden geçirip tekrar onayla.",
       "withdrawQuantityAction": "Çekilecek miktar: {item}",

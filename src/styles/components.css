@@ -8978,22 +8978,32 @@
   }
   .vault-row-partial {
     display: inline-flex;
+    flex: none; /* sized by its full label; the row name is what shrinks */
     align-items: center;
     justify-content: center;
-    gap: 5px;
+    gap: 6px;
     min-width: 40px;
     min-height: 40px;
-    padding: 4px 8px;
+    padding: 4px 12px;
     border: 1px solid var(--color-border-showcase);
     border-radius: 4px;
-    background: color-mix(in srgb, var(--panel-base) 78%, var(--panel-edge));
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--panel-edge) 55%, var(--panel-base)),
+      color-mix(in srgb, var(--panel-base) 88%, var(--panel-edge))
+    );
     color: var(--color-accent);
-    font: 11px / 1.1 var(--ui-font);
+    font: 600 11px / 1.1 var(--ui-font);
+    letter-spacing: 0.02em;
+    box-shadow: inset 0 1px 0 color-mix(in srgb, var(--panel-edge) 45%, transparent);
     cursor: var(--cursor-point);
   }
   .vault-row-partial:hover {
     border-color: var(--color-primary-dim);
     filter: brightness(1.12);
+  }
+  .vault-row-partial:active {
+    filter: brightness(0.95);
   }
   .vault-row-partial:focus-visible {
     outline: 2px solid var(--color-border-focus);
@@ -9005,9 +9015,8 @@
     height: 14px;
   }
   .vault-row-partial-label {
-    max-width: 72px;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    /* The full label, never elided: the button grows to fit it in every
+       locale and the row name beside it is what gives way. */
     white-space: nowrap;
   }
   @media (pointer: coarse) {
@@ -19628,10 +19637,14 @@
   }
   .material-sources-quantity {
     display: grid;
-    grid-template-columns: 40px 64px 40px;
+    /* Bag-stack step, unit step, the count, unit step, bag-stack step. */
+    grid-template-columns: 46px 40px 64px 40px 46px;
     gap: 4px;
     align-items: stretch;
     flex: none;
+  }
+  .material-sources-step-big {
+    font-size: 12px;
   }
   .material-sources-step {
     margin: 0;
@@ -19682,7 +19695,7 @@
       min-width: 44px;
     }
     .material-sources-quantity {
-      grid-template-columns: 44px 64px 44px;
+      grid-template-columns: 48px 44px 64px 44px 48px;
     }
   }
   @media (forced-colors: active) {

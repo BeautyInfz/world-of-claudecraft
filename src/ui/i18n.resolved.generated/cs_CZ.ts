@@ -3444,7 +3444,10 @@ export const cs_CZ: EnTranslations = {
       "unrecordedSigned": "Bez zaznamenaného sběrače, podepsal(a) {name}",
       "quantityAria": "Kusy ze zdroje {source}, až {count}",
       "decreaseAria": "Snížit počet kusů ze zdroje {source}",
-      "increaseAria": "Zvýšit počet kusů ze zdroje {source}"
+      "increaseAria": "Zvýšit počet kusů ze zdroje {source}",
+      "decreaseByAria": "Decrease units from {source} by {count}",
+      "increaseByAria": "Increase units from {source} by {count}",
+      "moveAll": "Move all units"
     },
     "materialHint": {
       "fineGrade": "Jemná jakost. Sesbírána z naleziště plné úrovně nástrojem vyššího stupně, než je materiál, a počítá se jako běžná verze všude, kde je běžná verze potřeba.",
@@ -3788,6 +3791,8 @@ export const cs_CZ: EnTranslations = {
       "withdrawQuantityTitle": "Vybrat {item}",
       "withdrawQuantityInput": "Množství k výběru",
       "withdrawQuantityConfirm": "Vybrat",
+      "quantityStepDownAria": "Decrease the quantity by {count}",
+      "quantityStepUpAria": "Increase the quantity by {count}",
       "vaultRowWithdrawName": "Vybrat {item}",
       "priceChanged": "Cena se změnila, než se nákup dokončil. Zkontroluj aktualizovanou cenu a potvrď znovu.",
       "withdrawQuantityAction": "Množství k výběru: {item}",

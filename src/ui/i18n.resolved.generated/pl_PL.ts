@@ -3444,7 +3444,10 @@ export const pl_PL: EnTranslations = {
       "unrecordedSigned": "Brak zapisanego zbierającego, podpisane przez {name}",
       "quantityAria": "Sztuki ze źródła {source}, maksymalnie {count}",
       "decreaseAria": "Zmniejsz liczbę sztuk ze źródła {source}",
-      "increaseAria": "Zwiększ liczbę sztuk ze źródła {source}"
+      "increaseAria": "Zwiększ liczbę sztuk ze źródła {source}",
+      "decreaseByAria": "Decrease units from {source} by {count}",
+      "increaseByAria": "Increase units from {source} by {count}",
+      "moveAll": "Move all units"
     },
     "materialHint": {
       "fineGrade": "Gatunek wyborny. Zebrany z żyły o pełnym poziomie narzędziem wyższej rangi niż sam materiał; liczy się jako zwykła wersja wszędzie tam, gdzie jest ona wymagana.",
@@ -3788,6 +3791,8 @@ export const pl_PL: EnTranslations = {
       "withdrawQuantityTitle": "Wyjmij: {item}",
       "withdrawQuantityInput": "Liczba do wyjęcia",
       "withdrawQuantityConfirm": "Wyjmij",
+      "quantityStepDownAria": "Decrease the quantity by {count}",
+      "quantityStepUpAria": "Increase the quantity by {count}",
       "vaultRowWithdrawName": "Wyjmij {item}",
       "priceChanged": "Cena zmieniła się, zanim zakup został zakończony. Sprawdź odświeżoną cenę i potwierdź ponownie.",
       "withdrawQuantityAction": "Liczba do wyjęcia: {item}",

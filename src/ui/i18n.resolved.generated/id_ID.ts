@@ -3444,7 +3444,10 @@ export const id_ID: EnTranslations = {
       "unrecordedSigned": "Tidak ada pengumpul yang tercatat, ditandatangani oleh {name}",
       "quantityAria": "Unit dari {source}, hingga {count}",
       "decreaseAria": "Kurangi unit dari {source}",
-      "increaseAria": "Tambah unit dari {source}"
+      "increaseAria": "Tambah unit dari {source}",
+      "decreaseByAria": "Decrease units from {source} by {count}",
+      "increaseByAria": "Increase units from {source} by {count}",
+      "moveAll": "Move all units"
     },
     "materialHint": {
       "fineGrade": "Mutu halus. Dikumpulkan dari urat tingkat penuh dengan alat berperingkat di atas materialnya, dan dihitung sebagai versi biasa di mana pun versi biasa dibutuhkan.",
@@ -3788,6 +3791,8 @@ export const id_ID: EnTranslations = {
       "withdrawQuantityTitle": "Tarik {item}",
       "withdrawQuantityInput": "Jumlah yang ditarik",
       "withdrawQuantityConfirm": "Tarik",
+      "quantityStepDownAria": "Decrease the quantity by {count}",
+      "quantityStepUpAria": "Increase the quantity by {count}",
       "vaultRowWithdrawName": "Tarik {item}",
       "priceChanged": "Harga berubah sebelum pembelian selesai. Tinjau harga yang diperbarui dan konfirmasi lagi.",
       "withdrawQuantityAction": "Jumlah yang ditarik: {item}",

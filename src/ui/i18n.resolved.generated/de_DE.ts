@@ -3444,7 +3444,10 @@ export const de_DE: EnTranslations = {
       "unrecordedSigned": "Keine Sammleraufzeichnung, signiert von {name}",
       "quantityAria": "Einheiten aus {source}, bis zu {count}",
       "decreaseAria": "Einheiten aus {source} verringern",
-      "increaseAria": "Einheiten aus {source} erhöhen"
+      "increaseAria": "Einheiten aus {source} erhöhen",
+      "decreaseByAria": "Decrease units from {source} by {count}",
+      "increaseByAria": "Increase units from {source} by {count}",
+      "moveAll": "Move all units"
     },
     "materialHint": {
       "fineGrade": "Feine Güte. An einer Ader voller Stufe mit einem Werkzeug über dem Rang des Materials gesammelt; zählt überall dort als die gewöhnliche Version, wo diese verlangt wird.",
@@ -3788,6 +3791,8 @@ export const de_DE: EnTranslations = {
       "withdrawQuantityTitle": "{item} entnehmen",
       "withdrawQuantityInput": "Zu entnehmende Menge",
       "withdrawQuantityConfirm": "Entnehmen",
+      "quantityStepDownAria": "Decrease the quantity by {count}",
+      "quantityStepUpAria": "Increase the quantity by {count}",
       "vaultRowWithdrawName": "{item} entnehmen",
       "priceChanged": "Der Preis hat sich vor Abschluss des Kaufs geändert. Prüfe den aktualisierten Preis und bestätige erneut.",
       "withdrawQuantityAction": "Zu entnehmende Menge: {item}",

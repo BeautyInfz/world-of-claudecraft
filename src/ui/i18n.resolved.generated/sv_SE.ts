@@ -3444,7 +3444,10 @@ export const sv_SE: EnTranslations = {
       "unrecordedSigned": "Ingen samlare registrerad, signerad av {name}",
       "quantityAria": "Enheter från {source}, upp till {count}",
       "decreaseAria": "Minska enheter från {source}",
-      "increaseAria": "Öka enheter från {source}"
+      "increaseAria": "Öka enheter från {source}",
+      "decreaseByAria": "Decrease units from {source} by {count}",
+      "increaseByAria": "Increase units from {source} by {count}",
+      "moveAll": "Move all units"
     },
     "materialHint": {
       "fineGrade": "Fin kvalitet. Bruten ur en åder av full nivå med ett verktyg som rankar över materialet, och räknas som den vanliga versionen varhelst en sådan krävs.",
@@ -3788,6 +3791,8 @@ export const sv_SE: EnTranslations = {
       "withdrawQuantityTitle": "Ta ut {item}",
       "withdrawQuantityInput": "Antal att ta ut",
       "withdrawQuantityConfirm": "Ta ut",
+      "quantityStepDownAria": "Decrease the quantity by {count}",
+      "quantityStepUpAria": "Increase the quantity by {count}",
       "vaultRowWithdrawName": "Ta ut {item}",
       "priceChanged": "Priset ändrades innan köpet slutfördes. Granska det uppdaterade priset och bekräfta igen.",
       "withdrawQuantityAction": "Antal att ta ut: {item}",

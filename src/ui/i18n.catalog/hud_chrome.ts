@@ -4845,6 +4845,13 @@ export const hudChromeStrings = {
     quantityAria: 'Units from {source}, up to {count}',
     decreaseAria: 'Decrease units from {source}',
     increaseAria: 'Increase units from {source}',
+    // The bag-stack step buttons beside each row's +/- pair ({count} is the
+    // stack size, twenty for every material today).
+    decreaseByAria: 'Decrease units from {source} by {count}',
+    increaseByAria: 'Increase units from {source} by {count}',
+    // The picker's one-press whole-stack move (every row to its full count,
+    // then the same confirm as "Move selected units").
+    moveAll: 'Move all units',
   },
   // Purpose hints for the eight enchanting materials
   // (src/ui/hud/professions/material_hint_view.ts), keyed by item id there. Each says what the
@@ -5366,6 +5373,10 @@ export const hudChromeStrings = {
     withdrawQuantityTitle: 'Withdraw {item}',
     withdrawQuantityInput: 'Quantity to withdraw',
     withdrawQuantityConfirm: 'Withdraw',
+    // The vault withdraw prompt's bag-stack step buttons ({count} is the
+    // item's stack size); their visible text is the signed number itself.
+    quantityStepDownAria: 'Decrease the quantity by {count}',
+    quantityStepUpAria: 'Increase the quantity by {count}',
     // The vault row's accessible ACTION name (its aria-label). Same English as
     // withdrawQuantityTitle on purpose, but a distinct key: that one titles the
     // quantity PROMPT, and rewording a dialog title must not silently rename

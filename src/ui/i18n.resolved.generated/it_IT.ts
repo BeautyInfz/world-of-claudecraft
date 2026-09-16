@@ -3444,7 +3444,10 @@ export const it_IT: EnTranslations = {
       "unrecordedSigned": "Raccoglitore non registrato, firmato da {name}",
       "quantityAria": "Unità da {source}, fino a {count}",
       "decreaseAria": "Diminuisci unità da {source}",
-      "increaseAria": "Aumenta unità da {source}"
+      "increaseAria": "Aumenta unità da {source}",
+      "decreaseByAria": "Decrease units from {source} by {count}",
+      "increaseByAria": "Increase units from {source} by {count}",
+      "moveAll": "Move all units"
     },
     "materialHint": {
       "fineGrade": "Grado pregiato. Raccolto da un filone di pieno livello con uno strumento di rango superiore al materiale, e vale come la versione ordinaria ovunque ne venga richiesta una.",
@@ -3788,6 +3791,8 @@ export const it_IT: EnTranslations = {
       "withdrawQuantityTitle": "Ritira {item}",
       "withdrawQuantityInput": "Quantità da ritirare",
       "withdrawQuantityConfirm": "Ritira",
+      "quantityStepDownAria": "Decrease the quantity by {count}",
+      "quantityStepUpAria": "Increase the quantity by {count}",
       "vaultRowWithdrawName": "Ritira {item}",
       "priceChanged": "Il prezzo è cambiato prima che l'acquisto si completasse. Controlla il prezzo aggiornato e conferma di nuovo.",
       "withdrawQuantityAction": "Quantità da ritirare: {item}",
