@@ -280,7 +280,7 @@ export class VaultTab {
   // snapshot) renders the pitch without a buy row rather than a 0-price offer.
   private buildLockedPane(panel: HTMLElement, unlockCost: number | null, unlockCap: number): void {
     const intro = document.createElement('div');
-    intro.className = 'vault-locked-intro';
+    intro.className = 'vault-locked-intro ui-card';
     intro.textContent = t('hudChrome.bank.vaultLockedIntro', {
       cap: formatCount(unlockCap),
     });
@@ -299,7 +299,7 @@ export class VaultTab {
     // visible shortfall marker instead, which is what the purse term in
     // BankWindow's repaint signature repaints.
     const affordable = this.deps.world().copper >= unlockCost;
-    btn.className = `bank-buy-btn vault-unlock-btn${affordable ? '' : ' bank-buy-short'}`;
+    btn.className = `bank-buy-btn ui-btn ui-btn--gold vault-unlock-btn${affordable ? '' : ' bank-buy-short'}`;
     btn.innerHTML =
       `<span class="bank-buy-label">${esc(t('hudChrome.bank.vaultUnlockButton'))}</span>` +
       this.deps.moneyHtml(unlockCost) +
@@ -343,7 +343,7 @@ export class VaultTab {
     const glyphKind = model.kind === 'special' ? bagInstanceGlyphKind(model.instance) : null;
     const cornerMark = bagCornerMark(glyphKind, null, model.fine);
     const locked = model.kind === 'special' && isItemLocked(model.instance);
-    row.className = `vault-row vault-row-${model.kind}${model.atCap ? ' at-cap' : ''}${model.overCap ? ' over-cap' : ''}${bagRimClasses(null, model.fine)}`;
+    row.className = `vault-row ui-card vault-row-${model.kind}${model.atCap ? ' at-cap' : ''}${model.overCap ? ' over-cap' : ''}${bagRimClasses(null, model.fine)}`;
     row.dataset.itemId = itemId;
     if (model.kind === 'special') row.dataset.vaultSpecialIndex = String(model.specialRef.index);
     row.setAttribute(FOCUS_KEY_ATTR, vaultFocusKey(model, 'row'));
@@ -387,7 +387,7 @@ export class VaultTab {
       lockMarkHtml(locked) +
       `<span class="vault-row-name">${esc(name)}</span>` +
       (model.kind === 'special'
-        ? `<span class="vault-row-stack-count">${esc(t('itemUi.bags.stackCount', { count: countLabel }))}</span>`
+        ? `<span class="vault-row-stack-count ui-chip">${esc(t('itemUi.bags.stackCount', { count: countLabel }))}</span>`
         : '') +
       `<span class="vault-row-count">${esc(t('hudChrome.bank.capacity', { used: totalLabel, total: capLabel }))}</span>` +
       `<span class="visually-hidden" id="${rowStateId}">${esc(t('hudChrome.bank.vaultRowAria', { item: name, count: totalLabel, cap: capLabel }))}</span>` +
@@ -454,7 +454,7 @@ export class VaultTab {
       // not a nested button, so both controls retain valid native semantics.
       const partial = document.createElement('button');
       partial.type = 'button';
-      partial.className = 'vault-row-partial';
+      partial.className = 'vault-row-partial ui-btn';
       partial.setAttribute(FOCUS_KEY_ATTR, vaultFocusKey(model, 'partial'));
       // Label-in-name (WCAG 2.5.3): the accessible name embeds the chip's
       // visible label text in every filled locale (the English value leads
@@ -663,7 +663,7 @@ export class VaultTab {
 
     const deposit = document.createElement('button');
     deposit.type = 'button';
-    deposit.className = 'bank-deposit-all vault-deposit-all';
+    deposit.className = 'bank-deposit-all ui-btn vault-deposit-all';
     deposit.textContent = t('hudChrome.bank.vaultDepositAll');
     const tooltip = t('hudChrome.bank.vaultDepositAllTooltip');
     deposit.title = tooltip;
@@ -691,7 +691,7 @@ export class VaultTab {
     // The unlock button's rule: enabled always, marked when the purse is short
     // (the wording reuses the guild key; the English is target-neutral).
     const affordable = this.deps.world().copper >= nextCost;
-    btn.className = `bank-buy-btn vault-upgrade-btn${affordable ? '' : ' bank-buy-short'}`;
+    btn.className = `bank-buy-btn ui-btn ui-btn--gold vault-upgrade-btn${affordable ? '' : ' bank-buy-short'}`;
     btn.innerHTML =
       `<span class="bank-buy-label">${esc(t('hudChrome.bank.vaultUpgrade', { cap: formatCount(nextCap) }))}</span>` +
       this.deps.moneyHtml(nextCost) +

@@ -902,6 +902,7 @@ export const sv_SE: EnTranslations = {
     },
     "questTracker": {
       "count": "({count})",
+      "objectiveValue": "{current} / {total}",
       "collapseHint": "Fäll ihop uppdragsspåraren",
       "expandHint": "Fäll ut uppdragsspåraren"
     },
@@ -1220,7 +1221,10 @@ export const sv_SE: EnTranslations = {
       "devName": "Bidragsgivare",
       "devTierCol": "Märke",
       "mergedPrs": "Sammanslagna PR:er",
-      "devEmpty": "Inga rankade bidragsgivare ännu."
+      "devEmpty": "Inga rankade bidragsgivare ännu.",
+      "podiumLabel": "Top three",
+      "unclaimed": "Unclaimed",
+      "prestigeTitle": "Prestige {rank}"
     },
     "pledge": {
       "open": "Tar emot löften",
@@ -1243,6 +1247,8 @@ export const sv_SE: EnTranslations = {
       "noteLabel": "Anslag",
       "notePlaceholder": "Berätta för blivande medlemmar vad ditt gille söker",
       "save": "Spara",
+      "newPlayerFriendlyLabel": "New player friendly",
+      "newPlayerFriendlyHint": "Shown on the recruits' board at the Proving Shore signpost.",
       "yourPledge": "Ditt löfte: {guild}",
       "since": "Lovade {date}",
       "withdraw": "Dra tillbaka löfte"
@@ -1266,6 +1272,9 @@ export const sv_SE: EnTranslations = {
       "previous": "Tidigare körningar",
       "runLabel": "Körning {index}",
       "runSummary": "{total} på {time}"
+    },
+    "talkingHead": {
+      "label": "Dialogue"
     },
     "hubLesson": {
       "target": "Välj träningsdockan som mål för att börja.",
@@ -1395,6 +1404,7 @@ export const sv_SE: EnTranslations = {
       "targetPrev": "Växla mål bakåt",
       "discord": "Discord",
       "bgFlag": "Slagfältets flaggåtgärd",
+      "friendlyNameplates": "Toggle Friendly Nameplates",
       "sheathe": "Slida/Ta fram vapen",
       "dive": "Simma nedåt",
       "categoryPet": "Djur",
@@ -1729,6 +1739,9 @@ export const sv_SE: EnTranslations = {
     },
     "controller": {
       "title": "Handkontroll",
+      "device": "Connected Device",
+      "deviceConnected": "Connected",
+      "deviceDisconnected": "No controller detected",
       "glyphStyle": "Knappsymboler",
       "glyphStyleAuto": "Auto",
       "glyphStyleXbox": "Xbox",
@@ -2043,6 +2056,52 @@ export const sv_SE: EnTranslations = {
       "spellOrder": "Besvärjelseordning",
       "reset": "Återställ position",
       "spellPosition": "Besvärjelseordning {position} / {count}",
+      "watchlist": "Watched Spells",
+      "watchlistHint": "Pick any spell that buffs you to give it its own aura. Picked spells get a full card below, with their own icon, color, position and ground ring.",
+      "watchlistEmpty": "No other spell in your spellbook puts a buff on you.",
+      "watchlistWatch": "Watch {spell}",
+      "watchlistUnwatch": "Stop watching {spell}",
+      "watchlistCount": "{count} watched",
+      "sound": "Alert Sound",
+      "soundNone": "No sound",
+      "soundVolume": "Sound Volume",
+      "soundPreview": "Play",
+      "soundPreviewAria": "Preview the {sound} alert sound",
+      "soundHint": "A sound plays each time this spell procs. Turn the icon, crescents and ground ring off to have the sound alone announce it.",
+      "readyGlow": "Hotbar Glow",
+      "readyGlowHint": "Lights this spell on your action bar while its buff is up.",
+      "reticleTick": "Reticle Tick",
+      "reticleTickHint": "Adds a mark near the centre of the screen that lights when this spell procs.",
+      "haptic": "Rumble",
+      "hapticNone": "Off",
+      "hapticHint": "Vibrates a connected controller, or your phone. Ignored where the device has no haptics.",
+      "haptics": {
+        "tap": "Tap",
+        "double": "Double",
+        "long": "Long"
+      },
+      "cues": {
+        "softChime": "Soft Chime",
+        "musicBox": "Music Box",
+        "glassPing": "Glass Ping",
+        "waterDrop": "Water Drop",
+        "bubblePop": "Bubble Pop",
+        "hardBell": "Hard Bell",
+        "templeGong": "Temple Gong",
+        "anvilStrike": "Anvil Strike",
+        "coinDrop": "Coin Drop",
+        "swordDraw": "Sword Draw",
+        "blaringHorn": "Blaring Horn",
+        "carKlaxon": "Car Klaxon",
+        "sonarPing": "Sonar Ping",
+        "electricZap": "Electric Zap",
+        "catMeow": "Cat Meow",
+        "owlHoot": "Owl Hoot",
+        "wolfHowl": "Wolf Howl",
+        "frogCroak": "Frog Croak",
+        "windWhoosh": "Wind Whoosh",
+        "steamHiss": "Steam Hiss"
+      },
       "procs": {
         "revenge": "Hämnd!",
         "battleTrance": "Stridstrans",
@@ -2114,6 +2173,22 @@ export const sv_SE: EnTranslations = {
       "playtimeHidden": "Dold",
       "showPlaytimeAria": "Visa tid spelad",
       "hidePlaytimeAria": "Dölj tid spelad"
+    },
+    "charSidebar": {
+      "label": "Character details",
+      "subtitle": "Level {level} {className} . {archetype} . Hobby: {hobby}",
+      "subtitleNoHobby": "Level {level} {className} . {archetype}",
+      "stats": "Stats",
+      "progression": "Progression",
+      "skills": "Skills",
+      "gathering": "Gathering",
+      "crafting": "Crafting",
+      "openProfessions": "Open Professions"
+    },
+    "questLog": {
+      "completed": "Completed",
+      "zoneSummary": "{count} ({ready} ready)",
+      "shiftHint": "Shift-click a quest to link it in chat."
     },
     "statInfo": {
       "fromYour": "Från dina {value} {stat}:",
@@ -2228,6 +2303,12 @@ export const sv_SE: EnTranslations = {
       "linkHint": "Skift-klicka för att länka det här föremålet i chatten."
     },
     "plurals": {
+      "guildBoardShown": {
+        "one": "{count} guild shown",
+        "few": "{count} guilds shown",
+        "many": "{count} guilds shown",
+        "other": "{count} guilds shown"
+      },
       "commissionMasterworks": {
         "one": "{count} mästerverk",
         "few": "{count} mästerverk",
@@ -2357,6 +2438,7 @@ export const sv_SE: EnTranslations = {
     },
     "bugReport": {
       "menuButton": "Rapportera ett fel",
+      "online": "Online",
       "realm": "Värld",
       "character": "Rollfigur",
       "position": "Position",
@@ -2962,8 +3044,8 @@ export const sv_SE: EnTranslations = {
         "kingsWrathSummary": "Nythraxis orsakar {bonusNormal} mer skada på Normal eller {bonusHeroic} på Heroic resten av striden. Gravutbrott sker var {eruptionEveryNormal} sek ({eruptionEveryHeroic} på Heroic) och Graveld var {gravefireEveryNormal} sek ({gravefireEveryHeroic} på Heroic).",
         "kingsWrathResponse": "Använd återstående defensiva nedkylningar för oundviklig skada. Håll varje tidigare mekanik ren medan raiden avslutar striden.",
         "boneStormName": "Benstorm",
-        "boneStormSummary": "Från {first} sek in i Kungens Vrede och var {everyNormal} sek därefter börjar Nythraxis Benstorm i {duration} sek. Han ignorerar hot, rör sig {speed} gånger normal hastighet och gör {charges} rusningar som varar {chargeSeconds} sek var. Hans virvel orsakar {whirlNormal} av maximal hälsa varje sekund inom {radius} yd. Varje rusning slutar i en Bensmäll inom samma radie för {slamNormal} av maximal hälsa. Han kastar Benspett {spikeAt} sek in i stormen, sedan återaktiveras Gravbrytare {rearm} sek efter att den slutar.",
-        "boneStormHeroicSummary": "Från {first} sek in i Kungens Vrede och var {everyHeroic} sek därefter börjar Nythraxis Benstorm i {duration} sek. Han ignorerar hot, rör sig {speed} gånger normal hastighet och gör {charges} rusningar som varar {chargeSeconds} sek var. Hans virvel orsakar {whirlHeroic} av maximal hälsa varje sekund inom {radius} yd. Varje rusning slutar i en Bensmäll inom samma radie för {slamHeroic} av maximal hälsa. Han kastar Benspett {spikeAt} sek in i stormen, sedan återaktiveras Gravbrytare {rearm} sek efter att den slutar.",
+        "boneStormSummary": "Från {first} sek in i Kungens Vrede och var {everyNormal} sek därefter börjar Nythraxis Benstorm i {duration} sek. Han ignorerar hot, rör sig {speed} gånger normal hastighet och gör {charges} rusningar som varar {chargeSeconds} sek var. Hans virvel orsakar {whirlNormal} av maximal hälsa varje sekund inom {radius} yd. Varje rusning slutar i en Bensmäll inom samma radie för {slamNormal} av maximal hälsa. Det första slaget i varje storm träffar i stället för {openingSlamNormal}. Gravbrytare återaktiveras {rearm} sek efter att den slutar.",
+        "boneStormHeroicSummary": "Från {first} sek in i Kungens Vrede och var {everyHeroic} sek därefter börjar Nythraxis Benstorm i {duration} sek. Han ignorerar hot, rör sig {speed} gånger normal hastighet och gör {charges} rusningar som varar {chargeSeconds} sek var. Hans virvel orsakar {whirlHeroic} av maximal hälsa varje sekund inom {radius} yd. Varje rusning slutar i en Bensmäll inom samma radie för {slamHeroic} av maximal hälsa. Det första slaget i varje storm träffar i stället för {openingSlamHeroic}. Gravbrytare återaktiveras {rearm} sek efter att den slutar.",
         "boneStormResponse": "Sprid ut er och fortsätt springa från Nythraxis. Den jagade raiddeltagaren springer bort medan alla andra lämnar utrymme runt rusningsvägen, sedan tar tankarna upp honom när stormen slutar.",
         "crownEnduresName": "Kronan består",
         "crownEnduresSummary": "Vid {enrageNormal} sek från stridsstarten (klockan pausar medan Broder Aldric kommer in vid 70%) utlöser Kronan består en hård raseri. Nythraxis får {damage} mer skada och {haste} snabbare anfall, sedan ytterligare {rampStep} skada var {rampEveryNormal} sek. Det finns ingen timerstapel. Varningar kommer som rop vid {warn60}, {warn30} och {warn10} sek kvar.",
@@ -3014,6 +3096,7 @@ export const sv_SE: EnTranslations = {
       "elementalConvergencePrimed": "Din nästa besvärjelse från den andra elementarskolan ger Elementär konvergens",
       "hunterFerocity": "{stacks} Flockvildhet: ditt husdjur gör {pct}% mer skada",
       "cooldownCap": "{used} av {cap} sek nedkylningsreduktion använd i detta fönster",
+      "bruinRushWindow": "Vargform kostar ingen mana och håller fast målet för er Bruinrusning, vilket saktar ner det med {pct}% i {sec} sek",
       "funeralHarvestLock": "Funeral Harvest kan inte skapa ännu ett Själfragment än",
       "leadenHexLock": "Blytung förbannelse kan inte rota fast detta mål igen än",
       "forbiddenReflectionReady": "Din nästa kvalificerade häxmästarförmåga kan kastas igen",
@@ -3126,7 +3209,7 @@ export const sv_SE: EnTranslations = {
       "elementalTrance": "Mottagen skada minskad med {pct}%. {mana}% av all skada du vållar omvandlas till mana",
       "stealth": "Verborgen; Bewegungstempo um {pct}% verringert",
       "formBear": "Bruinform: ökad hälsa och rustning",
-      "formCat": "Katzengestalt: Nahkampfschaden und Energie",
+      "wolfForm": "Cat Form: melee damage and energy; movement speed increased by {pct}%",
       "formTravel": "Fleetform: förflyttningshastighet ökad med {pct}%",
       "formFireball": "Ember Form: rörelsehastigheten ökad med {pct}%; attacker och besvärjelser är inaktiverade",
       "formMoonkin": "Månugglaform: besvärjelseskada ökad med {pct}% och rustning ökad med {armorPct}%",
@@ -3234,6 +3317,7 @@ export const sv_SE: EnTranslations = {
       "lock": "Lås spelarramen"
     },
     "partyFrames": {
+      "header": "Party",
       "section": "Grupp- och raidramar",
       "optionsSection": "Alternativ för gruppramar",
       "unlock": "Flytta grupp- och raidramar",
@@ -3735,6 +3819,15 @@ export const sv_SE: EnTranslations = {
       "subtitle": "Rikets gillen",
       "rosterTitle": "Visa medlemslistan för {guild}",
       "back": "Tillbaka",
+      "filters": "Board filters",
+      "newPlayerFriendly": "New player friendly",
+      "newPlayerFriendlyTitle": "This guild welcomes new players",
+      "filterNewPlayersTitle": "Show only guilds that welcome new players",
+      "filterEmpty": "No guild has opened its doors to new players yet.",
+      "showAll": "Show all guilds",
+      "officersOnline": "Officers online",
+      "officersOnlineLabel": "Officers online: {names}",
+      "officerEntry": "{name} ({rank})",
       "popupTitle": "Gillesskylt",
       "close": "Stäng"
     },
@@ -4023,7 +4116,6 @@ export const sv_SE: EnTranslations = {
       }
     },
     "gathering": {
-      "title": "Insamling",
       "mining": "Gruvdrift",
       "logging": "Skogsavverkning",
       "herbalism": "Örtkunskap",
@@ -4207,9 +4299,7 @@ export const sv_SE: EnTranslations = {
       "noviceBody": "Odlingsfärdigheten ökar varje gång du skördar en gröda. Så ett frö i en valfri odlingsbädd för att börja."
     },
     "archetypeTitle": {
-      "label": "Titel",
-      "none": "Ingen",
-      "hobbyLabel": "Fritidssyssla"
+      "none": "Ingen"
     },
     "archetypePair": {
       "engineering+alchemy": "Bombbärare",
@@ -4379,7 +4469,9 @@ export const sv_SE: EnTranslations = {
       "hobbyLabel": "Hobby: {craft}",
       "majorsLabel": "Huvudämnen: {a} och {b}",
       "pairsHeld": "Par som hålls: {count}",
-      "returnsLabel": "Returnerar: {count}"
+      "returnsLabel": "Returnerar: {count}",
+      "retentionFooter": "Returns on respec: 60% of skill kept.",
+      "tutorialLink": "Profession tutorial"
     },
     "crafting": {
       "title": "Hantverk",
@@ -4414,6 +4506,7 @@ export const sv_SE: EnTranslations = {
       "vaultUnreachable": "Materialvalvet är utom räckhåll här.",
       "craftFeeLine": "Hantverksavgift: {fee} styck",
       "empty": "Inga recept kända än.",
+      "materialsFooter": "Materials in your vault are drawn automatically. Learn more recipes at the station.",
       "resultAria": "Hantverk {name}",
       "craftedToast": "Tillverkad: {name}",
       "craftedToastQty": "Tillverkad: {name} x{qty}",
@@ -4515,6 +4608,9 @@ export const sv_SE: EnTranslations = {
       "commissionToggleHint": "Binds till den första karaktären som tar emot det i en handel.",
       "commissionUnbound": "Beställningsstycke: binds till den första mottagaren",
       "commissionBound": "Beställningsstycke: bundet till sin mottagare"
+    },
+    "marketWindow": {
+      "mixedListingsFooter": "The Merchant restocks common goods; player listings sit beside them at their asking price."
     },
     "itemMenu": {
       "use": "Använd",
@@ -4950,6 +5046,10 @@ export const sv_SE: EnTranslations = {
       "ownedTooltipStatus": "Katalogiserad i Relikvariet",
       "missingTooltipStatus": "Ännu inte funnen",
       "firstFindClears": "Först funnen vid klarning {count}",
+      "foundBy": "Found by {names}",
+      "finderWithDate": "{name} ({date})",
+      "sharedScopeNote": "Shared by every character on your account",
+      "sharedScopeHint": "A relic found by any character on your account fills the page here too.",
       "unlockToast": "Relik katalogiserad: {name}",
       "illuminateBanner": "Sida illuminerad: {name}",
       "illuminateToast": "Varje relik på {name} är fylld.",
@@ -5083,6 +5183,10 @@ export const sv_SE: EnTranslations = {
       "progressAria": "Framsteg: {current} av {target}",
       "renownChip": "{renown} ryktbarhet",
       "earnedDate": "Fullbordad {date}",
+      "earnedBy": "Earned by {names}",
+      "earnerWithDate": "{name} ({date})",
+      "accountScopeNote": "Shared by every character on your account",
+      "accountScopeHint": "A deed any character on your account accomplishes is earned here too, and the Book names who earned it.",
       "featRibbon": "Bragd",
       "hiddenBadge": "Dold",
       "titleChip": "Titelbelöning",
@@ -5132,6 +5236,33 @@ export const sv_SE: EnTranslations = {
       "toggleAria": "Växla mellan världskartan, zonkartan och instanskartan",
       "levels": "Nivåer {min} till {max}"
     },
+    "mapAtlas": {
+      "level": "Level {level}",
+      "landmarkCount": "{count} landmarks",
+      "filtersAria": "Map layers",
+      "filters": {
+        "quests": "Quests",
+        "gather": "Gather",
+        "dungeons": "Dungeons",
+        "services": "Services",
+        "players": "Players"
+      },
+      "trackedQuests": "Tracked quests",
+      "noTrackedQuests": "No tracked quests",
+      "availableNearby": "Available nearby",
+      "noNearbyQuests": "No nearby quests",
+      "distance": "{distance} yards",
+      "showRoute": "Show Route",
+      "untrack": "Untrack",
+      "track": "Track",
+      "legend": {
+        "dungeon": "Dungeon",
+        "ore": "Ore",
+        "herb": "Herb",
+        "mail": "Mail",
+        "passage": "Passage"
+      }
+    },
     "arenaGate": {
       "minLevelNote": "Kräver nivå {level}"
     },
@@ -5150,6 +5281,7 @@ export const sv_SE: EnTranslations = {
       "tabBrowse": "Bläddra",
       "tabSell": "Sälj",
       "tabActivity": "Mina aktiviteter",
+      "tabHistory": "Sales History",
       "tabsLabel": "Delar av $WOC-börsen",
       "loading": "Laddar $WOC-börsen...",
       "loadFailed": "$WOC-börsen kunde inte nås. Försök igen om en liten stund.",
@@ -5174,6 +5306,16 @@ export const sv_SE: EnTranslations = {
       "colCurrentBid": "Aktuellt bud",
       "colBuyNow": "Köp nu",
       "colTimeLeft": "Tid kvar",
+      "colBuyer": "Buyer",
+      "colSoldAt": "Sold",
+      "colSalePrice": "Sale price",
+      "colSaleType": "Type",
+      "saleTypeAuction": "Auction",
+      "saleTypeBuyNow": "Buy now",
+      "saleTypeDirected": "Directed",
+      "saleTypeUnknown": "Unknown",
+      "historyEmpty": "No sales recorded yet.",
+      "historyError": "Sales history could not be loaded.",
       "reserveMet": "Reservationspris uppnått",
       "reserveNotMet": "Reservationspris inte uppnått",
       "yourListing": "Din annons",
@@ -6066,6 +6208,7 @@ export const sv_SE: EnTranslations = {
       "framesMoveBodyEditFrames": "Din ram, din målram och dina gruppmedlemsramar kan alla flyttas. Varje ram har en liten flyttknapp i hörnet: lås upp den, dra ramen dit du vill och lås den igen så att ett felklick inte kan flytta den. Redigera ramar, högst upp på ramfliken i gränssnittsalternativen, frigör resten av gränssnittet på en gång, tillsammans med dessa tre ramar: åtgärdsraderna, kastningsraden, svängraden, erfarenhetsraden, minimap, knappraden, husdjursramen, stansraden, raderna för förstärkningar och försvagningar samt namnmarkeringen för önskelistepåminnelsen. Var och en får en namnmarkering när den är frigjord. Om de hamnar någonstans du ångrar återställer Återställ standardvärden längst ned på samma ramflik dem alla till där de började.",
       "framesGovernedExtra": "Redigera ramar frigör också spårarstacken nedanför (dina följda uppdrag och deras mål, dina bedriftframsteg, dina reliksamlingssidor, djupet du befinner dig i, varje spricka du deltar i samt receptet eller beställningen du följer), husdjurets åtgärdsrad bredvid dess ram, Målprickar-ramen för dina försvagningar på fiender i närheten, paladinens Andaktsmedaljong, häxmästarens Lidelsefält, överlägget för besvärjelseprocs, timern för vapenhandens svingar för den som använder två vapen och fönstret med flikar för skademätaren. Var och en får sin egen namnmarkering när den är frigjord.",
       "framesGovernedAuraTracks": "Redigera ramar frigör också de sex frivilliga auraraderna när du har slagit på dem på stridsfliken i samma gränssnittsalternativ: raden Mina förstärkningar, raden Defensiva nedkylningar, raden Mina sköldar, raden Offensiva nedkylningar, raden Rörelse och Smygande samt raden Mina förstärkningar på allierade. Varje rad är avstängd från början och får sin egen namnmarkering när den är frigjord.",
+      "framesGovernedTalkingHead": "Edit Frames also loosens the Dialogue panel, which carries an NPC's spoken line while that NPC is out of your view; it wears its name chip while it is loose.",
       "barsTitle": "Mätare, timer och stridstext",
       "barsBody": "Din besvärjelsemätare visas mitt på skärmen, precis ovanför dina handlingsfält, närhelst du kastar eller kanaliserar, och bär besvärjelsens namn och tiden som återstår. Ditt mål får en egen besvärjelsemätare på sin ram, så du kan se vad som kommer och svara på det.\n\nEn tunn svingmätare sitter under din besvärjelsemätare och fylls mellan dina vapensvingar, så en närstrids- eller distansanfallare kan se när nästa automatiska träff landar.\n\nDin erfarenhetsmätare löper i full bredd under dina handlingsfält, uppdelad i segment, med en ljusare sträcka som visar den vilade erfarenhet du har sparat.\n\nSimma under vatten så visas en blå andningsmätare högst upp på skärmen. Den tappas medan huvudet är under ytan, blinkar rött när den tar slut och du börjar drunkna, och fylls snabbt på igen så fort du dyker upp. Blanksteg simmar dig upp, och tangenten Simma ner, Ctrl som standard, tar dig djupare.\n\nSkada och läkning flyter upp över det de landade på som små siffror, så du kan läsa en strid utan att läsa text. Fliken Stridslogg i din chattruta håller den fullständiga skriftliga redogörelsen.",
       "aurasTitle": "Buffar och debuffar",
@@ -6423,6 +6566,7 @@ export const sv_SE: EnTranslations = {
       "formsNote": "En druid slåss genom att byta form. De flesta av druidens förmågor hör till en enda form, så formen du befinner dig i avgör vad du kan kasta, och att skifta kostar lite mana. Du kan skifta in eller ut ur strid, så ofta du vill.",
       "formsAutoUnshift": "En läkning eller en skadetrollformel som kastas i skepnad tar dig ur den åt dig. Att lämna en skepnad på det sättet är gratis och förbrukar inte den globala nedkylningen, så en omedelbar trollformel går av i samma stund du trycker. Att skifta tillbaka är en vanlig förmåga och kostar fortfarande mana och din globala nedkylning.",
       "formsMoonwing": "En Månlund-druid får en form till, Månugglaform, besvärjarformen en Balans-druid strider i. Det är den enda djurformen som behåller dina besvärjelser, och din trollstav fungerar bara i den eller i din vanliga besvärjarform.",
+      "formsWolfEngage": "En varg öppnar striden med Bruinrusning, skiftar genast till Vargform för att hålla fast målet, sluter avståndet med Utfall när den inte smyger och håller en fiende stilla med Nedtagning.",
       "formLine": {
         "form_bear": "Tankformen: en tjock hud, Raseri i stället för mana, och extra hot så att fiender fortsätter slå på dig.",
         "form_cat": "Närstridsskadeformen: Energi och kombopoäng, precis som en Skurk, och betydligt mindre hot.",
@@ -6990,7 +7134,7 @@ export const sv_SE: EnTranslations = {
     "reliquaryPage": {
       "intro": "Relikvariet är museet över det unika byte du har katalogiserat: eftertraktade fynd ur fängelsehålor, yrkestroféer, riddjur, vapenutseenden och titlar. Det hör ihop med Bedrifternas bok på samma sätt som en trofésal hör ihop med en bragdbok.",
       "howHeading": "Så fungerar samlingen",
-      "howBody": "Öppna Relikvariet i spelet (Skift+X som standard). Varje hylla rymmer sidor med unika reliker. Du fyller en silhuett när du får just det föremålet för första gången på den rollpersonen, och du illuminerar en sida när varje relik på den är fylld. Ett fåtal sidor är märkta Utgången eller Personlig: de står utanför fullbordandet och spärrar därför aldrig en hylla eller hela katalogen. Fynd ger en avisering direkt och uppdaterar det öppna fönstret; framstegen hör till rollpersonen, utom vapenutseenden, som är kontokosmetika.",
+      "howBody": "Öppna Relikgömman i spelet (standard Skift+X). Varje hylla rymmer sidor med unika reliker. En siluett fylls när vilken rollperson som helst på ditt konto får föremålet för första gången, och en sida lyses upp när varje relik på den är fylld. Några sidor är märkta Utgången eller Personlig: de står utanför fullbordan och spärrar därför aldrig en hylla eller hela katalogen. Fynd ger en avisering direkt och uppdaterar det öppna fönstret; framstegen delas av alla rollpersoner på kontot, så en relik som en rollperson hittar fyller sidan för alla.",
       "ranksHeading": "Intendent-grader",
       "ranksBody": "Intendent-graderna stiger med varje unik katalogiserad relik och ger uteslutande kosmetiska titlar och ramar. De ger aldrig stridsstyrka, byteschans eller oturskompensation. Vapenutseenden knutna till kontot ger inga poäng mot Intendent-graden, så att anseendet förblir knutet till rollpersonen, och reliker på Utgångna eller Personliga sidor ger inte heller några poäng mot den.",
       "retiredTag": "Utgången",
@@ -11858,7 +12002,7 @@ export const sv_SE: EnTranslations = {
       },
       "cat_form": {
         "name": "Vargform",
-        "description": "Förvandlar er till en varg: smidigheten stiger med er nivå, anfallskraft +8 plus 2 per nivå, era anfall använder energi och kombopoäng, och ni alstrar 29% mindre hot. Besvärj igen för att återgå till besvärjarskepnaden."
+        "description": "Förvandlar er till en varg: smidigheten stiger med er nivå, anfallskraft +8 plus 2 per nivå, era anfall använder energi och kombopoäng, och ni alstrar 29% mindre hot. Att skifta till vilken gestalt som helst ger Lunkande steg: 60% förflyttningshastighet i 3 sek, en gång var 20:e sek. Besvärj igen för att återgå till besvärjarskepnaden."
       },
       "claw": {
         "name": "Rivklo",
@@ -11923,7 +12067,15 @@ export const sv_SE: EnTranslations = {
       },
       "pounce": {
         "name": "Smyghugg",
-        "description": "En smygöppnare som bedövar målet i 2 sek. Ger 1 kombopoäng. Endast i vargform."
+        "description": "En smygöppnare som bedövar målet i 2 sek. Ger 1 kombopoäng. Endast i vargform. Utanför smyg är den här knappen Utfall."
+      },
+      "lunge": {
+        "name": "Utfall",
+        "description": "Kasta dig mot en fiende upp till 12 m bort, tillfoga 60% vapenskada och ge 1 kombopoäng. Endast i vargform."
+      },
+      "hamstring_bite": {
+        "name": "Nedtagning",
+        "description": "Avslutande drag som bedövar målet i 1 sek plus 1 sek per kombopoäng (5 kombopoäng: 6 sek). Endast i vargform."
       },
       "insect_swarm": {
         "name": "Stickande svärm",
@@ -12637,7 +12789,7 @@ export const sv_SE: EnTranslations = {
       },
       "bear_charge": {
         "name": "Bruinrusning",
-        "description": "Storma en fiende, generera 9 raseri och bedöva den i 1 sek. 8-25 m räckvidd. Endast i Bruinform."
+        "description": "Storma en fiende, generera 9 raseri och bedöva den i 1 sek. I 3 sek därefter är Vargform gratis och håller fast målet, vilket saktar ner det med 50% i 4 sek. 8-25 m räckvidd. Endast i Bruinform."
       },
       "demoralizing_roar": {
         "name": "Fegt vrål",
@@ -12645,7 +12797,7 @@ export const sv_SE: EnTranslations = {
       },
       "prowl": {
         "name": "Smygjaga",
-        "description": "Gå i smyg medan du är i vargform och rör dig 5 % långsammare. Kan inte användas i strid."
+        "description": "Gå i smyg medan du är i vargform. Kan inte användas i strid."
       },
       "rake": {
         "name": "Flå",

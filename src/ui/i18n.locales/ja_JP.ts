@@ -264,6 +264,8 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'hudChrome.pledge.noteLabel': '掲示メッセージ',
   'hudChrome.pledge.notePlaceholder': 'ギルドが求める仲間について書きましょう',
   'hudChrome.pledge.save': '保存',
+  'hudChrome.pledge.newPlayerFriendlyLabel': '初心者歓迎',
+  'hudChrome.pledge.newPlayerFriendlyHint': '修練の浜の掲示板の新人向け一覧に表示されます。',
   'hudChrome.pledge.yourPledge': 'あなたの誓約：{guild}',
   'hudChrome.pledge.since': '{date}に誓約',
   'hudChrome.pledge.withdraw': '誓約を取り下げる',
@@ -1431,6 +1433,7 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'hudChrome.warfareShop.buyConfirmBody':
     '{item}を{honor}で購入しますか？名誉での購入は返金できません。',
   'hudChrome.keybinds.bgFlag': '戦場フラッグアクション',
+  'hudChrome.keybinds.friendlyNameplates': '友好ネームプレート切り替え',
   'hudChrome.pvp.mobileLabel': 'PvP',
   'hudChrome.bg.title': 'ソーンホロウ平原',
   'hudChrome.bg.blurb':
@@ -3786,7 +3789,7 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
     '対象に唸ります。あなたの脅威が対象の最も憎む敵と同じ値まで上がり、3秒間あなたを攻撃させます。ブルーインフォーム専用。',
   'entities.abilities.cat_form.name': 'ウルフフォーム',
   'entities.abilities.cat_form.description':
-    '狼へ変身します。敏捷性がレベルとともに上がり、攻撃力は+8にレベルごとの2を加え、攻撃はエネルギーとコンボポイントを使い、生む脅威度が29%減ります。もう一度使えば術者の姿に戻ります。',
+    '狼へ変身します。敏捷性がレベルとともに上がり、攻撃力は+8にレベルごとの2を加え、攻撃はエネルギーとコンボポイントを使い、生む脅威度が29%減ります。いずれかの姿に変身すると疾駆の歩みを得ます。3秒間移動速度が60%上昇し、20秒に1回まで発動します。もう一度使えば術者の姿に戻ります。',
   'entities.abilities.claw.name': '裂爪',
   'entities.abilities.claw.description':
     '敵を引っかき、武器ダメージに {damage} を加えたダメージを与えます。コンボポイントを1獲得します。ウルフフォーム専用。',
@@ -3827,8 +3830,14 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.dash.description':
     '前方へ駆け出し、移動速度を15秒間50%上昇させます。ウルフフォーム専用。',
   'entities.abilities.pounce.name': '忍び強襲',
+  'entities.abilities.lunge.description':
+    '最大12メートル先の敵に飛びかかり、武器ダメージの60%を与えてコンボポイントを1獲得する。ウルフフォーム時のみ使用可能。',
+  'entities.abilities.lunge.name': 'ランジ',
+  'entities.abilities.hamstring_bite.description':
+    '対象を1秒に加えコンボポイント1つにつき1秒スタンさせるフィニッシュ技（コンボポイント5：6秒）。ウルフフォーム時のみ使用可能。',
+  'entities.abilities.hamstring_bite.name': 'テイクダウン',
   'entities.abilities.pounce.description':
-    '隠密状態から放つ先制攻撃で、対象を2秒間スタンさせます。コンボポイントを1獲得します。ウルフフォーム専用。',
+    '隠密状態から放つ先制攻撃で、対象を2秒間スタンさせます。コンボポイントを1獲得します。ウルフフォーム専用。 ステルス状態でない場合、このボタンはランジになる。',
   'entities.abilities.insect_swarm.name': '刺す虫の群れ',
   'entities.abilities.insect_swarm.description':
     '敵が虫の群れに襲われ、12秒かけて{damage}の自然ダメージを受けます。',
@@ -3876,13 +3885,13 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
     'レイスボーンを意のままに束縛します。遠方から強力なシャドウダメージを降らせるエリート悪魔です。長い再使用時間がその破壊的な力を制限します。新たな悪魔を召喚すると現在の悪魔は解放されます。悪魔は一度に1体しか従えられません。',
   'entities.abilities.bear_charge.name': 'ブルーインラッシュ',
   'entities.abilities.bear_charge.description':
-    '敵に突進して激怒を9獲得し、1秒間スタンさせる。射程7～23メートル。ブルーインフォーム時のみ使用可能。',
+    '敵に突進して激怒を9獲得し、1秒間スタンさせる。その後3秒間、ウルフフォームは無料になり、対象を押さえ込んで4秒間移動速度を50%低下させる。射程7～23メートル。ブルーインフォーム時のみ使用可能。',
   'entities.abilities.demoralizing_roar.name': '臆病の咆哮',
   'entities.abilities.demoralizing_roar.description':
     '周囲の敵を萎縮させ、20秒間その攻撃力を20低下させる。ブルーインフォーム時のみ使用可能。',
   'entities.abilities.prowl.name': 'つけ狙い',
   'entities.abilities.prowl.description':
-    'ウルフフォーム中にステルス状態に入り、移動速度が5%低下する。戦闘中は使用できない。',
+    'ウルフフォーム中にステルス状態に入る。戦闘中は使用できない。',
   'entities.abilities.rake.name': '皮剥ぎ',
   'entities.abilities.rake.description':
     '敵を切り裂いて武器ダメージに{damage}を加え、18秒間の出血ダメージを与えます。コンボポイントを1与えます。狼の姿専用。',
@@ -6380,6 +6389,9 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'hudChrome.leaderboard.devTierCol': 'バッジ',
   'hudChrome.leaderboard.mergedPrs': 'マージ済みPR',
   'hudChrome.leaderboard.devEmpty': 'ランク入りのコントリビューターはまだいません。',
+  'hudChrome.leaderboard.podiumLabel': 'トップ3',
+  'hudChrome.leaderboard.prestigeTitle': '威信 {rank}',
+  'hudChrome.leaderboard.unclaimed': '空席',
   'hudChrome.widgets.worldCoordinates': 'ワールド座標',
   'hudChrome.plurals.guildMembers.one': 'あなたは{rank}、{count}人のメンバー',
   'hudChrome.plurals.guildMembers.few': 'あなたは{rank}、{count}人のメンバー',
@@ -6671,7 +6683,7 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
     '偉業は別格の棚です。それは伝承と世界初の記録であり、過ぎ去った時代に結びついた功績や、二度と起こらない一瞬の功績です。名声はなく、達成率にも数えられず、成し遂げられたことの記憶として永遠に残されます。',
   'guide.deedsPage.featsHeading': '偉業',
   'guide.deedsPage.howBody':
-    '功績は一人のキャラクターごとに獲得し、そのまま保たれます。ですから、あなたが遊ぶどの英雄も、それぞれ自分だけの功績の書を築いていきます。あなたのすべてのキャラクターにまたがって名声をまとめるのはレルムのリーダーボードだけで、そこでは各功績が一度だけ数えられます。それぞれの功績が何を求めているかは、ゲーム内の功績の書にはっきりと記されているので、次に何を追うべきかはいつでも分かります。狙っている功績には追跡を設定して、遊んでいる間もずっと視界に入れておけます。ごく一部の功績は秘密のままで、獲得して初めて姿を現します。功績の書はまた、自らに正直であり続けます。あなたの過去の記録で証明できるものはその場で認められるので、歴戦の者が開いたページが白紙ということはありません。数を刻む功績だけが、その集計を新たに始めます。',
+    '功績はキャラクターごとに達成しますが、功績の書はアカウント内の全キャラクターで共有されます。どのキャラクターが成し遂げた功績も全員のものとして記録され、書は誰がいつ達成したかを記し、その報酬の称号や縁飾りはどのキャラクターでも身に着けられます。レルムのランキングも同じ方法で名声を集め、各功績を一度だけ数えます。各功績は求められることをゲーム内の功績の書に明記しているので、追うべきものが常に分かり、狙っている功績を監視に登録して遊びながら視界に置いておけます。ごく一部は秘密のままで、達成したときにのみ姿を見せます。書は自らの誠実さも保ちます。過去の記録が証明できるものはその場で認められるので、ベテランが白紙のページを開くことはなく、数を数える功績だけが新たに集計を始めます。',
   'guide.deedsPage.howHeading': '功績の仕組み',
   'guide.deedsPage.intro':
     '功績の書は、始まりの谷を出る最初の一歩から、この王国が用意する最も過酷な戦いまで、あなたが成し遂げたすべてを世界が記録する場所です。遊びながら功績を獲得し、授かった称号を身にまとい、名声が高まっていくのを見届けましょう。',
@@ -6732,7 +6744,7 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
     '聖遺物庫は、カタログに載せたユニークな戦利品の博物館です。ダンジョンの追撃装備、職業のトロフィー、マウント、武器スキン、称号。功績の書に対して、トロフィー室と実績帳のような関係です。',
   'guide.reliquaryPage.howHeading': 'コレクションの仕組み',
   'guide.reliquaryPage.howBody':
-    'ゲーム内で聖遺物庫を開きます（既定は Shift+X）。各棚にユニークな聖遺物のページがあります。キャラクターが初めてその品を得るとシルエットが埋まり、ページ上のすべてが埋まると点灯します。「絶版」や「専用」と表示される一部のページは達成の対象外で、棚や全体の完成を妨げることはありません。ライブの発見はトーストと開いているウィンドウの更新になります。進捗はキャラクター単位で、武器スキンだけはアカウントの見た目です。',
+    'ゲーム内で聖遺物庫を開きます（既定は Shift+X）。各棚にユニークな聖遺物のページがあります。アカウント内のいずれかのキャラクターが初めてその品を得るとシルエットが埋まり、ページ上のすべてが埋まると点灯します。「絶版」や「専用」と表示される一部のページは達成の対象外で、棚や全体の完成を妨げることはありません。ライブの発見はトーストと開いているウィンドウの更新になります。進捗はアカウント内の全キャラクターで共有され、あるキャラクターが見つけた聖遺物は全員のページを埋めます。',
   'guide.reliquaryPage.ranksHeading': 'キュレーターランク',
   'guide.reliquaryPage.ranksBody':
     'キュレーターランクはカタログに載せたユニーク埋めで上がり、装飾の称号と枠だけを与えます。戦闘力、ドロップ率、天井はありません。アカウントの武器スキンはキュレーターランクに数えず、名声はキャラクターに残ります。絶版や専用ページの聖遺物も同様にランクへは数えません。',
@@ -8550,9 +8562,9 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
     '回避できないダメージには残っている防御クールダウンを使う。戦闘を終えるまで、それまでのメカニクスを引き続き丁寧に処理する。',
   'hudChrome.raidBossGuide.nythraxis.boneStormName': '骨の嵐',
   'hudChrome.raidBossGuide.nythraxis.boneStormSummary':
-    '王の怒りの開始から{first}秒後、以降{everyNormal}秒ごとに、ナイスラクシスは{duration}秒間骨の嵐を始める。彼はヘイトを無視し、通常の{speed}倍の速度で移動し、それぞれ{chargeSeconds}秒続く突進を{charges}回行う。彼の旋風は{radius}ヤード以内へ毎秒最大体力の{whirlNormal}を与える。各突進の終わりには同じ範囲内で骨の一撃が発生し、最大体力の{slamNormal}を与える。嵐が始まってから{spikeAt}秒後に骨の棘を詠唱し、嵐が終わってから{rearm}秒後にグレイブブレイカーが再び使用可能になる。',
+    '王の怒りの開始から{first}秒後、以降{everyNormal}秒ごとに、ナイスラクシスは{duration}秒間骨の嵐を始める。彼はヘイトを無視し、通常の{speed}倍の速度で移動し、それぞれ{chargeSeconds}秒続く突進を{charges}回行う。彼の旋風は{radius}ヤード以内へ毎秒最大体力の{whirlNormal}を与える。各突進の終わりには同じ範囲内で骨の一撃が発生し、最大体力の{slamNormal}を与える。各嵐の最初の一撃は代わりに{openingSlamNormal}を与える。嵐が終わってから{rearm}秒後にグレイブブレイカーが再び使用可能になる。',
   'hudChrome.raidBossGuide.nythraxis.boneStormHeroicSummary':
-    '王の怒りの開始から{first}秒後、以降{everyHeroic}秒ごとに、ナイスラクシスは{duration}秒間骨の嵐を始める。彼はヘイトを無視し、通常の{speed}倍の速度で移動し、それぞれ{chargeSeconds}秒続く突進を{charges}回行う。彼の旋風は{radius}ヤード以内へ毎秒最大体力の{whirlHeroic}を与える。各突進の終わりには同じ範囲内で骨の一撃が発生し、最大体力の{slamHeroic}を与える。嵐が始まってから{spikeAt}秒後に骨の棘を詠唱し、嵐が終わってから{rearm}秒後にグレイブブレイカーが再び使用可能になる。',
+    '王の怒りの開始から{first}秒後、以降{everyHeroic}秒ごとに、ナイスラクシスは{duration}秒間骨の嵐を始める。彼はヘイトを無視し、通常の{speed}倍の速度で移動し、それぞれ{chargeSeconds}秒続く突進を{charges}回行う。彼の旋風は{radius}ヤード以内へ毎秒最大体力の{whirlHeroic}を与える。各突進の終わりには同じ範囲内で骨の一撃が発生し、最大体力の{slamHeroic}を与える。各嵐の最初の一撃は代わりに{openingSlamHeroic}を与える。嵐が終わってから{rearm}秒後にグレイブブレイカーが再び使用可能になる。',
   'hudChrome.raidBossGuide.nythraxis.boneStormResponse':
     '散開し、ナイスラクシスから走って逃げ続ける。突進の対象になったレイドメンバーは走って逃げ、他の全員は突進経路の周囲に空間を空ける。嵐が終わったらタンクが確保する。',
   'hudChrome.raidBossGuide.nythraxis.crownEnduresName': '王冠不滅',
@@ -8629,7 +8641,7 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'hudChrome.auraEffect.imbueRange': '武器付与: ヴァーディクトで{min}から{max}の追加ダメージ',
   'hudChrome.auraEffect.stealth': '隠密状態。移動速度が{pct}%低下する',
   'hudChrome.auraEffect.formBear': 'ブルーインフォーム: 体力と防御力が上昇',
-  'hudChrome.auraEffect.formCat': 'キャットフォーム: 近接ダメージとエネルギー',
+  'hudChrome.auraEffect.wolfForm': 'ウルフフォーム: 近接ダメージとエネルギー、移動速度が{pct}%上昇',
   'hudChrome.auraEffect.formTravel': 'フリートフォーム: 移動速度が{pct}%上昇',
   'hudChrome.auraEffect.defensiveStance':
     'ガーデッドスタンス: 受けるダメージが減少し、脅威度が上昇',
@@ -9870,6 +9882,18 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'hudChrome.noticeboard.subtitle': 'ワールドのギルド',
   'hudChrome.noticeboard.rosterTitle': '{guild}のメンバー一覧を見る',
   'hudChrome.noticeboard.back': '戻る',
+  'hudChrome.noticeboard.filters': '掲示板の絞り込み',
+  'hudChrome.noticeboard.newPlayerFriendly': '初心者歓迎',
+  'hudChrome.noticeboard.newPlayerFriendlyTitle': 'このギルドは新規プレイヤーを歓迎しています',
+  'hudChrome.noticeboard.filterNewPlayersTitle': '新規プレイヤーを歓迎するギルドのみ表示',
+  'hudChrome.noticeboard.filterEmpty': 'まだ新規プレイヤーに門戸を開いたギルドはありません。',
+  'hudChrome.noticeboard.showAll': 'すべてのギルドを表示',
+  'hudChrome.noticeboard.officersOnline': '幹部がオンライン',
+  'hudChrome.noticeboard.officersOnlineLabel': 'オンラインの幹部: {names}',
+  'hudChrome.plurals.guildBoardShown.one': '{count} 件のギルドを表示中',
+  'hudChrome.plurals.guildBoardShown.few': '{count} 件のギルドを表示中',
+  'hudChrome.plurals.guildBoardShown.many': '{count} 件のギルドを表示中',
+  'hudChrome.plurals.guildBoardShown.other': '{count} 件のギルドを表示中',
   'hudChrome.noticeboard.popupTitle': 'ギルドの掲示柱',
   'hudChrome.noticeboard.close': '閉じる',
   'hudChrome.mailbox.subtitle': 'レイヴンポスト',
@@ -10131,6 +10155,14 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'hudChrome.wocMarket.sellerError': '最近の取引を読み込めませんでした。',
   'hudChrome.wocMarket.sellerSaleRow': '{time}: {item} を {buyer} に {usd} で売却',
   'hudChrome.wocMarket.colSeller': '出品者',
+  'hudChrome.wocMarket.colBuyer': '購入者',
+  'hudChrome.wocMarket.colSalePrice': '販売価格',
+  'hudChrome.wocMarket.tabHistory': '販売履歴',
+  'hudChrome.wocMarket.saleTypeAuction': 'オークション',
+  'hudChrome.wocMarket.saleTypeDirected': '指定販売',
+  'hudChrome.wocMarket.saleTypeUnknown': '不明',
+  'hudChrome.wocMarket.historyEmpty': 'まだ販売記録がありません。',
+  'hudChrome.wocMarket.historyError': '販売履歴を読み込めませんでした。',
   'hudChrome.wocMarket.colCurrentBid': '現在の入札額',
   'hudChrome.wocMarket.colBuyNow': '即決価格',
   'hudChrome.wocMarket.colTimeLeft': '残り時間',
@@ -10413,7 +10445,6 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
     'ハルヴェン修道士が海図に印を。崩落した聖遺物庫に挑む好日。',
   'hudChrome.calendar.events.moongateCommunion.title': '月門の集い',
   'hudChrome.calendar.events.moongateCommunion.note': '月半ばの月の下、巡礼者が神殿の月門に集う。',
-  'hudChrome.gathering.title': '採集',
   'hudChrome.gathering.mining': '採掘',
   'hudChrome.gathering.logging': '伐採',
   'hudChrome.gathering.herbalism': '薬草学',
@@ -10722,9 +10753,7 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'entities.items.highwatch_barley_porridge.name': 'ハイウォッチの大麦粥',
   'entities.items.evergarden_braised_greens.name': 'エバーガーデンの青菜煮込み',
   'entities.items.harvest_feast.name': '収穫の宴',
-  'hudChrome.archetypeTitle.label': '称号',
   'hudChrome.archetypeTitle.none': 'なし',
-  'hudChrome.archetypeTitle.hobbyLabel': '趣味',
   'hudChrome.archetypePair.engineering+alchemy': '爆破師',
   'hudChrome.archetypePair.alchemy+cooking': '薬師',
   'hudChrome.archetypePair.cooking+leatherworking': '罠師',
@@ -11409,6 +11438,11 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'hudChrome.deeds.progressAria': '進行度: {current}/{target}',
   'hudChrome.deeds.renownChip': '名声 {renown}',
   'hudChrome.deeds.earnedDate': '{date} に獲得',
+  'hudChrome.deeds.earnedBy': '{names} が獲得',
+  'hudChrome.deeds.earnerWithDate': '{name}（{date}）',
+  'hudChrome.deeds.accountScopeNote': 'アカウント内の全キャラクターで共有',
+  'hudChrome.deeds.accountScopeHint':
+    'アカウント内のどのキャラクターが成し遂げた功績もここで達成扱いになり、書は誰が達成したかを記します。',
   'hudChrome.deeds.hiddenBadge': '隠し',
   'hudChrome.deeds.titleChip': '称号報酬',
   'hudChrome.deeds.borderChip': '枠飾り報酬',
@@ -12660,6 +12694,11 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'hudChrome.reliquary.ownedTooltipStatus': '聖遺物庫に収蔵済み',
   'hudChrome.reliquary.missingTooltipStatus': 'まだ見つかっていません',
   'hudChrome.reliquary.firstFindClears': '初回入手：クリア {count} 回目',
+  'hudChrome.reliquary.foundBy': '{names} が発見',
+  'hudChrome.reliquary.finderWithDate': '{name}（{date}）',
+  'hudChrome.reliquary.sharedScopeNote': 'アカウント内の全キャラクターで共有',
+  'hudChrome.reliquary.sharedScopeHint':
+    'アカウント内のどのキャラクターが見つけた聖遺物も、ここでページを埋めます。',
   'hudChrome.reliquary.unlockToast': '聖遺物を収蔵：{name}',
   'hudChrome.reliquary.illuminateBanner': 'ページが照耀されました：{name}',
   'hudChrome.reliquary.illuminateToast': '{name} の聖遺物がすべて埋まりました。',
@@ -13741,6 +13780,54 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'hudChrome.auraOverlay.spellOrder': 'スペル順',
   'hudChrome.auraOverlay.reset': '位置をリセット',
   'hudChrome.auraOverlay.spellPosition': 'スペル順 {position} / {count}',
+  'hudChrome.auraOverlay.readyGlow': 'ホットバーの発光',
+  'hudChrome.auraOverlay.readyGlowHint':
+    'このスペルのバフが有効な間、アクションバー上で光らせます。',
+  'hudChrome.auraOverlay.reticleTick': 'レティクルの目盛り',
+  'hudChrome.auraOverlay.reticleTickHint':
+    '画面中央付近に目盛りを追加し、このスペルが発動すると点灯します。',
+  'hudChrome.auraOverlay.haptic': '振動',
+  'hudChrome.auraOverlay.hapticNone': 'オフ',
+  'hudChrome.auraOverlay.hapticHint':
+    '接続中のコントローラーやスマートフォンを振動させます。振動機能のない端末では無視されます。',
+  'hudChrome.auraOverlay.haptics.tap': 'タップ',
+  'hudChrome.auraOverlay.haptics.double': 'ダブル',
+  'hudChrome.auraOverlay.haptics.long': 'ロング',
+  'hudChrome.auraOverlay.watchlistHint':
+    '自分にバフを付与するスペルを選ぶと、そのスペル専用のオーラが有効になります。選んだスペルは下に専用カードが表示され、アイコン、色、位置、グラウンドリングを個別に設定できます。',
+  'hudChrome.auraOverlay.watchlistEmpty':
+    'スペルブックに、自分にバフを付与するスペルは他にありません。',
+  'hudChrome.auraOverlay.soundHint':
+    'このスペルが発動するたびに音が鳴ります。アイコン、クレセント、グラウンドリングをオフにすると、音だけで知らせます。',
+  'hudChrome.auraOverlay.watchlist': '監視するスペル',
+  'hudChrome.auraOverlay.watchlistWatch': '{spell}を監視',
+  'hudChrome.auraOverlay.watchlistUnwatch': '{spell}の監視を解除',
+  'hudChrome.auraOverlay.watchlistCount': '{count}件を監視中',
+  'hudChrome.auraOverlay.sound': '通知音',
+  'hudChrome.auraOverlay.soundNone': '音なし',
+  'hudChrome.auraOverlay.soundVolume': '音量',
+  'hudChrome.auraOverlay.soundPreview': '再生',
+  'hudChrome.auraOverlay.soundPreviewAria': '「{sound}」の通知音を試聴',
+  'hudChrome.auraOverlay.cues.softChime': 'やわらかいチャイム',
+  'hudChrome.auraOverlay.cues.musicBox': 'オルゴール',
+  'hudChrome.auraOverlay.cues.glassPing': 'ガラスの音',
+  'hudChrome.auraOverlay.cues.waterDrop': '水滴',
+  'hudChrome.auraOverlay.cues.bubblePop': '泡がはじける音',
+  'hudChrome.auraOverlay.cues.hardBell': '鋭いベル',
+  'hudChrome.auraOverlay.cues.templeGong': '寺の鐘',
+  'hudChrome.auraOverlay.cues.anvilStrike': '金床の一撃',
+  'hudChrome.auraOverlay.cues.coinDrop': 'コインの音',
+  'hudChrome.auraOverlay.cues.swordDraw': '剣を抜く音',
+  'hudChrome.auraOverlay.cues.blaringHorn': '鳴り響くホルン',
+  'hudChrome.auraOverlay.cues.carKlaxon': 'クラクション',
+  'hudChrome.auraOverlay.cues.sonarPing': 'ソナー音',
+  'hudChrome.auraOverlay.cues.electricZap': '電撃音',
+  'hudChrome.auraOverlay.cues.catMeow': '猫の鳴き声',
+  'hudChrome.auraOverlay.cues.owlHoot': 'フクロウの声',
+  'hudChrome.auraOverlay.cues.wolfHowl': '狼の遠吠え',
+  'hudChrome.auraOverlay.cues.frogCroak': 'カエルの声',
+  'hudChrome.auraOverlay.cues.windWhoosh': '風の音',
+  'hudChrome.auraOverlay.cues.steamHiss': '蒸気の音',
   'hudChrome.auraOverlay.procs.revenge': 'リベンジ！',
   'hudChrome.auraOverlay.procs.battleTrance': 'バトルトランス',
   'hudChrome.auraOverlay.procs.overpowerCharge': 'レッドハンドエンパワー',
@@ -14454,6 +14541,8 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'guide.classPage.formsHeading': '変身',
   'guide.classPage.formsMoonwing':
     '均衡（ムーングローブ）のドルイドは、もう一つの姿、ムーンウィングフォームを得ます。均衡型のドルイドが戦うための術者の姿です。獣の姿でありながら呪文を保てる唯一の形であり、ワンドもこの姿か、通常の術者の姿でしか使えません。',
+  'guide.classPage.formsWolfEngage':
+    '狼はブルーインラッシュで戦いを開き、すぐにウルフフォームへ変身して対象を押さえ込み、ステルスでないときはランジで距離を詰め、テイクダウンで敵を足止めする。',
   'guide.classPage.formsAutoUnshift':
     '変身中に回復や攻撃の呪文を唱えると、姿はひとりでに解けます。こうして姿を解くのはマナもかからず、グローバルクールダウンも使いません。ですから即時発動の呪文は押した瞬間に飛びます。もう一度変身するのは普通のアビリティなので、マナもグローバルクールダウンもかかります。',
   'guide.classPage.formsNote':
@@ -15302,6 +15391,8 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'hudChrome.auraEffect.castShield': 'ダメージで詠唱が中断または遅延しない',
   'hudChrome.auraEffect.cauterizeFatigue': 'コーテライズは次の致死ダメージを防げない',
   'hudChrome.auraEffect.cooldownCap': 'この時間枠でクールダウン短縮を{used}/{cap}秒使用済み',
+  'hudChrome.auraEffect.bruinRushWindow':
+    'ウルフフォームのマナ消費がなくなり、ブルーインラッシュの対象を押さえ込んで{sec}秒間移動速度を{pct}%低下させる',
   'hudChrome.auraEffect.dawnsWrath': '制裁の鎚: HP不問 · +1回 · CD0 · ダメージ+{pct}%',
   'hudChrome.auraEffect.desolation':
     '残り{charges}チャージ：次のカオス・ボルトの詠唱が{castPct}%短縮、または次のレイン・オブ・ファイアが即着弾する',
@@ -16540,6 +16631,8 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
     '自分のフレーム、ターゲットフレーム、パーティフレームは、いずれも移動できます。どれも隅に小さな移動ボタンを備えているので、固定を外し、好きな位置へドラッグし、もう一度固定すれば、うっかりクリックしてもずれません。オプションの「インターフェース」にある「フレーム」タブの先頭の「フレーム編集」を使うと、インターフェースの残りの部分もいっせいに動かせるようになり、この3つのフレームもそれに含まれます。アクションバー、キャストバー、スイングバー、経験値バー、ミニマップ、ボタンレール、ペットフレーム、スタンスバー、バフとデバフの列、そして「ウィッシュリストの通知」のチップが対象で、動かせる間はそれぞれに名前のチップが付きます。置き場所を悔やむことになったら、同じ「フレーム」タブの末尾にある「初期設定に戻す」で、すべて元の場所へ戻せます。',
   'guide.interfacePage.framesGovernedExtra':
     '「フレーム編集」は、その下に積み重なるトラッカー群(追跡中のクエストとその目標、功績の進み具合、聖遺物庫のページ、潜っているデルヴ、参加中のリフト、そして追跡中のレシピまたは依頼)、ペットフレーム脇のペットアクションバー、周囲の敵にかけた継続的なデバフをまとめて表示する「ターゲットデバフ」フレーム、パラディンの「献身」の記章、ウォーロックの「苦痛リソースバー」、スペル発動オーバーレイ、二刀流時のオフハンド用スイングバー、そしてタブ式のダメージメーターウィンドウも緩めます。緩んでいる間はそれぞれに名前のチップが付きます。',
+  'guide.interfacePage.framesGovernedTalkingHead':
+    '「フレームを編集」では会話パネルも動かせるようになります。会話パネルは、話しているNPCが視界の外にいるときにそのセリフを表示するもので、ロック解除中は名前チップを表示します。',
   'guide.interfacePage.framesGovernedAuraTracks':
     '「フレーム編集」は、同じ「インターフェース」オプションの「戦闘」タブでオンにした任意の6つのオーラトラック、すなわち「自分のバフ」トラック、「防御クールダウン」トラック、「自分のシールド」トラック、「攻撃クールダウン」トラック、「移動とステルス」トラック、「味方へのバフ」トラックも緩めます。どのトラックも初期状態ではオフで、緩んでいる間はそれぞれに名前のチップが付きます。',
   'guide.interfacePage.mapBodyZoneFirst':
@@ -16596,6 +16689,7 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'hudChrome.realmBuilder.pastEmpty': 'まだ名前が刻まれていません。',
   'hudChrome.realmBuilder.close': '閉じる',
   'worldContent.realmBuilderMonumentName': '王国建設者の記念碑',
+  'hudChrome.talkingHead.label': '会話',
   'hudChrome.hubLesson.target': 'まずダミーを標的にしよう。',
   'hudChrome.hubLesson.openWindow': '{meters}を開こう。',
   'hudChrome.hubLesson.openWindowTouch': '{menu} → {more} → {meters}を開こう。',
@@ -16733,6 +16827,51 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'loading.kickedByModerator': 'モデレーターによって切断されました：{reason}',
   'loading.rendererContextLost':
     '3D レンダラーがグラフィックスコンテキストを失い、復旧できませんでした。再読み込みしてください。',
+  'hudChrome.charSidebar.label': 'キャラクター詳細',
+  'hudChrome.charSidebar.subtitle': 'レベル{level} {className} . {archetype} . 趣味：{hobby}',
+  'hudChrome.charSidebar.subtitleNoHobby': 'レベル{level} {className} . {archetype}',
+  'hudChrome.charSidebar.stats': '能力値',
+  'hudChrome.charSidebar.progression': '進行状況',
+  'hudChrome.charSidebar.skills': 'スキル',
+  'hudChrome.charSidebar.gathering': '採集',
+  'hudChrome.charSidebar.crafting': '製作',
+  'hudChrome.charSidebar.openProfessions': '職業を開く',
+  'hudChrome.questLog.completed': '完了済み',
+  'hudChrome.questLog.zoneSummary': '{count}件（{ready}件完了）',
+  'hudChrome.questLog.shiftHint':
+    'Shiftキーを押しながらクエストをクリックするとチャットにリンクできます。',
+  'hudChrome.bugReport.online': 'オンライン',
+  'hudChrome.controller.device': '接続中のデバイス',
+  'hudChrome.controller.deviceConnected': '接続済み',
+  'hudChrome.controller.deviceDisconnected': 'コントローラーが見つかりません',
+  'hudChrome.crafting.materialsFooter':
+    '保管庫の素材は自動的に使用されます。ステーションでさらにレシピを習得できます。',
+  'hudChrome.partyFrames.header': 'パーティ',
+  'hudChrome.professions.retentionFooter': 'リスペック時はスキルの60%を保持します。',
+  'hudChrome.professions.tutorialLink': '専門技能チュートリアル',
+  'hudChrome.marketWindow.mixedListingsFooter':
+    '商人はコモンの商品を補充し、プレイヤーの出品は希望価格でその隣に並びます。',
+  'hudChrome.mapAtlas.track': '追跡',
+  'hudChrome.mapAtlas.level': 'レベル {level}',
+  'hudChrome.mapAtlas.landmarkCount': 'ランドマーク {count} 個',
+  'hudChrome.mapAtlas.filtersAria': 'マップレイヤー',
+  'hudChrome.mapAtlas.filters.quests': 'クエスト',
+  'hudChrome.mapAtlas.filters.gather': '採集',
+  'hudChrome.mapAtlas.filters.dungeons': 'ダンジョン',
+  'hudChrome.mapAtlas.filters.services': '施設',
+  'hudChrome.mapAtlas.filters.players': 'プレイヤー',
+  'hudChrome.mapAtlas.trackedQuests': '追跡中のクエスト',
+  'hudChrome.mapAtlas.noTrackedQuests': '追跡中のクエストはありません',
+  'hudChrome.mapAtlas.availableNearby': '近くの受注可能クエスト',
+  'hudChrome.mapAtlas.noNearbyQuests': '近くに受注可能なクエストはありません',
+  'hudChrome.mapAtlas.distance': '{distance}ヤード',
+  'hudChrome.mapAtlas.showRoute': 'ルートを表示',
+  'hudChrome.mapAtlas.untrack': '追跡を解除',
+  'hudChrome.mapAtlas.legend.dungeon': 'ダンジョン',
+  'hudChrome.mapAtlas.legend.ore': '鉱石',
+  'hudChrome.mapAtlas.legend.herb': '薬草',
+  'hudChrome.mapAtlas.legend.mail': '郵便',
+  'hudChrome.mapAtlas.legend.passage': '通路',
 
   'hudChrome.wocStore.mountSkinType': 'マウントスキン',
   'hudChrome.cosmetics.title': 'コスメティック',

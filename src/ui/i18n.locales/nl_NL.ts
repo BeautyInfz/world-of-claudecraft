@@ -965,6 +965,8 @@ export const nl_NL: Partial<Record<TranslationKey, string>> = {
   'guide.classPage.formsHeading': 'Gedaanteverwisseling',
   'guide.classPage.formsMoonwing':
     'Een Balans-druïde krijgt er nog één gedaante bij: de Maanuilvorm, de spreukgedaante waarin hij vecht. Het is de enige diergedaante die je spreuken behoudt, en je toverstaf werkt alleen in deze vorm of in je normale spreukgedaante.',
+  'guide.classPage.formsWolfEngage':
+    'Een wolf opent het gevecht met Bruin-stormloop, wisselt meteen naar Wolfsgedaante om het doelwit vast te pinnen, dicht de afstand met Uitval wanneer hij niet sluipt, en houdt een vijand stil met Neerhalen.',
   'guide.classPage.formsNote':
     'Een druïde vecht door van gedaante te veranderen. De meeste druïdenvaardigheden horen bij één gedaante, dus de vorm waarin je verkeert bepaalt wat je kunt gebruiken, en van gedaante wisselen kost een beetje mana. Je kunt in of buiten gevecht van gedaante wisselen, zo vaak je wilt.',
   'guide.classPage.mageEleHeading': 'Waterelementaal',
@@ -3984,7 +3986,6 @@ export const nl_NL: Partial<Record<TranslationKey, string>> = {
   'hudChrome.townFocus.title': 'Stadsfocus',
   'hudChrome.townFocus.townOnlyHint':
     'Focus kan alleen worden gewijzigd terwijl je in de stad bent.',
-  'hudChrome.archetypeTitle.label': 'Titel',
   'hudChrome.archetypeTitle.none': 'Geen',
   'entities.itemSets.crownforged.bonus4':
     'Je kritieke wapentreffers splinteren het doelwit met Beensplinter, waardoor het 8 schade bloedt elke 2 sec gedurende 12 sec. Stapelt tot 3 keer.',
@@ -5400,7 +5401,7 @@ export const nl_NL: Partial<Record<TranslationKey, string>> = {
     'Een kreet die de aanvalskracht van alle groepsleden met {buff}% verhoogt gedurende 30 min.',
   'entities.abilities.battle_shout.name': 'IJzeren Gebrul',
   'entities.abilities.bear_charge.description':
-    'Storm op een vijand af, genereer 9 woede en verdoof hem gedurende 1 sec. Bereik 8-25 m. Alleen in Bruingedaante.',
+    'Storm op een vijand af, genereer 9 woede en verdoof hem gedurende 1 sec. Gedurende 3 sec daarna is Wolfsgedaante gratis en pint het doelwit vast, wat het 4 sec lang 50% vertraagt. Bereik 8-25 m. Alleen in Bruingedaante.',
   'entities.abilities.bear_charge.name': 'Bruin-stormloop',
   'entities.abilities.bear_form.description':
     'Verander in een beer: pantser +110%, maximale gezondheid +30%, sterk verhoogde aanvalskracht, je aanvallen bouwen woede op en genereren 30% meer dreiging. Spreek opnieuw om terug te keren naar je oorspronkelijke gedaante.',
@@ -5420,7 +5421,7 @@ export const nl_NL: Partial<Record<TranslationKey, string>> = {
     'Val onmiddellijk aan in een bloedrazernij voor 60% wapenschade plus {damage}. (Razernij-kenmerk)',
   'entities.abilities.bloodthirst.name': 'Aderlating',
   'entities.abilities.cat_form.description':
-    'Verandert u in een wolf: behendigheid stijgt met uw niveau, aanvalskracht +8 plus 2 per niveau, uw aanvallen gebruiken energie en combopunten, en u wekt 29% minder dreiging op. Werp de spreuk opnieuw om naar de spreukengedaante terug te keren.',
+    'Verandert u in een wolf: behendigheid stijgt met uw niveau, aanvalskracht +8 plus 2 per niveau, uw aanvallen gebruiken energie en combopunten, en u wekt 29% minder dreiging op. Wisselen naar welke gedaante ook verleent Hobbelende pas: 3 sec lang 60% bewegingssnelheid, eenmaal per 20 sec. Werp de spreuk opnieuw om naar de spreukengedaante terug te keren.',
   'entities.abilities.cat_form.name': 'Wolfsgedaante',
   'entities.abilities.charge.description':
     'Stormt op een vijand af, genereert 9 woede en verdooft hem gedurende 1 sec. Bereik 8-25 m.',
@@ -5639,8 +5640,14 @@ export const nl_NL: Partial<Record<TranslationKey, string>> = {
     'Verandert de vijand in een pad gedurende maximaal {duration} sec. De pad dwaalt rond en geneest snel. Elke schade verbreekt het effect. Alleen beesten en humanoïden.',
   'entities.abilities.polymorph.name': 'Beheksen',
   'entities.abilities.pounce.description':
-    'Een sluipopener die het doelwit 2 sec verdooft. Levert 1 combopunt op. Alleen in Wolfsgedaante.',
+    'Een sluipopener die het doelwit 2 sec verdooft. Levert 1 combopunt op. Alleen in Wolfsgedaante. Buiten sluiptocht is deze knop Uitval.',
   'entities.abilities.pounce.name': 'Sluipslag',
+  'entities.abilities.lunge.description':
+    'Stort je op een vijand tot 12 m ver, wat 60% wapenschade toebrengt en 1 combopunt oplevert. Alleen in Wolfsgedaante.',
+  'entities.abilities.lunge.name': 'Uitval',
+  'entities.abilities.hamstring_bite.description':
+    'Afmaakactie die het doelwit verdooft voor 1 sec plus 1 sec per combopunt (5 combopunten: 6 sec). Alleen in Wolfsgedaante.',
+  'entities.abilities.hamstring_bite.name': 'Neerhalen',
   'entities.abilities.power_word_fortitude.description':
     'Verhoogt het Uithoudingsvermogen van elk groepslid 30 min lang met {buff}%.',
   'entities.abilities.power_word_fortitude.name': 'Litanie van Vastberadenheid',
@@ -5648,7 +5655,7 @@ export const nl_NL: Partial<Record<TranslationKey, string>> = {
     'Schildt een bevriend doelwit en absorbeert 30 sec lang {damage} schade. Discipline verbindt het doelwit bovendien 30 sec lang met uw Heilige schade.',
   'entities.abilities.power_word_shield.name': 'Psalm van Bescherming',
   'entities.abilities.prowl.description':
-    'Ga in sluiptocht terwijl je in Wolfsgedaante bent en beweeg 5% trager. Kan niet in gevecht worden gebruikt.',
+    'Ga in sluiptocht terwijl je in Wolfsgedaante bent. Kan niet in gevecht worden gebruikt.',
   'entities.abilities.prowl.name': 'Besluipen',
   'entities.abilities.pyroblast.description':
     'Werpt een immense vurige kei die {damage} Vuurschade toebrengt plus extra schade over tijd.',
@@ -10117,7 +10124,6 @@ export const nl_NL: Partial<Record<TranslationKey, string>> = {
   'hudChrome.auraEffect.imbueRange': 'Wapen doordrongen: {min} tot {max} bonusschade bij Verdict',
   'hudChrome.auraEffect.stealth': 'Verborgen; Bewegungstempo um {pct}% verringert',
   'hudChrome.auraEffect.formBear': 'Bruingedaante: verhoogde gezondheid en pantser',
-  'hudChrome.auraEffect.formCat': 'Katzengestalt: Nahkampfschaden und Energie',
   'hudChrome.auraEffect.formTravel': 'Fleetgedaante: bewegingssnelheid verhoogd met {pct}%',
   'hudChrome.auraEffect.defensiveStance':
     'Bewaakte Houding: minder ontvangen schade, meer dreiging',
@@ -10399,7 +10405,6 @@ export const nl_NL: Partial<Record<TranslationKey, string>> = {
   'hudChrome.gathering.herbalism': 'Kruidenkunde',
   'hudChrome.gathering.logging': 'Houtkap',
   'hudChrome.gathering.mining': 'Mijnbouw',
-  'hudChrome.gathering.title': 'Verzamelen',
   'hudChrome.corpseHarvest.title': 'Oogsten',
   'hudChrome.corpseHarvest.harvestButton': 'Oogsten',
   'hudChrome.corpseHarvest.alreadyHarvested': 'Dit kadaver is al geoogst.',
@@ -10665,7 +10670,6 @@ export const nl_NL: Partial<Record<TranslationKey, string>> = {
   'entities.mobs.training_dummy.name': 'Oefenpop',
   'entities.mobs.hub_training_dummy.name': 'Oefenpop',
   'entities.mobs.yumi_cat.name': 'Yumi',
-  'hudChrome.archetypeTitle.hobbyLabel': 'Liefhebberij',
   'hudChrome.auraEffect.armorPct': 'Vermindert pantser met {pct}%',
   'hudChrome.auraEffect.armorPctStacks': 'Vermindert pantser met {pct}% ({stacks} stapels)',
   'hudChrome.auraEffect.increasePct.allStats': 'Verhoogt alle statistieken met {pct}%',
@@ -14068,6 +14072,8 @@ export const nl_NL: Partial<Record<TranslationKey, string>> = {
     'Cauteriseren kan geen volgende dodelijke treffer voorkomen',
   'hudChrome.auraEffect.cooldownCap':
     '{used} van {cap} sec afkoeltijdvermindering gebruikt in dit venster',
+  'hudChrome.auraEffect.bruinRushWindow':
+    'Wolfsgedaante kost geen mana en pint het doelwit van uw Bruin-stormloop vast, wat het {sec} sec lang {pct}% vertraagt',
   'hudChrome.auraEffect.desolation':
     '{charges} ladingen: je volgende Ruinenschicht wordt {castPct}% sneller gespreukt, of je volgende Vuurregen valt onmiddellijk neer',
   'hudChrome.auraEffect.duskfireClaim': 'Dood kent {value} Ruïne toe',
@@ -14161,7 +14167,7 @@ export const nl_NL: Partial<Record<TranslationKey, string>> = {
     'Elke geschreven Reliquarium-bladzijde en de namen van de relieken die erop staan. Deze lijst geeft uitsluitend namen zonder spoilers: open Het Reliquarium in het spel om je eigen voortgang, je voltooiingen en de silhouetten te zien.',
   'guide.reliquaryPage.catalogHeading': 'Catalogus van bladzijden',
   'guide.reliquaryPage.howBody':
-    'Open Het Reliquarium in het spel (standaard Shift+X). Elke plank draagt bladzijden met unieke relieken. Je vult een silhouet zodra je dat stuk voor het eerst op dit personage bemachtigt, en je verlucht een bladzijde zodra elk reliek erop gevuld is. Een paar bladzijden dragen het label Vervallen of Persoonlijk: die staan buiten de voltooiing en blokkeren dus nooit een plank of de hele catalogus. Vondsten verschijnen meteen als melding en verversen het geopende venster; voortgang geldt per personage, behalve wapenskins, die accountcosmetica zijn.',
+    "Open Het Reliekschrijn in het spel (standaard Shift+X). Elke plank bevat pagina's met unieke relieken. Een silhouet wordt gevuld zodra een willekeurig personage op je account dat stuk voor het eerst verkrijgt, en een pagina licht op wanneer elke reliek erop gevuld is. Enkele pagina's dragen het label Uitgefaseerd of Persoonlijk: ze vallen buiten de voltooiing en blokkeren dus nooit een plank of de hele catalogus. Vondsten verschijnen meteen als melding en verversen het geopende venster; voortgang wordt gedeeld door alle personages op het account, dus een reliek die één personage vindt, vult de pagina voor allemaal.",
   'guide.reliquaryPage.howHeading': 'Hoe de verzameling werkt',
   'guide.reliquaryPage.intro':
     'Het Reliquarium is het museum van de unieke buit die je hebt gecatalogiseerd: de felbegeerde stukken uit kerkers, beroepstrofeeën, rijdieren, wapenskins en titels. Het hoort bij het Boek der Daden zoals een trofeeënzaal hoort bij een prestatieboek.',
@@ -15795,12 +15801,12 @@ export const nl_NL: Partial<Record<TranslationKey, string>> = {
   'hudChrome.raidBossGuide.nythraxis.boneSpikeSummary':
     'Elke {everyNormal} sec spietst Nythraxis {victimsNormal} raiders behalve zijn huidige doelwit op Beenderspiezen. Een gespietste raider kan niet handelen en verliest elke seconde {drainNormal} van maximale gezondheid totdat zijn spies is vernietigd.',
   'hudChrome.raidBossGuide.nythraxis.boneStormHeroicSummary':
-    'Vanaf {first} sec in Koningswoede en daarna elke {everyHeroic} sec begint Nythraxis {duration} sec lang Beenderstorm. Hij negeert dreiging, beweegt {speed} keer zo snel als normaal en doet {charges} charges van elk {chargeSeconds} sec. Zijn werveling richt elke seconde binnen {radius} yd {whirlHeroic} van maximale gezondheid aan. Elke charge eindigt in een Beenderslag binnen dezelfde straal voor {slamHeroic} van maximale gezondheid. Hij cast Beenderspies {spikeAt} sec in de storm, daarna wordt Grafbreker {rearm} sec na het einde opnieuw geactiveerd.',
+    'Vanaf {first} sec in Koningswoede en daarna elke {everyHeroic} sec begint Nythraxis {duration} sec lang Beenderstorm. Hij negeert dreiging, beweegt {speed} keer zo snel als normaal en doet {charges} charges van elk {chargeSeconds} sec. Zijn werveling richt elke seconde binnen {radius} yd {whirlHeroic} van maximale gezondheid aan. Elke charge eindigt in een Beenderslag binnen dezelfde straal voor {slamHeroic} van maximale gezondheid. De eerste slag van elke storm raakt in plaats daarvan voor {openingSlamHeroic}. Grafbreker wordt {rearm} sec na het einde opnieuw geactiveerd.',
   'hudChrome.raidBossGuide.nythraxis.boneStormName': 'Beenderstorm',
   'hudChrome.raidBossGuide.nythraxis.boneStormResponse':
     'Verspreid je en blijf wegrennen van Nythraxis. De gechargede raider rent weg terwijl iedereen ruimte vrijlaat rond het chargepad, daarna pakken de tanks hem op wanneer de storm eindigt.',
   'hudChrome.raidBossGuide.nythraxis.boneStormSummary':
-    'Vanaf {first} sec in Koningswoede en daarna elke {everyNormal} sec begint Nythraxis {duration} sec lang Beenderstorm. Hij negeert dreiging, beweegt {speed} keer zo snel als normaal en doet {charges} charges van elk {chargeSeconds} sec. Zijn werveling richt elke seconde binnen {radius} yd {whirlNormal} van maximale gezondheid aan. Elke charge eindigt in een Beenderslag binnen dezelfde straal voor {slamNormal} van maximale gezondheid. Hij cast Beenderspies {spikeAt} sec in de storm, daarna wordt Grafbreker {rearm} sec na het einde opnieuw geactiveerd.',
+    'Vanaf {first} sec in Koningswoede en daarna elke {everyNormal} sec begint Nythraxis {duration} sec lang Beenderstorm. Hij negeert dreiging, beweegt {speed} keer zo snel als normaal en doet {charges} charges van elk {chargeSeconds} sec. Zijn werveling richt elke seconde binnen {radius} yd {whirlNormal} van maximale gezondheid aan. Elke charge eindigt in een Beenderslag binnen dezelfde straal voor {slamNormal} van maximale gezondheid. De eerste slag van elke storm raakt in plaats daarvan voor {openingSlamNormal}. Grafbreker wordt {rearm} sec na het einde opnieuw geactiveerd.',
   'hudChrome.raidBossGuide.nythraxis.courtName': 'Het Doodloze Hof',
   'hudChrome.raidBossGuide.nythraxis.courtResponse':
     'Tanks pakken Aldren op en draaien zijn splijtaanval weg van de raid. Verdoof of silence Malric zodra Malrics Heling begint en dood hem eerst, root of verdoof daarna Voss weg van de healers, omdat hij niet getaunt kan worden, en maak hem daarna af.',

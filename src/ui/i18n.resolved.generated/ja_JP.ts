@@ -902,6 +902,7 @@ export const ja_JP: EnTranslations = {
     },
     "questTracker": {
       "count": "（{count}）",
+      "objectiveValue": "{current} / {total}",
       "collapseHint": "クエストトラッカーを折りたたむ",
       "expandHint": "クエストトラッカーを展開する"
     },
@@ -1220,7 +1221,10 @@ export const ja_JP: EnTranslations = {
       "devName": "コントリビューター",
       "devTierCol": "バッジ",
       "mergedPrs": "マージ済みPR",
-      "devEmpty": "ランク入りのコントリビューターはまだいません。"
+      "devEmpty": "ランク入りのコントリビューターはまだいません。",
+      "podiumLabel": "トップ3",
+      "unclaimed": "空席",
+      "prestigeTitle": "威信 {rank}"
     },
     "pledge": {
       "open": "誓約受付中",
@@ -1243,6 +1247,8 @@ export const ja_JP: EnTranslations = {
       "noteLabel": "掲示メッセージ",
       "notePlaceholder": "ギルドが求める仲間について書きましょう",
       "save": "保存",
+      "newPlayerFriendlyLabel": "初心者歓迎",
+      "newPlayerFriendlyHint": "修練の浜の掲示板の新人向け一覧に表示されます。",
       "yourPledge": "あなたの誓約：{guild}",
       "since": "{date}に誓約",
       "withdraw": "誓約を取り下げる"
@@ -1266,6 +1272,9 @@ export const ja_JP: EnTranslations = {
       "previous": "これまでの計測",
       "runLabel": "{index}回目の練習",
       "runSummary": "{time} で {total}"
+    },
+    "talkingHead": {
+      "label": "会話"
     },
     "hubLesson": {
       "target": "まずダミーを標的にしよう。",
@@ -1395,6 +1404,7 @@ export const ja_JP: EnTranslations = {
       "targetPrev": "ターゲットを逆順に切り替え",
       "discord": "Discord",
       "bgFlag": "戦場フラッグアクション",
+      "friendlyNameplates": "友好ネームプレート切り替え",
       "sheathe": "武器を納刀/抜刀",
       "dive": "潜水",
       "categoryPet": "ペット",
@@ -1729,6 +1739,9 @@ export const ja_JP: EnTranslations = {
     },
     "controller": {
       "title": "コントローラー",
+      "device": "接続中のデバイス",
+      "deviceConnected": "接続済み",
+      "deviceDisconnected": "コントローラーが見つかりません",
       "glyphStyle": "ボタン表示",
       "glyphStyleAuto": "自動",
       "glyphStyleXbox": "Xbox",
@@ -2043,6 +2056,52 @@ export const ja_JP: EnTranslations = {
       "spellOrder": "スペル順",
       "reset": "位置をリセット",
       "spellPosition": "スペル順 {position} / {count}",
+      "watchlist": "監視するスペル",
+      "watchlistHint": "自分にバフを付与するスペルを選ぶと、そのスペル専用のオーラが有効になります。選んだスペルは下に専用カードが表示され、アイコン、色、位置、グラウンドリングを個別に設定できます。",
+      "watchlistEmpty": "スペルブックに、自分にバフを付与するスペルは他にありません。",
+      "watchlistWatch": "{spell}を監視",
+      "watchlistUnwatch": "{spell}の監視を解除",
+      "watchlistCount": "{count}件を監視中",
+      "sound": "通知音",
+      "soundNone": "音なし",
+      "soundVolume": "音量",
+      "soundPreview": "再生",
+      "soundPreviewAria": "「{sound}」の通知音を試聴",
+      "soundHint": "このスペルが発動するたびに音が鳴ります。アイコン、クレセント、グラウンドリングをオフにすると、音だけで知らせます。",
+      "readyGlow": "ホットバーの発光",
+      "readyGlowHint": "このスペルのバフが有効な間、アクションバー上で光らせます。",
+      "reticleTick": "レティクルの目盛り",
+      "reticleTickHint": "画面中央付近に目盛りを追加し、このスペルが発動すると点灯します。",
+      "haptic": "振動",
+      "hapticNone": "オフ",
+      "hapticHint": "接続中のコントローラーやスマートフォンを振動させます。振動機能のない端末では無視されます。",
+      "haptics": {
+        "tap": "タップ",
+        "double": "ダブル",
+        "long": "ロング"
+      },
+      "cues": {
+        "softChime": "やわらかいチャイム",
+        "musicBox": "オルゴール",
+        "glassPing": "ガラスの音",
+        "waterDrop": "水滴",
+        "bubblePop": "泡がはじける音",
+        "hardBell": "鋭いベル",
+        "templeGong": "寺の鐘",
+        "anvilStrike": "金床の一撃",
+        "coinDrop": "コインの音",
+        "swordDraw": "剣を抜く音",
+        "blaringHorn": "鳴り響くホルン",
+        "carKlaxon": "クラクション",
+        "sonarPing": "ソナー音",
+        "electricZap": "電撃音",
+        "catMeow": "猫の鳴き声",
+        "owlHoot": "フクロウの声",
+        "wolfHowl": "狼の遠吠え",
+        "frogCroak": "カエルの声",
+        "windWhoosh": "風の音",
+        "steamHiss": "蒸気の音"
+      },
       "procs": {
         "revenge": "リベンジ！",
         "battleTrance": "バトルトランス",
@@ -2114,6 +2173,22 @@ export const ja_JP: EnTranslations = {
       "playtimeHidden": "非表示",
       "showPlaytimeAria": "プレイ時間を表示",
       "hidePlaytimeAria": "プレイ時間を非表示"
+    },
+    "charSidebar": {
+      "label": "キャラクター詳細",
+      "subtitle": "レベル{level} {className} . {archetype} . 趣味：{hobby}",
+      "subtitleNoHobby": "レベル{level} {className} . {archetype}",
+      "stats": "能力値",
+      "progression": "進行状況",
+      "skills": "スキル",
+      "gathering": "採集",
+      "crafting": "製作",
+      "openProfessions": "職業を開く"
+    },
+    "questLog": {
+      "completed": "完了済み",
+      "zoneSummary": "{count}件（{ready}件完了）",
+      "shiftHint": "Shiftキーを押しながらクエストをクリックするとチャットにリンクできます。"
     },
     "statInfo": {
       "fromYour": "あなたの{stat}{value}による効果:",
@@ -2228,6 +2303,12 @@ export const ja_JP: EnTranslations = {
       "linkHint": "Shift + クリックでこのアイテムをチャットにリンクします。"
     },
     "plurals": {
+      "guildBoardShown": {
+        "one": "{count} 件のギルドを表示中",
+        "few": "{count} 件のギルドを表示中",
+        "many": "{count} 件のギルドを表示中",
+        "other": "{count} 件のギルドを表示中"
+      },
       "commissionMasterworks": {
         "one": "傑作{count}点",
         "few": "傑作{count}点",
@@ -2357,6 +2438,7 @@ export const ja_JP: EnTranslations = {
     },
     "bugReport": {
       "menuButton": "バグを報告",
+      "online": "オンライン",
       "realm": "ワールド",
       "character": "キャラクター",
       "position": "座標",
@@ -2962,8 +3044,8 @@ export const ja_JP: EnTranslations = {
         "kingsWrathSummary": "ナイスラクシスは以後戦闘終了まで、通常で{bonusNormal}、英雄で{bonusHeroic}多いダメージを与える。墓所の噴出は{eruptionEveryNormal}秒ごと（英雄は{eruptionEveryHeroic}秒ごと）、紫炎は{gravefireEveryNormal}秒ごと（英雄は{gravefireEveryHeroic}秒ごと）に発生する。",
         "kingsWrathResponse": "回避できないダメージには残っている防御クールダウンを使う。戦闘を終えるまで、それまでのメカニクスを引き続き丁寧に処理する。",
         "boneStormName": "骨の嵐",
-        "boneStormSummary": "王の怒りの開始から{first}秒後、以降{everyNormal}秒ごとに、ナイスラクシスは{duration}秒間骨の嵐を始める。彼はヘイトを無視し、通常の{speed}倍の速度で移動し、それぞれ{chargeSeconds}秒続く突進を{charges}回行う。彼の旋風は{radius}ヤード以内へ毎秒最大体力の{whirlNormal}を与える。各突進の終わりには同じ範囲内で骨の一撃が発生し、最大体力の{slamNormal}を与える。嵐が始まってから{spikeAt}秒後に骨の棘を詠唱し、嵐が終わってから{rearm}秒後にグレイブブレイカーが再び使用可能になる。",
-        "boneStormHeroicSummary": "王の怒りの開始から{first}秒後、以降{everyHeroic}秒ごとに、ナイスラクシスは{duration}秒間骨の嵐を始める。彼はヘイトを無視し、通常の{speed}倍の速度で移動し、それぞれ{chargeSeconds}秒続く突進を{charges}回行う。彼の旋風は{radius}ヤード以内へ毎秒最大体力の{whirlHeroic}を与える。各突進の終わりには同じ範囲内で骨の一撃が発生し、最大体力の{slamHeroic}を与える。嵐が始まってから{spikeAt}秒後に骨の棘を詠唱し、嵐が終わってから{rearm}秒後にグレイブブレイカーが再び使用可能になる。",
+        "boneStormSummary": "王の怒りの開始から{first}秒後、以降{everyNormal}秒ごとに、ナイスラクシスは{duration}秒間骨の嵐を始める。彼はヘイトを無視し、通常の{speed}倍の速度で移動し、それぞれ{chargeSeconds}秒続く突進を{charges}回行う。彼の旋風は{radius}ヤード以内へ毎秒最大体力の{whirlNormal}を与える。各突進の終わりには同じ範囲内で骨の一撃が発生し、最大体力の{slamNormal}を与える。各嵐の最初の一撃は代わりに{openingSlamNormal}を与える。嵐が終わってから{rearm}秒後にグレイブブレイカーが再び使用可能になる。",
+        "boneStormHeroicSummary": "王の怒りの開始から{first}秒後、以降{everyHeroic}秒ごとに、ナイスラクシスは{duration}秒間骨の嵐を始める。彼はヘイトを無視し、通常の{speed}倍の速度で移動し、それぞれ{chargeSeconds}秒続く突進を{charges}回行う。彼の旋風は{radius}ヤード以内へ毎秒最大体力の{whirlHeroic}を与える。各突進の終わりには同じ範囲内で骨の一撃が発生し、最大体力の{slamHeroic}を与える。各嵐の最初の一撃は代わりに{openingSlamHeroic}を与える。嵐が終わってから{rearm}秒後にグレイブブレイカーが再び使用可能になる。",
         "boneStormResponse": "散開し、ナイスラクシスから走って逃げ続ける。突進の対象になったレイドメンバーは走って逃げ、他の全員は突進経路の周囲に空間を空ける。嵐が終わったらタンクが確保する。",
         "crownEnduresName": "王冠不滅",
         "crownEnduresSummary": "開始から{enrageNormal}秒で（体力70%でアルドリック修道士が登場する間は時間が止まる）、王冠不滅がハードエンレイジとして発動する。ナイスラクシスは{damage}多いダメージと{haste}速い攻撃速度を得て、その後は{rampEveryNormal}秒ごとにさらに{rampStep}のダメージを得ていく。タイマーバーは表示されない。警告は残り{warn60}秒、{warn30}秒、{warn10}秒の時点で叫びとして発せられる。",
@@ -3014,6 +3096,7 @@ export const ja_JP: EnTranslations = {
       "elementalConvergencePrimed": "次に異なる属性の呪文を唱えると、エレメンタル・コンバージェンスが発動します",
       "hunterFerocity": "群れの獰猛さ{stacks}スタック：ペットの与えるダメージが{pct}%上昇",
       "cooldownCap": "この時間枠でクールダウン短縮を{used}/{cap}秒使用済み",
+      "bruinRushWindow": "ウルフフォームのマナ消費がなくなり、ブルーインラッシュの対象を押さえ込んで{sec}秒間移動速度を{pct}%低下させる",
       "funeralHarvestLock": "フューネラル・ハーベストはまだ次の魂の欠片を生成できない",
       "leadenHexLock": "レドン・ヘックスはまだこの対象を再び移動不能にできない",
       "forbiddenReflectionReady": "次の対象となるウォーロックのクールダウンを再使用できる",
@@ -3126,7 +3209,7 @@ export const ja_JP: EnTranslations = {
       "elementalTrance": "受けるダメージが{pct}%軽減される。与えた全ダメージの{mana}%がマナに変換される",
       "stealth": "隠密状態。移動速度が{pct}%低下する",
       "formBear": "ブルーインフォーム: 体力と防御力が上昇",
-      "formCat": "キャットフォーム: 近接ダメージとエネルギー",
+      "wolfForm": "ウルフフォーム: 近接ダメージとエネルギー、移動速度が{pct}%上昇",
       "formTravel": "フリートフォーム: 移動速度が{pct}%上昇",
       "formFireball": "火球形態：移動速度が{pct}%上昇、攻撃と呪文は使用不可",
       "formMoonkin": "ムーンウィング形態：呪文ダメージが{pct}%、アーマーが{armorPct}%増加する",
@@ -3234,6 +3317,7 @@ export const ja_JP: EnTranslations = {
       "lock": "プレイヤーフレームを固定"
     },
     "partyFrames": {
+      "header": "パーティ",
       "section": "パーティ・レイドフレーム",
       "optionsSection": "パーティフレーム設定",
       "unlock": "パーティ・レイドフレームを移動",
@@ -3735,6 +3819,15 @@ export const ja_JP: EnTranslations = {
       "subtitle": "ワールドのギルド",
       "rosterTitle": "{guild}のメンバー一覧を見る",
       "back": "戻る",
+      "filters": "掲示板の絞り込み",
+      "newPlayerFriendly": "初心者歓迎",
+      "newPlayerFriendlyTitle": "このギルドは新規プレイヤーを歓迎しています",
+      "filterNewPlayersTitle": "新規プレイヤーを歓迎するギルドのみ表示",
+      "filterEmpty": "まだ新規プレイヤーに門戸を開いたギルドはありません。",
+      "showAll": "すべてのギルドを表示",
+      "officersOnline": "幹部がオンライン",
+      "officersOnlineLabel": "オンラインの幹部: {names}",
+      "officerEntry": "{name} ({rank})",
       "popupTitle": "ギルドの掲示柱",
       "close": "閉じる"
     },
@@ -4023,7 +4116,6 @@ export const ja_JP: EnTranslations = {
       }
     },
     "gathering": {
-      "title": "採集",
       "mining": "採掘",
       "logging": "伐採",
       "herbalism": "薬草学",
@@ -4207,9 +4299,7 @@ export const ja_JP: EnTranslations = {
       "noviceBody": "作物を収穫するたびに農耕スキルが上がります。どの作物畑でもよいので、種をまいて始めましょう。"
     },
     "archetypeTitle": {
-      "label": "称号",
-      "none": "なし",
-      "hobbyLabel": "趣味"
+      "none": "なし"
     },
     "archetypePair": {
       "engineering+alchemy": "爆破師",
@@ -4379,7 +4469,9 @@ export const ja_JP: EnTranslations = {
       "hobbyLabel": "趣味：{craft}",
       "majorsLabel": "主専攻：{a}と{b}",
       "pairsHeld": "保持している組み合わせ：{count}",
-      "returnsLabel": "復帰：{count}"
+      "returnsLabel": "復帰：{count}",
+      "retentionFooter": "リスペック時はスキルの60%を保持します。",
+      "tutorialLink": "専門技能チュートリアル"
     },
     "crafting": {
       "title": "製作",
@@ -4414,6 +4506,7 @@ export const ja_JP: EnTranslations = {
       "vaultUnreachable": "ここでは素材保管庫を利用できません。",
       "craftFeeLine": "製作手数料：1個あたり {fee}",
       "empty": "既知のレシピはありません。",
+      "materialsFooter": "保管庫の素材は自動的に使用されます。ステーションでさらにレシピを習得できます。",
       "resultAria": "{name}を製作",
       "craftedToast": "製作しました:{name}",
       "craftedToastQty": "製作しました:{name} x{qty}",
@@ -4515,6 +4608,9 @@ export const ja_JP: EnTranslations = {
       "commissionToggleHint": "取引で最初に受け取ったキャラクターにバインドされます。",
       "commissionUnbound": "受注品：最初の受取人にバインドされる",
       "commissionBound": "受注品：受取人にバインド済み"
+    },
+    "marketWindow": {
+      "mixedListingsFooter": "商人はコモンの商品を補充し、プレイヤーの出品は希望価格でその隣に並びます。"
     },
     "itemMenu": {
       "use": "使用する",
@@ -4950,6 +5046,10 @@ export const ja_JP: EnTranslations = {
       "ownedTooltipStatus": "聖遺物庫に収蔵済み",
       "missingTooltipStatus": "まだ見つかっていません",
       "firstFindClears": "初回入手：クリア {count} 回目",
+      "foundBy": "{names} が発見",
+      "finderWithDate": "{name}（{date}）",
+      "sharedScopeNote": "アカウント内の全キャラクターで共有",
+      "sharedScopeHint": "アカウント内のどのキャラクターが見つけた聖遺物も、ここでページを埋めます。",
       "unlockToast": "聖遺物を収蔵：{name}",
       "illuminateBanner": "ページが照耀されました：{name}",
       "illuminateToast": "{name} の聖遺物がすべて埋まりました。",
@@ -5083,6 +5183,10 @@ export const ja_JP: EnTranslations = {
       "progressAria": "進行度: {current}/{target}",
       "renownChip": "名声 {renown}",
       "earnedDate": "{date} に獲得",
+      "earnedBy": "{names} が獲得",
+      "earnerWithDate": "{name}（{date}）",
+      "accountScopeNote": "アカウント内の全キャラクターで共有",
+      "accountScopeHint": "アカウント内のどのキャラクターが成し遂げた功績もここで達成扱いになり、書は誰が達成したかを記します。",
       "featRibbon": "偉業",
       "hiddenBadge": "隠し",
       "titleChip": "称号報酬",
@@ -5132,6 +5236,33 @@ export const ja_JP: EnTranslations = {
       "toggleAria": "ワールドマップ、ゾーンマップ、インスタンスマップを切り替える",
       "levels": "レベル {min} から {max}"
     },
+    "mapAtlas": {
+      "level": "レベル {level}",
+      "landmarkCount": "ランドマーク {count} 個",
+      "filtersAria": "マップレイヤー",
+      "filters": {
+        "quests": "クエスト",
+        "gather": "採集",
+        "dungeons": "ダンジョン",
+        "services": "施設",
+        "players": "プレイヤー"
+      },
+      "trackedQuests": "追跡中のクエスト",
+      "noTrackedQuests": "追跡中のクエストはありません",
+      "availableNearby": "近くの受注可能クエスト",
+      "noNearbyQuests": "近くに受注可能なクエストはありません",
+      "distance": "{distance}ヤード",
+      "showRoute": "ルートを表示",
+      "untrack": "追跡を解除",
+      "track": "追跡",
+      "legend": {
+        "dungeon": "ダンジョン",
+        "ore": "鉱石",
+        "herb": "薬草",
+        "mail": "郵便",
+        "passage": "通路"
+      }
+    },
     "arenaGate": {
       "minLevelNote": "レベル {level} が必要です"
     },
@@ -5150,6 +5281,7 @@ export const ja_JP: EnTranslations = {
       "tabBrowse": "出品一覧",
       "tabSell": "出品する",
       "tabActivity": "マイ取引履歴",
+      "tabHistory": "販売履歴",
       "tabsLabel": "$WOC 取引所のセクション",
       "loading": "取引所を読み込み中...",
       "loadFailed": "取引所に接続できませんでした。しばらくしてからもう一度お試しください。",
@@ -5174,6 +5306,16 @@ export const ja_JP: EnTranslations = {
       "colCurrentBid": "現在の入札額",
       "colBuyNow": "即決価格",
       "colTimeLeft": "残り時間",
+      "colBuyer": "購入者",
+      "colSoldAt": "Sold",
+      "colSalePrice": "販売価格",
+      "colSaleType": "Type",
+      "saleTypeAuction": "オークション",
+      "saleTypeBuyNow": "Buy now",
+      "saleTypeDirected": "指定販売",
+      "saleTypeUnknown": "不明",
+      "historyEmpty": "まだ販売記録がありません。",
+      "historyError": "販売履歴を読み込めませんでした。",
       "reserveMet": "最低価格到達",
       "reserveNotMet": "最低価格未到達",
       "yourListing": "自分の出品",
@@ -6066,6 +6208,7 @@ export const ja_JP: EnTranslations = {
       "framesMoveBodyEditFrames": "自分のフレーム、ターゲットフレーム、パーティフレームは、いずれも移動できます。どれも隅に小さな移動ボタンを備えているので、固定を外し、好きな位置へドラッグし、もう一度固定すれば、うっかりクリックしてもずれません。オプションの「インターフェース」にある「フレーム」タブの先頭の「フレーム編集」を使うと、インターフェースの残りの部分もいっせいに動かせるようになり、この3つのフレームもそれに含まれます。アクションバー、キャストバー、スイングバー、経験値バー、ミニマップ、ボタンレール、ペットフレーム、スタンスバー、バフとデバフの列、そして「ウィッシュリストの通知」のチップが対象で、動かせる間はそれぞれに名前のチップが付きます。置き場所を悔やむことになったら、同じ「フレーム」タブの末尾にある「初期設定に戻す」で、すべて元の場所へ戻せます。",
       "framesGovernedExtra": "「フレーム編集」は、その下に積み重なるトラッカー群(追跡中のクエストとその目標、功績の進み具合、聖遺物庫のページ、潜っているデルヴ、参加中のリフト、そして追跡中のレシピまたは依頼)、ペットフレーム脇のペットアクションバー、周囲の敵にかけた継続的なデバフをまとめて表示する「ターゲットデバフ」フレーム、パラディンの「献身」の記章、ウォーロックの「苦痛リソースバー」、スペル発動オーバーレイ、二刀流時のオフハンド用スイングバー、そしてタブ式のダメージメーターウィンドウも緩めます。緩んでいる間はそれぞれに名前のチップが付きます。",
       "framesGovernedAuraTracks": "「フレーム編集」は、同じ「インターフェース」オプションの「戦闘」タブでオンにした任意の6つのオーラトラック、すなわち「自分のバフ」トラック、「防御クールダウン」トラック、「自分のシールド」トラック、「攻撃クールダウン」トラック、「移動とステルス」トラック、「味方へのバフ」トラックも緩めます。どのトラックも初期状態ではオフで、緩んでいる間はそれぞれに名前のチップが付きます。",
+      "framesGovernedTalkingHead": "「フレームを編集」では会話パネルも動かせるようになります。会話パネルは、話しているNPCが視界の外にいるときにそのセリフを表示するもので、ロック解除中は名前チップを表示します。",
       "barsTitle": "バー、タイマー、戦闘テキスト",
       "barsBody": "詠唱やチャネルを行うと、画面中央、アクションバーのすぐ上にキャストバーが現れ、呪文の名前と残り時間を伝えます。ターゲットにもそのフレーム上に専用のキャストバーが出るので、何が来るのかを見て応じられます。\n\nキャストバーの下には細いスイングバーがあり、武器を振るたびに満ちていきます。近接や遠隔で戦う人は、次の自動攻撃がいつ当たるのかを見て取れます。\n\n経験値バーはアクションバーの下を画面幅いっぱいに走り、区切りが刻まれ、明るく伸びた部分が蓄えている休息経験値を示します。\n\n水中を泳ぐと、画面上部に青い息バーが現れます。頭が沈んでいる間は減り続け、尽きて溺れ始めると赤く点滅し、水面に出た瞬間に素早く戻ります。スペースで浮上し、初期設定でCtrlの「潜水」キーを押せばさらに深く潜れます。\n\nダメージと回復は、当たった相手の上に小さな数字となって浮かび上がるので、文字を読まなくても戦いの流れがつかめます。書かれた記録はすべて、チャットボックスの「戦闘」タブに残ります。",
       "aurasTitle": "バフとデバフ",
@@ -6423,6 +6566,7 @@ export const ja_JP: EnTranslations = {
       "formsNote": "ドルイドは姿を変えて戦います。ドルイドのアビリティはほとんどがいずれか一つの姿に属しているので、今どの姿でいるかが何を使えるかを決めます。変身にはわずかなマナがかかります。戦闘中でも戦闘外でも、好きなだけ変身し、また解くことができます。",
       "formsAutoUnshift": "変身中に回復や攻撃の呪文を唱えると、姿はひとりでに解けます。こうして姿を解くのはマナもかからず、グローバルクールダウンも使いません。ですから即時発動の呪文は押した瞬間に飛びます。もう一度変身するのは普通のアビリティなので、マナもグローバルクールダウンもかかります。",
       "formsMoonwing": "均衡（ムーングローブ）のドルイドは、もう一つの姿、ムーンウィングフォームを得ます。均衡型のドルイドが戦うための術者の姿です。獣の姿でありながら呪文を保てる唯一の形であり、ワンドもこの姿か、通常の術者の姿でしか使えません。",
+      "formsWolfEngage": "狼はブルーインラッシュで戦いを開き、すぐにウルフフォームへ変身して対象を押さえ込み、ステルスでないときはランジで距離を詰め、テイクダウンで敵を足止めする。",
       "formLine": {
         "form_bear": "タンクの姿です。分厚い毛皮をまとい、マナの代わりにレイジを使い、追加の脅威で敵の矛先を自分に引きつけ続けます。",
         "form_cat": "近接ダメージの姿です。ローグと同じくエナジーとコンボポイントで戦い、脅威ははるかに低く抑えられます。",
@@ -6952,7 +7096,7 @@ export const ja_JP: EnTranslations = {
     "deedsPage": {
       "intro": "功績の書は、始まりの谷を出る最初の一歩から、この王国が用意する最も過酷な戦いまで、あなたが成し遂げたすべてを世界が記録する場所です。遊びながら功績を獲得し、授かった称号を身にまとい、名声が高まっていくのを見届けましょう。",
       "howHeading": "功績の仕組み",
-      "howBody": "功績は一人のキャラクターごとに獲得し、そのまま保たれます。ですから、あなたが遊ぶどの英雄も、それぞれ自分だけの功績の書を築いていきます。あなたのすべてのキャラクターにまたがって名声をまとめるのはレルムのリーダーボードだけで、そこでは各功績が一度だけ数えられます。それぞれの功績が何を求めているかは、ゲーム内の功績の書にはっきりと記されているので、次に何を追うべきかはいつでも分かります。狙っている功績には追跡を設定して、遊んでいる間もずっと視界に入れておけます。ごく一部の功績は秘密のままで、獲得して初めて姿を現します。功績の書はまた、自らに正直であり続けます。あなたの過去の記録で証明できるものはその場で認められるので、歴戦の者が開いたページが白紙ということはありません。数を刻む功績だけが、その集計を新たに始めます。",
+      "howBody": "功績はキャラクターごとに達成しますが、功績の書はアカウント内の全キャラクターで共有されます。どのキャラクターが成し遂げた功績も全員のものとして記録され、書は誰がいつ達成したかを記し、その報酬の称号や縁飾りはどのキャラクターでも身に着けられます。レルムのランキングも同じ方法で名声を集め、各功績を一度だけ数えます。各功績は求められることをゲーム内の功績の書に明記しているので、追うべきものが常に分かり、狙っている功績を監視に登録して遊びながら視界に置いておけます。ごく一部は秘密のままで、達成したときにのみ姿を見せます。書は自らの誠実さも保ちます。過去の記録が証明できるものはその場で認められるので、ベテランが白紙のページを開くことはなく、数を数える功績だけが新たに集計を始めます。",
       "renownHeading": "名声",
       "renownBody": "名声は功績の書の背後にある点数です。得た功績にはそれぞれ定まった値があり、合計は上がる一方なので、静かな一週間が足場を奪うことはありません。ひと握りは腕前より運によるもので、ほかの収集の功績はそれ自体が報いであり、偉業はまた別の栄誉なので、そのいずれも名声にはなりません。名声のない功績も、あなたの書の達成には数えられます。ただ得点にならないだけです。偉業だけが唯一の例外で、数のまったく外に置かれています。",
       "rewardsHeading": "称号と枠飾り",
@@ -6990,7 +7134,7 @@ export const ja_JP: EnTranslations = {
     "reliquaryPage": {
       "intro": "聖遺物庫は、カタログに載せたユニークな戦利品の博物館です。ダンジョンの追撃装備、職業のトロフィー、マウント、武器スキン、称号。功績の書に対して、トロフィー室と実績帳のような関係です。",
       "howHeading": "コレクションの仕組み",
-      "howBody": "ゲーム内で聖遺物庫を開きます（既定は Shift+X）。各棚にユニークな聖遺物のページがあります。キャラクターが初めてその品を得るとシルエットが埋まり、ページ上のすべてが埋まると点灯します。「絶版」や「専用」と表示される一部のページは達成の対象外で、棚や全体の完成を妨げることはありません。ライブの発見はトーストと開いているウィンドウの更新になります。進捗はキャラクター単位で、武器スキンだけはアカウントの見た目です。",
+      "howBody": "ゲーム内で聖遺物庫を開きます（既定は Shift+X）。各棚にユニークな聖遺物のページがあります。アカウント内のいずれかのキャラクターが初めてその品を得るとシルエットが埋まり、ページ上のすべてが埋まると点灯します。「絶版」や「専用」と表示される一部のページは達成の対象外で、棚や全体の完成を妨げることはありません。ライブの発見はトーストと開いているウィンドウの更新になります。進捗はアカウント内の全キャラクターで共有され、あるキャラクターが見つけた聖遺物は全員のページを埋めます。",
       "ranksHeading": "キュレーターランク",
       "ranksBody": "キュレーターランクはカタログに載せたユニーク埋めで上がり、装飾の称号と枠だけを与えます。戦闘力、ドロップ率、天井はありません。アカウントの武器スキンはキュレーターランクに数えず、名声はキャラクターに残ります。絶版や専用ページの聖遺物も同様にランクへは数えません。",
       "retiredTag": "絶版",
@@ -11858,7 +12002,7 @@ export const ja_JP: EnTranslations = {
       },
       "cat_form": {
         "name": "ウルフフォーム",
-        "description": "狼へ変身します。敏捷性がレベルとともに上がり、攻撃力は+8にレベルごとの2を加え、攻撃はエネルギーとコンボポイントを使い、生む脅威度が29%減ります。もう一度使えば術者の姿に戻ります。"
+        "description": "狼へ変身します。敏捷性がレベルとともに上がり、攻撃力は+8にレベルごとの2を加え、攻撃はエネルギーとコンボポイントを使い、生む脅威度が29%減ります。いずれかの姿に変身すると疾駆の歩みを得ます。3秒間移動速度が60%上昇し、20秒に1回まで発動します。もう一度使えば術者の姿に戻ります。"
       },
       "claw": {
         "name": "裂爪",
@@ -11923,7 +12067,15 @@ export const ja_JP: EnTranslations = {
       },
       "pounce": {
         "name": "忍び強襲",
-        "description": "隠密状態から放つ先制攻撃で、対象を2秒間スタンさせます。コンボポイントを1獲得します。ウルフフォーム専用。"
+        "description": "隠密状態から放つ先制攻撃で、対象を2秒間スタンさせます。コンボポイントを1獲得します。ウルフフォーム専用。 ステルス状態でない場合、このボタンはランジになる。"
+      },
+      "lunge": {
+        "name": "ランジ",
+        "description": "最大12メートル先の敵に飛びかかり、武器ダメージの60%を与えてコンボポイントを1獲得する。ウルフフォーム時のみ使用可能。"
+      },
+      "hamstring_bite": {
+        "name": "テイクダウン",
+        "description": "対象を1秒に加えコンボポイント1つにつき1秒スタンさせるフィニッシュ技（コンボポイント5：6秒）。ウルフフォーム時のみ使用可能。"
       },
       "insect_swarm": {
         "name": "刺す虫の群れ",
@@ -12637,7 +12789,7 @@ export const ja_JP: EnTranslations = {
       },
       "bear_charge": {
         "name": "ブルーインラッシュ",
-        "description": "敵に突進して激怒を9獲得し、1秒間スタンさせる。射程7～23メートル。ブルーインフォーム時のみ使用可能。"
+        "description": "敵に突進して激怒を9獲得し、1秒間スタンさせる。その後3秒間、ウルフフォームは無料になり、対象を押さえ込んで4秒間移動速度を50%低下させる。射程7～23メートル。ブルーインフォーム時のみ使用可能。"
       },
       "demoralizing_roar": {
         "name": "臆病の咆哮",
@@ -12645,7 +12797,7 @@ export const ja_JP: EnTranslations = {
       },
       "prowl": {
         "name": "つけ狙い",
-        "description": "ウルフフォーム中にステルス状態に入り、移動速度が5%低下する。戦闘中は使用できない。"
+        "description": "ウルフフォーム中にステルス状態に入る。戦闘中は使用できない。"
       },
       "rake": {
         "name": "皮剥ぎ",

@@ -902,6 +902,7 @@ export const id_ID: EnTranslations = {
     },
     "questTracker": {
       "count": "({count})",
+      "objectiveValue": "{current} / {total}",
       "collapseHint": "Ciutkan pelacak misi",
       "expandHint": "Bentangkan pelacak misi"
     },
@@ -1220,7 +1221,10 @@ export const id_ID: EnTranslations = {
       "devName": "Kontributor",
       "devTierCol": "Lencana",
       "mergedPrs": "PR Digabungkan",
-      "devEmpty": "Belum ada kontributor berperingkat."
+      "devEmpty": "Belum ada kontributor berperingkat.",
+      "podiumLabel": "Top three",
+      "unclaimed": "Unclaimed",
+      "prestigeTitle": "Prestige {rank}"
     },
     "pledge": {
       "open": "Menerima lamaran",
@@ -1243,6 +1247,8 @@ export const id_ID: EnTranslations = {
       "noteLabel": "Catatan papan",
       "notePlaceholder": "Ceritakan apa yang dicari guildmu kepada calon anggota",
       "save": "Simpan",
+      "newPlayerFriendlyLabel": "New player friendly",
+      "newPlayerFriendlyHint": "Shown on the recruits' board at the Proving Shore signpost.",
       "yourPledge": "Lamaranmu: {guild}",
       "since": "Melamar {date}",
       "withdraw": "Tarik lamaran"
@@ -1266,6 +1272,9 @@ export const id_ID: EnTranslations = {
       "previous": "Percobaan sebelumnya",
       "runLabel": "Percobaan {index}",
       "runSummary": "{total} dalam {time}"
+    },
+    "talkingHead": {
+      "label": "Dialogue"
     },
     "hubLesson": {
       "target": "Targetkan boneka untuk memulai.",
@@ -1395,6 +1404,7 @@ export const id_ID: EnTranslations = {
       "targetPrev": "Putar Bidikan Mundur",
       "discord": "Discord",
       "bgFlag": "Aksi Bendera Medan Pertempuran",
+      "friendlyNameplates": "Toggle Friendly Nameplates",
       "sheathe": "Sarungkan/Cabut Senjata",
       "dive": "Berenang ke Bawah",
       "categoryPet": "Peliharaan",
@@ -1729,6 +1739,9 @@ export const id_ID: EnTranslations = {
     },
     "controller": {
       "title": "Kontroler",
+      "device": "Connected Device",
+      "deviceConnected": "Connected",
+      "deviceDisconnected": "No controller detected",
       "glyphStyle": "Label Tombol",
       "glyphStyleAuto": "Otomatis",
       "glyphStyleXbox": "Xbox",
@@ -2043,6 +2056,52 @@ export const id_ID: EnTranslations = {
       "spellOrder": "Urutan mantra",
       "reset": "Atur Ulang Posisi",
       "spellPosition": "Urutan mantra {position} / {count}",
+      "watchlist": "Watched Spells",
+      "watchlistHint": "Pick any spell that buffs you to give it its own aura. Picked spells get a full card below, with their own icon, color, position and ground ring.",
+      "watchlistEmpty": "No other spell in your spellbook puts a buff on you.",
+      "watchlistWatch": "Watch {spell}",
+      "watchlistUnwatch": "Stop watching {spell}",
+      "watchlistCount": "{count} watched",
+      "sound": "Alert Sound",
+      "soundNone": "No sound",
+      "soundVolume": "Sound Volume",
+      "soundPreview": "Play",
+      "soundPreviewAria": "Preview the {sound} alert sound",
+      "soundHint": "A sound plays each time this spell procs. Turn the icon, crescents and ground ring off to have the sound alone announce it.",
+      "readyGlow": "Hotbar Glow",
+      "readyGlowHint": "Lights this spell on your action bar while its buff is up.",
+      "reticleTick": "Reticle Tick",
+      "reticleTickHint": "Adds a mark near the centre of the screen that lights when this spell procs.",
+      "haptic": "Rumble",
+      "hapticNone": "Off",
+      "hapticHint": "Vibrates a connected controller, or your phone. Ignored where the device has no haptics.",
+      "haptics": {
+        "tap": "Tap",
+        "double": "Double",
+        "long": "Long"
+      },
+      "cues": {
+        "softChime": "Soft Chime",
+        "musicBox": "Music Box",
+        "glassPing": "Glass Ping",
+        "waterDrop": "Water Drop",
+        "bubblePop": "Bubble Pop",
+        "hardBell": "Hard Bell",
+        "templeGong": "Temple Gong",
+        "anvilStrike": "Anvil Strike",
+        "coinDrop": "Coin Drop",
+        "swordDraw": "Sword Draw",
+        "blaringHorn": "Blaring Horn",
+        "carKlaxon": "Car Klaxon",
+        "sonarPing": "Sonar Ping",
+        "electricZap": "Electric Zap",
+        "catMeow": "Cat Meow",
+        "owlHoot": "Owl Hoot",
+        "wolfHowl": "Wolf Howl",
+        "frogCroak": "Frog Croak",
+        "windWhoosh": "Wind Whoosh",
+        "steamHiss": "Steam Hiss"
+      },
       "procs": {
         "revenge": "Balas Dendam!",
         "battleTrance": "Kesurupan Pertempuran",
@@ -2114,6 +2173,22 @@ export const id_ID: EnTranslations = {
       "playtimeHidden": "Tersembunyi",
       "showPlaytimeAria": "Tampilkan waktu bermain",
       "hidePlaytimeAria": "Sembunyikan waktu bermain"
+    },
+    "charSidebar": {
+      "label": "Character details",
+      "subtitle": "Level {level} {className} . {archetype} . Hobby: {hobby}",
+      "subtitleNoHobby": "Level {level} {className} . {archetype}",
+      "stats": "Stats",
+      "progression": "Progression",
+      "skills": "Skills",
+      "gathering": "Gathering",
+      "crafting": "Crafting",
+      "openProfessions": "Open Professions"
+    },
+    "questLog": {
+      "completed": "Completed",
+      "zoneSummary": "{count} ({ready} ready)",
+      "shiftHint": "Shift-click a quest to link it in chat."
     },
     "statInfo": {
       "fromYour": "Dari {value} {stat} Anda:",
@@ -2228,6 +2303,12 @@ export const id_ID: EnTranslations = {
       "linkHint": "Shift-klik untuk menautkan item ini di obrolan."
     },
     "plurals": {
+      "guildBoardShown": {
+        "one": "{count} guild shown",
+        "few": "{count} guilds shown",
+        "many": "{count} guilds shown",
+        "other": "{count} guilds shown"
+      },
       "commissionMasterworks": {
         "one": "{count} mahakarya",
         "few": "{count} mahakarya",
@@ -2357,6 +2438,7 @@ export const id_ID: EnTranslations = {
     },
     "bugReport": {
       "menuButton": "Laporkan Bug",
+      "online": "Online",
       "realm": "Dunia",
       "character": "Karakter",
       "position": "Posisi",
@@ -2962,8 +3044,8 @@ export const id_ID: EnTranslations = {
         "kingsWrathSummary": "Nythraxis menghasilkan {bonusNormal} lebih banyak kerusakan pada Normal atau {bonusHeroic} pada Heroic selama sisa pertarungan. Erupsi Makam terjadi setiap {eruptionEveryNormal} dtk ({eruptionEveryHeroic} pada Heroic) dan Api Makam setiap {gravefireEveryNormal} dtk ({gravefireEveryHeroic} pada Heroic).",
         "kingsWrathResponse": "Gunakan cooldown defensif yang tersisa untuk kerusakan yang tidak bisa dihindari. Jaga semua mekanik sebelumnya tetap bersih sementara raid menyelesaikan pertarungan.",
         "boneStormName": "Badai Tulang",
-        "boneStormSummary": "Mulai {first} dtk setelah Murka Raja dan setiap {everyNormal} dtk sesudahnya, Nythraxis memulai Badai Tulang selama {duration} dtk. Ia mengabaikan ancaman, bergerak {speed} kali kecepatan normal, dan melakukan {charges} terjangan masing-masing selama {chargeSeconds} dtk. Pusarannya menghasilkan {whirlNormal} kesehatan maksimum setiap detik dalam {radius} yd. Setiap terjangan berakhir dengan Hantaman Tulang dalam radius yang sama sebesar {slamNormal} kesehatan maksimum. Ia merapal Pancang Tulang {spikeAt} dtk setelah badai dimulai, lalu Penghancur Makam siap lagi {rearm} dtk setelah berakhir.",
-        "boneStormHeroicSummary": "Mulai {first} dtk setelah Murka Raja dan setiap {everyHeroic} dtk sesudahnya, Nythraxis memulai Badai Tulang selama {duration} dtk. Ia mengabaikan ancaman, bergerak {speed} kali kecepatan normal, dan melakukan {charges} terjangan masing-masing selama {chargeSeconds} dtk. Pusarannya menghasilkan {whirlHeroic} kesehatan maksimum setiap detik dalam {radius} yd. Setiap terjangan berakhir dengan Hantaman Tulang dalam radius yang sama sebesar {slamHeroic} kesehatan maksimum. Ia merapal Pancang Tulang {spikeAt} dtk setelah badai dimulai, lalu Penghancur Makam siap lagi {rearm} dtk setelah berakhir.",
+        "boneStormSummary": "Mulai {first} dtk setelah Murka Raja dan setiap {everyNormal} dtk sesudahnya, Nythraxis memulai Badai Tulang selama {duration} dtk. Ia mengabaikan ancaman, bergerak {speed} kali kecepatan normal, dan melakukan {charges} terjangan masing-masing selama {chargeSeconds} dtk. Pusarannya menghasilkan {whirlNormal} kesehatan maksimum setiap detik dalam {radius} yd. Setiap terjangan berakhir dengan Hantaman Tulang dalam radius yang sama sebesar {slamNormal} kesehatan maksimum. Hantaman pertama setiap badai sebesar {openingSlamNormal} sebagai gantinya. Penghancur Makam siap lagi {rearm} dtk setelah berakhir.",
+        "boneStormHeroicSummary": "Mulai {first} dtk setelah Murka Raja dan setiap {everyHeroic} dtk sesudahnya, Nythraxis memulai Badai Tulang selama {duration} dtk. Ia mengabaikan ancaman, bergerak {speed} kali kecepatan normal, dan melakukan {charges} terjangan masing-masing selama {chargeSeconds} dtk. Pusarannya menghasilkan {whirlHeroic} kesehatan maksimum setiap detik dalam {radius} yd. Setiap terjangan berakhir dengan Hantaman Tulang dalam radius yang sama sebesar {slamHeroic} kesehatan maksimum. Hantaman pertama setiap badai sebesar {openingSlamHeroic} sebagai gantinya. Penghancur Makam siap lagi {rearm} dtk setelah berakhir.",
         "boneStormResponse": "Menyebarlah dan terus lari dari Nythraxis. Raider yang diterjang berlari menjauh sementara semua orang memberi ruang di sekitar jalur terjangan, lalu tank mengambilnya kembali saat badai berakhir.",
         "crownEnduresName": "Mahkota Bertahan",
         "crownEnduresSummary": "Pada {enrageNormal} dtk sejak pull (jam berhenti saat Bruder Aldric masuk pada 70%), Mahkota Bertahan terpicu sebagai enrage keras. Nythraxis mendapat {damage} lebih banyak kerusakan dan serangan {haste} lebih cepat, lalu tambahan {rampStep} kerusakan setiap {rampEveryNormal} dtk. Tidak ada bilah timer. Peringatan datang sebagai teriakan pada sisa {warn60}, {warn30}, dan {warn10} dtk.",
@@ -3014,6 +3096,7 @@ export const id_ID: EnTranslations = {
       "elementalConvergencePrimed": "Mantra berikutmu dari sekolah elemen lain memberikan Konvergensi Elemen",
       "hunterFerocity": "{stacks} Keganasan Kawanan: hewan peliharaanmu memberi {pct}% lebih banyak kerusakan",
       "cooldownCap": "{used} dari {cap} dtk pengurangan jeda terpakai dalam jendela ini",
+      "bruinRushWindow": "Wujud Serigala tidak memakai mana dan menjepit target Terjangan Bruin-mu, memperlambatnya {pct}% selama {sec} dtk",
       "funeralHarvestLock": "Funeral Harvest belum bisa menciptakan Serpihan Jiwa lagi",
       "leadenHexLock": "Kutuk Timah belum bisa mengakar target ini lagi",
       "forbiddenReflectionReady": "Jeda Penyihir Iblis berikutnya yang memenuhi syarat dapat dirapal kembali",
@@ -3126,7 +3209,7 @@ export const id_ID: EnTranslations = {
       "elementalTrance": "Kerusakan yang diterima berkurang {pct}%. {mana}% dari semua kerusakan yang kamu berikan diubah menjadi mana",
       "stealth": "Oculto; velocidad de movimiento reducida un {pct}%",
       "formBear": "Wujud Bruin: nyawa dan zirah meningkat",
-      "formCat": "Forma felina: daño cuerpo a cuerpo y energía",
+      "wolfForm": "Cat Form: melee damage and energy; movement speed increased by {pct}%",
       "formTravel": "Wujud Fleet: kecepatan gerak meningkat sebesar {pct}%",
       "formFireball": "Ember Form: kecepatan gerak meningkat {pct}%; serangan dan mantra dinonaktifkan",
       "formMoonkin": "Wujud Burung Bulan: kerusakan sihir meningkat {pct}% dan zirah meningkat {armorPct}%",
@@ -3234,6 +3317,7 @@ export const id_ID: EnTranslations = {
       "lock": "Kunci bingkai pemain"
     },
     "partyFrames": {
+      "header": "Party",
       "section": "Bingkai Grup dan Raid",
       "optionsSection": "Opsi Bingkai Party",
       "unlock": "Pindahkan bingkai grup dan raid",
@@ -3735,6 +3819,15 @@ export const id_ID: EnTranslations = {
       "subtitle": "Guild-guild di realm",
       "rosterTitle": "Lihat daftar anggota {guild}",
       "back": "Kembali",
+      "filters": "Board filters",
+      "newPlayerFriendly": "New player friendly",
+      "newPlayerFriendlyTitle": "This guild welcomes new players",
+      "filterNewPlayersTitle": "Show only guilds that welcome new players",
+      "filterEmpty": "No guild has opened its doors to new players yet.",
+      "showAll": "Show all guilds",
+      "officersOnline": "Officers online",
+      "officersOnlineLabel": "Officers online: {names}",
+      "officerEntry": "{name} ({rank})",
       "popupTitle": "Papan Petunjuk Guild",
       "close": "Tutup"
     },
@@ -4023,7 +4116,6 @@ export const id_ID: EnTranslations = {
       }
     },
     "gathering": {
-      "title": "Pengumpulan",
       "mining": "Penambangan",
       "logging": "Penebangan",
       "herbalism": "Herbalisme",
@@ -4207,9 +4299,7 @@ export const id_ID: EnTranslations = {
       "noviceBody": "Keahlian Bertani tumbuh setiap kali kamu memanen tanaman. Tanam benih di bedeng kebun mana pun untuk memulai."
     },
     "archetypeTitle": {
-      "label": "Gelar",
-      "none": "Tidak Ada",
-      "hobbyLabel": "Hobi"
+      "none": "Tidak Ada"
     },
     "archetypePair": {
       "engineering+alchemy": "Pengebom",
@@ -4379,7 +4469,9 @@ export const id_ID: EnTranslations = {
       "hobbyLabel": "Hobi: {craft}",
       "majorsLabel": "Jurusan: {a} dan {b}",
       "pairsHeld": "Pasangan yang dimiliki: {count}",
-      "returnsLabel": "Pengembalian: {count}"
+      "returnsLabel": "Pengembalian: {count}",
+      "retentionFooter": "Returns on respec: 60% of skill kept.",
+      "tutorialLink": "Profession tutorial"
     },
     "crafting": {
       "title": "kerajinan",
@@ -4414,6 +4506,7 @@ export const id_ID: EnTranslations = {
       "vaultUnreachable": "Brankas Material tidak terjangkau di sini.",
       "craftFeeLine": "Biaya kerajinan: {fee} per buah",
       "empty": "Belum ada resep yang diketahui.",
+      "materialsFooter": "Materials in your vault are drawn automatically. Learn more recipes at the station.",
       "resultAria": "Kerajinan {name}",
       "craftedToast": "Dibuat: {name}",
       "craftedToastQty": "Dibuat: {name} x{qty}",
@@ -4515,6 +4608,9 @@ export const id_ID: EnTranslations = {
       "commissionToggleHint": "Terikat pada karakter pertama yang menerimanya dalam perdagangan.",
       "commissionUnbound": "Karya pesanan: terikat pada penerima pertama",
       "commissionBound": "Karya pesanan: terikat pada penerimanya"
+    },
+    "marketWindow": {
+      "mixedListingsFooter": "The Merchant restocks common goods; player listings sit beside them at their asking price."
     },
     "itemMenu": {
       "use": "Gunakan",
@@ -4950,6 +5046,10 @@ export const id_ID: EnTranslations = {
       "ownedTooltipStatus": "Terkatalog di Relikuari",
       "missingTooltipStatus": "Belum ditemukan",
       "firstFindClears": "Pertama ditemukan pada penyelesaian ke-{count}",
+      "foundBy": "Found by {names}",
+      "finderWithDate": "{name} ({date})",
+      "sharedScopeNote": "Shared by every character on your account",
+      "sharedScopeHint": "A relic found by any character on your account fills the page here too.",
       "unlockToast": "Relik terkatalog: {name}",
       "illuminateBanner": "Halaman diterangi: {name}",
       "illuminateToast": "Setiap relik pada {name} sudah terisi.",
@@ -5083,6 +5183,10 @@ export const id_ID: EnTranslations = {
       "progressAria": "Kemajuan: {current} dari {target}",
       "renownChip": "{renown} Kemasyhuran",
       "earnedDate": "Diraih {date}",
+      "earnedBy": "Earned by {names}",
+      "earnerWithDate": "{name} ({date})",
+      "accountScopeNote": "Shared by every character on your account",
+      "accountScopeHint": "A deed any character on your account accomplishes is earned here too, and the Book names who earned it.",
       "featRibbon": "Mahajasa",
       "hiddenBadge": "Tersembunyi",
       "titleChip": "Hadiah gelar",
@@ -5132,6 +5236,33 @@ export const id_ID: EnTranslations = {
       "toggleAria": "Beralih antara peta dunia, peta zona, dan peta instans",
       "levels": "Level {min} hingga {max}"
     },
+    "mapAtlas": {
+      "level": "Level {level}",
+      "landmarkCount": "{count} landmarks",
+      "filtersAria": "Map layers",
+      "filters": {
+        "quests": "Quests",
+        "gather": "Gather",
+        "dungeons": "Dungeons",
+        "services": "Services",
+        "players": "Players"
+      },
+      "trackedQuests": "Tracked quests",
+      "noTrackedQuests": "No tracked quests",
+      "availableNearby": "Available nearby",
+      "noNearbyQuests": "No nearby quests",
+      "distance": "{distance} yards",
+      "showRoute": "Show Route",
+      "untrack": "Untrack",
+      "track": "Track",
+      "legend": {
+        "dungeon": "Dungeon",
+        "ore": "Ore",
+        "herb": "Herb",
+        "mail": "Mail",
+        "passage": "Passage"
+      }
+    },
     "arenaGate": {
       "minLevelNote": "Membutuhkan Level {level}"
     },
@@ -5150,6 +5281,7 @@ export const id_ID: EnTranslations = {
       "tabBrowse": "Jelajahi",
       "tabSell": "Jual",
       "tabActivity": "Aktivitasku",
+      "tabHistory": "Sales History",
       "tabsLabel": "Bagian Bursa $WOC",
       "loading": "Memuat Bursa...",
       "loadFailed": "Bursa tidak dapat dihubungi. Coba lagi sebentar lagi.",
@@ -5174,6 +5306,16 @@ export const id_ID: EnTranslations = {
       "colCurrentBid": "Penawaran saat ini",
       "colBuyNow": "Beli sekarang",
       "colTimeLeft": "Waktu tersisa",
+      "colBuyer": "Buyer",
+      "colSoldAt": "Sold",
+      "colSalePrice": "Sale price",
+      "colSaleType": "Type",
+      "saleTypeAuction": "Auction",
+      "saleTypeBuyNow": "Buy now",
+      "saleTypeDirected": "Directed",
+      "saleTypeUnknown": "Unknown",
+      "historyEmpty": "No sales recorded yet.",
+      "historyError": "Sales history could not be loaded.",
       "reserveMet": "Cadangan terpenuhi",
       "reserveNotMet": "Cadangan belum terpenuhi",
       "yourListing": "Daftarmu",
@@ -6066,6 +6208,7 @@ export const id_ID: EnTranslations = {
       "framesMoveBodyEditFrames": "Bingkai kamu, bingkai sasaranmu, dan bingkai partymu semuanya dapat dipindahkan. Masing-masing membawa tombol pindah kecil di sudutnya: buka kuncinya, seret bingkai ke tempat yang kamu inginkan, lalu kunci lagi agar klik tak sengaja tidak menggesernya. Edit Bingkai, di bagian atas tab Bingkai pada opsi Antarmuka, melonggarkan seluruh antarmuka sekaligus, termasuk ketiga bingkai itu: bilah aksi, bilah rapal, bilah ayunan, bilah pengalaman, peta mini, rel tombol, bingkai pet, bilah sikap, baris buff dan debuff, serta chip Pengingat Wishlist, masing-masing memakai chip nama saat longgar. Jika posisinya akhirnya tidak kamu sukai, Atur Ulang ke Bawaan di bagian bawah tab Bingkai yang sama mengembalikan semuanya ke posisi awal.",
       "framesGovernedExtra": "Edit Bingkai juga melonggarkan tumpukan pelacak di bawahnya, yaitu misi dan tujuan yang kamu lacak, kemajuan jasamu, halaman Relikvarium, delve yang sedang kamu jalani, rift yang sedang kamu ikuti, serta resep atau komisi yang kamu lacak, bilah aksi pet di samping bingkai pet, bingkai Titik Sasaran untuk debuffmu pada musuh terdekat, medali Devosi paladin, Bilah Penderitaan warlock, hamparan proc mantra, timer ayunan tangan kedua untuk pemakai dua senjata, dan jendela meter kerusakan bertab, semuanya memakai chip nama sendiri saat dilonggarkan.",
       "framesGovernedAuraTracks": "Edit Bingkai juga melonggarkan enam jalur aura pilihan setelah kamu menyalakannya dari tab Tempur pada opsi Antarmuka yang sama: jalur Buffku, jalur Masa Tunggu Defensif, jalur Perisaiku, jalur Masa Tunggu Ofensif, jalur Pergerakan dan Sembunyi, serta jalur Buffku pada Sekutu. Semua jalur mati secara bawaan, dan masing-masing memakai chip nama sendiri saat dilonggarkan.",
+      "framesGovernedTalkingHead": "Edit Frames also loosens the Dialogue panel, which carries an NPC's spoken line while that NPC is out of your view; it wears its name chip while it is loose.",
       "barsTitle": "Bilah, penghitung waktu, dan teks pertarungan",
       "barsBody": "Bilah rapalanmu muncul di tengah layar, tepat di atas bilah aksimu, setiap kali kamu merapal atau menyalurkan mantra, dan menampilkan nama mantra serta waktu yang tersisa. Targetmu mendapatkan bilah rapalannya sendiri pada bingkainya, sehingga kamu bisa melihat apa yang akan datang dan meresponsnya.\n\nSebuah bilah ayunan tipis berada di bawah bilah rapalanmu dan terisi di antara ayunan senjatamu, sehingga penyerang jarak dekat atau jarak jauh bisa melihat kapan pukulan otomatis berikutnya akan mendarat.\n\nBilah pengalamanmu membentang selebar penuh di bawah bilah aksimu, terbagi menjadi segmen-segmen, dengan sebuah bagian yang lebih terang menunjukkan pengalaman istirahat yang telah kamu tabung.\n\nBerenang di bawah air dan sebuah bilah napas biru muncul di bagian atas layar. Bilah itu berkurang selama kepalamu terendam, berkedip merah begitu habis dan kamu mulai tenggelam, lalu terisi cepat begitu kamu muncul ke permukaan. Space membuatmu berenang ke atas, dan tombol Berenang Turun, Ctrl secara bawaan, membawamu lebih dalam.\n\nKerusakan dan penyembuhan melayang ke atas dari apa pun yang menerimanya sebagai angka-angka kecil, sehingga kamu bisa membaca sebuah pertarungan tanpa membaca teks. Tab Catatan Tempur di kotak obrolanmu menyimpan catatan tertulis yang lengkap.",
       "aurasTitle": "Buff dan debuff",
@@ -6423,6 +6566,7 @@ export const id_ID: EnTranslations = {
       "formsNote": "Seorang druid bertarung dengan berganti wujud. Sebagian besar kemampuan druid terikat pada satu wujud tertentu, jadi wujud yang sedang kamu tempati menentukan apa yang bisa kamu rapalkan, dan berganti wujud menghabiskan sedikit mana. Kamu bisa berubah wujud masuk atau keluar dari pertempuran, sesering yang kamu mau.",
       "formsAutoUnshift": "Penyembuhan atau sihir serangan yang dirapal saat berwujud akan mengeluarkanmu dari wujud itu secara otomatis. Keluar dari wujud dengan cara ini gratis dan tidak memakai jeda global, jadi sihir instan langsung meluncur begitu kau menekannya. Kembali ke wujud adalah kemampuan biasa dan tetap memakan mana serta jeda global.",
       "formsMoonwing": "Druid Keseimbangan mendapat satu wujud lagi, Wujud Burung Bulan, wujud perapal yang menjadi cara bertarung druid Keseimbangan. Inilah satu-satunya wujud hewan yang tetap mempertahankan mantramu, dan tongkat sihirmu hanya berfungsi dalam wujud ini atau dalam wujud perapal normalmu.",
+      "formsWolfEngage": "Serigala membuka pertarungan dengan Terjangan Bruin, langsung berubah ke Wujud Serigala untuk menjepit target, menutup jarak dengan Terkaman saat tidak menyelinap, dan menahan musuh dengan Penjatuhan.",
       "formLine": {
         "form_bear": "Wujud tank: kulit tebal, Amarah alih-alih mana, dan ancaman ekstra agar musuh terus menyerangmu.",
         "form_cat": "Wujud kerusakan jarak dekat: Energi dan poin combo, seperti penyamun, dan ancaman yang jauh lebih sedikit.",
@@ -6990,7 +7134,7 @@ export const id_ID: EnTranslations = {
     "reliquaryPage": {
       "intro": "Relikuari adalah museum rampasan unik yang telah kamu katalogkan: benda buruan dari ruang bawah tanah, trofi profesi, tunggangan, tampilan senjata, dan gelar. Ia berpasangan dengan Kitab Jasa seperti aula trofi berpasangan dengan buku pencapaian.",
       "howHeading": "Cara kerja koleksinya",
-      "howBody": "Buka Relikuari di dalam game (bawaan Shift+X). Setiap rak memuat halaman berisi relik unik. Kamu mengisi sebuah siluet saat pertama kali memperoleh benda itu pada karakter tersebut, dan menerangi sebuah halaman saat setiap relik di dalamnya sudah terisi. Beberapa halaman berlabel Ditarik atau Pribadi: halaman itu berada di luar penuntasan, jadi tidak pernah mengunci sebuah rak maupun seluruh katalog. Temuan langsung memunculkan pemberitahuan dan menyegarkan jendela yang terbuka; kemajuan bersifat per karakter, kecuali tampilan senjata, yang merupakan kosmetik akun.",
+      "howBody": "Buka Relikuari dalam game (bawaan Shift+X). Setiap rak menampung halaman relik unik. Siluet terisi saat karakter mana pun di akunmu memperoleh benda itu untuk pertama kalinya, dan halaman menyala saat setiap relik di dalamnya terisi. Beberapa halaman berlabel Pensiun atau Pribadi: halaman itu berada di luar penyelesaian, jadi tidak pernah menghalangi rak atau seluruh katalog. Temuan langsung memunculkan pemberitahuan dan menyegarkan jendela yang terbuka; kemajuan dibagi oleh semua karakter di akun, sehingga relik yang ditemukan satu karakter mengisi halaman untuk semuanya.",
       "ranksHeading": "Peringkat Kurator",
       "ranksBody": "Peringkat Kurator naik seiring setiap relik unik yang terkatalog dan hanya memberi gelar serta bingkai kosmetik. Peringkat itu tidak pernah memberi kekuatan tempur, peluang jarahan, atau kompensasi kesialan. Tampilan senjata milik akun tidak menambah peringkat Kurator agar prestise tetap melekat pada karakter, dan relik pada halaman Ditarik atau Pribadi juga tidak menambahnya.",
       "retiredTag": "Ditarik",
@@ -11858,7 +12002,7 @@ export const id_ID: EnTranslations = {
       },
       "cat_form": {
         "name": "Wujud Serigala",
-        "description": "Mengubahmu menjadi serigala: agility naik seiring levelmu, daya serang +8 ditambah 2 per level, seranganmu memakai energi dan poin kombo, dan kamu menghasilkan 29% ancaman lebih sedikit. Rapal lagi untuk kembali ke wujud pemantra."
+        "description": "Mengubahmu menjadi serigala: agility naik seiring levelmu, daya serang +8 ditambah 2 per level, seranganmu memakai energi dan poin kombo, dan kamu menghasilkan 29% ancaman lebih sedikit. Berubah ke wujud apa pun memberi Langkah Berderap Lambat: 60% kecepatan gerak selama 3 dtk, sekali setiap 20 dtk. Rapal lagi untuk kembali ke wujud pemantra."
       },
       "claw": {
         "name": "Cakar Perobek",
@@ -11923,7 +12067,15 @@ export const id_ID: EnTranslations = {
       },
       "pounce": {
         "name": "Terkaman Senyap",
-        "description": "Pembuka siluman yang membuat target terpana selama 2 detik. Memberi 1 poin kombo. Hanya dalam Wujud Serigala."
+        "description": "Pembuka siluman yang membuat target terpana selama 2 detik. Memberi 1 poin kombo. Hanya dalam Wujud Serigala. Di luar siluman, tombol ini adalah Terkaman."
+      },
+      "lunge": {
+        "name": "Terkaman",
+        "description": "Terkam musuh hingga 12 yard jauhnya, memberikan 60% kerusakan senjata dan menghasilkan 1 poin kombo. Hanya dalam Wujud Serigala."
+      },
+      "hamstring_bite": {
+        "name": "Penjatuhan",
+        "description": "Jurus penutup yang membuat target terpana selama 1 detik plus 1 detik per poin combo (5 poin combo: 6 detik). Hanya dalam Wujud Serigala."
       },
       "insect_swarm": {
         "name": "Kerumunan Penyengat",
@@ -12637,7 +12789,7 @@ export const id_ID: EnTranslations = {
       },
       "bear_charge": {
         "name": "Terjangan Bruin",
-        "description": "Menerjang musuh, menghasilkan 9 amarah dan menyetrumnya selama 1 detik. Jangkauan 8-25 yard. Hanya dalam Wujud Bruin."
+        "description": "Menerjang musuh, menghasilkan 9 amarah dan menyetrumnya selama 1 detik. Selama 3 detik setelahnya, Wujud Serigala gratis dan menjepit target, memperlambatnya 50% selama 4 detik. Jangkauan 8-25 yard. Hanya dalam Wujud Bruin."
       },
       "demoralizing_roar": {
         "name": "Auman Pengecut",
@@ -12645,7 +12797,7 @@ export const id_ID: EnTranslations = {
       },
       "prowl": {
         "name": "Mengintai",
-        "description": "Masuk ke siluman saat dalam Wujud Serigala, bergerak 5% lebih lambat. Tidak dapat digunakan dalam pertempuran."
+        "description": "Masuk ke siluman saat dalam Wujud Serigala. Tidak dapat digunakan dalam pertempuran."
       },
       "rake": {
         "name": "Kupasan",

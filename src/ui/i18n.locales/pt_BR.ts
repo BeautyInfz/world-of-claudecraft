@@ -973,6 +973,8 @@ export const pt_BR: Partial<Record<TranslationKey, string>> = {
   'guide.classPage.formsHeading': 'Mudança de Forma',
   'guide.classPage.formsMoonwing':
     'Um druida Equilíbrio ganha mais uma forma, a Forma de Luniscante, a forma de conjurador em que um druida Equilíbrio luta. É a única forma animal que mantém suas magias, e sua varinha só funciona nela ou na sua forma normal de conjurador.',
+  'guide.classPage.formsWolfEngage':
+    'Um lobo abre a luta com Investida de Bruin, muda logo para a Forma de Lobo para fixar o alvo, fecha a distância com Bote quando não está furtivo e prende um inimigo com Derrubada.',
   'guide.classPage.formsNote':
     'Um druida luta mudando de forma. A maioria das habilidades de druida pertence a uma forma específica, então a forma em que você está decide o que pode conjurar, e mudar de forma custa um pouco de mana. Você pode mudar de forma dentro ou fora de combate, quantas vezes quiser.',
   'guide.classPage.mageEleHeading': 'Elemental da Água',
@@ -3935,7 +3937,6 @@ export const pt_BR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.townFocus.notInTownHint': 'Você precisa estar na cidade para definir seu foco.',
   'hudChrome.townFocus.saveButton': 'Salvar Foco',
   'hudChrome.townFocus.title': 'Foco da Cidade',
-  'hudChrome.archetypeTitle.label': 'Título',
   'hudChrome.archetypeTitle.none': 'Nenhum',
   'entities.itemSets.crownforged.bonus4':
     'Seus acertos críticos com armas estilhaçam o alvo com Estilhaço Ósseo, causando 8 de sangramento a cada 2 s por 12 s. Acumula até 3 vezes.',
@@ -6943,7 +6944,7 @@ export const pt_BR: Partial<Record<TranslationKey, string>> = {
     'Rosna para o alvo: sua ameaça sobe para igualar a do inimigo mais odiado por ele, que é forçado a atacar você por 3 s. Apenas Forma de Bruin.',
   'entities.abilities.cat_form.name': 'Forma de Lobo',
   'entities.abilities.cat_form.description':
-    'Transforma-vos em lobo: a agilidade sobe com vosso nível, poder de ataque +8 mais 2 por nível, vossos ataques usam energia e pontos de combo, e gerais 29% menos ameaça. Conjurai novamente para voltar à forma de conjurador.',
+    'Transforma-vos em lobo: a agilidade sobe com vosso nível, poder de ataque +8 mais 2 por nível, vossos ataques usam energia e pontos de combo, e gerais 29% menos ameaça. Mudar para qualquer forma concede Passo ligeiro: 60% de velocidade de movimento por 3 s, uma vez a cada 20 s. Conjurai novamente para voltar à forma de conjurador.',
   'entities.abilities.claw.name': 'Garra Dilacerante',
   'entities.abilities.ferocious_bite.name': 'Mordida Sanguinária',
   'entities.abilities.swipe.name': 'Garras Varredoras',
@@ -6968,8 +6969,14 @@ export const pt_BR: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.dash.description':
     'Dispara para a frente, aumentando a velocidade de movimento em 50% por 15 s. Apenas Forma de Lobo.',
   'entities.abilities.pounce.name': 'Bote Furtivo',
+  'entities.abilities.lunge.description':
+    'Dá um bote em um inimigo a até 12 m, causando 60% do dano da arma e concedendo 1 ponto de combo. Apenas Forma de Lobo.',
+  'entities.abilities.lunge.name': 'Bote',
+  'entities.abilities.hamstring_bite.description':
+    'Movimento finalizador que atordoa o alvo por 1 s mais 1 s por ponto de combo (5 pontos de combo: 6 s). Apenas Forma de Lobo.',
+  'entities.abilities.hamstring_bite.name': 'Derrubada',
   'entities.abilities.pounce.description':
-    'Abertura furtiva que atordoa o alvo por 2 s. Concede 1 ponto de combo. Apenas Forma de Lobo.',
+    'Abertura furtiva que atordoa o alvo por 2 s. Concede 1 ponto de combo. Apenas Forma de Lobo. Fora da furtividade, este botão é Bote.',
   'entities.abilities.insect_swarm.name': 'Enxame Ferroante',
   'entities.abilities.insect_swarm.description':
     'O inimigo é atacado por um enxame de insetos, sofrendo {damage} de dano de Natureza ao longo de 12 s.',
@@ -7015,13 +7022,13 @@ export const pt_BR: Partial<Record<TranslationKey, string>> = {
     'Vincula um Wraithborn à sua vontade, um demônio de elite que faz chover pesado dano Sombrio à distância. Uma longa recarga limita seu poder devastador. Invocar um novo demônio dispensa o atual. Você só pode ter um demônio por vez.',
   'entities.abilities.bear_charge.name': 'Investida de Bruin',
   'entities.abilities.bear_charge.description':
-    'Investe contra um inimigo, gera 9 de raiva e o atordoa por 1 s. Alcance de 8 a 25 m. Apenas Forma de Bruin.',
+    'Investe contra um inimigo, gera 9 de raiva e o atordoa por 1 s. Durante os 3 s seguintes, a Forma de Lobo é gratuita e fixa o alvo, reduzindo sua velocidade em 50% por 4 s. Alcance de 8 a 25 m. Apenas Forma de Bruin.',
   'entities.abilities.demoralizing_roar.name': 'Rugido Covarde',
   'entities.abilities.demoralizing_roar.description':
     'Desmoraliza os inimigos próximos, reduzindo seu poder de ataque em 20 por 20 s. Apenas Forma de Bruin.',
   'entities.abilities.prowl.name': 'Espreitar',
   'entities.abilities.prowl.description':
-    'Entra em furtividade enquanto na Forma de Lobo, movendo-se 5% mais devagar. Não pode ser usado em combate.',
+    'Entra em furtividade enquanto na Forma de Lobo. Não pode ser usado em combate.',
   'entities.abilities.rake.name': 'Esfolar',
   'entities.abilities.revive_pet.name': 'Remendar',
   'entities.abilities.revive_pet.description':
@@ -10124,7 +10131,6 @@ export const pt_BR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.auraEffect.imbueRange': 'Arma imbuída: {min} a {max} de dano adicional no Verdict',
   'hudChrome.auraEffect.stealth': 'Oculto; velocidad de movimiento reducida un {pct}%',
   'hudChrome.auraEffect.formBear': 'Forma de Bruin: vida e armadura aumentadas',
-  'hudChrome.auraEffect.formCat': 'Forma felina: daño cuerpo a cuerpo y energía',
   'hudChrome.auraEffect.formTravel': 'Forma de Fleet: velocidade de movimento aumentada em {pct}%',
   'hudChrome.auraEffect.defensiveStance': 'Postura de Guarda: dano recebido reduzido, mais ameaça',
   'hudChrome.auraEffect.righteousFury': 'Juramento Ardente: ameaça de dano Sagrado muito aumentada',
@@ -10409,7 +10415,6 @@ export const pt_BR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.gathering.herbalism': 'Herborismo',
   'hudChrome.gathering.logging': 'Lenharia',
   'hudChrome.gathering.mining': 'Mineração',
-  'hudChrome.gathering.title': 'Coleta',
   'errors.api.accountSessionLimit': 'Personagens demais desta conta já estão no mundo.',
   'errors.api.crossSiteOrigin': 'Solicitação bloqueada por motivos de segurança.',
   'errors.api.unsupportedMediaType': 'Formato de solicitação não suportado.',
@@ -10756,7 +10761,6 @@ export const pt_BR: Partial<Record<TranslationKey, string>> = {
   'entities.mobs.willow_sprite.name': 'Duende do Salgueiro',
   'entities.mobs.wood_wraith.name': 'Espectro do Bosque',
   'entities.mobs.wreck_thief.name': 'Ladrão dos Destroços',
-  'hudChrome.archetypeTitle.hobbyLabel': 'Passatempo',
   'hudChrome.auraEffect.armorPct': 'Reduz a armadura em {pct}%',
   'hudChrome.auraEffect.armorPctStacks': 'Reduz a armadura em {pct}% ({stacks} acúmulos)',
   'hudChrome.auraEffect.increasePct.allStats': 'Aumenta todos os atributos em {pct}%',
@@ -14698,6 +14702,8 @@ export const pt_BR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.auraEffect.castShield': 'A conjuração não pode ser interrompida ou atrasada por dano',
   'hudChrome.auraEffect.cauterizeFatigue': 'Cauterizar não pode evitar outro acerto letal',
   'hudChrome.auraEffect.cooldownCap': '{used} de {cap} s de redução de recarga usados nesta janela',
+  'hudChrome.auraEffect.bruinRushWindow':
+    'A Forma de Lobo não custa mana e fixa o alvo da vossa Investida de Bruin, reduzindo sua velocidade em {pct}% por {sec} s',
   'hudChrome.auraEffect.desolation':
     '{charges} cargas: sua próxima Seta da Ruína conjura {castPct}% mais rápido ou sua próxima Chuva de Fogo cai imediatamente',
   'hudChrome.auraEffect.duskfireClaim': 'A morte concede {value} de Ruína',
@@ -14788,7 +14794,7 @@ export const pt_BR: Partial<Record<TranslationKey, string>> = {
     'Todas as páginas escritas do Relicário e os nomes das relíquias que elas guardam. Esta lista traz apenas nomes livres de spoiler: abra O Relicário no jogo para ver seu próprio progresso, suas conquistas e as silhuetas.',
   'guide.reliquaryPage.catalogHeading': 'Catálogo de páginas',
   'guide.reliquaryPage.howBody':
-    'Abra O Relicário no jogo (Shift+X por padrão). Cada estante guarda páginas de relíquias únicas. Você preenche uma silhueta quando obtém aquela peça pela primeira vez no personagem, e ilumina uma página quando todas as relíquias dela estão preenchidas. Algumas páginas trazem a marca Retirada ou Pessoal: ficam fora da conclusão, então nunca travam uma estante nem o catálogo inteiro. Os achados ao vivo mostram um aviso e atualizam a janela aberta; o progresso é por personagem, exceto os visuais de arma, que são cosméticos da conta.',
+    'Abra O Relicário no jogo (padrão Shift+X). Cada estante contém páginas de relíquias únicas. Uma silhueta é preenchida quando qualquer personagem da sua conta obtém aquela peça pela primeira vez, e uma página é iluminada quando todas as relíquias nela estão preenchidas. Algumas páginas são marcadas como Aposentada ou Pessoal: ficam fora da conclusão, então nunca travam uma estante nem o catálogo inteiro. Os achados ao vivo mostram um aviso e atualizam a janela aberta; o progresso é compartilhado por todos os personagens da conta, então uma relíquia que um personagem encontra preenche a página para todos.',
   'guide.reliquaryPage.howHeading': 'Como funciona a coleção',
   'guide.reliquaryPage.intro':
     'O Relicário é o museu dos espólios únicos que você catalogou: as peças mais cobiçadas das masmorras, troféus de profissão, montarias, visuais de arma e títulos. Ele acompanha o Livro dos Feitos como um salão de troféus acompanha um livro de conquistas.',
@@ -16422,12 +16428,12 @@ export const pt_BR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.raidBossGuide.nythraxis.boneSpikeSummary':
     'A cada {everyNormal} s, Nythraxis empala {victimsNormal} raiders que não sejam seu alvo atual em Espinhos ósseos. Um raider empalado não pode agir e perde {drainNormal} da vida máxima a cada segundo até que seu espinho seja destruído.',
   'hudChrome.raidBossGuide.nythraxis.boneStormHeroicSummary':
-    'Começando {first} s depois da Ira do rei e a cada {everyHeroic} s depois, Nythraxis inicia Tempestade óssea por {duration} s. Ele ignora ameaça, move-se a {speed} vezes a velocidade normal e faz {charges} avanços de {chargeSeconds} s cada. Seu redemoinho causa {whirlHeroic} da vida máxima por segundo em até {radius} yd. Cada avanço termina em um Impacto ósseo no mesmo raio, causando {slamHeroic} da vida máxima. Ele lança Espinho ósseo {spikeAt} s após o início da tempestade, e então Quebra-túmulos rearma {rearm} s após ela terminar.',
+    'Começando {first} s depois da Ira do rei e a cada {everyHeroic} s depois, Nythraxis inicia Tempestade óssea por {duration} s. Ele ignora ameaça, move-se a {speed} vezes a velocidade normal e faz {charges} avanços de {chargeSeconds} s cada. Seu redemoinho causa {whirlHeroic} da vida máxima por segundo em até {radius} yd. Cada avanço termina em um Impacto ósseo no mesmo raio, causando {slamHeroic} da vida máxima. O primeiro impacto de cada tempestade causa {openingSlamHeroic} em vez disso. Quebra-túmulos rearma {rearm} s após ela terminar.',
   'hudChrome.raidBossGuide.nythraxis.boneStormName': 'Tempestade óssea',
   'hudChrome.raidBossGuide.nythraxis.boneStormResponse':
     'Espalhem-se e continuem correndo de Nythraxis. O raider marcado pelo avanço foge enquanto todos os outros deixam espaço ao redor da trajetória; depois os tanks pegam o chefe quando a tempestade termina.',
   'hudChrome.raidBossGuide.nythraxis.boneStormSummary':
-    'Começando {first} s depois da Ira do rei e a cada {everyNormal} s depois, Nythraxis inicia Tempestade óssea por {duration} s. Ele ignora ameaça, move-se a {speed} vezes a velocidade normal e faz {charges} avanços de {chargeSeconds} s cada. Seu redemoinho causa {whirlNormal} da vida máxima por segundo em até {radius} yd. Cada avanço termina em um Impacto ósseo no mesmo raio, causando {slamNormal} da vida máxima. Ele lança Espinho ósseo {spikeAt} s após o início da tempestade, e então Quebra-túmulos rearma {rearm} s após ela terminar.',
+    'Começando {first} s depois da Ira do rei e a cada {everyNormal} s depois, Nythraxis inicia Tempestade óssea por {duration} s. Ele ignora ameaça, move-se a {speed} vezes a velocidade normal e faz {charges} avanços de {chargeSeconds} s cada. Seu redemoinho causa {whirlNormal} da vida máxima por segundo em até {radius} yd. Cada avanço termina em um Impacto ósseo no mesmo raio, causando {slamNormal} da vida máxima. O primeiro impacto de cada tempestade causa {openingSlamNormal} em vez disso. Quebra-túmulos rearma {rearm} s após ela terminar.',
   'hudChrome.raidBossGuide.nythraxis.courtName': 'A Corte imortal',
   'hudChrome.raidBossGuide.nythraxis.courtResponse':
     'Os tanks pegam Aldren e viram seu cleave para longe da raide. Atordoe ou silencie Malric assim que Cura de Malric começar e mate-o primeiro; depois enraíze ou atordoe Voss longe dos curadores, já que ele não pode ser provocado, e acabe com ele em seguida.',

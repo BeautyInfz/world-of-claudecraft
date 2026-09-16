@@ -902,6 +902,7 @@ export const de_DE: EnTranslations = {
     },
     "questTracker": {
       "count": "({count})",
+      "objectiveValue": "{current} / {total}",
       "collapseHint": "Quests einklappen",
       "expandHint": "Quests ausklappen"
     },
@@ -1220,7 +1221,10 @@ export const de_DE: EnTranslations = {
       "devName": "Mitwirkender",
       "devTierCol": "Abzeichen",
       "mergedPrs": "Zusammengeführte PRs",
-      "devEmpty": "Noch keine platzierten Mitwirkenden."
+      "devEmpty": "Noch keine platzierten Mitwirkenden.",
+      "podiumLabel": "Top three",
+      "unclaimed": "Unclaimed",
+      "prestigeTitle": "Prestige {rank}"
     },
     "pledge": {
       "open": "Nimmt Gelöbnisse an",
@@ -1243,6 +1247,8 @@ export const de_DE: EnTranslations = {
       "noteLabel": "Pinnwandnotiz",
       "notePlaceholder": "Erzähl angehenden Mitgliedern, wonach deine Gilde sucht",
       "save": "Speichern",
+      "newPlayerFriendlyLabel": "New player friendly",
+      "newPlayerFriendlyHint": "Shown on the recruits' board at the Proving Shore signpost.",
       "yourPledge": "Dein Gelöbnis: {guild}",
       "since": "Gelobt am {date}",
       "withdraw": "Gelöbnis zurückziehen"
@@ -1266,6 +1272,9 @@ export const de_DE: EnTranslations = {
       "previous": "Frühere Läufe",
       "runLabel": "Lauf {index}",
       "runSummary": "{total} in {time}"
+    },
+    "talkingHead": {
+      "label": "Dialogue"
     },
     "hubLesson": {
       "target": "Visiere die Puppe an, um zu beginnen.",
@@ -1395,6 +1404,7 @@ export const de_DE: EnTranslations = {
       "targetPrev": "Ziel rückwärts wechseln",
       "discord": "Discord",
       "bgFlag": "Schlachtfeld-Flaggenaktion",
+      "friendlyNameplates": "Toggle Friendly Nameplates",
       "sheathe": "Waffe einstecken/ziehen",
       "dive": "Nach unten schwimmen",
       "categoryPet": "Begleiter",
@@ -1729,6 +1739,9 @@ export const de_DE: EnTranslations = {
     },
     "controller": {
       "title": "Controller",
+      "device": "Connected Device",
+      "deviceConnected": "Connected",
+      "deviceDisconnected": "No controller detected",
       "glyphStyle": "Tastenbeschriftung",
       "glyphStyleAuto": "Auto",
       "glyphStyleXbox": "Xbox",
@@ -2043,6 +2056,52 @@ export const de_DE: EnTranslations = {
       "spellOrder": "Zauberreihenfolge",
       "reset": "Position zurücksetzen",
       "spellPosition": "Zauberreihenfolge {position} / {count}",
+      "watchlist": "Watched Spells",
+      "watchlistHint": "Pick any spell that buffs you to give it its own aura. Picked spells get a full card below, with their own icon, color, position and ground ring.",
+      "watchlistEmpty": "No other spell in your spellbook puts a buff on you.",
+      "watchlistWatch": "Watch {spell}",
+      "watchlistUnwatch": "Stop watching {spell}",
+      "watchlistCount": "{count} watched",
+      "sound": "Alert Sound",
+      "soundNone": "No sound",
+      "soundVolume": "Sound Volume",
+      "soundPreview": "Play",
+      "soundPreviewAria": "Preview the {sound} alert sound",
+      "soundHint": "A sound plays each time this spell procs. Turn the icon, crescents and ground ring off to have the sound alone announce it.",
+      "readyGlow": "Hotbar Glow",
+      "readyGlowHint": "Lights this spell on your action bar while its buff is up.",
+      "reticleTick": "Reticle Tick",
+      "reticleTickHint": "Adds a mark near the centre of the screen that lights when this spell procs.",
+      "haptic": "Rumble",
+      "hapticNone": "Off",
+      "hapticHint": "Vibrates a connected controller, or your phone. Ignored where the device has no haptics.",
+      "haptics": {
+        "tap": "Tap",
+        "double": "Double",
+        "long": "Long"
+      },
+      "cues": {
+        "softChime": "Soft Chime",
+        "musicBox": "Music Box",
+        "glassPing": "Glass Ping",
+        "waterDrop": "Water Drop",
+        "bubblePop": "Bubble Pop",
+        "hardBell": "Hard Bell",
+        "templeGong": "Temple Gong",
+        "anvilStrike": "Anvil Strike",
+        "coinDrop": "Coin Drop",
+        "swordDraw": "Sword Draw",
+        "blaringHorn": "Blaring Horn",
+        "carKlaxon": "Car Klaxon",
+        "sonarPing": "Sonar Ping",
+        "electricZap": "Electric Zap",
+        "catMeow": "Cat Meow",
+        "owlHoot": "Owl Hoot",
+        "wolfHowl": "Wolf Howl",
+        "frogCroak": "Frog Croak",
+        "windWhoosh": "Wind Whoosh",
+        "steamHiss": "Steam Hiss"
+      },
       "procs": {
         "revenge": "Rache!",
         "battleTrance": "Kampftrance",
@@ -2114,6 +2173,22 @@ export const de_DE: EnTranslations = {
       "playtimeHidden": "Ausgeblendet",
       "showPlaytimeAria": "Spielzeit anzeigen",
       "hidePlaytimeAria": "Spielzeit ausblenden"
+    },
+    "charSidebar": {
+      "label": "Character details",
+      "subtitle": "Level {level} {className} . {archetype} . Hobby: {hobby}",
+      "subtitleNoHobby": "Level {level} {className} . {archetype}",
+      "stats": "Stats",
+      "progression": "Progression",
+      "skills": "Skills",
+      "gathering": "Gathering",
+      "crafting": "Crafting",
+      "openProfessions": "Open Professions"
+    },
+    "questLog": {
+      "completed": "Completed",
+      "zoneSummary": "{count} ({ready} ready)",
+      "shiftHint": "Shift-click a quest to link it in chat."
     },
     "statInfo": {
       "fromYour": "Von deinen {value} Punkten {stat}:",
@@ -2228,6 +2303,12 @@ export const de_DE: EnTranslations = {
       "linkHint": "Umschalt-Klick, um diesen Gegenstand im Chat zu verlinken."
     },
     "plurals": {
+      "guildBoardShown": {
+        "one": "{count} guild shown",
+        "few": "{count} guilds shown",
+        "many": "{count} guilds shown",
+        "other": "{count} guilds shown"
+      },
       "commissionMasterworks": {
         "one": "{count} Meisterwerk",
         "few": "{count} Meisterwerke",
@@ -2357,6 +2438,7 @@ export const de_DE: EnTranslations = {
     },
     "bugReport": {
       "menuButton": "Fehler melden",
+      "online": "Online",
       "realm": "Welt",
       "character": "Charakter",
       "position": "Position",
@@ -2962,8 +3044,8 @@ export const de_DE: EnTranslations = {
         "kingsWrathSummary": "Nythraxis verursacht auf Normal {bonusNormal} mehr Schaden oder auf Heroisch {bonusHeroic} für den Rest des Kampfes. Graberuption tritt alle {eruptionEveryNormal} Sek. auf ({eruptionEveryHeroic} auf Heroisch) und Grabfeuer alle {gravefireEveryNormal} Sek. ({gravefireEveryHeroic} auf Heroisch).",
         "kingsWrathResponse": "Nutzt verbleibende defensive Abklingzeiten für unvermeidbaren Schaden. Haltet jede frühere Mechanik sauber, während der Schlachtzug den Kampf beendet.",
         "boneStormName": "Knochensturm",
-        "boneStormSummary": "Ab {first} Sek. nach Beginn von Zorn des Königs und danach alle {everyNormal} Sek. beginnt Nythraxis {duration} Sek. lang Knochensturm. Er ignoriert Bedrohung, bewegt sich {speed}-mal so schnell wie normal und führt {charges} Anstürme aus, die jeweils {chargeSeconds} Sek. dauern. Sein Wirbel verursacht jede Sekunde innerhalb von {radius} yd {whirlNormal} der maximalen Gesundheit. Jeder Ansturm endet mit einem Knochenschlag im selben Radius für {slamNormal} der maximalen Gesundheit. Er wirkt {spikeAt} Sek. nach Beginn des Sturms Knochenspieß, dann wird Grabbrecher {rearm} Sek. nach seinem Ende wieder bereit.",
-        "boneStormHeroicSummary": "Ab {first} Sek. nach Beginn von Zorn des Königs und danach alle {everyHeroic} Sek. beginnt Nythraxis {duration} Sek. lang Knochensturm. Er ignoriert Bedrohung, bewegt sich {speed}-mal so schnell wie normal und führt {charges} Anstürme aus, die jeweils {chargeSeconds} Sek. dauern. Sein Wirbel verursacht jede Sekunde innerhalb von {radius} yd {whirlHeroic} der maximalen Gesundheit. Jeder Ansturm endet mit einem Knochenschlag im selben Radius für {slamHeroic} der maximalen Gesundheit. Er wirkt {spikeAt} Sek. nach Beginn des Sturms Knochenspieß, dann wird Grabbrecher {rearm} Sek. nach seinem Ende wieder bereit.",
+        "boneStormSummary": "Ab {first} Sek. nach Beginn von Zorn des Königs und danach alle {everyNormal} Sek. beginnt Nythraxis {duration} Sek. lang Knochensturm. Er ignoriert Bedrohung, bewegt sich {speed}-mal so schnell wie normal und führt {charges} Anstürme aus, die jeweils {chargeSeconds} Sek. dauern. Sein Wirbel verursacht jede Sekunde innerhalb von {radius} yd {whirlNormal} der maximalen Gesundheit. Jeder Ansturm endet mit einem Knochenschlag im selben Radius für {slamNormal} der maximalen Gesundheit. Der erste Schlag jedes Sturms trifft stattdessen für {openingSlamNormal}. Grabbrecher wird {rearm} Sek. nach seinem Ende wieder bereit.",
+        "boneStormHeroicSummary": "Ab {first} Sek. nach Beginn von Zorn des Königs und danach alle {everyHeroic} Sek. beginnt Nythraxis {duration} Sek. lang Knochensturm. Er ignoriert Bedrohung, bewegt sich {speed}-mal so schnell wie normal und führt {charges} Anstürme aus, die jeweils {chargeSeconds} Sek. dauern. Sein Wirbel verursacht jede Sekunde innerhalb von {radius} yd {whirlHeroic} der maximalen Gesundheit. Jeder Ansturm endet mit einem Knochenschlag im selben Radius für {slamHeroic} der maximalen Gesundheit. Der erste Schlag jedes Sturms trifft stattdessen für {openingSlamHeroic}. Grabbrecher wird {rearm} Sek. nach seinem Ende wieder bereit.",
         "boneStormResponse": "Verteilt Euch und lauft weiter vor Nythraxis weg. Der anvisierte Schlachtzügler läuft davon, während alle anderen Platz um die Ansturmroute lassen. Danach nehmen die Tanks ihn wieder auf.",
         "crownEnduresName": "Die Krone hält stand",
         "crownEnduresSummary": "Bei {enrageNormal} Sek. nach Kampfbeginn (die Uhr pausiert, während Bruder Aldric bei 70% eintritt) löst Die Krone hält stand eine harte Raserei aus. Nythraxis erhält {damage} mehr Schaden und {haste} schnellere Angriffe, danach alle {rampEveryNormal} Sek. weitere {rampStep} Schaden. Es gibt keine Timerleiste. Warnungen kommen als Rufe bei {warn60}, {warn30} und {warn10} Sek. verbleibend.",
@@ -3014,6 +3096,7 @@ export const de_DE: EnTranslations = {
       "elementalConvergencePrimed": "Dein nächster Zauber der anderen Elementarschule gewährt Elementarkonvergenz",
       "hunterFerocity": "{stacks} Rudelwildheit: Euer Begleiter verursacht {pct}% mehr Schaden",
       "cooldownCap": "{used} von {cap} Sek. Abklingzeit-Verkürzung in diesem Fenster verbraucht",
+      "bruinRushWindow": "Die Wolfsgestalt kostet kein Mana und nagelt das Ziel eures Bruin-Ansturms fest, was es {sec} Sek. lang um {pct}% verlangsamt",
       "funeralHarvestLock": "Funeral Harvest kann noch kein weiteres Seelenfragment erschaffen",
       "leadenHexLock": "Bleierner Fluch kann dieses Ziel noch nicht erneut verwurzeln",
       "forbiddenReflectionReady": "Eure nächste berechtigte Hexenmeister-Fähigkeit mit Abklingzeit kann erneut gewirkt werden",
@@ -3126,7 +3209,7 @@ export const de_DE: EnTranslations = {
       "elementalTrance": "Erlittener Schaden verringert um {pct}%. {mana}% des von Euch verursachten Schadens wird in Mana umgewandelt",
       "stealth": "Verborgen; Bewegungstempo um {pct}% verringert",
       "formBear": "Bruin Form: Gesundheit und Rüstung erhöht",
-      "formCat": "Katzengestalt: Nahkampfschaden und Energie",
+      "wolfForm": "Cat Form: melee damage and energy; movement speed increased by {pct}%",
       "formTravel": "Fleet Form: Bewegungstempo um {pct}% erhöht",
       "formFireball": "Glutgestalt: Bewegungsgeschwindigkeit um {pct}% erhöht; Angriffe und Zauber deaktiviert",
       "formMoonkin": "Mondkingestalt: Zauberschaden um {pct}% und Rüstung um {armorPct}% erhöht",
@@ -3234,6 +3317,7 @@ export const de_DE: EnTranslations = {
       "lock": "Spielerfenster sperren"
     },
     "partyFrames": {
+      "header": "Party",
       "section": "Gruppen- und Schlachtzugsrahmen",
       "optionsSection": "Gruppenrahmen-Optionen",
       "unlock": "Gruppen- und Schlachtzugsrahmen verschieben",
@@ -3735,6 +3819,15 @@ export const de_DE: EnTranslations = {
       "subtitle": "Gilden des Reichs",
       "rosterTitle": "Die Mitgliederliste von {guild} ansehen",
       "back": "Zurück",
+      "filters": "Board filters",
+      "newPlayerFriendly": "New player friendly",
+      "newPlayerFriendlyTitle": "This guild welcomes new players",
+      "filterNewPlayersTitle": "Show only guilds that welcome new players",
+      "filterEmpty": "No guild has opened its doors to new players yet.",
+      "showAll": "Show all guilds",
+      "officersOnline": "Officers online",
+      "officersOnlineLabel": "Officers online: {names}",
+      "officerEntry": "{name} ({rank})",
       "popupTitle": "Gilden-Wegweiser",
       "close": "Schließen"
     },
@@ -4023,7 +4116,6 @@ export const de_DE: EnTranslations = {
       }
     },
     "gathering": {
-      "title": "Sammeln",
       "mining": "Bergbau",
       "logging": "Holzfällen",
       "herbalism": "Kräuterkunde",
@@ -4207,9 +4299,7 @@ export const de_DE: EnTranslations = {
       "noviceBody": "Deine Pflanzenfertigkeit steigt jedes Mal, wenn du eine Pflanze einbringst. Säe einen Samen in einem beliebigen Gartenbeet, um zu beginnen."
     },
     "archetypeTitle": {
-      "label": "Titel",
-      "none": "Keiner",
-      "hobbyLabel": "Freizeit"
+      "none": "Keiner"
     },
     "archetypePair": {
       "engineering+alchemy": "Bombardier",
@@ -4379,7 +4469,9 @@ export const de_DE: EnTranslations = {
       "hobbyLabel": "Hobby: {craft}",
       "majorsLabel": "Hauptfächer: {a} und {b}",
       "pairsHeld": "Gehaltene Paare: {count}",
-      "returnsLabel": "Rückgabe: {count}"
+      "returnsLabel": "Rückgabe: {count}",
+      "retentionFooter": "Returns on respec: 60% of skill kept.",
+      "tutorialLink": "Profession tutorial"
     },
     "crafting": {
       "title": "Basteln",
@@ -4414,6 +4506,7 @@ export const de_DE: EnTranslations = {
       "vaultUnreachable": "Der Materialtresor ist hier außer Reichweite.",
       "craftFeeLine": "Herstellungsgebühr: {fee} je Stück",
       "empty": "Noch keine Rezepte bekannt.",
+      "materialsFooter": "Materials in your vault are drawn automatically. Learn more recipes at the station.",
       "resultAria": "Basteln {name}",
       "craftedToast": "Hergestellt: {name}",
       "craftedToastQty": "Hergestellt: {name} x{qty}",
@@ -4515,6 +4608,9 @@ export const de_DE: EnTranslations = {
       "commissionToggleHint": "Bindet sich an den ersten Charakter, der es im Handel erhält.",
       "commissionUnbound": "Auftragsarbeit: bindet sich an den ersten Empfänger",
       "commissionBound": "Auftragsarbeit: gebunden an den Empfänger"
+    },
+    "marketWindow": {
+      "mixedListingsFooter": "The Merchant restocks common goods; player listings sit beside them at their asking price."
     },
     "itemMenu": {
       "use": "Verwenden",
@@ -4950,6 +5046,10 @@ export const de_DE: EnTranslations = {
       "ownedTooltipStatus": "Im Reliquiar katalogisiert",
       "missingTooltipStatus": "Noch nicht gefunden",
       "firstFindClears": "Erstmals bei Durchgang {count} gefunden",
+      "foundBy": "Found by {names}",
+      "finderWithDate": "{name} ({date})",
+      "sharedScopeNote": "Shared by every character on your account",
+      "sharedScopeHint": "A relic found by any character on your account fills the page here too.",
       "unlockToast": "Reliquie katalogisiert: {name}",
       "illuminateBanner": "Seite illuminiert: {name}",
       "illuminateToast": "Jede Reliquie auf {name} ist gefüllt.",
@@ -5083,6 +5183,10 @@ export const de_DE: EnTranslations = {
       "progressAria": "Fortschritt: {current} von {target}",
       "renownChip": "{renown} Ansehen",
       "earnedDate": "Errungen am {date}",
+      "earnedBy": "Earned by {names}",
+      "earnerWithDate": "{name} ({date})",
+      "accountScopeNote": "Shared by every character on your account",
+      "accountScopeHint": "A deed any character on your account accomplishes is earned here too, and the Book names who earned it.",
       "featRibbon": "Heldentat",
       "hiddenBadge": "Verborgen",
       "titleChip": "Titelbelohnung",
@@ -5132,6 +5236,33 @@ export const de_DE: EnTranslations = {
       "toggleAria": "Zwischen Weltkarte, Zonenkarte und Instanzkarte wechseln",
       "levels": "Stufe {min} bis {max}"
     },
+    "mapAtlas": {
+      "level": "Level {level}",
+      "landmarkCount": "{count} landmarks",
+      "filtersAria": "Map layers",
+      "filters": {
+        "quests": "Quests",
+        "gather": "Gather",
+        "dungeons": "Dungeons",
+        "services": "Services",
+        "players": "Players"
+      },
+      "trackedQuests": "Tracked quests",
+      "noTrackedQuests": "No tracked quests",
+      "availableNearby": "Available nearby",
+      "noNearbyQuests": "No nearby quests",
+      "distance": "{distance} yards",
+      "showRoute": "Show Route",
+      "untrack": "Untrack",
+      "track": "Track",
+      "legend": {
+        "dungeon": "Dungeon",
+        "ore": "Ore",
+        "herb": "Herb",
+        "mail": "Mail",
+        "passage": "Passage"
+      }
+    },
     "arenaGate": {
       "minLevelNote": "Erfordert Stufe {level}"
     },
@@ -5150,6 +5281,7 @@ export const de_DE: EnTranslations = {
       "tabBrowse": "Durchsuchen",
       "tabSell": "Verkaufen",
       "tabActivity": "Meine Aktivitäten",
+      "tabHistory": "Sales History",
       "tabsLabel": "Bereiche der $WOC-Börse",
       "loading": "Die Börse wird geladen...",
       "loadFailed": "Die Börse konnte nicht erreicht werden. Versuch es in Kürze erneut.",
@@ -5174,6 +5306,16 @@ export const de_DE: EnTranslations = {
       "colCurrentBid": "Aktuelles Gebot",
       "colBuyNow": "Sofortkauf",
       "colTimeLeft": "Verbleibende Zeit",
+      "colBuyer": "Buyer",
+      "colSoldAt": "Sold",
+      "colSalePrice": "Sale price",
+      "colSaleType": "Type",
+      "saleTypeAuction": "Auction",
+      "saleTypeBuyNow": "Buy now",
+      "saleTypeDirected": "Directed",
+      "saleTypeUnknown": "Unknown",
+      "historyEmpty": "No sales recorded yet.",
+      "historyError": "Sales history could not be loaded.",
       "reserveMet": "Mindestpreis erreicht",
       "reserveNotMet": "Mindestpreis nicht erreicht",
       "yourListing": "Dein Angebot",
@@ -6066,6 +6208,7 @@ export const de_DE: EnTranslations = {
       "framesMoveBodyEditFrames": "Dein Einheitenrahmen, dein Zielrahmen und deine Gruppenrahmen können alle verschoben werden. Jeder besitzt eine kleine Verschiebeschaltfläche in der Ecke: entsperre ihn, ziehe ihn an die gewünschte Stelle und sperre ihn wieder, damit ein Fehlklick nichts verschiebt. Rahmen bearbeiten oben im Reiter Rahmen der Interfaceoptionen löst den übrigen Bildschirm gleichzeitig mit diesen drei Rahmen: Aktionsleisten, Zauberleiste, Schwungleiste, Erfahrungsleiste, Minikarte, Schaltflächenleiste, Haustierrahmen, Haltungsleiste, Stärkungs- und Schwächungsreihen sowie den Wunschlistenhinweis. Wenn ein Rahmen falsch steht, setzt Auf Standard zurück am Fuß desselben Reiters alle auf ihren Ausgangsort.",
       "framesGovernedExtra": "Rahmen bearbeiten löst außerdem den Trackerstapel darunter: verfolgte Quests und Ziele, Fortschritt im Buch der Taten, Reliquiarseiten, das aktuelle Delve, jeden Riss, an dem du teilnimmst, und das verfolgte Rezept oder die Kommission. Ebenfalls enthalten sind die Haustieraktionsleiste neben dem Haustierrahmen, der Zielpunkte-Rahmen für deine Schwächungen auf nahen Gegnern, das Paladin-Medaillon der Hingabe, die Affliction-Leiste des Hexenmeisters, das Zauberproc-Overlay, der Nebenhandschwungtimer für Beidhänder und das Register-Schadensmeterfenster. Jeder Bereich trägt seinen eigenen Namenschip, sobald er gelöst ist.",
       "framesGovernedAuraTracks": "Rahmen bearbeiten löst außerdem die sechs optionalen Aurenleisten, sobald du sie im Reiter Kampf der Interfaceoptionen einschaltest: Meine Stärkungen, defensive Abklingzeiten, meine Schilde, offensive Abklingzeiten, Bewegung und Verstohlenheit sowie Meine Stärkungen auf Verbündeten. Jede Leiste ist zunächst aus und trägt beim Lösen ihren eigenen Namenschip.",
+      "framesGovernedTalkingHead": "Edit Frames also loosens the Dialogue panel, which carries an NPC's spoken line while that NPC is out of your view; it wears its name chip while it is loose.",
       "barsTitle": "Leisten, Timer und Kampftext",
       "barsBody": "Deine Zauberleiste erscheint in der Mitte des Bildschirms, direkt über deinen Aktionsleisten, sobald du zauberst oder kanalisierst, und zeigt den Namen des Zaubers sowie die verbleibende Zeit. Dein Ziel bekommt eine eigene Zauberleiste auf seinem Fenster, sodass du siehst, was kommt, und darauf reagieren kannst.\n\nEine dünne Schwungleiste liegt unter deiner Zauberleiste und füllt sich zwischen deinen Waffenschwüngen, sodass ein Nah- oder Fernkämpfer sehen kann, wann der nächste automatische Treffer landet.\n\nDeine Erfahrungsleiste läuft über die volle Breite unter deinen Aktionsleisten, in Segmente unterteilt, mit einem helleren Abschnitt, der die ausgeruhte Erfahrung zeigt, die du angesammelt hast.\n\nSchwimme unter Wasser, und am oberen Bildschirmrand erscheint eine blaue Atemleiste. Sie leert sich, während dein Kopf unter Wasser ist, blinkt rot auf, sobald sie aufgebraucht ist und du zu ertrinken beginnst, und füllt sich schnell wieder, sobald du auftauchst. Die Leertaste lässt dich nach oben schwimmen, und die Taste zum Abtauchen, standardmäßig Strg, bringt dich tiefer.\n\nSchaden und Heilung schweben als kleine Zahlen über dem auf, was sie getroffen haben, sodass du einen Kampf lesen kannst, ohne Text lesen zu müssen. Der Kampf-Reiter in deinem Chatfenster führt das vollständige schriftliche Protokoll.",
       "aurasTitle": "Stärkungs- und Schwächungszauber",
@@ -6423,6 +6566,7 @@ export const de_DE: EnTranslations = {
       "formsNote": "Ein Druide kämpft, indem er die Gestalt wechselt. Die meisten Druidenfähigkeiten gehören zu einer bestimmten Gestalt, sodass die Form, in der du dich befindest, entscheidet, was du wirken kannst, und der Wechsel kostet etwas Mana. Du kannst innerhalb oder außerhalb des Kampfes wechseln, so oft du willst.",
       "formsAutoUnshift": "Ein Heilzauber oder ein Schadenszauber, den du in einer Gestalt wirkst, holt dich selbst daraus hervor. Eine Gestalt auf diese Weise zu verlassen ist gratis und verbraucht keine globale Abklingzeit, ein Sofortzauber geht also in dem Moment los, in dem du ihn drückst. Zurückzuwechseln ist eine gewöhnliche Fähigkeit und kostet weiterhin Mana und deine globale Abklingzeit.",
       "formsMoonwing": "Ein Gleichgewichts-Druide erhält eine weitere Gestalt, die Mondkingestalt, die Zaubergestalt, in der er kämpft. Sie ist die einzige Tiergestalt, die deine Zauber behält, und dein Zauberstab funktioniert nur in ihr oder in deiner gewöhnlichen Zaubergestalt.",
+      "formsWolfEngage": "Ein Wolf eröffnet den Kampf mit Bruin-Ansturm, wechselt sofort in die Wolfsgestalt, um das Ziel festzunageln, schließt die Lücke mit Ansprung, wenn er nicht schleicht, und hält einen Gegner mit Niederreißen fest.",
       "formLine": {
         "form_bear": "Die Tank-Gestalt: ein dickes Fell, Wut statt Mana und zusätzliche Bedrohung, damit Gegner weiter auf dich einschlagen.",
         "form_cat": "Die Nahkampf-Schadensgestalt: Energie und Combopunkte wie ein Schurke, dazu deutlich weniger Bedrohung.",
@@ -6990,7 +7134,7 @@ export const de_DE: EnTranslations = {
     "reliquaryPage": {
       "intro": "Das Reliquiar ist das Museum der einzigartigen Beute, die du katalogisiert hast: begehrte Einzelstücke aus Dungeons, Berufstrophäen, Reittiere, Waffenoptiken und Titel. Es ergänzt das Buch der Taten so, wie eine Trophäenhalle ein Erfolgsbuch ergänzt.",
       "howHeading": "Wie die Sammlung funktioniert",
-      "howBody": "Öffne Das Reliquiar im Spiel (standardmäßig Umschalt+X). Jedes Regal beherbergt Seiten einzigartiger Reliquien. Du füllst eine Silhouette, sobald du dieses Stück zum ersten Mal auf dem Charakter erhältst, und illuminierst eine Seite, sobald jede Reliquie darauf gefüllt ist. Einige Seiten tragen die Kennzeichnung Ausgemustert oder Persönlich: Sie stehen außerhalb der Vervollständigung und blockieren daher niemals ein Regal oder den gesamten Katalog. Funde erscheinen sofort als Hinweis und aktualisieren das offene Fenster; der Fortschritt gilt pro Charakter, ausgenommen Waffenoptiken, die Kontokosmetik sind.",
+      "howBody": "Öffne Das Reliquiar im Spiel (standardmäßig Umschalt+X). Jedes Regal beherbergt Seiten einzigartiger Reliquien. Eine Silhouette füllt sich, sobald irgendein Charakter deines Kontos dieses Stück zum ersten Mal erhält, und eine Seite wird illuminiert, sobald jede Reliquie darauf gefüllt ist. Einige Seiten tragen die Kennzeichnung Ausgemustert oder Persönlich: Sie stehen außerhalb der Vervollständigung und blockieren daher niemals ein Regal oder den gesamten Katalog. Funde erscheinen sofort als Hinweis und aktualisieren das offene Fenster; der Fortschritt gilt für alle Charaktere des Kontos gemeinsam, sodass eine Reliquie, die ein Charakter findet, die Seite für alle füllt.",
       "ranksHeading": "Kustos-Ränge",
       "ranksBody": "Kustos-Ränge steigen mit jeder katalogisierten einzigartigen Reliquie und gewähren ausschließlich kosmetische Titel und Rahmen. Sie geben niemals Kampfkraft, Beutechance oder einen Pechausgleich. Kontoweite Waffenoptiken zählen nicht für den Kustos-Rang, damit das Ansehen am Charakter haften bleibt, und Reliquien auf ausgemusterten oder persönlichen Seiten zählen ebenfalls nicht dafür.",
       "retiredTag": "Ausgemustert",
@@ -11858,7 +12002,7 @@ export const de_DE: EnTranslations = {
       },
       "cat_form": {
         "name": "Wolfsgestalt",
-        "description": "Verwandelt euch in einen Wolf: Beweglichkeit steigt mit eurer Stufe, Angriffskraft +8 plus 2 je Stufe, eure Angriffe nutzen Energie und Combopunkte, und ihr erzeugt 29% weniger Bedrohung. Erneut wirken, um zur Zauberergestalt zurückzukehren."
+        "description": "Verwandelt euch in einen Wolf: Beweglichkeit steigt mit eurer Stufe, Angriffskraft +8 plus 2 je Stufe, eure Angriffe nutzen Energie und Combopunkte, und ihr erzeugt 29% weniger Bedrohung. Der Wechsel in eine beliebige Gestalt gewährt Weiter Schritt: 3 Sek. lang 60% Bewegungstempo, einmal alle 20 Sek. Erneut wirken, um zur Zauberergestalt zurückzukehren."
       },
       "claw": {
         "name": "Reißklaue",
@@ -11923,7 +12067,15 @@ export const de_DE: EnTranslations = {
       },
       "pounce": {
         "name": "Schleichschlag",
-        "description": "Ein Eröffnungsangriff aus der Verstohlenheit, der das Ziel 2 Sek. lang betäubt. Gewährt 1 Combopunkt. Nur in Wolfsgestalt."
+        "description": "Ein Eröffnungsangriff aus der Verstohlenheit, der das Ziel 2 Sek. lang betäubt. Gewährt 1 Combopunkt. Nur in Wolfsgestalt. Außerhalb des Schleichmodus ist diese Taste Ansprung."
+      },
+      "lunge": {
+        "name": "Ansprung",
+        "description": "Springt einen bis zu 12 m entfernten Gegner an, verursacht 60% Waffenschaden und gewährt 1 Combopunkt. Nur in Wolfsgestalt."
+      },
+      "hamstring_bite": {
+        "name": "Niederreißen",
+        "description": "Finishing-Move, der das Ziel 1 Sek. plus 1 Sek. pro Combopunkt betäubt (5 Combopunkte: 6 Sek.). Nur in Wolfsgestalt."
       },
       "insect_swarm": {
         "name": "Stechender Schwarm",
@@ -12637,7 +12789,7 @@ export const de_DE: EnTranslations = {
       },
       "bear_charge": {
         "name": "Bruin-Ansturm",
-        "description": "Stürmt auf einen Gegner zu, erzeugt 9 Wut und betäubt ihn für 1 Sek. Reichweite 8-25 m. Nur in Bruin Form."
+        "description": "Stürmt auf einen Gegner zu, erzeugt 9 Wut und betäubt ihn für 1 Sek. 3 Sek. lang danach ist die Wolfsgestalt kostenlos und nagelt das Ziel fest, was es 4 Sek. lang um 50% verlangsamt. Reichweite 8-25 m. Nur in Bruin Form."
       },
       "demoralizing_roar": {
         "name": "Feiges Gebrüll",
@@ -12645,7 +12797,7 @@ export const de_DE: EnTranslations = {
       },
       "prowl": {
         "name": "Anpirschen",
-        "description": "Geht in Wolfsgestalt in den Schleichmodus über und bewegt Euch 5% langsamer. Im Kampf nicht einsetzbar."
+        "description": "Geht in Wolfsgestalt in den Schleichmodus über. Im Kampf nicht einsetzbar."
       },
       "rake": {
         "name": "Schinden",

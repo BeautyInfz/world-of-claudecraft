@@ -902,6 +902,7 @@ export const nl_NL: EnTranslations = {
     },
     "questTracker": {
       "count": "({count})",
+      "objectiveValue": "{current} / {total}",
       "collapseHint": "Queestevolger inklappen",
       "expandHint": "Queestevolger uitklappen"
     },
@@ -1220,7 +1221,10 @@ export const nl_NL: EnTranslations = {
       "devName": "Bijdrager",
       "devTierCol": "Insigne",
       "mergedPrs": "Samengevoegde PR's",
-      "devEmpty": "Nog geen gerangschikte bijdragers."
+      "devEmpty": "Nog geen gerangschikte bijdragers.",
+      "podiumLabel": "Top three",
+      "unclaimed": "Unclaimed",
+      "prestigeTitle": "Prestige {rank}"
     },
     "pledge": {
       "open": "Accepteert geloften",
@@ -1243,6 +1247,8 @@ export const nl_NL: EnTranslations = {
       "noteLabel": "Bordnotitie",
       "notePlaceholder": "Vertel aspirant-leden waarnaar je gilde op zoek is",
       "save": "Opslaan",
+      "newPlayerFriendlyLabel": "New player friendly",
+      "newPlayerFriendlyHint": "Shown on the recruits' board at the Proving Shore signpost.",
       "yourPledge": "Je gelofte: {guild}",
       "since": "Gezworen op {date}",
       "withdraw": "Gelofte intrekken"
@@ -1266,6 +1272,9 @@ export const nl_NL: EnTranslations = {
       "previous": "Vorige sessies",
       "runLabel": "Sessie {index}",
       "runSummary": "{total} in {time}"
+    },
+    "talkingHead": {
+      "label": "Dialogue"
     },
     "hubLesson": {
       "target": "Richt je op de oefenpop om te beginnen.",
@@ -1395,6 +1404,7 @@ export const nl_NL: EnTranslations = {
       "targetPrev": "Achteruit Door Doelwitten Bladeren",
       "discord": "Discord",
       "bgFlag": "Slagveldvlag-actie",
+      "friendlyNameplates": "Toggle Friendly Nameplates",
       "sheathe": "Wapen Schede In/Uit",
       "dive": "Omlaag Zwemmen",
       "categoryPet": "Huisdier",
@@ -1729,6 +1739,9 @@ export const nl_NL: EnTranslations = {
     },
     "controller": {
       "title": "Controller",
+      "device": "Connected Device",
+      "deviceConnected": "Connected",
+      "deviceDisconnected": "No controller detected",
       "glyphStyle": "Knoplabels",
       "glyphStyleAuto": "Automatisch",
       "glyphStyleXbox": "Xbox",
@@ -2043,6 +2056,52 @@ export const nl_NL: EnTranslations = {
       "spellOrder": "Spreukvolgorde",
       "reset": "Positie resetten",
       "spellPosition": "Spreukvolgorde {position} / {count}",
+      "watchlist": "Watched Spells",
+      "watchlistHint": "Pick any spell that buffs you to give it its own aura. Picked spells get a full card below, with their own icon, color, position and ground ring.",
+      "watchlistEmpty": "No other spell in your spellbook puts a buff on you.",
+      "watchlistWatch": "Watch {spell}",
+      "watchlistUnwatch": "Stop watching {spell}",
+      "watchlistCount": "{count} watched",
+      "sound": "Alert Sound",
+      "soundNone": "No sound",
+      "soundVolume": "Sound Volume",
+      "soundPreview": "Play",
+      "soundPreviewAria": "Preview the {sound} alert sound",
+      "soundHint": "A sound plays each time this spell procs. Turn the icon, crescents and ground ring off to have the sound alone announce it.",
+      "readyGlow": "Hotbar Glow",
+      "readyGlowHint": "Lights this spell on your action bar while its buff is up.",
+      "reticleTick": "Reticle Tick",
+      "reticleTickHint": "Adds a mark near the centre of the screen that lights when this spell procs.",
+      "haptic": "Rumble",
+      "hapticNone": "Off",
+      "hapticHint": "Vibrates a connected controller, or your phone. Ignored where the device has no haptics.",
+      "haptics": {
+        "tap": "Tap",
+        "double": "Double",
+        "long": "Long"
+      },
+      "cues": {
+        "softChime": "Soft Chime",
+        "musicBox": "Music Box",
+        "glassPing": "Glass Ping",
+        "waterDrop": "Water Drop",
+        "bubblePop": "Bubble Pop",
+        "hardBell": "Hard Bell",
+        "templeGong": "Temple Gong",
+        "anvilStrike": "Anvil Strike",
+        "coinDrop": "Coin Drop",
+        "swordDraw": "Sword Draw",
+        "blaringHorn": "Blaring Horn",
+        "carKlaxon": "Car Klaxon",
+        "sonarPing": "Sonar Ping",
+        "electricZap": "Electric Zap",
+        "catMeow": "Cat Meow",
+        "owlHoot": "Owl Hoot",
+        "wolfHowl": "Wolf Howl",
+        "frogCroak": "Frog Croak",
+        "windWhoosh": "Wind Whoosh",
+        "steamHiss": "Steam Hiss"
+      },
       "procs": {
         "revenge": "Wraak!",
         "battleTrance": "Gevechtstrance",
@@ -2114,6 +2173,22 @@ export const nl_NL: EnTranslations = {
       "playtimeHidden": "Verborgen",
       "showPlaytimeAria": "Speeltijd tonen",
       "hidePlaytimeAria": "Speeltijd verbergen"
+    },
+    "charSidebar": {
+      "label": "Character details",
+      "subtitle": "Level {level} {className} . {archetype} . Hobby: {hobby}",
+      "subtitleNoHobby": "Level {level} {className} . {archetype}",
+      "stats": "Stats",
+      "progression": "Progression",
+      "skills": "Skills",
+      "gathering": "Gathering",
+      "crafting": "Crafting",
+      "openProfessions": "Open Professions"
+    },
+    "questLog": {
+      "completed": "Completed",
+      "zoneSummary": "{count} ({ready} ready)",
+      "shiftHint": "Shift-click a quest to link it in chat."
     },
     "statInfo": {
       "fromYour": "Van je {value} {stat}:",
@@ -2228,6 +2303,12 @@ export const nl_NL: EnTranslations = {
       "linkHint": "Shift-klik om dit voorwerp in de chat te delen."
     },
     "plurals": {
+      "guildBoardShown": {
+        "one": "{count} guild shown",
+        "few": "{count} guilds shown",
+        "many": "{count} guilds shown",
+        "other": "{count} guilds shown"
+      },
       "commissionMasterworks": {
         "one": "{count} meesterwerk",
         "few": "{count} meesterwerken",
@@ -2357,6 +2438,7 @@ export const nl_NL: EnTranslations = {
     },
     "bugReport": {
       "menuButton": "Bug melden",
+      "online": "Online",
       "realm": "Wereld",
       "character": "Personage",
       "position": "Positie",
@@ -2962,8 +3044,8 @@ export const nl_NL: EnTranslations = {
         "kingsWrathSummary": "Nythraxis richt op Normal {bonusNormal} meer schade aan of {bonusHeroic} op Heroic voor de rest van het gevecht. Grafuitbarsting gebeurt elke {eruptionEveryNormal} sec ({eruptionEveryHeroic} op Heroic) en Grafvuur elke {gravefireEveryNormal} sec ({gravefireEveryHeroic} op Heroic).",
         "kingsWrathResponse": "Gebruik resterende defensieve cooldowns voor onvermijdbare schade. Houd elke eerdere mechaniek schoon terwijl de raid het gevecht afrondt.",
         "boneStormName": "Beenderstorm",
-        "boneStormSummary": "Vanaf {first} sec in Koningswoede en daarna elke {everyNormal} sec begint Nythraxis {duration} sec lang Beenderstorm. Hij negeert dreiging, beweegt {speed} keer zo snel als normaal en doet {charges} charges van elk {chargeSeconds} sec. Zijn werveling richt elke seconde binnen {radius} yd {whirlNormal} van maximale gezondheid aan. Elke charge eindigt in een Beenderslag binnen dezelfde straal voor {slamNormal} van maximale gezondheid. Hij cast Beenderspies {spikeAt} sec in de storm, daarna wordt Grafbreker {rearm} sec na het einde opnieuw geactiveerd.",
-        "boneStormHeroicSummary": "Vanaf {first} sec in Koningswoede en daarna elke {everyHeroic} sec begint Nythraxis {duration} sec lang Beenderstorm. Hij negeert dreiging, beweegt {speed} keer zo snel als normaal en doet {charges} charges van elk {chargeSeconds} sec. Zijn werveling richt elke seconde binnen {radius} yd {whirlHeroic} van maximale gezondheid aan. Elke charge eindigt in een Beenderslag binnen dezelfde straal voor {slamHeroic} van maximale gezondheid. Hij cast Beenderspies {spikeAt} sec in de storm, daarna wordt Grafbreker {rearm} sec na het einde opnieuw geactiveerd.",
+        "boneStormSummary": "Vanaf {first} sec in Koningswoede en daarna elke {everyNormal} sec begint Nythraxis {duration} sec lang Beenderstorm. Hij negeert dreiging, beweegt {speed} keer zo snel als normaal en doet {charges} charges van elk {chargeSeconds} sec. Zijn werveling richt elke seconde binnen {radius} yd {whirlNormal} van maximale gezondheid aan. Elke charge eindigt in een Beenderslag binnen dezelfde straal voor {slamNormal} van maximale gezondheid. De eerste slag van elke storm raakt in plaats daarvan voor {openingSlamNormal}. Grafbreker wordt {rearm} sec na het einde opnieuw geactiveerd.",
+        "boneStormHeroicSummary": "Vanaf {first} sec in Koningswoede en daarna elke {everyHeroic} sec begint Nythraxis {duration} sec lang Beenderstorm. Hij negeert dreiging, beweegt {speed} keer zo snel als normaal en doet {charges} charges van elk {chargeSeconds} sec. Zijn werveling richt elke seconde binnen {radius} yd {whirlHeroic} van maximale gezondheid aan. Elke charge eindigt in een Beenderslag binnen dezelfde straal voor {slamHeroic} van maximale gezondheid. De eerste slag van elke storm raakt in plaats daarvan voor {openingSlamHeroic}. Grafbreker wordt {rearm} sec na het einde opnieuw geactiveerd.",
         "boneStormResponse": "Verspreid je en blijf wegrennen van Nythraxis. De gechargede raider rent weg terwijl iedereen ruimte vrijlaat rond het chargepad, daarna pakken de tanks hem op wanneer de storm eindigt.",
         "crownEnduresName": "De Kroon houdt stand",
         "crownEnduresSummary": "Op {enrageNormal} sec vanaf de pull (de klok pauzeert terwijl Broeder Aldric bij 70% binnenkomt) activeert De Kroon houdt stand als harde razernij. Nythraxis krijgt {damage} meer schade en {haste} snellere aanvallen, daarna elke {rampEveryNormal} sec nog eens {rampStep} schade. Er is geen timerbalk. Waarschuwingen komen als kreten bij {warn60}, {warn30} en {warn10} sec resterend.",
@@ -3014,6 +3096,7 @@ export const nl_NL: EnTranslations = {
       "elementalConvergencePrimed": "Je volgende spreuk van de andere elementaire school verleent Elementaire Convergentie",
       "hunterFerocity": "{stacks} Roedelfelheid: je huisdier richt {pct}% meer schade aan",
       "cooldownCap": "{used} van {cap} sec afkoeltijdvermindering gebruikt in dit venster",
+      "bruinRushWindow": "Wolfsgedaante kost geen mana en pint het doelwit van uw Bruin-stormloop vast, wat het {sec} sec lang {pct}% vertraagt",
       "funeralHarvestLock": "Funeral Harvest kan nog geen ander Zielfragment creëren",
       "leadenHexLock": "Loden vloek kan dit doelwit nog niet opnieuw vastwortelen",
       "forbiddenReflectionReady": "Je volgende in aanmerking komende Heksenmeester-afkoeltijd kan opnieuw worden ingezet",
@@ -3126,7 +3209,7 @@ export const nl_NL: EnTranslations = {
       "elementalTrance": "Opgelopen schade verminderd met {pct}%. {mana}% van alle schade die je aanricht wordt omgezet in mana",
       "stealth": "Verborgen; Bewegungstempo um {pct}% verringert",
       "formBear": "Bruingedaante: verhoogde gezondheid en pantser",
-      "formCat": "Katzengestalt: Nahkampfschaden und Energie",
+      "wolfForm": "Cat Form: melee damage and energy; movement speed increased by {pct}%",
       "formTravel": "Fleetgedaante: bewegingssnelheid verhoogd met {pct}%",
       "formFireball": "Ember Form: bewegingssnelheid verhoogd met {pct}%; aanvallen en spreuken zijn uitgeschakeld",
       "formMoonkin": "Maanuilvorm: spreukschade verhoogd met {pct}% en pantser verhoogd met {armorPct}%",
@@ -3234,6 +3317,7 @@ export const nl_NL: EnTranslations = {
       "lock": "Spelerframe vergrendelen"
     },
     "partyFrames": {
+      "header": "Party",
       "section": "Groeps- en raidframes",
       "optionsSection": "Groepsframe-opties",
       "unlock": "Groeps- en raidframes verplaatsen",
@@ -3735,6 +3819,15 @@ export const nl_NL: EnTranslations = {
       "subtitle": "Gildes van het rijk",
       "rosterTitle": "Bekijk de ledenlijst van {guild}",
       "back": "Terug",
+      "filters": "Board filters",
+      "newPlayerFriendly": "New player friendly",
+      "newPlayerFriendlyTitle": "This guild welcomes new players",
+      "filterNewPlayersTitle": "Show only guilds that welcome new players",
+      "filterEmpty": "No guild has opened its doors to new players yet.",
+      "showAll": "Show all guilds",
+      "officersOnline": "Officers online",
+      "officersOnlineLabel": "Officers online: {names}",
+      "officerEntry": "{name} ({rank})",
       "popupTitle": "Gildebord",
       "close": "Sluiten"
     },
@@ -4023,7 +4116,6 @@ export const nl_NL: EnTranslations = {
       }
     },
     "gathering": {
-      "title": "Verzamelen",
       "mining": "Mijnbouw",
       "logging": "Houtkap",
       "herbalism": "Kruidenkunde",
@@ -4207,9 +4299,7 @@ export const nl_NL: EnTranslations = {
       "noviceBody": "Je Landbouwvaardigheid groeit telkens wanneer je een gewas oogst. Zaai een zaad in een kweekbed om te beginnen."
     },
     "archetypeTitle": {
-      "label": "Titel",
-      "none": "Geen",
-      "hobbyLabel": "Liefhebberij"
+      "none": "Geen"
     },
     "archetypePair": {
       "engineering+alchemy": "Bommenwerper",
@@ -4379,7 +4469,9 @@ export const nl_NL: EnTranslations = {
       "hobbyLabel": "Hobby: {craft}",
       "majorsLabel": "Hoofdvakken: {a} en {b}",
       "pairsHeld": "Behouden paren: {count}",
-      "returnsLabel": "Teruggaven: {count}"
+      "returnsLabel": "Teruggaven: {count}",
+      "retentionFooter": "Returns on respec: 60% of skill kept.",
+      "tutorialLink": "Profession tutorial"
     },
     "crafting": {
       "title": "Knutselen",
@@ -4414,6 +4506,7 @@ export const nl_NL: EnTranslations = {
       "vaultUnreachable": "De Materialenkluis is hier niet bereikbaar.",
       "craftFeeLine": "Ambachtskosten: {fee} per stuk",
       "empty": "Nog geen recepten bekend.",
+      "materialsFooter": "Materials in your vault are drawn automatically. Learn more recipes at the station.",
       "resultAria": "Ambacht {name}",
       "craftedToast": "Gemaakt: {name}",
       "craftedToastQty": "Gemaakt: {name} x{qty}",
@@ -4515,6 +4608,9 @@ export const nl_NL: EnTranslations = {
       "commissionToggleHint": "Bindt aan het eerste personage dat het via een ruil ontvangt.",
       "commissionUnbound": "Opdrachtsstuk: bindt aan de eerste ontvanger",
       "commissionBound": "Opdrachtstuk: gebonden aan de ontvanger"
+    },
+    "marketWindow": {
+      "mixedListingsFooter": "The Merchant restocks common goods; player listings sit beside them at their asking price."
     },
     "itemMenu": {
       "use": "Gebruiken",
@@ -4950,6 +5046,10 @@ export const nl_NL: EnTranslations = {
       "ownedTooltipStatus": "Gecatalogiseerd in Het Reliquarium",
       "missingTooltipStatus": "Nog niet gevonden",
       "firstFindClears": "Voor het eerst gevonden bij voltooiing {count}",
+      "foundBy": "Found by {names}",
+      "finderWithDate": "{name} ({date})",
+      "sharedScopeNote": "Shared by every character on your account",
+      "sharedScopeHint": "A relic found by any character on your account fills the page here too.",
       "unlockToast": "Reliek gecatalogiseerd: {name}",
       "illuminateBanner": "Bladzijde verlucht: {name}",
       "illuminateToast": "Elk reliek op {name} is gevuld.",
@@ -5083,6 +5183,10 @@ export const nl_NL: EnTranslations = {
       "progressAria": "Voortgang: {current} van {target}",
       "renownChip": "{renown} Roem",
       "earnedDate": "Behaald op {date}",
+      "earnedBy": "Earned by {names}",
+      "earnerWithDate": "{name} ({date})",
+      "accountScopeNote": "Shared by every character on your account",
+      "accountScopeHint": "A deed any character on your account accomplishes is earned here too, and the Book names who earned it.",
       "featRibbon": "Wapenfeit",
       "hiddenBadge": "Verborgen",
       "titleChip": "Titelbeloning",
@@ -5132,6 +5236,33 @@ export const nl_NL: EnTranslations = {
       "toggleAria": "Schakel tussen de wereldkaart en de gebiedskaart",
       "levels": "Niveaus {min} tot {max}"
     },
+    "mapAtlas": {
+      "level": "Level {level}",
+      "landmarkCount": "{count} landmarks",
+      "filtersAria": "Map layers",
+      "filters": {
+        "quests": "Quests",
+        "gather": "Gather",
+        "dungeons": "Dungeons",
+        "services": "Services",
+        "players": "Players"
+      },
+      "trackedQuests": "Tracked quests",
+      "noTrackedQuests": "No tracked quests",
+      "availableNearby": "Available nearby",
+      "noNearbyQuests": "No nearby quests",
+      "distance": "{distance} yards",
+      "showRoute": "Show Route",
+      "untrack": "Untrack",
+      "track": "Track",
+      "legend": {
+        "dungeon": "Dungeon",
+        "ore": "Ore",
+        "herb": "Herb",
+        "mail": "Mail",
+        "passage": "Passage"
+      }
+    },
     "arenaGate": {
       "minLevelNote": "Vereist niveau {level}"
     },
@@ -5150,6 +5281,7 @@ export const nl_NL: EnTranslations = {
       "tabBrowse": "Bladeren",
       "tabSell": "Verkopen",
       "tabActivity": "Mijn Activiteiten",
+      "tabHistory": "Sales History",
       "tabsLabel": "Onderdelen van de $WOC-beurs",
       "loading": "De Beurs laden...",
       "loadFailed": "De Beurs kon niet worden bereikt. Probeer het straks opnieuw.",
@@ -5174,6 +5306,16 @@ export const nl_NL: EnTranslations = {
       "colCurrentBid": "Huidig bod",
       "colBuyNow": "Nu kopen",
       "colTimeLeft": "Resterende tijd",
+      "colBuyer": "Buyer",
+      "colSoldAt": "Sold",
+      "colSalePrice": "Sale price",
+      "colSaleType": "Type",
+      "saleTypeAuction": "Auction",
+      "saleTypeBuyNow": "Buy now",
+      "saleTypeDirected": "Directed",
+      "saleTypeUnknown": "Unknown",
+      "historyEmpty": "No sales recorded yet.",
+      "historyError": "Sales history could not be loaded.",
       "reserveMet": "Reserveprijs behaald",
       "reserveNotMet": "Reserveprijs niet behaald",
       "yourListing": "Jouw aanbieding",
@@ -6066,6 +6208,7 @@ export const nl_NL: EnTranslations = {
       "framesMoveBodyEditFrames": "Je eigen frame, je doelraam en je groepsframes kunnen allemaal worden verplaatst. Elk heeft een kleine verplaatsknop in de hoek: ontgrendel hem, sleep het frame naar de gewenste plek en vergrendel hem weer zodat een verdwaalde klik niets kan verschuiven. Frames bewerken bovenaan het tabblad Frames in de Interface-opties maakt de rest van de interface in één keer los, samen met die drie frames: de actiebar, de werpbalk, de zwaaibalk, de ervaringsbalk, de minimap, de knoppenrail, het huisdierframe, de houdingsbalk, de buff- en debuffrijen en het label Herinnering voor verlanglijst. Als ze op een plek belanden waar je spijt van krijgt, zet Herstellen naar standaard onderaan hetzelfde tabblad Frames ze allemaal terug naar hun oorspronkelijke plek.",
       "framesGovernedExtra": "Frames bewerken maakt ook de tracker-stapel eronder los, met je gevolgde queesten en doelen, je deedvoortgang, je Reliquary-pagina's, de delve waarin je zit, elke rift waaraan je deelneemt en het recept of de opdracht die je volgt. Ook de huisdieractiebar naast je huisdierframe, het Doel-puntenframe voor je debuffs op nabije vijanden, de Toewijding-medaille van de paladijn, de Affliction-balk van de warlock, de spreukproc-overlay, de zwaai-timer voor de vrije hand van dubbelzwaaiers en het venster met tabbladen voor de schademeter worden losgemaakt, elk met zijn eigen naamlabel.",
       "framesGovernedAuraTracks": "Frames bewerken maakt ook de zes optionele aurastromen los zodra je ze hebt ingeschakeld op het tabblad Gevecht van dezelfde Interface-opties: de stroom Mijn buffs, de stroom Verdedigingsafkoelingen, de stroom Mijn schilden, de stroom Aanvalsafkoelingen, de stroom Beweging en sluipen, en de stroom Mijn buffs op bondgenoten. Elke stroom staat standaard uit en draagt zijn eigen naamlabel zolang hij losstaat.",
+      "framesGovernedTalkingHead": "Edit Frames also loosens the Dialogue panel, which carries an NPC's spoken line while that NPC is out of your view; it wears its name chip while it is loose.",
       "barsTitle": "Balken, timers en gevechtstekst",
       "barsBody": "Je spreukbalk verschijnt in het midden van het scherm, net boven je actiebalken, telkens wanneer je een spreuk uitspreekt of kanaliseert, en toont de naam van de spreuk en de resterende tijd. Je doelwit krijgt een eigen spreukbalk op zijn frame, zodat je kunt zien wat eraan komt en erop kunt reageren.\n\nEen dunne wapenslagbalk zit onder je spreukbalk en vult zich tussen je wapenslagen, zodat een nabij- of afstandsaanvaller kan zien wanneer de volgende automatische treffer landt.\n\nJe ervaringsbalk loopt over de volle breedte onder je actiebalken, verdeeld in segmenten, met een lichter stuk dat de uitgeruste ervaring toont die je hebt opgespaard.\n\nZwem onder water en een blauwe adembalk verschijnt bovenaan het scherm. Hij loopt leeg terwijl je hoofd onder water is, knippert rood zodra hij leeg is en je begint te verdrinken, en vult zich snel weer zodra je boven water komt. Spatie zwemt je omhoog, en de toets Omlaag Zwemmen, standaard Ctrl, brengt je dieper.\n\nSchade en genezing zweven als kleine getallen omhoog boven wat ze raken, zodat je een gevecht kunt lezen zonder tekst te lezen. Het tabblad Gevecht in je chatbox houdt het volledige geschreven verslag bij.",
       "aurasTitle": "Buffs en debuffs",
@@ -6423,6 +6566,7 @@ export const nl_NL: EnTranslations = {
       "formsNote": "Een druïde vecht door van gedaante te veranderen. De meeste druïdenvaardigheden horen bij één gedaante, dus de vorm waarin je verkeert bepaalt wat je kunt gebruiken, en van gedaante wisselen kost een beetje mana. Je kunt in of buiten gevecht van gedaante wisselen, zo vaak je wilt.",
       "formsAutoUnshift": "Een heling of een schadespreuk die je in gedaante uitspreekt, haalt je er vanzelf uit. Een gedaante zo verlaten is gratis en verbruikt je globale afkoeltijd niet, dus een instantspreuk gaat af op het moment dat je drukt. Terugschakelen is een gewone vaardigheid en kost nog steeds mana en je globale afkoeltijd.",
       "formsMoonwing": "Een Balans-druïde krijgt er nog één gedaante bij: de Maanuilvorm, de spreukgedaante waarin hij vecht. Het is de enige diergedaante die je spreuken behoudt, en je toverstaf werkt alleen in deze vorm of in je normale spreukgedaante.",
+      "formsWolfEngage": "Een wolf opent het gevecht met Bruin-stormloop, wisselt meteen naar Wolfsgedaante om het doelwit vast te pinnen, dicht de afstand met Uitval wanneer hij niet sluipt, en houdt een vijand stil met Neerhalen.",
       "formLine": {
         "form_bear": "De tankgedaante: een zware huid, Woede in plaats van mana, en extra dreiging zodat vijanden jou blijven aanvallen.",
         "form_cat": "De gedaante voor melee-schade: Energie en combopunten, zoals een Schurk, en veel minder dreiging.",
@@ -6990,7 +7134,7 @@ export const nl_NL: EnTranslations = {
     "reliquaryPage": {
       "intro": "Het Reliquarium is het museum van de unieke buit die je hebt gecatalogiseerd: de felbegeerde stukken uit kerkers, beroepstrofeeën, rijdieren, wapenskins en titels. Het hoort bij het Boek der Daden zoals een trofeeënzaal hoort bij een prestatieboek.",
       "howHeading": "Hoe de verzameling werkt",
-      "howBody": "Open Het Reliquarium in het spel (standaard Shift+X). Elke plank draagt bladzijden met unieke relieken. Je vult een silhouet zodra je dat stuk voor het eerst op dit personage bemachtigt, en je verlucht een bladzijde zodra elk reliek erop gevuld is. Een paar bladzijden dragen het label Vervallen of Persoonlijk: die staan buiten de voltooiing en blokkeren dus nooit een plank of de hele catalogus. Vondsten verschijnen meteen als melding en verversen het geopende venster; voortgang geldt per personage, behalve wapenskins, die accountcosmetica zijn.",
+      "howBody": "Open Het Reliekschrijn in het spel (standaard Shift+X). Elke plank bevat pagina's met unieke relieken. Een silhouet wordt gevuld zodra een willekeurig personage op je account dat stuk voor het eerst verkrijgt, en een pagina licht op wanneer elke reliek erop gevuld is. Enkele pagina's dragen het label Uitgefaseerd of Persoonlijk: ze vallen buiten de voltooiing en blokkeren dus nooit een plank of de hele catalogus. Vondsten verschijnen meteen als melding en verversen het geopende venster; voortgang wordt gedeeld door alle personages op het account, dus een reliek die één personage vindt, vult de pagina voor allemaal.",
       "ranksHeading": "Curator-rangen",
       "ranksBody": "Curator-rangen stijgen met elk uniek gecatalogiseerd reliek en schenken uitsluitend cosmetische titels en randen. Ze geven nooit gevechtskracht, buitkans of pechcompensatie. Wapenskins van het account tellen niet mee voor de Curator-rang, zodat het aanzien aan het personage gebonden blijft, en relieken op Vervallen of Persoonlijke bladzijden tellen er evenmin voor mee.",
       "retiredTag": "Vervallen",
@@ -11858,7 +12002,7 @@ export const nl_NL: EnTranslations = {
       },
       "cat_form": {
         "name": "Wolfsgedaante",
-        "description": "Verandert u in een wolf: behendigheid stijgt met uw niveau, aanvalskracht +8 plus 2 per niveau, uw aanvallen gebruiken energie en combopunten, en u wekt 29% minder dreiging op. Werp de spreuk opnieuw om naar de spreukengedaante terug te keren."
+        "description": "Verandert u in een wolf: behendigheid stijgt met uw niveau, aanvalskracht +8 plus 2 per niveau, uw aanvallen gebruiken energie en combopunten, en u wekt 29% minder dreiging op. Wisselen naar welke gedaante ook verleent Hobbelende pas: 3 sec lang 60% bewegingssnelheid, eenmaal per 20 sec. Werp de spreuk opnieuw om naar de spreukengedaante terug te keren."
       },
       "claw": {
         "name": "Rijtklauw",
@@ -11923,7 +12067,15 @@ export const nl_NL: EnTranslations = {
       },
       "pounce": {
         "name": "Sluipslag",
-        "description": "Een sluipopener die het doelwit 2 sec verdooft. Levert 1 combopunt op. Alleen in Wolfsgedaante."
+        "description": "Een sluipopener die het doelwit 2 sec verdooft. Levert 1 combopunt op. Alleen in Wolfsgedaante. Buiten sluiptocht is deze knop Uitval."
+      },
+      "lunge": {
+        "name": "Uitval",
+        "description": "Stort je op een vijand tot 12 m ver, wat 60% wapenschade toebrengt en 1 combopunt oplevert. Alleen in Wolfsgedaante."
+      },
+      "hamstring_bite": {
+        "name": "Neerhalen",
+        "description": "Afmaakactie die het doelwit verdooft voor 1 sec plus 1 sec per combopunt (5 combopunten: 6 sec). Alleen in Wolfsgedaante."
       },
       "insect_swarm": {
         "name": "Stekende Zwerm",
@@ -12637,7 +12789,7 @@ export const nl_NL: EnTranslations = {
       },
       "bear_charge": {
         "name": "Bruin-stormloop",
-        "description": "Storm op een vijand af, genereer 9 woede en verdoof hem gedurende 1 sec. Bereik 8-25 m. Alleen in Bruingedaante."
+        "description": "Storm op een vijand af, genereer 9 woede en verdoof hem gedurende 1 sec. Gedurende 3 sec daarna is Wolfsgedaante gratis en pint het doelwit vast, wat het 4 sec lang 50% vertraagt. Bereik 8-25 m. Alleen in Bruingedaante."
       },
       "demoralizing_roar": {
         "name": "Laf Gebrul",
@@ -12645,7 +12797,7 @@ export const nl_NL: EnTranslations = {
       },
       "prowl": {
         "name": "Besluipen",
-        "description": "Ga in sluiptocht terwijl je in Wolfsgedaante bent en beweeg 5% trager. Kan niet in gevecht worden gebruikt."
+        "description": "Ga in sluiptocht terwijl je in Wolfsgedaante bent. Kan niet in gevecht worden gebruikt."
       },
       "rake": {
         "name": "Villen",

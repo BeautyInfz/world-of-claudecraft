@@ -608,6 +608,23 @@ async function dismissTutorialGreeting(page) {
   await wait(200);
 }
 
+/** The staged skill some recipes write crosses a profession tier, and the
+ *  first-tier tutorial pops a variable beat LATER than any single dismissal:
+ *  a one-shot clear races it and the shot then shows the tutorial, not the
+ *  window under it. Sweep for the whole settle window instead. */
+async function dismissTutorialGreetingUntilSettled(page, attempts = 8) {
+  for (let i = 0; i < attempts; i++) {
+    await dismissTutorialGreeting(page);
+    const gone = await page.evaluate(
+      () =>
+        !document.getElementById('tutorial-greeting') &&
+        !document.getElementById('profession-tutorial'),
+    );
+    if (gone && i >= 3) return;
+    await wait(300);
+  }
+}
+
 /** Deliberate MEDIUM leg for treatments hidden below the medium effects tier
  *  (renderer gates like gfxTierAtLeast(GFX.effectsTier, 'medium')). Preset 2 is
  *  the LOWEST numeric preset whose tier passes such a gate (gfx.ts
@@ -1052,6 +1069,108 @@ async function triggerRowBreakdown(page, rowSelector, variant) {
 }
 
 export const TARGETS = [
+  // The account ledger (src/sim/account_ledger.ts): both books read the union
+  // of the character's own state and what the account's other characters
+  // earned or found. The capture stamps an ALT's entries straight onto the
+  // live ledger (never onto the character's own deedsEarned / itemsDiscovered),
+  // exactly what the server hands the sim for a sibling character's record, so
+  // the earned card and the owned cells paint from the ledger alone and name
+  // the alt. On a pre-ledger build the stamp is inert, which is the BEFORE.
+  // The half-page stamp idea is jgyy's (PR #3933's reliquary-account-ledger
+  // target), adapted to this ledger's keyed shape.
+  {
+    key: 'account-ledger-deeds',
+    label: 'The Book of Deeds: a deed an ALT on the account earned, with its earner named',
+    when: ['sim/account_ledger', 'sim/deeds_restore', 'net/book_wire', 'server/account_ledger'],
+    variants: [
+      { key: 'desktop', beforeLoad: seedLowGraphicsPreset },
+      { key: 'mobile', mobile: true, beforeLoad: seedLowGraphicsPreset },
+    ],
+    async capture(page) {
+      const seeded = await page.evaluate(() => {
+        document.querySelector('#gpu-notice')?.remove();
+        document.querySelector('.camera-prompt-confirm')?.click();
+        document.querySelector('.tut-skip')?.click();
+        const sim = window.__game?.sim;
+        const meta = sim?.players?.get?.(sim.playerId);
+        if (!sim || !meta) return { ok: false, reason: 'no sim' };
+        const alt = { characterId: 99, name: 'Bram', cls: 'mage', day: '2026-09-01' };
+        // A pre-ledger build (the BEFORE) has no ledger: the stamp is inert there
+        // and the Book opens as it always did.
+        const ledger = meta.accountLedger;
+        if (ledger) {
+          for (const id of ['dgn_deepward', 'col_discovery_250']) {
+            const list = ledger.deeds.get(id) ?? [];
+            ledger.deeds.set(id, [alt, ...list]);
+          }
+        }
+        window.__game?.hud?.openDeeds?.('dungeon');
+        return { ok: true };
+      });
+      if (!seeded.ok) throw new Error(`account ledger deeds seeding failed: ${seeded.reason}`);
+      const opened = await pollForSize(page, '#deeds-window');
+      if (!opened) throw new Error('deeds window did not open');
+      // The Earned filter through the real chip, so the alt-earned cards (and
+      // their "Earned by" foot) lead the list instead of sitting below the clip.
+      await page.evaluate(() => {
+        document.querySelector('#deeds-window [data-filter="earned"]')?.click();
+      });
+      await wait(400);
+      return { clip: '#deeds-window' };
+    },
+  },
+  {
+    key: 'account-ledger-reliquary',
+    label: 'The Reliquary: a page half-filled by an ALT on the account, finders in the tooltip',
+    when: ['sim/account_ledger', 'net/book_wire', 'server/account_ledger'],
+    variants: [
+      { key: 'desktop', beforeLoad: seedLowGraphicsPreset },
+      { key: 'mobile', mobile: true, beforeLoad: seedLowGraphicsPreset },
+    ],
+    async capture(page) {
+      const pageIds = await openReliquaryConquerorsShelf(page);
+      if (pageIds.length === 0) throw new Error('reliquary shelf listed no pages');
+      const pick = await page.evaluate((ids) => {
+        const sim = window.__game?.sim;
+        for (const id of ids) {
+          const c = sim?.reliquaryPageCompletion?.(id);
+          if (c && c.total >= 4 && c.total <= 14) return id;
+        }
+        return ids[0];
+      }, pageIds);
+      await page.evaluate((id) => {
+        document.querySelector(`#reliquary-window [data-page="${id}"]`)?.click();
+      }, pick);
+      await wait(250);
+      await page.evaluate(() => {
+        const cells = [...document.querySelectorAll('#reliquary-window .reliquary-cell')].filter(
+          (c) => c.dataset.cellKind === 'item',
+        );
+        const ids = cells
+          .slice(0, Math.ceil(cells.length / 2))
+          .map((c) => c.dataset.cellId)
+          .filter(Boolean);
+        const sim = window.__game?.sim;
+        const meta = sim?.players?.get?.(sim.playerId);
+        if (!meta) return;
+        const alt = { characterId: 99, name: 'Bram', cls: 'mage', day: '2026-09-01' };
+        // Inert on a pre-ledger build (the BEFORE), exactly like the Book target.
+        const ledger = meta.accountLedger;
+        if (ledger) for (const id of ids) ledger.relics.set(`item:${id}`, [alt]);
+      });
+      // Re-enter the page through the real navigation so the shot is the
+      // rebuilt detail, not a slow-band race.
+      await page.evaluate(() => {
+        document.querySelector('#reliquary-window [data-back]')?.click();
+      });
+      await wait(250);
+      await page.evaluate((id) => {
+        document.querySelector(`#reliquary-window [data-page="${id}"]`)?.click();
+      }, pick);
+      await wait(400);
+      return { clip: '#reliquary-window' };
+    },
+  },
   ...masterwroughtReviewTargets({
     beforeLoad: lowGraphicsSeed,
     dismissOverlays: dismissEntryOverlays,
@@ -1499,6 +1618,149 @@ export const TARGETS = [
       const ready = await pollForSize(page, '#cosmetics-window');
       if (!ready) return { skip: 'the cosmetics window never became visible' };
       return { clip: '#cosmetics-window' };
+    },
+  },
+  {
+    key: 'guild-board',
+    label: 'Guild Signpost window: category filter, new-player-friendly chip, officers online',
+    // Committed frames live in docs/screenshots/guild-pledge-board/ (categories-*).
+    when: ['ui/hud/guild_board/', 'ui/guild_leaderboard_view.ts', 'sim/guild_board_category.ts'],
+    // The offline Sim ranks no guilds, so the recipe seeds a fixture page on
+    // the IWorld seam the window reads (guildLeaderboard + socialInfo), the
+    // way the sim.addItem recipes seed bags: the painter renders exactly what
+    // the online mirror would hand it. The Proving Shore variants open with
+    // the board id the tutorial island's signpost emits (the filter ticked);
+    // the town variant opens on the whole ranking.
+    variants: [
+      { key: 'proving-shore-desktop', boardId: 'proving_shore_noticeboard' },
+      { key: 'town-desktop', boardId: 'eastbrook_noticeboard' },
+      { key: 'proving-shore-mobile', boardId: 'proving_shore_noticeboard', mobile: true },
+    ],
+    async capture(page, variant) {
+      await dismissArrivalGreeting(page);
+      const opened = await page.evaluate((boardId) => {
+        const game = window.__game;
+        if (!game?.hud || !game?.sim) return { ok: false, reason: 'offline world is unavailable' };
+        const guild = (rank, name, xp, members, top, extra) => ({
+          rank,
+          name,
+          memberCount: members,
+          totalLifetimeXp: xp,
+          topLevel: top,
+          pledgesOpen: true,
+          ...extra,
+        });
+        const all = [
+          guild(1, 'Stormcallers', 2_600_000, 38, 60, {
+            pledgeMinLevel: 20,
+            pledgeNote: 'Raid nights Tue and Thu, alts welcome.',
+            onlineOfficers: [
+              { name: 'Brannoc', rank: 'leader' },
+              { name: 'Wrenfield', rank: 'officer' },
+            ],
+          }),
+          guild(2, 'Lanternmere Wardens', 1_140_000, 27, 58, {
+            pledgeNote: 'Chill, invites open, we help you gear.',
+            newPlayerFriendly: true,
+            onlineOfficers: [{ name: 'Maelis', rank: 'officer' }],
+          }),
+          guild(3, 'Hollow Crown', 620_000, 12, 44, { pledgesOpen: false }),
+          guild(4, 'The Long Ferry', 310_000, 19, 31, {
+            pledgeNote: 'New to ClaudeCraft? Start here.',
+            newPlayerFriendly: true,
+          }),
+          guild(5, 'Gullhaven Rovers', 96_000, 6, 18, { newPlayerFriendly: true }),
+        ];
+        game.sim.guildLeaderboard = async (pg = 0, size = 20, category = null) => {
+          const rows = category ? all.filter((g) => g.newPlayerFriendly) : all;
+          // The served page echoes the category it applied (the window
+          // renders the filter it GOT, not the one it asked for).
+          return {
+            leaders: rows.slice(0, size),
+            page: pg,
+            pageCount: 1,
+            total: rows.length,
+            pageSize: size,
+            ...(category ? { category } : {}),
+          };
+        };
+        game.sim.socialInfo = { friends: [], blocks: [], ignores: [], guild: null, myPledge: null };
+        game.hud.openGuildBoard(boardId);
+        return { ok: true };
+      }, variant.boardId);
+      if (!opened.ok) return { skip: opened.reason };
+      const ready = await pollForSize(page, '#guild-board-window .lb-guild-entry');
+      if (!ready) return { skip: 'the guild board never rendered its rows' };
+      // The arrival greeting can spawn a beat after the board opens and sit
+      // over it; sweep its confirm through the settle window (the
+      // professions target's idiom) so the frame shows the board alone.
+      for (let i = 0; i < 6; i++) {
+        await page.evaluate(() => {
+          document.querySelector('#tutorial-greeting button')?.click();
+          document.querySelector('#tutorial-greeting')?.remove();
+          document.querySelector('.tut-skip')?.click();
+        });
+        await wait(400);
+      }
+      return { clip: '#guild-board-window' };
+    },
+  },
+  {
+    key: 'guild-pledge-settings',
+    label: 'Social window Pledges tab: the recruiting editor with the new-player-friendly opt-in',
+    // Committed frames live in docs/screenshots/guild-pledge-board/ (categories-*).
+    when: ['ui/social_window.ts', 'ui/social_view.ts', 'sim/guild_board_category.ts'],
+    // The Pledges tab exists for officer-plus members only and guilds are
+    // online-only, so the recipe seeds a Guild Master's social mirror on the
+    // IWorld seam and clicks the real tab.
+    variants: [{ key: 'desktop' }, { key: 'mobile', mobile: true }],
+    async capture(page) {
+      await dismissArrivalGreeting(page);
+      const opened = await page.evaluate(() => {
+        const game = window.__game;
+        if (!game?.hud || !game?.sim) return { ok: false, reason: 'offline world is unavailable' };
+        game.sim.socialInfo = {
+          friends: [],
+          blocks: [],
+          ignores: [],
+          myPledge: null,
+          guild: {
+            id: 1,
+            name: 'Lanternmere Wardens',
+            rank: 'leader',
+            motd: '',
+            motdSetBy: '',
+            members: [],
+            events: [],
+            pledgeSettings: {
+              enabled: true,
+              minLevel: 1,
+              note: 'Chill, invites open, we help you gear.',
+              newPlayerFriendly: true,
+            },
+            pledges: [
+              { id: 21, name: 'Hopeful', cls: 'mage', level: 12, realm: 'Test', sinceMs: 1 },
+            ],
+            tier: 1,
+          },
+        };
+        game.hud.toggleSocial();
+        return { ok: true };
+      });
+      if (!opened.ok) return { skip: opened.reason };
+      const ready = await pollForSize(page, '#social-window');
+      if (!ready) return { skip: 'the social window never became visible' };
+      const tabbed = await page.evaluate(() => {
+        const tab = document.querySelector('#social-window [data-tab="pledges"]');
+        if (!(tab instanceof HTMLElement)) return false;
+        tab.click();
+        return true;
+      });
+      if (!tabbed) return { skip: 'the Pledges tab did not render (not officer-plus?)' };
+      const editor = await pollForSize(page, '#social-window .soc-pledge-settings');
+      if (!editor) return { skip: 'the pledge settings editor never rendered' };
+      await wait(400);
+      return { clip: '#social-window' };
     },
   },
   {
@@ -2940,6 +3202,40 @@ export const TARGETS = [
       });
       const open = await pollForSize(page, '#options-menu .kb-cols');
       return open ? { clip: '#options-menu' } : {};
+    },
+  },
+  {
+    // The Key Bindings panel's Interface rows, where a new bindable action lands.
+    // Shot by ROW TEXT rather than an index: the registry order shifts whenever an
+    // action is added, and a stale index would quietly frame the wrong row.
+    key: 'keybinds-interface-rows',
+    label: 'Key Bindings panel: the Interface action rows and their keys',
+    when: ['game/keybinds', 'ui/keybind_action_names_core'],
+    variants: [{ key: 'desktop' }, { key: 'mobile', mobile: true }],
+    async capture(page) {
+      await page.evaluate(() => {
+        document.querySelector('#tutorial-greeting button')?.click();
+        const el = document.querySelector('#options-menu');
+        if (el) el.style.display = 'none';
+        window.__game?.hud?.toggleOptionsMenu?.();
+      });
+      await wait(400);
+      await page.evaluate(() => {
+        // Key Bindings is the first row on the main options menu.
+        document.querySelectorAll('#options-menu .opt-btn')[0]?.click();
+      });
+      const open = await pollForSize(page, '#options-menu .kb-cols');
+      if (!open) return {};
+      await page.evaluate(() => {
+        document.getElementById('tutorial-greeting')?.remove();
+        const rows = Array.from(document.querySelectorAll('#options-menu .kb-row'));
+        const match = rows.find((row) =>
+          (row.querySelector('.kb-label')?.textContent ?? '').includes('Nameplates'),
+        );
+        match?.scrollIntoView({ block: 'center' });
+      });
+      await wait(120);
+      return { clip: '#options-menu' };
     },
   },
   {
@@ -8441,6 +8737,148 @@ export const TARGETS = [
     },
   },
   {
+    // The three alternative proc-notification channels the Auras panel can route a
+    // spell to: the hotbar ready glow, the reticle tick ring, and rumble. Drives
+    // the real controls and then holds a live proc so the glow and a lit tick are
+    // both on screen at the shutter.
+    key: 'proc-signal-channels',
+    label: 'Aura proc channels: hotbar glow and reticle tick, live',
+    when: ['ui/reticle_ticks', 'ui/proc_ready_glow_core', 'game/haptic'],
+    variants: [{ key: 'desktop' }],
+    async capture(page) {
+      await page.evaluate(() => {
+        const sim = window.__game?.sim;
+        const hud = window.__game?.hud;
+        if (!sim || !hud) return;
+        sim.setPlayerLevel?.(20);
+        const win = document.querySelector('#options-menu');
+        if (win && getComputedStyle(win).display !== 'none') hud.toggleOptionsMenu();
+        hud.toggleOptionsMenu();
+        const buttons = Array.from(document.querySelectorAll('#options-menu .opt-btn'));
+        buttons[4]?.click();
+      });
+      const open = await pollForSize(page, '#options-menu .aura-settings-intro');
+      if (!open) return {};
+      // Route the first proc to both on-screen channels through the real controls.
+      await page.evaluate(() => {
+        const rows = Array.from(document.querySelectorAll('#options-menu .set-row'));
+        for (const row of rows) {
+          const name = row.querySelector('.set-name');
+          if (!name) continue;
+          const label = (name.textContent || '').trim();
+          if (label !== 'Hotbar Glow' && label !== 'Reticle Tick') continue;
+          const toggle = row.querySelector('button');
+          if (toggle instanceof HTMLButtonElement && !/On/.test(toggle.textContent || '')) {
+            toggle.click();
+          }
+        }
+      });
+      await wait(200);
+      // Keep the panel open and framed on the three new rows: the controls ARE
+      // the change, and the lit tick is 3px wide at rest, so a world shot shows
+      // a reviewer nothing.
+      await page.evaluate(() => {
+        const row = Array.from(document.querySelectorAll('#options-menu .set-row')).find(
+          (r) => (r.querySelector('.set-name')?.textContent || '').trim() === 'Hotbar Glow',
+        );
+        row?.scrollIntoView({ block: 'center' });
+      });
+      await wait(300);
+      return { clip: '#options-menu' };
+    },
+  },
+  {
+    // The Auras panel, where the Watched Spells picker lets a player put an
+    // aura overlay on any known spell that buffs them, on top of the curated
+    // class procs. Polls the proc GRID rather than the picker itself, so the
+    // same target also captures the BEFORE frame on a base commit that has no
+    // picker at all.
+    key: 'aura-watchlist',
+    label: 'Auras options: the Watched Spells picker above the proc cards',
+    when: [
+      'ui/aura_watchlist_core',
+      'ui/aura_overlay_settings',
+      'ui/aura_overlay_controller',
+      'ui/aura_overlay_config',
+    ],
+    variants: [
+      // Warrior is the class with the richest AUTHORED proc list, so its frame
+      // shows the picker sitting on top of curated cards.
+      { key: 'warrior-desktop', charClass: 'warrior', charName: 'Thorgar' },
+      // Shaman is the case that motivated the feature: exactly ONE authored proc,
+      // so before the picker its Auras panel was nearly empty.
+      { key: 'shaman-desktop', charClass: 'shaman', charName: 'Stormcaller' },
+      { key: 'shaman-mobile', charClass: 'shaman', charName: 'Stormcaller', mobile: true },
+    ],
+    async capture(page) {
+      await page.evaluate(() => {
+        const sim = window.__game?.sim;
+        const hud = window.__game?.hud;
+        if (!sim || !hud) return;
+        // A level-1 spellbook holds almost nothing to watch. setPlayerLevel is the
+        // sim's own dev/test level jump: it re-learns the abilities and recalcs
+        // stats, so the picker derives from a REAL level-60 spellbook. Setting
+        // entity.level directly is not enough, since meta.known is a stored field
+        // the level-up path recomputes.
+        sim.setPlayerLevel?.(60);
+        const win = document.querySelector('#options-menu');
+        if (win && getComputedStyle(win).display !== 'none') hud.toggleOptionsMenu();
+        hud.toggleOptionsMenu();
+        // Offline has no Report a Bug row, so Auras is the fifth button.
+        const buttons = Array.from(document.querySelectorAll('#options-menu .opt-btn'));
+        buttons[4]?.click();
+      });
+      // Poll the panel INTRO, not the proc grid: a class with no authored proc
+      // (Shaman, the case this feature exists for) renders no grid at all, and a
+      // base commit with no picker renders only the intro. The intro is the one
+      // node present in every arm, so one target covers before and after.
+      const open = await pollForSize(page, '#options-menu .aura-settings-intro');
+      if (!open) return {};
+      // Pick two spells, so the frame shows both chip states and the cards the
+      // picks add. Driving the real chip click, not the controller hook.
+      //
+      // Drive to a TARGET STATE rather than blind-toggling. The watchlist is
+      // persisted per character (localStorage, key woc_aura_overlays:<class>:<name>),
+      // so the shaman-desktop variant's pick is still stored when shaman-mobile
+      // runs against the same browser profile: a bare click there UNWATCHES it and
+      // the second frame silently reads "0 watched" with no cards, which is a lie
+      // about the feature rather than a fact about it. aria-pressed carries the
+      // real state, so only click a chip that is not already pressed. Each call
+      // re-reads the list because picking re-renders it.
+      const watchChip = (index) =>
+        page.evaluate((i) => {
+          const chip = Array.from(document.querySelectorAll('.aura-watch-chip'))[i];
+          if (chip instanceof HTMLButtonElement && chip.getAttribute('aria-pressed') !== 'true') {
+            chip.click();
+          }
+        }, index);
+      await watchChip(0);
+      await wait(150);
+      await watchChip(2);
+      await wait(250);
+      // Give the first picked spell an alert sound, so the frame shows the cue
+      // picker with its volume slider and preview revealed (they only exist once
+      // a cue is chosen).
+      await page.evaluate(() => {
+        const select = document.querySelector('.aura-sound-select');
+        if (!(select instanceof HTMLSelectElement)) return;
+        select.value = 'ui_aura_cat_meow';
+        select.dispatchEvent(new Event('change'));
+      });
+      await wait(250);
+      // Choosing a cue grows the card, which scrolls the Watched Spells chip row
+      // out of frame: the picker IS the feature, so pin the panel back to the top
+      // before the shutter.
+      await page.evaluate(() => {
+        for (const el of document.querySelectorAll('#options-menu, #options-menu *')) {
+          if (el instanceof HTMLElement && el.scrollTop > 0) el.scrollTop = 0;
+        }
+      });
+      await wait(200);
+      return { clip: '#options-menu' };
+    },
+  },
+  {
     // The Key Bindings panel with the per-slot action-bar rows replaced by a
     // single "Edit action bar keys" entry (issue #1238).
     key: 'actionbar-keybind-menu-entry',
@@ -8775,7 +9213,12 @@ export const TARGETS = [
     // variants then click Expand roster and clip the prompt stack (the price there
     // is the coin-icon readout with bare digits).
     variants: [
-      { key: 'desktop', charName: 'Rueweaver', charClass: 'paladin', beforeLoad: seedLowGraphicsPreset },
+      {
+        key: 'desktop',
+        charName: 'Rueweaver',
+        charClass: 'paladin',
+        beforeLoad: seedLowGraphicsPreset,
+      },
       {
         key: 'desktop-confirm',
         charName: 'Rueweaver',
@@ -9213,6 +9656,7 @@ export const TARGETS = [
       // Weapon coats decide the whole rogue-poison tooltip family: what the
       // coat does per swing, and whether the row asks for a target at all.
       'sim/combat/poison_coating',
+      'ui/ability_imbue_text',
     ],
     variants: [
       // Every variant enters as the class that OWNS the ability: the standalone
@@ -9238,6 +9682,20 @@ export const TARGETS = [
         charClass: 'rogue',
         charName: 'Nightsliver',
         abilityId: 'deadly_poison',
+        level: 14,
+        talentRow: {},
+        spec: 'assassination',
+        beforeLoad: lowGraphicsSeed,
+      },
+      {
+        key: 'deadly-poison-mobile',
+        charClass: 'rogue',
+        charName: 'Nightsliver',
+        abilityId: 'deadly_poison',
+        talentRow: {},
+        spec: 'assassination',
+        beforeLoad: lowGraphicsSeed,
+        mobile: true,
       },
       {
         key: 'nightshade-coating',
@@ -9286,7 +9744,10 @@ export const TARGETS = [
         const player = sim?.player;
         if (!sim || !player) return { known: false };
         sim.setPlayerLevel?.(20, player.id);
-        if (shot.talentRow) sim.applyTalents?.({ spec: null, rows: shot.talentRow }, player.id);
+        if (shot.level) sim.setPlayerLevel?.(shot.level, player.id);
+        if (shot.talentRow) {
+          sim.applyTalents?.({ spec: shot.spec ?? null, rows: shot.talentRow }, player.id);
+        }
         const resolved = sim.resolvedAbility?.(shot.abilityId);
         game.hud.toggleSpellbook?.();
         return { known: !!resolved, abilityName: resolved?.def.name ?? shot.abilityId };
@@ -9303,6 +9764,13 @@ export const TARGETS = [
         row?.dispatchEvent(new MouseEvent('mouseenter', { bubbles: true }));
         row?.dispatchEvent(new MouseEvent('mouseover', { bubbles: true }));
       }, variant);
+      if (variant.mobile) {
+        await triggerRowBreakdown(
+          page,
+          `.spell-row[data-ability-id="${variant.abilityId}"] .spell-icon`,
+          { key: 'mobile' },
+        );
+      }
       await wait(500);
       const shown = await page.evaluate((shot) => {
         const row = document.querySelector(`.spell-row[data-ability-id="${shot.abilityId}"]`);
@@ -9313,11 +9781,8 @@ export const TARGETS = [
         };
       }, variant);
       if (!shown.row) throw new Error(`no spellbook row for ${variant.abilityId}`);
-      // The hovered tooltip is a POINTER surface: a touch viewport has no hover,
-      // so the mobile variant is about the spellbook ROW reading correctly at
-      // phone width and deliberately makes no tooltip claim. Asserting one there
-      // would fail on a platform difference rather than on a regression.
-      if (!variant.mobile && !shown.tooltip) {
+      // A held touch reveals the same tooltip as a pointer hover.
+      if (!shown.tooltip) {
         throw new Error(`tooltip did not paint for ${variant.abilityId}`);
       }
       // Full frame on purpose: the shared #tooltip renders OUTSIDE #spellbook, so
@@ -11913,6 +12378,17 @@ export const TARGETS = [
       { key: 'targets-heroic-mobile', targets: true, heroicPair: true, mobile: true },
       { key: 'targets-rings', targets: true, rings: true, drill: 'Ring' },
       { key: 'targets-rings-mobile', targets: true, rings: true, drill: 'Ring', mobile: true },
+      // Riftbound bands take ring enchants at every rung: a worn S band and a
+      // bagged upgraded, gemmed band both list as plain target rows (they were
+      // once refused by id and never offered).
+      { key: 'targets-riftband', targets: true, riftBand: true, drill: 'Ring' },
+      {
+        key: 'targets-riftband-mobile',
+        targets: true,
+        riftBand: true,
+        drill: 'Ring',
+        mobile: true,
+      },
       // The #2415 replace flow: already-enchanted copies list as FLAGGED
       // replace rows (worn and bagged families both, the meta naming the
       // enchant a confirm would destroy), and accepting one runs the
@@ -11965,10 +12441,21 @@ export const TARGETS = [
           wantsHeroicPair,
           wantsRings,
           wantsSameEnchant,
+          wantsRiftBand,
         ) => {
           const game = window.__game;
           const sim = game?.sim;
           if (!game || !sim?.player) return { ok: false, reason: 'offline world unavailable' };
+          if (wantsRiftBand) {
+            // The dev kit mints two maxed (essenced, gemmed) S bands on the
+            // fingers through the real rift path (the band tooltip target's
+            // idiom); unequipping one gives a WORN band and a BAGGED band.
+            sim.setPlayerLevel?.(20);
+            sim.chat?.('/dev bis prot');
+            sim.unequipItem?.('ring2');
+            sim.addItem('arcane_dust', 6);
+            return { ok: true, itemName: 'Chime Dust' };
+          }
           if (wantsSameEnchant) {
             // The QoL re-apply scene: a WORN copy and a BAGGED copy both
             // already carrying enchant_weapon_might, the same enchant the
@@ -12089,6 +12576,7 @@ export const TARGETS = [
         Boolean(variant?.heroicPair),
         Boolean(variant?.rings),
         Boolean(variant?.sameEnchant),
+        Boolean(variant?.riftBand),
       );
       if (!staged.ok) throw new Error(staged.reason);
       await page.evaluate(() => {
@@ -13308,6 +13796,38 @@ export const TARGETS = [
     },
   },
   {
+    // The shared corpse-harvest preference picker, reached the way a player
+    // reaches it: the Professions window's own preference entry button. The
+    // picker is content inside #harvest-preference-window, so the desktop
+    // clip is that window; mobile clips the HUD to prove the sheet placement.
+    key: 'harvest-preference-picker',
+    label: 'The shared harvest preference picker (radio rows, Apply and Cancel)',
+    when: ['ui/hud/professions/harvest_preference_picker'],
+    variants: [
+      { key: 'desktop', beforeLoad: seedLowGraphicsPreset },
+      { key: 'mobile', mobile: true, beforeLoad: seedLowGraphicsPreset },
+    ],
+    async capture(page, shot) {
+      await dismissTutorialGreeting(page);
+      await page.evaluate(() => {
+        const el = document.querySelector('#professions-window');
+        if (el) el.style.display = 'none';
+        window.__game?.hud?.toggleProfessions?.();
+      });
+      if (!(await pollForSize(page, '#professions-window'))) {
+        return { skip: 'the professions window never opened' };
+      }
+      await page.evaluate(() => {
+        document.querySelector('#professions-window [data-harvest-preference]')?.click();
+      });
+      if (!(await pollForSize(page, '#harvest-preference-window'))) {
+        return { skip: 'the harvest preference picker never opened' };
+      }
+      await wait(400);
+      return { clip: shot?.mobile ? '#ui' : '#harvest-preference-window' };
+    },
+  },
+  {
     key: 'farm-map-pins',
     label: 'World map farm-patch pins from the Eastbrook garden beds',
     when: [
@@ -14276,10 +14796,9 @@ export const TARGETS = [
       const open = await pollForSize(page, '#perfecting-window');
       if (!open) return { skip: 'the perfecting window never opened (base checkout?)' };
       // The staged skill crossing a tier pops the first-tier profession
-      // tutorial AFTER the entry flow's dismissal already ran; clear it
-      // before the shot (the naming target's precedent).
-      await wait(400);
-      await dismissTutorialGreeting(page);
+      // tutorial AFTER the entry flow's dismissal already ran, on a variable
+      // delay; sweep until it stays gone (the naming target's precedent).
+      await dismissTutorialGreetingUntilSettled(page);
       // Mobile clips the whole HUD so the shot also proves the window fits
       // the 844x390 landscape viewport beside the touch cluster.
       return { clip: shot?.mobile ? '#ui' : '#perfecting-window' };
@@ -14308,7 +14827,7 @@ export const TARGETS = [
       }
       // The staged skill crossing a tier can pop the first-tier profession
       // tutorial over the window; clear it before driving the action button.
-      await dismissTutorialGreeting(page);
+      await dismissTutorialGreetingUntilSettled(page);
       await page.evaluate(() => {
         document.querySelector('#perfecting-window [data-action]')?.click();
       });

@@ -902,6 +902,7 @@ export const pl_PL: EnTranslations = {
     },
     "questTracker": {
       "count": "({count})",
+      "objectiveValue": "{current} / {total}",
       "collapseHint": "Zwiń śledzenie zadań",
       "expandHint": "Rozwiń śledzenie zadań"
     },
@@ -1220,7 +1221,10 @@ export const pl_PL: EnTranslations = {
       "devName": "Kontrybutor",
       "devTierCol": "Odznaka",
       "mergedPrs": "Scalone PR-y",
-      "devEmpty": "Brak sklasyfikowanych kontrybutorów."
+      "devEmpty": "Brak sklasyfikowanych kontrybutorów.",
+      "podiumLabel": "Top three",
+      "unclaimed": "Unclaimed",
+      "prestigeTitle": "Prestige {rank}"
     },
     "pledge": {
       "open": "Przyjmuje przysięgi",
@@ -1243,6 +1247,8 @@ export const pl_PL: EnTranslations = {
       "noteLabel": "Notatka na tablicy",
       "notePlaceholder": "Napisz przyszłym członkom, kogo szuka twoja gildia",
       "save": "Zapisz",
+      "newPlayerFriendlyLabel": "New player friendly",
+      "newPlayerFriendlyHint": "Shown on the recruits' board at the Proving Shore signpost.",
       "yourPledge": "Twoja przysięga: {guild}",
       "since": "Przysięga złożona {date}",
       "withdraw": "Wycofaj przysięgę"
@@ -1266,6 +1272,9 @@ export const pl_PL: EnTranslations = {
       "previous": "Poprzednie biegi",
       "runLabel": "Bieg {index}",
       "runSummary": "{total} w {time}"
+    },
+    "talkingHead": {
+      "label": "Dialogue"
     },
     "hubLesson": {
       "target": "Wybierz manekina jako cel, aby zacząć.",
@@ -1395,6 +1404,7 @@ export const pl_PL: EnTranslations = {
       "targetPrev": "Przełączaj cel wstecz",
       "discord": "Discord",
       "bgFlag": "Akcja flagi pola bitwy",
+      "friendlyNameplates": "Toggle Friendly Nameplates",
       "sheathe": "Schowaj/Wyciągnij Broń",
       "dive": "Nurkowanie w dół",
       "categoryPet": "Zwierzę",
@@ -1729,6 +1739,9 @@ export const pl_PL: EnTranslations = {
     },
     "controller": {
       "title": "Kontroler",
+      "device": "Connected Device",
+      "deviceConnected": "Connected",
+      "deviceDisconnected": "No controller detected",
       "glyphStyle": "Etykiety przycisków",
       "glyphStyleAuto": "Automatyczne",
       "glyphStyleXbox": "Xbox",
@@ -2043,6 +2056,52 @@ export const pl_PL: EnTranslations = {
       "spellOrder": "Kolejność zaklęć",
       "reset": "Resetuj pozycję",
       "spellPosition": "Kolejność zaklęć {position} / {count}",
+      "watchlist": "Watched Spells",
+      "watchlistHint": "Pick any spell that buffs you to give it its own aura. Picked spells get a full card below, with their own icon, color, position and ground ring.",
+      "watchlistEmpty": "No other spell in your spellbook puts a buff on you.",
+      "watchlistWatch": "Watch {spell}",
+      "watchlistUnwatch": "Stop watching {spell}",
+      "watchlistCount": "{count} watched",
+      "sound": "Alert Sound",
+      "soundNone": "No sound",
+      "soundVolume": "Sound Volume",
+      "soundPreview": "Play",
+      "soundPreviewAria": "Preview the {sound} alert sound",
+      "soundHint": "A sound plays each time this spell procs. Turn the icon, crescents and ground ring off to have the sound alone announce it.",
+      "readyGlow": "Hotbar Glow",
+      "readyGlowHint": "Lights this spell on your action bar while its buff is up.",
+      "reticleTick": "Reticle Tick",
+      "reticleTickHint": "Adds a mark near the centre of the screen that lights when this spell procs.",
+      "haptic": "Rumble",
+      "hapticNone": "Off",
+      "hapticHint": "Vibrates a connected controller, or your phone. Ignored where the device has no haptics.",
+      "haptics": {
+        "tap": "Tap",
+        "double": "Double",
+        "long": "Long"
+      },
+      "cues": {
+        "softChime": "Soft Chime",
+        "musicBox": "Music Box",
+        "glassPing": "Glass Ping",
+        "waterDrop": "Water Drop",
+        "bubblePop": "Bubble Pop",
+        "hardBell": "Hard Bell",
+        "templeGong": "Temple Gong",
+        "anvilStrike": "Anvil Strike",
+        "coinDrop": "Coin Drop",
+        "swordDraw": "Sword Draw",
+        "blaringHorn": "Blaring Horn",
+        "carKlaxon": "Car Klaxon",
+        "sonarPing": "Sonar Ping",
+        "electricZap": "Electric Zap",
+        "catMeow": "Cat Meow",
+        "owlHoot": "Owl Hoot",
+        "wolfHowl": "Wolf Howl",
+        "frogCroak": "Frog Croak",
+        "windWhoosh": "Wind Whoosh",
+        "steamHiss": "Steam Hiss"
+      },
       "procs": {
         "revenge": "Odwet!",
         "battleTrance": "Trans bojowy",
@@ -2114,6 +2173,22 @@ export const pl_PL: EnTranslations = {
       "playtimeHidden": "Ukryty",
       "showPlaytimeAria": "Pokaż czas gry",
       "hidePlaytimeAria": "Ukryj czas gry"
+    },
+    "charSidebar": {
+      "label": "Character details",
+      "subtitle": "Level {level} {className} . {archetype} . Hobby: {hobby}",
+      "subtitleNoHobby": "Level {level} {className} . {archetype}",
+      "stats": "Stats",
+      "progression": "Progression",
+      "skills": "Skills",
+      "gathering": "Gathering",
+      "crafting": "Crafting",
+      "openProfessions": "Open Professions"
+    },
+    "questLog": {
+      "completed": "Completed",
+      "zoneSummary": "{count} ({ready} ready)",
+      "shiftHint": "Shift-click a quest to link it in chat."
     },
     "statInfo": {
       "fromYour": "Z twoich {value} pkt. cechy {stat}:",
@@ -2228,6 +2303,12 @@ export const pl_PL: EnTranslations = {
       "linkHint": "Kliknij z Shift, aby wstawić link do tego przedmiotu na czacie."
     },
     "plurals": {
+      "guildBoardShown": {
+        "one": "{count} guild shown",
+        "few": "{count} guilds shown",
+        "many": "{count} guilds shown",
+        "other": "{count} guilds shown"
+      },
       "commissionMasterworks": {
         "one": "{count} mistrzowsko kuty przedmiot",
         "few": "{count} mistrzowsko kute przedmioty",
@@ -2357,6 +2438,7 @@ export const pl_PL: EnTranslations = {
     },
     "bugReport": {
       "menuButton": "Zgłoś błąd",
+      "online": "Online",
       "realm": "Świat",
       "character": "Postać",
       "position": "Pozycja",
@@ -2962,8 +3044,8 @@ export const pl_PL: EnTranslations = {
         "kingsWrathSummary": "Nythraxis zadaje o {bonusNormal} więcej obrażeń na Normal albo o {bonusHeroic} na Heroic do końca walki. Grobowa Erupcja następuje co {eruptionEveryNormal} sek. ({eruptionEveryHeroic} na Heroic), a Grobowy Ogień co {gravefireEveryNormal} sek. ({gravefireEveryHeroic} na Heroic).",
         "kingsWrathResponse": "Użyjcie pozostałych defensywnych cooldownów na nieuniknione obrażenia. Utrzymujcie każdą wcześniejszą mechanikę czysto, gdy rajd kończy walkę.",
         "boneStormName": "Kościana Burza",
-        "boneStormSummary": "Zaczynając {first} sek. po wejściu Gniewu Króla, a potem co {everyNormal} sek., Nythraxis rozpoczyna Kościaną Burzę na {duration} sek. Ignoruje zagrożenie, porusza się {speed} razy szybciej niż normalnie i wykonuje {charges} szarż trwających po {chargeSeconds} sek. Jego wir zadaje {whirlNormal} maksymalnego zdrowia co sekundę w promieniu {radius} jardów. Każda szarża kończy się Kościanym Uderzeniem w tym samym promieniu za {slamNormal} maksymalnego zdrowia. Rzuca Kościany Kolec {spikeAt} sek. po rozpoczęciu burzy, a Grobołamacz uzbraja się ponownie {rearm} sek. po jej końcu.",
-        "boneStormHeroicSummary": "Zaczynając {first} sek. po wejściu Gniewu Króla, a potem co {everyHeroic} sek., Nythraxis rozpoczyna Kościaną Burzę na {duration} sek. Ignoruje zagrożenie, porusza się {speed} razy szybciej niż normalnie i wykonuje {charges} szarż trwających po {chargeSeconds} sek. Jego wir zadaje {whirlHeroic} maksymalnego zdrowia co sekundę w promieniu {radius} jardów. Każda szarża kończy się Kościanym Uderzeniem w tym samym promieniu za {slamHeroic} maksymalnego zdrowia. Rzuca Kościany Kolec {spikeAt} sek. po rozpoczęciu burzy, a Grobołamacz uzbraja się ponownie {rearm} sek. po jej końcu.",
+        "boneStormSummary": "Zaczynając {first} sek. po wejściu Gniewu Króla, a potem co {everyNormal} sek., Nythraxis rozpoczyna Kościaną Burzę na {duration} sek. Ignoruje zagrożenie, porusza się {speed} razy szybciej niż normalnie i wykonuje {charges} szarż trwających po {chargeSeconds} sek. Jego wir zadaje {whirlNormal} maksymalnego zdrowia co sekundę w promieniu {radius} jardów. Każda szarża kończy się Kościanym Uderzeniem w tym samym promieniu za {slamNormal} maksymalnego zdrowia. Pierwsze uderzenie każdej burzy zadaje zamiast tego {openingSlamNormal}. Grobołamacz uzbraja się ponownie {rearm} sek. po jej końcu.",
+        "boneStormHeroicSummary": "Zaczynając {first} sek. po wejściu Gniewu Króla, a potem co {everyHeroic} sek., Nythraxis rozpoczyna Kościaną Burzę na {duration} sek. Ignoruje zagrożenie, porusza się {speed} razy szybciej niż normalnie i wykonuje {charges} szarż trwających po {chargeSeconds} sek. Jego wir zadaje {whirlHeroic} maksymalnego zdrowia co sekundę w promieniu {radius} jardów. Każda szarża kończy się Kościanym Uderzeniem w tym samym promieniu za {slamHeroic} maksymalnego zdrowia. Pierwsze uderzenie każdej burzy zadaje zamiast tego {openingSlamHeroic}. Grobołamacz uzbraja się ponownie {rearm} sek. po jej końcu.",
         "boneStormResponse": "Rozproszcie się i stale uciekajcie przed Nythraxis. Szarżowany rajder ucieka, a wszyscy inni zostawiają miejsce wokół trasy szarży; potem tankowie przejmują go, gdy burza się skończy.",
         "crownEnduresName": "Korona Trwa",
         "crownEnduresSummary": "Po {enrageNormal} sek. od rozpoczęcia walki (zegar zatrzymuje się, gdy brat Aldric wchodzi przy 70%) Korona Trwa uruchamia twardy enrage. Nythraxis zyskuje o {damage} więcej obrażeń i o {haste} szybsze ataki, a potem kolejne {rampStep} obrażeń co {rampEveryNormal} sek. Nie ma paska czasu. Ostrzeżenia przychodzą jako okrzyki przy {warn60}, {warn30} i {warn10} sek. do końca.",
@@ -3014,6 +3096,7 @@ export const pl_PL: EnTranslations = {
       "elementalConvergencePrimed": "Twój następny czar z innej szkoły żywiołu nadaje Konwergencję Żywiołów",
       "hunterFerocity": "{stacks} Zaciekłości Sfory: twój towarzysz zadaje o {pct}% więcej obrażeń",
       "cooldownCap": "Wykorzystano {used} z {cap} s skrócenia czasu odnowienia w tym oknie",
+      "bruinRushWindow": "Postać wilka nie kosztuje many i przygważdża cel twojej Szarży Bruina, spowalniając go o {pct}% na {sec} sek.",
       "funeralHarvestLock": "Funeral Harvest nie może jeszcze stworzyć kolejnego Odłamka Duszy",
       "leadenHexLock": "Ołowiana Klątwa nie może jeszcze ponownie unieruchomić tego celu",
       "forbiddenReflectionReady": "Możesz ponownie rzucić swoją następną kwalifikującą się umiejętność czarnoksiężnika, mimo że jest w odnowieniu",
@@ -3126,7 +3209,7 @@ export const pl_PL: EnTranslations = {
       "elementalTrance": "Otrzymywane obrażenia zmniejszone o {pct}%. {mana}% wszystkich zadawanych przez ciebie obrażeń zamienia się w manę",
       "stealth": "Verborgen; Bewegungstempo um {pct}% verringert",
       "formBear": "Postać Bruina: zwiększone zdrowie i pancerz",
-      "formCat": "Katzengestalt: Nahkampfschaden und Energie",
+      "wolfForm": "Cat Form: melee damage and energy; movement speed increased by {pct}%",
       "formTravel": "Postać Fleet: prędkość ruchu zwiększona o {pct}%",
       "formFireball": "Postać Żaru: prędkość ruchu zwiększona o {pct}%; ataki i czary są wyłączone",
       "formMoonkin": "Postać księżycowej sowy: obrażenia zaklęć zwiększone o {pct}%, a pancerz o {armorPct}%",
@@ -3234,6 +3317,7 @@ export const pl_PL: EnTranslations = {
       "lock": "Zablokuj ramkę gracza"
     },
     "partyFrames": {
+      "header": "Party",
       "section": "Ramki grupy i rajdu",
       "optionsSection": "Opcje ramek drużyny",
       "unlock": "Przenieś ramki grupy i rajdu",
@@ -3735,6 +3819,15 @@ export const pl_PL: EnTranslations = {
       "subtitle": "Gildie królestwa",
       "rosterTitle": "Zobacz skład gildii {guild}",
       "back": "Wstecz",
+      "filters": "Board filters",
+      "newPlayerFriendly": "New player friendly",
+      "newPlayerFriendlyTitle": "This guild welcomes new players",
+      "filterNewPlayersTitle": "Show only guilds that welcome new players",
+      "filterEmpty": "No guild has opened its doors to new players yet.",
+      "showAll": "Show all guilds",
+      "officersOnline": "Officers online",
+      "officersOnlineLabel": "Officers online: {names}",
+      "officerEntry": "{name} ({rank})",
       "popupTitle": "Tablica gildii",
       "close": "Zamknij"
     },
@@ -4023,7 +4116,6 @@ export const pl_PL: EnTranslations = {
       }
     },
     "gathering": {
-      "title": "Zbieractwo",
       "mining": "Górnictwo",
       "logging": "Wyrąb",
       "herbalism": "Zielarstwo",
@@ -4207,9 +4299,7 @@ export const pl_PL: EnTranslations = {
       "noviceBody": "Umiejętność Uprawy rośnie za każdym razem, gdy zbierasz roślinę. Aby zacząć, zasiej nasiono na dowolnej grządce."
     },
     "archetypeTitle": {
-      "label": "Tytuł",
-      "none": "Brak",
-      "hobbyLabel": "Pasja"
+      "none": "Brak"
     },
     "archetypePair": {
       "engineering+alchemy": "Bombardier",
@@ -4379,7 +4469,9 @@ export const pl_PL: EnTranslations = {
       "hobbyLabel": "Zajęcie dodatkowe: {craft}",
       "majorsLabel": "Kierunki: {a} i {b}",
       "pairsHeld": "Posiadane pary: {count}",
-      "returnsLabel": "Zwroty: {count}"
+      "returnsLabel": "Zwroty: {count}",
+      "retentionFooter": "Returns on respec: 60% of skill kept.",
+      "tutorialLink": "Profession tutorial"
     },
     "crafting": {
       "title": "Rzemiosło",
@@ -4414,6 +4506,7 @@ export const pl_PL: EnTranslations = {
       "vaultUnreachable": "Skarbiec Materiałów jest tu poza zasięgiem.",
       "craftFeeLine": "Opłata za wytworzenie: {fee} za sztukę",
       "empty": "Nie są jeszcze znane żadne przepisy.",
+      "materialsFooter": "Materials in your vault are drawn automatically. Learn more recipes at the station.",
       "resultAria": "Craft {name}",
       "craftedToast": "Wykonane: {name}",
       "craftedToastQty": "Wykonane: {name} x{qty}",
@@ -4515,6 +4608,9 @@ export const pl_PL: EnTranslations = {
       "commissionToggleHint": "Przywiązuje się do pierwszej postaci, która go otrzyma w transakcji.",
       "commissionUnbound": "Wyrób na zamówienie: przywiązuje się do pierwszego odbiorcy",
       "commissionBound": "Wyrób na zamówienie: przywiązany do odbiorcy"
+    },
+    "marketWindow": {
+      "mixedListingsFooter": "The Merchant restocks common goods; player listings sit beside them at their asking price."
     },
     "itemMenu": {
       "use": "Użyj",
@@ -4950,6 +5046,10 @@ export const pl_PL: EnTranslations = {
       "ownedTooltipStatus": "Skatalogowana w Relikwiarzu",
       "missingTooltipStatus": "Jeszcze nieznaleziona",
       "firstFindClears": "Znaleziona po raz pierwszy przy przejściu {count}",
+      "foundBy": "Found by {names}",
+      "finderWithDate": "{name} ({date})",
+      "sharedScopeNote": "Shared by every character on your account",
+      "sharedScopeHint": "A relic found by any character on your account fills the page here too.",
       "unlockToast": "Relikwia skatalogowana: {name}",
       "illuminateBanner": "Karta iluminowana: {name}",
       "illuminateToast": "Wszystkie relikwie na karcie {name} są wypełnione.",
@@ -5083,6 +5183,10 @@ export const pl_PL: EnTranslations = {
       "progressAria": "Postęp: {current} z {target}",
       "renownChip": "{renown} Renomy",
       "earnedDate": "Zdobyto {date}",
+      "earnedBy": "Earned by {names}",
+      "earnerWithDate": "{name} ({date})",
+      "accountScopeNote": "Shared by every character on your account",
+      "accountScopeHint": "A deed any character on your account accomplishes is earned here too, and the Book names who earned it.",
       "featRibbon": "Wyczyn",
       "hiddenBadge": "Ukryty",
       "titleChip": "Nagroda: tytuł",
@@ -5132,6 +5236,33 @@ export const pl_PL: EnTranslations = {
       "toggleAria": "Przełącz między mapą świata a mapą strefy",
       "levels": "Poziomy od {min} do {max}"
     },
+    "mapAtlas": {
+      "level": "Level {level}",
+      "landmarkCount": "{count} landmarks",
+      "filtersAria": "Map layers",
+      "filters": {
+        "quests": "Quests",
+        "gather": "Gather",
+        "dungeons": "Dungeons",
+        "services": "Services",
+        "players": "Players"
+      },
+      "trackedQuests": "Tracked quests",
+      "noTrackedQuests": "No tracked quests",
+      "availableNearby": "Available nearby",
+      "noNearbyQuests": "No nearby quests",
+      "distance": "{distance} yards",
+      "showRoute": "Show Route",
+      "untrack": "Untrack",
+      "track": "Track",
+      "legend": {
+        "dungeon": "Dungeon",
+        "ore": "Ore",
+        "herb": "Herb",
+        "mail": "Mail",
+        "passage": "Passage"
+      }
+    },
     "arenaGate": {
       "minLevelNote": "Wymaga poziomu {level}"
     },
@@ -5150,6 +5281,7 @@ export const pl_PL: EnTranslations = {
       "tabBrowse": "Przeglądaj",
       "tabSell": "Sprzedaj",
       "tabActivity": "Moja aktywność",
+      "tabHistory": "Sales History",
       "tabsLabel": "Sekcje Giełdy $WOC",
       "loading": "Wczytywanie Giełdy...",
       "loadFailed": "Nie udało się połączyć z Giełdą. Spróbuj ponownie za chwilę.",
@@ -5174,6 +5306,16 @@ export const pl_PL: EnTranslations = {
       "colCurrentBid": "Obecna oferta",
       "colBuyNow": "Kup teraz",
       "colTimeLeft": "Pozostały czas",
+      "colBuyer": "Buyer",
+      "colSoldAt": "Sold",
+      "colSalePrice": "Sale price",
+      "colSaleType": "Type",
+      "saleTypeAuction": "Auction",
+      "saleTypeBuyNow": "Buy now",
+      "saleTypeDirected": "Directed",
+      "saleTypeUnknown": "Unknown",
+      "historyEmpty": "No sales recorded yet.",
+      "historyError": "Sales history could not be loaded.",
       "reserveMet": "Cena minimalna osiągnięta",
       "reserveNotMet": "Cena minimalna nieosiągnięta",
       "yourListing": "Twoje wystawienie",
@@ -6066,6 +6208,7 @@ export const pl_PL: EnTranslations = {
       "framesMoveBodyEditFrames": "Możesz przesuwać własną ramkę, ramkę celu i ramki drużyny. Każda ma w rogu mały przycisk przesuwania: odblokuj ją, przeciągnij w wybrane miejsce i zablokuj ponownie, aby przypadkowe kliknięcie jej nie przesunęło. Edycja ramek na górze karty Ramki w opcjach interfejsu odblokowuje naraz resztę interfejsu, w tym te trzy ramki: paski akcji, pasek rzucania, pasek uderzeń, pasek doświadczenia, minimapę, szynę przycisków, ramkę pupila, pasek postawy, wiersze premii i osłabień oraz etykietę przypomnienia listy życzeń. Jeśli trafią w miejsce, którego żałujesz, przycisk Przywróć domyślne na dole tej samej karty Ramki przywraca je wszystkie.",
       "framesGovernedExtra": "Edycja ramek odblokowuje także stos śledzonych elementów poniżej: śledzone zadania i ich cele, postęp dokonań, strony Reliquarium, aktywną wyprawę, każdą trwającą szczelinę oraz śledzoną recepturę lub zlecenie. Obejmuje też pasek akcji pupila obok jego ramki, ramkę kropek Celu dla osłabień pobliskich wrogów, medalion Oddania paladyna, Pasek utrapień czarnoksiężnika, nakładkę wyzwalacza zaklęć, zegar uderzeń broni podręcznej dla walczących dwiema broniami oraz okno miernika obrażeń z kartami. Każdy element ma własną etykietę, gdy zostanie odblokowany.",
       "framesGovernedAuraTracks": "Edycja ramek odblokowuje także sześć dobrowolnych ścieżek aur, gdy włączysz je na karcie Walka tych samych opcji interfejsu: ścieżkę Moje premie, ścieżkę defensywnych czasów odnowienia, ścieżkę Moich tarcz, ścieżkę ofensywnych czasów odnowienia, ścieżkę Ruchu i ukrycia oraz ścieżkę Moich premii na sojusznikach. Każda ścieżka jest domyślnie wyłączona i każda nosi własną etykietę, gdy zostanie odblokowana.",
+      "framesGovernedTalkingHead": "Edit Frames also loosens the Dialogue panel, which carries an NPC's spoken line while that NPC is out of your view; it wears its name chip while it is loose.",
       "barsTitle": "Paski, liczniki i tekst walki",
       "barsBody": "Twój pasek rzucania pojawia się na środku ekranu, tuż nad paskami akcji, gdy tylko rzucasz zaklęcie lub kanałujesz, i pokazuje nazwę zaklęcia oraz pozostały czas. Twój cel dostaje własny pasek rzucania na swojej ramce, więc widzisz, co nadchodzi, i możesz na to odpowiedzieć.\n\nCienki pasek zamachu leży pod paskiem rzucania i wypełnia się między zamachami twojej broni, więc wojownik walczący wręcz lub na dystans widzi, kiedy padnie następne automatyczne trafienie.\n\nTwój pasek doświadczenia biegnie na całą szerokość pod paskami akcji, podzielony na odcinki, a jaśniejszy fragment pokazuje zgromadzone doświadczenie z wypoczęcia.\n\nZanurz się pod wodą, a na górze ekranu pojawi się niebieski pasek oddechu. Opróżnia się, dopóki twoja głowa jest pod wodą, błyska na czerwono, gdy się wyczerpie i zaczynasz tonąć, i szybko napełnia się ponownie, gdy tylko wynurzysz się na powierzchnię. Spacja unosi cię w górę, a klawisz Nurkowania w dół, domyślnie Ctrl, zabiera cię głębiej.\n\nObrażenia i leczenie unoszą się nad tym, w co trafiły, jako małe liczby, więc możesz odczytać przebieg walki bez czytania tekstu. Zakładka Walka w twoim oknie czatu prowadzi pełny pisemny zapis.",
       "aurasTitle": "Wzmocnienia i osłabienia",
@@ -6423,6 +6566,7 @@ export const pl_PL: EnTranslations = {
       "formsNote": "Druid walczy, zmieniając kształt. Większość zdolności druida należy do jednej postaci, więc to, w jakiej formie się znajdujesz, decyduje, co możesz rzucić, a przemiana kosztuje odrobinę many. Możesz przemieniać się w walce i poza nią, tak często, jak chcesz.",
       "formsAutoUnshift": "Leczenie lub zaklęcie zadające obrażenia rzucone w formie samo cię z niej wyprowadza. Opuszczenie formy w ten sposób jest darmowe i nie zużywa globalnego czasu odnowienia, więc błyskawiczne zaklęcie odpala się w chwili naciśnięcia. Powrót do formy to zwykła zdolność i nadal kosztuje manę oraz globalny czas odnowienia.",
       "formsMoonwing": "Druid o specjalizacji Równowaga zyskuje jeszcze jedną postać, Postać księżycowej sowy, formę rzucającego, w jakiej walczy. To jedyna zwierzęca postać, która zachowuje twoje zaklęcia, a różdżka działa tylko w niej albo w twojej zwykłej postaci rzucającego.",
+      "formsWolfEngage": "Wilk otwiera walkę Szarżą Bruina, od razu zmienia się w postać wilka, by przygwoździć cel, skraca dystans Wypadem, gdy się nie skrada, i zatrzymuje wroga Obaleniem.",
       "formLine": {
         "form_bear": "Postać do tankowania: gruba skóra, wściekłość zamiast many i dodatkowe zagrożenie, dzięki któremu wrogowie wciąż atakują ciebie.",
         "form_cat": "Postać do obrażeń w zwarciu: energia i punkty kombinacji, jak u łotrzyka, oraz znacznie mniej zagrożenia.",
@@ -6990,7 +7134,7 @@ export const pl_PL: EnTranslations = {
     "reliquaryPage": {
       "intro": "Relikwiarz to muzeum wyjątkowych łupów, które skatalogowałeś: wyczekiwane okazy z lochów, trofea zawodowe, wierzchowce, wyglądy broni i tytuły. Idzie w parze z Księgą Czynów tak, jak sala trofeów idzie w parze z księgą osiągnięć.",
       "howHeading": "Jak działa kolekcja",
-      "howBody": "Otwórz Relikwiarz w grze (domyślnie Shift+X). Każda półka mieści karty wyjątkowych relikwii. Sylwetkę wypełniasz, gdy po raz pierwszy zdobędziesz dany przedmiot na tej postaci, a kartę iluminujesz, gdy wypełnisz na niej wszystkie relikwie. Kilka kart nosi oznaczenie Wycofana lub Osobista: stoją poza ukończeniem, więc nigdy nie blokują półki ani całego katalogu. Znaleziska pojawiają się od razu jako powiadomienie i odświeżają otwarte okno; postępy są przypisane do postaci, z wyjątkiem wyglądów broni, które są kosmetyką konta.",
+      "howBody": "Otwórz Relikwiarz w grze (domyślnie Shift+X). Każda półka zawiera strony z unikatowymi relikwiami. Sylwetka wypełnia się, gdy dowolna postać na twoim koncie zdobędzie ten przedmiot po raz pierwszy, a strona rozświetla się, gdy wypełniona jest każda relikwia na niej. Kilka stron nosi oznaczenie Wycofana lub Osobista: pozostają poza ukończeniem, więc nigdy nie blokują półki ani całego katalogu. Znaleziska pojawiają się od razu jako powiadomienie i odświeżają otwarte okno; postępy są wspólne dla wszystkich postaci na koncie, więc relikwia znaleziona przez jedną postać wypełnia stronę dla wszystkich.",
       "ranksHeading": "Rangi Kustosza",
       "ranksBody": "Rangi Kustosza rosną wraz z każdą skatalogowaną wyjątkową relikwią i przyznają wyłącznie kosmetyczne tytuły oraz obramowania. Nigdy nie dają siły bojowej, szansy na łup ani rekompensaty za pecha. Wyglądy broni przypisane do konta nie liczą się do rangi Kustosza, dzięki czemu prestiż pozostaje związany z postacią, a relikwie z kart Wycofanych lub Osobistych również się do niej nie liczą.",
       "retiredTag": "Wycofana",
@@ -11858,7 +12002,7 @@ export const pl_PL: EnTranslations = {
       },
       "cat_form": {
         "name": "Postać wilka",
-        "description": "Zmienia cię w wilka: zręczność rośnie z twoim poziomem, moc ataku +8 plus 2 na poziom, twoje ataki używają energii i punktów kombinacji, a ty generujesz o 29% mniejsze zagrożenie. Rzuć ponownie, by wrócić do postaci rzucającego zaklęcia."
+        "description": "Zmienia cię w wilka: zręczność rośnie z twoim poziomem, moc ataku +8 plus 2 na poziom, twoje ataki używają energii i punktów kombinacji, a ty generujesz o 29% mniejsze zagrożenie. Zmiana w dowolną postać przyznaje Długi krok: 60% prędkości ruchu na 3 sekundy, raz na 20 sekund. Rzuć ponownie, by wrócić do postaci rzucającego zaklęcia."
       },
       "claw": {
         "name": "Szarpiący pazur",
@@ -11923,7 +12067,15 @@ export const pl_PL: EnTranslations = {
       },
       "pounce": {
         "name": "Skradający cios",
-        "description": "Otwarcie ze skradania, które ogłusza cel na 2 sek. Przyznaje 1 punkt kombinacji. Tylko w postaci wilka."
+        "description": "Otwarcie ze skradania, które ogłusza cel na 2 sek. Przyznaje 1 punkt kombinacji. Tylko w postaci wilka. Poza skradaniem ten przycisk to Wypad."
+      },
+      "lunge": {
+        "name": "Wypad",
+        "description": "Rzucasz się na wroga oddalonego o maksymalnie 12 jardów, zadając 60% obrażeń broni i przyznając 1 punkt kombinacji. Tylko w postaci wilka."
+      },
+      "hamstring_bite": {
+        "name": "Obalenie",
+        "description": "Umiejętność kończąca, która ogłusza cel na 1 sekundę plus 1 sekundę za punkt combo (5 punktów combo: 6 sekund). Tylko w postaci wilka."
       },
       "insect_swarm": {
         "name": "Żądlący rój",
@@ -12637,7 +12789,7 @@ export const pl_PL: EnTranslations = {
       },
       "bear_charge": {
         "name": "Szarża Bruina",
-        "description": "Szarżuj na wroga, generując 9 wściekłości i ogłuszając go na 1 sek. Zasięg 8-25 jardów. Tylko w postaci Bruina."
+        "description": "Szarżuj na wroga, generując 9 wściekłości i ogłuszając go na 1 sek. Przez 3 sek. potem Postać wilka jest darmowa i przygważdża cel, spowalniając go o 50% na 4 sek. Zasięg 8-25 jardów. Tylko w postaci Bruina."
       },
       "demoralizing_roar": {
         "name": "Tchórzliwy ryk",
@@ -12645,7 +12797,7 @@ export const pl_PL: EnTranslations = {
       },
       "prowl": {
         "name": "Podchody",
-        "description": "Wchodzi w skradanie w postaci wilka, poruszając się o 5% wolniej. Nie można użyć w walce."
+        "description": "Wchodzi w skradanie w postaci wilka. Nie można użyć w walce."
       },
       "rake": {
         "name": "Zdzieranie",

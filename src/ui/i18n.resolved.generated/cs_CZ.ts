@@ -902,6 +902,7 @@ export const cs_CZ: EnTranslations = {
     },
     "questTracker": {
       "count": "({count})",
+      "objectiveValue": "{current} / {total}",
       "collapseHint": "Sbalit tracker úkolů",
       "expandHint": "Rozbalit tracker úkolů"
     },
@@ -1220,7 +1221,10 @@ export const cs_CZ: EnTranslations = {
       "devName": "Přispěvatel",
       "devTierCol": "Odznak",
       "mergedPrs": "Sloučené PR",
-      "devEmpty": "Zatím žádní hodnocení přispěvatelé."
+      "devEmpty": "Zatím žádní hodnocení přispěvatelé.",
+      "podiumLabel": "Top three",
+      "unclaimed": "Unclaimed",
+      "prestigeTitle": "Prestige {rank}"
     },
     "pledge": {
       "open": "Přijímá přihlášky",
@@ -1243,6 +1247,8 @@ export const cs_CZ: EnTranslations = {
       "noteLabel": "Poznámka na nástěnce",
       "notePlaceholder": "Napiš budoucím členům, koho tvůj cech hledá",
       "save": "Uložit",
+      "newPlayerFriendlyLabel": "New player friendly",
+      "newPlayerFriendlyHint": "Shown on the recruits' board at the Proving Shore signpost.",
       "yourPledge": "Tvoje přihláška: {guild}",
       "since": "Přihlášeno {date}",
       "withdraw": "Zrušit přihlášku"
@@ -1266,6 +1272,9 @@ export const cs_CZ: EnTranslations = {
       "previous": "Předchozí běhy",
       "runLabel": "Běh {index}",
       "runSummary": "{total} za {time}"
+    },
+    "talkingHead": {
+      "label": "Dialogue"
     },
     "hubLesson": {
       "target": "Začni výběrem figuríny jako cíle.",
@@ -1395,6 +1404,7 @@ export const cs_CZ: EnTranslations = {
       "targetPrev": "Přepínat cíl zpět",
       "discord": "Discord",
       "bgFlag": "Akce s vlajkou na bojišti",
+      "friendlyNameplates": "Toggle Friendly Nameplates",
       "sheathe": "Zasunout/Vytasit zbraň",
       "dive": "Potopit se",
       "categoryPet": "Mazlíček",
@@ -1729,6 +1739,9 @@ export const cs_CZ: EnTranslations = {
     },
     "controller": {
       "title": "Ovladač",
+      "device": "Connected Device",
+      "deviceConnected": "Connected",
+      "deviceDisconnected": "No controller detected",
       "glyphStyle": "Popisky tlačítek",
       "glyphStyleAuto": "Automaticky",
       "glyphStyleXbox": "Xbox",
@@ -2043,6 +2056,52 @@ export const cs_CZ: EnTranslations = {
       "spellOrder": "Pořadí kouzel",
       "reset": "Resetovat pozici",
       "spellPosition": "Pořadí kouzel {position} / {count}",
+      "watchlist": "Watched Spells",
+      "watchlistHint": "Pick any spell that buffs you to give it its own aura. Picked spells get a full card below, with their own icon, color, position and ground ring.",
+      "watchlistEmpty": "No other spell in your spellbook puts a buff on you.",
+      "watchlistWatch": "Watch {spell}",
+      "watchlistUnwatch": "Stop watching {spell}",
+      "watchlistCount": "{count} watched",
+      "sound": "Alert Sound",
+      "soundNone": "No sound",
+      "soundVolume": "Sound Volume",
+      "soundPreview": "Play",
+      "soundPreviewAria": "Preview the {sound} alert sound",
+      "soundHint": "A sound plays each time this spell procs. Turn the icon, crescents and ground ring off to have the sound alone announce it.",
+      "readyGlow": "Hotbar Glow",
+      "readyGlowHint": "Lights this spell on your action bar while its buff is up.",
+      "reticleTick": "Reticle Tick",
+      "reticleTickHint": "Adds a mark near the centre of the screen that lights when this spell procs.",
+      "haptic": "Rumble",
+      "hapticNone": "Off",
+      "hapticHint": "Vibrates a connected controller, or your phone. Ignored where the device has no haptics.",
+      "haptics": {
+        "tap": "Tap",
+        "double": "Double",
+        "long": "Long"
+      },
+      "cues": {
+        "softChime": "Soft Chime",
+        "musicBox": "Music Box",
+        "glassPing": "Glass Ping",
+        "waterDrop": "Water Drop",
+        "bubblePop": "Bubble Pop",
+        "hardBell": "Hard Bell",
+        "templeGong": "Temple Gong",
+        "anvilStrike": "Anvil Strike",
+        "coinDrop": "Coin Drop",
+        "swordDraw": "Sword Draw",
+        "blaringHorn": "Blaring Horn",
+        "carKlaxon": "Car Klaxon",
+        "sonarPing": "Sonar Ping",
+        "electricZap": "Electric Zap",
+        "catMeow": "Cat Meow",
+        "owlHoot": "Owl Hoot",
+        "wolfHowl": "Wolf Howl",
+        "frogCroak": "Frog Croak",
+        "windWhoosh": "Wind Whoosh",
+        "steamHiss": "Steam Hiss"
+      },
       "procs": {
         "revenge": "Odveta!",
         "battleTrance": "Bojový trans",
@@ -2114,6 +2173,22 @@ export const cs_CZ: EnTranslations = {
       "playtimeHidden": "Skryto",
       "showPlaytimeAria": "Zobrazit odehraný čas",
       "hidePlaytimeAria": "Skrýt odehraný čas"
+    },
+    "charSidebar": {
+      "label": "Character details",
+      "subtitle": "Level {level} {className} . {archetype} . Hobby: {hobby}",
+      "subtitleNoHobby": "Level {level} {className} . {archetype}",
+      "stats": "Stats",
+      "progression": "Progression",
+      "skills": "Skills",
+      "gathering": "Gathering",
+      "crafting": "Crafting",
+      "openProfessions": "Open Professions"
+    },
+    "questLog": {
+      "completed": "Completed",
+      "zoneSummary": "{count} ({ready} ready)",
+      "shiftHint": "Shift-click a quest to link it in chat."
     },
     "statInfo": {
       "fromYour": "Z tvojí hodnoty {value} {stat}:",
@@ -2228,6 +2303,12 @@ export const cs_CZ: EnTranslations = {
       "linkHint": "Shift + kliknutí vloží odkaz na tento předmět do chatu."
     },
     "plurals": {
+      "guildBoardShown": {
+        "one": "{count} guild shown",
+        "few": "{count} guilds shown",
+        "many": "{count} guilds shown",
+        "other": "{count} guilds shown"
+      },
       "commissionMasterworks": {
         "one": "{count} mistrovsky kovaný předmět",
         "few": "{count} mistrovsky kované předměty",
@@ -2357,6 +2438,7 @@ export const cs_CZ: EnTranslations = {
     },
     "bugReport": {
       "menuButton": "Nahlásit chybu",
+      "online": "Online",
       "realm": "Svět",
       "character": "Postava",
       "position": "Pozice",
@@ -2962,8 +3044,8 @@ export const cs_CZ: EnTranslations = {
         "kingsWrathSummary": "Nythraxis způsobuje o {bonusNormal} vyšší poškození na Normal nebo o {bonusHeroic} na Heroic po zbytek boje. Hrobová erupce nastává každých {eruptionEveryNormal} s ({eruptionEveryHeroic} na Heroic) a Hrobový oheň každých {gravefireEveryNormal} s ({gravefireEveryHeroic} na Heroic).",
         "kingsWrathResponse": "Použijte zbývající obranné cooldowny na nevyhnutelné poškození. Udržte všechny dřívější mechaniky čisté, zatímco raid dokončuje boj.",
         "boneStormName": "Kostěná bouře",
-        "boneStormSummary": "Počínaje {first} s po začátku Králova hněvu a pak každých {everyNormal} s Nythraxis zahájí Kostěnou bouři na {duration} s. Ignoruje hrozbu, pohybuje se {speed}násobkem běžné rychlosti a provede {charges} výpadů, každý v trvání {chargeSeconds} s. Jeho vír způsobí každou sekundu v dosahu {radius} yardů {whirlNormal} maximálního zdraví. Každý výpad končí Kostěným úderem ve stejném dosahu za {slamNormal} maximálního zdraví. {spikeAt} s po začátku bouře sesílá Kostěný bodec a Hrobobijec se znovu připraví {rearm} s po jejím konci.",
-        "boneStormHeroicSummary": "Počínaje {first} s po začátku Králova hněvu a pak každých {everyHeroic} s Nythraxis zahájí Kostěnou bouři na {duration} s. Ignoruje hrozbu, pohybuje se {speed}násobkem běžné rychlosti a provede {charges} výpadů, každý v trvání {chargeSeconds} s. Jeho vír způsobí každou sekundu v dosahu {radius} yardů {whirlHeroic} maximálního zdraví. Každý výpad končí Kostěným úderem ve stejném dosahu za {slamHeroic} maximálního zdraví. {spikeAt} s po začátku bouře sesílá Kostěný bodec a Hrobobijec se znovu připraví {rearm} s po jejím konci.",
+        "boneStormSummary": "Počínaje {first} s po začátku Králova hněvu a pak každých {everyNormal} s Nythraxis zahájí Kostěnou bouři na {duration} s. Ignoruje hrozbu, pohybuje se {speed}násobkem běžné rychlosti a provede {charges} výpadů, každý v trvání {chargeSeconds} s. Jeho vír způsobí každou sekundu v dosahu {radius} yardů {whirlNormal} maximálního zdraví. Každý výpad končí Kostěným úderem ve stejném dosahu za {slamNormal} maximálního zdraví. První úder každé bouře místo toho zasáhne za {openingSlamNormal}. Hrobobijec se znovu připraví {rearm} s po jejím konci.",
+        "boneStormHeroicSummary": "Počínaje {first} s po začátku Králova hněvu a pak každých {everyHeroic} s Nythraxis zahájí Kostěnou bouři na {duration} s. Ignoruje hrozbu, pohybuje se {speed}násobkem běžné rychlosti a provede {charges} výpadů, každý v trvání {chargeSeconds} s. Jeho vír způsobí každou sekundu v dosahu {radius} yardů {whirlHeroic} maximálního zdraví. Každý výpad končí Kostěným úderem ve stejném dosahu za {slamHeroic} maximálního zdraví. První úder každé bouře místo toho zasáhne za {openingSlamHeroic}. Hrobobijec se znovu připraví {rearm} s po jejím konci.",
         "boneStormResponse": "Rozestupte se a nepřestávejte před Nythraxisem utíkat. Označený raider běží pryč, zatímco všichni ostatní nechají kolem trasy výpadu místo; tankové ho po konci bouře znovu převezmou.",
         "crownEnduresName": "Koruna vytrvá",
         "crownEnduresSummary": "V {enrageNormal} s od začátku boje (hodiny se zastaví, když bratr Aldric vstoupí při 70%) se Koruna vytrvá spustí jako tvrdé rozzuření. Nythraxis získá o {damage} vyšší poškození a o {haste} rychlejší útoky, poté každých {rampEveryNormal} s další {rampStep} poškození. Není zde žádná časová lišta. Varování přicházejí jako výkřiky při {warn60}, {warn30} a {warn10} s do konce.",
@@ -3014,6 +3096,7 @@ export const cs_CZ: EnTranslations = {
       "elementalConvergencePrimed": "Tvoje příští kouzlo z jiné živlové školy udělí Živlovou konvergenci",
       "hunterFerocity": "{stacks} Zuřivosti smečky: tvůj společník způsobuje o {pct}% větší poškození",
       "cooldownCap": "Využito {used} z {cap} s snížení doby obnovy v tomto okně",
+      "bruinRushWindow": "Vlčí podoba nestojí manu a přišpendlí cíl tvého Medvědího výpadu, čímž ho zpomalí o {pct} % na {sec} s",
       "funeralHarvestLock": "Funeral Harvest zatím nemůže vytvořit další Úlomek duše",
       "leadenHexLock": "Olověná kletba tento cíl zatím nemůže znovu zakořenit",
       "forbiddenReflectionReady": "Tvou příští způsobilou schopnost černokněžníka lze seslat znovu i mimo dobu obnovy",
@@ -3126,7 +3209,7 @@ export const cs_CZ: EnTranslations = {
       "elementalTrance": "Utrpěné poškození sníženo o {pct} %. {mana} % veškerého způsobeného poškození se mění v manu",
       "stealth": "Skrytí; rychlost pohybu snížena o {pct} %",
       "formBear": "Medvědí podoba: zvýšené zdraví a brnění",
-      "formCat": "Vlčí podoba: poškození na blízko a energie",
+      "wolfForm": "Cat Form: melee damage and energy; movement speed increased by {pct}%",
       "formTravel": "Cestovní podoba: rychlost pohybu zvýšena o {pct} %",
       "formFireball": "Žárová podoba: rychlost pohybu zvýšena o {pct} %; útoky a kouzla jsou zakázány",
       "formMoonkin": "Podoba měsíčního křídla: poškození kouzel zvýšeno o {pct} % a brnění zvýšeno o {armorPct} %",
@@ -3234,6 +3317,7 @@ export const cs_CZ: EnTranslations = {
       "lock": "Zamknout rám hráče"
     },
     "partyFrames": {
+      "header": "Party",
       "section": "Rámečky skupiny a raidu",
       "optionsSection": "Možnosti rámečků skupiny",
       "unlock": "Přesunout rámečky skupiny a raidu",
@@ -3735,6 +3819,15 @@ export const cs_CZ: EnTranslations = {
       "subtitle": "Cechy říše",
       "rosterTitle": "Zobrazit seznam členů cechu {guild}",
       "back": "Zpět",
+      "filters": "Board filters",
+      "newPlayerFriendly": "New player friendly",
+      "newPlayerFriendlyTitle": "This guild welcomes new players",
+      "filterNewPlayersTitle": "Show only guilds that welcome new players",
+      "filterEmpty": "No guild has opened its doors to new players yet.",
+      "showAll": "Show all guilds",
+      "officersOnline": "Officers online",
+      "officersOnlineLabel": "Officers online: {names}",
+      "officerEntry": "{name} ({rank})",
       "popupTitle": "Cechovní vývěska",
       "close": "Zavřít"
     },
@@ -4023,7 +4116,6 @@ export const cs_CZ: EnTranslations = {
       }
     },
     "gathering": {
-      "title": "Sběr",
       "mining": "Těžba",
       "logging": "Dřevorubectví",
       "herbalism": "Bylinkářství",
@@ -4207,9 +4299,7 @@ export const cs_CZ: EnTranslations = {
       "noviceBody": "Dovednost Farmaření roste pokaždé, když sklidíš plodinu. Začni zasetím semene na libovolném záhonu."
     },
     "archetypeTitle": {
-      "label": "Titul",
-      "none": "Žádný",
-      "hobbyLabel": "Koníček"
+      "none": "Žádný"
     },
     "archetypePair": {
       "engineering+alchemy": "Bombardér",
@@ -4379,7 +4469,9 @@ export const cs_CZ: EnTranslations = {
       "hobbyLabel": "Hobby: {craft}",
       "majorsLabel": "Hlavní: {a} a {b}",
       "pairsHeld": "Držené páry: {count}",
-      "returnsLabel": "Vrácení: {count}"
+      "returnsLabel": "Vrácení: {count}",
+      "retentionFooter": "Returns on respec: 60% of skill kept.",
+      "tutorialLink": "Profession tutorial"
     },
     "crafting": {
       "title": "Výroba",
@@ -4414,6 +4506,7 @@ export const cs_CZ: EnTranslations = {
       "vaultUnreachable": "Trezor materiálů je tady mimo dosah.",
       "craftFeeLine": "Poplatek za výrobu: {fee} za kus",
       "empty": "Zatím nejsou známy žádné recepty.",
+      "materialsFooter": "Materials in your vault are drawn automatically. Learn more recipes at the station.",
       "resultAria": "Vyrobit {name}",
       "craftedToast": "Vyrobeno: {name}",
       "craftedToastQty": "Vyrobeno: {name} x{qty}",
@@ -4515,6 +4608,9 @@ export const cs_CZ: EnTranslations = {
       "commissionToggleHint": "Váže se na první postavu, která ho přijme v obchodu.",
       "commissionUnbound": "Zakázkový předmět: váže se na prvního příjemce",
       "commissionBound": "Zakázkový předmět: vázán na příjemce"
+    },
+    "marketWindow": {
+      "mixedListingsFooter": "The Merchant restocks common goods; player listings sit beside them at their asking price."
     },
     "itemMenu": {
       "use": "Použít",
@@ -4950,6 +5046,10 @@ export const cs_CZ: EnTranslations = {
       "ownedTooltipStatus": "Zkatalogizováno v Relikviáři",
       "missingTooltipStatus": "Dosud nenalezeno",
       "firstFindClears": "Poprvé nalezeno při průchodu {count}",
+      "foundBy": "Found by {names}",
+      "finderWithDate": "{name} ({date})",
+      "sharedScopeNote": "Shared by every character on your account",
+      "sharedScopeHint": "A relic found by any character on your account fills the page here too.",
       "unlockToast": "Relikvie zkatalogizována: {name}",
       "illuminateBanner": "Stránka iluminována: {name}",
       "illuminateToast": "Všechny relikvie na stránce {name} jsou vyplněné.",
@@ -5083,6 +5183,10 @@ export const cs_CZ: EnTranslations = {
       "progressAria": "Postup: {current} z {target}",
       "renownChip": "Věhlas: {renown}",
       "earnedDate": "Vykonáno {date}",
+      "earnedBy": "Earned by {names}",
+      "earnerWithDate": "{name} ({date})",
+      "accountScopeNote": "Shared by every character on your account",
+      "accountScopeHint": "A deed any character on your account accomplishes is earned here too, and the Book names who earned it.",
       "featRibbon": "Počin",
       "hiddenBadge": "Skrytý",
       "titleChip": "Odměna: titul",
@@ -5132,6 +5236,33 @@ export const cs_CZ: EnTranslations = {
       "toggleAria": "Přepnout mezi mapou světa, mapou oblasti a mapou instance",
       "levels": "Úrovně {min} až {max}"
     },
+    "mapAtlas": {
+      "level": "Level {level}",
+      "landmarkCount": "{count} landmarks",
+      "filtersAria": "Map layers",
+      "filters": {
+        "quests": "Quests",
+        "gather": "Gather",
+        "dungeons": "Dungeons",
+        "services": "Services",
+        "players": "Players"
+      },
+      "trackedQuests": "Tracked quests",
+      "noTrackedQuests": "No tracked quests",
+      "availableNearby": "Available nearby",
+      "noNearbyQuests": "No nearby quests",
+      "distance": "{distance} yards",
+      "showRoute": "Show Route",
+      "untrack": "Untrack",
+      "track": "Track",
+      "legend": {
+        "dungeon": "Dungeon",
+        "ore": "Ore",
+        "herb": "Herb",
+        "mail": "Mail",
+        "passage": "Passage"
+      }
+    },
     "arenaGate": {
       "minLevelNote": "Vyžaduje úroveň {level}"
     },
@@ -5150,6 +5281,7 @@ export const cs_CZ: EnTranslations = {
       "tabBrowse": "Procházet",
       "tabSell": "Prodat",
       "tabActivity": "Moje aktivity",
+      "tabHistory": "Sales History",
       "tabsLabel": "Sekce Burzy $WOC",
       "loading": "Načítání Burzy…",
       "loadFailed": "Burzu se nepodařilo spojit. Zkus to znovu za chvíli.",
@@ -5174,6 +5306,16 @@ export const cs_CZ: EnTranslations = {
       "colCurrentBid": "Aktuální příhoz",
       "colBuyNow": "Koupit ihned",
       "colTimeLeft": "Zbývající čas",
+      "colBuyer": "Buyer",
+      "colSoldAt": "Sold",
+      "colSalePrice": "Sale price",
+      "colSaleType": "Type",
+      "saleTypeAuction": "Auction",
+      "saleTypeBuyNow": "Buy now",
+      "saleTypeDirected": "Directed",
+      "saleTypeUnknown": "Unknown",
+      "historyEmpty": "No sales recorded yet.",
+      "historyError": "Sales history could not be loaded.",
       "reserveMet": "Rezerva splněna",
       "reserveNotMet": "Rezerva nesplněna",
       "yourListing": "Tvá nabídka",
@@ -6066,6 +6208,7 @@ export const cs_CZ: EnTranslations = {
       "framesMoveBodyEditFrames": "Rámeček tvé postavy, rámeček cíle i rámečky skupiny lze přesouvat. Každý má v rohu malé tlačítko přesunu: odemkni ho, přetáhni rámeček na požadované místo a znovu ho zamkni, aby ho náhodný klik neposunul. Upravit rámečky nahoře v kartě Rámečky možností Rozhraní uvolní najednou zbytek rozhraní a s ním tyto tři rámečky: akční lišty, lištu sesílání, lištu švihů, lištu zkušeností, minimapu, lištu tlačítek, rámeček mazlíčka, lištu postoje, řádky posílení a záporných účinků a štítek Připomínka přání. Když skončí někde, kde je nechceš, Obnovit výchozí nastavení dole ve stejné kartě Rámečky je všechny vrátí na původní místa.",
       "framesGovernedExtra": "Upravit rámečky uvolní také zásobník trackerů pod nimi, tedy sledované úkoly a jejich cíle, postup skutků, stránky Reliquiáře, delve, ve kterém jsi, rift, jehož se účastníš, a sledovaný recept či zakázku, dále akční lištu mazlíčka vedle jeho rámečku, rámeček teček cíle pro tvé záporné účinky na blízkých nepřátelích, paladinův medailon Oddanosti, čarodějův Panel trápení, překryv procs kouzel, časovač švihu vedlejší ruky pro bojovníky se dvěma zbraněmi a záložkové okno měřiče poškození. Každý při uvolnění nosí vlastní štítek se jménem.",
       "framesGovernedAuraTracks": "Upravit rámečky po zapnutí v kartě Boj stejných možností Rozhraní uvolní také šest volitelných stop aur: stopu Mých posílení, stopu Obranných obnov, stopu Mých štítů, stopu Útočných obnov, stopu Pohybu a utajení a stopu Mých posílení na spojencích. Každá stopa je ve výchozím stavu vypnutá a po uvolnění nosí vlastní štítek se jménem.",
+      "framesGovernedTalkingHead": "Edit Frames also loosens the Dialogue panel, which carries an NPC's spoken line while that NPC is out of your view; it wears its name chip while it is loose.",
       "barsTitle": "Lišty, časovače a bojový text",
       "barsBody": "Tvá lišta sesílání se objeví uprostřed obrazovky, těsně nad tvými akčními lištami, kdykoli sesíláš nebo kanáluješ kouzlo, a nese jméno kouzla a zbývající čas. Tvůj cíl má na svém rámu vlastní lištu sesílání, takže vidíš, co přichází, a můžeš na to zareagovat.\n\nPod tvou lištou sesílání sedí tenká lišta švihu, která se plní mezi švihy tvé zbraně, takže útočník na blízko nebo na dálku vidí, kdy dopadne další automatický zásah.\n\nTvá lišta zkušeností běží přes celou šířku pod akčními lištami, rozdělená do úseků, se světlejším pruhem, který ukazuje naspořené odpočaté zkušenosti.\n\nPlav pod vodou a nahoře na obrazovce se objeví modrá lišta dechu. Vyprazdňuje se, dokud máš hlavu pod hladinou, jakmile dojde, zabliká červeně a začneš se topit, a jakmile se vynoříš, rychle se doplní. Mezerník tě žene nahoru a klávesa Plavat dolů, ve výchozím stavu Ctrl, tě táhne hlouběji.\n\nPoškození a léčení vyplouvají nad tím, co zasáhly, jako malá čísla, takže boj přečteš, aniž bys musel číst text. Záložka Bojový záznam v tvém chatu drží úplný písemný záznam.",
       "aurasTitle": "Buffy a debuffy",
@@ -6423,6 +6566,7 @@ export const cs_CZ: EnTranslations = {
       "formsNote": "Druid bojuje měněním podoby. Většina druidských schopností patří k jedné podobě, takže to, v jaké jsi právě podobě, rozhoduje, co můžeš seslat, a přeměna stojí trochu many. Měnit podobu můžeš v boji i mimo něj, tak často, jak chceš.",
       "formsAutoUnshift": "Léčení nebo útočné kouzlo seslané v podobě tě z ní samo vyvede. Opuštění podoby tímto způsobem je zdarma a nespotřebuje globální dobu obnovy, takže okamžité kouzlo vyletí hned, jak ho stiskneš. Návrat do podoby je běžná schopnost a stále stojí manu i globální dobu obnovy.",
       "formsMoonwing": "Druid Měsíčního háje získá ještě jednu podobu, Podobu měsíčního křídla, v níž bojuje jako sesilatel. Je to jediná zvířecí podoba, která si ponechá tvá kouzla, a hůlka funguje jen v ní nebo v tvé běžné sesilatelské podobě.",
+      "formsWolfEngage": "Vlk zahajuje boj Medvědím výpadem, hned se přemění do Vlčí podoby, aby cíl přišpendlil, mimo plížení se přiblíží Výpadem a nepřítele zastaví Sražením.",
       "formLine": {
         "form_bear": "Tankovací podoba: silná kůže, vztek místo many a navíc hrozba, aby po tobě nepřátelé dál sekali.",
         "form_cat": "Podoba pro poškození na blízko: energie a combo body jako u tuláka a mnohem menší hrozba.",
@@ -6990,7 +7134,7 @@ export const cs_CZ: EnTranslations = {
     "reliquaryPage": {
       "intro": "Relikviář je muzeum jedinečné kořisti, kterou jsi zkatalogizoval: vytoužené kousky z dungeonů, profesní trofeje, jezdecká zvířata, vzhledy zbraní a tituly. Ke Knize skutků patří tak, jako patří síň trofejí k knize úspěchů.",
       "howHeading": "Jak sbírka funguje",
-      "howBody": "Otevři Relikviář ve hře (výchozí Shift+X). Každá police nese stránky jedinečných relikvií. Siluetu vyplníš, jakmile daný kus poprvé získáš na této postavě, a stránku iluminuješ, jakmile jsou vyplněné všechny její relikvie. Několik stránek nese označení Vyřazená nebo Osobní: stojí mimo dokončení, takže nikdy neblokují polici ani celý katalog. Živé nálezy se ohlásí a obnoví otevřené okno; postup je vázaný na postavu, s výjimkou vzhledů zbraní, které jsou kosmetikou účtu.",
+      "howBody": "Otevři Relikviář ve hře (výchozí Shift+X). Každá police obsahuje stránky jedinečných relikvií. Silueta se vyplní, jakmile kterákoli postava na tvém účtu ten kus poprvé získá, a stránka se rozsvítí, když jsou vyplněny všechny relikvie na ní. Několik stránek je označeno Vyřazené nebo Osobní: stojí mimo dokončení, takže nikdy neblokují polici ani celý katalog. Živé nálezy se ohlásí a obnoví otevřené okno; postup sdílejí všechny postavy na účtu, takže relikvie, kterou najde jedna postava, vyplní stránku všem.",
       "ranksHeading": "Hodnosti Kurátora",
       "ranksBody": "Hodnosti Kurátora rostou s každou zkatalogizovanou jedinečnou relikvií a udělují výhradně kosmetické tituly a rámečky. Nikdy nedávají bojovou sílu, šanci na kořist ani vyrovnání smůly. Vzhledy zbraní vázané na účet se do hodnosti Kurátora nezapočítávají, aby prestiž zůstala vázaná na postavu, a relikvie z Vyřazených či Osobních stránek se do ní nezapočítávají také.",
       "retiredTag": "Vyřazená",
@@ -11858,7 +12002,7 @@ export const cs_CZ: EnTranslations = {
       },
       "cat_form": {
         "name": "Vlčí podoba",
-        "description": "Promění tě ve vlka: obratnost roste s tvou úrovní, útočná síla +8 plus 2 za úroveň, tvé útoky používají energii a combo body a vytváříš o 29 % nižší hrozbu. Sešli znovu, aby ses vrátil do sesilatelské podoby."
+        "description": "Promění tě ve vlka: obratnost roste s tvou úrovní, útočná síla +8 plus 2 za úroveň, tvé útoky používají energii a combo body a vytváříš o 29 % nižší hrozbu. Přeměna do jakékoli podoby udělí Dlouhý krok: 60 % rychlosti pohybu na 3 s, jednou za 20 s. Sešli znovu, aby ses vrátil do sesilatelské podoby."
       },
       "claw": {
         "name": "Rvoucí dráp",
@@ -11923,7 +12067,15 @@ export const cs_CZ: EnTranslations = {
       },
       "pounce": {
         "name": "Plíživý úder",
-        "description": "Zahajovací útok z plížení, který omráčí cíl na 2 s. Udělí 1 combo bod. Pouze ve vlčí podobě."
+        "description": "Zahajovací útok z plížení, který omráčí cíl na 2 s. Udělí 1 combo bod. Pouze ve vlčí podobě. Bez plížení je toto tlačítko Výpad."
+      },
+      "lunge": {
+        "name": "Výpad",
+        "description": "Vrhni se na nepřítele až 12 yardů daleko, způsob 60 % poškození zbraní a získej 1 combo bod. Pouze ve vlčí podobě."
+      },
+      "hamstring_bite": {
+        "name": "Sražení",
+        "description": "Dokončovací útok, který omráčí cíl na 1 s plus 1 s za combo bod (5 combo bodů: 6 s). Pouze ve vlčí podobě."
       },
       "insect_swarm": {
         "name": "Bodavý roj",
@@ -12637,7 +12789,7 @@ export const cs_CZ: EnTranslations = {
       },
       "bear_charge": {
         "name": "Medvědí výpad",
-        "description": "Vyrazí k nepříteli, vygeneruje 9 vzteku a omráčí ho na 1 s. Dosah 8-25 yardů. Pouze v medvědí podobě."
+        "description": "Vyrazí k nepříteli, vygeneruje 9 vzteku a omráčí ho na 1 s. Po dobu 3 s poté je Vlčí podoba zdarma a přišpendlí cíl, čímž ho zpomalí o 50 % na 4 s. Dosah 8-25 yardů. Pouze v medvědí podobě."
       },
       "demoralizing_roar": {
         "name": "Zbabělý řev",
@@ -12645,7 +12797,7 @@ export const cs_CZ: EnTranslations = {
       },
       "prowl": {
         "name": "Plížení",
-        "description": "Vstoupíš do plížení ve vlčí podobě a pohybuješ se o 5 % pomaleji. Nelze použít v boji."
+        "description": "Vstoupíš do plížení ve vlčí podobě. Nelze použít v boji."
       },
       "rake": {
         "name": "Stažení z kůže",

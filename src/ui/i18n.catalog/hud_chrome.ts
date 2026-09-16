@@ -590,12 +590,16 @@ export const hudChromeStrings = {
       energy: 'Energy',
     },
   },
-  // On-screen quest tracker. The "(N)" count shown beside the header while the
-  // tracker is collapsed (the number is spliced in via formatNumber), plus the
-  // header button's state-aware hover/title hint (Collapse while expanded,
-  // Expand while collapsed).
+  // On-screen quest tracker. The "(N)" count beside a collapsed deed/Reliquary
+  // header (the number is spliced in via formatNumber), the bare "4 / 8" value
+  // column the quest tracker's counted objective rows carry opposite their
+  // label, plus the header button's state-aware hover/title hint (Collapse
+  // while expanded, Expand while collapsed).
   questTracker: {
     count: '({count})',
+    // Both numbers arrive already localized; a locale that writes the fraction
+    // tight ("4/8") drops the spaces here.
+    objectiveValue: '{current} / {total}',
     collapseHint: 'Collapse quest tracker',
     expandHint: 'Expand quest tracker',
   },
@@ -1309,6 +1313,13 @@ export const hudChromeStrings = {
     devTierCol: 'Badge',
     mergedPrs: 'Merged PRs',
     devEmpty: 'No ranked contributors yet.',
+    // The top-three podium every tab shows on its first page: its list label and
+    // the stand-in name on a place nobody holds yet.
+    podiumLabel: 'Top three',
+    unclaimed: 'Unclaimed',
+    // The prestige star's tooltip on a ladder row and on a podium card: one key
+    // with the rank interpolated, never a translated word glued to a number.
+    prestigeTitle: 'Prestige {rank}',
   },
   // Guild pledge board (docs/prd/guild-pledge-board.md): shared strings for the
   // guild high-score tab's pledge affordances AND the social window's Pledges
@@ -1344,6 +1355,10 @@ export const hudChromeStrings = {
     noteLabel: 'Board note',
     notePlaceholder: 'Tell aspiring members what your guild is looking for',
     save: 'Save',
+    // Guild board categories (src/sim/guild_board_category.ts): the
+    // new-player-friendly opt-in in the same editor, and its helper line.
+    newPlayerFriendlyLabel: 'New player friendly',
+    newPlayerFriendlyHint: "Shown on the recruits' board at the Proving Shore signpost.",
     // The unguilded viewer's own standing pledge (social window guild tab).
     yourPledge: 'Your pledge: {guild}',
     since: 'Pledged {date}',
@@ -1394,6 +1409,9 @@ export const hudChromeStrings = {
   // time, beside a real control (a keybind, a tab, a row, the history
   // arrow), never a wall of text. Wordy (M16): the five non-Latin fills
   // land in this same change.
+  talkingHead: {
+    label: 'Dialogue',
+  },
   hubLesson: {
     target: 'Target the dummy to begin.',
     openWindow: 'Open {meters}.',
@@ -1610,6 +1628,10 @@ export const hudChromeStrings = {
     // Discord is a brand name; it stays identical across locales.
     discord: 'Discord',
     bgFlag: 'Battleground Flag Action',
+    // The friendly half of the `hud` catalog's existing `nameplates` row: that
+    // key (V) hides every mob nameplate, this one (Ctrl+V) hides only the
+    // friendly ones and leaves the enemies you are fighting alone.
+    friendlyNameplates: 'Toggle Friendly Nameplates',
     sheathe: 'Sheathe/Unsheathe Weapon',
     // Swimming: Jump swims up, this swims down.
     dive: 'Swim Down',
@@ -2227,6 +2249,9 @@ export const hudChromeStrings = {
   // hardware glyphs in gamepad_map and need no translation.
   controller: {
     title: 'Controller',
+    device: 'Connected Device',
+    deviceConnected: 'Connected',
+    deviceDisconnected: 'No controller detected',
     glyphStyle: 'Button Labels',
     glyphStyleAuto: 'Auto',
     glyphStyleXbox: 'Xbox',
@@ -2256,7 +2281,7 @@ export const hudChromeStrings = {
     crossHotbarResetLayout: 'Reset Cross Hotbar',
     crossHotbarPosition: '{trigger} + {button}',
     crossHotbarOwnsButtons:
-      'The triggers and the d-pad belong to the cross hotbar while it is on, so they are set up below rather than here.',
+      'The triggers modify the cross hotbar while it is on. D-pad directions remain editable here for menus and movement.',
     cancelAction: 'Cancel / Back',
     subcommandsAction: 'Subcommands / Map',
     cycleHudAction: 'Cycle Interface',
@@ -2267,10 +2292,16 @@ export const hudChromeStrings = {
     crossHotbarDisplayMinimal: 'Only While Held',
     crossHotbarArrangeChord: '{bumper} + {button}',
     crossHotbarCarrying: 'Carrying {action}: confirm on a cell to place it, cancel to put it back.',
+    // The button words stay generic (confirm / cancel): both are rebindable and
+    // brand-dependent, and the chord that leaves the mode is the one the player
+    // just pressed to enter it, so the line names what each press DOES instead.
     crossHotbarEditHint:
-      'Arranging: confirm picks up from a cell or the spellbook and drops on a cell, cancel clears one.',
+      'Arranging · d-pad moves · confirm picks up and places · cancel clears a cell',
     crossHotbarEditHelp:
       'Hold the left bumper and press the top face button to arrange the bar with the controller.',
+    // The pad hint strip and the micro-menu legend: a controller's replacement
+    // for the keyboard's implicit key knowledge. The glyph beside each label is
+    // a hardware name from gamepad_map, so only the action words are keyed.
   },
   // Performance overlay (the customizable in-game stats panel + its Options
   // sub-view). Player-facing, so every label is a key here; the live numbers in
@@ -2579,6 +2610,62 @@ export const hudChromeStrings = {
     spellOrder: 'Spell Order',
     reset: 'Reset Position',
     spellPosition: 'Spell order {position} / {count}',
+    // The watchlist picker: any known spell that puts a buff on you can be given
+    // its own aura vision, on top of the curated class procs above.
+    watchlist: 'Watched Spells',
+    watchlistHint:
+      'Pick any spell that buffs you to give it its own aura. Picked spells get a full card below, with their own icon, color, position and ground ring.',
+    watchlistEmpty: 'No other spell in your spellbook puts a buff on you.',
+    watchlistWatch: 'Watch {spell}',
+    watchlistUnwatch: 'Stop watching {spell}',
+    watchlistCount: '{count} watched',
+    // Sound cues attachable to any proc (src/game/aura_cue_catalog.ts). Named for
+    // what the player hears, not for the class or proc, since any cue can go on
+    // any spell.
+    sound: 'Alert Sound',
+    soundNone: 'No sound',
+    soundVolume: 'Sound Volume',
+    soundPreview: 'Play',
+    soundPreviewAria: 'Preview the {sound} alert sound',
+    soundHint:
+      'A sound plays each time this spell procs. Turn the icon, crescents and ground ring off to have the sound alone announce it.',
+    // The alternative notification channels a proc can be routed to, alongside or
+    // instead of the on-screen aura.
+    readyGlow: 'Hotbar Glow',
+    readyGlowHint: 'Lights this spell on your action bar while its buff is up.',
+    reticleTick: 'Reticle Tick',
+    reticleTickHint: 'Adds a mark near the centre of the screen that lights when this spell procs.',
+    haptic: 'Rumble',
+    hapticNone: 'Off',
+    hapticHint:
+      'Vibrates a connected controller, or your phone. Ignored where the device has no haptics.',
+    haptics: {
+      tap: 'Tap',
+      double: 'Double',
+      long: 'Long',
+    },
+    cues: {
+      softChime: 'Soft Chime',
+      musicBox: 'Music Box',
+      glassPing: 'Glass Ping',
+      waterDrop: 'Water Drop',
+      bubblePop: 'Bubble Pop',
+      hardBell: 'Hard Bell',
+      templeGong: 'Temple Gong',
+      anvilStrike: 'Anvil Strike',
+      coinDrop: 'Coin Drop',
+      swordDraw: 'Sword Draw',
+      blaringHorn: 'Blaring Horn',
+      carKlaxon: 'Car Klaxon',
+      sonarPing: 'Sonar Ping',
+      electricZap: 'Electric Zap',
+      catMeow: 'Cat Meow',
+      owlHoot: 'Owl Hoot',
+      wolfHowl: 'Wolf Howl',
+      frogCroak: 'Frog Croak',
+      windWhoosh: 'Wind Whoosh',
+      steamHiss: 'Steam Hiss',
+    },
     procs: {
       revenge: 'Revenge!',
       battleTrance: 'Battle Trance',
@@ -2689,6 +2776,22 @@ export const hudChromeStrings = {
     playtimeHidden: 'Hidden',
     showPlaytimeAria: 'Show time played',
     hidePlaytimeAria: 'Hide time played',
+  },
+  charSidebar: {
+    label: 'Character details',
+    subtitle: 'Level {level} {className} . {archetype} . Hobby: {hobby}',
+    subtitleNoHobby: 'Level {level} {className} . {archetype}',
+    stats: 'Stats',
+    progression: 'Progression',
+    skills: 'Skills',
+    gathering: 'Gathering',
+    crafting: 'Crafting',
+    openProfessions: 'Open Professions',
+  },
+  questLog: {
+    completed: 'Completed',
+    zoneSummary: '{count} ({ready} ready)',
+    shiftHint: 'Shift-click a quest to link it in chat.',
   },
   // Character-screen stat tooltips (hover a stat on the C panel). The stat NAMES
   // reuse itemUi.stats.*; only these descriptions / effect lines / notes are new.
@@ -2879,6 +2982,14 @@ export const hudChromeStrings = {
   // carry the real distinct forms only in the locales that need them (ru_RU). The
   // count is auto-supplied as {count}. Keep all four categories present per base.
   plurals: {
+    // The signpost guild board's live count line ({count} pre-formatted): a
+    // screen reader hears how many guilds a read (or a filter flip) produced.
+    guildBoardShown: {
+      one: '{count} guild shown',
+      few: '{count} guilds shown',
+      many: '{count} guilds shown',
+      other: '{count} guilds shown',
+    },
     // The commission board's crafter's-record counts (Masterwrought phase
     // 14): lifetime masterworks crafted and legendaries forged, off the
     // accepter's deed stat counters.
@@ -3038,6 +3149,7 @@ export const hudChromeStrings = {
   // position/screenshot plus a free-text description and posts to the server.
   bugReport: {
     menuButton: 'Report a Bug',
+    online: 'Online',
     realm: 'World',
     character: 'Character',
     position: 'Position',
@@ -4042,9 +4154,9 @@ export const hudChromeStrings = {
         'Use remaining defensive cooldowns for unavoidable damage. Keep every earlier mechanic clean while the raid finishes the fight.',
       boneStormName: 'Bone Storm',
       boneStormSummary:
-        "Starting {first} sec into The King's Wrath and every {everyNormal} sec after, Nythraxis begins Bone Storm for {duration} sec. He ignores threat, moves at {speed} times normal speed, and makes {charges} charges lasting {chargeSeconds} sec each. His whirl deals {whirlNormal} of maximum health every second within {radius} yd. Each charge ends in a Bone Slam within the same radius for {slamNormal} of maximum health. He casts Bone Spike {spikeAt} sec into the storm, then Gravebreaker re-arms {rearm} sec after it ends.",
+        "Starting {first} sec into The King's Wrath and every {everyNormal} sec after, Nythraxis begins Bone Storm for {duration} sec. He ignores threat, moves at {speed} times normal speed, and makes {charges} charges lasting {chargeSeconds} sec each. His whirl deals {whirlNormal} of maximum health every second within {radius} yd. Each charge ends in a Bone Slam within the same radius for {slamNormal} of maximum health. The first slam of each storm hits for {openingSlamNormal} instead. Gravebreaker re-arms {rearm} sec after the storm ends.",
       boneStormHeroicSummary:
-        "Starting {first} sec into The King's Wrath and every {everyHeroic} sec after, Nythraxis begins Bone Storm for {duration} sec. He ignores threat, moves at {speed} times normal speed, and makes {charges} charges lasting {chargeSeconds} sec each. His whirl deals {whirlHeroic} of maximum health every second within {radius} yd. Each charge ends in a Bone Slam within the same radius for {slamHeroic} of maximum health. He casts Bone Spike {spikeAt} sec into the storm, then Gravebreaker re-arms {rearm} sec after it ends.",
+        "Starting {first} sec into The King's Wrath and every {everyHeroic} sec after, Nythraxis begins Bone Storm for {duration} sec. He ignores threat, moves at {speed} times normal speed, and makes {charges} charges lasting {chargeSeconds} sec each. His whirl deals {whirlHeroic} of maximum health every second within {radius} yd. Each charge ends in a Bone Slam within the same radius for {slamHeroic} of maximum health. The first slam of each storm hits for {openingSlamHeroic} instead. Gravebreaker re-arms {rearm} sec after the storm ends.",
       boneStormResponse:
         'Spread out and keep running from Nythraxis. The charged raider runs away while everyone else leaves room around the charge path, then tanks pick him up when the storm ends.',
       crownEnduresName: 'The Crown Endures',
@@ -4117,6 +4229,9 @@ export const hudChromeStrings = {
       'Your next spell from the other elemental school grants Elemental Convergence',
     hunterFerocity: '{stacks} Pack Ferocity: your pet deals {pct}% more damage',
     cooldownCap: '{used} of {cap} sec of cooldown reduction used in this window',
+    // wordy (M16): filled in the five non-Latin locales in this change.
+    bruinRushWindow:
+      'Cat Form costs no mana and Pins your Bruin Rush target, slowing it by {pct}% for {sec} sec',
     funeralHarvestLock: 'Funeral Harvest cannot create another Soul Fragment yet',
     leadenHexLock: 'Leaden Hex cannot root this target again yet',
     forbiddenReflectionReady: 'Your next eligible Warlock cooldown can be cast again',
@@ -4190,7 +4305,7 @@ export const hudChromeStrings = {
     moontide:
       'Moontide {stacks}/{max}. Wildbolt, Skyfall, and Moonseed casts in Moonwing Form each add 1. At {max}: Moonseed becomes Moonsurge and Skyfall becomes Sunwake, and using either spends all 3',
     oldBlood:
-      'Old Blood {stacks}/{max}. Landed hits from Rendclaw, Flense, Bloodrift, Gorebite, Sweeping Claws, and Bonecrush each add 1. At {max}: Gorebite becomes Redharvest in Wolf Form, Bonecrush becomes Marrowbreak in Bruin Form',
+      'Old Blood {stacks}/{max}. Landed hits from Rendclaw, Flense, Bloodrift, Gorebite, Sweeping Claws, and Bonecrush each add 1. At {max}: Gorebite becomes Redharvest in Cat Form, Bonecrush becomes Marrowbreak in Bruin Form',
     verdance:
       'Verdance {stacks}/{max}. Each NEW Wildbloom or Second Bloom you plant adds 1. At {max}, Fleetmend becomes Overbloom',
     freeExecute: 'Your next eligible execute ability costs nothing',
@@ -4261,7 +4376,11 @@ export const hudChromeStrings = {
       'Damage taken reduced by {pct}%. {mana}% of all damage you deal is converted to mana',
     stealth: 'Concealed; movement speed reduced by {pct}%',
     formBear: 'Bruin Form: increased health and armor',
-    formCat: 'Wolf Form: melee damage and energy',
+    // wolfForm replaced formCat when the Cat Form mobility pass added the
+    // resolved {pct} (a reword is a new key: the old rows were retired). The
+    // key name predates the Cat Form rename; the English follows the rename
+    // and the overlays are on the release-time fill list.
+    wolfForm: 'Cat Form: melee damage and energy; movement speed increased by {pct}%',
     formTravel: 'Fleet Form: movement speed increased by {pct}%',
     formFireball: 'Ember Form: movement speed increased by {pct}%; attacks and spells are disabled',
     formMoonkin:
@@ -4461,6 +4580,7 @@ export const hudChromeStrings = {
     lock: 'Lock player frame',
   },
   partyFrames: {
+    header: 'Party',
     section: 'Party and Raid Frames',
     // The Frames tab's one labelled subsection (options window): every
     // declarative row there tunes the party frames now. Wordy (M16):
@@ -5274,6 +5394,23 @@ export const hudChromeStrings = {
     subtitle: 'Guilds of the realm',
     rosterTitle: 'View the roster of {guild}',
     back: 'Back',
+    // The category filter strip above the ranking (one tick box per
+    // category, src/sim/guild_board_category.ts) and the row chip a guild
+    // that opted in wears; the Proving Shore signpost opens with the box
+    // ticked. filterEmpty + showAll are the filtered board's empty state.
+    filters: 'Board filters',
+    newPlayerFriendly: 'New player friendly',
+    newPlayerFriendlyTitle: 'This guild welcomes new players',
+    filterNewPlayersTitle: 'Show only guilds that welcome new players',
+    filterEmpty: 'No guild has opened its doors to new players yet.',
+    showAll: 'Show all guilds',
+    // The live "officers online" dot beside a guild name: the legend in the
+    // filter strip, the tooltip title, and the dot's accessible name
+    // ({names} is a localized list of "Name (Rank)" entries).
+    officersOnline: 'Officers online',
+    officersOnlineLabel: 'Officers online: {names}',
+    // One entry of that list: the officer's name and localized rank.
+    officerEntry: '{name} ({rank})',
     // The 'listings' arm of the noticeboard event opens the signpost popup
     // (src/ui/noticeboard_popup.ts). Guild names and notes are world data,
     // spliced verbatim like player names, never translated.
@@ -5759,7 +5896,6 @@ export const hudChromeStrings = {
   // Gathering proficiency section on the character sheet (#1124). Profession
   // display names mirror src/sim/content/professions.ts (GatheringProfessionId).
   gathering: {
-    title: 'Gathering',
     mining: 'Mining',
     logging: 'Logging',
     herbalism: 'Herbalism',
@@ -6234,9 +6370,7 @@ export const hudChromeStrings = {
   // fallback, just untitled), and `hobbyLabel` heads the hobby line (#1294).
   // The title NAMES live under archetypePair below, keyed by canonical pair id.
   archetypeTitle: {
-    label: 'Title',
     none: 'None',
-    hobbyLabel: 'Hobby',
   },
   // Pair-named archetype titles (Professions 2.0): one named title per
   // selectable adjacent-pair attunement, keyed by the CANONICAL PAIR ID from
@@ -6332,7 +6466,7 @@ export const hudChromeStrings = {
   },
   enchantDescription: {
     enchant_weapon_lastflame_zeal:
-      "Your landed melee attacks can grant 50 Strength for 15 sec and heal you for 200 health. Healing modifiers apply. Each hit rolls 1% per 0.6 sec of the striking weapon's base speed. No internal cooldown. Each hand has its own buff; repeated triggers refresh that hand. Ranged attacks do not trigger this effect. Wolf Form uses its 1 sec base swing speed instead.",
+      "Your landed melee attacks can grant 50 Strength for 15 sec and heal you for 200 health. Healing modifiers apply. Each hit rolls 1% per 0.6 sec of the striking weapon's base speed. No internal cooldown. Each hand has its own buff; repeated triggers refresh that hand. Ranged attacks do not trigger this effect. Cat Form uses its 1 sec base swing speed instead.",
   },
   // Professions window (Professions 2.0): the read-only craft-wheel
   // window. Craft and pair NAMES resolve through craftName / archetypePair
@@ -6506,6 +6640,8 @@ export const hudChromeStrings = {
     majorsLabel: 'Majors: {a} and {b}',
     pairsHeld: 'Pairs held: {count}',
     returnsLabel: 'Returns: {count}',
+    retentionFooter: 'Returns on respec: 60% of skill kept.',
+    tutorialLink: 'Profession tutorial',
   },
   // Crafting window (#1127): the minimal common-tier crafting action, one row
   // per known recipe, a Craft button enabled only when every reagent is held.
@@ -6579,6 +6715,8 @@ export const hudChromeStrings = {
     // the row's Create and Create All controls can submit multi-craft batches.
     craftFeeLine: 'Craft fee: {fee} each',
     empty: 'No recipes known yet.',
+    materialsFooter:
+      'Materials in your vault are drawn automatically. Learn more recipes at the station.',
     resultAria: 'Craft {name}',
     // The SOLE player-visible line for a craft grant (#2430). The grant hub's
     // own 'loot' event no longer prints its "You receive:" line for a craft
@@ -6801,6 +6939,10 @@ export const hudChromeStrings = {
     commissionUnbound: 'Commission piece: binds to the first recipient',
     commissionBound: 'Commission piece: bound to its recipient',
   },
+  marketWindow: {
+    mixedListingsFooter:
+      'The Merchant restocks common goods; player listings sit beside them at their asking price.',
+  },
   // Bag-item context menu verbs (Professions 2.0): the row labels for
   // the right-click / touch action menu (bag_item_context_menu.ts). The first
   // row mirrors the classic left-click action (equip gear, use everything else);
@@ -6946,8 +7088,8 @@ export const hudChromeStrings = {
     // it: how a piece becomes Perfected is the Perfecting stage's own copy.
     notPerfected: 'Only a Perfected item can bear that enchant.',
     enchantSkillTooLow: 'Your Enchanting skill is too low for that enchant.',
-    // Riftbound bands are forge-only (rift/band_ladder.ts); the enchanting
-    // profession refuses them by id.
+    // Retired deny: bands take ring enchants now (rift/progression.ts). The
+    // string stays so an older server's rift_gear reply still renders.
     riftGear: 'Riftbound bands take Rift gems, not enchants.',
     replaceTag: 'Replaces {enchant}',
     sameEnchantTag: 'Already applied',
@@ -7457,6 +7599,14 @@ export const hudChromeStrings = {
     // slot would invalidate every shipped overlay fill, so the two meanings
     // coexist and this note is the guard.
     firstFindClears: 'First found on clear {count}',
+    // The account-wide Reliquary (src/sim/account_ledger.ts): which characters
+    // on the account found the relic (owned-cell tooltip), and the summary
+    // band's scope disclosure beside the count.
+    foundBy: 'Found by {names}',
+    finderWithDate: '{name} ({date})',
+    sharedScopeNote: 'Shared by every character on your account',
+    // The note's tooltip (the wording is jgyy's accountWideHint from PR #3933).
+    sharedScopeHint: 'A relic found by any character on your account fills the page here too.',
     unlockToast: 'Relic catalogued: {name}',
     illuminateBanner: 'Page illuminated: {name}',
     illuminateToast: 'Every relic on {name} is filled.',
@@ -7672,6 +7822,15 @@ export const hudChromeStrings = {
     progressAria: 'Progress: {current} of {target}',
     renownChip: '{renown} Renown',
     earnedDate: 'Earned {date}',
+    // The account-wide Book (src/sim/account_ledger.ts): which characters on
+    // the account earned the deed, each with its earn date where one is
+    // recorded (deeds_window.ts card foot), and the summary band's scope
+    // disclosure (the ranked-surface rule: a re-scoped count names its scope).
+    earnedBy: 'Earned by {names}',
+    earnerWithDate: '{name} ({date})',
+    accountScopeNote: 'Shared by every character on your account',
+    accountScopeHint:
+      'A deed any character on your account accomplishes is earned here too, and the Book names who earned it.',
     featRibbon: 'Feat',
     hiddenBadge: 'Hidden',
     titleChip: 'Title reward',
@@ -7764,6 +7923,39 @@ export const hudChromeStrings = {
     // Hover tooltip over a zone region: its name plus the suggested level band.
     levels: 'Levels {min} to {max}',
   },
+  // World map atlas rail. These labels name visible filters, quest actions,
+  // region facts, and the compact marker legend; wordy values carry same-change
+  // fills in the five non-Latin runtime overlays.
+  mapAtlas: {
+    level: 'Level {level}',
+    landmarkCount: '{count} landmarks',
+    filtersAria: 'Map layers',
+    filters: {
+      quests: 'Quests',
+      gather: 'Gather',
+      dungeons: 'Dungeons',
+      services: 'Services',
+      players: 'Players',
+    },
+    trackedQuests: 'Tracked quests',
+    noTrackedQuests: 'No tracked quests',
+    availableNearby: 'Available nearby',
+    noNearbyQuests: 'No nearby quests',
+    distance: '{distance} yards',
+    showRoute: 'Show Route',
+    // The tracking pair. Both labels live here because the two controls that
+    // flip local quest tracking share them: the atlas rail's Untrack button and
+    // the quest log's per-quest toggle, which is the way back from untracked.
+    untrack: 'Untrack',
+    track: 'Track',
+    legend: {
+      dungeon: 'Dungeon',
+      ore: 'Ore',
+      herb: 'Herb',
+      mail: 'Mail',
+      passage: 'Passage',
+    },
+  },
   // Ranked Arena's minimum-level queue gate (src/sim/social/arena.ts
   // arenaQueueJoin, 1v1/2v2 only): the arena window's disabled-queue note
   // when the local character is below the floor.
@@ -7798,6 +7990,8 @@ export const hudChromeStrings = {
     // "My", said outright: the tab is the viewer's own bids and listings, and
     // the bare "Activity" read as a market-wide feed (Zyzz's dev-test note).
     tabActivity: 'My Activities',
+    // The Sales History tab: every completed sale on the realm, newest first.
+    tabHistory: 'Sales History',
     // The tab strip's own accessible name (the store's 'WOC Store sections'
     // precedent), never the window title twice.
     tabsLabel: '$WOC Exchange sections',
@@ -7845,6 +8039,21 @@ export const hudChromeStrings = {
     colCurrentBid: 'Current bid',
     colBuyNow: 'Buy now',
     colTimeLeft: 'Time left',
+    // The Sales History table columns (Item and Seller reuse the two above).
+    colBuyer: 'Buyer',
+    colSoldAt: 'Sold',
+    colSalePrice: 'Sale price',
+    colSaleType: 'Type',
+    // The sale-type cell values (independent of the filter labels: a filter
+    // reads "Buy now", a completed sale reads its type the same but they
+    // translate separately). An unstamped pre-feature sale reads Unknown.
+    saleTypeAuction: 'Auction',
+    saleTypeBuyNow: 'Buy now',
+    saleTypeDirected: 'Directed',
+    saleTypeUnknown: 'Unknown',
+    // The Sales History faces.
+    historyEmpty: 'No sales recorded yet.',
+    historyError: 'Sales history could not be loaded.',
     reserveMet: 'Reserve met',
     reserveNotMet: 'Reserve not met',
     yourListing: 'Your listing',

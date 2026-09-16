@@ -902,6 +902,7 @@ export const vi_VN: EnTranslations = {
     },
     "questTracker": {
       "count": "({count})",
+      "objectiveValue": "{current} / {total}",
       "collapseHint": "Thu gọn bảng theo dõi nhiệm vụ",
       "expandHint": "Mở rộng bảng theo dõi nhiệm vụ"
     },
@@ -1220,7 +1221,10 @@ export const vi_VN: EnTranslations = {
       "devName": "Người đóng góp",
       "devTierCol": "Huy hiệu",
       "mergedPrs": "PR đã hợp nhất",
-      "devEmpty": "Chưa có người đóng góp nào được xếp hạng."
+      "devEmpty": "Chưa có người đóng góp nào được xếp hạng.",
+      "podiumLabel": "Top three",
+      "unclaimed": "Unclaimed",
+      "prestigeTitle": "Prestige {rank}"
     },
     "pledge": {
       "open": "Đang Nhận Cam Kết",
@@ -1243,6 +1247,8 @@ export const vi_VN: EnTranslations = {
       "noteLabel": "Ghi chú bảng tin",
       "notePlaceholder": "Cho các thành viên tương lai biết bang hội của bạn đang tìm kiếm điều gì",
       "save": "Lưu",
+      "newPlayerFriendlyLabel": "New player friendly",
+      "newPlayerFriendlyHint": "Shown on the recruits' board at the Proving Shore signpost.",
       "yourPledge": "Cam kết của bạn: {guild}",
       "since": "Đã cam kết {date}",
       "withdraw": "Rút cam kết"
@@ -1266,6 +1272,9 @@ export const vi_VN: EnTranslations = {
       "previous": "Các lượt trước",
       "runLabel": "Lượt luyện tập {index}",
       "runSummary": "{total} trong {time}"
+    },
+    "talkingHead": {
+      "label": "Dialogue"
     },
     "hubLesson": {
       "target": "Nhắm vào hình nộm để bắt đầu.",
@@ -1395,6 +1404,7 @@ export const vi_VN: EnTranslations = {
       "targetPrev": "Luân Phiên Mục Tiêu Ngược",
       "discord": "Discord",
       "bgFlag": "Hành Động Cờ Chiến Trường",
+      "friendlyNameplates": "Toggle Friendly Nameplates",
       "sheathe": "Tra/Rút Vũ Khí",
       "dive": "Lặn Xuống",
       "categoryPet": "Thú Cưng",
@@ -1729,6 +1739,9 @@ export const vi_VN: EnTranslations = {
     },
     "controller": {
       "title": "Tay Cầm",
+      "device": "Connected Device",
+      "deviceConnected": "Connected",
+      "deviceDisconnected": "No controller detected",
       "glyphStyle": "Nhãn Nút",
       "glyphStyleAuto": "Tự Động",
       "glyphStyleXbox": "Xbox",
@@ -2043,6 +2056,52 @@ export const vi_VN: EnTranslations = {
       "spellOrder": "Thứ tự phép",
       "reset": "Đặt Lại Vị Trí",
       "spellPosition": "Thứ tự phép {position} / {count}",
+      "watchlist": "Watched Spells",
+      "watchlistHint": "Pick any spell that buffs you to give it its own aura. Picked spells get a full card below, with their own icon, color, position and ground ring.",
+      "watchlistEmpty": "No other spell in your spellbook puts a buff on you.",
+      "watchlistWatch": "Watch {spell}",
+      "watchlistUnwatch": "Stop watching {spell}",
+      "watchlistCount": "{count} watched",
+      "sound": "Alert Sound",
+      "soundNone": "No sound",
+      "soundVolume": "Sound Volume",
+      "soundPreview": "Play",
+      "soundPreviewAria": "Preview the {sound} alert sound",
+      "soundHint": "A sound plays each time this spell procs. Turn the icon, crescents and ground ring off to have the sound alone announce it.",
+      "readyGlow": "Hotbar Glow",
+      "readyGlowHint": "Lights this spell on your action bar while its buff is up.",
+      "reticleTick": "Reticle Tick",
+      "reticleTickHint": "Adds a mark near the centre of the screen that lights when this spell procs.",
+      "haptic": "Rumble",
+      "hapticNone": "Off",
+      "hapticHint": "Vibrates a connected controller, or your phone. Ignored where the device has no haptics.",
+      "haptics": {
+        "tap": "Tap",
+        "double": "Double",
+        "long": "Long"
+      },
+      "cues": {
+        "softChime": "Soft Chime",
+        "musicBox": "Music Box",
+        "glassPing": "Glass Ping",
+        "waterDrop": "Water Drop",
+        "bubblePop": "Bubble Pop",
+        "hardBell": "Hard Bell",
+        "templeGong": "Temple Gong",
+        "anvilStrike": "Anvil Strike",
+        "coinDrop": "Coin Drop",
+        "swordDraw": "Sword Draw",
+        "blaringHorn": "Blaring Horn",
+        "carKlaxon": "Car Klaxon",
+        "sonarPing": "Sonar Ping",
+        "electricZap": "Electric Zap",
+        "catMeow": "Cat Meow",
+        "owlHoot": "Owl Hoot",
+        "wolfHowl": "Wolf Howl",
+        "frogCroak": "Frog Croak",
+        "windWhoosh": "Wind Whoosh",
+        "steamHiss": "Steam Hiss"
+      },
       "procs": {
         "revenge": "Phục Thù!",
         "battleTrance": "Nhập Định Chiến Đấu",
@@ -2114,6 +2173,22 @@ export const vi_VN: EnTranslations = {
       "playtimeHidden": "Ẩn",
       "showPlaytimeAria": "Hiện thời gian chơi",
       "hidePlaytimeAria": "Ẩn thời gian chơi"
+    },
+    "charSidebar": {
+      "label": "Character details",
+      "subtitle": "Level {level} {className} . {archetype} . Hobby: {hobby}",
+      "subtitleNoHobby": "Level {level} {className} . {archetype}",
+      "stats": "Stats",
+      "progression": "Progression",
+      "skills": "Skills",
+      "gathering": "Gathering",
+      "crafting": "Crafting",
+      "openProfessions": "Open Professions"
+    },
+    "questLog": {
+      "completed": "Completed",
+      "zoneSummary": "{count} ({ready} ready)",
+      "shiftHint": "Shift-click a quest to link it in chat."
     },
     "statInfo": {
       "fromYour": "Từ {value} {stat} của bạn:",
@@ -2228,6 +2303,12 @@ export const vi_VN: EnTranslations = {
       "linkHint": "Shift-click để chia sẻ vật phẩm này trong khung chat."
     },
     "plurals": {
+      "guildBoardShown": {
+        "one": "{count} guild shown",
+        "few": "{count} guilds shown",
+        "many": "{count} guilds shown",
+        "other": "{count} guilds shown"
+      },
       "commissionMasterworks": {
         "one": "{count} kiệt tác",
         "few": "{count} kiệt tác",
@@ -2357,6 +2438,7 @@ export const vi_VN: EnTranslations = {
     },
     "bugReport": {
       "menuButton": "Báo Cáo Lỗi",
+      "online": "Online",
       "realm": "Thế Giới",
       "character": "Nhân vật",
       "position": "Vị Trí",
@@ -2962,8 +3044,8 @@ export const vi_VN: EnTranslations = {
         "kingsWrathSummary": "Nythraxis gây thêm {bonusNormal} sát thương ở Normal hoặc {bonusHeroic} ở Heroic trong phần còn lại của trận đấu. Mộ Phần Phun Trào xảy ra mỗi {eruptionEveryNormal} giây ({eruptionEveryHeroic} ở Heroic) và Lửa Mộ mỗi {gravefireEveryNormal} giây ({gravefireEveryHeroic} ở Heroic).",
         "kingsWrathResponse": "Dùng các cooldown phòng thủ còn lại cho sát thương không thể tránh. Giữ mọi cơ chế trước đó thật sạch trong khi raid kết thúc trận đấu.",
         "boneStormName": "Bão Xương",
-        "boneStormSummary": "Bắt đầu {first} giây sau Cơn Thịnh Nộ Của Vua và mỗi {everyNormal} giây sau đó, Nythraxis bắt đầu Bão Xương trong {duration} giây. Hắn bỏ qua thù hận, di chuyển nhanh gấp {speed} lần tốc độ thường, và thực hiện {charges} lần lao, mỗi lần kéo dài {chargeSeconds} giây. Vòng xoáy của hắn gây {whirlNormal} máu tối đa mỗi giây trong phạm vi {radius} yd. Mỗi lần lao kết thúc bằng Cú Nện Xương trong cùng phạm vi, gây {slamNormal} máu tối đa. Hắn niệm Cọc Xương vào {spikeAt} giây sau khi bão bắt đầu, rồi Phá Mộ tái kích hoạt {rearm} giây sau khi bão kết thúc.",
-        "boneStormHeroicSummary": "Bắt đầu {first} giây sau Cơn Thịnh Nộ Của Vua và mỗi {everyHeroic} giây sau đó, Nythraxis bắt đầu Bão Xương trong {duration} giây. Hắn bỏ qua thù hận, di chuyển nhanh gấp {speed} lần tốc độ thường, và thực hiện {charges} lần lao, mỗi lần kéo dài {chargeSeconds} giây. Vòng xoáy của hắn gây {whirlHeroic} máu tối đa mỗi giây trong phạm vi {radius} yd. Mỗi lần lao kết thúc bằng Cú Nện Xương trong cùng phạm vi, gây {slamHeroic} máu tối đa. Hắn niệm Cọc Xương vào {spikeAt} giây sau khi bão bắt đầu, rồi Phá Mộ tái kích hoạt {rearm} giây sau khi bão kết thúc.",
+        "boneStormSummary": "Bắt đầu {first} giây sau Cơn Thịnh Nộ Của Vua và mỗi {everyNormal} giây sau đó, Nythraxis bắt đầu Bão Xương trong {duration} giây. Hắn bỏ qua thù hận, di chuyển nhanh gấp {speed} lần tốc độ thường, và thực hiện {charges} lần lao, mỗi lần kéo dài {chargeSeconds} giây. Vòng xoáy của hắn gây {whirlNormal} máu tối đa mỗi giây trong phạm vi {radius} yd. Mỗi lần lao kết thúc bằng Cú Nện Xương trong cùng phạm vi, gây {slamNormal} máu tối đa. Cú nện đầu tiên của mỗi cơn bão chỉ gây {openingSlamNormal} thay vào đó. Phá Mộ tái kích hoạt {rearm} giây sau khi bão kết thúc.",
+        "boneStormHeroicSummary": "Bắt đầu {first} giây sau Cơn Thịnh Nộ Của Vua và mỗi {everyHeroic} giây sau đó, Nythraxis bắt đầu Bão Xương trong {duration} giây. Hắn bỏ qua thù hận, di chuyển nhanh gấp {speed} lần tốc độ thường, và thực hiện {charges} lần lao, mỗi lần kéo dài {chargeSeconds} giây. Vòng xoáy của hắn gây {whirlHeroic} máu tối đa mỗi giây trong phạm vi {radius} yd. Mỗi lần lao kết thúc bằng Cú Nện Xương trong cùng phạm vi, gây {slamHeroic} máu tối đa. Cú nện đầu tiên của mỗi cơn bão chỉ gây {openingSlamHeroic} thay vào đó. Phá Mộ tái kích hoạt {rearm} giây sau khi bão kết thúc.",
         "boneStormResponse": "Tản ra và tiếp tục chạy khỏi Nythraxis. Raider bị lao vào chạy đi xa trong khi những người khác chừa chỗ quanh đường lao, rồi tank kéo hắn lại khi bão kết thúc.",
         "crownEnduresName": "Vương Miện Trường Tồn",
         "crownEnduresSummary": "Ở {enrageNormal} giây tính từ lúc kéo boss (đồng hồ tạm dừng khi Tu Huynh Aldric bước vào ở 70%), Vương Miện Trường Tồn kích hoạt như một cuồng nộ cứng. Nythraxis nhận thêm {damage} sát thương và đòn đánh nhanh hơn {haste}, rồi thêm {rampStep} sát thương mỗi {rampEveryNormal} giây. Không có thanh hẹn giờ. Cảnh báo đến dưới dạng tiếng hét khi còn {warn60}, {warn30}, và {warn10} giây.",
@@ -3014,6 +3096,7 @@ export const vi_VN: EnTranslations = {
       "elementalConvergencePrimed": "Phép tiếp theo của bạn từ trường nguyên tố khác sẽ ban Hội Tụ Nguyên Tố",
       "hunterFerocity": "{stacks} Hung Tính Bầy Đàn: thú nuôi của bạn gây thêm {pct}% sát thương",
       "cooldownCap": "{used} trên {cap} giây giảm thời gian hồi chiêu đã dùng trong khung này",
+      "bruinRushWindow": "Hình Sói không tốn mana và ghim mục tiêu Cú Lao Bruin của bạn, làm chậm nó {pct}% trong {sec} giây",
       "funeralHarvestLock": "Thu Hoạch Tang Lễ chưa thể tạo thêm Mảnh Linh Hồn",
       "leadenHexLock": "Bùa Trì Trệ chưa thể trói mục tiêu này lại",
       "forbiddenReflectionReady": "Kỹ năng hồi chiêu Thuật Sĩ Hắc Ám hợp lệ tiếp theo của bạn có thể được thi triển lại",
@@ -3126,7 +3209,7 @@ export const vi_VN: EnTranslations = {
       "elementalTrance": "Sát thương phải nhận giảm {pct}%. {mana}% toàn bộ sát thương bạn gây ra được chuyển thành mana",
       "stealth": "Oculto; velocidad de movimiento reducida un {pct}%",
       "formBear": "Bruin Form: tăng máu và giáp.",
-      "formCat": "Forma felina: daño cuerpo a cuerpo y energía",
+      "wolfForm": "Cat Form: melee damage and energy; movement speed increased by {pct}%",
       "formTravel": "Fleet Form: tốc độ di chuyển tăng {pct}%.",
       "formFireball": "Ember Form: tốc độ di chuyển tăng {pct}%; tấn công và thi triển phép bị vô hiệu hóa",
       "formMoonkin": "Dạng Cú Mặt Trăng: sát thương phép tăng {pct}% và giáp tăng {armorPct}%",
@@ -3234,6 +3317,7 @@ export const vi_VN: EnTranslations = {
       "lock": "Khóa khung người chơi"
     },
     "partyFrames": {
+      "header": "Party",
       "section": "Khung Tổ Đội và Raid",
       "optionsSection": "Tùy Chọn Khung Tổ Đội",
       "unlock": "Di chuyển khung tổ đội và raid",
@@ -3735,6 +3819,15 @@ export const vi_VN: EnTranslations = {
       "subtitle": "Các bang hội trong vương quốc",
       "rosterTitle": "Xem danh sách thành viên của {guild}",
       "back": "Quay Lại",
+      "filters": "Board filters",
+      "newPlayerFriendly": "New player friendly",
+      "newPlayerFriendlyTitle": "This guild welcomes new players",
+      "filterNewPlayersTitle": "Show only guilds that welcome new players",
+      "filterEmpty": "No guild has opened its doors to new players yet.",
+      "showAll": "Show all guilds",
+      "officersOnline": "Officers online",
+      "officersOnlineLabel": "Officers online: {names}",
+      "officerEntry": "{name} ({rank})",
       "popupTitle": "Bảng Thông Báo Bang Hội",
       "close": "Đóng"
     },
@@ -4023,7 +4116,6 @@ export const vi_VN: EnTranslations = {
       }
     },
     "gathering": {
-      "title": "Thu thập",
       "mining": "Khai mỏ",
       "logging": "Đốn gỗ",
       "herbalism": "Thảo dược học",
@@ -4207,9 +4299,7 @@ export const vi_VN: EnTranslations = {
       "noviceBody": "Kỹ năng trồng trọt tăng mỗi khi bạn thu hoạch cây. Gieo hạt vào bất kỳ luống nào để bắt đầu."
     },
     "archetypeTitle": {
-      "label": "Danh hiệu",
-      "none": "Không có",
-      "hobbyLabel": "Sở Thích"
+      "none": "Không có"
     },
     "archetypePair": {
       "engineering+alchemy": "Chuyên Gia Nổ",
@@ -4379,7 +4469,9 @@ export const vi_VN: EnTranslations = {
       "hobbyLabel": "Sở thích: {craft}",
       "majorsLabel": "Chuyên ngành: {a} và {b}",
       "pairsHeld": "Các cặp được tổ chức: {count}",
-      "returnsLabel": "Trả về: {count}"
+      "returnsLabel": "Trả về: {count}",
+      "retentionFooter": "Returns on respec: 60% of skill kept.",
+      "tutorialLink": "Profession tutorial"
     },
     "crafting": {
       "title": "Chế tạo",
@@ -4414,6 +4506,7 @@ export const vi_VN: EnTranslations = {
       "vaultUnreachable": "Kho Nguyên Liệu không thể tiếp cận được ở đây.",
       "craftFeeLine": "Phí chế tạo: {fee} mỗi món",
       "empty": "Chưa có công thức nấu ăn nào được biết đến.",
+      "materialsFooter": "Materials in your vault are drawn automatically. Learn more recipes at the station.",
       "resultAria": "Thủ công {name}",
       "craftedToast": "Đã chế tác: {name}",
       "craftedToastQty": "Đã chế tác: {name} x{qty}",
@@ -4515,6 +4608,9 @@ export const vi_VN: EnTranslations = {
       "commissionToggleHint": "Ràng buộc với nhân vật đầu tiên nhận nó qua giao dịch.",
       "commissionUnbound": "Đồ ủy thác: ràng buộc với người nhận đầu tiên",
       "commissionBound": "Đồ ủy thác: đã ràng buộc với người nhận"
+    },
+    "marketWindow": {
+      "mixedListingsFooter": "The Merchant restocks common goods; player listings sit beside them at their asking price."
     },
     "itemMenu": {
       "use": "Sử Dụng",
@@ -4950,6 +5046,10 @@ export const vi_VN: EnTranslations = {
       "ownedTooltipStatus": "Đã biên mục trong Kỳ Trân Các",
       "missingTooltipStatus": "Chưa tìm thấy",
       "firstFindClears": "Lần đầu tìm thấy ở lượt hoàn thành thứ {count}",
+      "foundBy": "Found by {names}",
+      "finderWithDate": "{name} ({date})",
+      "sharedScopeNote": "Shared by every character on your account",
+      "sharedScopeHint": "A relic found by any character on your account fills the page here too.",
       "unlockToast": "Đã biên mục kỳ trân: {name}",
       "illuminateBanner": "Trang đã rực sáng: {name}",
       "illuminateToast": "Mọi kỳ trân trên trang {name} đã được lấp đầy.",
@@ -5083,6 +5183,10 @@ export const vi_VN: EnTranslations = {
       "progressAria": "Tiến độ: {current} trên {target}",
       "renownChip": "{renown} Danh Vọng",
       "earnedDate": "Lập ngày {date}",
+      "earnedBy": "Earned by {names}",
+      "earnerWithDate": "{name} ({date})",
+      "accountScopeNote": "Shared by every character on your account",
+      "accountScopeHint": "A deed any character on your account accomplishes is earned here too, and the Book names who earned it.",
       "featRibbon": "Kỳ Tích",
       "hiddenBadge": "Ẩn",
       "titleChip": "Thưởng Danh Hiệu",
@@ -5132,6 +5236,33 @@ export const vi_VN: EnTranslations = {
       "toggleAria": "Chuyển đổi giữa bản đồ thế giới, bản đồ vùng và bản đồ phiên",
       "levels": "Cấp {min} đến {max}"
     },
+    "mapAtlas": {
+      "level": "Level {level}",
+      "landmarkCount": "{count} landmarks",
+      "filtersAria": "Map layers",
+      "filters": {
+        "quests": "Quests",
+        "gather": "Gather",
+        "dungeons": "Dungeons",
+        "services": "Services",
+        "players": "Players"
+      },
+      "trackedQuests": "Tracked quests",
+      "noTrackedQuests": "No tracked quests",
+      "availableNearby": "Available nearby",
+      "noNearbyQuests": "No nearby quests",
+      "distance": "{distance} yards",
+      "showRoute": "Show Route",
+      "untrack": "Untrack",
+      "track": "Track",
+      "legend": {
+        "dungeon": "Dungeon",
+        "ore": "Ore",
+        "herb": "Herb",
+        "mail": "Mail",
+        "passage": "Passage"
+      }
+    },
     "arenaGate": {
       "minLevelNote": "Yêu cầu Cấp {level}"
     },
@@ -5150,6 +5281,7 @@ export const vi_VN: EnTranslations = {
       "tabBrowse": "Duyệt",
       "tabSell": "Bán",
       "tabActivity": "Hoạt Động Của Tôi",
+      "tabHistory": "Sales History",
       "tabsLabel": "Các mục của Sàn Giao Dịch $WOC",
       "loading": "Đang tải Sàn Giao Dịch...",
       "loadFailed": "Không thể kết nối tới Sàn Giao Dịch. Hãy thử lại sau ít phút.",
@@ -5174,6 +5306,16 @@ export const vi_VN: EnTranslations = {
       "colCurrentBid": "Giá Thầu Hiện Tại",
       "colBuyNow": "Mua Ngay",
       "colTimeLeft": "Thời Gian Còn Lại",
+      "colBuyer": "Buyer",
+      "colSoldAt": "Sold",
+      "colSalePrice": "Sale price",
+      "colSaleType": "Type",
+      "saleTypeAuction": "Auction",
+      "saleTypeBuyNow": "Buy now",
+      "saleTypeDirected": "Directed",
+      "saleTypeUnknown": "Unknown",
+      "historyEmpty": "No sales recorded yet.",
+      "historyError": "Sales history could not be loaded.",
       "reserveMet": "Đã đạt giá dự trữ",
       "reserveNotMet": "Chưa đạt giá dự trữ",
       "yourListing": "Tin rao của bạn",
@@ -6066,6 +6208,7 @@ export const vi_VN: EnTranslations = {
       "framesMoveBodyEditFrames": "Khung của bạn, khung mục tiêu và khung tổ đội đều di chuyển được. Mỗi khung có nút di chuyển nhỏ ở góc: mở khóa, kéo đến nơi muốn đặt rồi khóa lại để cú bấm nhầm không làm nó xê dịch. Chỉnh Khung ở đầu thẻ Khung trong tùy chọn Giao Diện mở khóa phần còn lại của giao diện cùng lúc, gồm cả ba khung trên: thanh hành động, thanh niệm phép, thanh đòn đánh, thanh kinh nghiệm, bản đồ nhỏ, dãy nút, khung thú cưng, thanh tư thế, hàng bùa lợi và bùa hại, cùng nhãn Nhắc Danh Sách Mong Muốn. Mỗi thành phần hiện tên khi mở khóa. Nếu đặt nhầm, Khôi Phục Mặc Định ở cuối cùng thẻ Khung đó đưa tất cả về vị trí ban đầu.",
       "framesGovernedExtra": "Chỉnh Khung cũng mở khóa cụm theo dõi phía dưới (nhiệm vụ và mục tiêu đang theo dõi, tiến độ chiến công, trang Thánh Tích, hang thám hiểm hiện tại, khe nứt đang tham gia, và công thức hoặc đơn đặt chế tác đang theo dõi), thanh hành động cạnh khung thú cưng, khung hiệu ứng theo thời gian trên mục tiêu để xem bùa hại của bạn trên kẻ địch gần đó, huy hiệu Tận Hiến của Thánh Kỵ Sĩ, thanh Thống Khổ của Thuật Sĩ, lớp hiển thị phép được kích hoạt, thanh đếm đòn tay phụ cho người dùng hai vũ khí và cửa sổ thống kê sát thương có thẻ. Mỗi thành phần hiện nhãn tên riêng khi mở khóa.",
       "framesGovernedAuraTracks": "Chỉnh Khung cũng mở khóa sáu thanh hào quang tùy chọn sau khi bạn bật chúng trong thẻ Chiến Đấu của cùng cửa sổ tùy chọn Giao Diện: Bùa Lợi Của Tôi, Hồi Chiêu Phòng Thủ, Lá Chắn Của Tôi, Hồi Chiêu Tấn Công, Di Chuyển Và Tàng Hình, và Bùa Lợi Của Tôi Trên Đồng Minh. Mặc định mọi thanh đều tắt; mỗi thanh hiện nhãn tên riêng khi được mở khóa.",
+      "framesGovernedTalkingHead": "Edit Frames also loosens the Dialogue panel, which carries an NPC's spoken line while that NPC is out of your view; it wears its name chip while it is loose.",
       "barsTitle": "Các thanh, bộ đếm giờ, và chữ chiến đấu",
       "barsBody": "Thanh niệm chú của bạn xuất hiện giữa màn hình, ngay phía trên thanh kỹ năng, bất cứ khi nào bạn niệm hoặc duy trì một phép, và hiển thị tên phép cùng thời gian còn lại. Mục tiêu của bạn cũng có thanh niệm chú riêng trên khung của nó, để bạn biết điều gì sắp xảy ra và đối phó kịp thời.\n\nMột thanh vung đòn mảnh nằm dưới thanh niệm chú và đầy dần giữa hai lần vung vũ khí, để một người đánh cận chiến hay tầm xa biết khi nào đòn đánh tự động tiếp theo sẽ trúng.\n\nThanh kinh nghiệm của bạn chạy suốt chiều rộng bên dưới thanh kỹ năng, chia thành từng đoạn, với một dải sáng hơn cho biết lượng kinh nghiệm nghỉ ngơi bạn đã tích lũy.\n\nBơi xuống dưới nước và một thanh hơi thở màu xanh sẽ xuất hiện ở đầu màn hình. Nó cạn dần khi đầu bạn còn ở dưới nước, chớp đỏ khi cạn hết và bạn bắt đầu chết đuối, rồi đầy lại nhanh chóng ngay khi bạn nổi lên mặt nước. Phím Nhảy đưa bạn bơi lên, còn phím Bơi Xuống, mặc định là Ctrl, đưa bạn xuống sâu hơn.\n\nSát thương và hồi máu bay lên trên bất cứ thứ gì chúng vừa tác động, dưới dạng những con số nhỏ, để bạn có thể đọc hiểu một trận đánh mà không cần đọc chữ. Tab Chiến Đấu trong khung trò chuyện của bạn giữ lại toàn bộ ghi chép bằng văn bản.",
       "aurasTitle": "Buff và debuff",
@@ -6423,6 +6566,7 @@ export const vi_VN: EnTranslations = {
       "formsNote": "Druid chiến đấu bằng cách đổi hình dạng. Hầu hết kỹ năng của Druid thuộc về một hình dạng riêng, nên hình bạn đang mang quyết định bạn có thể thi triển gì, và việc đổi hình tốn một chút mana. Bạn có thể đổi hình trong hoặc ngoài chiến đấu, bao nhiêu lần tùy thích.",
       "formsAutoUnshift": "Một phép hồi máu hoặc phép gây sát thương thi triển khi đang ở dạng thú sẽ tự đưa bạn ra khỏi dạng đó. Rời dạng theo cách này miễn phí và không tốn hồi chiêu toàn cục, nên phép tức thời phát ra ngay khi bạn bấm. Vào lại dạng là một kỹ năng bình thường, vẫn tốn mana và hồi chiêu toàn cục.",
       "formsMoonwing": "Một Druid Moongrove có thêm một hình dạng nữa, Dạng Cú Mặt Trăng, hình dạng pháp thuật mà một Druid Cân Bằng chiến đấu trong đó. Đây là hình thú duy nhất giữ lại các phép của bạn, và đũa phép của bạn chỉ dùng được trong hình đó hoặc trong hình pháp sư bình thường.",
+      "formsWolfEngage": "Sói mở màn trận đấu bằng Cú Lao Bruin, lập tức chuyển sang Hình Sói để ghim mục tiêu, thu hẹp khoảng cách bằng Lao Vồ khi không ẩn thân, và giữ chân kẻ địch bằng Quật Ngã.",
       "formLine": {
         "form_bear": "Dạng gánh chịu đòn: một lớp da dày, dùng Nộ Khí thay vì Mana, và tạo thêm đe dọa để kẻ địch luôn nhắm vào bạn.",
         "form_cat": "Dạng sát thương cận chiến: dùng Năng Lượng và điểm tổ hợp giống Đạo Tặc, và tạo ra ít đe dọa hơn nhiều.",
@@ -6990,7 +7134,7 @@ export const vi_VN: EnTranslations = {
     "reliquaryPage": {
       "intro": "Kỳ Trân Các là bảo tàng những chiến lợi phẩm độc nhất mà bạn đã biên mục: các món săn lùng trong hầm ngục, cúp nghề, thú cưỡi, ngoại hình vũ khí và danh hiệu. Nó đi cùng Sách Kỳ Công như một sảnh cúp đi cùng một cuốn sổ thành tích.",
       "howHeading": "Bộ sưu tập vận hành ra sao",
-      "howBody": "Mở Kỳ Trân Các trong trò chơi (mặc định Shift+X). Mỗi kệ chứa những trang kỳ trân độc nhất. Bạn lấp đầy một bóng hình khi lần đầu sở hữu món đó trên nhân vật này, và làm rực sáng một trang khi mọi kỳ trân trên trang ấy đã được lấp đầy. Một vài trang mang nhãn Đã ngừng hoặc Riêng: chúng nằm ngoài phần hoàn tất, nên không bao giờ chặn một kệ hay cả mục lục. Vật phẩm tìm được sẽ hiện thông báo ngay và làm mới cửa sổ đang mở; tiến trình gắn với từng nhân vật, trừ ngoại hình vũ khí vốn là đồ trang trí của tài khoản.",
+      "howBody": "Mở Thánh Tích Quán trong game (mặc định Shift+X). Mỗi kệ chứa các trang thánh tích độc nhất. Một bóng hình được lấp đầy khi bất kỳ nhân vật nào trong tài khoản của bạn nhận được món đó lần đầu, và một trang được thắp sáng khi mọi thánh tích trên đó đã đầy. Vài trang được gắn nhãn Đã ngừng hoặc Cá nhân: chúng nằm ngoài phần hoàn thành nên không bao giờ chặn một kệ hay toàn bộ danh mục. Vật tìm được sẽ hiện thông báo ngay và làm mới cửa sổ đang mở; tiến trình được chia sẻ cho mọi nhân vật trong tài khoản, nên thánh tích một nhân vật tìm được sẽ lấp đầy trang cho tất cả.",
       "ranksHeading": "Cấp Quản Thủ",
       "ranksBody": "Cấp Quản Thủ tăng theo từng kỳ trân độc nhất được biên mục và chỉ trao danh hiệu cùng viền trang trí. Chúng không bao giờ trao sức mạnh chiến đấu, tỉ lệ rơi đồ hay bù trừ vận rủi. Ngoại hình vũ khí thuộc tài khoản không tính điểm cấp Quản Thủ, nhờ vậy danh vọng vẫn gắn chặt với nhân vật, và kỳ trân trên các trang Đã ngừng hoặc Riêng cũng không tính điểm cho cấp ấy.",
       "retiredTag": "Đã ngừng",
@@ -11858,7 +12002,7 @@ export const vi_VN: EnTranslations = {
       },
       "cat_form": {
         "name": "Hình Sói",
-        "description": "Biến bạn thành sói: nhanh nhẹn tăng theo cấp của bạn, sức tấn công +8 cộng 2 mỗi cấp, các đòn của bạn dùng năng lượng và điểm combo, và bạn tạo ra ít hơn 29% mối đe dọa. Niệm lại để trở về hình dạng pháp sư."
+        "description": "Biến bạn thành sói: nhanh nhẹn tăng theo cấp của bạn, sức tấn công +8 cộng 2 mỗi cấp, các đòn của bạn dùng năng lượng và điểm combo, và bạn tạo ra ít hơn 29% mối đe dọa. Biến thành bất kỳ hình dạng nào sẽ ban Sải bước: 60% tốc độ di chuyển trong 3 giây, mỗi 20 giây một lần. Niệm lại để trở về hình dạng pháp sư."
       },
       "claw": {
         "name": "Vuốt Xé",
@@ -11923,7 +12067,15 @@ export const vi_VN: EnTranslations = {
       },
       "pounce": {
         "name": "Đòn Lẻn Vồ",
-        "description": "Một đòn mở màn từ trạng thái ẩn thân làm choáng mục tiêu trong 2 giây. Tặng 1 điểm liên hoàn. Chỉ dùng được ở Hình Sói."
+        "description": "Một đòn mở màn từ trạng thái ẩn thân làm choáng mục tiêu trong 2 giây. Tặng 1 điểm liên hoàn. Chỉ dùng được ở Hình Sói. Khi không ẩn thân, nút này là Lao Vồ."
+      },
+      "lunge": {
+        "name": "Lao Vồ",
+        "description": "Lao vào kẻ địch cách xa tới 12 thước, gây 60% sát thương vũ khí và nhận 1 điểm combo. Chỉ dùng được ở Hình Sói."
+      },
+      "hamstring_bite": {
+        "name": "Quật Ngã",
+        "description": "Chiêu kết liễu làm choáng mục tiêu trong 1 giây cộng thêm 1 giây mỗi điểm liên hoàn (5 điểm liên hoàn: 6 giây). Chỉ dùng được ở Hình Sói."
       },
       "insect_swarm": {
         "name": "Bầy Đốt Chích",
@@ -12637,7 +12789,7 @@ export const vi_VN: EnTranslations = {
       },
       "bear_charge": {
         "name": "Cú Lao Bruin",
-        "description": "Lao vào kẻ địch, tạo 9 nộ khí và làm choáng nó trong 1 giây. Tầm 8-25 thước. Chỉ dùng được ở Bruin Form."
+        "description": "Lao vào kẻ địch, tạo 9 nộ khí và làm choáng nó trong 1 giây. Trong 3 giây sau đó, Hình Sói miễn phí và ghim mục tiêu, làm chậm nó 50% trong 4 giây. Tầm 8-25 thước. Chỉ dùng được ở Bruin Form."
       },
       "demoralizing_roar": {
         "name": "Tiếng Gầm Khiếp Đảm",
@@ -12645,7 +12797,7 @@ export const vi_VN: EnTranslations = {
       },
       "prowl": {
         "name": "Rình Rập",
-        "description": "Vào trạng thái ẩn thân khi ở Hình Sói, di chuyển chậm hơn 5%. Không thể dùng trong chiến đấu."
+        "description": "Vào trạng thái ẩn thân khi ở Hình Sói. Không thể dùng trong chiến đấu."
       },
       "rake": {
         "name": "Lóc Xé",

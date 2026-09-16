@@ -1029,6 +1029,8 @@ export const fr_FR: Partial<Record<TranslationKey, string>> = {
   'guide.classPage.formsHeading': 'Changement de forme',
   'guide.classPage.formsMoonwing':
     "Un druide Équilibre gagne une forme supplémentaire, la Forme de sélénien, la forme de lanceur de sorts dans laquelle il combat. C'est la seule forme animale qui conserve vos sorts, et votre baguette ne fonctionne que dans cette forme ou dans votre forme de lanceur de sorts normale.",
+  'guide.classPage.formsWolfEngage':
+    "Un loup ouvre le combat avec Ruée de Bruin, passe aussitôt en Forme de loup pour clouer la cible, comble la distance avec Bond quand il n'est pas camouflé et immobilise un ennemi avec Mise à terre.",
   'guide.classPage.formsNote':
     'Un druide combat en changeant de forme. La plupart des capacités de druide appartiennent à une forme précise, si bien que la forme que vous portez détermine ce que vous pouvez lancer, et changer de forme coûte un peu de mana. Vous pouvez changer de forme en combat ou hors combat, aussi souvent que vous le souhaitez.',
   'guide.classPage.mageEleHeading': "Élémentaire d'eau",
@@ -4488,7 +4490,6 @@ export const fr_FR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.townFocus.title': 'Priorités de la ville',
   'hudChrome.townFocus.townOnlyHint':
     'Le focus ne peut être modifié que lorsque vous êtes en ville.',
-  'hudChrome.archetypeTitle.label': 'Titre',
   'hudChrome.archetypeTitle.none': 'Aucun',
   'entities.itemSets.crownforged.bonus4':
     "Vos coups critiques d'arme lacèrent la cible avec Éclat d'os, lui infligeant 8 points de dégâts de saignement toutes les 2 s pendant 12 s. Se cumule jusqu'à 3 fois.",
@@ -7568,7 +7569,7 @@ export const fr_FR: Partial<Record<TranslationKey, string>> = {
     'Gronde la cible : votre menace rejoint celle de son ennemi le plus haï et elle est forcée de vous attaquer pendant 3 s. Forme de Bruin uniquement.',
   'entities.abilities.cat_form.name': 'Forme de loup',
   'entities.abilities.cat_form.description':
-    "Vous transforme en loup : l'agilité monte avec votre niveau, puissance d'attaque +8 plus 2 par niveau, vos attaques utilisent de l'énergie et des points de combo, et vous générez 29% de menace en moins. Lancez de nouveau pour revenir en forme de lanceur de sorts.",
+    "Vous transforme en loup : l'agilité monte avec votre niveau, puissance d'attaque +8 plus 2 par niveau, vos attaques utilisent de l'énergie et des points de combo, et vous générez 29% de menace en moins. Passer sous une forme quelconque octroie Foulée bondissante : 60% de vitesse de déplacement pendant 3 s, une fois toutes les 20 s. Lancez de nouveau pour revenir en forme de lanceur de sorts.",
   'entities.abilities.claw.name': 'Griffe lacérante',
   'entities.abilities.ferocious_bite.name': 'Morsure sanglante',
   'entities.abilities.swipe.name': 'Griffes balayantes',
@@ -7594,8 +7595,14 @@ export const fr_FR: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.dash.description':
     'Bondit en avant, augmentant la vitesse de déplacement de 50% pendant 15 s. Forme de loup uniquement.',
   'entities.abilities.pounce.name': 'Frappe furtive',
+  'entities.abilities.lunge.description':
+    "Bondit sur un ennemi jusqu'à 12 m, inflige 60% des dégâts de l'arme et octroie 1 point de combo. Forme de loup uniquement.",
+  'entities.abilities.lunge.name': 'Bond',
+  'entities.abilities.hamstring_bite.description':
+    'Technique de finition qui étourdit la cible pendant 1 s plus 1 s par point de combo (5 points de combo : 6 s). Forme de loup uniquement.',
+  'entities.abilities.hamstring_bite.name': 'Mise à terre',
   'entities.abilities.pounce.description':
-    'Ouverture furtive qui étourdit la cible pendant 2 s. Confère 1 point de combo. Forme de loup uniquement.',
+    'Ouverture furtive qui étourdit la cible pendant 2 s. Confère 1 point de combo. Forme de loup uniquement. Hors camouflage, ce bouton devient Bond.',
   'entities.abilities.insect_swarm.name': 'Nuée cinglante',
   'entities.abilities.insect_swarm.description':
     "L'ennemi est assailli par une nuée d'insectes, subissant {damage} points de dégâts de Nature sur 12 s.",
@@ -7641,13 +7648,13 @@ export const fr_FR: Partial<Record<TranslationKey, string>> = {
     "Soumet un Wraithborn à votre volonté, un démon d'élite qui déverse de lourds dégâts d'Ombre à distance. Un long temps de recharge bride sa puissance dévastatrice. Invoquer un nouveau démon renvoie celui que vous avez. Vous ne pouvez avoir qu'un démon à la fois.",
   'entities.abilities.bear_charge.name': 'Ruée de Bruin',
   'entities.abilities.bear_charge.description':
-    "Charge un ennemi, génère 9 points de rage et l'étourdit pendant 1 s. Portée de 8-25 m. Forme de Bruin uniquement.",
+    "Charge un ennemi, génère 9 points de rage et l'étourdit pendant 1 s. Pendant les 3 s qui suivent, la Forme de loup est gratuite et cloue la cible, la ralentissant de 50% pendant 4 s. Portée de 8-25 m. Forme de Bruin uniquement.",
   'entities.abilities.demoralizing_roar.name': 'Rugissement lâche',
   'entities.abilities.demoralizing_roar.description':
     "Démoralise les ennemis proches, réduisant leur puissance d'attaque de 20 pendant 20 s. Forme de Bruin uniquement.",
   'entities.abilities.prowl.name': 'Traquer',
   'entities.abilities.prowl.description':
-    'Passe en camouflage tant que vous êtes en forme de loup, avec une vitesse de déplacement réduite de 5%. Inutilisable en combat.',
+    'Passe en camouflage tant que vous êtes en forme de loup. Inutilisable en combat.',
   'entities.abilities.rake.name': 'Écorcher',
   'entities.abilities.revive_pet.name': 'Rafistoler',
   'entities.abilities.revive_pet.description':
@@ -10803,7 +10810,6 @@ export const fr_FR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.auraEffect.imbueRange': 'Arme imprégnée : {min} à {max} dégâts bonus au Verdict',
   'hudChrome.auraEffect.stealth': 'Camouflé ; vitesse de déplacement réduite de {pct}%',
   'hudChrome.auraEffect.formBear': 'Forme de Bruin : points de vie et armure augmentés',
-  'hudChrome.auraEffect.formCat': 'Forme de félin : dégâts de mêlée et énergie',
   'hudChrome.auraEffect.formTravel': 'Forme de Fleet : vitesse de déplacement augmentée de {pct}%',
   'hudChrome.auraEffect.defensiveStance': 'Posture de garde : dégâts subis réduits, menace accrue',
   'hudChrome.auraEffect.righteousFury':
@@ -11089,7 +11095,6 @@ export const fr_FR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.gathering.herbalism': 'Herboristerie',
   'hudChrome.gathering.logging': 'Bûcheronnage',
   'hudChrome.gathering.mining': 'Minage',
-  'hudChrome.gathering.title': 'Récolte',
   'errors.api.accountSessionLimit': 'Trop de personnages de ce compte sont déjà dans le monde.',
   'errors.api.crossSiteOrigin': 'Requête bloquée pour des raisons de sécurité.',
   'errors.api.unsupportedMediaType': 'Format de requête non pris en charge.',
@@ -11517,7 +11522,6 @@ export const fr_FR: Partial<Record<TranslationKey, string>> = {
   'entities.mobs.willow_sprite.name': 'Lutin du saule',
   'entities.mobs.wood_wraith.name': 'Spectre des bois',
   'entities.mobs.wreck_thief.name': "Voleur des champs d'épaves",
-  'hudChrome.archetypeTitle.hobbyLabel': 'Loisir',
   'hudChrome.auraEffect.armorPct': "Réduit l'armure de {pct}%",
   'hudChrome.auraEffect.armorPctStacks': "Réduit l'armure de {pct}% ({stacks} charges)",
   'hudChrome.auraEffect.increasePct.allStats': 'Augmente tous les attributs de {pct}%',
@@ -14442,6 +14446,8 @@ export const fr_FR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.auraEffect.cauterizeFatigue': 'Cautérisation ne peut pas empêcher un autre coup fatal',
   'hudChrome.auraEffect.cooldownCap':
     '{used} sur {cap} s de réduction de temps de recharge utilisés dans cette fenêtre',
+  'hudChrome.auraEffect.bruinRushWindow':
+    'La Forme de loup ne coûte aucun mana et cloue la cible de votre Ruée de Bruin, la ralentissant de {pct}% pendant {sec} s',
   'hudChrome.auraEffect.desolation':
     "{charges} charges : votre prochain Trait de ruine s'incante {castPct}% plus vite, ou votre prochaine Pluie de feu s'abat immédiatement",
   'hudChrome.auraEffect.duskfireClaim': 'La mort accorde {value} Ruine',
@@ -14549,7 +14555,7 @@ export const fr_FR: Partial<Record<TranslationKey, string>> = {
     "Toutes les pages écrites du Reliquaire et les noms des reliques qu'elles contiennent. Cette liste ne donne que des noms sans divulgâcher : ouvrez Le Reliquaire en jeu pour voir votre progression, vos conquêtes et les silhouettes.",
   'guide.reliquaryPage.catalogHeading': 'Catalogue des pages',
   'guide.reliquaryPage.howBody':
-    "Ouvrez Le Reliquaire en jeu (Maj+X par défaut). Chaque étagère abrite des pages de reliques uniques. Vous remplissez une silhouette lorsque vous obtenez cette pièce pour la première fois sur ce personnage, et vous enluminez une page lorsque toutes ses reliques sont remplies. Quelques pages portent la mention Retirée ou Personnelle : elles restent hors de la complétion et ne bloquent donc jamais une étagère ni le catalogue entier. Les trouvailles en direct déclenchent une notification et rafraîchissent la fenêtre ouverte ; la progression est propre au personnage, sauf les apparences d'arme, qui sont des cosmétiques de compte.",
+    "Ouvrez Le Reliquaire en jeu (Maj+X par défaut). Chaque étagère contient des pages de reliques uniques. Une silhouette se remplit dès qu'un personnage de votre compte, quel qu'il soit, obtient cette pièce pour la première fois, et une page s'illumine lorsque chaque relique qu'elle contient est remplie. Quelques pages portent la mention Retirée ou Personnelle : elles restent hors de la complétion et ne bloquent donc jamais une étagère ni le catalogue entier. Les trouvailles en direct affichent une notification et rafraîchissent la fenêtre ouverte ; la progression est partagée par tous les personnages du compte, si bien qu'une relique trouvée par un personnage remplit la page pour tous.",
   'guide.reliquaryPage.howHeading': 'Comment fonctionne la collection',
   'guide.reliquaryPage.intro':
     "Le Reliquaire est le musée des butins uniques que vous avez catalogués : les pièces convoitées des donjons, les trophées de métier, les montures, les apparences d'arme et les titres. Il accompagne le Livre des hauts faits comme une salle des trophées accompagne un livre de succès.",
@@ -16062,12 +16068,12 @@ export const fr_FR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.raidBossGuide.nythraxis.boneSpikeSummary':
     "Toutes les {everyNormal} s, Nythraxis empale {victimsNormal} membres du raid autres que sa cible actuelle sur des Pointes d'os. Un membre empalé ne peut pas agir et perd {drainNormal} de ses points de vie maximum chaque seconde jusqu'à la destruction de sa pointe.",
   'hudChrome.raidBossGuide.nythraxis.boneStormHeroicSummary':
-    "À partir de {first} s après le Courroux du roi, puis toutes les {everyHeroic} s, Nythraxis commence Tempête d'os pendant {duration} s. Il ignore la menace, se déplace à {speed} fois la vitesse normale, et effectue {charges} charges de {chargeSeconds} s chacune. Son tourbillon inflige {whirlHeroic} des points de vie maximum chaque seconde dans un rayon de {radius} yd. Chaque charge se termine par un Heurt d'os dans le même rayon, infligeant {slamHeroic} des points de vie maximum. Il lance Pointe d'os {spikeAt} s après le début de la tempête, puis Brise-tombe se réarme {rearm} s après la fin.",
+    "À partir de {first} s après le Courroux du roi, puis toutes les {everyHeroic} s, Nythraxis commence Tempête d'os pendant {duration} s. Il ignore la menace, se déplace à {speed} fois la vitesse normale, et effectue {charges} charges de {chargeSeconds} s chacune. Son tourbillon inflige {whirlHeroic} des points de vie maximum chaque seconde dans un rayon de {radius} yd. Chaque charge se termine par un Heurt d'os dans le même rayon, infligeant {slamHeroic} des points de vie maximum. Le premier heurt de chaque tempête inflige {openingSlamHeroic} à la place. Brise-tombe se réarme {rearm} s après la fin.",
   'hudChrome.raidBossGuide.nythraxis.boneStormName': "Tempête d'os",
   'hudChrome.raidBossGuide.nythraxis.boneStormResponse':
     'Dispersez-vous et continuez à courir pour vous éloigner de Nythraxis. Le membre chargé fuit pendant que les autres laissent de l espace autour de la trajectoire, puis les tanks le reprennent quand la tempête se termine.',
   'hudChrome.raidBossGuide.nythraxis.boneStormSummary':
-    "À partir de {first} s après le Courroux du roi, puis toutes les {everyNormal} s, Nythraxis commence Tempête d'os pendant {duration} s. Il ignore la menace, se déplace à {speed} fois la vitesse normale, et effectue {charges} charges de {chargeSeconds} s chacune. Son tourbillon inflige {whirlNormal} des points de vie maximum chaque seconde dans un rayon de {radius} yd. Chaque charge se termine par un Heurt d'os dans le même rayon, infligeant {slamNormal} des points de vie maximum. Il lance Pointe d'os {spikeAt} s après le début de la tempête, puis Brise-tombe se réarme {rearm} s après la fin.",
+    "À partir de {first} s après le Courroux du roi, puis toutes les {everyNormal} s, Nythraxis commence Tempête d'os pendant {duration} s. Il ignore la menace, se déplace à {speed} fois la vitesse normale, et effectue {charges} charges de {chargeSeconds} s chacune. Son tourbillon inflige {whirlNormal} des points de vie maximum chaque seconde dans un rayon de {radius} yd. Chaque charge se termine par un Heurt d'os dans le même rayon, infligeant {slamNormal} des points de vie maximum. Le premier heurt de chaque tempête inflige {openingSlamNormal} à la place. Brise-tombe se réarme {rearm} s après la fin.",
   'hudChrome.raidBossGuide.nythraxis.courtName': 'La Cour immortelle',
   'hudChrome.raidBossGuide.nythraxis.courtResponse':
     "Les tanks récupèrent Aldren et tournent son cleave loin du raid. Étourdissez ou réduisez Malric au silence dès que Guérison de Malric commence, et tuez-le d'abord ; puis immobilisez ou étourdissez Voss loin des soigneurs, puisqu'il ne peut pas être provoqué, et achevez-le ensuite.",

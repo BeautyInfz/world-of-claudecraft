@@ -902,6 +902,7 @@ export const fr_FR: EnTranslations = {
     },
     "questTracker": {
       "count": "({count})",
+      "objectiveValue": "{current} / {total}",
       "collapseHint": "Réduire le suivi des quêtes",
       "expandHint": "Développer le suivi des quêtes"
     },
@@ -1220,7 +1221,10 @@ export const fr_FR: EnTranslations = {
       "devName": "Contributeur",
       "devTierCol": "Badge",
       "mergedPrs": "PR fusionnées",
-      "devEmpty": "Aucun contributeur classé pour l'instant."
+      "devEmpty": "Aucun contributeur classé pour l'instant.",
+      "podiumLabel": "Top three",
+      "unclaimed": "Unclaimed",
+      "prestigeTitle": "Prestige {rank}"
     },
     "pledge": {
       "open": "Candidatures ouvertes",
@@ -1243,6 +1247,8 @@ export const fr_FR: EnTranslations = {
       "noteLabel": "Note du tableau",
       "notePlaceholder": "Dites aux futurs membres ce que votre guilde recherche",
       "save": "Enregistrer",
+      "newPlayerFriendlyLabel": "New player friendly",
+      "newPlayerFriendlyHint": "Shown on the recruits' board at the Proving Shore signpost.",
       "yourPledge": "Votre candidature : {guild}",
       "since": "Candidature envoyée le {date}",
       "withdraw": "Retirer la candidature"
@@ -1266,6 +1272,9 @@ export const fr_FR: EnTranslations = {
       "previous": "Sessions précédentes",
       "runLabel": "Session {index}",
       "runSummary": "{total} en {time}"
+    },
+    "talkingHead": {
+      "label": "Dialogue"
     },
     "hubLesson": {
       "target": "Ciblez le mannequin pour commencer.",
@@ -1395,6 +1404,7 @@ export const fr_FR: EnTranslations = {
       "targetPrev": "Revenir à la cible précédente",
       "discord": "Discord",
       "bgFlag": "Champ de bataille : drapeau",
+      "friendlyNameplates": "Toggle Friendly Nameplates",
       "sheathe": "Ranger/Dégainer l'arme",
       "dive": "Nager vers le bas",
       "categoryPet": "Familier",
@@ -1729,6 +1739,9 @@ export const fr_FR: EnTranslations = {
     },
     "controller": {
       "title": "Manette",
+      "device": "Connected Device",
+      "deviceConnected": "Connected",
+      "deviceDisconnected": "No controller detected",
       "glyphStyle": "Étiquettes des boutons",
       "glyphStyleAuto": "Auto",
       "glyphStyleXbox": "Xbox",
@@ -2043,6 +2056,52 @@ export const fr_FR: EnTranslations = {
       "spellOrder": "Ordre des sorts",
       "reset": "Réinitialiser la position",
       "spellPosition": "Ordre des sorts {position} / {count}",
+      "watchlist": "Watched Spells",
+      "watchlistHint": "Pick any spell that buffs you to give it its own aura. Picked spells get a full card below, with their own icon, color, position and ground ring.",
+      "watchlistEmpty": "No other spell in your spellbook puts a buff on you.",
+      "watchlistWatch": "Watch {spell}",
+      "watchlistUnwatch": "Stop watching {spell}",
+      "watchlistCount": "{count} watched",
+      "sound": "Alert Sound",
+      "soundNone": "No sound",
+      "soundVolume": "Sound Volume",
+      "soundPreview": "Play",
+      "soundPreviewAria": "Preview the {sound} alert sound",
+      "soundHint": "A sound plays each time this spell procs. Turn the icon, crescents and ground ring off to have the sound alone announce it.",
+      "readyGlow": "Hotbar Glow",
+      "readyGlowHint": "Lights this spell on your action bar while its buff is up.",
+      "reticleTick": "Reticle Tick",
+      "reticleTickHint": "Adds a mark near the centre of the screen that lights when this spell procs.",
+      "haptic": "Rumble",
+      "hapticNone": "Off",
+      "hapticHint": "Vibrates a connected controller, or your phone. Ignored where the device has no haptics.",
+      "haptics": {
+        "tap": "Tap",
+        "double": "Double",
+        "long": "Long"
+      },
+      "cues": {
+        "softChime": "Soft Chime",
+        "musicBox": "Music Box",
+        "glassPing": "Glass Ping",
+        "waterDrop": "Water Drop",
+        "bubblePop": "Bubble Pop",
+        "hardBell": "Hard Bell",
+        "templeGong": "Temple Gong",
+        "anvilStrike": "Anvil Strike",
+        "coinDrop": "Coin Drop",
+        "swordDraw": "Sword Draw",
+        "blaringHorn": "Blaring Horn",
+        "carKlaxon": "Car Klaxon",
+        "sonarPing": "Sonar Ping",
+        "electricZap": "Electric Zap",
+        "catMeow": "Cat Meow",
+        "owlHoot": "Owl Hoot",
+        "wolfHowl": "Wolf Howl",
+        "frogCroak": "Frog Croak",
+        "windWhoosh": "Wind Whoosh",
+        "steamHiss": "Steam Hiss"
+      },
       "procs": {
         "revenge": "Vengeance !",
         "battleTrance": "Transe de combat",
@@ -2114,6 +2173,22 @@ export const fr_FR: EnTranslations = {
       "playtimeHidden": "Masqué",
       "showPlaytimeAria": "Afficher le temps de jeu",
       "hidePlaytimeAria": "Masquer le temps de jeu"
+    },
+    "charSidebar": {
+      "label": "Character details",
+      "subtitle": "Level {level} {className} . {archetype} . Hobby: {hobby}",
+      "subtitleNoHobby": "Level {level} {className} . {archetype}",
+      "stats": "Stats",
+      "progression": "Progression",
+      "skills": "Skills",
+      "gathering": "Gathering",
+      "crafting": "Crafting",
+      "openProfessions": "Open Professions"
+    },
+    "questLog": {
+      "completed": "Completed",
+      "zoneSummary": "{count} ({ready} ready)",
+      "shiftHint": "Shift-click a quest to link it in chat."
     },
     "statInfo": {
       "fromYour": "Grâce à vos {value} en {stat} :",
@@ -2228,6 +2303,12 @@ export const fr_FR: EnTranslations = {
       "linkHint": "Maj-clic pour lier cet objet dans le canal de discussion."
     },
     "plurals": {
+      "guildBoardShown": {
+        "one": "{count} guild shown",
+        "few": "{count} guilds shown",
+        "many": "{count} guilds shown",
+        "other": "{count} guilds shown"
+      },
       "commissionMasterworks": {
         "one": "{count} chef-d’œuvre",
         "few": "{count} chefs-d’œuvre",
@@ -2357,6 +2438,7 @@ export const fr_FR: EnTranslations = {
     },
     "bugReport": {
       "menuButton": "Signaler un bug",
+      "online": "Online",
       "realm": "Monde",
       "character": "Personnage",
       "position": "Position",
@@ -2962,8 +3044,8 @@ export const fr_FR: EnTranslations = {
         "kingsWrathSummary": "Nythraxis inflige {bonusNormal} de dégâts supplémentaires en normal ou {bonusHeroic} en héroïque pour le reste du combat. Éruption sépulcrale survient toutes les {eruptionEveryNormal} s ({eruptionEveryHeroic} en héroïque) et Feu sépulcral toutes les {gravefireEveryNormal} s ({gravefireEveryHeroic} en héroïque).",
         "kingsWrathResponse": "Utilisez les temps de recharge défensifs restants pour les dégâts inévitables. Gardez toutes les mécaniques précédentes propres pendant que le raid termine le combat.",
         "boneStormName": "Tempête d'os",
-        "boneStormSummary": "À partir de {first} s après le Courroux du roi, puis toutes les {everyNormal} s, Nythraxis commence Tempête d'os pendant {duration} s. Il ignore la menace, se déplace à {speed} fois la vitesse normale, et effectue {charges} charges de {chargeSeconds} s chacune. Son tourbillon inflige {whirlNormal} des points de vie maximum chaque seconde dans un rayon de {radius} yd. Chaque charge se termine par un Heurt d'os dans le même rayon, infligeant {slamNormal} des points de vie maximum. Il lance Pointe d'os {spikeAt} s après le début de la tempête, puis Brise-tombe se réarme {rearm} s après la fin.",
-        "boneStormHeroicSummary": "À partir de {first} s après le Courroux du roi, puis toutes les {everyHeroic} s, Nythraxis commence Tempête d'os pendant {duration} s. Il ignore la menace, se déplace à {speed} fois la vitesse normale, et effectue {charges} charges de {chargeSeconds} s chacune. Son tourbillon inflige {whirlHeroic} des points de vie maximum chaque seconde dans un rayon de {radius} yd. Chaque charge se termine par un Heurt d'os dans le même rayon, infligeant {slamHeroic} des points de vie maximum. Il lance Pointe d'os {spikeAt} s après le début de la tempête, puis Brise-tombe se réarme {rearm} s après la fin.",
+        "boneStormSummary": "À partir de {first} s après le Courroux du roi, puis toutes les {everyNormal} s, Nythraxis commence Tempête d'os pendant {duration} s. Il ignore la menace, se déplace à {speed} fois la vitesse normale, et effectue {charges} charges de {chargeSeconds} s chacune. Son tourbillon inflige {whirlNormal} des points de vie maximum chaque seconde dans un rayon de {radius} yd. Chaque charge se termine par un Heurt d'os dans le même rayon, infligeant {slamNormal} des points de vie maximum. Le premier heurt de chaque tempête inflige {openingSlamNormal} à la place. Brise-tombe se réarme {rearm} s après la fin.",
+        "boneStormHeroicSummary": "À partir de {first} s après le Courroux du roi, puis toutes les {everyHeroic} s, Nythraxis commence Tempête d'os pendant {duration} s. Il ignore la menace, se déplace à {speed} fois la vitesse normale, et effectue {charges} charges de {chargeSeconds} s chacune. Son tourbillon inflige {whirlHeroic} des points de vie maximum chaque seconde dans un rayon de {radius} yd. Chaque charge se termine par un Heurt d'os dans le même rayon, infligeant {slamHeroic} des points de vie maximum. Le premier heurt de chaque tempête inflige {openingSlamHeroic} à la place. Brise-tombe se réarme {rearm} s après la fin.",
         "boneStormResponse": "Dispersez-vous et continuez à courir pour vous éloigner de Nythraxis. Le membre chargé fuit pendant que les autres laissent de l espace autour de la trajectoire, puis les tanks le reprennent quand la tempête se termine.",
         "crownEnduresName": "La Couronne perdure",
         "crownEnduresSummary": "À {enrageNormal} s après le pull (le chronomètre s arrête pendant l'arrivée de Frère Aldric à 70%), La Couronne perdure se déclenche comme un enrage brutal. Nythraxis gagne {damage} de dégâts supplémentaires et {haste} de vitesse d'attaque, puis encore {rampStep} de dégâts toutes les {rampEveryNormal} s. Il n'y a pas de barre de minuterie. Les avertissements arrivent par cris à {warn60}, {warn30} et {warn10} s restantes.",
@@ -3014,6 +3096,7 @@ export const fr_FR: EnTranslations = {
       "elementalConvergencePrimed": "Votre prochain sort de l'autre école élémentaire accorde la Convergence élémentaire",
       "hunterFerocity": "{stacks} Férocité de meute : votre familier inflige {pct}% de dégâts en plus",
       "cooldownCap": "{used} sur {cap} s de réduction de temps de recharge utilisés dans cette fenêtre",
+      "bruinRushWindow": "La Forme de loup ne coûte aucun mana et cloue la cible de votre Ruée de Bruin, la ralentissant de {pct}% pendant {sec} s",
       "funeralHarvestLock": "Moisson funéraire ne peut pas encore créer un autre Fragment d'âme",
       "leadenHexLock": "Hex de plomb ne peut pas encore enraciner cette cible de nouveau",
       "forbiddenReflectionReady": "Votre prochain temps de recharge de Démoniste éligible peut être relancé",
@@ -3126,7 +3209,7 @@ export const fr_FR: EnTranslations = {
       "elementalTrance": "Dégâts subis réduits de {pct}%. {mana}% de tous les dégâts infligés sont convertis en mana",
       "stealth": "Camouflé ; vitesse de déplacement réduite de {pct}%",
       "formBear": "Forme de Bruin : points de vie et armure augmentés",
-      "formCat": "Forme de félin : dégâts de mêlée et énergie",
+      "wolfForm": "Cat Form: melee damage and energy; movement speed increased by {pct}%",
       "formTravel": "Forme de Fleet : vitesse de déplacement augmentée de {pct}%",
       "formFireball": "Forme de braise : vitesse de déplacement augmentée de {pct} % ; les attaques et sorts sont désactivés",
       "formMoonkin": "Forme de sélénien : dégâts des sorts augmentés de {pct}% et armure augmentée de {armorPct}%",
@@ -3234,6 +3317,7 @@ export const fr_FR: EnTranslations = {
       "lock": "Verrouiller le cadre du joueur"
     },
     "partyFrames": {
+      "header": "Party",
       "section": "Cadres de groupe et de raid",
       "optionsSection": "Options des cadres de groupe",
       "unlock": "Déplacer les cadres de groupe et de raid",
@@ -3735,6 +3819,15 @@ export const fr_FR: EnTranslations = {
       "subtitle": "Guildes du royaume",
       "rosterTitle": "Voir l'effectif de {guild}",
       "back": "Retour",
+      "filters": "Board filters",
+      "newPlayerFriendly": "New player friendly",
+      "newPlayerFriendlyTitle": "This guild welcomes new players",
+      "filterNewPlayersTitle": "Show only guilds that welcome new players",
+      "filterEmpty": "No guild has opened its doors to new players yet.",
+      "showAll": "Show all guilds",
+      "officersOnline": "Officers online",
+      "officersOnlineLabel": "Officers online: {names}",
+      "officerEntry": "{name} ({rank})",
       "popupTitle": "Panneau de guilde",
       "close": "Fermer"
     },
@@ -4023,7 +4116,6 @@ export const fr_FR: EnTranslations = {
       }
     },
     "gathering": {
-      "title": "Récolte",
       "mining": "Minage",
       "logging": "Bûcheronnage",
       "herbalism": "Herboristerie",
@@ -4207,9 +4299,7 @@ export const fr_FR: EnTranslations = {
       "noviceBody": "Votre compétence de culture augmente chaque fois que vous récoltez une culture. Semez une graine dans n’importe quel carré pour commencer."
     },
     "archetypeTitle": {
-      "label": "Titre",
-      "none": "Aucun",
-      "hobbyLabel": "Loisir"
+      "none": "Aucun"
     },
     "archetypePair": {
       "engineering+alchemy": "Bombardier",
@@ -4379,7 +4469,9 @@ export const fr_FR: EnTranslations = {
       "hobbyLabel": "Passe-temps : {craft}",
       "majorsLabel": "Majeurs : {a} et {b}",
       "pairsHeld": "Paires détenues : {count}",
-      "returnsLabel": "Retours : {count}"
+      "returnsLabel": "Retours : {count}",
+      "retentionFooter": "Returns on respec: 60% of skill kept.",
+      "tutorialLink": "Profession tutorial"
     },
     "crafting": {
       "title": "Artisanat",
@@ -4414,6 +4506,7 @@ export const fr_FR: EnTranslations = {
       "vaultUnreachable": "La Réserve de matériaux est hors de portée ici.",
       "craftFeeLine": "Frais de fabrication : {fee} chacun",
       "empty": "Aucune recette connue pour l'instant.",
+      "materialsFooter": "Materials in your vault are drawn automatically. Learn more recipes at the station.",
       "resultAria": "Artisanat {name}",
       "craftedToast": "Fabriqué$1 {name}",
       "craftedToastQty": "Fabriqué : {name} x{qty}",
@@ -4515,6 +4608,9 @@ export const fr_FR: EnTranslations = {
       "commissionToggleHint": "Se lie au premier personnage qui la reçoit lors d'un échange.",
       "commissionUnbound": "Pièce de commande : se lie au premier destinataire",
       "commissionBound": "Pièce de commande : liée à son destinataire"
+    },
+    "marketWindow": {
+      "mixedListingsFooter": "The Merchant restocks common goods; player listings sit beside them at their asking price."
     },
     "itemMenu": {
       "use": "Utiliser",
@@ -4950,6 +5046,10 @@ export const fr_FR: EnTranslations = {
       "ownedTooltipStatus": "Cataloguée dans Le Reliquaire",
       "missingTooltipStatus": "Pas encore trouvée",
       "firstFindClears": "Trouvée pour la première fois à la conquête {count}",
+      "foundBy": "Found by {names}",
+      "finderWithDate": "{name} ({date})",
+      "sharedScopeNote": "Shared by every character on your account",
+      "sharedScopeHint": "A relic found by any character on your account fills the page here too.",
       "unlockToast": "Relique cataloguée : {name}",
       "illuminateBanner": "Page enluminée : {name}",
       "illuminateToast": "Toutes les reliques de {name} sont remplies.",
@@ -5083,6 +5183,10 @@ export const fr_FR: EnTranslations = {
       "progressAria": "Progression: {current} sur {target}",
       "renownChip": "{renown} de Renommée",
       "earnedDate": "Obtenu le {date}",
+      "earnedBy": "Earned by {names}",
+      "earnerWithDate": "{name} ({date})",
+      "accountScopeNote": "Shared by every character on your account",
+      "accountScopeHint": "A deed any character on your account accomplishes is earned here too, and the Book names who earned it.",
       "featRibbon": "Prouesse",
       "hiddenBadge": "Secret",
       "titleChip": "Titre à la clé",
@@ -5132,6 +5236,33 @@ export const fr_FR: EnTranslations = {
       "toggleAria": "Basculer entre la carte du monde et la carte de la zone",
       "levels": "Niveaux {min} à {max}"
     },
+    "mapAtlas": {
+      "level": "Level {level}",
+      "landmarkCount": "{count} landmarks",
+      "filtersAria": "Map layers",
+      "filters": {
+        "quests": "Quests",
+        "gather": "Gather",
+        "dungeons": "Dungeons",
+        "services": "Services",
+        "players": "Players"
+      },
+      "trackedQuests": "Tracked quests",
+      "noTrackedQuests": "No tracked quests",
+      "availableNearby": "Available nearby",
+      "noNearbyQuests": "No nearby quests",
+      "distance": "{distance} yards",
+      "showRoute": "Show Route",
+      "untrack": "Untrack",
+      "track": "Track",
+      "legend": {
+        "dungeon": "Dungeon",
+        "ore": "Ore",
+        "herb": "Herb",
+        "mail": "Mail",
+        "passage": "Passage"
+      }
+    },
     "arenaGate": {
       "minLevelNote": "Niveau requis : {level}"
     },
@@ -5150,6 +5281,7 @@ export const fr_FR: EnTranslations = {
       "tabBrowse": "Parcourir",
       "tabSell": "Vendre",
       "tabActivity": "Mes activités",
+      "tabHistory": "Sales History",
       "tabsLabel": "Sections de la Bourse $WOC",
       "loading": "Chargement de la Bourse...",
       "loadFailed": "Impossible de contacter la Bourse. Réessayez dans un instant.",
@@ -5174,6 +5306,16 @@ export const fr_FR: EnTranslations = {
       "colCurrentBid": "Enchère actuelle",
       "colBuyNow": "Achat immédiat",
       "colTimeLeft": "Temps restant",
+      "colBuyer": "Buyer",
+      "colSoldAt": "Sold",
+      "colSalePrice": "Sale price",
+      "colSaleType": "Type",
+      "saleTypeAuction": "Auction",
+      "saleTypeBuyNow": "Buy now",
+      "saleTypeDirected": "Directed",
+      "saleTypeUnknown": "Unknown",
+      "historyEmpty": "No sales recorded yet.",
+      "historyError": "Sales history could not be loaded.",
       "reserveMet": "Réserve atteinte",
       "reserveNotMet": "Réserve non atteinte",
       "yourListing": "Votre annonce",
@@ -6066,6 +6208,7 @@ export const fr_FR: EnTranslations = {
       "framesMoveBodyEditFrames": "Votre cadre, votre cadre de cible et vos cadres de groupe peuvent tous être déplacés. Chacun possède un petit bouton de déplacement dans un coin : déverrouillez-le, faites glisser le cadre où vous le souhaitez, puis verrouillez-le afin qu’un clic égaré ne le déplace pas. Modifier les cadres, en haut de l’onglet Cadres des options d’interface, déverrouille tout le reste en même temps : barres d’action, barre d’incantation, barre de frappe, barre d’expérience, minicarte, rail de boutons, cadre du familier, barre de posture, lignes d’améliorations et d’affaiblissements et étiquette de rappel de liste de souhaits. Si le résultat ne vous convient pas, Réinitialiser par défaut, en bas du même onglet, remet tout à sa place.",
       "framesGovernedExtra": "Modifier les cadres déverrouille aussi la pile de suivi ci-dessous (quêtes et objectifs suivis, progression des hauts faits, pages du Reliquaire, l’exploration, la faille et la recette ou commission suivies), la barre d’action du familier, le cadre des points de cible pour vos affaiblissements sur les ennemis proches, le médaillon de Dévotion du paladin, la barre d’affliction du démoniste, la superposition des déclenchements de sorts, le minuteur de frappe de la main secondaire et la fenêtre à onglets des compteurs de dégâts. Chacun porte sa propre étiquette lorsqu’il est déverrouillé.",
       "framesGovernedAuraTracks": "Modifier les cadres déverrouille aussi les six pistes d’auras facultatives après leur activation dans l’onglet Combat des mêmes options d’interface : Mes améliorations, Temps de recharge défensifs, Mes boucliers, Temps de recharge offensifs, Déplacement et furtivité, et Mes améliorations sur les alliés. Chaque piste est désactivée par défaut et porte sa propre étiquette lorsqu’elle est déverrouillée.",
+      "framesGovernedTalkingHead": "Edit Frames also loosens the Dialogue panel, which carries an NPC's spoken line while that NPC is out of your view; it wears its name chip while it is loose.",
       "barsTitle": "Barres, minuteries et texte de combat",
       "barsBody": "Votre barre d'incantation apparaît au milieu de l'écran, juste au-dessus de vos barres d'action, chaque fois que vous incantez ou canalisez, et affiche le nom du sort ainsi que le temps restant. Votre cible dispose de sa propre barre d'incantation sur son cadre, pour que vous puissiez voir ce qui arrive et y répondre.\n\nUne fine barre de cadence se trouve sous votre barre d'incantation et se remplit entre vos coups d'arme, pour qu'un attaquant au corps à corps ou à distance puisse voir quand le prochain coup automatique arrivera.\n\nVotre barre d'expérience s'étend sur toute la largeur sous vos barres d'action, graduée en segments, avec une portion plus claire montrant l'expérience reposée que vous avez accumulée.\n\nNagez sous l'eau et une barre de souffle bleue apparaît en haut de l'écran. Elle se vide tant que votre tête est immergée, clignote en rouge une fois épuisée quand vous commencez à vous noyer, puis se remplit rapidement dès que vous refaites surface. Espace vous fait remonter, et la touche Nager vers le bas, Ctrl par défaut, vous emmène plus profond.\n\nLes dégâts et les soins flottent au-dessus de ce qu'ils ont touché sous forme de petits nombres, pour que vous puissiez lire un combat sans lire de texte. L'onglet Combat de votre fenêtre de discussion conserve le relevé écrit complet.",
       "aurasTitle": "Améliorations et affaiblissements",
@@ -6423,6 +6566,7 @@ export const fr_FR: EnTranslations = {
       "formsNote": "Un druide combat en changeant de forme. La plupart des capacités de druide appartiennent à une forme précise, si bien que la forme que vous portez détermine ce que vous pouvez lancer, et changer de forme coûte un peu de mana. Vous pouvez changer de forme en combat ou hors combat, aussi souvent que vous le souhaitez.",
       "formsAutoUnshift": "Un soin ou un sort de dégâts lancé sous forme vous en fait sortir tout seul. Quitter une forme ainsi est gratuit et ne consomme pas votre temps de recharge global, un sort instantané part donc à l'instant où vous appuyez. Reprendre la forme est une capacité ordinaire, qui coûte toujours du mana et votre temps de recharge global.",
       "formsMoonwing": "Un druide Équilibre gagne une forme supplémentaire, la Forme de sélénien, la forme de lanceur de sorts dans laquelle il combat. C'est la seule forme animale qui conserve vos sorts, et votre baguette ne fonctionne que dans cette forme ou dans votre forme de lanceur de sorts normale.",
+      "formsWolfEngage": "Un loup ouvre le combat avec Ruée de Bruin, passe aussitôt en Forme de loup pour clouer la cible, comble la distance avec Bond quand il n'est pas camouflé et immobilise un ennemi avec Mise à terre.",
       "formLine": {
         "form_bear": "La forme de tank : une peau épaisse, de la rage à la place du mana, et davantage de menace pour que les ennemis continuent de vous frapper.",
         "form_cat": "La forme de dégâts au corps à corps : de l'énergie et des points de combo, comme un voleur, et beaucoup moins de menace.",
@@ -6990,7 +7134,7 @@ export const fr_FR: EnTranslations = {
     "reliquaryPage": {
       "intro": "Le Reliquaire est le musée des butins uniques que vous avez catalogués : les pièces convoitées des donjons, les trophées de métier, les montures, les apparences d'arme et les titres. Il accompagne le Livre des hauts faits comme une salle des trophées accompagne un livre de succès.",
       "howHeading": "Comment fonctionne la collection",
-      "howBody": "Ouvrez Le Reliquaire en jeu (Maj+X par défaut). Chaque étagère abrite des pages de reliques uniques. Vous remplissez une silhouette lorsque vous obtenez cette pièce pour la première fois sur ce personnage, et vous enluminez une page lorsque toutes ses reliques sont remplies. Quelques pages portent la mention Retirée ou Personnelle : elles restent hors de la complétion et ne bloquent donc jamais une étagère ni le catalogue entier. Les trouvailles en direct déclenchent une notification et rafraîchissent la fenêtre ouverte ; la progression est propre au personnage, sauf les apparences d'arme, qui sont des cosmétiques de compte.",
+      "howBody": "Ouvrez Le Reliquaire en jeu (Maj+X par défaut). Chaque étagère contient des pages de reliques uniques. Une silhouette se remplit dès qu'un personnage de votre compte, quel qu'il soit, obtient cette pièce pour la première fois, et une page s'illumine lorsque chaque relique qu'elle contient est remplie. Quelques pages portent la mention Retirée ou Personnelle : elles restent hors de la complétion et ne bloquent donc jamais une étagère ni le catalogue entier. Les trouvailles en direct affichent une notification et rafraîchissent la fenêtre ouverte ; la progression est partagée par tous les personnages du compte, si bien qu'une relique trouvée par un personnage remplit la page pour tous.",
       "ranksHeading": "Rangs de Conservateur",
       "ranksBody": "Les rangs de Conservateur montent avec chaque relique unique cataloguée et n'accordent que des titres et des bordures cosmétiques. Ils ne donnent jamais de puissance de combat, de taux de butin ni de compensation de malchance. Les apparences d'arme de compte ne comptent pas pour le rang de Conservateur, afin que le prestige reste attaché au personnage, et les reliques des pages Retirées ou Personnelles n'y comptent pas non plus.",
       "retiredTag": "Retirée",
@@ -11858,7 +12002,7 @@ export const fr_FR: EnTranslations = {
       },
       "cat_form": {
         "name": "Forme de loup",
-        "description": "Vous transforme en loup : l'agilité monte avec votre niveau, puissance d'attaque +8 plus 2 par niveau, vos attaques utilisent de l'énergie et des points de combo, et vous générez 29% de menace en moins. Lancez de nouveau pour revenir en forme de lanceur de sorts."
+        "description": "Vous transforme en loup : l'agilité monte avec votre niveau, puissance d'attaque +8 plus 2 par niveau, vos attaques utilisent de l'énergie et des points de combo, et vous générez 29% de menace en moins. Passer sous une forme quelconque octroie Foulée bondissante : 60% de vitesse de déplacement pendant 3 s, une fois toutes les 20 s. Lancez de nouveau pour revenir en forme de lanceur de sorts."
       },
       "claw": {
         "name": "Griffe lacérante",
@@ -11923,7 +12067,15 @@ export const fr_FR: EnTranslations = {
       },
       "pounce": {
         "name": "Frappe furtive",
-        "description": "Ouverture furtive qui étourdit la cible pendant 2 s. Confère 1 point de combo. Forme de loup uniquement."
+        "description": "Ouverture furtive qui étourdit la cible pendant 2 s. Confère 1 point de combo. Forme de loup uniquement. Hors camouflage, ce bouton devient Bond."
+      },
+      "lunge": {
+        "name": "Bond",
+        "description": "Bondit sur un ennemi jusqu'à 12 m, inflige 60% des dégâts de l'arme et octroie 1 point de combo. Forme de loup uniquement."
+      },
+      "hamstring_bite": {
+        "name": "Mise à terre",
+        "description": "Technique de finition qui étourdit la cible pendant 1 s plus 1 s par point de combo (5 points de combo : 6 s). Forme de loup uniquement."
       },
       "insect_swarm": {
         "name": "Nuée cinglante",
@@ -12637,7 +12789,7 @@ export const fr_FR: EnTranslations = {
       },
       "bear_charge": {
         "name": "Ruée de Bruin",
-        "description": "Charge un ennemi, génère 9 points de rage et l'étourdit pendant 1 s. Portée de 8-25 m. Forme de Bruin uniquement."
+        "description": "Charge un ennemi, génère 9 points de rage et l'étourdit pendant 1 s. Pendant les 3 s qui suivent, la Forme de loup est gratuite et cloue la cible, la ralentissant de 50% pendant 4 s. Portée de 8-25 m. Forme de Bruin uniquement."
       },
       "demoralizing_roar": {
         "name": "Rugissement lâche",
@@ -12645,7 +12797,7 @@ export const fr_FR: EnTranslations = {
       },
       "prowl": {
         "name": "Traquer",
-        "description": "Passe en camouflage tant que vous êtes en forme de loup, avec une vitesse de déplacement réduite de 5%. Inutilisable en combat."
+        "description": "Passe en camouflage tant que vous êtes en forme de loup. Inutilisable en combat."
       },
       "rake": {
         "name": "Écorcher",

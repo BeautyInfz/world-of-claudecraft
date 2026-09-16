@@ -902,6 +902,7 @@ export const da_DK: EnTranslations = {
     },
     "questTracker": {
       "count": "({count})",
+      "objectiveValue": "{current} / {total}",
       "collapseHint": "Fold opgavesporing sammen",
       "expandHint": "Fold opgavesporing ud"
     },
@@ -1220,7 +1221,10 @@ export const da_DK: EnTranslations = {
       "devName": "Bidragyder",
       "devTierCol": "Mærke",
       "mergedPrs": "Flettede PR'er",
-      "devEmpty": "Ingen rangerede bidragydere endnu."
+      "devEmpty": "Ingen rangerede bidragydere endnu.",
+      "podiumLabel": "Top three",
+      "unclaimed": "Unclaimed",
+      "prestigeTitle": "Prestige {rank}"
     },
     "pledge": {
       "open": "Accepterer løfter",
@@ -1243,6 +1247,8 @@ export const da_DK: EnTranslations = {
       "noteLabel": "Opslagsbesked",
       "notePlaceholder": "Fortæl håbefulde medlemmer, hvad jeres laug søger",
       "save": "Gem",
+      "newPlayerFriendlyLabel": "New player friendly",
+      "newPlayerFriendlyHint": "Shown on the recruits' board at the Proving Shore signpost.",
       "yourPledge": "Dit løfte: {guild}",
       "since": "Løfte afgivet {date}",
       "withdraw": "Træk løfte tilbage"
@@ -1266,6 +1272,9 @@ export const da_DK: EnTranslations = {
       "previous": "Tidligere løb",
       "runLabel": "Løb {index}",
       "runSummary": "{total} på {time}"
+    },
+    "talkingHead": {
+      "label": "Dialogue"
     },
     "hubLesson": {
       "target": "Vælg træningsdukken som mål for at begynde.",
@@ -1395,6 +1404,7 @@ export const da_DK: EnTranslations = {
       "targetPrev": "Skift mål baglæns",
       "discord": "Discord",
       "bgFlag": "Flaghandling på slagmarken",
+      "friendlyNameplates": "Toggle Friendly Nameplates",
       "sheathe": "Gem/fremvis våben",
       "dive": "Svøm ned",
       "categoryPet": "Kæledyr",
@@ -1729,6 +1739,9 @@ export const da_DK: EnTranslations = {
     },
     "controller": {
       "title": "Controller",
+      "device": "Connected Device",
+      "deviceConnected": "Connected",
+      "deviceDisconnected": "No controller detected",
       "glyphStyle": "Knapikoner",
       "glyphStyleAuto": "Auto",
       "glyphStyleXbox": "Xbox",
@@ -2043,6 +2056,52 @@ export const da_DK: EnTranslations = {
       "spellOrder": "Besværgelsesrækkefølge",
       "reset": "Nulstil position",
       "spellPosition": "Besværgelsesrækkefølge {position} / {count}",
+      "watchlist": "Watched Spells",
+      "watchlistHint": "Pick any spell that buffs you to give it its own aura. Picked spells get a full card below, with their own icon, color, position and ground ring.",
+      "watchlistEmpty": "No other spell in your spellbook puts a buff on you.",
+      "watchlistWatch": "Watch {spell}",
+      "watchlistUnwatch": "Stop watching {spell}",
+      "watchlistCount": "{count} watched",
+      "sound": "Alert Sound",
+      "soundNone": "No sound",
+      "soundVolume": "Sound Volume",
+      "soundPreview": "Play",
+      "soundPreviewAria": "Preview the {sound} alert sound",
+      "soundHint": "A sound plays each time this spell procs. Turn the icon, crescents and ground ring off to have the sound alone announce it.",
+      "readyGlow": "Hotbar Glow",
+      "readyGlowHint": "Lights this spell on your action bar while its buff is up.",
+      "reticleTick": "Reticle Tick",
+      "reticleTickHint": "Adds a mark near the centre of the screen that lights when this spell procs.",
+      "haptic": "Rumble",
+      "hapticNone": "Off",
+      "hapticHint": "Vibrates a connected controller, or your phone. Ignored where the device has no haptics.",
+      "haptics": {
+        "tap": "Tap",
+        "double": "Double",
+        "long": "Long"
+      },
+      "cues": {
+        "softChime": "Soft Chime",
+        "musicBox": "Music Box",
+        "glassPing": "Glass Ping",
+        "waterDrop": "Water Drop",
+        "bubblePop": "Bubble Pop",
+        "hardBell": "Hard Bell",
+        "templeGong": "Temple Gong",
+        "anvilStrike": "Anvil Strike",
+        "coinDrop": "Coin Drop",
+        "swordDraw": "Sword Draw",
+        "blaringHorn": "Blaring Horn",
+        "carKlaxon": "Car Klaxon",
+        "sonarPing": "Sonar Ping",
+        "electricZap": "Electric Zap",
+        "catMeow": "Cat Meow",
+        "owlHoot": "Owl Hoot",
+        "wolfHowl": "Wolf Howl",
+        "frogCroak": "Frog Croak",
+        "windWhoosh": "Wind Whoosh",
+        "steamHiss": "Steam Hiss"
+      },
       "procs": {
         "revenge": "Hævn!",
         "battleTrance": "Kamptrance",
@@ -2114,6 +2173,22 @@ export const da_DK: EnTranslations = {
       "playtimeHidden": "Skjult",
       "showPlaytimeAria": "Vis spilletid",
       "hidePlaytimeAria": "Skjul spilletid"
+    },
+    "charSidebar": {
+      "label": "Character details",
+      "subtitle": "Level {level} {className} . {archetype} . Hobby: {hobby}",
+      "subtitleNoHobby": "Level {level} {className} . {archetype}",
+      "stats": "Stats",
+      "progression": "Progression",
+      "skills": "Skills",
+      "gathering": "Gathering",
+      "crafting": "Crafting",
+      "openProfessions": "Open Professions"
+    },
+    "questLog": {
+      "completed": "Completed",
+      "zoneSummary": "{count} ({ready} ready)",
+      "shiftHint": "Shift-click a quest to link it in chat."
     },
     "statInfo": {
       "fromYour": "Fra din {value} {stat}:",
@@ -2228,6 +2303,12 @@ export const da_DK: EnTranslations = {
       "linkHint": "Shift-klik for at linke denne genstand i chatten."
     },
     "plurals": {
+      "guildBoardShown": {
+        "one": "{count} guild shown",
+        "few": "{count} guilds shown",
+        "many": "{count} guilds shown",
+        "other": "{count} guilds shown"
+      },
       "commissionMasterworks": {
         "one": "{count} mesterværk",
         "few": "{count} mesterværker",
@@ -2357,6 +2438,7 @@ export const da_DK: EnTranslations = {
     },
     "bugReport": {
       "menuButton": "Rapportér en fejl",
+      "online": "Online",
       "realm": "Verden",
       "character": "Figur",
       "position": "Position",
@@ -2962,8 +3044,8 @@ export const da_DK: EnTranslations = {
         "kingsWrathSummary": "Nythraxis giver {bonusNormal} mere skade på Normal eller {bonusHeroic} på Heroic resten af kampen. Gravudbrud sker hvert {eruptionEveryNormal} sek ({eruptionEveryHeroic} på Heroic), og Gravild hvert {gravefireEveryNormal} sek ({gravefireEveryHeroic} på Heroic).",
         "kingsWrathResponse": "Brug resterende defensive nedkølinger til uundgåelig skade. Hold alle tidligere mekanikker rene, mens raidet afslutter kampen.",
         "boneStormName": "Knoglestorm",
-        "boneStormSummary": "Fra {first} sek inde i Kongens vrede og hvert {everyNormal} sek derefter begynder Nythraxis Knoglestorm i {duration} sek. Han ignorerer trussel, bevæger sig {speed} gange normal hastighed og laver {charges} stormløb, der varer {chargeSeconds} sek hver. Hans hvirvel giver {whirlNormal} af maksimal sundhed hvert sekund inden for {radius} yd. Hvert stormløb ender i et Knogleslag inden for samme radius for {slamNormal} af maksimal sundhed. Han kaster Knoglespyd {spikeAt} sek inde i stormen, derefter genaktiveres Gravbryder {rearm} sek efter den slutter.",
-        "boneStormHeroicSummary": "Fra {first} sek inde i Kongens vrede og hvert {everyHeroic} sek derefter begynder Nythraxis Knoglestorm i {duration} sek. Han ignorerer trussel, bevæger sig {speed} gange normal hastighed og laver {charges} stormløb, der varer {chargeSeconds} sek hver. Hans hvirvel giver {whirlHeroic} af maksimal sundhed hvert sekund inden for {radius} yd. Hvert stormløb ender i et Knogleslag inden for samme radius for {slamHeroic} af maksimal sundhed. Han kaster Knoglespyd {spikeAt} sek inde i stormen, derefter genaktiveres Gravbryder {rearm} sek efter den slutter.",
+        "boneStormSummary": "Fra {first} sek inde i Kongens vrede og hvert {everyNormal} sek derefter begynder Nythraxis Knoglestorm i {duration} sek. Han ignorerer trussel, bevæger sig {speed} gange normal hastighed og laver {charges} stormløb, der varer {chargeSeconds} sek hver. Hans hvirvel giver {whirlNormal} af maksimal sundhed hvert sekund inden for {radius} yd. Hvert stormløb ender i et Knogleslag inden for samme radius for {slamNormal} af maksimal sundhed. Det første slag i hver storm rammer i stedet for {openingSlamNormal}. Gravbryder genaktiveres {rearm} sek efter den slutter.",
+        "boneStormHeroicSummary": "Fra {first} sek inde i Kongens vrede og hvert {everyHeroic} sek derefter begynder Nythraxis Knoglestorm i {duration} sek. Han ignorerer trussel, bevæger sig {speed} gange normal hastighed og laver {charges} stormløb, der varer {chargeSeconds} sek hver. Hans hvirvel giver {whirlHeroic} af maksimal sundhed hvert sekund inden for {radius} yd. Hvert stormløb ender i et Knogleslag inden for samme radius for {slamHeroic} af maksimal sundhed. Det første slag i hver storm rammer i stedet for {openingSlamHeroic}. Gravbryder genaktiveres {rearm} sek efter den slutter.",
         "boneStormResponse": "Spred jer og bliv ved med at løbe fra Nythraxis. Den jagede raiddeltager løber væk, mens alle andre giver plads omkring stormløbsvejen, og tanks samler ham op, når stormen slutter.",
         "crownEnduresName": "Kronen holder stand",
         "crownEnduresSummary": "Ved {enrageNormal} sek fra pullen (uret holder pause, mens Broder Aldric træder ind ved 70%) udløser Kronen holder stand som en hård rasen. Nythraxis får {damage} mere skade og {haste} hurtigere angreb, derefter yderligere {rampStep} skade hvert {rampEveryNormal} sek. Der er ingen timerbjælke. Advarsler kommer som råb ved {warn60}, {warn30} og {warn10} sek tilbage.",
@@ -3014,6 +3096,7 @@ export const da_DK: EnTranslations = {
       "elementalConvergencePrimed": "Din næste trolddom fra den anden elementarskole giver Elementar Konvergens",
       "hunterFerocity": "{stacks} Flokvildskab: dit kæledyr gør {pct}% mere skade",
       "cooldownCap": "{used} af {cap} sek. nedkølingsreduktion brugt i dette vindue",
+      "bruinRushWindow": "Ulveform koster ingen mana og fastholder målet for jeres Bruin-storm, hvilket nedsætter dets hastighed med {pct}% i {sec} sek.",
       "funeralHarvestLock": "Funeral Harvest kan ikke skabe endnu en Sjælesplint lige nu",
       "leadenHexLock": "Blytung forbandelse kan ikke rodfæste dette mål igen lige nu",
       "forbiddenReflectionReady": "Din næste kvalificerede Heksemester-nedkøling kan kastes igen",
@@ -3126,7 +3209,7 @@ export const da_DK: EnTranslations = {
       "elementalTrance": "Skade modtaget reduceret med {pct}%. {mana}% af al skade, du gør, omdannes til mana",
       "stealth": "Verborgen; Bewegungstempo um {pct}% verringert",
       "formBear": "Bruin-form: øget helbred og rustning",
-      "formCat": "Katzengestalt: Nahkampfschaden und Energie",
+      "wolfForm": "Cat Form: melee damage and energy; movement speed increased by {pct}%",
       "formTravel": "Fleet-form: bevægelseshastighed øget med {pct}%",
       "formFireball": "Ember Form: bevægelseshastighed øget med {pct}%; angreb og trolddomme er deaktiverede",
       "formMoonkin": "Månekinform: besværgelsesskade øget med {pct}% og rustning øget med {armorPct}%",
@@ -3234,6 +3317,7 @@ export const da_DK: EnTranslations = {
       "lock": "Lås spillerrammen"
     },
     "partyFrames": {
+      "header": "Party",
       "section": "Gruppe- og raidrammer",
       "optionsSection": "Indstillinger for gruppens rammer",
       "unlock": "Flyt gruppe- og raidrammer",
@@ -3735,6 +3819,15 @@ export const da_DK: EnTranslations = {
       "subtitle": "Rigets laug",
       "rosterTitle": "Se medlemslisten for {guild}",
       "back": "Tilbage",
+      "filters": "Board filters",
+      "newPlayerFriendly": "New player friendly",
+      "newPlayerFriendlyTitle": "This guild welcomes new players",
+      "filterNewPlayersTitle": "Show only guilds that welcome new players",
+      "filterEmpty": "No guild has opened its doors to new players yet.",
+      "showAll": "Show all guilds",
+      "officersOnline": "Officers online",
+      "officersOnlineLabel": "Officers online: {names}",
+      "officerEntry": "{name} ({rank})",
       "popupTitle": "Laugsskilt",
       "close": "Luk"
     },
@@ -4023,7 +4116,6 @@ export const da_DK: EnTranslations = {
       }
     },
     "gathering": {
-      "title": "Indsamling",
       "mining": "Minedrift",
       "logging": "Skovhugst",
       "herbalism": "Urtekundskab",
@@ -4207,9 +4299,7 @@ export const da_DK: EnTranslations = {
       "noviceBody": "Din landbrugsfærdighed vokser hver gang du tager en afgrøde hjem. Så et frø i et vilkårligt havebed for at begynde."
     },
     "archetypeTitle": {
-      "label": "Titel",
-      "none": "Ingen",
-      "hobbyLabel": "Fritid"
+      "none": "Ingen"
     },
     "archetypePair": {
       "engineering+alchemy": "Bombardør",
@@ -4379,7 +4469,9 @@ export const da_DK: EnTranslations = {
       "hobbyLabel": "Hobby: {craft}",
       "majorsLabel": "Hovedfag: {a} og {b}",
       "pairsHeld": "Afholdte par: {count}",
-      "returnsLabel": "Returnerer: {count}"
+      "returnsLabel": "Returnerer: {count}",
+      "retentionFooter": "Returns on respec: 60% of skill kept.",
+      "tutorialLink": "Profession tutorial"
     },
     "crafting": {
       "title": "Håndværk",
@@ -4414,6 +4506,7 @@ export const da_DK: EnTranslations = {
       "vaultUnreachable": "Materialehvælvet er uden for rækkevidde her.",
       "craftFeeLine": "Gebyr: {fee} pr. stk.",
       "empty": "Ingen opskrifter kendt endnu.",
+      "materialsFooter": "Materials in your vault are drawn automatically. Learn more recipes at the station.",
       "resultAria": "Håndværk {name}",
       "craftedToast": "Udformet: {name}",
       "craftedToastQty": "Udformet: {name} x{qty}",
@@ -4515,6 +4608,9 @@ export const da_DK: EnTranslations = {
       "commissionToggleHint": "Bindes til den første karakter, der modtager det i en handel.",
       "commissionUnbound": "Kommissionsstykke: bindes til den første modtager",
       "commissionBound": "Kommissionsstykke: bundet til modtageren"
+    },
+    "marketWindow": {
+      "mixedListingsFooter": "The Merchant restocks common goods; player listings sit beside them at their asking price."
     },
     "itemMenu": {
       "use": "Brug",
@@ -4950,6 +5046,10 @@ export const da_DK: EnTranslations = {
       "ownedTooltipStatus": "Katalogiseret i Relikvariet",
       "missingTooltipStatus": "Endnu ikke fundet",
       "firstFindClears": "Først fundet ved gennemførsel {count}",
+      "foundBy": "Found by {names}",
+      "finderWithDate": "{name} ({date})",
+      "sharedScopeNote": "Shared by every character on your account",
+      "sharedScopeHint": "A relic found by any character on your account fills the page here too.",
       "unlockToast": "Relikvie katalogiseret: {name}",
       "illuminateBanner": "Side illumineret: {name}",
       "illuminateToast": "Hver relikvie på {name} er udfyldt.",
@@ -5083,6 +5183,10 @@ export const da_DK: EnTranslations = {
       "progressAria": "Fremskridt: {current} af {target}",
       "renownChip": "{renown} Hæder",
       "earnedDate": "Opnået {date}",
+      "earnedBy": "Earned by {names}",
+      "earnerWithDate": "{name} ({date})",
+      "accountScopeNote": "Shared by every character on your account",
+      "accountScopeHint": "A deed any character on your account accomplishes is earned here too, and the Book names who earned it.",
       "featRibbon": "Bragd",
       "hiddenBadge": "Skjult",
       "titleChip": "Titelbelønning",
@@ -5132,6 +5236,33 @@ export const da_DK: EnTranslations = {
       "toggleAria": "Skift mellem verdenskortet, zonekortet og instanskortet",
       "levels": "Niveauer {min} til {max}"
     },
+    "mapAtlas": {
+      "level": "Level {level}",
+      "landmarkCount": "{count} landmarks",
+      "filtersAria": "Map layers",
+      "filters": {
+        "quests": "Quests",
+        "gather": "Gather",
+        "dungeons": "Dungeons",
+        "services": "Services",
+        "players": "Players"
+      },
+      "trackedQuests": "Tracked quests",
+      "noTrackedQuests": "No tracked quests",
+      "availableNearby": "Available nearby",
+      "noNearbyQuests": "No nearby quests",
+      "distance": "{distance} yards",
+      "showRoute": "Show Route",
+      "untrack": "Untrack",
+      "track": "Track",
+      "legend": {
+        "dungeon": "Dungeon",
+        "ore": "Ore",
+        "herb": "Herb",
+        "mail": "Mail",
+        "passage": "Passage"
+      }
+    },
     "arenaGate": {
       "minLevelNote": "Kræver niveau {level}"
     },
@@ -5150,6 +5281,7 @@ export const da_DK: EnTranslations = {
       "tabBrowse": "Gennemse",
       "tabSell": "Sælg",
       "tabActivity": "Mine aktiviteter",
+      "tabHistory": "Sales History",
       "tabsLabel": "Sektioner i $WOC-Børsen",
       "loading": "Indlæser Børsen...",
       "loadFailed": "Børsen kunne ikke nås. Prøv igen om lidt.",
@@ -5174,6 +5306,16 @@ export const da_DK: EnTranslations = {
       "colCurrentBid": "Nuværende bud",
       "colBuyNow": "Køb nu",
       "colTimeLeft": "Tid tilbage",
+      "colBuyer": "Buyer",
+      "colSoldAt": "Sold",
+      "colSalePrice": "Sale price",
+      "colSaleType": "Type",
+      "saleTypeAuction": "Auction",
+      "saleTypeBuyNow": "Buy now",
+      "saleTypeDirected": "Directed",
+      "saleTypeUnknown": "Unknown",
+      "historyEmpty": "No sales recorded yet.",
+      "historyError": "Sales history could not be loaded.",
       "reserveMet": "Mindstepris nået",
       "reserveNotMet": "Mindstepris ikke nået",
       "yourListing": "Din notering",
@@ -6066,6 +6208,7 @@ export const da_DK: EnTranslations = {
       "framesMoveBodyEditFrames": "Din ramme, din målramme og dine gruppesrammer kan alle flyttes. Hver har en lille flyt-knap i hjørnet: lås den op, træk rammen derhen, hvor du vil have den, og lås den igen, så et fejlagtigt klik ikke kan flytte den. Rediger rammer øverst på Rammer-fanen i grænsefladeindstillingerne løsner resten af grænsefladen på én gang, inklusive de tre rammer: handlingslinjerne, besværgelseslinjen, svinglinjen, erfaringslinjen, minikortet, knaprækken, kæledyrsrammen, stillingslinjen, fordel- og debuffrækkerne samt Påmindelse om ønskeliste-brikken, hver med sin egen navnebrik, mens den er løsnet. Hvis de ender et sted, du fortryder, sætter Gendan standarder nederst på samme Rammer-fane dem alle tilbage, hvor de startede.",
       "framesGovernedExtra": "Rediger rammer løsner også sporingsstakken nedenunder (dine sporede opgaver og deres mål, din bedriftstatus, dine Relikvarium-sider, den udgravning du er i, enhver rift du deltager i, og opskriften eller bestillingen du sporer), kæledyrets handlingslinje ved siden af kæledyrsrammen, Mål-prikkerammen for dine debuffs på fjender i nærheden, paladinens Hengivenhedsmedaljon, troldmandens Affektionslinje, besværgelsesproc-overlayet, svingtimeren for sekundærhånd for dobbelthåndsbrugere og det fanebladede skademålervindue, hver med sin egen navnebrik, mens den er løsnet.",
       "framesGovernedAuraTracks": "Rediger rammer løsner også de seks valgfri aurabaner, når du har slået dem til fra Kamp-fanen i de samme grænsefladeindstillinger: Mine fordele-banen, Defensive nedkølinger-banen, Mine skjolde-banen, Offensive nedkølinger-banen, Bevægelse og stealth-banen samt Mine fordele på allierede-banen. Alle baner er slået fra som standard, og hver har sin egen navnebrik, mens den er løsnet.",
+      "framesGovernedTalkingHead": "Edit Frames also loosens the Dialogue panel, which carries an NPC's spoken line while that NPC is out of your view; it wears its name chip while it is loose.",
       "barsTitle": "Bjælker, timere og kamptekst",
       "barsBody": "Din castbjælke dukker op midt på skærmen, lige over dine handlingsbjælker, når du kaster eller kanaliserer, og viser besværgelsens navn og den resterende tid. Dit mål får sin egen castbjælke på sin ramme, så du kan se, hvad der er på vej, og svare på det.\n\nEn tynd svingbjælke sidder under din castbjælke og fyldes op mellem dine våbensving, så en nærkamps- eller afstandsangriber kan se, hvornår det næste automatiske slag lander.\n\nDin erfaringsbjælke løber i fuld bredde under dine handlingsbjælker, inddelt i segmenter, med en lysere strækning, der viser den udhvilede erfaring, du har opsparet.\n\nSvøm under vandet, og en blå åndedrætsbjælke dukker op øverst på skærmen. Den tømmes, mens dit hoved er under, blinker rødt, når den løber ud, og du begynder at drukne, og fyldes hurtigt op igen, i det øjeblik du dukker op. Mellemrum svømmer dig op, og tasten Svøm ned, Ctrl som standard, tager dig dybere.\n\nSkade og helbredelse svæver op over det, de rammer, som små tal, så du kan læse en kamp uden at læse tekst. Fanen Kamp i dit chatvindue holder den fulde skriftlige log.",
       "aurasTitle": "Forstærkninger og svækkelser",
@@ -6423,6 +6566,7 @@ export const da_DK: EnTranslations = {
       "formsNote": "En druide kæmper ved at skifte form. De fleste druideevner hører til én form, så den form, du er i, afgør, hvad du kan kaste, og at skifte koster lidt mana. Du kan skifte form både i og uden for kamp, så tit du vil.",
       "formsAutoUnshift": "Et heal eller en skadetrylleformular kastet i skikkelse trækker dig selv ud af den. At forlade en skikkelse på den måde er gratis og bruger ikke den globale nedkøling, så en øjeblikkelig trylleformular affyres i samme sekund, du trykker. At skifte tilbage er en almindelig evne og koster stadig mana og din globale nedkøling.",
       "formsMoonwing": "En Månelund-druide får endnu en form, Månekinform, den kasterform en Månelund-druide kæmper i. Det er den ene dyreform, der beholder dine besværgelser, og din tryllestav virker kun i den eller i din normale kasterform.",
+      "formsWolfEngage": "En ulv åbner kampen med Bruin-storm, skifter straks til Ulveform for at fastholde målet, lukker afstanden med Spring, når den ikke sniger, og holder en fjende fast med Nedlæggelse.",
       "formLine": {
         "form_bear": "Tank-formen: en tyk hud, raseri i stedet for mana, og ekstra trussel, så fjenderne bliver ved med at svinge efter dig.",
         "form_cat": "Nærkampsskade-formen: energi og kombopoint, som en slyngel, og langt mindre trussel.",
@@ -6990,7 +7134,7 @@ export const da_DK: EnTranslations = {
     "reliquaryPage": {
       "intro": "Relikvariet er museet over det enestående bytte, du har katalogiseret: eftertragtede fund fra fangekældre, erhvervstrofæer, ridedyr, våbenudseender og titler. Det hører sammen med Bedrifternes Bog, som en trofæsal hører sammen med en bedriftsbog.",
       "howHeading": "Sådan fungerer samlingen",
-      "howBody": "Åbn Relikvariet inde i spillet (Skift+X som standard). Hver hylde rummer sider med enestående relikvier. Du udfylder en silhuet, når du første gang får den genstand på den pågældende figur, og du illuminerer en side, når hver relikvie på den er udfyldt. Nogle få sider er mærket Udgået eller Personlig: de står uden for fuldførelsen og spærrer derfor aldrig en hylde eller hele kataloget. Fund giver straks en besked og opdaterer det åbne vindue; fremskridt hører til figuren, undtagen våbenudseender, der er kontokosmetik.",
+      "howBody": "Åbn Relikviegemmet i spillet (standard Shift+X). Hver hylde rummer sider med unikke relikvier. En silhuet fyldes, når en hvilken som helst figur på din konto får den genstand for første gang, og en side oplyses, når hvert relikvie på den er fyldt. Nogle få sider er mærket Udgået eller Personlig: de står uden for fuldførelsen og spærrer derfor aldrig en hylde eller hele kataloget. Fund giver straks en besked og opdaterer det åbne vindue; fremskridt deles af alle figurer på kontoen, så et relikvie, som én figur finder, fylder siden for dem alle.",
       "ranksHeading": "Kurator-range",
       "ranksBody": "Kurator-rangene stiger med hver enestående katalogiseret relikvie og giver udelukkende kosmetiske titler og rammer. De giver aldrig kampstyrke, byttechance eller uheldskompensation. Våbenudseender knyttet til kontoen giver ingen point til Kurator-rangen, så prestigen bliver ved med at høre til figuren, og relikvier på Udgåede eller Personlige sider giver heller ingen point til den.",
       "retiredTag": "Udgået",
@@ -11858,7 +12002,7 @@ export const da_DK: EnTranslations = {
       },
       "cat_form": {
         "name": "Ulveform",
-        "description": "Forvandler jer til en ulv: smidigheden stiger med jeres niveau, angrebsstyrke +8 plus 2 per niveau, jeres angreb bruger energi og kombopoint, og I skaber 29% mindre trussel. Kast den igen for at vende tilbage til besværgerskikkelsen."
+        "description": "Forvandler jer til en ulv: smidigheden stiger med jeres niveau, angrebsstyrke +8 plus 2 per niveau, jeres angreb bruger energi og kombopoint, og I skaber 29% mindre trussel. Skift til enhver skikkelse giver Langstrakt gang: 60% bevægelseshastighed i 3 sek., én gang hvert 20. sek. Kast den igen for at vende tilbage til besværgerskikkelsen."
       },
       "claw": {
         "name": "Flængeklo",
@@ -11923,7 +12067,15 @@ export const da_DK: EnTranslations = {
       },
       "pounce": {
         "name": "Luskeslag",
-        "description": "En snigeåbner der bedøver målet i 2 sek. Giver 1 kombopoint. Kun i Ulveform."
+        "description": "En snigeåbner der bedøver målet i 2 sek. Giver 1 kombopoint. Kun i Ulveform. Uden sneg-tilstand er denne knap Spring."
+      },
+      "lunge": {
+        "name": "Spring",
+        "description": "Spring mod en fjende op til 12 m væk, påfør 60% våbenskade og giv 1 kombopoint. Kun i Ulveform."
+      },
+      "hamstring_bite": {
+        "name": "Nedlæggelse",
+        "description": "Afsluttende manøvre, der bedøver målet i 1 sek. plus 1 sek. pr. combopoint (5 combopoint: 6 sek.). Kun i Ulveform."
       },
       "insect_swarm": {
         "name": "Stikkende Sværm",
@@ -12637,7 +12789,7 @@ export const da_DK: EnTranslations = {
       },
       "bear_charge": {
         "name": "Bruin-storm",
-        "description": "Storm mod en fjende, generér 9 raseri og bedøv den i 1 sek. 8-25 m rækkevidde. Kun i Bruin-form."
+        "description": "Storm mod en fjende, generér 9 raseri og bedøv den i 1 sek. I 3 sek. derefter er Ulveform gratis og fastholder målet, hvilket nedsætter dets hastighed med 50% i 4 sek. 8-25 m rækkevidde. Kun i Bruin-form."
       },
       "demoralizing_roar": {
         "name": "Fejt Brøl",
@@ -12645,7 +12797,7 @@ export const da_DK: EnTranslations = {
       },
       "prowl": {
         "name": "Snig",
-        "description": "Gå i sneg-tilstand mens du er i Ulveform, og bevæg dig 5 % langsommere. Kan ikke bruges i kamp."
+        "description": "Gå i sneg-tilstand mens du er i Ulveform. Kan ikke bruges i kamp."
       },
       "rake": {
         "name": "Flæns",
