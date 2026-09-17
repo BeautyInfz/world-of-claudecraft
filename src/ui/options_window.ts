@@ -1669,13 +1669,13 @@ export class OptionsWindow {
     // tune the party frames (owner request: one labelled subsection), since
     // every non-party knob moved into the editor's Frames Settings menu.
     if (tab === 'frames') {
-      // Frame editing is desktop-only (every gesture refuses touch layouts),
-      // so the touch HUD never offers the entry row; Hud.toggleInterfaceUnlock
-      // refuses on mobile as the backstop. The native shell forces the touch
-      // HUD whatever the Interface Mode override says, so it is gated too
-      // (the same union as the Esc menu's row).
+      // Frame editing is desktop-only (every gesture refuses touch layouts), so
+      // the touch HUD offers neither the entry row nor the layout code rows that
+      // carry its saved spots; Hud.toggleInterfaceUnlock refuses as the backstop.
+      // The native shell forces the touch HUD whatever the Interface Mode override
+      // says, so it is gated too (the same union as the Esc menu's row).
       if (!env.touch && !env.nativeShell) buildInterfaceUnlockRow(body, this.deps);
-      this.transferRows(body, 'frames');
+      if (!env.touch && !env.nativeShell) this.transferRows(body, 'frames');
       subhead(body, t('hudChrome.partyFrames.optionsSection'), 'set-subhead');
     }
 
