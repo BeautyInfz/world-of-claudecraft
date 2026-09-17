@@ -658,7 +658,7 @@ after the 6 s mark can differ from before. A spike cast shortly before a storm
 can still leave its victims pinned into it: a storm-lead hold on the regular
 cadence is a separate knob, not taken here.
 
-## 18. Opening Bone Slam softened (2026-09-16)
+## 18. Opening Bone Slam softened (2026-09-16, superseded by section 19)
 
 Same parse read as section 17. Bone Slam was 7.5% of heroic wipe killing blows
 and 17% of the damage in the pre-death windows, and its first landing is the

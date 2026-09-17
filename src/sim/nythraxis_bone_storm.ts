@@ -4,9 +4,9 @@
 // max-hp tick every second to anyone within NYTHRAXIS_BONE_STORM_RADIUS, and
 // charges living, non-impaled raiders in sequence: one target per charge
 // window, at NYTHRAXIS_BONE_STORM_SPEED_MULT times his move speed. When he
-// reaches a target he Bone Slams everyone around him (the storm's first slam
-// lands softer, since the raid has not spread yet; since v0.42.2 no Gravefire
-// line runs on down the charge direction), then he whirls in place until the
+// reaches a target he Bone Slams everyone around him (every slam of the storm
+// deals the same fraction; since v0.42.2 no Gravefire line runs on down the
+// charge direction), then he whirls in place until the
 // next window opens. The storm casts no spike of its own and the regular Bone
 // Spike cadence is frozen while he storms (the mid-storm cast pinned raiders
 // inside the whirl and was retired). When the storm ends the threat table is

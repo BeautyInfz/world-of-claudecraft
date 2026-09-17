@@ -307,6 +307,9 @@ describe('raid boss guide view', () => {
     expect(
       normalMechanics.find((mechanic) => mechanic.id === 'bone-storm')?.values,
     ).not.toHaveProperty('openingSlamNormal');
+    expect(
+      heroicMechanics.find((mechanic) => mechanic.id === 'bone-storm')?.values,
+    ).not.toHaveProperty('openingSlamHeroic');
     expect(normalMechanics.find((mechanic) => mechanic.id === 'crown-endures')).toMatchObject({
       roles: ['damage'],
       flags: ['deadly'],
