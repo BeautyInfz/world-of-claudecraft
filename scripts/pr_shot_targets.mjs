@@ -16030,14 +16030,15 @@ export const TARGETS = [
       const frame = variant.charClass === 'paladin' ? '#paladin-devotion-frame' : '#proc-overlay';
       if (variant.charClass === 'mage') {
         // The offline mage boots in another spec, whose painter hides the fire
-        // bird every frame: switch to Fire first, then the login-preview class
-        // lights the unlit bird the way it does for a few beats after entry.
+        // bird every frame: switch to Fire first, then stamp the Hot Streak
+        // look (the dim login preview reads as nothing at the touch scale) so
+        // the frame shows the bird a fire mage actually drags mid-fight.
         await page.evaluate(() => {
           window.__game?.sim?.setSpec?.('fire');
         });
         await wait(400);
         await page.evaluate(() => {
-          document.getElementById('proc-overlay')?.classList.add('preview');
+          document.getElementById('proc-overlay')?.classList.add('preview', 'heating', 'hot');
         });
         await wait(300);
       }
