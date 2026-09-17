@@ -9402,14 +9402,19 @@
   body.mobile-touch .warlock-doom-frame {
     pointer-events: auto;
     touch-action: none;
+    cursor: var(--cursor-move, move);
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     user-select: none;
   }
+  /* Their own centering translate, never the inherited one: the gamepad mode
+     anchors the medallion by its top edge (translate: -50% 0, hud.css) and the
+     detached class nulls it, while the anchor is the frame's CENTER. */
   body.mobile-touch #proc-overlay.tf-touch-placed,
   body.mobile-touch .paladin-devotion-frame.tf-touch-placed {
     left: var(--touch-fx);
     top: var(--touch-fy);
+    translate: -50% -50%;
   }
   /* The doom meter's stock touch seat is bottom-anchored and centred on one
      axis only, so its placed form re-anchors to the top and centres both. */
@@ -9418,6 +9423,24 @@
     top: var(--touch-fy);
     bottom: auto;
     transform: translate(-50%, -50%);
+  }
+  /* The frame under a live finger: the editor's dashed outline, so the box
+     being carried stays visible for its whole travel. */
+  body.mobile-touch .tf-touch-dragging {
+    outline: 1px dashed var(--gold);
+    outline-offset: -1px;
+  }
+  /* The inset probe touch_frame_drag.ts mints once per document: a hidden
+     full-viewport box whose padding is the four safe-area insets, read back
+     as px for the clamp. Not scoped to the touch class: the module reads it
+     on every layout, and the box is inert either way. */
+  .touch-safe-area-probe {
+    position: fixed;
+    inset: 0;
+    padding: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px)
+      env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
+    visibility: hidden;
+    pointer-events: none;
   }
 
   body.mobile-touch .material-sources-dialog {

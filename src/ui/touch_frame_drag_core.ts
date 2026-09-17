@@ -7,8 +7,9 @@
 // hides the editor chrome), so on a phone or tablet these three keep an
 // always-on one-finger drag instead: the DOM attacher is touch_frame_drag.ts,
 // this file holds the declarative table and the math (the clamp, the storage
-// round-trip, the drag arithmetic). Registered in tests/architecture.test.ts
-// UI_PURE_CORES; tests/touch_frame_drag_core.test.ts pins it.
+// round-trip, the drag arithmetic, the inset parse). Registered in
+// tests/architecture.test.ts UI_PURE_CORES; tests/touch_frame_drag_core.test.ts
+// pins it.
 //
 // A saved spot is the element CENTER as viewport FRACTIONS, the pre-registry
 // proc_overlay_drag shape: the stylesheet centres each frame on its left/top
@@ -37,7 +38,7 @@ export const NO_TOUCH_SAFE_AREA: TouchSafeArea = { top: 0, right: 0, bottom: 0, 
 /** Stamped on a frame while a saved touch spot applies; the mobile stylesheet
  *  reads the two custom properties below only under this class. */
 export const TOUCH_PLACED_CLASS = 'tf-touch-placed';
-/** Stamped for the length of a live drag. */
+/** Stamped for the length of a live drag (the stylesheet dresses it). */
 export const TOUCH_DRAGGING_CLASS = 'tf-touch-dragging';
 /** The inline custom properties carrying the anchor (percent strings). */
 export const TOUCH_ANCHOR_X_PROP = '--touch-fx';
@@ -78,15 +79,13 @@ export const TOUCH_DRAG_FRAMES: readonly TouchDragFrameSpec[] = TOUCH_DRAG_ROWS.
     : [];
 });
 
-/** Every storage key the touch drags own, so a layout reset can clear the set. */
-export const TOUCH_DRAG_STORAGE_KEYS: readonly string[] = TOUCH_DRAG_FRAMES.map(
-  (row) => row.storageKey,
-);
-
 /** Clamp a proposed anchor so the element (w x h px in a vw x vh viewport)
  *  always keeps its full VISUAL body inside the viewport safe area. Sizes are
  *  the live bounding rect (post-scale, post-zoom), so a scaled-down phoenix
- *  clamps by the box a thumb actually sees. Pure. */
+ *  clamps by the box a thumb actually sees. An inset that does not parse, or
+ *  one larger than the viewport, is capped rather than allowed to invert the
+ *  bounds; an element wider or taller than the usable area sits centered in
+ *  it. Pure. */
 export function clampTouchFrameAnchor(
   fx: number,
   fy: number,
@@ -150,4 +149,26 @@ export function draggedTouchFrameAnchor(
 /** The two percent strings the attacher writes into the custom properties. */
 export function touchFrameAnchorCss(a: TouchFrameAnchor): { x: string; y: string } {
   return { x: `${(a.fx * 100).toFixed(2)}%`, y: `${(a.fy * 100).toFixed(2)}%` };
+}
+
+/** The safe-area probe's four resolved paddings (a computed style's strings,
+ *  each the px the browser gave env(safe-area-inset-*)) as px insets. A value
+ *  that does not parse (a browser with no inset support leaves the env()
+ *  unresolved) counts as no inset. Pure. */
+export function safeAreaFromPadding(padding: {
+  top: string;
+  right: string;
+  bottom: string;
+  left: string;
+}): TouchSafeArea {
+  const px = (value: string): number => {
+    const parsed = Number.parseFloat(value);
+    return Number.isFinite(parsed) ? parsed : 0;
+  };
+  return {
+    top: px(padding.top),
+    right: px(padding.right),
+    bottom: px(padding.bottom),
+    left: px(padding.left),
+  };
 }
